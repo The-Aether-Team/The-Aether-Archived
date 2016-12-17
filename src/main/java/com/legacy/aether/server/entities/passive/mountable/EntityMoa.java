@@ -1,4 +1,4 @@
-package com.legacy.aether.entities.passive.mountable;
+package com.legacy.aether.server.entities.passive.mountable;
 
 import javax.annotation.Nullable;
 
@@ -23,14 +23,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import com.legacy.aether.Aether;
-import com.legacy.aether.client.audio.SoundsAether;
-import com.legacy.aether.entities.util.EntitySaddleMount;
-import com.legacy.aether.entities.util.MoaColor;
-import com.legacy.aether.items.ItemMoaEgg;
-import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.server.entities.util.EntitySaddleMount;
+import com.legacy.aether.server.entities.util.MoaColor;
+import com.legacy.aether.server.items.ItemMoaEgg;
+import com.legacy.aether.server.items.ItemsAether;
+import com.legacy.aether.server.registry.sounds.SoundsAether;
 
 public class EntityMoa extends EntitySaddleMount
 {
@@ -69,6 +69,14 @@ public class EntityMoa extends EntitySaddleMount
 		this.setColor(color);
 	}
 
+	public void moveEntity(int x, int y, int z)
+	{
+		if (!this.shouldSit)
+		{
+			super.moveEntity(x, y, z);
+		}
+	}
+
 	public int getRandomEggTime()
 	{
 		return 250 + this.rand.nextInt(25);
@@ -76,7 +84,6 @@ public class EntityMoa extends EntitySaddleMount
 
 	public void initAI()
 	{
-       // ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(2, new EntityAIWander(this, 0.30F));
 		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
@@ -247,7 +254,7 @@ public class EntityMoa extends EntitySaddleMount
 		{
 			if (this.ticksUntilFlap == 0)
 			{
-				//this.worldObj.playSoundAtEntity(this, ENTITY, 0.15f, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+				this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
 				this.ticksUntilFlap = 11;
 			}
@@ -261,7 +268,7 @@ public class EntityMoa extends EntitySaddleMount
 		this.prevDestPos = this.destPos;
 
 		this.destPos += 0.2D;
-		this.destPos = Aether.minMax(0.01F, 1.0F, this.destPos);
+		this.destPos = minMax(0.01F, 1.0F, this.destPos);
 
 		if (onGround)
 		{
@@ -269,6 +276,11 @@ public class EntityMoa extends EntitySaddleMount
 		}
 
 		this.wingRotation += 0.533F;
+	}
+
+	public static float minMax(float min, float max, float value)
+	{
+		return Math.min(max, Math.max(min, value));
 	}
 
 	@Override
@@ -280,7 +292,7 @@ public class EntityMoa extends EntitySaddleMount
 
 			if (!this.onGround)
 			{
-				//this.worldObj.playSoundAtEntity(this, "aether:aemob.aerbunny.hop", 0.5f, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+				this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
 				if (!this.worldObj.isRemote)
 				{
