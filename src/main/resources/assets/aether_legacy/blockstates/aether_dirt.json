@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"aether_legacy_double_drops=true": [
+			{ "model": "aether_legacy:aether_dirt" },
+			{ "model": "aether_legacy:aether_dirt", "y": 90 },
+			{ "model": "aether_legacy:aether_dirt", "y": 180 },
+			{ "model": "aether_legacy:aether_dirt", "y": 270 }
+		],
+		"aether_legacy_double_drops=false": [
+			{ "model": "aether_legacy:aether_dirt" },
+			{ "model": "aether_legacy:aether_dirt", "y": 90 },
+			{ "model": "aether_legacy:aether_dirt", "y": 180 },
+			{ "model": "aether_legacy:aether_dirt", "y": 270 }
+		]
+	}
+}

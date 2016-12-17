@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"aether_legacy_double_drops=true,aether_logs=golden_oak_log": {
+			"model": "aether_legacy:golden_oak_log"
+		},
+		"aether_legacy_double_drops=false,aether_logs=golden_oak_log": {
+			"model": "aether_legacy:golden_oak_log"
+		},
+		"aether_legacy_double_drops=true,aether_logs=skyroot_log": {
+			"model": "aether_legacy:skyroot_log"
+		},
+		"aether_legacy_double_drops=false,aether_logs=skyroot_log": {
+			"model": "aether_legacy:skyroot_log"
+		}
+	}
+}

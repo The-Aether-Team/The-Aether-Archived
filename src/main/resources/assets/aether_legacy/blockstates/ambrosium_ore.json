@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"aether_legacy_double_drops=true": {
+			"model": "aether_legacy:ambrosium_ore"
+		},
+		"aether_legacy_double_drops=false": {
+			"model": "aether_legacy:ambrosium_ore"
+		}
+	}
+}

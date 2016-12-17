@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"aether_legacy_double_drops=true": {
+			"model": "aether_legacy:mossy_holystone"
+		},
+		"aether_legacy_double_drops=false": {
+			"model": "aether_legacy:mossy_holystone"
+		}
+	}
+}

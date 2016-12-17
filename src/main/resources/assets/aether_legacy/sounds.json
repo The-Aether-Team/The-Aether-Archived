@@ -1,0 +1,178 @@
+{
+  "records.aether_tune": {
+	"category": "music",
+	"sounds":[
+	  {
+	    "name": "aether_legacy:record/aether_tune",
+	    "stream": true
+	  }
+	]
+  },
+  "records.ascending_dawn": {
+	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:record/ascending_dawn",
+	    "stream": true
+	  }
+	]
+  },
+  "records.welcoming_skies": {
+  	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:record/welcoming_skies",
+	    "stream": true
+	  }
+	]
+  },
+  "music.menu": {
+	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:music/menu",
+	    "stream": true
+	  }
+	]
+  },
+  "music.aether1": {
+	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:music/aether1",
+	    "stream": true
+	  }
+	]
+  },
+  "music.aether2": {
+	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:music/aether2",
+	    "stream": true
+	  }
+	]
+  },
+  "music.aether3": {
+	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:music/aether3",
+	    "stream": true
+	  }
+	]
+  },
+  "music.aether4": {
+	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:music/aether4",
+	    "stream": true
+	  }
+	]
+  },
+  "achievement": {
+  	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:achievement/achievement_gen",
+	    "stream": true
+	  }
+	]
+  },
+  "achievement_silver": {
+  	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:achievement/achievement_silver",
+	    "stream": true
+	  }
+	]
+  },
+  "achievement_bronze": {
+  	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:achievement/achievement_bronze",
+	    "stream": true
+	  }
+	]
+  },
+  "aemob.moa.say": {
+  	"category": "neutral",
+	"subtitle": "Moa calling",
+	"sounds": [
+	    "aether_legacy:aemob/moa/say"
+	]
+  },
+  "aemob.aerbunny.hurt": {
+  	"category": "neutral",
+	"subtitle": "Aerbunny hurt",
+	"sounds": [
+	    "aether_legacy:aemob/aerbunny/hurt"
+	]
+  },
+  "aemob.aerbunny.death": {
+  	"category": "neutral",
+	"subtitle": "Aerbunny death",
+	"sounds": [
+	    "aether_legacy:aemob/aerbunny/death"
+	]
+  },
+  "aemob.aerbunny.lift": {
+  	"category": "neutral",
+	"subtitle": "Aerbunny lifted",
+	"sounds": [
+	    "aether_legacy:aemob/aerbunny/lift"
+	]
+  },
+  "aemob.zephyr.call": {
+  	"category": "hostile",
+	"subtitle": "Zephyr calling",
+	"sounds": [
+	    "aether_legacy:aemob/zephyr/call"
+	]
+  },
+  "aemob.zephyr.shoot": {
+  	"category": "hostile",
+	"subtitle": "Zephyr shooting",
+	"sounds": [
+	    "aether_legacy:aemob/zephyr/shoot"
+	]
+  },
+  "aemob.aerwhale.call": {
+  	"category": "neutral",
+	"subtitle": "Aerwhale calling",
+	"sounds": [
+	    "aether_legacy:aemob/aerwhale/call"
+	]
+  },
+  "aemob.aerwhale.death": {
+  	"category": "neutral",
+	"subtitle": "Aerwhale death",
+	"sounds": [
+	    "aether_legacy:aemob/aerwhale/death"
+	]
+  },
+  "projectile.shoot": {
+	"category": "player",
+	"subtitle": "Projectile shot",
+	"sounds": [
+	    "aether_legacy:projectile/shoot"
+	]
+  },
+  "projectile.dart_shooter.shoot": {
+	"category": "player",
+	"subtitle": "Dart shot",
+	"sounds": [
+	    "aether_legacy:projectile/dart_shooter/shoot"
+	]
+  },
+  "aeboss.slider.death": {
+	"category": "hostile",
+	"subtitle": "Slider death",
+	"sounds": [
+	    "aether_legacy:aeboss/slider/death"
+	]
+   }
+}
