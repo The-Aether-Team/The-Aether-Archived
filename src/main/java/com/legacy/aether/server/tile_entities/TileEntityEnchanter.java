@@ -97,7 +97,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 			{
 				AetherEnchantment enchantment = AetherRegistry.getEnchantment(i);
 
-				if (itemstack != null && enchantment != null && itemstack.getItem() == enchantment.getEnchantmentInput().getItem() && itemstack.getItemDamage() == enchantment.getEnchantmentInput().getItemDamage())
+				if (itemstack != null && enchantment != null && itemstack.getItem() == enchantment.getEnchantmentInput().getItem() && (itemstack.getItemDamage() == enchantment.getEnchantmentInput().getItemDamage() || itemstack.isItemStackDamageable()))
 				{
 					if (this.enchantedItemStacks[2] == null)
 					{
