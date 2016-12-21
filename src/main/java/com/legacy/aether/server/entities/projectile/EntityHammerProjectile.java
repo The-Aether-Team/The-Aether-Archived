@@ -20,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 
 public class EntityHammerProjectile extends Entity implements IProjectile
@@ -234,7 +235,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 			}
 		}
 
-		if (rayTraceResult != null)
+		if (rayTraceResult != null && rayTraceResult.typeOfHit == Type.ENTITY)
 		{
 			if (rayTraceResult.entityHit instanceof EntitySaddleMount && ((EntitySaddleMount)rayTraceResult.entityHit).getSaddled())
 			{
@@ -249,6 +250,19 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 
 		if (movingobjectposition != null)
 		{
+			if (movingobjectposition.typeOfHit == Type.ENTITY)
+			{
+				if (movingobjectposition.entityHit instanceof EntitySaddleMount && ((EntitySaddleMount)movingobjectposition.entityHit).getSaddled())
+				{
+					
+				}
+				else if (movingobjectposition.entityHit != this.thrower)
+				{
+					movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.thrower), 5);
+					movingobjectposition.entityHit.addVelocity(this.motionX, 0.6D, this.motionZ);
+				}
+			}
+
 			for (int l = (int) (this.posX - 3); l <= this.posX + 3; l++)
 			{
 				for (int i1 = (int) (this.posY - 3); i1 <= this.posY + 3; i1++)
@@ -272,16 +286,6 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 						}
 					}
 				}
-			}
-
-			if (movingobjectposition.entityHit instanceof EntitySaddleMount && ((EntitySaddleMount)movingobjectposition.entityHit).getSaddled())
-			{
-				
-			}
-			else if (movingobjectposition != null && movingobjectposition.entityHit != this.thrower)
-			{
-				movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.thrower), 5);
-				movingobjectposition.entityHit.addVelocity(this.motionX, 0.6D, this.motionZ);
 			}
 
 			for (int j = 0; j < 8; j++)
