@@ -72,7 +72,7 @@
 	]
   },
   "achievement": {
-  	"category": "music",
+  	"category": "player",
 	"sounds": [
 	  {
 	    "name": "aether_legacy:achievement/achievement_gen",
@@ -81,7 +81,7 @@
 	]
   },
   "achievement_silver": {
-  	"category": "music",
+  	"category": "player",
 	"sounds": [
 	  {
 	    "name": "aether_legacy:achievement/achievement_silver",
@@ -90,7 +90,7 @@
 	]
   },
   "achievement_bronze": {
-  	"category": "music",
+  	"category": "player",
 	"sounds": [
 	  {
 	    "name": "aether_legacy:achievement/achievement_bronze",

@@ -36,9 +36,9 @@ public class AetherMusicHandler
 		{
 			if (this.mc.thePlayer != null)
 			{
-				if (event.getSound().getSoundLocation() == this.mc.getAmbientMusicType().getMusicLocation().getSoundName() && this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
+				if (this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
 				{
-					if (!this.isAetherSongPlaying(event.getSound()))
+					if (event.getSound().getSoundLocation() == this.mc.getAmbientMusicType().getMusicLocation().getSoundName() && !this.isAetherSongPlaying(event.getSound()))
 					{
 						int songNum = this.random.nextInt(4);
 
@@ -46,10 +46,12 @@ public class AetherMusicHandler
 
 		        		return;
 					}
+					else
+					{
+						event.setResultSound(null);
 
-					event.setResultSound(null);
-
-					return;
+						return;
+					}
 				}
 			}
 		}
