@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.network.play.client.CPacketClientStatus;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
@@ -40,7 +41,7 @@ public class AetherClientEvents
 			{
 				if (!mc.thePlayer.hasAchievement(AchievementList.OPEN_INVENTORY))
 				{
-					mc.thePlayer.addStat(AchievementList.OPEN_INVENTORY);
+		            mc.getConnection().sendPacket(new CPacketClientStatus(CPacketClientStatus.State.OPEN_INVENTORY_ACHIEVEMENT));
 				}
 
 				AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
