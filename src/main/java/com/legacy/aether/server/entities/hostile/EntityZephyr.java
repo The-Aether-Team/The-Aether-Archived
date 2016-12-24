@@ -71,7 +71,7 @@ public class EntityZephyr extends EntityFlying implements IMob
     		this.shootingAI.updateTask();
     	}
 
-		if(this.posY < -2D || this.posY > 130D)
+		if(this.posY < -2D || this.posY > 255D)
 		{
 			this.despawnEntity();
 		}

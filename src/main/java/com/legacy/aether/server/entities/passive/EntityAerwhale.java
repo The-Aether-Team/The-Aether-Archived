@@ -68,7 +68,7 @@ public class EntityAerwhale extends EntityFlying implements IMob
     {
     	super.onUpdate();
 
-        if (this.worldObj.getClosestPlayer(this.posX, this.posY, this.posZ, 200, false) == null)
+        if (this.worldObj.getClosestPlayer(this.posX, this.posY, this.posZ, 255, false) == null)
         {
         	this.setDead();
         	return;
