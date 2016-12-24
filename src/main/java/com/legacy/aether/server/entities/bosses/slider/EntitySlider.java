@@ -155,10 +155,11 @@ public class EntitySlider extends EntityFlying
 
 		if (!this.isAwake())
 		{
+			this.setAttackTarget(null);
 			return;
 		}
 
-		if (this.isMoving)
+		if(!this.worldObj.isRemote) 
 		{
 			if (this.getAttackTarget() == null || this.getAttackTarget().isDead || this.getAttackTarget().getHealth() <= 0.0F) 
 			{
@@ -166,10 +167,7 @@ public class EntitySlider extends EntityFlying
 
 				return;
 			}
-		}
 
-		if(!this.worldObj.isRemote) 
-		{
 			if(this.isMoving) 
 			{
 				if(this.isCollided) 

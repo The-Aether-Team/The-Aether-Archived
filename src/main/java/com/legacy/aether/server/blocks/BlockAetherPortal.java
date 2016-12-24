@@ -36,54 +36,7 @@ public class BlockAetherPortal extends BlockPortal
 	@Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
     {
-        int i1 = 0;
-        int j1 = 1;
 
-        if(world.getBlockState(pos.west(1)).getBlock() == state.getBlock() || world.getBlockState(pos.south(1)).getBlock() == state.getBlock())
-        {
-            i1 = 1;
-            j1 = 0;
-        }
-
-        int k1;
-    	BlockPos newPos = new BlockPos(pos.getX(), 0, pos.getZ());
-
-        for(k1 = pos.getY(); world.getBlockState(newPos.add(0, k1 - 1, 0)).getBlock() == state.getBlock(); k1--) { }
-
-        if(world.getBlockState(newPos.add(0, k1 - 1, 0)).getBlock() != Blocks.GLOWSTONE)
-        {
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            return;
-        }
-
-        int l1;
-
-        for(l1 = 1; l1 < 4 && world.getBlockState(newPos.add(0, k1 + l1, 0)).getBlock() == state.getBlock(); l1++) { }
-
-        if(l1 != 3 || world.getBlockState(newPos.add(0, k1 + l1, 0)).getBlock() != Blocks.GLOWSTONE)
-        {
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            return;
-        }
-
-        boolean flag = world.getBlockState(pos.west(1)).getBlock() == state.getBlock() || world.getBlockState(pos.east(1)).getBlock() == state.getBlock();
-        boolean flag1 = world.getBlockState(pos.north(1)).getBlock() == state.getBlock() || world.getBlockState(pos.south(1)).getBlock() == state.getBlock();
-
-        if(flag && flag1)
-        {
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            return;
-        }
-
-        if((world.getBlockState(pos.add(i1, 0, j1)).getBlock() != Blocks.GLOWSTONE || world.getBlockState(pos.add(-i1, 0, -j1)) != state.getBlock()) && (world.getBlockState(pos.add(-i1, 0, -j1)).getBlock() != Blocks.GLOWSTONE || world.getBlockState(pos.add(i1, 0, j1)).getBlock() != state.getBlock()))
-        {
-            world.setBlockState(pos, Blocks.AIR.getDefaultState());
-            return;
-        } 
-        else
-        {
-            return;
-        }
     }
 
 	@Override
