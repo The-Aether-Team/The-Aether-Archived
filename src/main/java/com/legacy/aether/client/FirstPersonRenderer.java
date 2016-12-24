@@ -144,7 +144,7 @@ public class FirstPersonRenderer
 			return;
 		}
 
-		if (accessories.stacks[6] != null)
+		if (accessories.stacks[6] != null && accessories.stacks[6].getItem() != null)
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.enableDepth();
