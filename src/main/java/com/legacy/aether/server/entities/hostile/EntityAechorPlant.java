@@ -178,9 +178,15 @@ public class EntityAechorPlant extends EntityAetherAnimal
     }
 
 	@Override
-	public int getMaxSpawnedInChunk()
-	{
-		return 2;
-	}
+    public int getMaxSpawnedInChunk()
+    {
+        return 2;
+    }
+
+	@Override
+    public boolean getCanSpawnHere()
+    {
+    	return this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) == 10.0F;
+    }
 
 }

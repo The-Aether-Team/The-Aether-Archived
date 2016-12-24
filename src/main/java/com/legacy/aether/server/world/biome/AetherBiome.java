@@ -57,7 +57,7 @@ public class AetherBiome extends Biome
 	private void addCreatureEntry(ArrayList<SpawnListEntry> list)
 	{
 		list.add(new SpawnListEntry(EntitySwet.class, 20, 4, 4));
-		list.add(new SpawnListEntry(EntityAechorPlant.class, 76, 3, 3));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 120, 3, 3));
 		list.add(new SpawnListEntry(EntitySheepuff.class, 30, 4, 4));
 		list.add(new SpawnListEntry(EntityPhyg.class, 39, 4, 4));
 		list.add(new SpawnListEntry(EntityMoa.class, 40, 3, 3));
@@ -67,6 +67,7 @@ public class AetherBiome extends Biome
 
 	private void addMobEntry(ArrayList<SpawnListEntry> list)
 	{
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 120, 1, 4));
 		list.add(new SpawnListEntry(EntityCockatrice.class, 60, 1, 2));
 	}
 
