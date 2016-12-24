@@ -26,11 +26,6 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile
     {
         super.onUpdate();
 
-        if (!(this instanceof EntityPoisonNeedle))
-        {
-            this.motionY += (double)0.05F;
-        }
-
         if (this.ticksInAir == 500)
         {
         	this.setDead();
@@ -40,14 +35,17 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile
         {
         	++this.ticksInAir;
         }
+
     }
-   
-    public boolean func_189652_ae()
+
+    @Override
+    public boolean hasNoGravity()
     {
         return true;
     }
 
-    public void func_189654_d(boolean flight)
+    @Override
+    public void setNoGravity(boolean flight)
     {
 
     }

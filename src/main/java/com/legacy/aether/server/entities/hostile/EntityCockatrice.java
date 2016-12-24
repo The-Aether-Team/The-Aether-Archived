@@ -131,7 +131,7 @@ public class EntityCockatrice extends EntityMob
 		d2 = d2 * d3;
 		EntityPoisonNeedle entityarrow = new EntityPoisonNeedle(this.worldObj, this);
 		entityarrow.setAim(this, this.rotationPitch, this.rotationYaw, 0.0F, 1.0F, 1.0F);
-		entityarrow.posY = this.posY + 1.25D;
+		entityarrow.posY = this.posY + 1.55D;
         this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		this.worldObj.spawnEntityInWorld(entityarrow);
 	}
