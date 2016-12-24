@@ -25,7 +25,7 @@ public class MoaLayer implements LayerRenderer<EntityMoa>
 	@Override
 	public void doRenderLayer(EntityMoa moa, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
 	{
-		if (moa.shouldSit)
+		if (moa.isSitting())
 		{
 			this.renderManager.renderEngine.bindTexture(TEXTURE_BRACE);
 			this.moaModel.render(moa, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);

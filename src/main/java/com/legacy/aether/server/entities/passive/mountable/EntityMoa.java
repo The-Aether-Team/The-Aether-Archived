@@ -45,7 +45,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public static final DataParameter<Boolean> HUNGRY = EntityDataManager.<Boolean>createKey(EntityMoa.class, DataSerializers.BOOLEAN);
 
-	public boolean shouldSit;
+	public static final DataParameter<Boolean> SITTING = EntityDataManager.<Boolean>createKey(EntityMoa.class, DataSerializers.BOOLEAN);
 
 	public float wingRotation, destPos, prevDestPos, prevWingRotation;
 
@@ -69,17 +69,22 @@ public class EntityMoa extends EntitySaddleMount
 		this.setColor(color);
 	}
 
-	public void moveEntity(int x, int y, int z)
-	{
-		if (!this.shouldSit)
+	@Override
+    public void moveEntity(double x, double y, double z)
+    {
+		if (!this.isSitting())
 		{
 			super.moveEntity(x, y, z);
 		}
-	}
+		else
+		{
+			super.moveEntity(0, y, 0);
+		}
+    }
 
 	public int getRandomEggTime()
 	{
-		return 250 + this.rand.nextInt(25);
+		return 775 + this.rand.nextInt(50);
 	}
 
 	public void initAI()
@@ -103,6 +108,7 @@ public class EntityMoa extends EntitySaddleMount
 		this.dataManager.register(PLAYER_GROWN, false);
 		this.dataManager.register(AMMOUNT_FEED, Byte.valueOf((byte) 0));
 		this.dataManager.register(HUNGRY, false);
+		this.dataManager.register(SITTING, false);
 	}
 
 	public boolean isAIEnabled()
@@ -117,6 +123,16 @@ public class EntityMoa extends EntitySaddleMount
 
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
+	}
+
+	public boolean isSitting()
+	{
+		return this.dataManager.get(SITTING);
+	}
+
+	public void setSitting(boolean isSitting)
+	{
+		this.dataManager.set(SITTING, isSitting);
 	}
 
 	public boolean isHungry()
@@ -190,11 +206,6 @@ public class EntityMoa extends EntitySaddleMount
 		super.onUpdate();
 
 		this.setMaxJumps(getColor().jumps);
-
-		if (this.shouldSit)
-		{
-			this.motionX = this.motionZ = 0.0F;
-		}
 
 		if (this.isJumping)
 		{
@@ -321,13 +332,13 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
     public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack)
 	{
-		if (this.isPlayerGrown() && this.isHungry() && this.isChild() && player.getActiveItemStack() != null)
+		if (stack != null && this.isPlayerGrown())
 		{
-			if (this.getAmountFed() < 3)
-			{
-				Item currentItem = player.getActiveItemStack().getItem();
+			Item currentItem = stack.getItem();
 
-				if (currentItem == ItemsAether.aechor_petal)
+			if (this.isChild() && this.isHungry())
+			{
+				if (this.getAmountFed() < 3 && currentItem == ItemsAether.aechor_petal)
 				{
 					if (!player.capabilities.isCreativeMode)
 					{
@@ -345,6 +356,15 @@ public class EntityMoa extends EntitySaddleMount
 						this.resetHunger();
 					}
 				}
+			}
+			
+			if (currentItem == ItemsAether.zanite_staff)
+			{
+				stack.damageItem(2, player);
+
+				this.setSitting(this.isSitting() ? false : true);
+
+				return true;
 			}
 		}
 
@@ -367,6 +387,7 @@ public class EntityMoa extends EntitySaddleMount
 		nbt.setInteger("color", this.getColor().ID);
 		nbt.setByte("amountFed", this.getAmountFed());
 		nbt.setBoolean("isHungry", this.isHungry());
+		nbt.setBoolean("isSitting", this.isSitting());
 	}
 
 	@Override
@@ -379,30 +400,31 @@ public class EntityMoa extends EntitySaddleMount
 		this.setColor(MoaColor.getColor(nbt.getInteger("color")));
 		this.setAmountFed(nbt.getByte("amountFed"));
 		this.setHungry(nbt.getBoolean("isHungry"));
+		this.setSitting(nbt.getBoolean("isSitting"));
 	}
 
 	@Override
 	protected SoundEvent getAmbientSound()
 	{
-		return SoundsAether.moa_say; //"aether_legacy:aemob.moa.say";
+		return SoundsAether.moa_say;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound()
 	{
-		return SoundsAether.moa_say;// "aether_legacy:aemob.moa.say";
+		return SoundsAether.moa_say;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound()
 	{
-		return SoundsAether.moa_say;// "aether_legacy:aemob.moa.say";
+		return SoundsAether.moa_say;
 	}
 
 	@Override
 	protected void playStepSound(BlockPos pos, Block par4)
 	{
-		this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PIG_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F, false);
+		this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PIG_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
 
 	@Override
@@ -431,7 +453,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public void jump()
 	{
-		if (this.getPassengers().isEmpty())
+		if (!this.isSitting() && this.getPassengers().isEmpty())
 		{
 			super.jump();
 		}
