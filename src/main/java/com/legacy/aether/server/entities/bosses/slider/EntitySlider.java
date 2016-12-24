@@ -158,14 +158,18 @@ public class EntitySlider extends EntityFlying
 			return;
 		}
 
-		if(!this.worldObj.isRemote) 
+		if (this.isMoving)
 		{
 			if (this.getAttackTarget() == null || this.getAttackTarget().isDead || this.getAttackTarget().getHealth() <= 0.0F) 
 			{
-				this.findTarget();
+				this.reset();
+
 				return;
 			}
+		}
 
+		if(!this.worldObj.isRemote) 
+		{
 			if(this.isMoving) 
 			{
 				if(this.isCollided) 
@@ -311,7 +315,7 @@ public class EntitySlider extends EntityFlying
 					}
 				}
 			}
-			else 
+			else
 			{
 				if(this.moveTime > 0) 
 				{
@@ -323,7 +327,7 @@ public class EntitySlider extends EntityFlying
 					}
 
 					this.motionX = this.motionY = this.motionZ = 0.0F;
-				} 
+				}
 				else 
 				{
 					double a, b, c;
@@ -539,7 +543,7 @@ public class EntitySlider extends EntityFlying
 		a = Math.abs(this.posX - player.posX);
 		c = Math.abs(this.posZ - player.posZ);
 
-		if(a > c) 
+		if(a > c)
 		{
 			this.hurtAngleZ = 1;
 			this.hurtAngleX = 0;
@@ -635,32 +639,16 @@ public class EntitySlider extends EntityFlying
 
 	}
 
-	public void findTarget()
-	{
-		EntityPlayer replacement = this.worldObj.getClosestPlayerToEntity(this, 16.0D);
-
-		if (replacement == null)
-		{
-			this.reset();
-		}
-		else
-		{
-			this.setAttackTarget(replacement);
-		}
-	}
-
 	public void reset()
 	{
 		this.moveTime = 0;
-		this.posX = this.dungeonX;
-		this.posY = this.dungeonY;
-		this.posZ = this.dungeonZ;
 
 		this.stop();
 		this.openDoor();
 		this.setAwake(false);
 		this.setAttackTarget(null);
 		this.setHealth(this.getMaxHealth());
+		this.setPositionAndUpdate(this.dungeonX + 8, this.dungeonY + 2, this.dungeonZ + 8);
 	}
 
 	public void setDungeon(double posX, double posY, double posZ)
