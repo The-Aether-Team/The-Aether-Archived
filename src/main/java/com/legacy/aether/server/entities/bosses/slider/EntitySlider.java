@@ -330,6 +330,8 @@ public class EntitySlider extends EntityFlying
 				}
 				else 
 				{
+					if (this.getAttackTarget() == null) return;
+
 					double a, b, c;
 					a = Math.abs(this.posX - this.getAttackTarget().posX);
 					b = Math.abs(this.getEntityBoundingBox().minY - this.getAttackTarget().getEntityBoundingBox().minY);
