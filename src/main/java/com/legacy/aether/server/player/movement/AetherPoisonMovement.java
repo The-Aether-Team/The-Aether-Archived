@@ -57,7 +57,7 @@ public class AetherPoisonMovement
 
     public boolean afflictPoison() 
     {
-        if (this.poisonTime < 0)
+        if (!this.thePlayer.worldObj.isRemote && this.poisonTime < 0)
         {
             return false;
         }

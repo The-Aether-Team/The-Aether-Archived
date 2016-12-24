@@ -37,13 +37,17 @@ public class EntityDartPoison extends EntityDartBase
     	if (living instanceof EntityPlayer)
     	{
             EntityPlayer ent = (EntityPlayer)living;
+            PlayerAether player = PlayerAether.get(ent);
 
-            if (!this.worldObj.isRemote)
+            if (!player.isPoisoned())
             {
-            	PlayerAether.get(ent).afflictPoison();
-            	AetherNetworkingManager.sendToAll(new PacketSendPoison(ent));
+                if (!this.worldObj.isRemote)
+                {
+                	PlayerAether.get(ent).afflictPoison();
+                	AetherNetworkingManager.sendToAll(new PacketSendPoison(ent));
 
-                this.setDead();
+                    this.setDead();
+                }
             }
     	}
     }
