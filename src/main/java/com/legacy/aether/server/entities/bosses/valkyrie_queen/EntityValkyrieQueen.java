@@ -82,7 +82,7 @@ public class EntityValkyrieQueen extends EntityMob
 
     public void registerEntityAI()
     {
-        this.tasks.addTask(4, new EntityAIAttackMelee(this, 0.65D, true));
+        this.targetTasks.addTask(0, new EntityAIAttackMelee(this, 0.65D, true));
         this.tasks.addTask(2, new ValkyrieQueenAIWander(this, 0.5D));
     }
 
@@ -90,9 +90,9 @@ public class EntityValkyrieQueen extends EntityMob
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(8.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(28.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(13.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500.0D);
         this.setHealth(500F);
 	}
@@ -270,7 +270,7 @@ public class EntityValkyrieQueen extends EntityMob
                     }
                     else
                     {
-                    	this.teleport(this.safeX, this.safeY, this.safeZ, 7);
+                    	this.teleport(this.getAttackTarget().posX, this.getAttackTarget().posY, this.getAttackTarget().posZ, 4);
                     }
             	}
                 else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D)))
