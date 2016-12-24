@@ -43,7 +43,7 @@ public class EntityDartPoison extends EntityDartBase
             {
                 if (!this.worldObj.isRemote)
                 {
-                	PlayerAether.get(ent).afflictPoison();
+                	player.afflictPoison();
                 	AetherNetworkingManager.sendToAll(new PacketSendPoison(ent));
 
                     this.setDead();

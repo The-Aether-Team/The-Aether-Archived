@@ -5,8 +5,6 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.world.World;
 
-import com.legacy.aether.server.entities.projectile.EntityPoisonNeedle;
-
 public abstract class EntityDartBase extends EntityArrow implements IProjectile
 {
 
