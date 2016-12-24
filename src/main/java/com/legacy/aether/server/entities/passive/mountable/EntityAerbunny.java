@@ -46,8 +46,8 @@ public class EntityAerbunny extends EntityAetherAnimal
 	@Override
     protected void initEntityAI()
     {
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAIWander(this, 2.5D));
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIWander(this, 2D, 6));
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 10.0F));
         this.tasks.addTask(6, new AerbunnyAIHop(this));
     }
