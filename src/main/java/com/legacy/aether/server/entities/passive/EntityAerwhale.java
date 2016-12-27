@@ -1,6 +1,7 @@
 package com.legacy.aether.server.entities.passive;
 
 import net.minecraft.entity.EntityFlying;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.monster.IMob;
@@ -61,6 +62,12 @@ public class EntityAerwhale extends EntityFlying implements IMob
         BlockPos pos = new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY), MathHelper.floor_double(this.posZ));
 
         return this.worldObj.getLight(pos) > 8 && this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox().expand(0D, 30D, 0D)) && this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.worldObj.containsAnyLiquid(this.getEntityBoundingBox());
+    }
+
+    @Override
+    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
+    {
+    	return type == EnumCreatureType.AMBIENT;
     }
 
     @Override

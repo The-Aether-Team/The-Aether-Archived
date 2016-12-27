@@ -1,5 +1,6 @@
 package com.legacy.aether.server.entities.hostile;
 
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -71,6 +72,12 @@ public class EntityCockatrice extends EntityMob
     public float getBlockPathWeight(BlockPos pos)
     {
     	return this.worldObj.getBlockState(pos).getBlock() == BlocksAether.aether_grass ? 10.0F : 0.0F;
+    }
+
+    @Override
+    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
+    {
+    	return type == EnumCreatureType.MONSTER;
     }
 
 	@Override

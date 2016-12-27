@@ -2,6 +2,7 @@ package com.legacy.aether.server.entities.hostile;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -50,6 +51,12 @@ public class EntityAechorPlant extends EntityAetherAnimal
     protected void initEntityAI()
     {
     	this.tasks.addTask(0, new AechorPlantAIShootPlayer(this));
+    }
+
+    @Override
+    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
+    {
+    	return type == EnumCreatureType.MONSTER;
     }
 
 	@Override
