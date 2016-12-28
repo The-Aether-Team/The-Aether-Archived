@@ -85,7 +85,7 @@ public class AetherMusicHandler
 	{
 		SoundEvent sound = number == 1 ? SoundsAether.achievement_bronze : number == 2 ? SoundsAether.achievement_silver : SoundsAether.achievement_gen;
 
-		return getSound(sound.getSoundName());
+		return new PositionedSoundRecord(sound.getSoundName(), SoundCategory.PLAYERS, 1.0F, 1.0F, false, 0, ISound.AttenuationType.NONE, 0, 0, 0);
 	}
 
 	public static ISound getSound(ResourceLocation location)
