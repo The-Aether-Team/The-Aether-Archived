@@ -18,13 +18,7 @@ public class ItemZaniteTool extends ItemAetherTool
     @Override
     public float getStrVsBlock(ItemStack stack, IBlockState state)
     {
-        for (String type : getToolClasses(stack))
-        {
-            if (state.getBlock().isToolEffective(type, state))
-                return this.calculateIncrease(stack, 4.0F);;
-        }
-
-		return this.calculateIncrease(stack, super.getStrVsBlock(stack, state));
+		return this.calculateIncrease(stack, this.toolType.getStrVsBlock(stack, state));
     }
 
     private float calculateIncrease(ItemStack tool, float original)

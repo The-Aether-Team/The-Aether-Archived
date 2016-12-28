@@ -3,7 +3,10 @@ package com.legacy.aether.server.items.tools;
 import java.util.Random;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
@@ -25,7 +28,7 @@ public abstract class ItemAetherTool extends ItemTool
 
 	public ItemAetherTool(ToolMaterial toolMaterial, EnumAetherToolType toolType)
 	{
-		super(toolType.getDamageVsEntity(), 2.0F, toolMaterial, toolType.getToolBlockSet());
+		super(1.0F, 2.0F, toolMaterial, toolType.getToolBlockSet());
 		this.setCreativeTab(AetherCreativeTabs.tools);
 		this.toolType = toolType;
 		
@@ -49,18 +52,15 @@ public abstract class ItemAetherTool extends ItemTool
         }
 	}
 
-    @Override
-    public int getHarvestLevel(ItemStack stack, String toolClass)
+	@Override
+    public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState)
     {
-        int level = super.getHarvestLevel(stack, toolClass);
-        if (level == -1 && toolClass != null && toolClass.equals(this.toolClass))
-        {
+		if (blockState != null && blockState.getBlock().isToolEffective(this.toolClass, blockState))
+		{
             return this.toolMaterial.getHarvestLevel();
-        }
-        else
-        {
-            return level;
-        }
+		}
+
+		return super.getHarvestLevel(stack, toolClass, player, blockState);
     }
 
 	@Override
@@ -72,8 +72,7 @@ public abstract class ItemAetherTool extends ItemTool
 	@Override
 	public float getStrVsBlock(ItemStack stack, IBlockState block)
 	{
-		float aetherStrength = this.toolType.getStrVsBlock(stack, block);
-		return aetherStrength == 4.0F ? aetherStrength : super.getStrVsBlock(stack, block);
+		return this.toolType.getStrVsBlock(stack, block) == 4.0F ? this.efficiencyOnProperMaterial : 1.0F;
 	}
 
     @Override

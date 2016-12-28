@@ -130,7 +130,7 @@ public class BlocksAether
 		dungeon_block = registerMeta("dungeon_block", new BlockDungeonBase(false));
 		locked_dungeon_block = registerMeta("locked_dungeon_block", new BlockDungeonBase(true).setResistance(2500F));
 		dungeon_trap = registerMeta("dungeon_trap", new BlockDungeonTrap());
-		aether_portal = registerUBlock("aether_portal", new BlockAetherPortal());
+		aether_portal = register("aether_portal", new BlockAetherPortal()).setCreativeTab(null);
 		ambrosium_torch = register("ambrosium_torch", new BlockAmbrosiumTorch());
 		chest_mimic = register("chest_mimic", new BlockMimicChest());
 		treasure_chest = register("treasure_chest", new BlockTreasureChest());
@@ -163,13 +163,13 @@ public class BlocksAether
 		holystone_stairs = register("holystone_stairs", new BlockAetherStairs(holystone.getDefaultState()));
 		holystone_brick_stairs = register("holystone_brick_stairs", new BlockAetherStairs(holystone_brick.getDefaultState()));
 
-		skyroot_double_slab = registerUBlock("skyroot_double_slab", new BlockAetherSlab("skyroot_double_slab", true, Material.WOOD).setHardness(2.0F).setResistance(5.0F));
-		carved_double_slab = registerUBlock("carved_double_slab", new BlockAetherSlab("carved_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F));
-		angelic_double_slab = registerUBlock("angelic_double_slab", new BlockAetherSlab("angelic_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F));
-		hellfire_double_slab = registerUBlock("hellfire_double_slab", new BlockAetherSlab("hellfire_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F));
-		holystone_double_slab = registerUBlock("holystone_double_slab", new BlockAetherSlab("holystone_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F));
-		mossy_holystone_double_slab = registerUBlock("mossy_holystone_double_slab", new BlockAetherSlab("mossy_holystone_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F));
-		holystone_brick_double_slab = registerUBlock("holystone_brick_double_slab", new BlockAetherSlab("holystone_brick_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F));
+		skyroot_double_slab = register("skyroot_double_slab", new BlockAetherSlab("skyroot_double_slab", true, Material.WOOD).setHardness(2.0F).setResistance(5.0F)).setCreativeTab(null);
+		carved_double_slab = register("carved_double_slab", new BlockAetherSlab("carved_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
+		angelic_double_slab = register("angelic_double_slab", new BlockAetherSlab("angelic_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
+		hellfire_double_slab = register("hellfire_double_slab", new BlockAetherSlab("hellfire_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
+		holystone_double_slab = register("holystone_double_slab", new BlockAetherSlab("holystone_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
+		mossy_holystone_double_slab = register("mossy_holystone_double_slab", new BlockAetherSlab("mossy_holystone_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
+		holystone_brick_double_slab = register("holystone_brick_double_slab", new BlockAetherSlab("holystone_brick_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
 
 		skyroot_slab = registerSlab("skyroot_slab", new BlockAetherSlab("skyroot_slab", false, Material.WOOD).setHardness(2.0F).setResistance(5.0F), skyroot_double_slab);
 		carved_slab = registerSlab("carved_slab", new BlockAetherSlab("carved_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), carved_double_slab);
@@ -178,22 +178,6 @@ public class BlocksAether
 		holystone_slab = registerSlab("holystone_slab", new BlockAetherSlab("holystone_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), holystone_double_slab);
 		mossy_holystone_slab = registerSlab("mossy_holystone_slab", new BlockAetherSlab("mossy_holystone_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), mossy_holystone_double_slab);
 		holystone_brick_slab = registerSlab("holystone_brick_slab", new BlockAetherSlab("holystone_brick_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), holystone_brick_double_slab);
-
-		Blocks.MOB_SPAWNER.setHarvestLevel("pickaxe", 0);
-		BlocksAether.ambrosium_ore.setHarvestLevel("pickaxe", 0);
-		BlocksAether.zanite_ore.setHarvestLevel("pickaxe", 1);
-		BlocksAether.gravitite_ore.setHarvestLevel("pickaxe", 2);
-		BlocksAether.icestone.setHarvestLevel("pickaxe", 2);
-		BlocksAether.enchanted_gravitite.setHarvestLevel("pickaxe", 2);
-		BlocksAether.icestone.setHarvestLevel("pickaxe", 1);
-		BlocksAether.aether_log.setHarvestLevel("axe", 0);
-		BlocksAether.holystone.setHarvestLevel("pickaxe", 0);
-		BlocksAether.mossy_holystone.setHarvestLevel("pickaxe", 0);
-		BlocksAether.dungeon_block.setHarvestLevel("pickaxe", 0);
-		BlocksAether.aether_grass.setHarvestLevel("shovel", 0);
-		BlocksAether.quicksoil.setHarvestLevel("shovel", 0);
-		BlocksAether.enchanted_aether_grass.setHarvestLevel("shovel", 0);
-		BlocksAether.aether_dirt.setHarvestLevel("shovel", 0);
 	}
 
 	public static Block registerSlab(String name, Block slab1, Block slab2)
@@ -210,16 +194,6 @@ public class BlocksAether
 	{
 		block.setUnlocalizedName(name);
 		block.setCreativeTab(AetherCreativeTabs.blocks);
-
-		GameRegistry.register(block.setRegistryName(Aether.locate(name)));
-		GameRegistry.register(new ItemBlock(block).setRegistryName(Aether.locate(name)));
-
-		return block;
-	}
-
-	public static Block registerUBlock(String name, Block block)
-	{
-		block.setUnlocalizedName(name);
 
 		GameRegistry.register(block.setRegistryName(Aether.locate(name)));
 		GameRegistry.register(new ItemBlock(block).setRegistryName(Aether.locate(name)));

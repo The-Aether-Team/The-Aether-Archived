@@ -47,9 +47,9 @@ public class Aether
 	{
 		PlayerAetherManager.initialization();
 		SoundsAether.initialization();
-		ItemsAether.initialization();
-		BlocksAether.initialization();
 		AetherEntities.initialization();
+		BlocksAether.initialization();
+		ItemsAether.initialization();
 		AetherRecipes.initialization();
 		AchievementsAether.initialization();
 		AetherTileEntities.initialization();

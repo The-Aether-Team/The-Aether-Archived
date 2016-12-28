@@ -15,32 +15,34 @@ import com.legacy.aether.server.blocks.BlocksAether;
 public enum EnumAetherToolType
 {
 
-	PICKAXE(2.0F, Sets.newHashSet(new Block[]
+	PICKAXE(Sets.newHashSet(new Block[]
 			{
 			Blocks.COBBLESTONE, Blocks.DOUBLE_STONE_SLAB, Blocks.STONE_SLAB,
 			Blocks.STONE, Blocks.SANDSTONE, Blocks.MOSSY_COBBLESTONE, Blocks.IRON_ORE,
 			Blocks.IRON_BLOCK, Blocks.COAL_ORE, Blocks.GOLD_ORE, Blocks.GOLD_BLOCK,
 			Blocks.DIAMOND_ORE, Blocks.DIAMOND_BLOCK, Blocks.ICE, Blocks.NETHERRACK,
 			Blocks.LAPIS_ORE, Blocks.LAPIS_BLOCK, Blocks.REDSTONE_ORE, Blocks.LIT_REDSTONE_ORE,
-			Blocks.RAIL, Blocks.DETECTOR_RAIL, Blocks.GOLDEN_RAIL, Blocks.ACTIVATOR_RAIL,
+			Blocks.RAIL, Blocks.DETECTOR_RAIL, Blocks.GOLDEN_RAIL, Blocks.ACTIVATOR_RAIL, Blocks.MOB_SPAWNER,
 			BlocksAether.holystone, BlocksAether.holystone_brick, BlocksAether.mossy_holystone,
 			BlocksAether.enchanter, BlocksAether.incubator, BlocksAether.enchanter, BlocksAether.ambrosium_ore,
 			BlocksAether.icestone, BlocksAether.aerogel, BlocksAether.dungeon_block
 			}))
 			{
 		@Override
-		public boolean canHarvestBlock(ToolMaterial toolMaterial, IBlockState block)
+		public boolean canHarvestBlock(ToolMaterial toolMaterial, IBlockState state)
 		{
-			if (block.getBlock() == BlocksAether.zanite_ore || block.getBlock() == BlocksAether.zanite_block)
+			Block block = state.getBlock();
+
+			if (block == BlocksAether.zanite_ore || block == BlocksAether.zanite_block || block == BlocksAether.icestone)
 			{
 				return toolMaterial.getHarvestLevel() >= 1;
 			}
-			else if (block.getBlock() == BlocksAether.gravitite_ore || block.getBlock() == BlocksAether.enchanted_gravitite)
+			else if (block == BlocksAether.gravitite_ore || block == BlocksAether.enchanted_gravitite)
 			{
 				return toolMaterial.getHarvestLevel() >= 2;
 			}
 
-			return block.getBlock() == Blocks.OBSIDIAN ? toolMaterial.getHarvestLevel() == 3 : (block.getBlock() != Blocks.DIAMOND_BLOCK && block.getBlock() != Blocks.DIAMOND_ORE ? (block.getBlock() != Blocks.EMERALD_ORE && block.getBlock() != Blocks.EMERALD_BLOCK ? (block.getBlock() != Blocks.GOLD_BLOCK && block.getBlock() != Blocks.GOLD_ORE ? (block.getBlock() != Blocks.IRON_BLOCK && block.getBlock() != Blocks.IRON_ORE ? (block.getBlock() != Blocks.LAPIS_BLOCK && block.getBlock() != Blocks.LAPIS_ORE ? (block.getBlock() != Blocks.REDSTONE_ORE && block.getBlock() != Blocks.LIT_REDSTONE_ORE ? (block.getMaterial() == Material.ROCK ? true : (block.getMaterial() == Material.IRON ? true : block.getMaterial() == Material.ANVIL)) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 1) : toolMaterial.getHarvestLevel() >= 1) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 2);
+			return block == Blocks.OBSIDIAN ? toolMaterial.getHarvestLevel() == 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK ? true : (state.getMaterial() == Material.IRON ? true : state.getMaterial() == Material.ANVIL)) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 1) : toolMaterial.getHarvestLevel() >= 1) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 2);
 		}
 
 		@Override
@@ -49,12 +51,12 @@ public enum EnumAetherToolType
 			return block != null && (block.getMaterial() == Material.IRON || block.getMaterial() == Material.ANVIL || block.getMaterial() == Material.ROCK) ? this.efficiencyOnProperMaterial : super.getStrVsBlock(stack, block);
 		}
 			},
-	SHOVEL(1.0F, Sets.newHashSet(new Block[]
+	SHOVEL(Sets.newHashSet(new Block[]
 			{
 			Blocks.GRASS, Blocks.DIRT, Blocks.SAND, Blocks.GRAVEL, Blocks.SNOW,
 			Blocks.SNOW_LAYER, Blocks.CLAY, Blocks.FARMLAND, Blocks.SOUL_SAND,
 			Blocks.MYCELIUM, BlocksAether.aether_dirt, BlocksAether.aether_grass,
-			BlocksAether.aercloud, BlocksAether.enchanted_aether_grass
+			BlocksAether.aercloud, BlocksAether.enchanted_aether_grass, BlocksAether.quicksoil
 			}))
 			{
 		@Override
@@ -64,7 +66,7 @@ public enum EnumAetherToolType
 		}
 			},
 
-	AXE(3.0F, Sets.newHashSet(new Block[]
+	AXE(Sets.newHashSet(new Block[]
 			{
 			Blocks.PLANKS, Blocks.BOOKSHELF, Blocks.LOG, Blocks.CHEST,
 			Blocks.DOUBLE_STONE_SLAB, Blocks.STONE_SLAB, Blocks.PUMPKIN,
@@ -79,21 +81,13 @@ public enum EnumAetherToolType
 		}
 			};
 
-		private float damageVsEntity;
-
 		private Set<Block> toolBlockSet;
 
 		public float efficiencyOnProperMaterial = 4.0F;
 
-		EnumAetherToolType(float damageVsEntity, Set<Block> toolBlockSet)
+		EnumAetherToolType(Set<Block> toolBlockSet)
 		{
-			this.damageVsEntity = damageVsEntity;
 			this.toolBlockSet = toolBlockSet;
-		}
-
-		public float getDamageVsEntity()
-		{
-			return this.damageVsEntity;
 		}
 
 		public Set<Block> getToolBlockSet()
