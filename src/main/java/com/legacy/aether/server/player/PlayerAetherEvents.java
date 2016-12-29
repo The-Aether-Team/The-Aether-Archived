@@ -28,8 +28,10 @@ import com.legacy.aether.server.Aether;
 import com.legacy.aether.server.items.ItemsAether;
 import com.legacy.aether.server.networking.AetherNetworkingManager;
 import com.legacy.aether.server.networking.packets.PacketAchievement;
+import com.legacy.aether.server.networking.packets.PacketPerkChanged;
 import com.legacy.aether.server.player.capability.PlayerAetherProvider;
 import com.legacy.aether.server.player.perks.AetherPerks;
+import com.legacy.aether.server.player.perks.util.EnumAetherPerkType;
 import com.legacy.aether.server.registry.achievements.AchievementsAether;
 import com.legacy.aether.server.registry.objects.AetherAchievement;
 
@@ -39,6 +41,7 @@ public class PlayerAetherEvents
 	private static final ResourceLocation PLAYER_LOCATION = new ResourceLocation(Aether.modid, "aether_players");
 
 	@SubscribeEvent
+	@SuppressWarnings("deprecation")
 	public void PlayerConstructingEvent(AttachCapabilitiesEvent.Entity event)
 	{
 		if ((event.getEntity() instanceof EntityPlayer))
@@ -69,7 +72,6 @@ public class PlayerAetherEvents
 			if (newPlayer != null)
 			{
 				newPlayer.loadNBTData(data);
-				newPlayer.hasTeleported = original.hasTeleported;
 			}
 		}
 	}
@@ -141,13 +143,18 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerLoggedInEvent event)
 	{
-		PlayerAether playerAether = PlayerAether.get(event.player);
+		EntityPlayer player = event.player;
+		PlayerAether playerAether = PlayerAether.get(player);
 
 		if (playerAether != null)
 		{
 			playerAether.accessories.markDirty();
 
-			playerAether.setDonator(AetherPerks.isDonator(event.player.getUniqueID()));
+			boolean isDonator = AetherPerks.isDonator(player.getUniqueID());
+
+			playerAether.setDonator(isDonator);
+
+			AetherNetworkingManager.sendTo(new PacketPerkChanged(player.getEntityId(), EnumAetherPerkType.Information, isDonator), (EntityPlayerMP) player);
 		}
 	}
 

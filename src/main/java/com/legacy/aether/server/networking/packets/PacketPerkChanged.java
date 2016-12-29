@@ -13,7 +13,7 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 
 	public int entityID;
 
-	public boolean renderHalo;
+	public boolean renderHalo, isDonator;
 
 	public DonatorMoaSkin moaSkin;
 
@@ -24,11 +24,19 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 
 	}
 
-	public PacketPerkChanged(int entityID, EnumAetherPerkType type, boolean renderHalo)
+	public PacketPerkChanged(int entityID, EnumAetherPerkType type, boolean info)
 	{
 		this.entityID = entityID;
-		this.renderHalo = renderHalo;
 		this.perkType = type;
+
+		if (type == EnumAetherPerkType.Halo) 
+		{ 
+			this.renderHalo = info;
+		}
+		else
+		{
+			this.isDonator = info;
+		}
 	}
 
 	public PacketPerkChanged(int entityID, EnumAetherPerkType type, DonatorMoaSkin moa)
@@ -48,6 +56,10 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 		{
 			this.renderHalo = buf.readBoolean();
 		}
+		else if (this.perkType == EnumAetherPerkType.Information)
+		{
+			this.isDonator = buf.readBoolean();
+		}
 		else if (this.perkType == EnumAetherPerkType.Moa)
 		{
 			this.moaSkin = DonatorMoaSkin.readMoaSkin(buf);
@@ -63,6 +75,10 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 		if (this.perkType == EnumAetherPerkType.Halo)
 		{
 			buf.writeBoolean(this.renderHalo);
+		}
+		else if (this.perkType == EnumAetherPerkType.Information)
+		{
+			buf.writeBoolean(this.isDonator);
 		}
 		else if (this.perkType == EnumAetherPerkType.Moa)
 		{
@@ -84,6 +100,10 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 				if (message.perkType == EnumAetherPerkType.Halo)
 				{
 					instance.shouldRenderHalo = message.renderHalo;
+				}
+				else if (message.perkType == EnumAetherPerkType.Information)
+				{
+					instance.setDonator(message.isDonator);
 				}
 				else if (message.perkType == EnumAetherPerkType.Moa)
 				{

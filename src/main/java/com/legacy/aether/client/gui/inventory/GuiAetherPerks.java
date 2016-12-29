@@ -28,6 +28,8 @@ public class GuiAetherPerks extends GuiScreen
 
 	private EntityMoa moa;
 
+	public GuiButton perkMoa, perkHalo;
+
 	private GuiButton defualtSkin, enableHalo, confirmPreference;
 
 	private GuiTextField moaWingMarking, moaWing, moaBody, moaBodyMarking, moaEye, moaOutside;
@@ -91,7 +93,7 @@ public class GuiAetherPerks extends GuiScreen
 
     	this.moaSkin.shouldUseDefualt(this.defualtSkin.displayString.contains("true"));
 
-    	if (!this.enableHaloEditor || !AetherRankings.isRankedPlayer(this.player.thePlayer.getUniqueID()))
+    	if (!this.enableHaloEditor)
     	{
     		this.enableHalo.visible = false;
     	}
@@ -111,12 +113,17 @@ public class GuiAetherPerks extends GuiScreen
         this.guiLeft = (this.width - 176) / 2;
         this.guiTop = (this.height - 166) / 2;
 
-    	this.buttonList.add(new GuiButton(1, 4, 17, 100, 20, "Moa Customizer"));
-    	this.buttonList.add(new GuiButton(5, 110, 17, 100, 20, "Developer Perks"));
+    	this.buttonList.add(this.perkMoa = new GuiButton(1, 4, 17, 100, 20, "Moa Customizer"));
+    	this.buttonList.add(this.perkHalo = new GuiButton(5, 110, 17, 100, 20, "Developer Perks"));
 
     	this.buttonList.add(this.enableHalo = new GuiButton(6, this.width / 2 - 50, this.height - 20, 100, 20, "Enable Halo: "));
     	this.buttonList.add(this.defualtSkin = new GuiButton(2,  this.width / 2 - 100, this.height - 20, 100, 20, "Default skin: " + this.player.donatorMoaSkin.shouldUseDefualt()));
     	this.buttonList.add(this.confirmPreference = new GuiButton(4,  this.width / 2, this.height - 20, 100, 20, "Confirm Skin"));
+
+    	if (!AetherRankings.isRankedPlayer(this.player.thePlayer.getUniqueID()))
+    	{
+    		this.perkHalo.visible = false;
+    	}
 
     	this.enableHalo.displayString = this.enableHalo.displayString + Boolean.toString(this.player.shouldRenderHalo ? false : true);
 
