@@ -46,6 +46,7 @@ import com.legacy.aether.server.blocks.natural.enchanted.BlockEnchantedGravitite
 import com.legacy.aether.server.blocks.natural.ore.BlockAmbrosiumOre;
 import com.legacy.aether.server.blocks.natural.ore.BlockGravititeOre;
 import com.legacy.aether.server.blocks.natural.ore.BlockZaniteOre;
+import com.legacy.aether.server.blocks.portal.BlockAetherPortal;
 import com.legacy.aether.server.items.block.ItemAetherSlab;
 import com.legacy.aether.server.items.block.ItemSubtype;
 import com.legacy.aether.server.registry.creative_tabs.AetherCreativeTabs;

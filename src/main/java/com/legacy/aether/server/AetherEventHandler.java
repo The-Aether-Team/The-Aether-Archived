@@ -27,8 +27,8 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
-import com.legacy.aether.server.blocks.BlockAetherPortal;
 import com.legacy.aether.server.blocks.BlocksAether;
+import com.legacy.aether.server.blocks.portal.BlockAetherPortal;
 import com.legacy.aether.server.items.ItemsAether;
 import com.legacy.aether.server.items.weapons.ItemSkyrootSword;
 import com.legacy.aether.server.registry.achievements.AchievementsAether;
@@ -85,7 +85,7 @@ public class AetherEventHandler
 
 			if (isWater)
 			{
-				if (((BlockAetherPortal) BlocksAether.aether_portal).setupAetherPortal(event.getWorld(), hitPos))
+				if (((BlockAetherPortal) BlocksAether.aether_portal).trySpawnPortal(event.getWorld(), hitPos))
 				{
 					if (!event.getEntityPlayer().capabilities.isCreativeMode)
 					{

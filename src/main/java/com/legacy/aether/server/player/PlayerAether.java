@@ -153,7 +153,7 @@ public class PlayerAether
 		{
 			this.timeInPortal += 0.0125F;
 
-			if (!this.hasTeleported && (this.thePlayer.capabilities.isCreativeMode || this.timeInPortal < 2.0F && this.timeInPortal >= 1.0F))
+			if (!this.hasTeleported && (this.thePlayer.capabilities.isCreativeMode || this.timeInPortal < 1.5F && this.timeInPortal >= 1.0F))
 			{
 				this.teleportPlayer(true);
 			}
@@ -276,6 +276,7 @@ public class PlayerAether
 			this.shouldRenderHalo = input.getBoolean("halo");
 		}
 
+		this.hasTeleported = true;
 		this.cooldown = input.getInteger("hammer_cooldown");
 		this.cooldownName = input.getString("notch_hammer_name");
 		this.cooldownMax = input.getInteger("max_hammer_cooldown");
