@@ -193,7 +193,7 @@ public class EntityAechorPlant extends EntityAetherAnimal
 	@Override
     public boolean getCanSpawnHere()
     {
-    	return this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) == 10.0F;
+    	return this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) == 10.0F && this.worldObj.isDaytime();
     }
 
 }
