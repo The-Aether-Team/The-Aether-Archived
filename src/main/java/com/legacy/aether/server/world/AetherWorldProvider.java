@@ -138,7 +138,7 @@ public class AetherWorldProvider extends WorldProvider
 	@Override
 	public boolean isSkyColored()
 	{
-		return true;
+		return false;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.legacy.aether.server.entities.passive;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -21,7 +22,9 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -150,6 +153,12 @@ public class EntitySheepuff extends EntityAetherAnimal
     {
     	++this.amountEaten;
     }
+
+	@Override
+	protected void playStepSound(BlockPos pos, Block par4)
+	{
+		this.worldObj.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+	}
 
     public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
     {

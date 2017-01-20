@@ -170,7 +170,7 @@ public class AetherLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(ItemsAether.iron_bubble), "Iron Bubble", "A bubble which", "grants its user", "infinite breath", "underwater.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.life_shard), "Life Shard", "A shard which", "grants the user", "extra life.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.cloud_staff), "Cloud Staff", "A staff that", "grants the user", "two mini clouds", "to protect it.", "", ""));
-		information.add(new EntryInformation(new ItemStack(ItemsAether.zanite_staff), "Nature Staff", "A staff that", "changes the behavior", "of moas.", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(ItemsAether.nature_staff), "Nature Staff", "A staff that", "changes the behavior", "of moas.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.lightning_knife), "Lightning Knife", "An unusual knife", "which, when thrown", "summons lightning", "where it lands.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.valkyrie_lance), "Valkyrie Lance", "A lance with a", "much greater", "mob reach than", "any other weapon.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.sentry_boots), "Sentry Boots", "Boots which negate", "fall damage to", "whoever is wearing", "these.", "", ""));

@@ -87,7 +87,7 @@ public class ItemZaniteSword extends ItemSword
     @Override
     public float getStrVsBlock(ItemStack itemstack, IBlockState block)
     {
-        return super.getStrVsBlock(itemstack, block) * (2.0F * (float)itemstack.getItemDamage() / (float)itemstack.getItem().getMaxDamage() + 0.5F);
+        return super.getStrVsBlock(itemstack, block) * (2.0F * (float)itemstack.getItemDamage() / (float)itemstack.getMaxDamage() + 0.5F);
     }
 
 }

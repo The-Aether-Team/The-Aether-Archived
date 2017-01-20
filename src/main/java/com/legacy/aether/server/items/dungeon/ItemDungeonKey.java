@@ -28,10 +28,7 @@ public class ItemDungeonKey extends Item
     {
     	for (int meta = 0; meta < EnumDungeonKeyType.values().length; ++meta)
     	{
-    		if (EnumDungeonKeyType.values()[meta] != EnumDungeonKeyType.Platinum)
-    		{
-        		list.add(new ItemStack(this, 1, meta));
-    		}
+        	list.add(new ItemStack(this, 1, meta));
     	}
     }
 

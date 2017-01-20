@@ -108,8 +108,8 @@ public class EntitySwet extends EntityMountable
 			if (j < list.size())
 			{
 				Entity entity = (Entity) list.get(j);
-				
-				if (!(entity instanceof EntitySwet))
+
+				if (entity instanceof EntityLivingBase && !(entity instanceof EntitySwet))
 				this.capturePrey(entity);
 			}
 		}
@@ -682,7 +682,7 @@ public class EntitySwet extends EntityMountable
 	@Override
 	protected void dropFewItems(boolean var1, int var2)
 	{
-		ItemStack droppedItem = new ItemStack(this.getType() == 0 ? BlocksAether.aercloud : Blocks.GLOWSTONE, 1, this.getType() == 0 ? 1 : 0);
+		ItemStack droppedItem = new ItemStack(this.getType() == 1 ? BlocksAether.aercloud : Blocks.GLOWSTONE, 1, this.getType() == 1 ? 1 : 0);
 		this.entityDropItem(droppedItem, 0F);
 	}
 

@@ -10,7 +10,7 @@ public class BlockZanite extends Block
 	public BlockZanite()
 	{
 		super(Material.IRON);
-		this.setHardness(5F);
+		this.setHardness(3F);
 		this.setSoundType(SoundType.METAL);
 	}
 

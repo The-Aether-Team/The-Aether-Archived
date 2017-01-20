@@ -39,6 +39,8 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 	{
 		super();
 
+		this.setHardness(0.2F);
+		this.setLightOpacity(1);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
         this.setDefaultState(this.getDefaultState().withProperty(leaf_type, EnumLeafType.Green).withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
 	}

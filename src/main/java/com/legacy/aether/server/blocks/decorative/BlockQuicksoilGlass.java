@@ -19,8 +19,8 @@ public class BlockQuicksoilGlass extends BlockBreakable
 		this.slipperiness = 1.1F;
 
 		this.setLightLevel(0.7375F);
-		this.setHardness(0.3F);
-		this.setLightOpacity(1);
+		this.setHardness(0.2F);
+		this.setLightOpacity(0);
 		this.setSoundType(SoundType.GLASS);
 	}
 

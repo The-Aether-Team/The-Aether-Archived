@@ -19,11 +19,10 @@ import com.legacy.aether.server.items.food.ItemGummySwet;
 import com.legacy.aether.server.items.food.ItemLifeShard;
 import com.legacy.aether.server.items.food.ItemWhiteApple;
 import com.legacy.aether.server.items.staffs.ItemCloudStaff;
-import com.legacy.aether.server.items.staffs.ItemNeptuneStaff;
+import com.legacy.aether.server.items.staffs.ItemNatureStaff;
 import com.legacy.aether.server.items.tools.ItemAetherParachute;
 import com.legacy.aether.server.items.tools.ItemGravititeTool;
 import com.legacy.aether.server.items.tools.ItemHolystoneTool;
-import com.legacy.aether.server.items.tools.ItemPhoenixTool;
 import com.legacy.aether.server.items.tools.ItemSkyrootBucket;
 import com.legacy.aether.server.items.tools.ItemSkyrootTool;
 import com.legacy.aether.server.items.tools.ItemValkyrieTool;
@@ -34,7 +33,6 @@ import com.legacy.aether.server.items.weapons.ItemCandyCaneSword;
 import com.legacy.aether.server.items.weapons.ItemElementalSword;
 import com.legacy.aether.server.items.weapons.ItemGravititeSword;
 import com.legacy.aether.server.items.weapons.ItemHolystoneSword;
-import com.legacy.aether.server.items.weapons.ItemJebHammer;
 import com.legacy.aether.server.items.weapons.ItemLightningKnife;
 import com.legacy.aether.server.items.weapons.ItemNotchHammer;
 import com.legacy.aether.server.items.weapons.ItemPigSlayer;
@@ -59,8 +57,6 @@ public class ItemsAether
 
 	public static Item zanite_pickaxe, zanite_axe, zanite_shovel, zanite_sword;
 
-	public static Item phoenix_pickaxe, phoenix_axe, phoenix_shovel;
-
 	public static Item gravitite_pickaxe, gravitite_axe, gravitite_shovel, gravitite_sword;
 
 	public static Item valkyrie_pickaxe, valkyrie_axe, valkyrie_shovel, valkyrie_sword;
@@ -83,13 +79,13 @@ public class ItemsAether
 
 	public static Item dungeon_key, skyroot_bucket, cloud_parachute, golden_parachute;
 
-	public static Item zanite_staff, cloud_staff, moa_egg, aerwhale_egg;
+	public static Item nature_staff, cloud_staff, moa_egg;
 
 	public static Item dart_shooter, phoenix_bow, dart;
 
 	public static Item flaming_sword, lightning_sword, holy_sword;
 
-	public static Item vampire_blade, pig_slayer, candy_cane_sword, jeb_hammer, notch_hammer, valkyrie_lance;
+	public static Item vampire_blade, pig_slayer, candy_cane_sword, notch_hammer, valkyrie_lance;
 
 	public static Item leather_gloves, iron_gloves, golden_gloves, chain_gloves, diamond_gloves;
 
@@ -135,10 +131,6 @@ public class ItemsAether
 		valkyrie_pickaxe = register("valkyrie_pickaxe", new ItemValkyrieTool(EnumAetherToolType.PICKAXE));
 		valkyrie_axe = register("valkyrie_axe", new ItemValkyrieTool(EnumAetherToolType.AXE));
 		valkyrie_shovel = register("valkyrie_shovel", new ItemValkyrieTool(EnumAetherToolType.SHOVEL));
-
-		phoenix_pickaxe = register("phoenix_pickaxe", new ItemPhoenixTool(EnumAetherToolType.PICKAXE));
-		phoenix_axe = register("phoenix_axe", new ItemPhoenixTool(EnumAetherToolType.AXE));
-		phoenix_shovel = register("phoenix_shovel", new ItemPhoenixTool(EnumAetherToolType.SHOVEL));
 
 		zanite_helmet = register("zanite_helmet", new ItemZaniteArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
 		zanite_chestplate = register("zanite_chestplate", new ItemZaniteArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
@@ -187,7 +179,6 @@ public class ItemsAether
 		golden_parachute = register("golden_parachute", new ItemAetherParachute());
 
 		moa_egg = register("moa_egg", new ItemMoaEgg());
-		aerwhale_egg = register("aerwhale_egg", new ItemAerwhaleEgg());
 
 		dart_shooter = register("dart_shooter", new ItemDartShooter());
 		phoenix_bow = register("phoenix_bow", new ItemPhoenixBow());
@@ -206,7 +197,6 @@ public class ItemsAether
 		pig_slayer = register("pig_slayer", new ItemPigSlayer());
 		candy_cane_sword = register("candy_cane_sword", new ItemCandyCaneSword());
 		notch_hammer = register("notch_hammer", new ItemNotchHammer());
-		jeb_hammer = register("jeb_hammer", new ItemJebHammer());
 
 		leather_gloves = register("leather_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xc65c35));
 		iron_gloves = register("iron_gloves", new ItemAccessory(AccessoryType.GLOVE));
@@ -245,7 +235,7 @@ public class ItemsAether
 
 		life_shard = register("life_shard", new ItemLifeShard());
 		cloud_staff = register("cloud_staff", new ItemCloudStaff());
-		zanite_staff = register("zanite_staff", new ItemNeptuneStaff());
+		nature_staff = register("nature_staff", new ItemNatureStaff());
 		lightning_knife = register("lightning_knife", new ItemLightningKnife());
 
 		valkyrie_lance = register("valkyrie_lance", new ItemValkyrieLance());

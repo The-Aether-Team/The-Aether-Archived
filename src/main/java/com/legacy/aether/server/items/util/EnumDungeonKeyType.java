@@ -2,7 +2,7 @@ package com.legacy.aether.server.items.util;
 
 public enum EnumDungeonKeyType
 {
-	Bronze(0, "bronze"), Silver(1, "silver"), Golden(2, "golden"), Platinum(3, "platinum");
+	Bronze(0, "bronze"), Silver(1, "silver"), Golden(2, "golden");
 
 	private int meta;
 
@@ -16,7 +16,7 @@ public enum EnumDungeonKeyType
 
 	public static EnumDungeonKeyType getType(int meta)
 	{
-		return meta == 1 ? Silver :  meta == 2 ? Golden : meta == 3 ? Platinum : Bronze;
+		return meta == 1 ? Silver :  meta == 2 ? Golden : Bronze;
 	}
 
 	public int getMeta()

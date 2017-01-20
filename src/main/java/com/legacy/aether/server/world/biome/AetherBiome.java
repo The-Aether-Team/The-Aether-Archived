@@ -81,6 +81,12 @@ public class AetherBiome extends Biome
 		list.add(new SpawnListEntry(EntityZephyr.class, 5, 0, 1));
 	}
 
+	@Override
+    public int getSkyColorByTemp(float currentTemperature)
+    {
+    	return 0xC0C0FF; // Lavender Blue
+    }
+
     public boolean canRain()
     {
     	return false;

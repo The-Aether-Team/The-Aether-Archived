@@ -64,11 +64,11 @@ public class ZephyrAIShootTarget extends EntityAIBase
 
                 if(this.attackCounter == 10)
                 {
-                	this.zephyr.playSound(SoundsAether.zephyr_call, this.base, this.base);
+                	this.zephyr.playSound(SoundsAether.zephyr_call, 3F, this.base);
                 }
                 else if(this.attackCounter == 20)
                 {
-                	this.zephyr.playSound(SoundsAether.zephyr_shoot, this.base, this.base);
+                	this.zephyr.playSound(SoundsAether.zephyr_shoot, 3F, this.base);
 
                     EntityZephyrSnowball projectile = new EntityZephyrSnowball(this.worldObj, this.zephyr, x, y, z);
                     Vec3d lookVector = this.zephyr.getLook(1.0F);

@@ -43,7 +43,7 @@ public class BlockBerryBushStem extends BlockAetherFlower
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
 	{
-		return this.FLOWER_AABB;
+		return null;
 	}
 
 	@Override

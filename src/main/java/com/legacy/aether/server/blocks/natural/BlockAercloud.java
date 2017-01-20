@@ -40,10 +40,25 @@ public class BlockAercloud extends Block implements IAetherMeta
 		super(Material.ICE);
 
 		this.setHardness(0.2F);
+		this.setLightOpacity(3);
         this.setTickRandomly(true);
 		this.setSoundType(SoundType.CLOTH);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(cloud_type, EnumCloudType.Cold));
+	}
+
+	public static int getHexColor(ItemStack stack)
+	{
+		if (stack.getMetadata() == 1)
+		{
+			return 0xCCFFFF;
+		}
+		else if (stack.getMetadata() == 2)
+		{
+			return 0xFFFF80;
+		}
+
+		return 16777215; //Default color
 	}
 
 	@Override

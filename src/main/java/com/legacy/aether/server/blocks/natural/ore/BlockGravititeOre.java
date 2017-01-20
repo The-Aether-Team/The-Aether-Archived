@@ -12,7 +12,7 @@ public class BlockGravititeOre extends BlockFloating
 	{
 		super(Material.ROCK, false);
 
-		this.setHardness(3F);
+		this.setHardness(5F);
 		this.setSoundType(SoundType.STONE);
 	}
 

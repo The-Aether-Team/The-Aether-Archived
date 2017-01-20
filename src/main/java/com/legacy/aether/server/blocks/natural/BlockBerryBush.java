@@ -76,7 +76,7 @@ public class BlockBerryBush extends BlockAetherFlower
 
 		if (randomNum != 0)
 		{
-			spawnAsEntity(world, entityplayer.getPosition(), new ItemStack(ItemsAether.blue_berry, randomNum, 0));
+			spawnAsEntity(world, pos.up(), new ItemStack(ItemsAether.blue_berry, randomNum, 0));
 		}
 
 		world.setBlockState(pos, BlocksAether.berry_bush_stem.getDefaultState());

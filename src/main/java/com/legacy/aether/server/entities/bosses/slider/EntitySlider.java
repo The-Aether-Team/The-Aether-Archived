@@ -40,6 +40,7 @@ import com.legacy.aether.server.items.tools.ItemAetherTool;
 import com.legacy.aether.server.items.util.EnumAetherToolType;
 import com.legacy.aether.server.player.PlayerAether;
 import com.legacy.aether.server.registry.achievements.AchievementsAether;
+import com.legacy.aether.server.registry.sounds.SoundsAether;
 
 public class EntitySlider extends EntityFlying 
 {
@@ -238,6 +239,7 @@ public class EntitySlider extends EntityFlying
 					if(this.crushedBlock)
 					{
 						this.worldObj.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 3F, (0.625F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+						this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_collide, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					}
 
 					this.stop();
@@ -364,6 +366,7 @@ public class EntitySlider extends EntityFlying
 						}
 					}
 
+					this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_move, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.isMoving = true;
 				}
 			}
@@ -415,6 +418,7 @@ public class EntitySlider extends EntityFlying
 			{
 				EntityLivingBase collidedEntity = (EntityLivingBase)entity;
 				collidedEntity.addVelocity(collidedEntity.motionY, 0.35D, collidedEntity.motionZ);
+				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_collide, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
 				this.stop();
 			}
@@ -512,11 +516,13 @@ public class EntitySlider extends EntityFlying
 				this.worldObj.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
 				PlayerAether.get(player).setCurrentBoss(null);
 				player.addStat(AchievementsAether.defeat_bronze);
+				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_death, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.isDead = true;
 			}
 
 			if(!this.isAwake())
 			{
+				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_awaken, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.setAttackTarget(player);
 
 				int x = this.dungeonX + 15;

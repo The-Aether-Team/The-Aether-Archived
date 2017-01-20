@@ -342,7 +342,7 @@ public class EntityMoa extends EntitySaddleMount
 				{
 					if (!player.capabilities.isCreativeMode)
 					{
-						--player.getActiveItemStack().stackSize;
+						--stack.stackSize;
 					}
 
 					this.increaseAmountFed(1);
@@ -358,7 +358,7 @@ public class EntityMoa extends EntitySaddleMount
 				}
 			}
 			
-			if (currentItem == ItemsAether.zanite_staff)
+			if (currentItem == ItemsAether.nature_staff)
 			{
 				stack.damageItem(2, player);
 

@@ -2,9 +2,8 @@ package com.legacy.aether.server.blocks.natural;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -20,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -30,6 +30,7 @@ import com.legacy.aether.server.Aether;
 import com.legacy.aether.server.blocks.BlocksAether;
 import com.legacy.aether.server.blocks.util.EnumLogType;
 import com.legacy.aether.server.blocks.util.IAetherMeta;
+import com.legacy.aether.server.items.ItemsAether;
 import com.legacy.aether.server.items.tools.ItemAetherTool;
 import com.legacy.aether.server.items.tools.ItemGravititeTool;
 import com.legacy.aether.server.items.tools.ItemSkyrootTool;
@@ -37,7 +38,7 @@ import com.legacy.aether.server.items.tools.ItemValkyrieTool;
 import com.legacy.aether.server.items.util.EnumAetherToolType;
 import com.legacy.aether.server.registry.creative_tabs.AetherCreativeTabs;
 
-public class BlockAetherLog extends Block implements IAetherMeta
+public class BlockAetherLog extends BlockLog implements IAetherMeta
 {
 
 	public static final PropertyEnum<EnumLogType> wood_type = PropertyEnum.create("aether_logs", EnumLogType.class);
@@ -46,7 +47,7 @@ public class BlockAetherLog extends Block implements IAetherMeta
 
 	public BlockAetherLog() 
 	{
-        super(Material.WOOD);
+        super();
 		this.setHardness(2.0F);
         this.setSoundType(SoundType.WOOD);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
@@ -56,7 +57,7 @@ public class BlockAetherLog extends Block implements IAetherMeta
 	@Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(wood_type, EnumLogType.getType(meta)).withProperty(double_drop, Boolean.FALSE);
+        return this.getStateFromMeta(meta).withProperty(wood_type, EnumLogType.getType(meta)).withProperty(double_drop, Boolean.FALSE);
     }
 
 	@Override
@@ -69,31 +70,34 @@ public class BlockAetherLog extends Block implements IAetherMeta
 
         ItemStack stack = player.inventory.getCurrentItem();
 
-		IBlockState defaults = BlocksAether.aether_log.getDefaultState().withProperty(wood_type, EnumLogType.Skyroot);
+		IBlockState defaults = BlocksAether.aether_log.getDefaultState().withProperty(wood_type, EnumLogType.Skyroot).withProperty(double_drop, Boolean.FALSE);
 
         if (stack != null && stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType == EnumAetherToolType.AXE)
         {
         	if (stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool)
         	{
-            	state.getBlock().dropBlockAsItem(player.worldObj, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+        		spawnAsEntity(worldIn, pos, new ItemStack(ItemsAether.golden_amber, 1 + RANDOM.nextInt(2)));
+        		defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
         	}
         	else if (stack.getItem() instanceof ItemSkyrootTool)
         	{
                 for (int i = 0; i < size; ++i)
                 {
-            		spawnAsEntity(worldIn, pos, new ItemStack(defaults.getBlock()));
+                	defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
                 }
         	}
         	else
         	{
-        		spawnAsEntity(worldIn, pos, new ItemStack(defaults.getBlock()));
+        		defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
         	}
         }
-        else
-        {
-    		spawnAsEntity(worldIn, pos, new ItemStack(defaults.getBlock()));
-        }
 	}
+
+	@Override
+    public IBlockState withRotation(IBlockState state, Rotation rot)
+    {
+    	return state;
+    }
 
 	@Override
 	public String getMetaName(ItemStack stack) 

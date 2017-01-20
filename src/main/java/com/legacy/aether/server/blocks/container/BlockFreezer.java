@@ -29,6 +29,8 @@ public class BlockFreezer extends BlockContainer
 	public BlockFreezer() 
 	{
 		super(Material.ROCK);
+
+		this.setHardness(2.5F);
 	}
 
 	@Override

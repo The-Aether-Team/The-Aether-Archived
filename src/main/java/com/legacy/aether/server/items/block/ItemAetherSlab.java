@@ -58,7 +58,7 @@ public class ItemAetherSlab extends ItemBlock
 
                     if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(pos)) && worldIn.setBlockState(pos, iblockstate1, 11))
                     {
-                        SoundType soundtype = this.doubleSlab.getSoundType();
+                        SoundType soundtype = this.doubleSlab.getSoundType(this.doubleSlab.getDefaultState(), worldIn, pos, playerIn);
                         worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                         --stack.stackSize;
                     }
@@ -107,7 +107,7 @@ public class ItemAetherSlab extends ItemBlock
 
             if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(pos)) && worldIn.setBlockState(pos, iblockstate1, 11))
             {
-                SoundType soundtype = this.doubleSlab.getSoundType();
+                SoundType soundtype = this.doubleSlab.getSoundType(this.doubleSlab.getDefaultState(), worldIn, pos, player);
                 worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
                 --stack.stackSize;
             }

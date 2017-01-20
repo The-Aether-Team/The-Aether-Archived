@@ -45,9 +45,6 @@ public class ItemRendering
 		register(ItemsAether.valkyrie_pickaxe, "valkyrie_pickaxe");
 		register(ItemsAether.valkyrie_axe, "valkyrie_axe");
 		register(ItemsAether.valkyrie_shovel, "valkyrie_shovel");
-		register(ItemsAether.phoenix_pickaxe, "phoenix_pickaxe");
-		register(ItemsAether.phoenix_axe, "phoenix_axe");
-		register(ItemsAether.phoenix_shovel, "phoenix_shovel");
 
 		register(ItemsAether.zanite_helmet, "zanite_helmet");
 		registerColor(ItemsAether.zanite_helmet);
@@ -222,7 +219,7 @@ public class ItemRendering
 		register(ItemsAether.victory_medal, "victory_medal");
 
 		register(ItemsAether.cloud_staff, "cloud_staff");
-		register(ItemsAether.zanite_staff, "zanite_staff");
+		register(ItemsAether.nature_staff, "nature_staff");
 
 		register(ItemsAether.lightning_knife, "lightning_knife");
 		register(ItemsAether.valkyrie_lance, "valkyrie_lance");
@@ -237,8 +234,6 @@ public class ItemRendering
 
 		register(ItemsAether.cloud_parachute, "cold_parachute");
 		register(ItemsAether.golden_parachute, "golden_parachute");
-		register(ItemsAether.aerwhale_egg, "aerwhale_egg");
-		register(ItemsAether.jeb_hammer, "jeb_hammer");
 		register(ItemsAether.lore_book, "lore_book");
 
 		registerDefinition(ItemsAether.phoenix_bow, new PhoenixBowDefinition());
@@ -279,7 +274,7 @@ public class ItemRendering
 		}
 
 		registerMeta(ItemsAether.gummy_swet, Aether.locate("blue_gummy_swet"), Aether.locate("golden_gummy_swet"));
-		registerMeta(ItemsAether.dungeon_key, Aether.locate("bronze_key"), Aether.locate("silver_key"), Aether.locate("golden_key"), Aether.locate("platinum_key"));
+		registerMeta(ItemsAether.dungeon_key, Aether.locate("bronze_key"), Aether.locate("silver_key"), Aether.locate("golden_key"));
 		registerMeta(ItemsAether.skyroot_bucket, Aether.locate("skyroot_bucket"), Aether.locate("skyroot_water_bucket"), Aether.locate("skyroot_poison_bucket"), Aether.locate("skyroot_remedy_bucket"));
 		registerMeta(ItemsAether.dart_shooter, Aether.locate("golden_dart_shooter"), Aether.locate("poison_dart_shooter"), Aether.locate("enchanted_dart_shooter"));
 		registerMeta(ItemsAether.dart, Aether.locate("golden_dart"), Aether.locate("poison_dart"), Aether.locate("enchanted_dart"));

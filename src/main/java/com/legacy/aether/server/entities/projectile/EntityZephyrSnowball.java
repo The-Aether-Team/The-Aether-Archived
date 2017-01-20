@@ -64,7 +64,7 @@ public class EntityZephyrSnowball extends Entity implements IThrowableEntity
             this.setDead();
         }
 
-        if (this.ticksInAir > 200 && !this.worldObj.isRemote)
+        if (this.ticksInAir > 600 && !this.worldObj.isRemote)
         {
             this.setDead();
         }

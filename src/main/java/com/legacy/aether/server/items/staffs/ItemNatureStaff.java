@@ -4,10 +4,10 @@ import net.minecraft.item.Item;
 
 import com.legacy.aether.server.registry.creative_tabs.AetherCreativeTabs;
 
-public class ItemNeptuneStaff extends Item
+public class ItemNatureStaff extends Item
 {
 
-	public ItemNeptuneStaff()
+	public ItemNatureStaff()
 	{
 		this.setCreativeTab(AetherCreativeTabs.misc);
 		this.setMaxStackSize(1);

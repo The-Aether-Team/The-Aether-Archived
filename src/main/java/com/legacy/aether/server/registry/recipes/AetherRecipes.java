@@ -45,7 +45,7 @@ public class AetherRecipes
 		register(new ItemStack(ItemsAether.dart_shooter, 1), "X  ", " Y ", "  Y", 'X', ItemsAether.golden_amber, 'Y', BlocksAether.skyroot_plank);
 		register(new ItemStack(ItemsAether.dart, 1), "X", "Y", "Z", 'X', Items.FEATHER, 'Y', ItemsAether.skyroot_stick, 'Z', ItemsAether.golden_amber);
 		register(new ItemStack(ItemsAether.dart_shooter, 1, 1), "X", "Y", 'X', new ItemStack(ItemsAether.dart_shooter, 1), 'Y', new ItemStack(ItemsAether.skyroot_bucket, 1, 2));
-		register(new ItemStack(ItemsAether.dart, 8), "XXX", "XYX", "XXX", 'X', new ItemStack(ItemsAether.dart, 1), 'Y', new ItemStack(ItemsAether.skyroot_bucket, 1, 2));
+		register(new ItemStack(ItemsAether.dart, 8, 1), "XXX", "XYX", "XXX", 'X', new ItemStack(ItemsAether.dart, 1), 'Y', new ItemStack(ItemsAether.skyroot_bucket, 1, 2));
 		register(new ItemStack(BlocksAether.incubator), "XXX", "XZX", "XXX", 'X', BlocksAether.holystone, 'Z', BlocksAether.ambrosium_torch);
 		register(new ItemStack(BlocksAether.freezer), "XXX", "XYX", "ZZZ", 'X', BlocksAether.holystone, 'Y', BlocksAether.icestone, 'Z', BlocksAether.skyroot_plank);
 		register(new ItemStack(BlocksAether.enchanter), "XXX", "XYX", "XXX", 'X', BlocksAether.holystone, 'Y', ItemsAether.zanite_gemstone);

@@ -23,6 +23,8 @@ public class BlockMimicChest extends BlockChest
 	public BlockMimicChest() 
 	{
 		super(BlockChest.Type.BASIC);
+
+		this.setHardness(2.0F);
 	}
 
 	@Override

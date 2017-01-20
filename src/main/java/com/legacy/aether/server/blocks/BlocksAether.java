@@ -109,7 +109,7 @@ public class BlocksAether
 		aether_dirt = register("aether_dirt", new BlockAetherDirt());
 		holystone = register("holystone", new BlockHolystone());
 		mossy_holystone = register("mossy_holystone", new BlockHolystone());
-		holystone_brick = register("holystone_brick", new Block(Material.ROCK).setHardness(2.0F).setResistance(10.0F));
+		holystone_brick = register("holystone_brick", new Block(Material.ROCK).setHardness(0.5F).setResistance(10.0F));
 		aercloud = registerMeta("aercloud", new BlockAercloud());
 		quicksoil = register("quicksoil", new BlockQuicksoil());
 		icestone = register("icestone", new BlockIcestone());
@@ -173,12 +173,12 @@ public class BlocksAether
 		holystone_brick_double_slab = register("holystone_brick_double_slab", new BlockAetherSlab("holystone_brick_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
 
 		skyroot_slab = registerSlab("skyroot_slab", new BlockAetherSlab("skyroot_slab", false, Material.WOOD).setHardness(2.0F).setResistance(5.0F), skyroot_double_slab);
-		carved_slab = registerSlab("carved_slab", new BlockAetherSlab("carved_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), carved_double_slab);
-		angelic_slab = registerSlab("angelic_slab", new BlockAetherSlab("angelic_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), angelic_double_slab);
-		hellfire_slab = registerSlab("hellfire_slab", new BlockAetherSlab("hellfire_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), hellfire_double_slab);
-		holystone_slab = registerSlab("holystone_slab", new BlockAetherSlab("holystone_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), holystone_double_slab);
-		mossy_holystone_slab = registerSlab("mossy_holystone_slab", new BlockAetherSlab("mossy_holystone_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), mossy_holystone_double_slab);
-		holystone_brick_slab = registerSlab("holystone_brick_slab", new BlockAetherSlab("holystone_brick_slab", false, Material.ROCK).setHardness(2.0F).setResistance(10.0F), holystone_brick_double_slab);
+		carved_slab = registerSlab("carved_slab", new BlockAetherSlab("carved_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), carved_double_slab);
+		angelic_slab = registerSlab("angelic_slab", new BlockAetherSlab("angelic_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), angelic_double_slab);
+		hellfire_slab = registerSlab("hellfire_slab", new BlockAetherSlab("hellfire_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), hellfire_double_slab);
+		holystone_slab = registerSlab("holystone_slab", new BlockAetherSlab("holystone_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), holystone_double_slab);
+		mossy_holystone_slab = registerSlab("mossy_holystone_slab", new BlockAetherSlab("mossy_holystone_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), mossy_holystone_double_slab);
+		holystone_brick_slab = registerSlab("holystone_brick_slab", new BlockAetherSlab("holystone_brick_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), holystone_brick_double_slab);
 	}
 
 	public static Block registerSlab(String name, Block slab1, Block slab2)

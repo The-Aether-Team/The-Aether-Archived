@@ -72,6 +72,12 @@ public abstract class ItemAetherTool extends ItemTool
 	@Override
 	public float getStrVsBlock(ItemStack stack, IBlockState block)
 	{
+        for (String type : getToolClasses(stack))
+        {
+            if (block.getBlock().isToolEffective(type, block))
+                return efficiencyOnProperMaterial;
+        }
+
 		return this.toolType.getStrVsBlock(stack, block) == 4.0F ? this.efficiencyOnProperMaterial : 1.0F;
 	}
 
@@ -79,6 +85,11 @@ public abstract class ItemAetherTool extends ItemTool
     public Set<String> getToolClasses(ItemStack stack)
     {
         return toolClass != null ? com.google.common.collect.ImmutableSet.of(toolClass) : super.getToolClasses(stack);
+    }
+
+    public float getEffectiveSpeed()
+    {
+    	return this.efficiencyOnProperMaterial;
     }
 
 }

@@ -11,7 +11,7 @@ public class BlockPillar extends Block
 	{
 		super(Material.ROCK);
 		this.setSoundType(SoundType.METAL);
-		this.setHardness(2.0F);
+		this.setHardness(0.5F);
 	}
 
 }

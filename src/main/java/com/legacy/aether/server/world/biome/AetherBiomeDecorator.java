@@ -11,6 +11,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import com.legacy.aether.server.AetherConfig;
 import com.legacy.aether.server.blocks.BlocksAether;
 import com.legacy.aether.server.blocks.util.EnumCloudType;
 import com.legacy.aether.server.world.biome.decoration.*;
@@ -29,8 +30,6 @@ public class AetherBiomeDecorator extends BiomeDecorator
 	public AetherGenFoilage foilage = new AetherGenFoilage();
 
 	public AetherGenMinable ores = new AetherGenMinable();
-
-	public AetherGenOakTree oak_tree = new AetherGenOakTree();
 
 	public AetherGenSkyrootTree skyroot_tree = new AetherGenSkyrootTree();
 
@@ -81,6 +80,19 @@ public class AetherBiomeDecorator extends BiomeDecorator
 		if (this.shouldSpawn(2))
 		{
 			this.getTree().generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
+		}
+
+		if (this.shouldSpawn(1))
+		{
+			this.skyroot_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16), 0, this.nextInt(16))));
+		}
+
+		if (AetherConfig.shouldLoadHolidayContent())
+		{
+			if (this.shouldSpawn(15))
+			{
+				this.holiday_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
+			}
 		}
 
     	this.generateFoilage(BlocksAether.white_flower.getDefaultState());

@@ -52,6 +52,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 		this.jumpsRemaining = 0;
 		this.stepHeight = 1.0F;
 		this.ignoreFrustumCheck = true;
+		this.canJumpMidAir = true;
 
 		this.setSize(0.9F, 1.3F);
 	}

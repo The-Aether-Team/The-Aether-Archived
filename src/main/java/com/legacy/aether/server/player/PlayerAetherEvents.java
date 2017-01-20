@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.stats.Achievement;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.CommandEvent;
@@ -210,11 +211,18 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void onAchievementGet(AchievementEvent event)
 	{
-		if (!event.getEntityPlayer().hasAchievement(event.getAchievement()) && event.getAchievement() instanceof AetherAchievement)
-		{
-			int achievementType = event.getAchievement() == AchievementsAether.defeat_bronze ? 1 : event.getAchievement() == AchievementsAether.defeat_silver ? 2 : 0;
-			EntityPlayer player = event.getEntityPlayer();
+		Achievement achievement = event.getAchievement();
+		EntityPlayer player = event.getEntityPlayer();
 
+		if (!(achievement instanceof AetherAchievement))
+		{
+			return;
+		}
+
+		int achievementType = achievement == AchievementsAether.defeat_bronze ? 1 : achievement == AchievementsAether.defeat_silver ? 2 : 0;
+
+		if (!player.worldObj.isRemote && ((EntityPlayerMP)player).getStatFile().canUnlockAchievement(achievement) && !player.hasAchievement(achievement))
+		{
 			if (event.getAchievement() == AchievementsAether.enter_aether)
 			{
 				if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.lore_book)))
@@ -228,10 +236,7 @@ public class PlayerAetherEvents
 				}
 			}
 
-			if (!event.getEntityPlayer().worldObj.isRemote)
-			{
-				AetherNetworkingManager.sendTo(new PacketAchievement(achievementType), (EntityPlayerMP) player);
-			}
+			AetherNetworkingManager.sendTo(new PacketAchievement(achievementType), (EntityPlayerMP) player);
 		}
 	}
 

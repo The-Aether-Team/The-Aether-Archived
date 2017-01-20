@@ -1,7 +1,7 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0": "aether_legacy:items/tools/phoenix_axe"
+		"layer0": "aether_legacy:items/staff/nature_staff"
 	},
 	"display": {
 		"thirdperson": {

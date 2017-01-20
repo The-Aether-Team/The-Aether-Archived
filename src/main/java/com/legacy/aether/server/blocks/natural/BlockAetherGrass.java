@@ -35,7 +35,7 @@ public class BlockAetherGrass extends Block
 		super(Material.GRASS);
 
 		this.setTickRandomly(true);
-		this.setHardness(0.6F);
+		this.setHardness(0.2F);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setSoundType(SoundType.PLANT);
 		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE));

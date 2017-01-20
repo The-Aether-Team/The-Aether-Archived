@@ -22,7 +22,7 @@ public class SliderRenderer extends RenderLiving<EntitySlider>
 	public SliderRenderer(RenderManager renderManager)
     {
         super(renderManager, new SliderModel(0.0F, 12.0F), 1.5F);
-        this.addLayer(new SliderLayer());
+        this.addLayer(new SliderLayer((SliderModel) this.mainModel));
     }
 
 	@Override

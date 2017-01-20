@@ -16,7 +16,7 @@ import com.legacy.aether.server.tile_entities.TileEntityEnchanter;
 public class GuiEnchanter extends GuiContainer
 {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/enchanter.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/altar.png");
 
 	private TileEntityEnchanter enchanter;
 
@@ -29,7 +29,7 @@ public class GuiEnchanter extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2)
 	{
-		String enchanterName = "Enchanter";
+		String enchanterName = "Altar";
 
 		this.fontRendererObj.drawString(enchanterName, this.xSize / 2 - this.fontRendererObj.getStringWidth(enchanterName) / 2, 6, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);

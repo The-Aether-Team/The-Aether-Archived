@@ -20,7 +20,7 @@ public class BlockEnchantedAetherGrass extends Block
 	{
 		super(Material.GRASS);
 
-		this.setHardness(0.6F);
+		this.setHardness(0.2F);
 		this.setTickRandomly(true);
 		this.setSoundType(SoundType.PLANT);
 	}

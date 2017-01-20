@@ -64,14 +64,6 @@ public class TileEntityTreasureChest extends TileEntityChest
             }
         }
 
-        if (kind == 3)
-        {
-        	for (p = 0; p < 5 + random.nextInt(1); ++p)
-        	{
-        		this.setInventorySlotContents(random.nextInt(this.getSizeInventory()), PlatinumDungeon.getPlatinumLoot(random));
-        	}
-        }
-
         this.locked = false;
 
         if (!this.worldObj.isRemote)

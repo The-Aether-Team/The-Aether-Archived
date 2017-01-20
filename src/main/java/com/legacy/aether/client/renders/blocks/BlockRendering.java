@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
+import com.legacy.aether.client.renders.items.util.AetherColor;
 import com.legacy.aether.server.Aether;
 import com.legacy.aether.server.blocks.BlocksAether;
 import com.legacy.aether.server.blocks.util.EnumCloudType;
@@ -133,6 +134,8 @@ public class BlockRendering
 		registerMetadata(BlocksAether.locked_dungeon_block, Aether.locate("carved_stone"), Aether.locate("sentry_stone"), Aether.locate("angelic_stone"), Aether.locate("light_angelic_stone"), Aether.locate("hellfire_stone"), Aether.locate("light_hellfire_stone"));
 		registerMetadata(BlocksAether.dungeon_trap, Aether.locate("carved_stone"), Aether.locate("sentry_stone"), Aether.locate("angelic_stone"), Aether.locate("light_angelic_stone"), Aether.locate("hellfire_stone"), Aether.locate("light_hellfire_stone"));
 
+		registerColor(BlocksAether.aercloud);
+
 		AetherEntityRenderingRegistry.registerTileEntities();
 	}
 
@@ -149,6 +152,12 @@ public class BlockRendering
 	public static void register(Block block, int meta, String model)
 	{
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), meta, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
+	}
+
+	public static void registerColor(Block item)
+	{
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new AetherColor(Item.getItemFromBlock(item)), item);
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new AetherColor(Item.getItemFromBlock(item)), item);
 	}
 
 	public static void registerMetadata(Block block, ResourceLocation... model)

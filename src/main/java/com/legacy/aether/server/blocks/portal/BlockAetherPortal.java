@@ -15,10 +15,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.cache.LoadingCache;
+import com.legacy.aether.server.entities.particles.EntityBlueFX;
 
 public class BlockAetherPortal extends BlockPortal
 {
@@ -92,11 +94,36 @@ public class BlockAetherPortal extends BlockPortal
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
+    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
 	{
-        if (random.nextInt(100) == 0)
+        if (rand.nextInt(100) == 0)
         {
-        	world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
+        	world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+        }
+
+        for (int i = 0; i < 4; ++i)
+        {
+            double d0 = (double)((float)pos.getX() + rand.nextFloat());
+            double d1 = (double)((float)pos.getY() + rand.nextFloat());
+            double d2 = (double)((float)pos.getZ() + rand.nextFloat());
+            double d3 = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+            double d4 = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+            double d5 = ((double)rand.nextFloat() - 0.5D) * 0.5D;
+            int j = rand.nextInt(2) * 2 - 1;
+
+            if (world.getBlockState(pos.west()).getBlock() != this && world.getBlockState(pos.east()).getBlock() != this)
+            {
+                d0 = (double)pos.getX() + 0.5D + 0.25D * (double)j;
+                d3 = (double)(rand.nextFloat() * 2.0F * (float)j);
+            }
+            else
+            {
+                d2 = (double)pos.getZ() + 0.5D + 0.25D * (double)j;
+                d5 = (double)(rand.nextFloat() * 2.0F * (float)j);
+            }
+
+            EntityBlueFX particle = new EntityBlueFX(world, d0, d1, d2, d3, d4, d5);
+            FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
         }
 	}
 

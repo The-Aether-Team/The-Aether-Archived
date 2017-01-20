@@ -253,7 +253,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 		}
 		else if (creatureType == EnumCreatureType.MONSTER)
 		{
-			if (this.rand.nextInt(13) == 0)
+			if (this.rand.nextInt(18) == 0)
 			{
 				return this.worldObj.getBiome(pos).getSpawnableList(EnumCreatureType.MONSTER);
 			}
@@ -270,7 +270,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 	}
 
 	@Override
-	public boolean generateStructures(Chunk chunkIn, int x, int z) 
+	public boolean generateStructures(Chunk chunkIn, int chunkX, int chunkZ) 
 	{
 		return false;
 	}
