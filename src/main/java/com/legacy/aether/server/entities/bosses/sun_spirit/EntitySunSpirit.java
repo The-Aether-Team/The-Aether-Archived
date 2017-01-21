@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -554,9 +555,30 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         }
     }
 
+    @Override
     protected void dropFewItems(boolean var1, int var2)
     {
-        this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 2), 0.0F);
+        this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 2), 0.5F);
+    }
+
+    @Override
+    public EntityItem entityDropItem(ItemStack stack, float offsetY)
+    {
+        if (stack.stackSize != 0 && stack.getItem() != null)
+        {
+            EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
+            entityitem.setEntityInvulnerable(true);
+            entityitem.setDefaultPickupDelay();
+            if (captureDrops)
+                this.capturedDrops.add(entityitem);
+            else
+                this.worldObj.spawnEntityInWorld(entityitem);
+            return entityitem;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private void setDoor(IBlockState block)

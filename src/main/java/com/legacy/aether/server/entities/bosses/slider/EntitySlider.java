@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -430,7 +431,27 @@ public class EntitySlider extends EntityFlying
 	{
 		this.dropItem(Item.getItemFromBlock(BlocksAether.dungeon_block), 7 + rand.nextInt(3));
 
-		this.entityDropItem(new ItemStack(ItemsAether.dungeon_key), 0F);
+		this.entityDropItem(new ItemStack(ItemsAether.dungeon_key), 0.5F);
+    }
+
+    @Override
+    public EntityItem entityDropItem(ItemStack stack, float offsetY)
+    {
+        if (stack.stackSize != 0 && stack.getItem() != null)
+        {
+            EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
+            entityitem.setEntityInvulnerable(true);
+            entityitem.setDefaultPickupDelay();
+            if (captureDrops)
+                this.capturedDrops.add(entityitem);
+            else
+                this.worldObj.spawnEntityInWorld(entityitem);
+            return entityitem;
+        }
+        else
+        {
+            return null;
+        }
     }
 
 	public void stop() 

@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -495,8 +496,28 @@ public class EntityValkyrieQueen extends EntityMob
     @Override
     protected void dropFewItems(boolean var1, int var2)
     {
-        entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 1), 0F);
-        dropItem(Items.GOLDEN_SWORD, 1);
+        this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 1), 0.5F);
+        this.dropItem(Items.GOLDEN_SWORD, 1);
+    }
+
+    @Override
+    public EntityItem entityDropItem(ItemStack stack, float offsetY)
+    {
+        if (stack.stackSize != 0 && stack.getItem() != null)
+        {
+            EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
+            entityitem.setEntityInvulnerable(true);
+            entityitem.setDefaultPickupDelay();
+            if (captureDrops)
+                this.capturedDrops.add(entityitem);
+            else
+                this.worldObj.spawnEntityInWorld(entityitem);
+            return entityitem;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     @Override
