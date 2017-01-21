@@ -443,7 +443,7 @@ public class SilverDungeon extends AetherDungeon
 	//Get loot for normal chests scattered around
 	private ItemStack getNormalLoot(Random random)
 	{
-		int item = random.nextInt(15);
+		int item = random.nextInt(16);
 		switch(item)
 		{
 			case 0 :
@@ -511,7 +511,7 @@ public class SilverDungeon extends AetherDungeon
 
 	public static ItemStack getSilverLoot(Random random)
 	{
-		int item = random.nextInt(10);
+		int item = random.nextInt(13);
 		switch(item)
 		{
 			case 0 :

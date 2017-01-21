@@ -345,7 +345,7 @@ public class BronzeDungeon extends AetherDungeon
 
 	private ItemStack getNormalLoot(Random random)
 	{
-		int item = random.nextInt(14);
+		int item = random.nextInt(15);
 		switch(item)
 		{
 			case 0 :
@@ -408,7 +408,7 @@ public class BronzeDungeon extends AetherDungeon
 	
 	public static ItemStack getBronzeLoot(Random random)
 	{
-		int item = random.nextInt(8);
+		int item = random.nextInt(9);
 		switch(item)
 		{
 			case 0 :
@@ -426,8 +426,6 @@ public class BronzeDungeon extends AetherDungeon
 			case 6 :
 				return new ItemStack(ItemsAether.agility_cape);
 			case 7 :
-				return new ItemStack(ItemsAether.nature_staff);
-			case 8 :
 				return new ItemStack(ItemsAether.sentry_boots);
 		}
 

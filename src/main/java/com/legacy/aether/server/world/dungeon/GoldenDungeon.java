@@ -233,7 +233,7 @@ public class GoldenDungeon extends AetherDungeon
 
 	public static ItemStack getGoldLoot(Random random)
 	{
-		int item = random.nextInt(8);
+		int item = random.nextInt(9);
 		switch(item)
 		{
 			case 0 :
