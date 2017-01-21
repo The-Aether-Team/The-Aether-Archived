@@ -43,7 +43,7 @@ public class BlockQuicksoil extends Block
 	@Override
     public IBlockState getStateFromMeta(int meta)
     {
-		return this.getDefaultState().withProperty(double_drop, Boolean.valueOf((meta % 1) == 0));
+		return this.getDefaultState().withProperty(double_drop, Boolean.valueOf(meta == 0));
     }
 
 	@Override

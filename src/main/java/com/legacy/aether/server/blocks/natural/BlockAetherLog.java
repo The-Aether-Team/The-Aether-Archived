@@ -70,7 +70,7 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 
         ItemStack stack = player.inventory.getCurrentItem();
 
-		IBlockState defaults = BlocksAether.aether_log.getDefaultState().withProperty(wood_type, EnumLogType.Skyroot).withProperty(double_drop, Boolean.FALSE);
+		IBlockState defaults = BlocksAether.aether_log.getDefaultState();
 
         if (stack != null && stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType == EnumAetherToolType.AXE)
         {
@@ -108,7 +108,7 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 	@Override
     public int damageDropped(IBlockState state)
     {
-		return ((EnumLogType)state.getValue(wood_type)).getMeta();
+		return 0;
     }
 
 	@Override
@@ -116,16 +116,14 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
     {
-		for (int meta = 0; meta < EnumLogType.values().length; ++meta)
-		{
-			list.add(new ItemStack(this, 1, meta));
-		}
+		list.add(new ItemStack(this, 1, 0));
+		list.add(new ItemStack(this, 1, 2));
     }
 
 	@Override
     public IBlockState getStateFromMeta(int meta)
     {
-		return this.getDefaultState().withProperty(wood_type, EnumLogType.getType(meta % 2)).withProperty(double_drop, Boolean.valueOf((meta % 4) == 0));
+		return this.getDefaultState().withProperty(wood_type, EnumLogType.getType(meta)).withProperty(double_drop, Boolean.valueOf((meta % 2) == 0));
     }
 
 	@Override
@@ -136,7 +134,7 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 
 		if (!((Boolean)state.getValue(double_drop)).booleanValue())
 		{
-			meta |= 4;
+			meta |= 2;
 		}
 
 		return meta;

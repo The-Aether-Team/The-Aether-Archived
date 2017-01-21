@@ -41,7 +41,7 @@ public class AetherGenOakTree extends WorldGenAbstractTree
 
 			if(world.getBlockState(mutablePos) == BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Golden))
 			{
-				IBlockState state = BlocksAether.aether_log.getDefaultState().withProperty(BlockAetherLog.wood_type, EnumLogType.Oak).withProperty(BlockAetherLog.double_drop, Boolean.valueOf(true));
+				IBlockState state = BlocksAether.aether_log.getDefaultState().withProperty(BlockAetherLog.wood_type, EnumLogType.Oak).withProperty(BlockAetherLog.double_drop, Boolean.TRUE);
 				world.setBlockState(mutablePos, state);
 				world.setBlockState(new BlockPos(i, y, k), state);
 			}
@@ -87,7 +87,7 @@ public class AetherGenOakTree extends WorldGenAbstractTree
 				}
 			}
 
-			IBlockState state = BlocksAether.aether_log.getDefaultState().withProperty(BlockAetherLog.wood_type, EnumLogType.Oak).withProperty(BlockAetherLog.double_drop, Boolean.valueOf(true));
+			IBlockState state = BlocksAether.aether_log.getDefaultState().withProperty(BlockAetherLog.wood_type, EnumLogType.Oak).withProperty(BlockAetherLog.double_drop, Boolean.TRUE);
 			world.setBlockState(pos.add(0, n, 0), state);
 		}
 
