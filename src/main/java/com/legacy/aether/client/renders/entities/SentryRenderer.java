@@ -20,7 +20,7 @@ public class SentryRenderer extends RenderLiving<EntitySentry>
 	public SentryRenderer(RenderManager renderManager)
     {
         super(renderManager, new ModelSlime(0), 0.3F);
-        this.addLayer(new SentryLayer());
+        this.addLayer(new SentryLayer((ModelSlime) this.getMainModel()));
     }
 
     protected void preRenderCallback(EntitySentry entityliving, float f)
@@ -31,7 +31,7 @@ public class SentryRenderer extends RenderLiving<EntitySentry>
 
     protected ResourceLocation getEntityTexture(EntitySentry entity)
     {
-        return entity.getAttackTarget() == null ? TEXTURE : TEXTURE_LIT;
+        return !entity.isAwake() ? TEXTURE : TEXTURE_LIT;
     }
 
 }

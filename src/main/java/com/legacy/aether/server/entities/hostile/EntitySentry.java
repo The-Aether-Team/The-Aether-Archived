@@ -15,6 +15,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -28,6 +31,10 @@ import com.legacy.aether.server.blocks.util.EnumStoneType;
 public class EntitySentry extends EntityLiving implements IMob
 {
 
+	public static final DataParameter<Boolean> SENTRY_AWAKE = EntityDataManager.<Boolean>createKey(EntitySentry.class, DataSerializers.BOOLEAN);
+
+	public float timeSpotted;
+
     public float squishAmount;
     public float squishFactor;
     public float prevSquishFactor;
@@ -39,23 +46,18 @@ public class EntitySentry extends EntityLiving implements IMob
 
         this.moveHelper = new EntitySentry.SlimeMoveHelper(this);
 
-        this.setSize(1);
+        this.setSize(1.0F, 1.0F);
+        this.setPosition(this.posX, this.posY, this.posZ);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0F);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3F);
+        this.setHealth(this.getMaxHealth());
     }
 
     public EntitySentry(World world, double x, double y, double z)
     {
         this(world);
-        this.setPosition(x, y, z);
-    }
 
-    protected void setSize(int size)
-    {
-        this.setSize(size, size);
-        this.setPosition(this.posX, this.posY, this.posZ);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(size);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)(0.2F + 0.1F * (float)size));
-        this.setHealth(this.getMaxHealth());
-        this.experienceValue = size;
+        this.setPosition(x, y, z);
     }
 
     @Override
@@ -68,6 +70,14 @@ public class EntitySentry extends EntityLiving implements IMob
         this.targetTasks.addTask(1, new EntityAIFindEntityNearestPlayer(this));
         this.targetTasks.addTask(3, new EntityAIFindEntityNearest(this, EntityIronGolem.class));
     }
+
+	@Override
+	protected void entityInit()
+	{
+		super.entityInit();
+
+	    this.dataManager.register(SENTRY_AWAKE, false);
+	}
 
     @Override
     public void writeEntityToNBT(NBTTagCompound tagCompound)
@@ -94,6 +104,25 @@ public class EntitySentry extends EntityLiving implements IMob
         if (!this.worldObj.isRemote && this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
         {
             this.isDead = true;
+        }
+
+        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 8D);
+
+        if (entityplayer != null)
+        {
+        	if (!this.isAwake())
+        	{
+        		if (this.timeSpotted >= 24)
+        		{
+        			this.setAwake(true);
+        		}
+
+        		++this.timeSpotted;
+        	}
+        }
+        else
+        {
+        	this.setAwake(false);
         }
 
         this.squishFactor += (this.squishAmount - this.squishFactor) * 0.5F;
@@ -149,7 +178,7 @@ public class EntitySentry extends EntityLiving implements IMob
 
     protected void explode(EntityLivingBase entity)
     {
-        if (this.canEntityBeSeen(entity) && entity.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F))
+        if (this.isAwake() && this.canEntityBeSeen(entity) && entity.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F))
         {
         	entity.addVelocity(0.5D, 0.5D, 0.5D);
 
@@ -160,6 +189,16 @@ public class EntitySentry extends EntityLiving implements IMob
             this.applyEnchantments(this, entity);
         }
     }
+
+	public void setAwake(boolean isAwake)
+	{
+		this.dataManager.set(SENTRY_AWAKE, isAwake);
+	}
+
+	public boolean isAwake()
+	{
+		return this.dataManager.get(SENTRY_AWAKE);
+	}
 
     public float getEyeHeight()
     {
@@ -187,8 +226,11 @@ public class EntitySentry extends EntityLiving implements IMob
     @Override 
     protected void jump()
     {
-        this.motionY = 0.41999998688697815D;
-        this.isAirBorne = true;
+    	if (this.isAwake())
+    	{
+            this.motionY = 0.41999998688697815D;
+            this.isAirBorne = true;
+    	}
     }
 
 	@Override
@@ -219,6 +261,12 @@ public class EntitySentry extends EntityLiving implements IMob
             public boolean shouldExecute()
             {
                 EntityLivingBase entitylivingbase = this.slime.getAttackTarget();
+
+                if (!this.slime.isAwake())
+                {
+                	return false;
+                }
+
                 return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : !(entitylivingbase instanceof EntityPlayer) || !((EntityPlayer)entitylivingbase).capabilities.disableDamage);
             }
 
