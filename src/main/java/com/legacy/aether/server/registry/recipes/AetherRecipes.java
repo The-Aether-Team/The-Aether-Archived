@@ -37,6 +37,7 @@ public class AetherRecipes
 	public static void initializeRecipes()
 	{
 		register(new ItemStack(BlocksAether.skyroot_plank, 4), "X", 'X', BlocksAether.aether_log);
+		register(new ItemStack(ItemsAether.nature_staff), "Y", "X", 'Y', ItemsAether.zanite_gemstone, 'X', ItemsAether.skyroot_stick);
 		register(new ItemStack(ItemsAether.skyroot_stick, 4), "X", "X", 'X', BlocksAether.skyroot_plank);
 		register(new ItemStack(Blocks.TRAPDOOR, 2), "XXX", "XXX", 'X', BlocksAether.skyroot_plank);
 		register(new ItemStack(BlocksAether.holystone_brick, 4), "XX", "XX", 'X', BlocksAether.holystone);
