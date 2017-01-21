@@ -5,7 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -31,6 +31,7 @@ import com.legacy.aether.server.Aether;
 import com.legacy.aether.server.blocks.BlocksAether;
 import com.legacy.aether.server.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.server.blocks.util.EnumStoneType;
+import com.legacy.aether.server.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.server.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
 import com.legacy.aether.server.entities.projectile.crystals.EntityThunderBall;
 import com.legacy.aether.server.entities.util.AetherNameGen;
@@ -45,7 +46,7 @@ public class EntityValkyrieQueen extends EntityMob
 
 	public static final DataParameter<Boolean> VALKYRIE_READY = EntityDataManager.<Boolean>createKey(EntityValkyrieQueen.class, DataSerializers.BOOLEAN);
 
-	private int attackTime;
+	private EntityAIAttackContinuously enhancedCombat = new EntityAIAttackContinuously(this, 0.65D, false);
 
     public int angerLevel;
 
@@ -82,7 +83,8 @@ public class EntityValkyrieQueen extends EntityMob
 
     public void registerEntityAI()
     {
-        this.targetTasks.addTask(0, new EntityAIAttackMelee(this, 0.65D, true));
+        this.targetTasks.addTask(0, this.enhancedCombat);
+        this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, new ValkyrieQueenAIWander(this, 0.5D));
     }
 
@@ -248,8 +250,6 @@ public class EntityValkyrieQueen extends EntityMob
     public void onEntityUpdate() 
     {
     	super.onEntityUpdate();
-
-    	--this.attackTime;
 
         if (!this.isBossReady()) 
         {
@@ -473,24 +473,20 @@ public class EntityValkyrieQueen extends EntityMob
     {
     	boolean flag = false;
 
-        if (this.attackTime <= 0 && entity.getEntityBoundingBox().maxY > getEntityBoundingBox().minY && entity.getEntityBoundingBox().minY < getEntityBoundingBox().maxY) 
-        {
-            this.attackTime = 20;
-            swingArm();
-            flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 7);
-            
-            if (entity != null && this.getAttackTarget() != null && entity == getAttackTarget() && entity instanceof EntityPlayer) 
-            {
-            	EntityPlayer player = (EntityPlayer)entity;
+        this.swingArm();
+        flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 7);
 
-            	if (player.getHealth() <= 0 || player.isDead)
-            	{
-            		this.setAttackTarget(null);
-            		this.angerLevel = this.chatTime = 0;
-            		chatItUp(player, "As expected of a human.");
-            		unlockDoor();
-            	}
-            }
+        if (entity != null && this.getAttackTarget() != null && entity == this.getAttackTarget() && entity instanceof EntityPlayer) 
+        {
+        	EntityPlayer player = (EntityPlayer)entity;
+
+        	if (player.getHealth() <= 0 || player.isDead)
+        	{
+        		this.setAttackTarget(null);
+        		this.angerLevel = this.chatTime = 0;
+        		this.chatItUp(player, "As expected of a human.");
+        		this.unlockDoor();
+        	}
         }
 
         return flag;
@@ -560,6 +556,7 @@ public class EntityValkyrieQueen extends EntityMob
         else 
         {
             this.spawnExplosionParticle();
+            this.enhancedCombat.resetTask();
             this.setPosition((double) newX + 0.5D, (double) newY + 0.5D, (double) newZ + 0.5D);
             
             this.isJumping = false;
