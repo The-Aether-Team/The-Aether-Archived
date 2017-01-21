@@ -6,9 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFallingBlock;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -67,7 +65,6 @@ public class EntityFloatingBlock extends Entity
         this.motionZ *= 0.9800000190734863D;
         BlockPos pos = new BlockPos(this);
         Block block = this.getBlockState().getBlock();
-        int meta = this.getBlockState().getBlock().getMetaFromState(this.getBlockState());
 
         List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.0D, 1.0D, 0.0D));
 
@@ -80,8 +77,6 @@ public class EntityFloatingBlock extends Entity
             }
         }
 
-        ItemStack var6;
-
         if (this.isCollidedVertically && !this.onGround)
         {
             this.motionX *= 0.699999988079071D;
@@ -91,22 +86,12 @@ public class EntityFloatingBlock extends Entity
 
             if (!block.canPlaceBlockAt(this.worldObj, pos) || BlockFloating.canContinue(this.worldObj, pos.up()) || !this.worldObj.setBlockState(pos, this.getBlockState(), 2))
             {
-                var6 = new ItemStack(block, 1, meta);
-
-                if (!this.worldObj.isRemote)
-                {
-                    this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, var6));
-                }
+            	block.dropBlockAsItem(this.worldObj, pos, this.getBlockState(), 0);
             }
         }
         else if (this.timeFloated > 100)
         {
-            var6 = new ItemStack(block, 1, meta);
-
-            if (!this.worldObj.isRemote)
-            {
-                this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, var6));
-            }
+        	block.dropBlockAsItem(this.worldObj, pos, this.getBlockState(), 0);
 
             this.setDead();
         }
