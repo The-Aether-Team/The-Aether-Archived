@@ -91,6 +91,10 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
         		defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
         	}
         }
+        else
+        {
+        	spawnAsEntity(worldIn, pos, new ItemStack(defaults.getBlock()));
+        }
 	}
 
 	@Override

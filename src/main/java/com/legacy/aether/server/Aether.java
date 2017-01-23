@@ -20,7 +20,7 @@ import com.legacy.aether.server.registry.sounds.SoundsAether;
 import com.legacy.aether.server.tile_entities.AetherTileEntities;
 import com.legacy.aether.server.world.AetherWorld;
 
-@Mod(name = "Aether Legacy", modid = Aether.modid, version = "v1.0-1.9.4", acceptedMinecraftVersions = "1.9.4")
+@Mod(name = "Aether Legacy", modid = Aether.modid, version = "v1.3.1-1.10.2", acceptedMinecraftVersions = "1.10.2")
 public class Aether 
 {
 
