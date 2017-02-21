@@ -28,7 +28,7 @@ import com.legacy.aether.server.registry.sounds.SoundsAether;
 public class EntityAerbunny extends EntityAetherAnimal
 {
 
-	public static final DataParameter<Integer> PUFF = EntityDataManager.<Integer>createKey(EntityAerbunny.class, DataSerializers.VARINT);
+	public int puffiness;
 
     private int jumpTicks;
 
@@ -104,19 +104,18 @@ public class EntityAerbunny extends EntityAetherAnimal
 
     public int getPuffiness()
     {
-        return this.dataManager.get(PUFF);
+        return this.puffiness;
     }
 
     public void setPuffiness(int i)
     {
-        this.dataManager.set(PUFF, i);
+        this.puffiness = i;
     }
 
 	@Override
     protected void entityInit()
     {
         super.entityInit();
-        this.dataManager.register(PUFF, 0);
     }
 
     public void onUpdate()
@@ -174,7 +173,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 
             this.getRidingEntity().fallDistance = 0.0F;
 
-            if(!this.getRidingEntity().onGround && this.getRidingEntity().motionY < 0.0D)
+            if(!this.getRidingEntity().onGround)
             {
             	this.getRidingEntity().motionY += 0.05000000074505806D;
                 this.getRidingEntity().fallDistance = 0.0F;
@@ -183,6 +182,7 @@ public class EntityAerbunny extends EntityAetherAnimal
             	{
             		if (PlayerAether.get((EntityPlayer) this.getRidingEntity()).isJumping())
             		{
+            			this.setPuffiness(11);
             	        this.spawnExplosionParticle();
                 		this.getRidingEntity().motionY = 0.125D;
             		}
