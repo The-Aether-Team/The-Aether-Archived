@@ -17,10 +17,10 @@ import net.minecraft.world.World;
 import com.legacy.aether.server.entities.block.EntityTNTPresent;
 import com.legacy.aether.server.items.ItemsAether;
 
-public class BlockPresnet extends Block 
+public class BlockPresent extends Block 
 {
 
-	public BlockPresnet() 
+	public BlockPresent() 
 	{
 		super(Material.GRASS);
 		this.setHardness(0.6F);

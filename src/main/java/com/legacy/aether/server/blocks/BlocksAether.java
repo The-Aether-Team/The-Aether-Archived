@@ -19,7 +19,7 @@ import com.legacy.aether.server.blocks.decorative.BlockAetherSlab;
 import com.legacy.aether.server.blocks.decorative.BlockAetherStairs;
 import com.legacy.aether.server.blocks.decorative.BlockAetherWall;
 import com.legacy.aether.server.blocks.decorative.BlockAmbrosiumTorch;
-import com.legacy.aether.server.blocks.decorative.BlockPresnet;
+import com.legacy.aether.server.blocks.decorative.BlockPresent;
 import com.legacy.aether.server.blocks.decorative.BlockQuicksoilGlass;
 import com.legacy.aether.server.blocks.decorative.BlockSkyrootPlank;
 import com.legacy.aether.server.blocks.decorative.BlockZanite;
@@ -141,7 +141,7 @@ public class BlocksAether
 		golden_oak_sapling = register("golden_oak_sapling", new BlockAetherSapling(new AetherGenOakTree()));
 		crystal_leaves = registerMeta("crystal_leaves", new BlockCrystalLeaves());
 		holiday_leaves = registerMeta("holiday_leaves", new BlockHolidayLeaves());
-		present = register("present", new BlockPresnet());
+		present = register("present", new BlockPresent());
 		pillar = register("pillar", new BlockPillar());
 		pillar_top = register("pillar_top", new BlockPillar());
 
