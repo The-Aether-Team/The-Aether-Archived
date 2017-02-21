@@ -19,7 +19,7 @@ public enum EnumLogType implements IStringSerializable
 
 	public static EnumLogType getType(int meta)
 	{
-		return meta == 0 || meta == 1 ? Skyroot : Oak;
+		return (meta % 2) == 0 ? Skyroot : Oak;
 	}
 
 	public int getMeta()

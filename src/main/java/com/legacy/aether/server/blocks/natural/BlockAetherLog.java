@@ -45,19 +45,36 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 
 	public static final PropertyBool double_drop = PropertyBool.create(Aether.doubleDropNotifier());
 
-	public BlockAetherLog() 
+	public BlockAetherLog()
 	{
         super();
 		this.setHardness(2.0F);
         this.setSoundType(SoundType.WOOD);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
-		this.setDefaultState(this.getDefaultState().withProperty(wood_type, EnumLogType.Skyroot).withProperty(double_drop, Boolean.TRUE));
+		this.setDefaultState(this.getDefaultState().withProperty(wood_type, EnumLogType.Skyroot).withProperty(double_drop, Boolean.TRUE).withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
 	}
 
 	@Override
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
-        return this.getStateFromMeta(meta).withProperty(wood_type, EnumLogType.getType(meta)).withProperty(double_drop, Boolean.FALSE);
+        return this.getStateFromMeta(meta).withProperty(wood_type, EnumLogType.getType(meta)).withProperty(double_drop, Boolean.FALSE).withProperty(LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()));
+    }
+
+	@Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+        if (worldIn.isAreaLoaded(pos.add(-5, -5, -5), pos.add(5, 5, 5)))
+        {
+            for (BlockPos blockpos : BlockPos.getAllInBox(pos.add(-4, -4, -4), pos.add(4, 4, 4)))
+            {
+                IBlockState iblockstate = worldIn.getBlockState(blockpos);
+
+                if (iblockstate.getBlock().isLeaves(iblockstate, worldIn, blockpos))
+                {
+                    iblockstate.getBlock().beginLeavesDecay(iblockstate, worldIn, blockpos);
+                }
+            }
+        }
     }
 
 	@Override
@@ -98,12 +115,6 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 	}
 
 	@Override
-    public IBlockState withRotation(IBlockState state, Rotation rot)
-    {
-    	return state;
-    }
-
-	@Override
 	public String getMetaName(ItemStack stack) 
 	{
 		return ((EnumLogType)this.getStateFromMeta(stack.getItemDamage()).getValue(wood_type)).getName();
@@ -117,17 +128,33 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
 		list.add(new ItemStack(this, 1, 0));
-		list.add(new ItemStack(this, 1, 2));
+		list.add(new ItemStack(this, 1, 1));
     }
 
 	@Override
     public IBlockState getStateFromMeta(int meta)
     {
-		return this.getDefaultState().withProperty(wood_type, EnumLogType.getType(meta)).withProperty(double_drop, Boolean.valueOf((meta % 2) == 0));
+		IBlockState iblockstate = this.getDefaultState().withProperty(wood_type, EnumLogType.getType(meta)).withProperty(double_drop, Boolean.valueOf((meta % 4) < 2));
+
+        switch (meta & 12)
+        {
+            case 0:
+                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
+                break;
+            case 4:
+                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
+                break;
+            case 8:
+                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
+                break;
+            default:
+                iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+        }
+
+		return iblockstate;
     }
 
 	@Override
@@ -141,6 +168,20 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 			meta |= 2;
 		}
 
+        switch ((BlockLog.EnumAxis)state.getValue(LOG_AXIS))
+        {
+        	case Y:
+        		break;
+            case X:
+            	meta |= 4;
+                break;
+            case Z:
+            	meta |= 8;
+                break;
+            case NONE:
+            	meta |= 12;
+        }
+
 		return meta;
     }
 
@@ -153,7 +194,7 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 	@Override
     protected BlockStateContainer createBlockState()
     {
-        return new BlockStateContainer(this, new IProperty[] {wood_type, double_drop});
+        return new BlockStateContainer(this, new IProperty[] {wood_type, double_drop, LOG_AXIS});
     }
 
 }

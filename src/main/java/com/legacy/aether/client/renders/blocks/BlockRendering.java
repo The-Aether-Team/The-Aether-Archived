@@ -111,7 +111,7 @@ public class BlockRendering
 			register(BlocksAether.holiday_leaves, meta, EnumHolidayType.getType(meta).getName());
 		}
 
-		for (int meta = 0; meta < EnumLogType.values().length + 2; ++meta)
+		for (int meta = 0; meta < 16; ++meta)
 		{
 			register(BlocksAether.aether_log, meta, EnumLogType.getType(meta).getName());
 		}
