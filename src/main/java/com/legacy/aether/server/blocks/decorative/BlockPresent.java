@@ -3,6 +3,7 @@ package com.legacy.aether.server.blocks.decorative;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -23,7 +24,9 @@ public class BlockPresent extends Block
 	public BlockPresent() 
 	{
 		super(Material.GRASS);
+
 		this.setHardness(0.6F);
+		this.setSoundType(SoundType.PLANT);
 	}
 
 	@Override
