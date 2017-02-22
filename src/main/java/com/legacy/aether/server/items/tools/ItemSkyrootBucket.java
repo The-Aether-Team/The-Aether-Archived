@@ -13,7 +13,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -24,14 +23,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.server.items.ItemsAether;
 import com.legacy.aether.server.items.util.EnumSkyrootBucketType;
-import com.legacy.aether.server.items.util.FluidSkyrootBucketWrapper;
 import com.legacy.aether.server.player.PlayerAether;
 import com.legacy.aether.server.registry.creative_tabs.AetherCreativeTabs;
 
@@ -275,11 +272,5 @@ public class ItemSkyrootBucket extends Item
 			return EnumAction.NONE;
 		}
 	}
-
-    @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) 
-    {
-        return new FluidSkyrootBucketWrapper(stack);
-    }
 
 }
