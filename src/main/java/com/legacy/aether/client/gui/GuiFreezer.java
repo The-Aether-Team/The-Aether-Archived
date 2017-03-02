@@ -16,7 +16,7 @@ import com.legacy.aether.server.tile_entities.TileEntityFreezer;
 public class GuiFreezer extends GuiContainer
 {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/enchanter.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/altar.png");
 
 	private TileEntityFreezer freezer;
 
