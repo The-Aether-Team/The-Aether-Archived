@@ -72,6 +72,8 @@ public class PlayerAetherEvents
 			
 			if (newPlayer != null)
 			{
+				newPlayer.timeInPortal = original.timeInPortal;
+				newPlayer.portalCooldown = original.portalCooldown;
 				newPlayer.loadNBTData(data);
 			}
 		}

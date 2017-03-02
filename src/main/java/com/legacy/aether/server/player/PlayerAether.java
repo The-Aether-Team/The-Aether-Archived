@@ -20,6 +20,7 @@ import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -68,9 +69,11 @@ public class PlayerAether
 
 	private float lifeShardsUsed;
 
-	public float timeInPortal, prevTimeInPortal;
+	public float prevPortalAnimTime, portalAnimTime;
 
-	public boolean hasTeleported = false;
+	public int timeInPortal, portalCooldown;
+
+	public boolean hasTeleported = false, inPortal = false;
 
 	private String cooldownName = "Hammer of Notch";
 
@@ -147,32 +150,6 @@ public class PlayerAether
 			this.setCooldown(this.getCooldown() - 1);
 		}
 
-		this.prevTimeInPortal = this.timeInPortal;
-
-		if (this.isInBlock(BlocksAether.aether_portal))
-		{
-			this.timeInPortal += 0.0125F;
-
-			if (!this.hasTeleported && (this.thePlayer.capabilities.isCreativeMode || this.timeInPortal < 1.5F && this.timeInPortal >= 1.0F))
-			{
-				this.teleportPlayer(true);
-			}
-		}
-		else
-		{
-			if (this.timeInPortal > 0.0F)
-			{
-				this.timeInPortal -= 0.05F;
-			}
-
-			if (this.timeInPortal < 0.0F)
-			{
-				this.timeInPortal = 0.0F;
-			}
-
-			this.hasTeleported = false;
-		}
-
 		if (this.thePlayer.motionY < -2F)
 		{
 			EntityParachute parachute = null;
@@ -217,8 +194,61 @@ public class PlayerAether
 			this.thePlayer.addStat(AchievementsAether.enter_aether);
 		}
 
-		if (!this.thePlayer.worldObj.isRemote)
+		if (this.thePlayer.worldObj.isRemote)
 		{
+			this.prevPortalAnimTime = this.portalAnimTime;
+
+			if (this.inPortal)
+			{
+				this.portalAnimTime += 0.0125F;
+				this.inPortal = false;
+			}
+			else
+			{
+				if (this.portalAnimTime > 0.0F)
+				{
+					this.portalAnimTime -= 0.05F;
+				}
+
+				if (this.portalAnimTime < 0.0F)
+				{
+					this.portalAnimTime = 0.0F;
+				}
+			}
+		}
+		else
+		{
+			if (this.inPortal)
+			{
+				int limit = this.thePlayer.getMaxInPortalTime();
+
+				if (this.timeInPortal++ >= limit)
+				{
+					this.timeInPortal = limit;
+					this.portalCooldown = this.thePlayer.getPortalCooldown();
+					this.teleportPlayer(true);
+				}
+
+				this.inPortal = false;
+			}
+			else
+			{
+                if (this.timeInPortal > 0)
+                {
+                    this.timeInPortal -= 4;
+                }
+
+                if (this.timeInPortal < 0)
+                {
+                    this.timeInPortal = 0;
+                }
+
+                if (this.portalCooldown > 0)
+                {
+                    --this.portalCooldown;
+                }
+			}
+
 			((EntityPlayerMP) this.thePlayer).interactionManager.setBlockReachDistance(this.getReach());
 		}
 	}
@@ -276,7 +306,6 @@ public class PlayerAether
 			this.shouldRenderHalo = input.getBoolean("halo");
 		}
 
-		this.hasTeleported = true;
 		this.cooldown = input.getInteger("hammer_cooldown");
 		this.cooldownName = input.getString("notch_hammer_name");
 		this.cooldownMax = input.getInteger("max_hammer_cooldown");
@@ -439,9 +468,6 @@ public class PlayerAether
 
 			scm.transferPlayerToDimension(player, transferToID, new TeleporterAether(shouldSpawnPortal, FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(transferToID)));
 		}
-
-		this.hasTeleported = true;
-		this.timeInPortal = 0.0F;
 	}
 
 	/*
@@ -633,6 +659,18 @@ public class PlayerAether
 	public void setDonator(boolean isDonator)
 	{
 		this.isDonator = isDonator;
+	}
+
+	public void setInPortal()
+	{
+		if (this.portalCooldown > 0)
+		{
+			this.portalCooldown = this.thePlayer.getPortalCooldown();
+		}
+		else
+		{
+			this.inPortal = true;
+		}
 	}
 
 	/*

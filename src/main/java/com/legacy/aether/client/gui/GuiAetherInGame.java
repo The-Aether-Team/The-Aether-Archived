@@ -62,7 +62,7 @@ public class GuiAetherInGame extends Gui
 			AetherOverlay.renderBossHP(this.mc);
 		}
 
-        float portalTime =  player.prevTimeInPortal * 1.2F + (player.timeInPortal -  player.prevTimeInPortal);
+        float portalTime =  player.portalAnimTime * 1.2F + (player.prevPortalAnimTime -  player.portalAnimTime);
 
         if(portalTime > 0.0F)
         {
