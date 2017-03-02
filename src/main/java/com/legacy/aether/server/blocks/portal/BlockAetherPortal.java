@@ -9,6 +9,7 @@ import net.minecraft.block.state.BlockWorldState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumFacing;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.cache.LoadingCache;
 import com.legacy.aether.server.entities.particles.EntityBlueFX;
+import com.legacy.aether.server.player.PlayerAether;
 
 public class BlockAetherPortal extends BlockPortal
 {
@@ -36,6 +38,11 @@ public class BlockAetherPortal extends BlockPortal
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
 	{
+		if (entity instanceof EntityPlayer)
+		{
+			PlayerAether.get((EntityPlayer)entity).setInPortal();
+		}
+
 		return;
 	}
 
