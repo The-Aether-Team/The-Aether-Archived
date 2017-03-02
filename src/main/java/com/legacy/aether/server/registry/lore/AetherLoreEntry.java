@@ -111,7 +111,7 @@ public class AetherLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(ItemsAether.ginger_bread_man), "Ginger Bread Man", "Holiday goodies", "from presents.", "", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.gummy_swet, 1, 0), "Blue Gummy Swet", "Rare healing item.", "Heals players health", "to max.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.gummy_swet, 1, 1), "Golden Gummy Swet", "Rare healing item.", "Heals players health", "to max.", "", "", ""));
-		information.add(new EntryInformation(new ItemStack(ItemsAether.skyroot_stick), "Skyroot Stick", "cCrafted from Skyroot", "Planks. Used to", "create various", "aether tools.", "", ""));
+		information.add(new EntryInformation(new ItemStack(ItemsAether.skyroot_stick), "Skyroot Stick", "Crafted from Skyroot", "Planks. Used to", "create various", "aether tools.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.victory_medal), "Victory Medal", "Proof of defeating", "a lesser Valkyrie.", "", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.cloud_parachute), "Cloud Parachute", "A parachute which", "negates fall damage", "and provides", "a safe landing.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.golden_parachute), "Golden Parachute", "A long lasting", "parachute which", "negates fall damage", "and provides", "a safe landing.", ""));
