@@ -16,6 +16,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
@@ -64,64 +65,64 @@ public class AetherEventHandler
 	@SubscribeEvent
 	public void onFillBucket(FillBucketEvent event)
 	{
-		@Nullable FluidStack fluid = FluidUtil.getFluidContained(event.getEmptyBucket());
+		ItemStack stack = event.getEmptyBucket();
 
-		if (fluid == null || fluid.getFluid() == null || event.getEmptyBucket() == null)
+		if (stack == null)
 		{
-			event.setResult(Result.DENY);
 			return;
 		}
 
+		World worldObj = event.getWorld();
 		RayTraceResult target = event.getTarget();
 		EntityPlayer player = event.getEntityPlayer();
 
-		boolean isWater = fluid.getFluid() == FluidRegistry.WATER;
-		boolean isLava = fluid.getFluid() == FluidRegistry.LAVA;
+		boolean isWater = stack.getItem() == Items.WATER_BUCKET || stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
+		boolean isLava = stack.getItem() == Items.LAVA_BUCKET;
+
 		boolean validDimension = (player.dimension == 0 || player.dimension == AetherConfig.getAetherDimensionID());
 
 		if (target != null && target.typeOfHit == Type.BLOCK && validDimension)
 		{
-			BlockPos hitPos = event.getTarget().getBlockPos().offset(event.getTarget().sideHit);
+			BlockPos hitPos = target.getBlockPos().offset(target.sideHit);
 
 			if (isWater)
 			{
-				if (((BlockAetherPortal) BlocksAether.aether_portal).trySpawnPortal(event.getWorld(), hitPos))
+				if (((BlockAetherPortal) BlocksAether.aether_portal).trySpawnPortal(worldObj, hitPos))
 				{
-					if (!event.getEntityPlayer().capabilities.isCreativeMode)
+					if (!player.capabilities.isCreativeMode)
 					{
-						if (event.getEmptyBucket().getItem() == ItemsAether.skyroot_bucket || event.getEmptyBucket().getItemDamage() == 1)
+						if (stack.getItem() == ItemsAether.skyroot_bucket || stack.getItemDamage() == 1)
 						{
 							event.setFilledBucket(new ItemStack(ItemsAether.skyroot_bucket));
 						}
 
-						if (event.getEmptyBucket().getItem() == Items.WATER_BUCKET)
+						if (stack.getItem() == Items.WATER_BUCKET)
 						{
 							event.setFilledBucket(new ItemStack(Items.BUCKET));
 						}
 					}
+
 					event.setResult(Result.ALLOW);
 				}
 			}
 
 			if (isLava && player.dimension == AetherConfig.getAetherDimensionID())
 			{
-				if (event.getEntityPlayer().capabilities.isCreativeMode && event.getEntityPlayer().isSneaking())
+				if (player.capabilities.isCreativeMode && player.isSneaking())
 				{
 					return;
 				}
 
-				if (!event.getWorld().isRemote)
+				if (worldObj.isAirBlock(hitPos))
 				{
-					if (event.getWorld().isAirBlock(hitPos))
-					{
-						event.getWorld().setBlockState(hitPos, BlocksAether.aerogel.getDefaultState());
+					worldObj.setBlockState(hitPos, BlocksAether.aerogel.getDefaultState());
 
-						if (!event.getEntityPlayer().capabilities.isCreativeMode)
-						{
-							event.setFilledBucket(new ItemStack(Items.BUCKET));
-						}
+					if (!player.capabilities.isCreativeMode)
+					{
+						event.setFilledBucket(new ItemStack(Items.BUCKET));
 					}
-				}	
+				}
+
 				event.setResult(Result.ALLOW);
 			}
 		}
