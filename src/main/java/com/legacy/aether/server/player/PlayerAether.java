@@ -20,7 +20,6 @@ import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -144,6 +143,11 @@ public class PlayerAether
 		boolean hasJumped = ReflectionHelper.getPrivateValue(EntityLivingBase.class, this.thePlayer, "isJumping", "field_70703_bu");
 
 		this.setJumping(hasJumped);
+
+		if (this.isInBlock(BlocksAether.aercloud))
+		{
+			this.thePlayer.fallDistance = 0.0F;
+		}
 
 		if (this.getCooldown() > 0)
 		{
