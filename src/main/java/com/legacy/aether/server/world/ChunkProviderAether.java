@@ -16,8 +16,13 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.legacy.aether.server.blocks.BlocksAether;
+import com.legacy.aether.server.world.biome.decoration.AetherGenGoldenIsland;
+import com.legacy.aether.server.world.dungeon.BronzeDungeon;
+import com.legacy.aether.server.world.dungeon.SilverDungeon;
+import com.legacy.aether.server.world.dungeon.util.AetherDungeon;
 
 public class ChunkProviderAether implements  IChunkGenerator
 {
@@ -31,6 +36,12 @@ public class ChunkProviderAether implements  IChunkGenerator
 	private double buffer[];
 
 	double pnr[], ar[], br[];
+
+	public static int gumCount;
+
+    protected WorldGenerator golden_island = new AetherGenGoldenIsland();
+
+    protected AetherDungeon dungeon_bronze = new BronzeDungeon(), dungeon_silver = new SilverDungeon();
 
 	public ChunkProviderAether(World world, long seed)
 	{
@@ -290,16 +301,44 @@ public class ChunkProviderAether implements  IChunkGenerator
 	@Override
 	public void populate(int chunkX, int chunkZ)
 	{
-		DungeonGenerator decorator = new DungeonGenerator(this.worldObj, this.rand, new BlockPos(chunkX * 16, 0, chunkZ * 16));
+		int x = chunkX * 16;
+		int z = chunkZ * 16;
 
-		BlockPos pos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+		BlockPos pos = new BlockPos(x, 0, z);
 
 		Biome biome = this.worldObj.getBiome(pos.add(16, 0, 16));
 
 		biome.decorate(this.worldObj, this.rand, pos);
 
-		decorator.generate();
+    	if (gumCount < 800)
+    	{
+    		++gumCount;
+    	}
+    	else if (this.rand.nextInt(100) == 0)
+    	{
+    		boolean resetCounter = false;
+    		
+    		resetCounter = this.golden_island.generate(this.worldObj, this.rand, pos.add(this.rand.nextInt(16) + 8, this.rand.nextInt(64) + 32, this.rand.nextInt(16) + 8));
 
-		WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, pos.getX() + 8, pos.getZ() + 8, 16, 16, this.rand);
+    		if (resetCounter)
+    		{
+    			gumCount = 0;
+    		}
+    	}
+
+		if (this.rand.nextInt(15) == 0)
+        {
+	        this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(this.rand.nextInt(16), this.rand.nextInt(64) + 32, this.rand.nextInt(16)));
+        }
+
+		if(this.rand.nextInt(500) == 0)
+		{
+			BlockPos newPos = pos.add(this.rand.nextInt(16), this.rand.nextInt(32) + 64, this.rand.nextInt(16));
+
+	        this.dungeon_silver.generate(this.worldObj, this.rand, newPos);
+		}
+
+		WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, x + 8, z + 8, 16, 16, this.rand);
 	}
+
 }

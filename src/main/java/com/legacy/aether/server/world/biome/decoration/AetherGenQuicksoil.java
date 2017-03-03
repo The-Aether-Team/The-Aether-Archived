@@ -14,21 +14,20 @@ public class AetherGenQuicksoil extends WorldGenerator
 
     public AetherGenQuicksoil()
     {
-
+    	super();
     }
 
     public boolean generate(World world, Random random, BlockPos pos)
     {
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-
 		for(int x = pos.getX() - 3; x < pos.getX() + 4; x++)
 		{
 			for(int z = pos.getZ() - 3; z < pos.getZ() + 4; z++)
 			{
-				mutablePos.setPos(x, pos.getY(), z);
-				if(world.getBlockState(mutablePos).getBlock() == Blocks.AIR && ((x - pos.getX()) * (x - pos.getX()) + (z - pos.getZ()) * (z - pos.getZ())) < 12)
+				BlockPos newPos = new BlockPos(x, pos.getY(), z);
+
+				if(world.getBlockState(newPos).getBlock() == Blocks.AIR && ((x - pos.getX()) * (x - pos.getX()) + (z - pos.getZ()) * (z - pos.getZ())) < 12)
 				{
-					world.setBlockState(mutablePos, BlocksAether.quicksoil.getDefaultState());
+					this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.quicksoil.getDefaultState());
 				}
 			}
 		}

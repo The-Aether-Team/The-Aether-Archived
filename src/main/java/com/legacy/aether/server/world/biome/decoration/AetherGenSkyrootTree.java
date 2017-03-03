@@ -9,18 +9,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import com.legacy.aether.server.blocks.BlocksAether;
-import com.legacy.aether.server.blocks.natural.BlockAetherDirt;
 import com.legacy.aether.server.blocks.natural.BlockAetherLeaves;
-import com.legacy.aether.server.blocks.natural.BlockAetherLog;
 import com.legacy.aether.server.blocks.util.EnumLeafType;
-import com.legacy.aether.server.blocks.util.EnumLogType;
 
 public class AetherGenSkyrootTree extends WorldGenAbstractTree
 {
 
-    public AetherGenSkyrootTree()
+    public AetherGenSkyrootTree(boolean notify)
     {
-    	super(true);
+    	super(notify);
     }
 
     @Override
@@ -28,15 +25,14 @@ public class AetherGenSkyrootTree extends WorldGenAbstractTree
     {
         int l = random.nextInt(3) + 4;
 
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-        IBlockState j1 = world.getBlockState(mutablePos.setPos(pos.getX(), pos.getY() - 1, pos.getZ()));
+        IBlockState j1 = world.getBlockState(pos.down());
 
         if(j1.getBlock() != BlocksAether.aether_grass && j1.getBlock() != BlocksAether.aether_dirt)
         {
             return false;
         }
 
-        world.setBlockState(pos.down(), BlocksAether.aether_dirt.getDefaultState().withProperty(BlockAetherDirt.double_drop, Boolean.valueOf(true)));
+        this.setBlockAndNotifyAdequately(world, pos.down(), BlocksAether.aether_dirt.getDefaultState());
 
         for(int k1 = (pos.getY() - 3) + l; k1 <= pos.getY() + l; k1++)
         {
@@ -50,10 +46,12 @@ public class AetherGenSkyrootTree extends WorldGenAbstractTree
                 for(int i4 = pos.getZ() - i3; i4 <= pos.getZ() + i3; i4++)
                 {
                     int j4 = i4 - pos.getZ();
-                    mutablePos.setPos(k3, k1, i4);
-                    if((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.nextInt(2) != 0 && j2 != 0) && !world.getBlockState(mutablePos).isOpaqueCube())
+
+                    BlockPos newPos = new BlockPos(k3, k1, i4);
+
+                    if((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.nextInt(2) != 0 && j2 != 0) && !world.getBlockState(newPos).isOpaqueCube())
                     {
-                        world.setBlockState(mutablePos, BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Green));
+                    	this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aether_leaves.getDefaultState());
                     }
                 }
 
@@ -62,12 +60,12 @@ public class AetherGenSkyrootTree extends WorldGenAbstractTree
 
         for(int l1 = 0; l1 < l; l1++)
         {
-        	mutablePos.setPos(pos.getX(), pos.getY() + l1, pos.getZ());
-            IBlockState k2 = world.getBlockState(mutablePos);
+        	BlockPos newPos = new BlockPos(pos.up(l1));
+            IBlockState k2 = world.getBlockState(newPos);
 
             if(k2.getBlock() == Blocks.AIR || k2 == BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Green))
             {
-                world.setBlockState(mutablePos, BlocksAether.aether_log.getDefaultState().withProperty(BlockAetherLog.wood_type, EnumLogType.Skyroot).withProperty(BlockAetherLog.double_drop, Boolean.valueOf(true)), 2);
+            	this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aether_log.getDefaultState());
             }
         }
 

@@ -75,8 +75,8 @@ public class GoldenDungeon extends AetherDungeon
 
 						if((i == (a - 2) || -i == (a - 2)) && (k == (a - 2) || -k == (a - 2))) 
 						{
-							world.setBlockState(new BlockPos(x + i, y + j + 1, z + k), Blocks.NETHERRACK.getDefaultState());
-							world.setBlockState(new BlockPos(x + i, y + j + 2, z + k), Blocks.FIRE.getDefaultState());
+							this.setBlockAndNotifyAdequately(world, new BlockPos(x + i, y + j, z + k), Blocks.NETHERRACK.getDefaultState());
+							this.setBlockAndNotifyAdequately(world, new BlockPos(x + i, y + j, z + k), Blocks.FIRE.getDefaultState());
 						}
 					}
 				}
@@ -126,7 +126,7 @@ public class GoldenDungeon extends AetherDungeon
 							{
 								if(k < 2 && k > -2 && j < 0)
 								{
-									world.setBlockState(new BlockPos(x + a, y + j, z + b), Blocks.AIR.getDefaultState(), 2);
+									this.setBlockAndNotifyAdequately(world, new BlockPos(x + a, y + j, z + b), Blocks.AIR.getDefaultState());
 								} 
 								else 
 								{
@@ -141,7 +141,7 @@ public class GoldenDungeon extends AetherDungeon
 								}
 								else
 								{
-									world.setBlockState(new BlockPos(x + a, y + j, z + b), Blocks.AIR.getDefaultState());
+									this.setBlockAndNotifyAdequately(world, new BlockPos(x + a, y + j, z + b), Blocks.AIR.getDefaultState());
 
 									if(j == -1 && (k == 2 || k == -2) && (i - wid - 2) % 3 == 0) 
 									{

@@ -32,6 +32,8 @@ public class SilverDungeon extends AetherDungeon
 
     public SilverDungeon()
     {
+    	super();
+
     	this.clouds.setCloudType(EnumCloudType.Cold);
     	this.clouds.setCloudAmmount(10);
     	this.clouds.setFlat(false);
@@ -98,7 +100,7 @@ public class SilverDungeon extends AetherDungeon
 		{
 			for(int z = pos.getZ() + 14; z < pos.getZ() + 16; z++)
 			{
-				world.setBlockState(new BlockPos(pos.getX() + 4, y, z), Blocks.AIR.getDefaultState());
+				this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 4, y, z), Blocks.AIR.getDefaultState());
 			}
 		}
 
@@ -129,7 +131,7 @@ public class SilverDungeon extends AetherDungeon
 		{
 			for(z = pos.getZ() + 7 + 7 * row; z < pos.getZ() + 9 + 7 * row; z++)
 			{
-				world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+				this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
 			}
 		}
 
@@ -165,7 +167,7 @@ public class SilverDungeon extends AetherDungeon
 							{
 								for(z = pos.getZ() + 7 + 7 * r; z < pos.getZ() + 9 + 7 * r; z++)
 								{
-									world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+									this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
 								}
 							}
 						}	
@@ -185,7 +187,7 @@ public class SilverDungeon extends AetherDungeon
 							{
 								for(z = pos.getZ() + 7 + 7 * r; z < pos.getZ() + 9 + 7 * r; z++)
 								{
-									world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+									this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
 								}
 							}
 						}	
@@ -205,7 +207,7 @@ public class SilverDungeon extends AetherDungeon
 							{
 								for(x = pos.getX() + 7 + 7 * p; x < pos.getX() + 9 + 7 * p; x++)
 								{
-									world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+									this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
 								}
 							}
 						}	
@@ -225,7 +227,7 @@ public class SilverDungeon extends AetherDungeon
 							{
 								for(x = pos.getX() + 7 + 7 * p; x < pos.getX() + 9 + 7 * p; x++)
 								{
-									world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+									this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
 								}
 							}
 						}	
@@ -235,7 +237,7 @@ public class SilverDungeon extends AetherDungeon
 
 					if(type >= 3)
 					{
-						world.setBlockState(new BlockPos(pos.getX() + 7 + p * 7, pos.getY() - 1 + q * 5, pos.getZ() + 7 + r * 7), BlocksAether.dungeon_trap.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+						this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + p * 7, pos.getY() - 1 + q * 5, pos.getZ() + 7 + r * 7), BlocksAether.dungeon_trap.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic));
 
 						switch(roomType)
 						{
@@ -246,7 +248,7 @@ public class SilverDungeon extends AetherDungeon
 								int v = pos.getZ() + 7 + 7 * r + random.nextInt(2);
 								if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(u, pos.getY() + 5 * q + 1, v)).getBlock() == Blocks.AIR)
 								{
-									world.setBlockState(new BlockPos(u, pos.getY() + 5 * q + 1, v), Blocks.CHEST.getDefaultState());
+									this.setBlockAndNotifyAdequately(world, new BlockPos(u, pos.getY() + 5 * q + 1, v), Blocks.CHEST.getDefaultState());
 									TileEntityChest chest = (TileEntityChest)world.getTileEntity(new BlockPos(u, pos.getY() + 5 * q + 1, v));
 
 									for(u = 0; u < 3 + random.nextInt(3); u++)
@@ -259,8 +261,8 @@ public class SilverDungeon extends AetherDungeon
 							case 2 :
 							{
 								addPlaneY(world, random, new PositionData(pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r), new PositionData(2, 0, 2));
-								world.setBlockState(new BlockPos(pos.getX() + 7 + 7 * p + random.nextInt(2), pos.getY() + 5 * q + 1, pos.getZ() + 7 + 7 * r + random.nextInt(2)), BlocksAether.chest_mimic.getDefaultState());
-								world.setBlockState(new BlockPos(pos.getX() + 7 + 7 * p + random.nextInt(2), pos.getY() + 5 * q + 1, pos.getZ() + 7 + 7 * r + random.nextInt(2)), BlocksAether.chest_mimic.getDefaultState());
+								this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + 7 * p + random.nextInt(2), pos.getY() + 5 * q + 1, pos.getZ() + 7 + 7 * r + random.nextInt(2)), BlocksAether.chest_mimic.getDefaultState());
+								this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + 7 * p + random.nextInt(2), pos.getY() + 5 * q + 1, pos.getZ() + 7 + 7 * r + random.nextInt(2)), BlocksAether.chest_mimic.getDefaultState());
 								break;
 							}
 						}
@@ -277,11 +279,11 @@ public class SilverDungeon extends AetherDungeon
 				int distance = (int)(Math.sqrt(x * x + (z - 7) * (z - 7)) + Math.sqrt(x * x + (z - 12) * (z - 12)));
 				if(distance == 21)
 				{
-					world.setBlockState(new BlockPos(pos.getX() + 26 + x, pos.getY(), pos.getZ() + 5 + z), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic), 16);
+					this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 26 + x, pos.getY(), pos.getZ() + 5 + z), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic));
 				}
 				else if(distance > 21)
 				{
-					world.setBlockState(new BlockPos(pos.getX() + 26 + x, pos.getY(), pos.getZ() + 5 + z), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 15);
+					this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 26 + x, pos.getY(), pos.getZ() + 5 + z), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic));
 				}
 			}
 		}
@@ -299,7 +301,7 @@ public class SilverDungeon extends AetherDungeon
 		{
 			for(z = 0; z < 2; z++)
 			{
-				world.setBlockState(new BlockPos(pos.getX() + 44 + x * 5, pos.getY() + 2, pos.getZ() + 11 + z * 7), BlocksAether.ambrosium_torch.getDefaultState());
+				this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 44 + x * 5, pos.getY() + 2, pos.getZ() + 11 + z * 7), BlocksAether.ambrosium_torch.getDefaultState());
 			}
 		}
 
@@ -320,16 +322,16 @@ public class SilverDungeon extends AetherDungeon
 		addPlaneY(world, random, new PositionData(pos.getX() + 35, pos.getY() + 1, pos.getZ() + 5), new PositionData(6, 0, 3));
 		addPlaneY(world, random, new PositionData(pos.getX() + 35, pos.getY() + 1, pos.getZ() + 22), new PositionData(6, 0, 3));
 
-		world.setBlockState(new BlockPos(pos.getX() + 35, pos.getY() + 1, pos.getZ() + 7), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 1);
-		world.setBlockState(new BlockPos(pos.getX() + 40, pos.getY() + 1, pos.getZ() + 7), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 1);
-		world.setBlockState(new BlockPos(pos.getX() + 35, pos.getY() + 1, pos.getZ() + 22), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 1);
-		world.setBlockState(new BlockPos(pos.getX() + 40, pos.getY() + 1, pos.getZ() + 22), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 1);
+		this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 35, pos.getY() + 1, pos.getZ() + 7), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic));
+		this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 40, pos.getY() + 1, pos.getZ() + 7), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic));
+		this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 35, pos.getY() + 1, pos.getZ() + 22), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic));
+		this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 40, pos.getY() + 1, pos.getZ() + 22), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic));
 		
 		for(x = pos.getX() + 36; x < pos.getX() + 40; x += 3)
 		{
 			for(z = pos.getZ() + 8; z < pos.getZ() + 22; z += 13)
 			{
-				world.setBlockState(new BlockPos(x, pos.getY() + 2, z), BlocksAether.ambrosium_torch.getDefaultState());
+				this.setBlockAndNotifyAdequately(world, new BlockPos(x, pos.getY() + 2, z), BlocksAether.ambrosium_torch.getDefaultState());
 			}
 		}
 
@@ -352,7 +354,8 @@ public class SilverDungeon extends AetherDungeon
 		addHollowBox(world, random, new PositionData(pos.getX() + 41, pos.getY() - 2, pos.getZ() + 13), new PositionData(4, 4, 4));
 		x = pos.getX() + 42 + random.nextInt(2);
 		z = pos.getZ() + 14 + random.nextInt(2);
-		world.setBlockState(new BlockPos(x, pos.getY() - 1, z), BlocksAether.treasure_chest.getDefaultState());
+		this.setBlockAndNotifyAdequately(world, new BlockPos(x, pos.getY() - 1, z), BlocksAether.treasure_chest.getDefaultState());
+
 		return true;
     }
 	
@@ -361,36 +364,35 @@ public class SilverDungeon extends AetherDungeon
 		setBlocks(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic), 2);
 		addPlaneY(world, random, pos, new PositionData(3, 0, 3));
 		BlockPos blockPos = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
-		world.setBlockState(blockPos.add(1, 0, 1), BlocksAether.aether_dirt.getDefaultState());
-		world.setBlockState(blockPos.add(1, 1, 1), BlocksAether.golden_oak_sapling.getDefaultState());
+		this.setBlockAndNotifyAdequately(world, blockPos.add(1, 0, 1), BlocksAether.aether_dirt.getDefaultState());
+		this.setBlockAndNotifyAdequately(world, blockPos.add(1, 1, 1), BlocksAether.golden_oak_sapling.getDefaultState());
+
 		for(int x = pos.getX(); x < pos.getX() + 3; x += 2)
 		{
 			for(int z = pos.getZ(); z < pos.getZ() + 3; z += 2)
 			{
-				world.setBlockState(new BlockPos(x, pos.getY() + 1, z), BlocksAether.ambrosium_torch.getDefaultState());
+				this.setBlockAndNotifyAdequately(world, new BlockPos(x, pos.getY() + 1, z), BlocksAether.ambrosium_torch.getDefaultState());
 			}
 		}
 	}
 	
 	private void addChandelier(World world, int i, int j, int k, int height)
 	{
-		//Fence (chain)
 		for(int y = j + height + 3; y < j + height + 6; y++)
 		{
-			world.setBlockState(new BlockPos(i, y, k), Blocks.OAK_FENCE.getDefaultState());
+			this.setBlockAndNotifyAdequately(world, new BlockPos(i, y, k), Blocks.OAK_FENCE.getDefaultState());
 		}
-		//Lightstone ball
 		for(int x = i - 1; x < i + 2; x++)
 		{
-			world.setBlockState(new BlockPos(x, j + height + 1, k), Blocks.GLOWSTONE.getDefaultState());
+			this.setBlockAndNotifyAdequately(world, new BlockPos(x, j + height + 1, k), Blocks.GLOWSTONE.getDefaultState());
 		}	
 		for(int y = j + height; y < j + height + 3; y++)
 		{
-			world.setBlockState(new BlockPos(i, y, k), Blocks.GLOWSTONE.getDefaultState());
+			this.setBlockAndNotifyAdequately(world, new BlockPos(i, y, k), Blocks.GLOWSTONE.getDefaultState());
 		}
 		for(int z = k - 1; z < k + 2; z++)
 		{
-			world.setBlockState(new BlockPos(i, j + height + 1, z), Blocks.GLOWSTONE.getDefaultState());
+			this.setBlockAndNotifyAdequately(world, new BlockPos(i, j + height + 1, z), Blocks.GLOWSTONE.getDefaultState());
 		}		
 	}
 	
@@ -401,7 +403,7 @@ public class SilverDungeon extends AetherDungeon
 		addPlaneY(world, random, new PositionData(pos.getX(), pos.getY() + h, pos.getZ()), new PositionData(3, 0, 3));
 		setBlocks(BlocksAether.pillar.getDefaultState(), BlocksAether.pillar.getDefaultState(), 1);
 		addLineY(world, random, new PositionData(pos.getX() + 1, pos.getY(), pos.getZ() + 1), h - 1);
-		world.setBlockState(new BlockPos(pos.getX() + 1, pos.getY() + h - 1, pos.getZ() + 1), BlocksAether.pillar_top.getDefaultState());
+		this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 1, pos.getY() + h - 1, pos.getZ() + 1), BlocksAether.pillar_top.getDefaultState());
 	}
 
 	private void addStaircase(World world, Random random, PositionData pos, int height)
@@ -414,30 +416,30 @@ public class SilverDungeon extends AetherDungeon
 		IBlockState slab = Blocks.STONE_SLAB.getDefaultState();
 		IBlockState double_slab = Blocks.DOUBLE_STONE_SLAB.getDefaultState();
 
-		world.setBlockState(blockPos.add(1, 0, 1), slab);
-		world.setBlockState(blockPos.add(2, 0, 1), double_slab);
-		world.setBlockState(blockPos.add(3, 1, 1), slab);
-		world.setBlockState(blockPos.add(4, 1, 1), double_slab);
-		world.setBlockState(blockPos.add(4, 2, 2), slab);
-		world.setBlockState(blockPos.add(4, 2, 3), double_slab);
-		world.setBlockState(blockPos.add(4, 3, 4), slab);
-		world.setBlockState(blockPos.add(3, 3, 4), double_slab);
-		world.setBlockState(blockPos.add(2, 4, 4), slab);
-		world.setBlockState(blockPos.add(1, 4, 4), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(1, 0, 1), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(2, 0, 1), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(3, 1, 1), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(4, 1, 1), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(4, 2, 2), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(4, 2, 3), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(4, 3, 4), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(3, 3, 4), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(2, 4, 4), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(1, 4, 4), double_slab);
 		if(height == 5)
 		{
 			return;
 		}
-		world.setBlockState(blockPos.add(1, 5, 3), slab);
-		world.setBlockState(blockPos.add(1, 5, 2), double_slab);
-		world.setBlockState(blockPos.add(1, 6, 1), slab);
-		world.setBlockState(blockPos.add(2, 6, 1), double_slab);
-		world.setBlockState(blockPos.add(3, 7, 1), slab);
-		world.setBlockState(blockPos.add(4, 7, 1), double_slab);
-		world.setBlockState(blockPos.add(4, 8, 2), slab);
-		world.setBlockState(blockPos.add(4, 8, 3), double_slab);
-		world.setBlockState(blockPos.add(4, 9, 4), slab);
-		world.setBlockState(blockPos.add(3, 9, 4), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(1, 5, 3), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(1, 5, 2), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(1, 6, 1), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(2, 6, 1), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(3, 7, 1), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(4, 7, 1), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(4, 8, 2), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(4, 8, 3), double_slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(4, 9, 4), slab);
+		this.setBlockAndNotifyAdequately(world, blockPos.add(3, 9, 4), double_slab);
 	}
 	
 	//Get loot for normal chests scattered around

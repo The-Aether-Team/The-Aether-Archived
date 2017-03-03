@@ -31,7 +31,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 	public AetherGenMinable ores = new AetherGenMinable();
 
-	public AetherGenSkyrootTree skyroot_tree = new AetherGenSkyrootTree();
+	public AetherGenSkyrootTree skyroot_tree = new AetherGenSkyrootTree(false);
 
 	public AetherGenQuicksoil quicksoil_patches = new AetherGenQuicksoil();
 
@@ -144,7 +144,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
     public WorldGenerator getTree()
     {
-        return this.shouldSpawn(20) ? new AetherGenOakTree() : new AetherGenSkyrootTree();
+        return this.shouldSpawn(20) ? new AetherGenOakTree() : new AetherGenSkyrootTree(true);
     }
 
 	public void generateFoilage(IBlockState block)

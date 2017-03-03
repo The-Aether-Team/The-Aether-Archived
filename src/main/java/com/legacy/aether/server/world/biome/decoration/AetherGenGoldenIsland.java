@@ -41,7 +41,7 @@ public class AetherGenGoldenIsland extends WorldGenerator
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
         int i1 = 0;
-        int j1 = MathHelper.floor_double((double)l * 0.875D);
+        int j1 = 21;
 
         for(int k1 = -j1; k1 <= j1; k1++)
         {
@@ -58,33 +58,31 @@ public class AetherGenGoldenIsland extends WorldGenerator
             }
         }
 
-        float f = 0.8F;
-
         for(int i2 = -l; i2 <= l; i2++)
         {
             for(int l2 = l; l2 >= -l; l2--)
             {
                 for(int i3 = -l; i3 <= l; i3++)
                 {
-                    int k3 = MathHelper.floor_double(((double)i2 * (1.0D + (double)l2 / ((double)l * 10D))) / (double)f);
+                    int k3 = MathHelper.floor_double(i2 * (1 + l2 / 240) / 0.8D);//MathHelper.floor_double(((double)i2 * (1.0D + (double)l2 / ((double)l * 10D))) / (double)f);
                     int i4 = l2;
 
-                    if((double)l2 > (double)l * 0.625D)
+                    if(l2 > 15)
                     {
                         i4 = MathHelper.floor_double((double)i4 * 1.375D);
-                        i4 -= MathHelper.floor_double((double)l * 0.25D);
+                        i4 -= 6;
                     } 
-                    else if((double)l2 < (double)l * -0.625D)
+                    else if(l2 < -15)
                     {
                         i4 = MathHelper.floor_double((double)i4 * 1.3500000238418579D);
-                        i4 += MathHelper.floor_double((double)l * 0.25D);
+                        i4 += 6;
                     }
 
-                    int k4 = MathHelper.floor_double(((double)i3 * (1.0D + (double)l2 / ((double)l * 10D))) / (double)f);
+                    int k4 = MathHelper.floor_double(i3 * (1 + l2 / 240) / 0.8D);// MathHelper.floor_double(((double)i3 * (1.0D + (double)l2 / ((double)l * 10D))) / (double)f);
 
-                    if(Math.sqrt(k3 * k3 + i4 * i4 + k4 * k4) <= (double)l)
+                    if(Math.sqrt(k3 * k3 + i4 * i4 + k4 * k4) <= 24.0D)
                     {
-                        if(BlocksAether.isGood(world.getBlockState(mutablePos.setPos(i2 + i, l2 + j + 1, i3 + k))) && (double)l2 > (double)MathHelper.floor_double((double)l / 5D))
+                        if(BlocksAether.isGood(world.getBlockState(mutablePos.setPos(i2 + i, l2 + j + 1, i3 + k))) && l2 > 4)
                         {
                             world.setBlockState(new BlockPos.MutableBlockPos(i2 + i, l2 + j, i3 + k), BlocksAether.aether_grass.getDefaultState());
                             world.setBlockState(new BlockPos.MutableBlockPos(i2 + i, (l2 + j) - 1, i3 + k), BlocksAether.aether_dirt.getDefaultState());
@@ -138,7 +136,7 @@ public class AetherGenGoldenIsland extends WorldGenerator
             int l4 = i + MathHelper.floor_double(Math.cos(f1 * f2) * (double)f3);
             int k5 = j - MathHelper.floor_double((double)l * (double)random.nextFloat() * 0.29999999999999999D);
             int i6 = k + MathHelper.floor_double(-Math.sin(f1 * f2) * (double)f3);
-            func_100008_b(world, random, l4, k5, i6, MathHelper.floor_double((double)l / 3D), true);
+            func_100008_b(world, random, l4, k5, i6, 8, true);
         }
 
         new GoldenDungeon().generate(world, random, i, j, k, j1);
@@ -180,28 +178,28 @@ public class AetherGenGoldenIsland extends WorldGenerator
                     int k2 = MathHelper.floor_double((double)i1 / (double)f);
                     int i3 = k1;
 
-                    if((double)k1 > (double)l * 0.625D)
+                    if(k1 > 5)
                     {
                         i3 = MathHelper.floor_double((double)i3 * 1.375D);
-                        i3 -= MathHelper.floor_double((double)l * 0.25D);
+                        i3 -= 2;
                     }
-                    else if((double)k1 < (double)l * -0.625D)
+                    else if(k1 < -5)
                     {
                         i3 = MathHelper.floor_double((double)i3 * 1.3500000238418579D);
-                        i3 += MathHelper.floor_double((double)l * 0.25D);
+                        i3 += 2;
                     }
 
                     int k3 = MathHelper.floor_double((double)i2 / (double)f);
 
-                    if(Math.sqrt(k2 * k2 + i3 * i3 + k3 * k3) <= (double)l)
+                    if(Math.sqrt(k2 * k2 + i3 * i3 + k3 * k3) <= 8.0D)
                     {
-                        if(BlocksAether.isGood(world.getBlockState(mutablePos.setPos(i1 + i, k1 + j + 1, i2 + k))) && (double)k1 > (double)MathHelper.floor_double((double)l / 5D))
+                        if(BlocksAether.isGood(world.getBlockState(mutablePos.setPos(i1 + i, k1 + j + 1, i2 + k))) && k1 > 1)
                         {
                             world.setBlockState(new BlockPos.MutableBlockPos(i1 + i, k1 + j, i2 + k), BlocksAether.aether_grass.getDefaultState());
                             world.setBlockState(new BlockPos.MutableBlockPos(i1 + i, (k1 + j) - 1, i2 + k), BlocksAether.aether_dirt.getDefaultState());
                             world.setBlockState(new BlockPos.MutableBlockPos(i1 + i, (k1 + j) - (1 + random.nextInt(2)), i2 + k), BlocksAether.aether_dirt.getDefaultState());
 
-                            if(k1 >= l / 2)
+                            if(k1 >= 4)
                             {
                                 int l3 = random.nextInt(64);
 
@@ -225,20 +223,6 @@ public class AetherGenGoldenIsland extends WorldGenerator
                     }
                 }
 
-            }
-
-        }
-
-        if(!flag)
-        {
-            int j1 = MathHelper.floor_double((double)l * 1.25D);
-
-            for(int l1 = 0; l1 < j1; l1++)
-            {
-                int j2 = (i + random.nextInt(l)) - random.nextInt(l);
-                int l2 = (j + random.nextInt(l)) - random.nextInt(l);
-                int j3 = (k + random.nextInt(l)) - random.nextInt(l);
-                (new AetherGenCave(Blocks.AIR, 16 + j1 / 3)).generate(world, random, new BlockPos.MutableBlockPos(j2, l2, j3));
             }
 
         }

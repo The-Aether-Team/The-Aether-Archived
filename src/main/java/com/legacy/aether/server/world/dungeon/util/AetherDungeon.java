@@ -21,6 +21,11 @@ public abstract class AetherDungeon extends WorldGenerator
 
     public boolean replaceAir, replaceSolid;
 
+    public AetherDungeon()
+    {
+    	super();
+    }
+
     public void setBlocks(IBlockState blockState)
     {
         this.blockState = blockState;
@@ -42,25 +47,27 @@ public abstract class AetherDungeon extends WorldGenerator
 
     public void addLineX(World world, Random rand, PositionData pos, int radius)
     {
-        for (int lineX = pos.getX(); lineX < pos.getX() + radius; lineX++)
+    	for (int lineX = pos.getX(); lineX < pos.getX() + radius; lineX++)
         {
-        	Block block = world.getBlockState(new BlockPos.MutableBlockPos().setPos(lineX, pos.getY(), pos.getZ())).getBlock();
+    		BlockPos newPos = new BlockPos(lineX, pos.getY(), pos.getZ());
+        	Block block = world.getBlockState(newPos).getBlock();
 
             if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
             {
             	if (this.chance == 0)
             	{
-            		world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, pos.getY(), pos.getZ()), this.blockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+
             		return;
             	}
 
                 if (rand.nextInt(this.chance) == 0)
                 {
-                	world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, pos.getY(), pos.getZ()), this.extraBlockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
                 }
                 else
                 {
-                	world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, pos.getY(), pos.getZ()), this.blockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
                 }
             }
         }
@@ -70,23 +77,25 @@ public abstract class AetherDungeon extends WorldGenerator
     {
         for (int lineY = pos.getY(); lineY < pos.getY() + radius; lineY++)
         {
-        	Block block = world.getBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), lineY, pos.getZ())).getBlock();
+    		BlockPos newPos = new BlockPos(pos.getX(), lineY, pos.getZ());
+        	Block block = world.getBlockState(newPos).getBlock();
 
             if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
             {
             	if (this.chance == 0)
             	{
-            		world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), lineY, pos.getZ()), this.blockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+
             		return;
             	}
 
                 if (rand.nextInt(this.chance) == 0)
                 {
-                	world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), lineY, pos.getZ()), this.extraBlockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
                 }
                 else
                 {
-                	world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), lineY, pos.getZ()), this.blockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
                 }
             }
         }
@@ -94,111 +103,119 @@ public abstract class AetherDungeon extends WorldGenerator
 
     public void addLineZ(World world, Random rand, PositionData pos, int radius)
     {
-        for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius; lineZ++)
+    	for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius; lineZ++)
         {
-        	Block block = world.getBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), pos.getY(), lineZ)).getBlock();
+    		BlockPos newPos = new BlockPos(pos.getX(), pos.getY(), lineZ);
+        	Block block = world.getBlockState(newPos).getBlock();
 
             if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
             {
             	if (this.chance == 0)
             	{
-            		world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), pos.getY(), lineZ), this.blockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+
             		return;
             	}
 
                 if (rand.nextInt(this.chance) == 0)
                 {
-                	world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), pos.getY(), lineZ), this.extraBlockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
                 }
                 else
                 {
-                	world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), pos.getY(), lineZ), this.blockState, 2);
+            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
                 }
             }
         }
     }
 
-    public void addPlaneX(World world, Random rand, PositionData pos, PositionData radiusPos)
+    public void addPlaneX(World world, Random rand, PositionData pos, PositionData radius)
     {
-        for (int lineY = pos.getY(); lineY < pos.getY() + radiusPos.getY(); lineY++)
+    	for (int lineY = pos.getY(); lineY < pos.getY() + radius.getY(); lineY++)
         {
-            for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radiusPos.getZ(); lineZ++)
+            for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
             {
-            	Block block = world.getBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), lineY, lineZ)).getBlock();
+        		BlockPos newPos = new BlockPos(pos.getX(), lineY, lineZ);
+            	Block block = world.getBlockState(newPos).getBlock();
 
                 if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
                 {
                 	if (this.chance == 0)
                 	{
-                		world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), lineY, lineZ), this.blockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+
                 		return;
                 	}
 
                     if (rand.nextInt(this.chance) == 0)
                     {
-                    	world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), lineY, lineZ), this.extraBlockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
                     }
                     else
                     {
-                    	world.setBlockState(new BlockPos.MutableBlockPos().setPos(pos.getX(), lineY, lineZ), this.blockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
                     }
                 }
             }
         }
     }
 
-    public void addPlaneY(World world, Random rand, PositionData pos, PositionData radiusPos)//, int radiusX, int radiusZ)
+    public void addPlaneY(World world, Random rand, PositionData pos, PositionData radius)//, int radiusX, int radiusZ)
     {
-        for (int lineX = pos.getX(); lineX < pos.getX() + radiusPos.getX(); lineX++)
+    	for (int lineX = pos.getX(); lineX < pos.getX() + radius.getX(); lineX++)
         {
-            for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radiusPos.getZ(); lineZ++)
+            for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
             {
-            	Block block = world.getBlockState(new MutableBlockPos().setPos(lineX, pos.getY(), lineZ)).getBlock();
+        		BlockPos newPos = new BlockPos(lineX, pos.getY(), lineZ);
+            	Block block = world.getBlockState(newPos).getBlock();
 
                 if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
                 {
                 	if (this.chance == 0)
                 	{
-                		world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, pos.getY(), lineZ), this.blockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+
                 		return;
                 	}
 
                     if (rand.nextInt(this.chance) == 0)
                     {
-                    	world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, pos.getY(), lineZ), this.extraBlockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
                     }
                     else
                     {
-                    	world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, pos.getY(), lineZ), this.blockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
                     }
                 }
             }
         }
     }
 
-    public void addPlaneZ(World world, Random var2, PositionData pos, PositionData radiusPos)//, int radiusX, int radiusY)
+    public void addPlaneZ(World world, Random rand, PositionData pos, PositionData radius)//, int radiusX, int radiusY)
     {
-        for (int lineX = pos.getX(); lineX < pos.getX() + radiusPos.getX(); lineX++)
+    	for (int lineX = pos.getX(); lineX < pos.getX() + radius.getX(); lineX++)
         {
-            for (int lineY = pos.getY(); lineY < pos.getY() + radiusPos.getY(); lineY++)
+            for (int lineY = pos.getY(); lineY < pos.getY() + radius.getY(); lineY++)
             {
-            	Block block = world.getBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, pos.getZ())).getBlock();
+        		BlockPos newPos = new BlockPos(lineX, lineY, pos.getZ());
+            	Block block = world.getBlockState(newPos).getBlock();
 
                 if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
                 {
                 	if (this.chance == 0)
                 	{
-                		world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, pos.getZ()), this.blockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+
                 		return;
                 	}
 
-                    if (var2.nextInt(this.chance) == 0)
+                    if (rand.nextInt(this.chance) == 0)
                     {
-                    	world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, pos.getZ()), this.extraBlockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
                     }
                     else
                     {
-                    	world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, pos.getZ()), this.blockState, 2);
+                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
                     }
                 }
             }
@@ -251,29 +268,31 @@ public abstract class AetherDungeon extends WorldGenerator
 
     public void addSolidBox(World world, Random rand, PositionData pos, PositionData radius)
     {
-        for (int lineX = pos.getX(); lineX < pos.getX() + radius.getX(); lineX++)
+    	for (int lineX = pos.getX(); lineX < pos.getX() + radius.getX(); lineX++)
         {
             for (int lineY = pos.getY(); lineY < pos.getY() + radius.getY(); lineY++)
             {
                 for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
                 {
-                	Block block = world.getBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, lineZ)).getBlock();
+            		BlockPos newPos = new BlockPos(lineX, lineY, lineZ);
+                	Block block = world.getBlockState(newPos).getBlock();
 
                     if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
                     {
                     	if (this.chance == 0)
                     	{
-                    		world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, lineZ), this.blockState, 2);
+                    		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+
                     		return;
                     	}
 
                         if (rand.nextInt(this.chance) == 0)
                         {
-                            world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, lineZ), this.extraBlockState, 2);
+                    		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
                         }
                         else
                         {
-                        	world.setBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, lineZ), this.blockState, 2);
+                    		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
                         }
                     }
                 }
@@ -327,11 +346,11 @@ public abstract class AetherDungeon extends WorldGenerator
 	{
 		if(random.nextInt(chance) == 0)
 		{
-			world.setBlockState(pos, extraState, 2);
+			this.setBlockAndNotifyAdequately(world, pos, extraState);
 		}
 		else 
 		{
-			world.setBlockState(pos, state, 2);
+			this.setBlockAndNotifyAdequately(world, pos, state);
 		}
 	}
 

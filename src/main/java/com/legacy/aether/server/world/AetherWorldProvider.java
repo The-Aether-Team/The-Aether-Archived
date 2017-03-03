@@ -1,8 +1,5 @@
 package com.legacy.aether.server.world;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
@@ -47,16 +44,7 @@ public class AetherWorldProvider extends WorldProvider
 	@Override
 	public boolean canCoordinateBeSpawn(int i, int j)
 	{
-		IBlockState k = this.worldObj.getBlockState(this.worldObj.getTopSolidOrLiquidBlock(new BlockPos(i, 0, j)));
-
-		if (k.getBlock() == Blocks.AIR)
-		{
-			return false;
-		}
-		else
-		{
-			return k.getMaterial().isSolid();
-		}
+		return false;
 	}
 
 	@Override

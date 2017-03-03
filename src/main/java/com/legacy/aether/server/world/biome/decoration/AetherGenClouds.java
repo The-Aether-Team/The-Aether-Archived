@@ -47,7 +47,6 @@ public class AetherGenClouds extends WorldGenerator
         int z = pos.getZ();
         int xTendency = random.nextInt(3) - 1;
         int zTendency = random.nextInt(3) - 1;
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
         if (this.type == null)
         {
@@ -71,12 +70,13 @@ public class AetherGenClouds extends WorldGenerator
                 {
                     for (int z1 = z; z1 < z + random.nextInt(4) + 3 * (this.flat ? 3 : 1); ++z1)
                     {
-                    	mutablePos.setPos(x1, y1, z1);
-                        if (world.getBlockState(mutablePos).getBlock() == Blocks.AIR)
+                    	BlockPos newPos = new BlockPos(x1, y1, z1);
+
+                        if (world.getBlockState(newPos).getBlock() == Blocks.AIR)
                         {
                         	if (Math.abs(x1 - x) + Math.abs(y1 - y) + Math.abs(z1 - z) < 4 * (this.flat ? 3 : 1) + random.nextInt(2))
                         	{
-                                world.setBlockState(mutablePos, BlocksAether.aercloud.getDefaultState().withProperty(BlockAercloud.cloud_type, this.type), 2);
+                        		this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aercloud.getDefaultState().withProperty(BlockAercloud.cloud_type, this.type));
                         	}
                         }
                     }

@@ -15,7 +15,7 @@ public class AetherGenLiquids extends WorldGenerator
 
     public AetherGenLiquids()
     {
-
+    	super();
     }
 
     public boolean generate(World worldIn, Random rand, BlockPos position)
@@ -85,7 +85,7 @@ public class AetherGenLiquids extends WorldGenerator
                 if (i == 3 && j == 1)
                 {
                     IBlockState iblockstate1 = Blocks.FLOWING_WATER.getDefaultState();
-                    worldIn.setBlockState(position, iblockstate1, 2);
+                    this.setBlockAndNotifyAdequately(worldIn, position, iblockstate1);
                     worldIn.immediateBlockTick(position, iblockstate1, rand);
                 }
 

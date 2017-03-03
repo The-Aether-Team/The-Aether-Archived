@@ -16,7 +16,7 @@ public class AetherGenFoilage extends WorldGenerator
 
     public AetherGenFoilage()
     {
-
+    	super();
     }
 
     public void setPlantBlock(IBlockState state)
@@ -27,18 +27,17 @@ public class AetherGenFoilage extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random random, BlockPos pos)
 	{
-	    BlockPos.MutableBlockPos mutableblockpos = new BlockPos.MutableBlockPos();
-
         for(int l = 0; l < 64; l++)
         {
             int i1 = (pos.getX() + random.nextInt(8)) - random.nextInt(8);
             int j1 = (pos.getY() + random.nextInt(4)) - random.nextInt(4);
             int k1 = (pos.getZ() + random.nextInt(8)) - random.nextInt(8);
-            mutableblockpos.setPos(i1, j1, k1);
 
-            if(world.isAirBlock(mutableblockpos) && ((BlockAetherFlower)plantState.getBlock()).canBlockStay(world, mutableblockpos, null))
+            BlockPos newPos = new BlockPos(i1, j1, k1);
+
+            if(world.isAirBlock(newPos) && ((BlockAetherFlower)this.plantState.getBlock()).canBlockStay(world, newPos, this.plantState))
             {
-            	world.setBlockState(mutableblockpos, plantState);
+            	this.setBlockAndNotifyAdequately(world, newPos, this.plantState);
             }
         }
 

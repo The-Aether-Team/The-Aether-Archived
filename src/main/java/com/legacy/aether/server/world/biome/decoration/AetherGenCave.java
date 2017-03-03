@@ -19,14 +19,14 @@ public class AetherGenCave extends WorldGenerator
 
     public AetherGenCave(Block block, int size)
     {
+    	super();
+
         this.hollowBlock = block;
         this.size = size;
     }
 
     public boolean generate(World world, Random random, BlockPos pos)
     {
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-
         float f = random.nextFloat() * 3.141593F;
         double d = (float)(pos.getX() + 8) + (MathHelper.sin(f) * (float)this.size) / 8F;
         double d1 = (float)(pos.getX() + 8) - (MathHelper.sin(f) * (float)this.size) / 8F;
@@ -63,12 +63,12 @@ public class AetherGenCave extends WorldGenerator
                             for(int i3 = k1; i3 <= j2; i3++)
                             {
                                 double d14 = (((double)i3 + 0.5D) - d8) / (d10 / 2D);
-                                mutablePos.setPos(k2, l2, i3);
-                                Block block = world.getBlockState(mutablePos.setPos(k2, l2, i3)).getBlock();
+                                BlockPos newPos = new BlockPos(k2, l2, i3);
+                                Block block = world.getBlockState(newPos).getBlock();
 
                                 if(d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && (block == BlocksAether.mossy_holystone || block == BlocksAether.holystone || block == BlocksAether.aether_grass || block == BlocksAether.aether_dirt))
                                 {
-                                    world.setBlockState(mutablePos, this.hollowBlock.getDefaultState());
+                                	this.setBlockAndNotifyAdequately(world, newPos, this.hollowBlock.getDefaultState());
                                 }
                             }
 

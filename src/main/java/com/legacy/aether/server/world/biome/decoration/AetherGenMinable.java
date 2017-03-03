@@ -19,6 +19,7 @@ public class AetherGenMinable extends WorldGenerator
 
     public AetherGenMinable()
     {
+    	super();
     }
 
     public void setSize(int size)
@@ -75,7 +76,7 @@ public class AetherGenMinable extends WorldGenerator
 
                                 if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && world.getBlockState(newPos).getBlock() == BlocksAether.holystone)
                                 {
-                                    world.setBlockState(newPos, this.oreBlock);
+                                	this.setBlockAndNotifyAdequately(world, newPos, this.oreBlock);
                                 }
                             }
                         }

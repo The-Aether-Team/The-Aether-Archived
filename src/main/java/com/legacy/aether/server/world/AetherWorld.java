@@ -20,7 +20,7 @@ public class AetherWorld
 
 		Biome.registerBiome(AetherConfig.getAetherBiomeID(), "aether_legacy:aether_highlands", aether_biome);
 
-		aether_dimension_type = DimensionType.register("AetherI", "_aetherI", AetherConfig.getAetherDimensionID(), AetherWorldProvider.class, true);
+		aether_dimension_type = DimensionType.register("AetherI", "_aetherI", AetherConfig.getAetherDimensionID(), AetherWorldProvider.class, false);
 
 		DimensionManager.registerDimension(AetherConfig.getAetherDimensionID(), aether_dimension_type);
 	}
