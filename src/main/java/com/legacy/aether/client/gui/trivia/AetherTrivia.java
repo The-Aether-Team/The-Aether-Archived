@@ -101,6 +101,14 @@ public class AetherTrivia
         "The game is only as fun as you make it.",
     });
 
+    public static void addNewTrivia(String string)
+    {
+    	if (string != null && string.isEmpty())
+    	{
+        	trivia.add(string);
+    	}
+    }
+
     public static String getNewTrivia() 
     {
         int i = random.nextInt(trivia.size());
