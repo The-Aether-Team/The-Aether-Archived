@@ -108,8 +108,7 @@ public class BlockCrystalLeaves extends BlockLeaves implements IAetherMeta
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         for (int j = 0; j < EnumLeafType.values().length; ++j)
         {
@@ -170,6 +169,7 @@ public class BlockCrystalLeaves extends BlockLeaves implements IAetherMeta
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
         List<ItemStack> ret = new ArrayList<ItemStack>();
+
 		if (((EnumCrystalType)state.getValue(leaf_type)) == EnumCrystalType.Crystal_Fruited)
 		{
 	        ret.add(new ItemStack(ItemsAether.white_apple));

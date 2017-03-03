@@ -18,8 +18,8 @@ public class BlockAetherFlower extends BlockBush
 
 	public BlockAetherFlower() 
 	{
-		this.setTickRandomly(true);
 		this.setHardness(0.0F);
+		this.setTickRandomly(true);
 		this.setSoundType(SoundType.PLANT);
 		this.FLOWER_AABB = new AxisAlignedBB(0.5F - 0.2F, 0.0F, 0.5F - 0.2F, 0.5F + 0.2F, 0.2F * 3.0F, 0.5F + 0.2F);
 	}	

@@ -40,8 +40,6 @@ public class BlockAercloud extends Block implements IAetherMeta
 		super(Material.ICE);
 
 		this.setHardness(0.2F);
-		this.setLightOpacity(3);
-        this.setTickRandomly(true);
 		this.setSoundType(SoundType.CLOTH);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(cloud_type, EnumCloudType.Cold));
@@ -175,7 +173,6 @@ public class BlockAercloud extends Block implements IAetherMeta
 
 	@Override
     @SideOnly(Side.CLIENT)
-	@SuppressWarnings("deprecation")
     public boolean shouldSideBeRendered(IBlockState state, IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
         IBlockState iblockstate = worldIn.getBlockState(pos);
@@ -191,7 +188,7 @@ public class BlockAercloud extends Block implements IAetherMeta
             return false;
         }
 
-        return super.shouldSideBeRendered(state, worldIn, pos, side);
+        return !worldIn.getBlockState(pos.offset(side)).doesSideBlockRendering(worldIn, pos.offset(side), side.getOpposite());
     }
 
 	@Override
@@ -199,18 +196,6 @@ public class BlockAercloud extends Block implements IAetherMeta
     {
         return false;
     }
-
-	@Override
-    public boolean isFullCube(IBlockState state)
-    {
-        return false;
-    }
-
-	@Override
-	public boolean isPassable(IBlockAccess world, BlockPos pos)
-	{
-		return true;
-	}
 
 	@Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World worldIn, BlockPos pos)

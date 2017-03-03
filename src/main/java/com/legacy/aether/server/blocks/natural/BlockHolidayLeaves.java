@@ -106,8 +106,7 @@ public class BlockHolidayLeaves extends BlockLeaves implements IAetherMeta
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List<ItemStack> list)
     {
         for (int j = 0; j < EnumLeafType.values().length; ++j)
         {

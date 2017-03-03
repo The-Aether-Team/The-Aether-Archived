@@ -61,7 +61,7 @@ public class BlockBerryBush extends BlockAetherFlower
 
 		if (world.getBlockState(pos.down()).getBlock() == BlocksAether.enchanted_aether_grass)
 		{
-			min = 2;
+			min = 1;
 			max = 4;
 		}
 		else
@@ -74,12 +74,12 @@ public class BlockBerryBush extends BlockAetherFlower
 		entityplayer.addStat(StatList.getBlockStats(this), 1);
 		entityplayer.addExhaustion(0.025F);
 
+		world.setBlockState(pos, BlocksAether.berry_bush_stem.getDefaultState());
+
 		if (randomNum != 0)
 		{
-			spawnAsEntity(world, pos.up(), new ItemStack(ItemsAether.blue_berry, randomNum, 0));
+			spawnAsEntity(world, pos, new ItemStack(ItemsAether.blue_berry, randomNum, 0));
 		}
-
-		world.setBlockState(pos, BlocksAether.berry_bush_stem.getDefaultState());
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class BlockBerryBush extends BlockAetherFlower
     {
     	if(!this.canBlockStay(world, pos, state))
     	{
-			spawnAsEntity(world, pos.up(), new ItemStack(ItemsAether.blue_berry, 1, 0));
+			spawnAsEntity(world, pos, new ItemStack(ItemsAether.blue_berry, 1, 0));
     		super.checkAndDropBlock(world, pos, state);
     	}
     }

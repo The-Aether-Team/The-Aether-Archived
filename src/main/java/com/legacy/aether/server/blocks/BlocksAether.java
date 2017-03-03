@@ -137,7 +137,7 @@ public class BlocksAether
 		treasure_chest = register("treasure_chest", new BlockTreasureChest());
 		purple_flower = register("purple_flower", new BlockAetherFlower());
 		white_flower = register("white_flower", new BlockAetherFlower());
-		skyroot_sapling = register("skyroot_sapling", new BlockAetherSapling(new AetherGenSkyrootTree()));
+		skyroot_sapling = register("skyroot_sapling", new BlockAetherSapling(new AetherGenSkyrootTree(true)));
 		golden_oak_sapling = register("golden_oak_sapling", new BlockAetherSapling(new AetherGenOakTree()));
 		crystal_leaves = registerMeta("crystal_leaves", new BlockCrystalLeaves());
 		holiday_leaves = registerMeta("holiday_leaves", new BlockHolidayLeaves());

@@ -19,7 +19,10 @@ public class BlockFloating extends Block
 	public BlockFloating(Material material, boolean leveled)
 	{
 		super(material);
+
 		this.leveled = leveled;
+
+		this.setTickRandomly(true);
 	}
 
 	@Override

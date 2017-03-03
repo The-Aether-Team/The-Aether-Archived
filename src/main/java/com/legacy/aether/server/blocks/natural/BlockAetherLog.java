@@ -19,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -48,6 +47,7 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 	public BlockAetherLog()
 	{
         super();
+
 		this.setHardness(2.0F);
         this.setSoundType(SoundType.WOOD);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
