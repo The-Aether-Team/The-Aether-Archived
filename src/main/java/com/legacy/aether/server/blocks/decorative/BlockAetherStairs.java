@@ -9,6 +9,7 @@ public class BlockAetherStairs extends BlockStairs
 	public BlockAetherStairs(IBlockState modelState)
 	{
 		super(modelState);
+		this.setLightOpacity(0);
 	}
 
 }
