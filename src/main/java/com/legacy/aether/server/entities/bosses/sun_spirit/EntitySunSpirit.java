@@ -204,6 +204,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             	EntityPlayer player = (EntityPlayer)this.getAttackTarget();
 
                 this.chatLine(player, "\u00a7bSuch bitter cold... is this the feeling... of pain?");
+                this.chatCount = 100;
 
                 player.addStat(AchievementsAether.defeat_gold);
     		}
@@ -223,6 +224,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             this.motionX = this.motionY = this.motionZ = 0.0D;
 
             this.chatLine(player, "\u00a7cSuch is the fate of a being who opposes the might of the sun.");
+            this.chatCount = 100;
 
             this.setDoor(Blocks.AIR.getDefaultState());
 
