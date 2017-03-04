@@ -156,34 +156,7 @@ public class PlayerAether
 
 		if (this.thePlayer.motionY < -2F)
 		{
-			EntityParachute parachute = null;
-
-			if(this.thePlayer.inventory.hasItemStack(new ItemStack(ItemsAether.cloud_parachute)))
-			{
-				parachute = new EntityParachute(this.thePlayer.worldObj, this.thePlayer, false);
-				parachute.setPosition(this.thePlayer.posX, this.thePlayer.posY, this.thePlayer.posZ);
-				this.thePlayer.worldObj.spawnEntityInWorld(parachute);
-				this.thePlayer.inventory.deleteStack(new ItemStack(ItemsAether.cloud_parachute));
-			}
-			else
-			{
-				if (this.thePlayer.inventory.hasItemStack(new ItemStack(ItemsAether.golden_parachute)))
-				{
-					for(int i = 0; i < this.thePlayer.inventory.getSizeInventory(); i++)
-					{
-						ItemStack itemstack = this.thePlayer.inventory.getStackInSlot(i);
-
-						if(itemstack != null && itemstack.getItem() == ItemsAether.golden_parachute)
-						{ 
-							itemstack.damageItem(1, this.thePlayer);
-							parachute = new EntityParachute(this.thePlayer.worldObj, this.thePlayer, true);
-							parachute.setPosition(this.thePlayer.posX, this.thePlayer.posY, this.thePlayer.posZ);
-							this.thePlayer.inventory.setInventorySlotContents(i, itemstack);
-							this.thePlayer.worldObj.spawnEntityInWorld(parachute);
-						}
-					}
-				}
-			}
+			this.activateParachute();
 		}
 
 		if (this.thePlayer.dimension == AetherConfig.getAetherDimensionID())
@@ -471,6 +444,38 @@ public class PlayerAether
 			int transferToID = player.dimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
 
 			scm.transferPlayerToDimension(player, transferToID, new TeleporterAether(shouldSpawnPortal, FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(transferToID)));
+		}
+	}
+
+	private void activateParachute()
+	{
+		EntityParachute parachute = null;
+
+		if(this.thePlayer.inventory.hasItemStack(new ItemStack(ItemsAether.cloud_parachute)))
+		{
+			parachute = new EntityParachute(this.thePlayer.worldObj, this.thePlayer, false);
+			parachute.setPosition(this.thePlayer.posX, this.thePlayer.posY, this.thePlayer.posZ);
+			this.thePlayer.worldObj.spawnEntityInWorld(parachute);
+			this.thePlayer.inventory.deleteStack(new ItemStack(ItemsAether.cloud_parachute));
+		}
+		else
+		{
+			if (this.thePlayer.inventory.hasItemStack(new ItemStack(ItemsAether.golden_parachute)))
+			{
+				for(int i = 0; i < this.thePlayer.inventory.getSizeInventory(); i++)
+				{
+					ItemStack itemstack = this.thePlayer.inventory.getStackInSlot(i);
+
+					if(itemstack != null && itemstack.getItem() == ItemsAether.golden_parachute)
+					{ 
+						itemstack.damageItem(1, this.thePlayer);
+						parachute = new EntityParachute(this.thePlayer.worldObj, this.thePlayer, true);
+						parachute.setPosition(this.thePlayer.posX, this.thePlayer.posY, this.thePlayer.posZ);
+						this.thePlayer.inventory.setInventorySlotContents(i, itemstack);
+						this.thePlayer.worldObj.spawnEntityInWorld(parachute);
+					}
+				}
+			}
 		}
 	}
 

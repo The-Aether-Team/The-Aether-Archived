@@ -12,6 +12,8 @@ public class AetherConfig
 
 	private static int aether_biome_id, aether_dimension_id;
 
+	private static boolean skyrootBucketOnly;
+
 	public static void init(File location)
 	{
 		File newFile = new File(location + "/aether" + "/Aether_Legacy.cfg");
@@ -34,6 +36,8 @@ public class AetherConfig
 		aether_dimension_id = config.get("World Identification", "Aether Dimension ID", 4).getInt(4);
 		aether_biome_id = config.get("World Identification", "Aether Biome ID", 127).getInt(127);
 
+		skyrootBucketOnly = config.get("Misc", "Activate portal with only Skyroot bucket", false).getBoolean(false);
+
 		config.save();
 	}
 
@@ -50,6 +54,11 @@ public class AetherConfig
 	public static boolean shouldLoadHolidayContent()
 	{
 		return AetherConfig.christmas_content;
+	}
+
+	public static boolean activateOnlyWithSkyroot()
+	{
+		return AetherConfig.skyrootBucketOnly;
 	}
 
 }

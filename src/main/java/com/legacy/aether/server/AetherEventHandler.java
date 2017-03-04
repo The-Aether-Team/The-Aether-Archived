@@ -76,7 +76,7 @@ public class AetherEventHandler
 		RayTraceResult target = event.getTarget();
 		EntityPlayer player = event.getEntityPlayer();
 
-		boolean isWater = stack.getItem() == Items.WATER_BUCKET || stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
+		boolean isWater = (!AetherConfig.activateOnlyWithSkyroot() && stack.getItem() == Items.WATER_BUCKET) || stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
 		boolean isLava = stack.getItem() == Items.LAVA_BUCKET;
 
 		boolean validDimension = (player.dimension == 0 || player.dimension == AetherConfig.getAetherDimensionID());
