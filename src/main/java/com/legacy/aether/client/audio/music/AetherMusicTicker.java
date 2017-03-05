@@ -34,7 +34,6 @@ public class AetherMusicTicker implements ITickable
         {
             if (!this.mc.getSoundHandler().isSoundPlaying(this.currentMusic))
             {
-            	System.out.println("MUSIC STOPPED!!");
                 this.currentMusic = null;
                 this.timeUntilNextMusic = Math.min(MathHelper.getRandomIntegerInRange(this.rand, tracktype.getMinDelay(), tracktype.getMaxDelay()), this.timeUntilNextMusic);
             }
@@ -44,7 +43,6 @@ public class AetherMusicTicker implements ITickable
 
         if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0)
         {
-        	System.out.println("Playing new Music!!!");
             this.playMusic(tracktype);
         }
     }
