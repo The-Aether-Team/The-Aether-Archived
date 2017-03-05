@@ -4,12 +4,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import com.legacy.aether.client.audio.music.AetherMusicTicker;
 import com.legacy.aether.client.gui.AetherLoadingScreen;
+import com.legacy.aether.server.AetherConfig;
 
 public class ClientTickHandler 
 {
 
-	public static Minecraft mc = Minecraft.getMinecraft();
+	private Minecraft mc = Minecraft.getMinecraft();
+
+	private AetherMusicTicker musicTicker = new AetherMusicTicker(mc);
 
 	@SubscribeEvent
 	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
@@ -24,6 +28,11 @@ public class ClientTickHandler
 				if (!(mc.loadingScreen instanceof AetherLoadingScreen))
 				{
 					mc.loadingScreen = new AetherLoadingScreen(mc);
+				}
+
+				if (!mc.isGamePaused() && mc.thePlayer != null && mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
+				{
+					musicTicker.update();
 				}
 			}
 		}
