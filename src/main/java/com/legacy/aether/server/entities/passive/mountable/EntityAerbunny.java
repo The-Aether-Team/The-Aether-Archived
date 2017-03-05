@@ -28,6 +28,8 @@ import com.legacy.aether.server.registry.sounds.SoundsAether;
 public class EntityAerbunny extends EntityAetherAnimal
 {
 
+	public static final DataParameter<Integer> PUFF = EntityDataManager.<Integer>createKey(EntityAerbunny.class, DataSerializers.VARINT);
+
 	public int puffiness;
 
     private int jumpTicks;
@@ -102,25 +104,42 @@ public class EntityAerbunny extends EntityAetherAnimal
         }
     }
 
-    public int getPuffiness()
+    public int getPuffinessClient()
     {
         return this.puffiness;
     }
 
-    public void setPuffiness(int i)
+    public int getPuffiness()
+    {
+        return this.dataManager.get(PUFF);
+    }
+
+    public void setPuffinessClient(int i)
     {
         this.puffiness = i;
+    }
+
+    public void setPuffiness(int i)
+    {
+        this.dataManager.set(PUFF, i);
     }
 
 	@Override
     protected void entityInit()
     {
         super.entityInit();
+        this.dataManager.register(PUFF, new Integer(0));
     }
 
     public void onUpdate()
     {
+    	this.setPuffinessClient(this.getPuffinessClient() - 1);
         this.setPuffiness(this.getPuffiness() - 1);
+
+        if (this.getPuffinessClient() < 0)
+        {
+        	this.setPuffinessClient(0);
+        }
 
         if (this.getPuffiness() < 0)
         {
@@ -155,6 +174,8 @@ public class EntityAerbunny extends EntityAetherAnimal
 
         if (this.getRidingEntity() != null && this.getRidingEntity() instanceof EntityPlayer)
         {
+        	EntityPlayer player = (EntityPlayer) this.getRidingEntity();
+
             if (this.worldObj.isRemote)
             {
                 for(int k = 0; k < 3; k++) 
@@ -169,22 +190,26 @@ public class EntityAerbunny extends EntityAetherAnimal
 
             this.getNavigator().clearPathEntity();
 
-            this.setRotation(this.getRidingEntity().rotationYaw, this.getRidingEntity().rotationPitch);
+            this.setRotation(player.rotationYaw, player.rotationPitch);
 
-            this.getRidingEntity().fallDistance = 0.0F;
+            player.fallDistance = 0.0F;
 
-            if(!this.getRidingEntity().onGround)
+            if(!player.onGround)
             {
-            	this.getRidingEntity().motionY += 0.05000000074505806D;
-                this.getRidingEntity().fallDistance = 0.0F;
+            	if (!player.capabilities.isFlying)
+            	{
+                	player.motionY += 0.05000000074505806D;
+            	}
 
-            	if (this.getRidingEntity().motionY < -0.22499999403953552D)
+            	player.fallDistance = 0.0F;
+
+            	if (player.motionY < -0.22499999403953552D)
             	{
             		if (PlayerAether.get((EntityPlayer) this.getRidingEntity()).isJumping())
             		{
-            			this.setPuffiness(11);
+            			this.setPuffinessClient(11);
             	        this.spawnExplosionParticle();
-                		this.getRidingEntity().motionY = 0.125D;
+            	        player.motionY = 0.125D;
             		}
             	}
             }

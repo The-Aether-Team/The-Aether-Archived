@@ -40,7 +40,7 @@ public class AerbunnyRenderer extends RenderLiving<EntityAerbunny>
             }
         }
 
-        this.model.puffiness = (float)entitybunny.getPuffiness() / 10.0F;
+        this.model.puffiness = (float)(entitybunny.getRidingEntity() != null ? entitybunny.getPuffinessClient() : entitybunny.getPuffiness()) / 10.0F;
     }
 
     protected void preRenderCallback(EntityAerbunny entitybunny, float f)
