@@ -93,7 +93,11 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
         {
         	if (stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool)
         	{
-        		spawnAsEntity(worldIn, pos, new ItemStack(ItemsAether.golden_amber, 1 + RANDOM.nextInt(2)));
+        		if (state.getValue(wood_type) == EnumLogType.Oak)
+        		{
+            		spawnAsEntity(worldIn, pos, new ItemStack(ItemsAether.golden_amber, 1 + RANDOM.nextInt(2)));
+        		}
+
         		defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
         	}
         	else if (stack.getItem() instanceof ItemSkyrootTool)
