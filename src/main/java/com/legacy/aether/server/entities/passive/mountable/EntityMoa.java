@@ -299,10 +299,9 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		if (this.getRemainingJumps() > 0 && this.motionY < 0.0D)
 		{
-			this.motionY = 0.6D;
-
 			if (!this.onGround)
 			{
+				this.motionY = 0.7D;
 				this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
 				if (!this.worldObj.isRemote)
@@ -314,6 +313,10 @@ public class EntityMoa extends EntitySaddleMount
 				{
 					this.spawnExplosionParticle();
 				}
+			}
+			else
+			{
+				this.motionY = 0.89D;
 			}
 		}
 	}
