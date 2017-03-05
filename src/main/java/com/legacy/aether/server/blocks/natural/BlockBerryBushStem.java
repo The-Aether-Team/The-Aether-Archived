@@ -2,6 +2,7 @@ package com.legacy.aether.server.blocks.natural;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
@@ -23,6 +24,12 @@ public class BlockBerryBushStem extends BlockAetherFlower
 		this.setHardness(1.0F);
 		this.setSoundType(SoundType.PLANT);
 	}
+
+    @SideOnly(Side.CLIENT)
+    public Block.EnumOffsetType getOffsetType()
+    {
+        return Block.EnumOffsetType.NONE;
+    }
 
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random random)
