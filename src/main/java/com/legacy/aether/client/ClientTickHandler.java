@@ -6,7 +6,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import com.legacy.aether.client.audio.music.AetherMusicTicker;
 import com.legacy.aether.client.gui.AetherLoadingScreen;
-import com.legacy.aether.server.AetherConfig;
 
 public class ClientTickHandler 
 {
@@ -30,7 +29,7 @@ public class ClientTickHandler
 					mc.loadingScreen = new AetherLoadingScreen(mc);
 				}
 
-				if (!mc.isGamePaused() && mc.thePlayer != null && mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
+				if (!mc.isGamePaused() && mc.thePlayer != null)
 				{
 					musicTicker.update();
 				}

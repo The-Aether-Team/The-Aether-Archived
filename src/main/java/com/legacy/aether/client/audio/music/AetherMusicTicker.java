@@ -11,6 +11,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.client.gui.menu.GuiAetherMainMenu;
+import com.legacy.aether.server.AetherConfig;
 import com.legacy.aether.server.registry.sounds.SoundsAether;
 
 @SideOnly(Side.CLIENT)
@@ -30,20 +32,28 @@ public class AetherMusicTicker implements ITickable
     {
        TrackType tracktype = this.getRandomTrack();
 
-        if (this.currentMusic != null)
+        if (this.mc.currentScreen instanceof GuiAetherMainMenu)
         {
-            if (!this.mc.getSoundHandler().isSoundPlaying(this.currentMusic))
-            {
-                this.currentMusic = null;
-                this.timeUntilNextMusic = Math.min(MathHelper.getRandomIntegerInRange(this.rand, tracktype.getMinDelay(), tracktype.getMaxDelay()), this.timeUntilNextMusic);
-            }
+        	tracktype = TrackType.TRACK_MENU;
         }
 
-        this.timeUntilNextMusic = Math.min(this.timeUntilNextMusic, tracktype.getMaxDelay());
-
-        if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0)
+        if (this.mc.thePlayer != null && this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID() || this.mc.currentScreen instanceof GuiAetherMainMenu)
         {
-            this.playMusic(tracktype);
+            if (this.currentMusic != null)
+            {
+                if (!this.mc.getSoundHandler().isSoundPlaying(this.currentMusic))
+                {
+                    this.currentMusic = null;
+                    this.timeUntilNextMusic = Math.min(MathHelper.getRandomIntegerInRange(this.rand, tracktype.getMinDelay(), tracktype.getMaxDelay()), this.timeUntilNextMusic);
+                }
+            }
+
+            this.timeUntilNextMusic = Math.min(this.timeUntilNextMusic, tracktype.getMaxDelay());
+
+            if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0)
+            {
+                this.playMusic(tracktype);
+            }
         }
     }
 
@@ -77,7 +87,8 @@ public class AetherMusicTicker implements ITickable
     	TRACK_ONE(SoundsAether.aether1, 1200, 1500),
     	TRACK_TWO(SoundsAether.aether2, 1200, 1500),
     	TRACK_THREE(SoundsAether.aether3, 1200, 1500),
-    	TRACK_FOUR(SoundsAether.aether4, 1200, 1500);
+    	TRACK_FOUR(SoundsAether.aether4, 1200, 1500),
+    	TRACK_MENU(SoundsAether.aether_menu, 0, 5);
 
         private final SoundEvent musicLocation;
         private final int minDelay;
