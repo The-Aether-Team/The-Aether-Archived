@@ -2,7 +2,6 @@ package com.legacy.aether.server.player;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandClearInventory;
-import net.minecraft.command.CommandException;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -188,13 +187,23 @@ public class PlayerAetherEvents
 	}
 
 	@SubscribeEvent
-	public void onCommandSentEvent(CommandEvent event) throws CommandException
+	public void onCommandSentEvent(CommandEvent event)
 	{
 		if (event.getCommand() instanceof CommandClearInventory)
 		{
 			if (event.getParameters().length <= 1)
 			{
-		        EntityPlayerMP entityplayermp = event.getParameters().length == 0 ? CommandBase.getCommandSenderAsPlayer(event.getSender()) : CommandBase.getPlayer(FMLCommonHandler.instance().getMinecraftServerInstance(), event.getSender(), event.getParameters()[0]);
+		        EntityPlayerMP entityplayermp = null;
+
+				try
+				{
+					entityplayermp = event.getParameters().length == 0 ? CommandBase.getCommandSenderAsPlayer(event.getSender()) : CommandBase.getPlayer(FMLCommonHandler.instance().getMinecraftServerInstance(), event.getSender(), event.getParameters()[0]);
+				} 
+		        catch (Throwable var9)
+		        {
+		            return;
+		        }
+
 				PlayerAether playerAether = PlayerAether.get(entityplayermp);
 
 				if (playerAether != null)
