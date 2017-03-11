@@ -27,7 +27,7 @@ public class BlockBerryBush extends BlockAetherFlower
 	public BlockBerryBush()
 	{
 		this.FLOWER_AABB = new AxisAlignedBB(0F, 0F, 0F, 1.0F, 1.0F, 1.0F);
-		this.setHardness(1.0F);
+		this.setHardness(0.2F);
 		this.setSoundType(SoundType.PLANT);
 	}
 
