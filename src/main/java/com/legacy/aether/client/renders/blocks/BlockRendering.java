@@ -24,12 +24,12 @@ public class BlockRendering
 
 	public static void initialize()
 	{
-		register(BlocksAether.aether_grass, "aether_grass");
-		register(BlocksAether.aether_dirt, "aether_dirt");
-		register(BlocksAether.holystone, "holystone");
-		register(BlocksAether.mossy_holystone, "mossy_holystone");
-		register(BlocksAether.quicksoil, "quicksoil");
-		register(BlocksAether.ambrosium_ore, "ambrosium_ore");
+		registerD(BlocksAether.aether_grass, "aether_grass");
+		registerD(BlocksAether.aether_dirt, "aether_dirt");
+		registerD(BlocksAether.holystone, "holystone");
+		registerD(BlocksAether.mossy_holystone, "mossy_holystone");
+		registerD(BlocksAether.quicksoil, "quicksoil");
+		registerD(BlocksAether.ambrosium_ore, "ambrosium_ore");
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
 		register(BlocksAether.holystone_brick, "holystone_brick");
 		register(BlocksAether.icestone, "icestone");
@@ -137,6 +137,12 @@ public class BlockRendering
 		registerColor(BlocksAether.aercloud);
 
 		AetherEntityRenderingRegistry.registerTileEntities();
+	}
+
+	public static void registerD(Block block, String model)
+	{
+		register(block, 0, model);
+		register(block, 1, model);
 	}
 
 	public static void register(Block block, String model)
