@@ -13,10 +13,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiButtonLanguage;
 import net.minecraft.client.gui.GuiLanguage;
-import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;
@@ -119,7 +117,7 @@ public class GuiAetherMainMenu extends GuiScreen
     {
     	if (this.mc.thePlayer != null)
     	{
-    		AetherNetworkingManager.sendToServer(new PacketGameType(GameType.SURVIVAL));
+    		AetherNetworkingManager.sendToServer(new PacketGameType(GameType.SPECTATOR));
     	}
 
         Calendar calendar = Calendar.getInstance();
