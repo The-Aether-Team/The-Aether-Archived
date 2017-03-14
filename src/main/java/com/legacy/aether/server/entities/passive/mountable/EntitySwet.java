@@ -573,7 +573,14 @@ public class EntitySwet extends EntityMountable
 
 	public boolean isFriendly()
 	{
-		return this.dataManager.get(FRIENDLY);
+		Object obj = this.dataManager.get(FRIENDLY);
+
+		if (!(obj instanceof Boolean))
+		{
+			return false;
+		}
+
+		return (Boolean) obj;
 	}
 
 	private void setFriendly(boolean friendly)
