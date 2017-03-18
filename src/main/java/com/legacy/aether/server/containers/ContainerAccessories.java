@@ -8,13 +8,13 @@ import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Loader;
 
 import com.legacy.aether.server.containers.inventory.InventoryAccessories;
 import com.legacy.aether.server.containers.slots.SlotAccessory;
 import com.legacy.aether.server.containers.util.AccessoryType;
 import com.legacy.aether.server.items.accessories.ItemAccessory;
 import com.legacy.aether.server.player.PlayerAether;
+import com.legacy.aether.universal.AetherCompatibility;
 
 public class ContainerAccessories extends ContainerPlayer
 {
@@ -37,7 +37,7 @@ public class ContainerAccessories extends ContainerPlayer
 		{
 			if (slot.slotNumber == 0)
 			{
-				if (!Loader.isModLoaded("inventorytweaks"))
+				if (!AetherCompatibility.visualModsLoaded())
 				{
 					slot.yDisplayPosition += 34;
 					slot.xDisplayPosition -= 11;
@@ -50,7 +50,7 @@ public class ContainerAccessories extends ContainerPlayer
 			}
 			else if (slot.slotNumber > 0 && slot.slotNumber < 5)
 			{
-				if (!Loader.isModLoaded("inventorytweaks"))
+				if (!AetherCompatibility.visualModsLoaded())
 				{
 					slot.yDisplayPosition -= 10;
 					slot.xDisplayPosition += 36;

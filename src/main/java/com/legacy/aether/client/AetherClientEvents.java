@@ -1,21 +1,16 @@
 package com.legacy.aether.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.network.play.client.CPacketClientStatus;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
-import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.PotionShiftEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
@@ -118,25 +113,6 @@ public class AetherClientEvents
 		for (int i = 0; i < InventoryAccessories.EMPTY_SLOT_NAMES.length; ++i)
 		{
 			event.getMap().registerSprite(new ResourceLocation("aether_legacy", "items/slots/" + InventoryAccessories.EMPTY_SLOT_NAMES[i]));
-		}
-	}
-
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onGuiRender(InitGuiEvent.Post event)
-	{
-		ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
-
-		for (int size = 0; size < event.getButtonList().size(); ++size)
-		{
-			GuiButton button = event.getButtonList().get(size);
-
-			if (Loader.isModLoaded("Baubles"))
-			{
-				if (button.id == 55)
-				{
-					button.xPosition = (resolution.getScaledWidth() / 2) - 39;
-				}
-			}
 		}
 	}
 

@@ -2,7 +2,9 @@ package com.legacy.aether.client.gui.inventory;
 
 import java.io.IOException;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
@@ -13,6 +15,7 @@ import com.legacy.aether.client.gui.button.GuiButtonPerks;
 import com.legacy.aether.server.containers.ContainerAccessories;
 import com.legacy.aether.server.player.PlayerAether;
 import com.legacy.aether.server.player.perks.AetherRankings;
+import com.legacy.aether.universal.AetherCompatibility;
 
 public class GuiAccessories extends GuiInventory
 {
@@ -43,6 +46,37 @@ public class GuiAccessories extends GuiInventory
 	}
 
 	@Override
+    public void setWorldAndResolution(Minecraft mc, int width, int height)
+    {
+    	super.setWorldAndResolution(mc, width, height);
+
+		for (int size = 0; size < this.buttonList.size(); ++size)
+		{
+			GuiButton button = this.buttonList.get(size);
+			int id = button.id;
+
+			if (id == 13211)
+			{
+				this.setButtonPosition(button, this.width / 2 + 65, this.height / 2 - 23);
+			}
+
+			if (Loader.isModLoaded("Baubles"))
+			{
+				if (id == 55)
+				{
+					button.xPosition = (new ScaledResolution(mc).getScaledWidth() / 2) - 39;
+				}
+			}
+		}
+    }
+
+	private void setButtonPosition(GuiButton button, int xPosition, int yPosition)
+	{
+		button.xPosition = xPosition;
+		button.yPosition = yPosition;
+	}
+
+	@Override
     protected void actionPerformed(GuiButton button) throws IOException
     {
     	if (button.id == 24)
@@ -62,7 +96,7 @@ public class GuiAccessories extends GuiInventory
 	{
 		GL11.glColor3d(1.0D, 1.0D, 1.0D);
 
-		this.mc.renderEngine.bindTexture(Loader.isModLoaded("inventorytweaks") ? ACCESSORIES_SHIFTED : ACCESSORIES);
+		this.mc.renderEngine.bindTexture(AetherCompatibility.visualModsLoaded() ? ACCESSORIES_SHIFTED : ACCESSORIES);
 
 		this.drawTexturedModalRect(this.width / 2 - 88, this.height / 2 - 166 / 2, 0, 0, 176, 166);
 
