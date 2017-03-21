@@ -159,31 +159,49 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         super.onUpdate();
 
         this.velocity = 0.5D - (double)this.getHealth() / 70.0D * 0.2D;
-        this.width = 2F;
-        this.height = 2F;
+        this.width = this.height = 2.0F;
 
-    	if(this.getAttackTarget() != null && this.getAttackTarget() instanceof EntityPlayer)
-    	{
-    		EntityPlayer player = (EntityPlayer)this.getAttackTarget();
-    		PlayerAether playerAether = PlayerAether.get(player);
-
-    		if (playerAether != null)
-    		{
-    			if (!player.isDead)
-    			{
-    				playerAether.setCurrentBoss(this);
-    			}
-    		}
-    	}
-
-        if (this.hurtTime > 0)
+        if (this.getAttackTarget() instanceof EntityPlayer)
         {
-        	this.setFreezing(true);
+        	EntityPlayer player = (EntityPlayer) this.getAttackTarget();
+        	PlayerAether playerAether = PlayerAether.get(player);
+
+        	if (player.isDead)
+        	{
+                this.setPosition((double)this.originPointX + 0.5D, (double)this.originPointY, (double)this.originPointZ + 0.5D);
+
+                this.chatLog = 10;
+
+                this.motionX = this.motionY = this.motionZ = 0.0D;
+
+                this.chatLine(player, "\u00a7cSuch is the fate of a being who opposes the might of the sun.");
+                this.chatCount = 100;
+
+                this.setPosition((double)this.originPointX + 0.5D, (double)this.originPointY, (double)this.originPointZ + 0.5D);
+                this.setDoor(Blocks.AIR.getDefaultState());
+
+                this.setFreezing(false);
+                this.setAttackTarget(null);
+                this.setHealth(this.getMaxHealth());
+        	}
+        	else
+        	{
+				playerAether.setCurrentBoss(this);
+        	}
+
+        	if (this.isDead())
+        	{
+                this.chatLine(player, "\u00a7bSuch bitter cold... is this the feeling... of pain?");
+                this.chatCount = 100;
+
+                player.addStat(AchievementsAether.defeat_gold);
+
+                this.setDoor(Blocks.AIR.getDefaultState());
+                this.unlockTreasure();	
+        	}
         }
-        else
-        {
-        	this.setFreezing(false);
-        }
+
+        this.setFreezing(this.hurtTime > 0);
 
         if (this.getHealth() > 0)
         {
@@ -197,48 +215,13 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             this.evapWater();
         }
 
-        if (this.isDead())
-        {
-    		if (this.getAttackTarget() instanceof EntityPlayer)
-    		{
-            	EntityPlayer player = (EntityPlayer)this.getAttackTarget();
-
-                this.chatLine(player, "\u00a7bSuch bitter cold... is this the feeling... of pain?");
-                this.chatCount = 100;
-
-                player.addStat(AchievementsAether.defeat_gold);
-    		}
-
-            this.setDoor(Blocks.AIR.getDefaultState());
-            this.unlockTreasure();	
-        }
-
-        if (this.getAttackTarget() != null && this.getAttackTarget().isDead && this.getAttackTarget() instanceof EntityPlayer)
-        {
-        	EntityPlayer player = (EntityPlayer)this.getAttackTarget();
-
-            this.setPosition((double)this.originPointX + 0.5D, (double)this.originPointY, (double)this.originPointZ + 0.5D);
-
-            this.chatLog = 10;
-
-            this.motionX = this.motionY = this.motionZ = 0.0D;
-
-            this.chatLine(player, "\u00a7cSuch is the fate of a being who opposes the might of the sun.");
-            this.chatCount = 100;
-
-            this.setDoor(Blocks.AIR.getDefaultState());
-
-            this.setFreezing(false);
-            this.setAttackTarget(null);
-            this.setHealth(this.getMaxHealth());
-        }
-
         if (this.chatCount > 0)
         {
             --this.chatCount;
         }
     }
 
+    @Override
     public void updateAITasks()
     {
         super.updateAITasks();
@@ -534,7 +517,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        if (source.getEntity() != null && source.getEntity() instanceof EntityIceyBall)
+        if (source.getEntity() instanceof EntityIceyBall)
         {
             this.velocity = 0.5D - (double)this.getHealth() / 70.0D * 0.2D;
             boolean flag = super.attackEntityFrom(source, amount);
@@ -593,7 +576,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (z = this.originPointZ - 1; z < this.originPointZ + 2; ++z)
                 {
-                    this.worldObj.setBlockState(new BlockPos(this.originPointX + (this.direction == 0 ? -11 : 11), y, z), block, 2);
+                	BlockPos pos = new BlockPos(this.originPointX + (this.direction == 0 ? -11 : 11), y, z);
+
+                	if (this.worldObj.getBlockState(pos).getBlock() != block.getBlock())
+                    this.worldObj.setBlockState(pos, block, 2);
                 }
             }
         }
@@ -603,7 +589,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (x = this.originPointX - 1; x < this.originPointX + 2; ++x)
                 {
-                    this.worldObj.setBlockState(new BlockPos(x, y, this.originPointZ + (this.direction == 3 ? 11 : -11)), block, 2);
+                	BlockPos pos = new BlockPos(x, y, this.originPointZ + (this.direction == 3 ? 11 : -11));
+
+                	if (this.worldObj.getBlockState(pos).getBlock() != block.getBlock())
+                    this.worldObj.setBlockState(pos, block, 2);
                 }
             }
         }
