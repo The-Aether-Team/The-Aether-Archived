@@ -7,9 +7,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.client.audio.music.AetherMusicTicker;
 import com.legacy.aether.server.AetherConfig;
 import com.legacy.aether.server.registry.sounds.SoundsAether;
 
@@ -18,16 +20,37 @@ public class AetherMusicHandler
 
 	private Minecraft mc = Minecraft.getMinecraft();
 
+	private AetherMusicTicker musicTicker = new AetherMusicTicker(mc);
+
+	@SubscribeEvent
+	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
+	{
+		TickEvent.Phase phase = event.phase;
+		TickEvent.Type type = event.type;
+
+		if (phase == TickEvent.Phase.END)
+		{
+			if (type.equals(TickEvent.Type.CLIENT))
+			{
+				if (!mc.isGamePaused() && mc.thePlayer != null)
+				{
+					musicTicker.update();
+				}
+			}
+		}
+	}
+
 	@SubscribeEvent
 	public void onMusicControl(PlaySoundEvent event)
 	{
-		SoundCategory category = event.getSound().getCategory();
+		ISound sound = event.getSound();
+		SoundCategory category = sound.getCategory();
 
 		if (category == SoundCategory.MUSIC)
 		{
-			if (this.mc.thePlayer != null)
+			if (this.mc.thePlayer != null && this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
 			{
-				if (!event.getSound().getSoundLocation().getResourceDomain().contains("aether_legacy") && this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
+				if (this.musicTicker.playingMusic() && !sound.getSoundLocation().getResourceDomain().contains("aether_legacy"))
 				{
 					event.setResultSound(null);
 

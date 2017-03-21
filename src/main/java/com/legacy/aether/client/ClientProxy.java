@@ -49,7 +49,6 @@ public class ClientProxy extends ServerProxy
 		}
 
 		registerEvent(new AetherMusicHandler());
-		registerEvent(new ClientTickHandler());
 	}
 
 	@Override

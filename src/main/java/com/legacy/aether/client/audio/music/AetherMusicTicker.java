@@ -32,11 +32,6 @@ public class AetherMusicTicker implements ITickable
     {
        TrackType tracktype = this.getRandomTrack();
 
-        if (this.mc.currentScreen instanceof GuiAetherMainMenu)
-        {
-        	tracktype = TrackType.TRACK_MENU;
-        }
-
         if (this.mc.thePlayer != null && this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID() || this.mc.currentScreen instanceof GuiAetherMainMenu)
         {
             if (this.currentMusic != null)
@@ -55,6 +50,11 @@ public class AetherMusicTicker implements ITickable
                 this.playMusic(tracktype);
             }
         }
+    }
+
+    public boolean playingMusic()
+    {
+    	return this.currentMusic != null;
     }
 
     public AetherMusicTicker.TrackType getRandomTrack()
@@ -87,8 +87,7 @@ public class AetherMusicTicker implements ITickable
     	TRACK_ONE(SoundsAether.aether1, 1200, 1500),
     	TRACK_TWO(SoundsAether.aether2, 1200, 1500),
     	TRACK_THREE(SoundsAether.aether3, 1200, 1500),
-    	TRACK_FOUR(SoundsAether.aether4, 1200, 1500),
-    	TRACK_MENU(SoundsAether.aether_menu, 0, 5);
+    	TRACK_FOUR(SoundsAether.aether4, 1200, 1500);
 
         private final SoundEvent musicLocation;
         private final int minDelay;

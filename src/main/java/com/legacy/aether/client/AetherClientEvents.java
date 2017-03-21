@@ -12,8 +12,10 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
+import com.legacy.aether.client.gui.AetherLoadingScreen;
 import com.legacy.aether.client.gui.inventory.GuiAccessories;
 import com.legacy.aether.server.containers.inventory.InventoryAccessories;
 import com.legacy.aether.server.items.ItemsAether;
@@ -24,6 +26,25 @@ import com.legacy.aether.server.player.PlayerAether;
 
 public class AetherClientEvents 
 {
+
+	@SubscribeEvent
+	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
+	{
+		Minecraft mc = Minecraft.getMinecraft();
+		TickEvent.Phase phase = event.phase;
+		TickEvent.Type type = event.type;
+
+		if (phase == TickEvent.Phase.END)
+		{
+			if (type.equals(TickEvent.Type.CLIENT))
+			{
+				if (!(mc.loadingScreen instanceof AetherLoadingScreen))
+				{
+					mc.loadingScreen = new AetherLoadingScreen(mc);
+				}
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void onInventoryKeyPressed(KeyInputEvent event)
