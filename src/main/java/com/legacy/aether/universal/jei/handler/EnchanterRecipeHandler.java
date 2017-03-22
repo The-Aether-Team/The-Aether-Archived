@@ -1,6 +1,6 @@
 package com.legacy.aether.universal.jei.handler;
 
-import com.legacy.aether.server.registry.objects.AetherEnchantment;
+import com.legacy.aether.common.registry.objects.AetherEnchantment;
 import com.legacy.aether.universal.jei.wrapper.EnchanterRecipeWrapper;
 
 import mezz.jei.api.recipe.IRecipeHandler;

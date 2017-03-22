@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.MimicModel;
-import com.legacy.aether.server.entities.hostile.EntityMimic;
+import com.legacy.aether.common.entities.hostile.EntityMimic;
 
 public class MimicRenderer extends RenderLiving<EntityMimic>
 {

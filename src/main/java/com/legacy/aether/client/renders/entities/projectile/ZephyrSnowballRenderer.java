@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.legacy.aether.server.entities.projectile.EntityZephyrSnowball;
+import com.legacy.aether.common.entities.projectile.EntityZephyrSnowball;
 
 public class ZephyrSnowballRenderer extends Render<EntityZephyrSnowball>
 {

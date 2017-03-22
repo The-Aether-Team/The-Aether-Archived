@@ -9,8 +9,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
-import com.legacy.aether.server.containers.ContainerEnchanter;
-import com.legacy.aether.server.tile_entities.TileEntityEnchanter;
+import com.legacy.aether.common.containers.ContainerEnchanter;
+import com.legacy.aether.common.tile_entities.TileEntityEnchanter;
 
 @SideOnly(Side.CLIENT)
 public class GuiEnchanter extends GuiContainer

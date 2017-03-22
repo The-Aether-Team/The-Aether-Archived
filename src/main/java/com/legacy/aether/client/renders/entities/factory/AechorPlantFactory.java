@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.AechorPlantRenderer;
-import com.legacy.aether.server.entities.hostile.EntityAechorPlant;
+import com.legacy.aether.common.entities.hostile.EntityAechorPlant;
 
 public class AechorPlantFactory implements IRenderFactory<EntityAechorPlant>
 {

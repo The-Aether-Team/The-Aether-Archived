@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
-import com.legacy.aether.server.entities.passive.mountable.EntityPhyg;
+import com.legacy.aether.common.entities.passive.mountable.EntityPhyg;
 
 public class PhygWingModel extends ModelBase
 {

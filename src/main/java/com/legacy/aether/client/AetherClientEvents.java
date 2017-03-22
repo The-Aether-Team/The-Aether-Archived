@@ -17,13 +17,13 @@ import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 import com.legacy.aether.client.gui.AetherLoadingScreen;
 import com.legacy.aether.client.gui.inventory.GuiAccessories;
-import com.legacy.aether.server.AetherConfig;
-import com.legacy.aether.server.containers.inventory.InventoryAccessories;
-import com.legacy.aether.server.items.ItemsAether;
-import com.legacy.aether.server.networking.AetherGuiHandler;
-import com.legacy.aether.server.networking.AetherNetworkingManager;
-import com.legacy.aether.server.networking.packets.PacketOpenContainer;
-import com.legacy.aether.server.player.PlayerAether;
+import com.legacy.aether.common.AetherConfig;
+import com.legacy.aether.common.containers.inventory.InventoryAccessories;
+import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.networking.AetherGuiHandler;
+import com.legacy.aether.common.networking.AetherNetworkingManager;
+import com.legacy.aether.common.networking.packets.PacketOpenContainer;
+import com.legacy.aether.common.player.PlayerAether;
 
 public class AetherClientEvents 
 {

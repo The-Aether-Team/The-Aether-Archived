@@ -18,8 +18,8 @@ import com.legacy.aether.client.gui.menu.AetherMenuHandler;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.blocks.BlockRendering;
 import com.legacy.aether.client.renders.items.ItemRendering;
-import com.legacy.aether.server.AetherConfig;
-import com.legacy.aether.server.ServerProxy;
+import com.legacy.aether.common.AetherConfig;
+import com.legacy.aether.common.ServerProxy;
 
 public class ClientProxy extends ServerProxy
 {

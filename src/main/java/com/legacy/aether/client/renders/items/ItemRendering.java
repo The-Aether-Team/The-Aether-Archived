@@ -10,14 +10,14 @@ import net.minecraft.util.ResourceLocation;
 import com.legacy.aether.client.renders.items.definitions.NotchHammerDefinition;
 import com.legacy.aether.client.renders.items.definitions.PhoenixBowDefinition;
 import com.legacy.aether.client.renders.items.util.AetherColor;
-import com.legacy.aether.server.Aether;
-import com.legacy.aether.server.entities.util.MoaColor;
-import com.legacy.aether.server.items.ItemsAether;
-import com.legacy.aether.server.items.util.EnumDartShooterType;
-import com.legacy.aether.server.items.util.EnumDartType;
-import com.legacy.aether.server.items.util.EnumDungeonKeyType;
-import com.legacy.aether.server.items.util.EnumGummySwetType;
-import com.legacy.aether.server.items.util.EnumSkyrootBucketType;
+import com.legacy.aether.common.Aether;
+import com.legacy.aether.common.entities.util.MoaColor;
+import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.items.util.EnumDartShooterType;
+import com.legacy.aether.common.items.util.EnumDartType;
+import com.legacy.aether.common.items.util.EnumDungeonKeyType;
+import com.legacy.aether.common.items.util.EnumGummySwetType;
+import com.legacy.aether.common.items.util.EnumSkyrootBucketType;
 
 public class ItemRendering
 {

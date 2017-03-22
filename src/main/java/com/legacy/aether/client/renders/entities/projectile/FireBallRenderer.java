@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.CrystalModel;
-import com.legacy.aether.server.entities.projectile.crystals.EntityFireBall;
+import com.legacy.aether.common.entities.projectile.crystals.EntityFireBall;
 
 public class FireBallRenderer extends RenderLiving<EntityFireBall>
 {

@@ -14,17 +14,17 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.server.entities.bosses.slider.EntitySlider;
-import com.legacy.aether.server.entities.bosses.sun_spirit.EntitySunSpirit;
-import com.legacy.aether.server.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
-import com.legacy.aether.server.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.server.items.ItemsAether;
-import com.legacy.aether.server.player.PlayerAether;
+import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.common.entities.bosses.slider.EntitySlider;
+import com.legacy.aether.common.entities.bosses.sun_spirit.EntitySunSpirit;
+import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.player.PlayerAether;
 
 @SideOnly(Side.CLIENT)
 public class AetherOverlay
@@ -244,7 +244,7 @@ public class AetherOverlay
         GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         GlStateManager.color(1.0F, 1.0F, 1.0F, timeInPortal);
         Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        TextureAtlasSprite textureatlassprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(Blocks.PORTAL.getDefaultState());
+        TextureAtlasSprite textureatlassprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(BlocksAether.aether_portal.getDefaultState());
         float f = textureatlassprite.getMinU();
         float f1 = textureatlassprite.getMinV();
         float f2 = textureatlassprite.getMaxU();

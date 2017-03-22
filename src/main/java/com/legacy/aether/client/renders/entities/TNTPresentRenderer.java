@@ -9,8 +9,8 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
-import com.legacy.aether.server.blocks.BlocksAether;
-import com.legacy.aether.server.entities.block.EntityTNTPresent;
+import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.common.entities.block.EntityTNTPresent;
 
 public class TNTPresentRenderer extends Render<EntityTNTPresent>
 {

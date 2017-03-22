@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.FlyingCowWingModel;
-import com.legacy.aether.server.entities.passive.mountable.EntityFlyingCow;
+import com.legacy.aether.common.entities.passive.mountable.EntityFlyingCow;
 
 public class FlyingCowWingLayer implements LayerRenderer<EntityFlyingCow> 
 {

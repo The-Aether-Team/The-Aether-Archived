@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.PhygRenderer;
-import com.legacy.aether.server.entities.passive.mountable.EntityPhyg;
+import com.legacy.aether.common.entities.passive.mountable.EntityPhyg;
 
 public class PhygFactory implements IRenderFactory<EntityPhyg>
 {

@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-import com.legacy.aether.server.entities.hostile.EntitySentry;
+import com.legacy.aether.common.entities.hostile.EntitySentry;
 
 public class SentryLayer implements LayerRenderer<EntitySentry>
 {

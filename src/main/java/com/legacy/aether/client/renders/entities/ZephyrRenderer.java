@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.ZephyrModel;
-import com.legacy.aether.server.entities.hostile.EntityZephyr;
+import com.legacy.aether.common.entities.hostile.EntityZephyr;
 
 public class ZephyrRenderer extends RenderLiving<EntityZephyr> 
 {

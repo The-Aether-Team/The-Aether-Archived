@@ -15,10 +15,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
-import com.legacy.aether.server.containers.inventory.InventoryAccessories;
-import com.legacy.aether.server.items.ItemsAether;
-import com.legacy.aether.server.items.accessories.ItemAccessory;
-import com.legacy.aether.server.player.PlayerAether;
+import com.legacy.aether.common.containers.inventory.InventoryAccessories;
+import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.items.accessories.ItemAccessory;
+import com.legacy.aether.common.player.PlayerAether;
 
 public class FirstPersonRenderer 
 {

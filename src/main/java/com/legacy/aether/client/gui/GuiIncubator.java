@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.legacy.aether.server.containers.ContainerIncubator;
-import com.legacy.aether.server.tile_entities.TileEntityIncubator;
+import com.legacy.aether.common.containers.ContainerIncubator;
+import com.legacy.aether.common.tile_entities.TileEntityIncubator;
 
 public class GuiIncubator extends GuiContainer
 {

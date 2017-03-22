@@ -12,9 +12,9 @@ import net.minecraftforge.fml.common.Loader;
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.gui.button.GuiButtonPerks;
-import com.legacy.aether.server.containers.ContainerAccessories;
-import com.legacy.aether.server.player.PlayerAether;
-import com.legacy.aether.server.player.perks.AetherRankings;
+import com.legacy.aether.common.containers.ContainerAccessories;
+import com.legacy.aether.common.player.PlayerAether;
+import com.legacy.aether.common.player.perks.AetherRankings;
 import com.legacy.aether.universal.AetherCompatibility;
 
 public class GuiAccessories extends GuiInventory

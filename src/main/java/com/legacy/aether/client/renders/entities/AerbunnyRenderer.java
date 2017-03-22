@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.models.entities.AerbunnyModel;
-import com.legacy.aether.server.entities.passive.mountable.EntityAerbunny;
+import com.legacy.aether.common.entities.passive.mountable.EntityAerbunny;
 
 public class AerbunnyRenderer extends RenderLiving<EntityAerbunny> 
 {

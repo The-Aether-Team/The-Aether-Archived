@@ -13,11 +13,11 @@ import net.minecraft.util.math.MathHelper;
 
 import com.legacy.aether.client.models.attachments.ModelAetherWings;
 import com.legacy.aether.client.models.attachments.ModelHalo;
-import com.legacy.aether.server.containers.inventory.InventoryAccessories;
-import com.legacy.aether.server.items.ItemsAether;
-import com.legacy.aether.server.items.accessories.ItemAccessory;
-import com.legacy.aether.server.player.PlayerAether;
-import com.legacy.aether.server.player.perks.AetherRankings;
+import com.legacy.aether.common.containers.inventory.InventoryAccessories;
+import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.items.accessories.ItemAccessory;
+import com.legacy.aether.common.player.PlayerAether;
+import com.legacy.aether.common.player.perks.AetherRankings;
 
 public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 {

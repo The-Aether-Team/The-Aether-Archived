@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.legacy.aether.server.registry.AetherRegistry;
-import com.legacy.aether.server.registry.objects.AetherEnchantment;
+import com.legacy.aether.common.registry.AetherRegistry;
+import com.legacy.aether.common.registry.objects.AetherEnchantment;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;

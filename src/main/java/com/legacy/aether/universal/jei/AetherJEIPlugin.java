@@ -8,8 +8,8 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import net.minecraft.item.ItemStack;
 
-import com.legacy.aether.server.blocks.BlocksAether;
-import com.legacy.aether.server.registry.AetherRegistry;
+import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.common.registry.AetherRegistry;
 import com.legacy.aether.universal.jei.category.EnchanterRecipeCategory;
 import com.legacy.aether.universal.jei.category.FreezerRecipeCategory;
 import com.legacy.aether.universal.jei.handler.EnchanterRecipeHandler;

@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.SunSpiritModel;
-import com.legacy.aether.server.entities.bosses.sun_spirit.EntitySunSpirit;
+import com.legacy.aether.common.entities.bosses.sun_spirit.EntitySunSpirit;
 
 public class SunSpiritRenderer extends RenderBiped<EntitySunSpirit>
 {

@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.AerwhaleRenderer;
-import com.legacy.aether.server.entities.passive.EntityAerwhale;
+import com.legacy.aether.common.entities.passive.EntityAerwhale;
 
 public class AerwhaleFactory implements IRenderFactory<EntityAerwhale> 
 {

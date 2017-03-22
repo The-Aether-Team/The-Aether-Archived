@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-import com.legacy.aether.server.entities.bosses.sun_spirit.EntitySunSpirit;
+import com.legacy.aether.common.entities.bosses.sun_spirit.EntitySunSpirit;
 
 public class SunSpiritModel extends ModelBiped
 {

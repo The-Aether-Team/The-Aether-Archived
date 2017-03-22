@@ -8,11 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-import com.legacy.aether.server.blocks.BlocksAether;
-import com.legacy.aether.server.blocks.natural.BlockAercloud;
-import com.legacy.aether.server.items.ItemMoaEgg;
-import com.legacy.aether.server.items.accessories.ItemAccessory;
-import com.legacy.aether.server.items.armor.ItemAetherArmor;
+import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.common.blocks.natural.BlockAercloud;
+import com.legacy.aether.common.items.ItemMoaEgg;
+import com.legacy.aether.common.items.accessories.ItemAccessory;
+import com.legacy.aether.common.items.armor.ItemAetherArmor;
 
 public class AetherColor implements IItemColor, IBlockColor
 {

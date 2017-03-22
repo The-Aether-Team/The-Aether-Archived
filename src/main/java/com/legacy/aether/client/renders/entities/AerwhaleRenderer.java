@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.AerwhaleModel;
-import com.legacy.aether.server.entities.passive.EntityAerwhale;
+import com.legacy.aether.common.entities.passive.EntityAerwhale;
 
 public class AerwhaleRenderer extends Render<EntityAerwhale>
 {

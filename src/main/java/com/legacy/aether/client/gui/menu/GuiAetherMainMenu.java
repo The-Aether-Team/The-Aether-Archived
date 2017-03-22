@@ -31,8 +31,8 @@ import com.legacy.aether.client.gui.button.GuiAetherButton;
 import com.legacy.aether.client.gui.button.GuiDescButton;
 import com.legacy.aether.client.gui.menu.hook.GuiMultiplayerHook;
 import com.legacy.aether.client.gui.menu.hook.GuiWorldSelectionHook;
-import com.legacy.aether.server.networking.AetherNetworkingManager;
-import com.legacy.aether.server.networking.packets.PacketGameType;
+import com.legacy.aether.common.networking.AetherNetworkingManager;
+import com.legacy.aether.common.networking.packets.PacketGameType;
 
 public class GuiAetherMainMenu extends GuiScreen
 {

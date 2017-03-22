@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.projectile.ZephyrSnowballRenderer;
-import com.legacy.aether.server.entities.projectile.EntityZephyrSnowball;
+import com.legacy.aether.common.entities.projectile.EntityZephyrSnowball;
 
 public class ZephyrSnowballFactory implements IRenderFactory<EntityZephyrSnowball>
 {

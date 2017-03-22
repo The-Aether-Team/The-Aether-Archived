@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.projectile.LightningKnifeRenderer;
-import com.legacy.aether.server.entities.projectile.EntityLightningKnife;
+import com.legacy.aether.common.entities.projectile.EntityLightningKnife;
 
 public class LightningKnifeFactory implements IRenderFactory<EntityLightningKnife> 
 {

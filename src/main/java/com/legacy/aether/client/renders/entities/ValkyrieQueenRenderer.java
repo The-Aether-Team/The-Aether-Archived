@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.ValkyrieModel;
-import com.legacy.aether.server.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
 
 public class ValkyrieQueenRenderer extends RenderLiving<EntityValkyrieQueen> 
 {
