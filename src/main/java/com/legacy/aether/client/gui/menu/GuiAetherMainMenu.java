@@ -186,15 +186,25 @@ public class GuiAetherMainMenu extends GuiScreen
 
 	private void drawFooter()
 	{
-        String version = "Minecraft 1.10.2";
-	    String copyright = "Copyright Mojang AB. Do not distribute.";
-	    String modTitle = "Aether Pre-1.10.2";
-	    String modSubtitle = "Creation of Gilded Games";
+        String s = "Minecraft 1.10.2";
 
-		drawString(fontRendererObj, version, width - fontRendererObj.getStringWidth(version) - 5, height - 20, 0xFFFFFF);
-		drawString(fontRendererObj, copyright, width - fontRendererObj.getStringWidth(copyright) - 5, height - 10, 0x707070);
-		drawString(fontRendererObj, modTitle, 5, height - 20, 0xFFFFFF);
-		drawString(fontRendererObj, modSubtitle, 5, height - 10, 0x707070);
+        if (this.mc.isDemo())
+        {
+            s = s + " Demo";
+        }
+
+        java.util.List<String> brandings = com.google.common.collect.Lists.reverse(net.minecraftforge.fml.common.FMLCommonHandler.instance().getBrandings(true));
+        for (int brdline = 0; brdline < brandings.size(); brdline++)
+        {
+            String brd = brandings.get(brdline);
+            if (!com.google.common.base.Strings.isNullOrEmpty(brd))
+            {
+                this.drawString(this.fontRendererObj, brd, 2, this.height - ( 10 + brdline * (this.fontRendererObj.FONT_HEIGHT + 1)), 16777215);
+            }
+        }
+
+        String s1 = "Copyright Mojang AB. Do not distribute!";
+        this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, -1);
 	}
 
     protected void actionPerformed(GuiButton button) throws IOException
