@@ -127,6 +127,8 @@ public class SunSpiritModel extends ModelBiped
     	this.bipedHead.rotateAngleX = headPitch / 57.29578F;
     	this.bipedHeadwear.rotateAngleY = this.bipedHead.rotateAngleY;
     	this.bipedHeadwear.rotateAngleX = this.bipedHead.rotateAngleX;
+        this.bipedRightArm.rotateAngleX = this.bipedRightArm.rotateAngleY = this.bipedRightArm.rotateAngleZ = 0.0F;
+        this.bipedLeftArm.rotateAngleX = this.bipedLeftArm.rotateAngleZ = this.bipedLeftArm.rotateAngleY = 0.0F;
 
         this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
         this.bipedLeftArm.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
@@ -136,16 +138,13 @@ public class SunSpiritModel extends ModelBiped
         this.bipedBody4.rotateAngleX = this.bipedBody3.rotateAngleX = this.bipedBody2.rotateAngleX = this.bipedBody.rotateAngleX;
         this.bipedBody4.rotateAngleY = this.bipedBody3.rotateAngleY = this.bipedBody2.rotateAngleY = this.bipedBody.rotateAngleY;
 
-        this.bipedLeftArm3.rotateAngleX = this.bipedLeftArm2.rotateAngleX = this.bipedLeftArm.rotateAngleX;
-        this.bipedLeftArm3.rotateAngleY = this.bipedLeftArm2.rotateAngleY = this.bipedLeftArm.rotateAngleY;
-        this.bipedLeftArm3.rotateAngleZ = this.bipedLeftArm2.rotateAngleZ = this.bipedLeftArm.rotateAngleZ;
+        this.bipedLeftArm3.rotateAngleX = this.bipedLeftArm2.rotateAngleX = -this.bipedLeftArm.rotateAngleX;
+        this.bipedLeftArm3.rotateAngleY = this.bipedLeftArm2.rotateAngleY = -this.bipedLeftArm.rotateAngleY;
+        this.bipedLeftArm3.rotateAngleZ = this.bipedLeftArm2.rotateAngleZ = -this.bipedLeftArm.rotateAngleZ;
 		
-        this.bipedRightArm3.rotateAngleX = this.bipedRightArm2.rotateAngleX = this.bipedRightArm.rotateAngleX;
-        this.bipedRightArm3.rotateAngleY = this.bipedRightArm2.rotateAngleY = this.bipedRightArm.rotateAngleY;
-        this.bipedRightArm3.rotateAngleZ = this.bipedRightArm2.rotateAngleZ = this.bipedRightArm.rotateAngleZ;
-
-        this.bipedRightArm.rotateAngleX = this.bipedRightArm.rotateAngleY = this.bipedRightArm.rotateAngleZ = 0.0F;
-        this.bipedLeftArm.rotateAngleX = this.bipedLeftArm.rotateAngleZ = this.bipedLeftArm.rotateAngleY = 0.0F;
+        this.bipedRightArm3.rotateAngleX = this.bipedRightArm2.rotateAngleX = -this.bipedRightArm.rotateAngleX;
+        this.bipedRightArm3.rotateAngleY = this.bipedRightArm2.rotateAngleY = -this.bipedRightArm.rotateAngleY;
+        this.bipedRightArm3.rotateAngleZ = this.bipedRightArm2.rotateAngleZ = -this.bipedRightArm.rotateAngleZ;
     }
 
 }
