@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 import com.legacy.aether.client.gui.AetherLoadingScreen;
 import com.legacy.aether.client.gui.inventory.GuiAccessories;
+import com.legacy.aether.server.AetherConfig;
 import com.legacy.aether.server.containers.inventory.InventoryAccessories;
 import com.legacy.aether.server.items.ItemsAether;
 import com.legacy.aether.server.networking.AetherGuiHandler;
@@ -38,9 +39,12 @@ public class AetherClientEvents
 		{
 			if (type.equals(TickEvent.Type.CLIENT))
 			{
-				if (!(mc.loadingScreen instanceof AetherLoadingScreen))
+				if (!AetherConfig.triviaDisabled())
 				{
-					mc.loadingScreen = new AetherLoadingScreen(mc);
+					if (!(mc.loadingScreen instanceof AetherLoadingScreen))
+					{
+						mc.loadingScreen = new AetherLoadingScreen(mc);
+					}
 				}
 			}
 		}

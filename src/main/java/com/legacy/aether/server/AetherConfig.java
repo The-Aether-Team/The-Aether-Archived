@@ -12,6 +12,8 @@ public class AetherConfig
 
 	private static int aether_biome_id, aether_dimension_id;
 
+	private static boolean disable_trivia;
+
 	private static boolean skyrootBucketOnly;
 
 	public static void init(File location)
@@ -39,6 +41,8 @@ public class AetherConfig
 
 		skyrootBucketOnly = config.get("Misc", "Activate portal with only Skyroot bucket", false).getBoolean(false);
 
+		disable_trivia = config.get("Trivia", "Disable random trivia", false).getBoolean(false);
+
 		config.save();
 	}
 
@@ -50,6 +54,11 @@ public class AetherConfig
 	public static int getAetherBiomeID()
 	{
 		return AetherConfig.aether_biome_id;
+	}
+
+	public static boolean triviaDisabled()
+	{
+		return AetherConfig.disable_trivia;
 	}
 
 	public static boolean shouldUseAetherMenu()
