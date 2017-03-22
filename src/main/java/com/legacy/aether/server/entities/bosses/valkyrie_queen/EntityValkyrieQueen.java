@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,7 +48,7 @@ public class EntityValkyrieQueen extends EntityMob
 
 	public static final DataParameter<Boolean> VALKYRIE_READY = EntityDataManager.<Boolean>createKey(EntityValkyrieQueen.class, DataSerializers.BOOLEAN);
 
-	private EntityAIAttackContinuously enhancedCombat = new EntityAIAttackContinuously(this, 0.65D, false);
+	private EntityAIAttackContinuously enhancedCombat = new EntityAIAttackContinuously(this, 0.65D);
 
     public int angerLevel;
 
@@ -85,8 +86,9 @@ public class EntityValkyrieQueen extends EntityMob
     public void registerEntityAI()
     {
         this.targetTasks.addTask(0, this.enhancedCombat);
-        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, new ValkyrieQueenAIWander(this, 0.5D));
+        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F, 200.0F));
     }
 
     @Override
@@ -259,8 +261,6 @@ public class EntityValkyrieQueen extends EntityMob
         }
         else
         {
-            super.onEntityUpdate();
-
             if (this.getAttackTarget() instanceof EntityPlayer) 
             {
             	if (this.timeUntilTeleport++ >= 450)
@@ -475,7 +475,7 @@ public class EntityValkyrieQueen extends EntityMob
     	boolean flag = false;
 
         this.swingArm();
-        flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 7);
+        flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 8);
 
         if (entity != null && this.getAttackTarget() != null && entity == this.getAttackTarget() && entity instanceof EntityPlayer) 
         {

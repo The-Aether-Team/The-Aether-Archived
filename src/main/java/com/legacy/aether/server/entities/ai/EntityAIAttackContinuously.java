@@ -4,31 +4,26 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.pathfinding.Path;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class EntityAIAttackContinuously extends EntityAIBase
 {
 
-    World worldObj;
-    protected EntityCreature attacker;
-    protected int attackTick;
+    private EntityCreature attacker;
+
+    private int attackTick;
+
     double speedTowardsTarget;
-    boolean longMemory;
-    Path entityPathEntity;
+
     private double targetX;
     private double targetY;
     private double targetZ;
-    protected final int attackInterval = 20;
 
-    public EntityAIAttackContinuously(EntityCreature creature, double speedIn, boolean useLongMemory)
+    public EntityAIAttackContinuously(EntityCreature creature, double speedIn)
     {
         this.attacker = creature;
-        this.worldObj = creature.worldObj;
         this.speedTowardsTarget = speedIn;
-        this.longMemory = useLongMemory;
+
         this.setMutexBits(3);
     }
 
@@ -47,8 +42,7 @@ public class EntityAIAttackContinuously extends EntityAIBase
         }
         else
         {
-            this.entityPathEntity = this.attacker.getNavigator().getPathToEntityLiving(entitylivingbase);
-            return this.entityPathEntity != null;
+        	return true;
         }
     }
 
@@ -56,13 +50,13 @@ public class EntityAIAttackContinuously extends EntityAIBase
     public boolean continueExecuting()
     {
         EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
-        return entitylivingbase == null ? false : (!entitylivingbase.isEntityAlive() ? false : (!this.longMemory ? !this.attacker.getNavigator().noPath() : (!this.attacker.isWithinHomeDistanceFromPosition(new BlockPos(entitylivingbase)) ? false : !(entitylivingbase instanceof EntityPlayer) || !((EntityPlayer)entitylivingbase).isSpectator() && !((EntityPlayer)entitylivingbase).isCreative())));
+        return entitylivingbase != null;
     }
 
     @Override
     public void startExecuting()
     {
-        this.attacker.getNavigator().setPath(this.entityPathEntity, this.speedTowardsTarget);
+
     }
 
     @Override
@@ -74,18 +68,19 @@ public class EntityAIAttackContinuously extends EntityAIBase
         {
             this.attacker.setAttackTarget((EntityLivingBase)null);
         }
-
-        this.attacker.getNavigator().clearPathEntity();
     }
 
     @Override
     public void updateTask()
     {
         EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
-        this.attacker.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F);
+
+        this.attacker.getNavigator().setPath(this.attacker.getNavigator().getPathToEntityLiving(entitylivingbase), this.speedTowardsTarget);
+        this.attacker.getLookHelper().setLookPositionWithEntity(entitylivingbase, 360.0F, 360.0F);
+
         double d0 = this.attacker.getDistanceSq(entitylivingbase.posX, entitylivingbase.getEntityBoundingBox().minY, entitylivingbase.posZ);
 
-        if ((this.longMemory || this.attacker.getEntitySenses().canSee(entitylivingbase)) && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || entitylivingbase.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRNG().nextFloat() < 0.05F))
+        if (this.attacker.getEntitySenses().canSee(entitylivingbase) && (this.targetX == 0.0D && this.targetY == 0.0D && this.targetZ == 0.0D || entitylivingbase.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1.0D || this.attacker.getRNG().nextFloat() < 0.05F))
         {
             this.targetX = entitylivingbase.posX;
             this.targetY = entitylivingbase.getEntityBoundingBox().minY;
