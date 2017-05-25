@@ -76,11 +76,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         this.setSize(2.25F, 2.5F);
         this.setPosition((double)posX + 0.5D, (double)posY, (double)posZ + 0.5D);
         this.setOriginPosition(posX, posY, posZ);
+        this.setBossName(AetherNameGen.gen());
+
         this.noClip = true;
         this.rotary = (double)this.rand.nextFloat() * 360.0D;;
         this.direction = var6;
-
-        this.setBossName(AetherNameGen.gen());
+        this.rotationYaw = this.rotationYawHead = var6 == 3 ? 0 : var6 == 0 ? 90 : var6 == 2 ? 180 : 270;
     }
 
     protected void applyEntityAttributes()
@@ -160,6 +161,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
         this.velocity = 0.5D - (double)this.getHealth() / 70.0D * 0.2D;
         this.width = this.height = 2.0F;
+       // this.rotationYaw = this.rotationYawHead += 10;
 
         if (this.getAttackTarget() instanceof EntityPlayer)
         {
@@ -226,12 +228,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     {
         super.updateAITasks();
 
-        if (this.getAttackTarget() == null)
-        {
-            this.setPosition((double)this.originPointX + 0.5D, (double)this.originPointY, (double)this.originPointZ + 0.5D);
-            this.setDoor(Blocks.AIR.getDefaultState());
-        }
-        else
+        if (this.getAttackTarget() != null)
         {
             this.motionY = 0.0D;
             this.renderYawOffset = this.rotationYaw;

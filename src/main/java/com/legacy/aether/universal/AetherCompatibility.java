@@ -10,4 +10,8 @@ public class AetherCompatibility
 		return Loader.isModLoaded("inventorytweaks") || Loader.isModLoaded("quark") || Loader.isModLoaded("Quark");
 	}
 
+	public static boolean guiInventoryModsLoaded()
+	{
+		return Loader.isModLoaded("Baubles") || Loader.isModLoaded("CosmeticArmor");
+	}
 }

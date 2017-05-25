@@ -115,7 +115,7 @@ public class EntityParachute extends Entity
 
 	private boolean isCollided()
 	{
-		List<?> list = this.worldObj.getCollisionBoxes(this, getEntityBoundingBox().expand(1D, 1.5D, 1D));
+		List<?> list = this.worldObj.getCollisionBoxes(this, getEntityBoundingBox().expand(0.0D, 0.0D, 0.0D));
 		
 		for (int size = 0; size < list.size();)
 		{
@@ -148,12 +148,7 @@ public class EntityParachute extends Entity
 
     public static boolean entityHasRoomForCloud(World world, EntityPlayer player)
     {
-    	AxisAlignedBB boundingBox = new AxisAlignedBB(player.posX,
-    			player.getEntityBoundingBox().minY - 1,
-    			player.posZ,
-    			player.posX,
-    			player.getEntityBoundingBox().minY,
-    			player.posZ);
+    	AxisAlignedBB boundingBox = player.getEntityBoundingBox();
 
     	return world.getCollisionBoxes(player, boundingBox).size() == 0 && !world.isAABBInMaterial(boundingBox, Material.WATER);
     }

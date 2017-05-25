@@ -14,11 +14,9 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 
 import com.legacy.aether.client.audio.AetherMusicHandler;
 import com.legacy.aether.client.gui.GuiAetherInGame;
-import com.legacy.aether.client.gui.menu.AetherMenuHandler;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.blocks.BlockRendering;
 import com.legacy.aether.client.renders.items.ItemRendering;
-import com.legacy.aether.common.AetherConfig;
 import com.legacy.aether.common.ServerProxy;
 
 public class ClientProxy extends ServerProxy
@@ -42,11 +40,6 @@ public class ClientProxy extends ServerProxy
 
 		MinecraftForge.EVENT_BUS.register(new GuiAetherInGame(Minecraft.getMinecraft()));
 		MinecraftForge.EVENT_BUS.register(new AetherClientEvents());
-
-		if (!AetherConfig.shouldUseAetherMenu())
-		{
-			registerEvent(new AetherMenuHandler());
-		}
 
 		registerEvent(new AetherMusicHandler());
 	}

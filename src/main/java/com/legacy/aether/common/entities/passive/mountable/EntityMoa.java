@@ -260,7 +260,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public void updateWingRotation()
 	{
-		boolean onGround = !this.worldObj.isAirBlock(new BlockPos(this).down());
+		boolean onGround = !this.worldObj.isAirBlock(new BlockPos.MutableBlockPos().setPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)));
 		if (!onGround)
 		{
 			if (this.ticksUntilFlap == 0)

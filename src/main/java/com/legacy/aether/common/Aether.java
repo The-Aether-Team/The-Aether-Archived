@@ -20,7 +20,7 @@ import com.legacy.aether.common.registry.sounds.SoundsAether;
 import com.legacy.aether.common.tile_entities.AetherTileEntities;
 import com.legacy.aether.common.world.AetherWorld;
 
-@Mod(name = "Aether Legacy", modid = Aether.modid, version = "v1.3.1-1.10.2", acceptedMinecraftVersions = "1.10.2")
+@Mod(name = "Aether Legacy", modid = Aether.modid, version = "v1.4.1", acceptedMinecraftVersions = "1.10.2")
 public class Aether 
 {
 
@@ -29,7 +29,7 @@ public class Aether
 	@Instance(Aether.modid)
 	public static Aether instance;
 
-	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.server.ServerProxy")
+	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.common.ServerProxy")
 	public static ServerProxy proxy;
 
 	@EventHandler

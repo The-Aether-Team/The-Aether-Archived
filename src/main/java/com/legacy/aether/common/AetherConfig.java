@@ -8,7 +8,7 @@ import net.minecraftforge.common.config.Configuration;
 public class AetherConfig 
 {
 
-	private static boolean aether_menu, christmas_content;
+	private static boolean christmas_content;
 
 	private static int aether_biome_id, aether_dimension_id;
 
@@ -33,7 +33,6 @@ public class AetherConfig
 
 		config.load();
 
-		aether_menu = config.get("Aether Menu Options", "Use Aether Menu", false).getBoolean(false);
 		christmas_content = config.get("Aether World Generation", "Christmas Content", false).getBoolean(false);
 
 		aether_dimension_id = config.get("World Identification", "Aether Dimension ID", 4).getInt(4);
@@ -59,11 +58,6 @@ public class AetherConfig
 	public static boolean triviaDisabled()
 	{
 		return AetherConfig.disable_trivia;
-	}
-
-	public static boolean shouldUseAetherMenu()
-	{
-		return AetherConfig.aether_menu;
 	}
 
 	public static boolean shouldLoadHolidayContent()

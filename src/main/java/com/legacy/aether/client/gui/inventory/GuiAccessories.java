@@ -5,19 +5,23 @@ import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 
 import org.lwjgl.opengl.GL11;
 
+import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.client.gui.button.GuiButtonPerks;
 import com.legacy.aether.common.containers.ContainerAccessories;
+import com.legacy.aether.common.networking.AetherNetworkingManager;
+import com.legacy.aether.common.networking.packets.PacketOpenContainer;
 import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.player.perks.AetherRankings;
 import com.legacy.aether.universal.AetherCompatibility;
 
-public class GuiAccessories extends GuiInventory
+public class GuiAccessories extends GuiContainer
 {
 
 	private static final ResourceLocation ACCESSORIES = new ResourceLocation("aether_legacy", "textures/gui/inventory/accessories.png");
@@ -28,8 +32,8 @@ public class GuiAccessories extends GuiInventory
 
 	public GuiAccessories(PlayerAether player)
 	{
-		super(player.thePlayer);
-		this.inventorySlots = new ContainerAccessories(player.accessories, player.thePlayer);
+		super(new ContainerAccessories(player.accessories, player.thePlayer));
+
 		this.playerAether = player;
 		this.allowUserInput = true;
 	}
@@ -43,6 +47,8 @@ public class GuiAccessories extends GuiInventory
 		{
 			this.buttonList.add(new GuiButtonPerks(this.width / 2 - 108, this.height / 2 - 83));
 		}
+
+		this.buttonList.add(new GuiAccessoryButton(new ScaledResolution(Minecraft.getMinecraft()), 43, 19));
 	}
 
 	@Override
@@ -83,6 +89,12 @@ public class GuiAccessories extends GuiInventory
     	{
     		this.mc.displayGuiScreen(new GuiAetherPerks());
     	}
+
+		if (button.id == 18067)
+		{
+			this.mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
+			AetherNetworkingManager.sendToServer(new PacketOpenContainer(-1));
+		}
     }
 
 	@Override
@@ -100,7 +112,7 @@ public class GuiAccessories extends GuiInventory
 
 		this.drawTexturedModalRect(this.width / 2 - 88, this.height / 2 - 166 / 2, 0, 0, 176, 166);
 
-		drawEntityOnScreen(this.guiLeft + 35, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
+		GuiInventory.drawEntityOnScreen(this.guiLeft + 35, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
 	}
 
 }

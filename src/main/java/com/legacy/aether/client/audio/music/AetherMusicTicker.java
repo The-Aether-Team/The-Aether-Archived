@@ -11,7 +11,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.client.gui.menu.GuiAetherMainMenu;
 import com.legacy.aether.common.AetherConfig;
 import com.legacy.aether.common.registry.sounds.SoundsAether;
 
@@ -32,23 +31,30 @@ public class AetherMusicTicker implements ITickable
     {
        TrackType tracktype = this.getRandomTrack();
 
-        if (this.mc.thePlayer != null && this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID() || this.mc.currentScreen instanceof GuiAetherMainMenu)
+        if (this.mc.thePlayer != null)
         {
-            if (this.currentMusic != null)
-            {
-                if (!this.mc.getSoundHandler().isSoundPlaying(this.currentMusic))
+           	if (this.mc.thePlayer.dimension != AetherConfig.getAetherDimensionID())
+           	{
+           		this.stopMusic();
+           	}
+           	else if (this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
+           	{
+                if (this.currentMusic != null)
                 {
-                    this.currentMusic = null;
-                    this.timeUntilNextMusic = Math.min(MathHelper.getRandomIntegerInRange(this.rand, tracktype.getMinDelay(), tracktype.getMaxDelay()), this.timeUntilNextMusic);
+                    if (!this.mc.getSoundHandler().isSoundPlaying(this.currentMusic))
+                    {
+                        this.currentMusic = null;
+                        this.timeUntilNextMusic = Math.min(MathHelper.getRandomIntegerInRange(this.rand, tracktype.getMinDelay(), tracktype.getMaxDelay()), this.timeUntilNextMusic);
+                    }
                 }
-            }
 
-            this.timeUntilNextMusic = Math.min(this.timeUntilNextMusic, tracktype.getMaxDelay());
+                this.timeUntilNextMusic = Math.min(this.timeUntilNextMusic, tracktype.getMaxDelay());
 
-            if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0)
-            {
-                this.playMusic(tracktype);
-            }
+                if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0)
+                {
+                    this.playMusic(tracktype);
+                }
+           	}
         }
     }
 

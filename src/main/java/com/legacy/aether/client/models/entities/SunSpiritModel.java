@@ -123,15 +123,16 @@ public class SunSpiritModel extends ModelBiped
     @Override
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
-    	this.bipedHead.rotateAngleY = netHeadYaw / 57.29578F;
-    	this.bipedHead.rotateAngleX = headPitch / 57.29578F;
+        this.bipedHead.rotateAngleX = headPitch * 0.017453292F;
+        this.bipedHead.rotateAngleY = netHeadYaw * 0.017453292F;
+
     	this.bipedHeadwear.rotateAngleY = this.bipedHead.rotateAngleY;
     	this.bipedHeadwear.rotateAngleX = this.bipedHead.rotateAngleX;
         this.bipedRightArm.rotateAngleX = this.bipedRightArm.rotateAngleY = this.bipedRightArm.rotateAngleZ = 0.0F;
         this.bipedLeftArm.rotateAngleX = this.bipedLeftArm.rotateAngleZ = this.bipedLeftArm.rotateAngleY = 0.0F;
 
-        this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
-        this.bipedLeftArm.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+        this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F - 0.05F;
+        this.bipedLeftArm.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F - 0.05F;
         this.bipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
         this.bipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
 		

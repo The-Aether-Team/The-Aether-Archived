@@ -1,21 +1,22 @@
 package com.legacy.aether.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.network.play.client.CPacketClientStatus;
-import net.minecraft.stats.AchievementList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.PotionShiftEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 import com.legacy.aether.client.gui.AetherLoadingScreen;
+import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.client.gui.inventory.GuiAccessories;
 import com.legacy.aether.common.AetherConfig;
 import com.legacy.aether.common.containers.inventory.InventoryAccessories;
@@ -51,25 +52,6 @@ public class AetherClientEvents
 	}
 
 	@SubscribeEvent
-	public void onInventoryKeyPressed(KeyInputEvent event)
-	{
-		Minecraft mc = Minecraft.getMinecraft();
-
-		if (mc.currentScreen == null && mc.theWorld != null)
-		{
-			if (mc.thePlayer != null && !mc.thePlayer.capabilities.isCreativeMode && mc.gameSettings.keyBindInventory.isPressed())
-			{
-				if (!mc.thePlayer.hasAchievement(AchievementList.OPEN_INVENTORY))
-				{
-		            mc.getConnection().sendPacket(new CPacketClientStatus(CPacketClientStatus.State.OPEN_INVENTORY_ACHIEVEMENT));
-				}
-
-				AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
-			}
-		}
-	}
-
-	@SubscribeEvent
 	public void onBowPulled(FOVUpdateEvent event)
 	{
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
@@ -100,6 +82,24 @@ public class AetherClientEvents
 	        original *= 1.0F - f1 * 0.15F;
 
 	        event.setNewfov(original);
+		}
+	}
+
+	@SubscribeEvent
+	public void onGuiOpened(GuiScreenEvent.InitGuiEvent.Post event)
+	{
+		if (event.getGui().getClass() == GuiInventory.class)
+		{
+			event.getButtonList().add(new GuiAccessoryButton(new ScaledResolution(Minecraft.getMinecraft())));
+		}
+	}
+
+	@SubscribeEvent
+	public void onButtonPressed(GuiScreenEvent.ActionPerformedEvent.Pre event)
+	{
+		if (event.getGui().getClass() ==  GuiInventory.class && event.getButton().id == 18067)
+		{
+			AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
 		}
 	}
 

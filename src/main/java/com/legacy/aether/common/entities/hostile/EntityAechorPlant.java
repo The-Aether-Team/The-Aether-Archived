@@ -107,7 +107,7 @@ public class EntityAechorPlant extends EntityAetherAnimal
 			this.setAttackTarget(player);
 		}
 
-		if(this.worldObj.getBlockState(new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(getEntityBoundingBox().minY) - 1, MathHelper.floor_double(this.posZ))).getBlock() != BlocksAether.aether_grass)
+		if(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ))).getBlock() != BlocksAether.aether_grass)
 		{
 			this.setDead();
 		}

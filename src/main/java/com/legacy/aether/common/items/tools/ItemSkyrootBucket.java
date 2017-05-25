@@ -43,7 +43,7 @@ public class ItemSkyrootBucket extends Item
 		super();
 
 		this.setHasSubtypes(true);
-		this.maxStackSize = 1;
+		this.setContainerItem(ItemsAether.skyroot_bucket);
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
@@ -55,6 +55,12 @@ public class ItemSkyrootBucket extends Item
     	{
         	list.add(new ItemStack(this, 1, meta));
     	}
+    }
+
+	@Override
+    public int getItemStackLimit(ItemStack stack)
+    {
+    	return EnumSkyrootBucketType.getType(stack.getItemDamage()) == EnumSkyrootBucketType.Empty ? 16 : 1;
     }
 
 	@Override

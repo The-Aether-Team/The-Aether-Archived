@@ -75,8 +75,8 @@ public class GoldenDungeon extends AetherDungeon
 
 						if((i == (a - 2) || -i == (a - 2)) && (k == (a - 2) || -k == (a - 2))) 
 						{
-							this.setBlockAndNotifyAdequately(world, new BlockPos(x + i, y + j, z + k), Blocks.NETHERRACK.getDefaultState());
-							this.setBlockAndNotifyAdequately(world, new BlockPos(x + i, y + j, z + k), Blocks.FIRE.getDefaultState());
+							this.setBlockAndNotifyAdequately(world, new BlockPos(x + i, y + j + 1, z + k), Blocks.NETHERRACK.getDefaultState());
+							this.setBlockAndNotifyAdequately(world, new BlockPos(x + i, y + j + 2, z + k), Blocks.FIRE.getDefaultState());
 						}
 					}
 				}
