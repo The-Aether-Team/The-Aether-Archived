@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.legacy.aether.common.entities.util.EntitySaddleMount;
+import com.legacy.aether.common.items.ItemsAether;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
@@ -12,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -213,7 +215,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 
 							if (!this.harvestBlockBans.contains(prevBlock))
 							{
-								prevBlock.harvestBlock(this.thrower.worldObj, (EntityPlayer) this.thrower, prevBlockPos, prevBlockState, this.worldObj.getTileEntity(prevBlockPos), null);
+								prevBlock.harvestBlock(this.thrower.worldObj, (EntityPlayer) this.thrower, prevBlockPos, prevBlockState, this.worldObj.getTileEntity(prevBlockPos), new ItemStack(ItemsAether.notch_hammer));
 
 								prevBlock.removedByPlayer(prevBlockState, this.thrower.worldObj, prevBlockPos, (EntityPlayer) this.thrower, false);
 							}
