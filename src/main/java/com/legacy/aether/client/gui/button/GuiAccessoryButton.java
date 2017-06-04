@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiAccessoryButton extends GuiButton
 {
 
-    protected static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("aether_legacy", "textures/items/accessories/iron_bubble.png");
+    protected static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("aether_legacy", "textures/gui/inventory/icon.png");
 
 	public GuiAccessoryButton(ScaledResolution resolution) 
 	{
