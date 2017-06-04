@@ -279,7 +279,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 
 							if (!this.harvestBlockBans.contains(prevBlock))
 							{
-								prevBlock.harvestBlock(this.thrower.worldObj, (EntityPlayer) this.thrower, prevBlockPos, prevBlockState, this.worldObj.getTileEntity(prevBlockPos), null);
+								prevBlock.harvestBlock(this.thrower.worldObj, (EntityPlayer) this.thrower, prevBlockPos, prevBlockState, this.worldObj.getTileEntity(prevBlockPos), new ItemStack(ItemsAether.notch_hammer));
 
 								prevBlock.removedByPlayer(prevBlockState, this.thrower.worldObj, prevBlockPos, (EntityPlayer) this.thrower, false);
 							}
