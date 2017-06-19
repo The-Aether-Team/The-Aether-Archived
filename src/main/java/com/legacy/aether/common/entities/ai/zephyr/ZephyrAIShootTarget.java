@@ -1,6 +1,7 @@
 package com.legacy.aether.common.entities.ai.zephyr;
 
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -48,10 +49,16 @@ public class ZephyrAIShootTarget extends EntityAIBase
             	this.attackCounter--;
             }
 
-        	this.zephyr.setAttackTarget(this.worldObj.getClosestPlayerToEntity(this.zephyr, 100D));
+        	this.zephyr.setAttackTarget(this.worldObj.getNearestAttackablePlayer(this.zephyr, 100D, 100D));
         }
         else
         {
+        	if (this.zephyr.getAttackTarget() instanceof EntityPlayer && (((EntityPlayer)this.zephyr.getAttackTarget()).isCreative() || ((EntityPlayer)this.zephyr.getAttackTarget()).isSpectator()))
+        	{
+        		this.zephyr.setAttackTarget(null);
+        		return;
+        	}
+
         	if (this.zephyr.getAttackTarget().getDistanceSqToEntity(this.zephyr) < 4096.0D  && this.zephyr.canEntityBeSeen(this.zephyr.getAttackTarget()))
         	{
                 double x = this.zephyr.getAttackTarget().posX - this.zephyr.posX;
