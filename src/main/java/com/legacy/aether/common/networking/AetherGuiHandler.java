@@ -1,6 +1,5 @@
 package com.legacy.aether.common.networking;
 
-import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
@@ -14,6 +13,7 @@ import com.legacy.aether.client.gui.GuiEnchanter;
 import com.legacy.aether.client.gui.GuiFreezer;
 import com.legacy.aether.client.gui.GuiIncubator;
 import com.legacy.aether.client.gui.GuiLore;
+import com.legacy.aether.client.gui.GuiTreasureChest;
 import com.legacy.aether.client.gui.inventory.GuiAccessories;
 import com.legacy.aether.common.containers.ContainerAccessories;
 import com.legacy.aether.common.containers.ContainerEnchanter;
@@ -24,6 +24,7 @@ import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.tile_entities.TileEntityEnchanter;
 import com.legacy.aether.common.tile_entities.TileEntityFreezer;
 import com.legacy.aether.common.tile_entities.TileEntityIncubator;
+import com.legacy.aether.common.tile_entities.TileEntityTreasureChest;
 
 public class AetherGuiHandler implements IGuiHandler
 {
@@ -83,7 +84,7 @@ public class AetherGuiHandler implements IGuiHandler
 		}
 		else if (ID == treasure_chest)
 		{
-			return new GuiChest(player.inventory, (IInventory) world.getTileEntity(new BlockPos(x, y, z)));
+			return new GuiTreasureChest(player.inventory, (TileEntityTreasureChest) world.getTileEntity(new BlockPos(x, y, z)));
 		}
 		else if (ID == lore)
 		{
