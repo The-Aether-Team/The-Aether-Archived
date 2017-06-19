@@ -7,8 +7,8 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Loader;
 
 import org.lwjgl.opengl.GL11;
 
@@ -19,14 +19,11 @@ import com.legacy.aether.common.networking.AetherNetworkingManager;
 import com.legacy.aether.common.networking.packets.PacketOpenContainer;
 import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.player.perks.AetherRankings;
-import com.legacy.aether.universal.AetherCompatibility;
 
 public class GuiAccessories extends GuiContainer
 {
 
 	private static final ResourceLocation ACCESSORIES = new ResourceLocation("aether_legacy", "textures/gui/inventory/accessories.png");
-
-	private static final ResourceLocation ACCESSORIES_SHIFTED = new ResourceLocation("aether_legacy", "textures/gui/inventory/accessories_shifted.png");
 
 	PlayerAether playerAether;
 
@@ -48,7 +45,7 @@ public class GuiAccessories extends GuiContainer
 			this.buttonList.add(new GuiButtonPerks(this.width / 2 - 108, this.height / 2 - 83));
 		}
 
-		this.buttonList.add(new GuiAccessoryButton(new ScaledResolution(Minecraft.getMinecraft()), 43, 19));
+		this.buttonList.add(new GuiAccessoryButton(new ScaledResolution(Minecraft.getMinecraft()), 47, 19));
 	}
 
 	@Override
@@ -64,14 +61,6 @@ public class GuiAccessories extends GuiContainer
 			if (id == 13211)
 			{
 				this.setButtonPosition(button, this.width / 2 + 65, this.height / 2 - 23);
-			}
-
-			if (Loader.isModLoaded("Baubles"))
-			{
-				if (id == 55)
-				{
-					button.xPosition = (new ScaledResolution(mc).getScaledWidth() / 2) - 39;
-				}
 			}
 		}
     }
@@ -100,7 +89,7 @@ public class GuiAccessories extends GuiContainer
 	@Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-    	
+        this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 115, 8, 4210752);
     }
 
 	@Override
@@ -108,7 +97,7 @@ public class GuiAccessories extends GuiContainer
 	{
 		GL11.glColor3d(1.0D, 1.0D, 1.0D);
 
-		this.mc.renderEngine.bindTexture(AetherCompatibility.visualModsLoaded() ? ACCESSORIES_SHIFTED : ACCESSORIES);
+		this.mc.renderEngine.bindTexture(ACCESSORIES);
 
 		this.drawTexturedModalRect(this.width / 2 - 88, this.height / 2 - 166 / 2, 0, 0, 176, 166);
 

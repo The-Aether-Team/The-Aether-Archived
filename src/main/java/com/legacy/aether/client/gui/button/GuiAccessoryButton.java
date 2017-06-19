@@ -13,11 +13,13 @@ import net.minecraft.util.ResourceLocation;
 public class GuiAccessoryButton extends GuiButton
 {
 
-    protected static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("aether_legacy", "textures/gui/inventory/icon.png");
+    protected static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/inventory//button/cloud.png");
+
+    protected static final ResourceLocation BUTTON_HOVERED_TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/inventory/button/cloud_hover.png");
 
 	public GuiAccessoryButton(ScaledResolution resolution) 
 	{
-		super(18067, (resolution.getScaledWidth() / 2) - 65, (resolution.getScaledHeight() / 2) - 20, 14, 14, "");
+		super(18067, (resolution.getScaledWidth() / 2) - 64, (resolution.getScaledHeight() / 2) - 19, 14, 14, "");
 
         Collection<PotionEffect> collection = Minecraft.getMinecraft().thePlayer.getActivePotionEffects();
 
@@ -41,14 +43,9 @@ public class GuiAccessoryButton extends GuiButton
     	{
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.pushMatrix();
-            mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
             int i = this.getHoverState(this.hovered);
+            mc.getTextureManager().bindTexture(i == 2 ? BUTTON_HOVERED_TEXTURE : BUTTON_TEXTURE);
             GlStateManager.enableBlend();
-
-            if (i == 2)
-            {
-            	GlStateManager.color(0.5F, 0.5F, 0.5F);
-            }
 
             drawModalRectWithCustomSizedTexture(-5 + this.xPosition + this.width / 2, this.yPosition, 0, 0, 14, 14, 14, 14);
 

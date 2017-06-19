@@ -14,7 +14,6 @@ import com.legacy.aether.common.containers.slots.SlotAccessory;
 import com.legacy.aether.common.containers.util.AccessoryType;
 import com.legacy.aether.common.items.accessories.ItemAccessory;
 import com.legacy.aether.common.player.PlayerAether;
-import com.legacy.aether.universal.AetherCompatibility;
 
 public class ContainerAccessories extends ContainerPlayer
 {
@@ -35,36 +34,14 @@ public class ContainerAccessories extends ContainerPlayer
 
 		for (Slot slot : (ArrayList<Slot>) this.inventorySlots)
 		{
-			if (slot.slotNumber == 0)
+			if (slot.slotNumber > 0 && slot.slotNumber < 5)
 			{
-				if (!AetherCompatibility.visualModsLoaded())
-				{
-					slot.yDisplayPosition += 34;
-					slot.xDisplayPosition -= 11;
-				}
-				else
-				{
-					slot.yDisplayPosition += 34;
-					slot.xDisplayPosition -= 20;
-				}
-			}
-			else if (slot.slotNumber > 0 && slot.slotNumber < 5)
-			{
-				if (!AetherCompatibility.visualModsLoaded())
-				{
-					slot.yDisplayPosition -= 10;
-					slot.xDisplayPosition += 36;
-				}
-				else
-				{
-					slot.yDisplayPosition -= 10;
-					slot.xDisplayPosition += 26;
-				}
+				slot.xDisplayPosition += 18;
 			}
 
 			if (slot.slotNumber > 4 && slot.slotNumber < 9)
 			{
-				slot.xDisplayPosition += 54;
+				slot.xDisplayPosition += 51;
 			}
 			else if (slot.slotNumber == 45)
 			{
@@ -80,7 +57,7 @@ public class ContainerAccessories extends ContainerPlayer
 			{
 				AccessoryType type = this.playerAether.accessories.slotTypes[slotID];
 
-				this.addSlotToContainer(new SlotAccessory(inventoryInstance, slotID, type, 62 + x * 18, 8 + y * 18));
+				this.addSlotToContainer(new SlotAccessory(inventoryInstance, slotID, type, 59 + x * 18, 8 + y * 18));
 				slotID++;
 			}
 		}
