@@ -24,8 +24,20 @@ public class DoubleDropHelper
 
         int size = state.getValue(property).equals(true) ? 2 : 1;
         ItemStack stack = player.inventory.getCurrentItem();
+        boolean flag = true;
 
         if (stack == null || !(stack.getItem() instanceof ItemSkyrootTool))
+        {
+        	flag = false;
+        }
+
+        if (block.canSilkHarvest(player.worldObj, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0)
+        {
+        	Block.spawnAsEntity(player.worldObj, pos, new ItemStack(block.getDefaultState().getBlock()));
+        	return;
+        }
+
+        if (!flag)
         {
         	block.dropBlockAsItem(player.worldObj, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
         	return;
