@@ -163,7 +163,6 @@ public class PlayerAether
 		{
 			if (this.thePlayer.posY < -2)
 			{
-				this.thePlayer.dismountRidingEntity();
 				this.teleportPlayer(false);
 				this.thePlayer.setPositionAndUpdate(thePlayer.posX, 256, thePlayer.posZ);
 			}
@@ -436,6 +435,9 @@ public class PlayerAether
 	 */
 	private void teleportPlayer(boolean shouldSpawnPortal) 
 	{
+		this.thePlayer.dismountRidingEntity();
+		this.thePlayer.removePassengers();
+
 		if (this.thePlayer instanceof EntityPlayerMP)
 		{
 			EntityPlayerMP player = (EntityPlayerMP) this.thePlayer;
