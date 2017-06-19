@@ -45,7 +45,7 @@ public class GuiAccessories extends GuiContainer
 			this.buttonList.add(new GuiButtonPerks(this.width / 2 - 108, this.height / 2 - 83));
 		}
 
-		this.buttonList.add(new GuiAccessoryButton(new ScaledResolution(Minecraft.getMinecraft()), 47, 19));
+		this.buttonList.add(new GuiAccessoryButton(this.guiLeft + 8, this.guiTop + 65));
 	}
 
 	@Override

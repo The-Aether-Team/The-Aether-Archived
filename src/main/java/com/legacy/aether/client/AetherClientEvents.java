@@ -2,6 +2,7 @@ package com.legacy.aether.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -12,6 +13,7 @@ import net.minecraftforge.client.event.GuiScreenEvent.PotionShiftEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -90,7 +92,10 @@ public class AetherClientEvents
 	{
 		if (event.getGui().getClass() == GuiInventory.class)
 		{
-			event.getButtonList().add(new GuiAccessoryButton(new ScaledResolution(Minecraft.getMinecraft())));
+			int guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiLeft", "field_147003_i");
+			int guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiTop", "field_147009_r");
+
+			event.getButtonList().add(new GuiAccessoryButton(guiLeft + 26, guiTop + 65));
 		}
 	}
 
@@ -138,15 +143,6 @@ public class AetherClientEvents
 		for (int i = 0; i < InventoryAccessories.EMPTY_SLOT_NAMES.length; ++i)
 		{
 			event.getMap().registerSprite(new ResourceLocation("aether_legacy", "items/slots/" + InventoryAccessories.EMPTY_SLOT_NAMES[i]));
-		}
-	}
-
-	@SubscribeEvent
-	public void onStopPotionEffect(PotionShiftEvent event)
-	{
-		if (event.getGui() instanceof GuiAccessories)
-		{
-			event.setCanceled(true);
 		}
 	}
 

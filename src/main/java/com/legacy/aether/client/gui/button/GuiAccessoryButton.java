@@ -1,13 +1,8 @@
 package com.legacy.aether.client.gui.button;
 
-import java.util.Collection;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiAccessoryButton extends GuiButton
@@ -17,21 +12,9 @@ public class GuiAccessoryButton extends GuiButton
 
     protected static final ResourceLocation BUTTON_HOVERED_TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/inventory/button/cloud_hover.png");
 
-	public GuiAccessoryButton(ScaledResolution resolution) 
+	public GuiAccessoryButton(int x, int y) 
 	{
-		super(18067, (resolution.getScaledWidth() / 2) - 64, (resolution.getScaledHeight() / 2) - 19, 14, 14, "");
-
-        Collection<PotionEffect> collection = Minecraft.getMinecraft().thePlayer.getActivePotionEffects();
-
-        if (Minecraft.getMinecraft().currentScreen.getClass() == GuiInventory.class && !collection.isEmpty())
-        {
-        	this.xPosition = this.xPosition + 59;
-        }
-	}
-
-	public GuiAccessoryButton(ScaledResolution resolution, int x, int y) 
-	{
-		super(18067, (resolution.getScaledWidth() / 2) - x, (resolution.getScaledHeight() / 2) - y, 14, 14, "");
+		super(18067, x, y, 12, 12, "");
 	}
 
 	@Override  
@@ -47,7 +30,7 @@ public class GuiAccessoryButton extends GuiButton
             mc.getTextureManager().bindTexture(i == 2 ? BUTTON_HOVERED_TEXTURE : BUTTON_TEXTURE);
             GlStateManager.enableBlend();
 
-            drawModalRectWithCustomSizedTexture(-5 + this.xPosition + this.width / 2, this.yPosition, 0, 0, 14, 14, 14, 14);
+            drawModalRectWithCustomSizedTexture(this.xPosition - 1, this.yPosition, 0, 0, 14, 14, 14, 14);
 
             GlStateManager.popMatrix();
     	}
