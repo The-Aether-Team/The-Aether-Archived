@@ -17,6 +17,35 @@ public class AetherWorldProvider extends WorldProvider
 		super();
 	}
 
+    public float calculateCelestialAngle(long worldTime, float partialTicks)
+    {
+		int i = (int)(worldTime % 80000L);
+		float f = ((float)i + partialTicks) / 120000F - 0.25F;
+
+		if(i > 60000)
+		{
+			i -= 40000;
+			f = ((float)i + partialTicks) / 20000F - 0.25F;
+		}
+
+		if(f < 0.0F)
+		{
+			f++;
+		}
+
+		if(f > 1.0F)
+		{
+			f--;
+		}
+
+		float f2 = f;
+
+		f = 1.0F - (float)((Math.cos((double)f * 3.1415926535897931D) + 1.0D) / 2D);
+		f = f2 + (f - f2) / 3F;
+
+		return f;
+    }
+
 	@Override
 	public float[] calcSunriseSunsetColors(float f, float f1)
 	{
