@@ -16,6 +16,7 @@ import com.legacy.aether.common.items.dungeon.ItemDungeonKey;
 import com.legacy.aether.common.items.food.ItemAetherFood;
 import com.legacy.aether.common.items.food.ItemAmbrosiumShard;
 import com.legacy.aether.common.items.food.ItemGummySwet;
+import com.legacy.aether.common.items.food.ItemHealingStone;
 import com.legacy.aether.common.items.food.ItemLifeShard;
 import com.legacy.aether.common.items.food.ItemWhiteApple;
 import com.legacy.aether.common.items.staffs.ItemCloudStaff;
@@ -166,7 +167,7 @@ public class ItemsAether
 		enchanted_blueberry = register("enchanted_blueberry", new ItemAetherFood(8));
 		white_apple = register("white_apple", new ItemWhiteApple());
 		gummy_swet = register("gummy_swet", new ItemGummySwet());
-		healing_stone = register("healing_stone", new ItemAetherFood(0).setPotionEffect(new PotionEffect(MobEffects.REGENERATION, 30, 0), 1.0F).setAlwaysEdible());
+		healing_stone = register("healing_stone", new ItemHealingStone());
 		candy_cane = register("candy_cane", new ItemAetherFood(2));
 		ginger_bread_man = register("ginger_bread_man", new ItemAetherFood(2));
 
