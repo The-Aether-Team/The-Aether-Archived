@@ -14,6 +14,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityMimic extends EntityMob
@@ -55,16 +56,23 @@ public class EntityMimic extends EntityMob
 		this.mouth = (float)((Math.cos((float)ticksExisted / 10F * 3.14159265F)) + 1F) * 0.6F;
 		this.legs *= 0.9F;
 
-		this.legs += legsDirection * 0.2F;
-
-		if(this.legs > 1.0F)
+		if (this.prevPosX - this.posX != 0 || this.prevPosZ - this.posZ != 0)
 		{
-			this.legsDirection = -1;
+			this.legs += legsDirection * 0.2F;
+
+			if(this.legs > 1.0F)
+			{
+				this.legsDirection = -1;
+			}
+
+			if(this.legs < -1.0F)
+			{
+				this.legsDirection = 1;
+			}
 		}
-
-		if(this.legs < -1.0F)
+		else
 		{
-			this.legsDirection = 1;
+			this.legs = 0.0F;
 		}
     }
 
