@@ -12,20 +12,24 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import com.legacy.aether.common.AetherConfig;
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.containers.inventory.InventoryAccessories;
+import com.legacy.aether.common.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.common.entities.passive.EntityMiniCloud;
 import com.legacy.aether.common.entities.passive.mountable.EntityParachute;
 import com.legacy.aether.common.items.ItemsAether;
@@ -37,7 +41,6 @@ import com.legacy.aether.common.player.abilities.AbilityArmor;
 import com.legacy.aether.common.player.abilities.AbilityFlight;
 import com.legacy.aether.common.player.abilities.AbilityRepulsion;
 import com.legacy.aether.common.player.capability.PlayerAetherManager;
-import com.legacy.aether.common.player.movement.AetherPoisonMovement;
 import com.legacy.aether.common.player.perks.AetherRankings;
 import com.legacy.aether.common.player.perks.util.DonatorMoaSkin;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
@@ -91,7 +94,7 @@ public class PlayerAether
 		this.thePlayer = player;
 
 		this.donatorMoaSkin = new DonatorMoaSkin();
-		this.poison = new AetherPoisonMovement(this);
+		this.poison = new AetherPoisonMovement(player);
 		this.accessories = new InventoryAccessories(this);
 
 		this.abilities = new Ability [] {new AbilityArmor(this), new AbilityAccessories(this), new AbilityFlight(this), new AbilityRepulsion(this)};

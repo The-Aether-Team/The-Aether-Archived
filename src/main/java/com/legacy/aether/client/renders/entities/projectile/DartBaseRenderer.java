@@ -11,6 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.legacy.aether.common.entities.projectile.EntityPoisonNeedle;
 import com.legacy.aether.common.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.common.entities.projectile.darts.EntityDartEnchanted;
 import com.legacy.aether.common.entities.projectile.darts.EntityDartGolden;
@@ -26,6 +27,11 @@ public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
 
 	public void renderDart(DART dart, double d, double d1, double d2, float f, float f1)
     {
+		if (dart.isInvisible())
+		{
+			return;
+		}
+
         this.bindEntityTexture(dart);
         GL11.glPushMatrix();
         GL11.glTranslatef((float)d, (float)d1, (float)d2);
@@ -95,7 +101,7 @@ public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
     protected ResourceLocation getEntityTexture(DART entity)
     {
     	String base = entity instanceof EntityDartGolden ? "golden" : entity instanceof EntityDartEnchanted ? "enchanted" : "poison";
-        return new ResourceLocation("aether_legacy", "textures/entities/projectile/dart/" + base + "_dart.png");
+        return new ResourceLocation("aether_legacy", "textures/entities/projectile/dart/" + base + (entity instanceof EntityPoisonNeedle ? "_needle" : "_dart") + ".png");
     }
 
 }

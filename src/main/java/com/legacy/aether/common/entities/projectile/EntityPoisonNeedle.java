@@ -24,7 +24,8 @@ public class EntityPoisonNeedle extends EntityDartPoison
         this.setDamage(1);
     }
 
-    public boolean func_189652_ae()
+    @Override
+    public boolean hasNoGravity()
     {
         return false;
     }
