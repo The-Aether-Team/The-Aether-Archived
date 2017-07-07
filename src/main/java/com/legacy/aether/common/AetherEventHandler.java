@@ -3,6 +3,7 @@ package com.legacy.aether.common;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -10,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -18,6 +20,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,7 +29,9 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.portal.BlockAetherPortal;
+import com.legacy.aether.common.entities.passive.mountable.EntityFlyingCow;
 import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.common.items.weapons.ItemSkyrootSword;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
 
@@ -53,6 +59,28 @@ public class AetherEventHandler
 			else if (event.getWorld().getBlockState(event.getPos()).getBlock() == Blocks.BED)
 			{
 				event.setCanceled(true);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onMilkedCow(EntityInteractSpecific event)
+	{
+		if (event.getTarget() instanceof EntityCow || event.getTarget() instanceof EntityFlyingCow)
+		{
+			EntityPlayer player = event.getEntityPlayer();
+			ItemStack heldItem = player.getHeldItem(event.getHand());
+
+			if (heldItem != null && heldItem.getItem() == ItemsAether.skyroot_bucket && EnumSkyrootBucketType.getType(heldItem.getMetadata()) == EnumSkyrootBucketType.Empty)
+			{
+	            if (--heldItem.stackSize == 0)
+	            {
+	                player.setHeldItem(event.getHand(), new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Milk.meta));
+	            }
+	            else if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Milk.meta)))
+	            {
+	                player.dropItem(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Milk.meta), false);
+	            }
 			}
 		}
 	}
