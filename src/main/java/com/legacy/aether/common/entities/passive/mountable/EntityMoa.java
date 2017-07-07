@@ -260,14 +260,13 @@ public class EntityMoa extends EntitySaddleMount
 
 	public void updateWingRotation()
 	{
-		boolean onGround = !this.worldObj.isAirBlock(new BlockPos.MutableBlockPos().setPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)));
-		if (!onGround)
+		if (!this.onGround)
 		{
 			if (this.ticksUntilFlap == 0)
 			{
 				this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
-				this.ticksUntilFlap = 11;
+				this.ticksUntilFlap = 8;
 			}
 			else
 			{
@@ -286,7 +285,7 @@ public class EntityMoa extends EntitySaddleMount
 			this.destPos = 0.0F;
 		}
 
-		this.wingRotation += 0.533F;
+		this.wingRotation += 1.233F;
 	}
 
 	public static float minMax(float min, float max, float value)
@@ -465,7 +464,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public double getMountedYOffset()
 	{
-		return 1.37D;
+		return 1.25D;
 	}
 
 	@Override
