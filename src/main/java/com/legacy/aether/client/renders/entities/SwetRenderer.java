@@ -1,11 +1,10 @@
 package com.legacy.aether.client.renders.entities;
 
 import net.minecraft.client.model.ModelSlime;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.renders.entities.layer.SwetLayer;
 import com.legacy.aether.common.entities.passive.mountable.EntitySwet;
@@ -23,43 +22,41 @@ public class SwetRenderer extends RenderLiving<EntitySwet>
 		this.addLayer(new SwetLayer(renderManager, this));
 	}
 
-    protected void setupAnimation(EntitySwet entityswets, float f)
+    protected void setupAnimation(EntitySwet swet, float f)
     {
         float f2 = 1.0F;
         float f1 = 1.0F;
         float f3 = 1.5F;
 
-        if (!entityswets.onGround)
+        if(!swet.onGround)
         {
-        	if (entityswets.getPassengers().isEmpty())
-        	{
-                if (entityswets.motionY > 0.8500000238418579D)
-                {
-                    f1 = 1.425F;
-                    f2 = 0.575F;
-                }
-                else if (entityswets.motionY < -0.8500000238418579D)
-                {
-                    f1 = 0.575F;
-                    f2 = 1.425F;
-                }
-                else
-                {
-                    float f4 = (float)entityswets.motionY * 0.5F;
-                    f1 += f4;
-                    f2 -= f4;
-                }
-        	}
+            if(swet.motionY > 0.85D)
+            {
+                f1 = 1.425F;
+                f2 = 0.575F;
+            }
+            else if(swet.motionY < -0.85D)
+            {
+                f1 = 0.575F;
+                f2 = 1.425F;
+            } 
+            else
+            {
+                float f4 = (float)swet.motionY * 0.5F;
+                f1 += f4;
+                f2 -= f4;
+            }
         }
 
-        if (entityswets.getPassengers().size() > 0)
+        if(!swet.getPassengers().isEmpty())
         {
-            f3 = 1.5F + (entityswets.getPassengers().get(0).width + entityswets.getPassengers().get(0).height) * 0.75F;
+            f3 = 1.5F + (swet.getPassengers().get(0).width + swet.getPassengers().get(0).height) * 0.75F;
         }
 
-        GL11.glScalef(f2 * f3, f1 * f3, f2 * f3);
+        GlStateManager.scale(f2 * f3, f1 * f3, f2 * f3);
     }
 
+    @Override
     protected void preRenderCallback(EntitySwet swet, float f)
     {
         this.setupAnimation(swet, f);
