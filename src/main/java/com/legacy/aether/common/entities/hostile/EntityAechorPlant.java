@@ -18,6 +18,7 @@ import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.entities.ai.aechorplant.AechorPlantAIShootPlayer;
 import com.legacy.aether.common.entities.passive.EntityAetherAnimal;
 import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.items.util.EnumSkyrootBucketType;
 
 public class EntityAechorPlant extends EntityAetherAnimal 
 {
@@ -128,16 +129,22 @@ public class EntityAechorPlant extends EntityAetherAnimal
 	@Override
     public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack itemStack)
 	{
-		ItemStack stack = itemStack;
+		ItemStack heldItem = itemStack;
 
-		if(stack != null && !this.worldObj.isRemote)
+		if(heldItem != null && !this.worldObj.isRemote)
 		{
-			if(stack.getItem() == ItemsAether.skyroot_bucket && stack.getItemDamage() == 0 && this.poisonRemaining > 0) 
+			if (heldItem.getItem() == ItemsAether.skyroot_bucket && EnumSkyrootBucketType.getType(heldItem.getMetadata()) == EnumSkyrootBucketType.Empty && this.poisonRemaining > 0)
 			{
-				player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(ItemsAether.skyroot_bucket, 1, 3));
-				this.poisonRemaining--;
+	            if (--heldItem.stackSize == 0)
+	            {
+	                player.setHeldItem(hand, new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.meta));
+	            }
+	            else if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.meta)))
+	            {
+	                player.dropItem(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.meta), false);
+	            }
 
-				return true;
+	            --this.poisonRemaining;
 			}
 		}
 
