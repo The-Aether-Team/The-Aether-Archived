@@ -82,9 +82,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 	{
 		super.onUpdate();
 
-		boolean blockBeneath = !this.worldObj.isAirBlock(new BlockPos.MutableBlockPos().setPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)));
-
-		if (blockBeneath)
+		if (this.onGround)
 		{
 			this.wingAngle *= 0.8F;
 			this.aimingForFold = 0.1F;
@@ -124,7 +122,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 	@Override
 	public double getMountedYOffset()
 	{
-		return (double) 1.25D;
+		return 1.15D;
 	}
 
 	@Override
@@ -144,8 +142,6 @@ public class EntityFlyingCow extends EntitySaddleMount
 	
 	private void fall()
 	{
-		boolean blockBeneath = !this.worldObj.isAirBlock(new BlockPos.MutableBlockPos().setPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)));
-
 		if (!this.onGround)
 		{
 			if (this.motionY < 0.0D && !this.isRiderSneaking())
@@ -153,7 +149,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 				this.motionY *= 0.6D;
 			}
 
-			if (blockBeneath && !this.worldObj.isRemote)
+			if (this.onGround && !this.worldObj.isRemote)
 			{
 				this.jumpsRemaining = this.maxJumps;
 			}

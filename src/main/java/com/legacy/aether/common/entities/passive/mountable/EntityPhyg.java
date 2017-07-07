@@ -78,9 +78,7 @@ public class EntityPhyg extends EntitySaddleMount
 	{
 		super.onUpdate();
 
-		boolean blockBeneath = !this.worldObj.isAirBlock(new BlockPos.MutableBlockPos().setPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)));
-
-		if (blockBeneath)
+		if (this.onGround)
 		{
 			this.wingAngle *= 0.8F;
 			this.aimingForFold = 0.1F;
@@ -125,7 +123,7 @@ public class EntityPhyg extends EntitySaddleMount
 	@Override
 	public double getMountedYOffset()
 	{
-		return 0.75D;
+		return 0.65D;
 	}
 
 	@Override
@@ -168,8 +166,6 @@ public class EntityPhyg extends EntitySaddleMount
 
 	private void fall()
 	{
-		boolean blockBeneath = !this.worldObj.isAirBlock(new BlockPos.MutableBlockPos().setPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)));
-
 		if (this.motionY < 0.0D && !this.isRiderSneaking())
 		{
 			this.motionY *= 0.6D;
@@ -177,7 +173,7 @@ public class EntityPhyg extends EntitySaddleMount
 
 		if (!this.onGround && !this.isJumping)
 		{
-			if (blockBeneath && !this.worldObj.isRemote)
+			if (this.onGround && !this.worldObj.isRemote)
 			{
 				this.jumpsRemaining = this.maxJumps;
 			}
