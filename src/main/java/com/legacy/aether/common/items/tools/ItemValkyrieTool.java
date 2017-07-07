@@ -5,10 +5,12 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.items.util.EnumAetherToolType;
 
 public class ItemValkyrieTool extends ItemAetherTool 
@@ -18,6 +20,12 @@ public class ItemValkyrieTool extends ItemAetherTool
 	{
 		super(ToolMaterial.DIAMOND, toolType);
 	}
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
+    }
 
 	@Override
 	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)

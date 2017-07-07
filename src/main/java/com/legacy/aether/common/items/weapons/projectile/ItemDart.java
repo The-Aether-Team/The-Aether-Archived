@@ -3,6 +3,7 @@ package com.legacy.aether.common.items.weapons.projectile;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -17,6 +18,12 @@ public class ItemDart extends Item
         super();
         this.setHasSubtypes(true);
         this.setCreativeTab(AetherCreativeTabs.weapons);
+    }
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return stack.getMetadata() == 2 ? EnumRarity.RARE : super.getRarity(stack);
     }
 
 	@Override

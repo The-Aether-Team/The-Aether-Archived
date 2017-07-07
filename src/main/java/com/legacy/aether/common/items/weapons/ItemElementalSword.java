@@ -2,6 +2,7 @@ package com.legacy.aether.common.items.weapons;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.DamageSource;
@@ -18,6 +19,12 @@ public class ItemElementalSword extends ItemSword
 		this.setMaxDamage(502);
 		this.setCreativeTab(AetherCreativeTabs.weapons);
 	}
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
+    }
 
 	@Override
     public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase entityliving1)

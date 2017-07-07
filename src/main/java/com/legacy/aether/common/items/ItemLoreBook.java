@@ -1,6 +1,7 @@
 package com.legacy.aether.common.items;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -21,9 +22,16 @@ public class ItemLoreBook extends Item
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
+    }
+
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
     	playerIn.openGui(Aether.instance, AetherGuiHandler.lore, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
     	return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
     }
+
 }

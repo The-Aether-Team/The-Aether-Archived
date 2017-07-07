@@ -2,9 +2,11 @@ package com.legacy.aether.common.items.weapons;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemVampireBlade extends ItemSword
@@ -15,6 +17,12 @@ public class ItemVampireBlade extends ItemSword
     	super(ToolMaterial.DIAMOND);
 
         this.setCreativeTab(AetherCreativeTabs.weapons);
+    }
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
     }
 
     @Override

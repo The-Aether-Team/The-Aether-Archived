@@ -5,11 +5,13 @@ import java.util.Random;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemPigSlayer extends ItemSword
@@ -22,6 +24,12 @@ public class ItemPigSlayer extends ItemSword
         super(ToolMaterial.IRON);
         this.setMaxDamage(200);
         this.setCreativeTab(AetherCreativeTabs.weapons);
+    }
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
     }
 
     @Override

@@ -106,6 +106,7 @@ item.skyroot_bucket_empty.name=Skyroot Bucket
 item.skyroot_bucket_water.name=Skyroot Water Bucket
 item.skyroot_bucket_poison.name=Skyroot Poison Bucket
 item.skyroot_bucket_remedy.name=Skyroot Remedy Bucket
+item.skyroot_bucket_milk.name=Skyroot Milk Bucket
 item.aether_tune.name=Aether Tune
 item.ascending_dawn.name=Ascending Dawn
 item.welcoming_skies.name=Welcoming Skies

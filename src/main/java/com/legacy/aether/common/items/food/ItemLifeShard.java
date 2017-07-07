@@ -1,6 +1,7 @@
 package com.legacy.aether.common.items.food;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -9,6 +10,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import com.legacy.aether.common.Aether;
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
@@ -21,6 +23,12 @@ public class ItemLifeShard extends Item
 		this.setMaxStackSize(1);
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
+    }
 
 	@Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World worldIn, EntityPlayer player, EnumHand hand)

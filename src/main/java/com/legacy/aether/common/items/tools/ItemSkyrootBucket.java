@@ -9,8 +9,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -55,6 +57,12 @@ public class ItemSkyrootBucket extends Item
     	{
         	list.add(new ItemStack(this, 1, meta));
     	}
+    }
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return stack.getMetadata() == 3 ? EnumRarity.RARE : super.getRarity(stack);
     }
 
 	@Override
@@ -249,6 +257,13 @@ public class ItemSkyrootBucket extends Item
 		else if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Remedy)
 		{
 			player.attainCure(200);
+		}
+		else if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Milk)
+		{
+	        if (!world.isRemote)
+	        {
+	        	entityplayer.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
+	        }
 		}
 
 		return itemstack.stackSize <= 0 ? new ItemStack(this, 1, 0) : itemstack;

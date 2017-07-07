@@ -4,6 +4,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.client.models.ModelColoredArmor;
 import com.legacy.aether.common.Aether;
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemAetherArmor extends ItemArmor
@@ -82,4 +84,9 @@ public class ItemAetherArmor extends ItemArmor
 	    return source == null ? false : repair.getItem() == source;
 	}
 
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return !this.armorName.contains("zanite") && !this.armorName.contains("gravitite")? ItemsAether.aether_loot : super.getRarity(stack);
+    }
 }

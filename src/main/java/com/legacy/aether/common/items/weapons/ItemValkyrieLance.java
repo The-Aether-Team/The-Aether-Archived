@@ -5,11 +5,13 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemValkyrieLance extends ItemSword
@@ -21,6 +23,12 @@ public class ItemValkyrieLance extends ItemSword
 
 		this.setCreativeTab(AetherCreativeTabs.weapons);
 	}
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
+    }
 
 	@Override
 	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)

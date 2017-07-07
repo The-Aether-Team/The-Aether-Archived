@@ -275,7 +275,7 @@ public class ItemRendering
 
 		registerMeta(ItemsAether.gummy_swet, Aether.locate("blue_gummy_swet"), Aether.locate("golden_gummy_swet"));
 		registerMeta(ItemsAether.dungeon_key, Aether.locate("bronze_key"), Aether.locate("silver_key"), Aether.locate("golden_key"));
-		registerMeta(ItemsAether.skyroot_bucket, Aether.locate("skyroot_bucket"), Aether.locate("skyroot_water_bucket"), Aether.locate("skyroot_poison_bucket"), Aether.locate("skyroot_remedy_bucket"));
+		registerMeta(ItemsAether.skyroot_bucket, Aether.locate("skyroot_bucket"), Aether.locate("skyroot_water_bucket"), Aether.locate("skyroot_poison_bucket"), Aether.locate("skyroot_remedy_bucket"), Aether.locate("skyroot_milk_bucket"));
 		registerMeta(ItemsAether.dart_shooter, Aether.locate("golden_dart_shooter"), Aether.locate("poison_dart_shooter"), Aether.locate("enchanted_dart_shooter"));
 		registerMeta(ItemsAether.dart, Aether.locate("golden_dart"), Aether.locate("poison_dart"), Aether.locate("enchanted_dart"));
 		registerMeta(ItemsAether.phoenix_bow, Aether.locate("phoenix_bow"), Aether.locate("phoenix_bow_pulling_0"), Aether.locate("phoenix_bow_pulling_1"), Aether.locate("phoenix_bow_pulling_2"));

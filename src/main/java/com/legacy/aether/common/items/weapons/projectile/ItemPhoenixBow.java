@@ -10,6 +10,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSpectralArrow;
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.common.entities.projectile.EntityPhoenixArrow;
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemPhoenixBow extends ItemBow
@@ -35,6 +37,12 @@ public class ItemPhoenixBow extends ItemBow
         this.maxStackSize = 1;
         this.setMaxDamage(384);
         this.setCreativeTab(AetherCreativeTabs.weapons);
+    }
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
     }
 
     private ItemStack findAmmo(EntityPlayer player)

@@ -2,6 +2,7 @@ package com.legacy.aether.common.items.weapons;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.ActionResult;
@@ -11,6 +12,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 import com.legacy.aether.common.entities.projectile.EntityHammerProjectile;
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
@@ -26,10 +28,10 @@ public class ItemNotchHammer extends ItemSword
 	}
 
 	@Override
-	public float getDamageVsEntity()
-	{
-		return 1.5F;
-	}
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
+    }
 
 	@Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer, EnumHand hand)

@@ -8,6 +8,7 @@ import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.google.common.base.Predicates;
 import com.legacy.aether.common.Aether;
 import com.legacy.aether.common.containers.util.AccessoryType;
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
@@ -38,6 +40,8 @@ public class ItemAccessory extends Item
 	public ResourceLocation texture;
 
 	private int colorHex = 0xdddddd;
+
+	private boolean isDungeonLoot = false;
 
     public static final IBehaviorDispenseItem DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem()
     {
@@ -115,10 +119,22 @@ public class ItemAccessory extends Item
     	return this;
     }
 
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return this.isDungeonLoot ? ItemsAether.aether_loot : super.getRarity(stack);
+    }
+
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int meta)
     {
     	return this.colorHex;
+    }
+
+    public ItemAccessory setDungeonLoot()
+    {
+    	this.isDungeonLoot = true;
+    	return this;
     }
 
     public ItemAccessory setTexture(String location)

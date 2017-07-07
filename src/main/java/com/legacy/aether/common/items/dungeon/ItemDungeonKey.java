@@ -3,11 +3,13 @@ package com.legacy.aether.common.items.dungeon;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.items.util.EnumDungeonKeyType;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
@@ -30,6 +32,12 @@ public class ItemDungeonKey extends Item
     	{
         	list.add(new ItemStack(this, 1, meta));
     	}
+    }
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return ItemsAether.aether_loot;
     }
 
 	@Override

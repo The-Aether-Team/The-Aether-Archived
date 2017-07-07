@@ -6,6 +6,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -38,6 +39,12 @@ public class ItemDartShooter extends Item
 	{
 		return false;
 	}
+
+	@Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+    	return stack.getMetadata() == 2 ? EnumRarity.RARE : super.getRarity(stack);
+    }
 
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })

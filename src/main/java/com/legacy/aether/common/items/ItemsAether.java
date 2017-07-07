@@ -1,10 +1,11 @@
 package com.legacy.aether.common.items;
 
-import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.legacy.aether.common.Aether;
@@ -13,6 +14,7 @@ import com.legacy.aether.common.items.accessories.ItemAccessory;
 import com.legacy.aether.common.items.armor.ItemAetherArmor;
 import com.legacy.aether.common.items.armor.ItemZaniteArmor;
 import com.legacy.aether.common.items.dungeon.ItemDungeonKey;
+import com.legacy.aether.common.items.dungeon.ItemVictoryMedal;
 import com.legacy.aether.common.items.food.ItemAetherFood;
 import com.legacy.aether.common.items.food.ItemAmbrosiumShard;
 import com.legacy.aether.common.items.food.ItemGummySwet;
@@ -49,6 +51,8 @@ import com.legacy.aether.common.registry.sounds.SoundsAether;
 
 public class ItemsAether 
 {
+
+	public static EnumRarity aether_loot = EnumHelper.addRarity("aether_legacy_loot", TextFormatting.GREEN, "Aether Loot");
 
 	public static Item zanite_gemstone, ambrosium_shard, golden_amber, aechor_petal;
 
@@ -172,7 +176,7 @@ public class ItemsAether
 		ginger_bread_man = register("ginger_bread_man", new ItemAetherFood(2));
 
 		skyroot_stick = register("skyroot_stick", new Item().setCreativeTab(AetherCreativeTabs.material));
-		victory_medal = register("victory_medal", new Item().setCreativeTab(AetherCreativeTabs.misc).setMaxStackSize(10));
+		victory_medal = register("victory_medal", new ItemVictoryMedal());
 
 		dungeon_key = register("dungeon_key", new ItemDungeonKey());
 		skyroot_bucket = register("skyroot_bucket", new ItemSkyrootBucket());
@@ -207,10 +211,10 @@ public class ItemsAether
 
 		zanite_gloves = register("zanite_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x711ae8));
 		gravitite_gloves = register("gravitite_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xe752db));
-		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x2654FF));
-		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("phoenix").setColor(0xff7700).setMaxDamage(152));
-		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x1b1447));
-		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("valkyrie"));
+		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setColor(0x2654FF));
+		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("phoenix").setDungeonLoot().setColor(0xff7700).setMaxDamage(152));
+		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setColor(0x1b1447));
+		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setTexture("valkyrie"));
 
 		iron_ring = register("iron_ring", new ItemAccessory(AccessoryType.RING));
 		golden_ring = register("golden_ring", new ItemAccessory(AccessoryType.RING).setColor(0xeaee57));
@@ -226,13 +230,13 @@ public class ItemsAether
 		blue_cape = register("blue_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0x137fb7));
 		yellow_cape = register("yellow_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xcdcb0e));
 		white_cape = register("white_cape", new ItemAccessory(AccessoryType.CAPE));
-		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape"));
-		invisibility_cape = register("invisibility_cape", new ItemAccessory(AccessoryType.CAPE));
-		agility_cape = register("agility_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("agility_cape"));
+		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape").setDungeonLoot());
+		invisibility_cape = register("invisibility_cape", new ItemAccessory(AccessoryType.CAPE).setDungeonLoot());
+		agility_cape = register("agility_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("agility_cape").setDungeonLoot());
 
-		golden_feather = register("golden_feather", new ItemAccessory(AccessoryType.MISC));
-		regeneration_stone = register("regeneration_stone", new ItemAccessory(AccessoryType.MISC));
-		iron_bubble = register("iron_bubble", new ItemAccessory(AccessoryType.MISC));
+		golden_feather = register("golden_feather", new ItemAccessory(AccessoryType.MISC).setDungeonLoot());
+		regeneration_stone = register("regeneration_stone", new ItemAccessory(AccessoryType.MISC).setDungeonLoot());
+		iron_bubble = register("iron_bubble", new ItemAccessory(AccessoryType.MISC).setDungeonLoot());
 
 		life_shard = register("life_shard", new ItemLifeShard());
 		cloud_staff = register("cloud_staff", new ItemCloudStaff());
@@ -246,7 +250,7 @@ public class ItemsAether
 		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", SoundsAether.ascending_dawn, "HEmile", "Ascending Dawn"));
 		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Void", "Welcoming Skies")).setCreativeTab(null);
 
-		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setMaxDamage(512));
+		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512));
 		lore_book = register("lore_book", new ItemLoreBook());
 	}
 
