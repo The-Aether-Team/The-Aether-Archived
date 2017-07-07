@@ -21,7 +21,7 @@ public class SheepuffModel extends ModelQuadruped
         this.head.setRotationPoint(0.0F, 6.0F, -8.0F);
 
         this.body = new ModelRenderer(this, 28, 8);
-        this.body.addBox(-4.0F, -8.0F, -7.0F, 8, 16, 6, 3.75F);
+        this.body.addBox(-4.0F, -10.0F, -7.0F, 8, 16, 6, 1.75F);
         this.body.setRotationPoint(0.0F, 5.0F, 2.0F);
 
         this.leg1 = new ModelRenderer(this, 0, 16);

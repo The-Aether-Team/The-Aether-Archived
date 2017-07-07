@@ -37,6 +37,10 @@ public class EntitySheepuff extends EntityAetherAnimal
 
 	public static final DataParameter<Byte> FLEECE_COLOR = EntityDataManager.<Byte>createKey(EntitySheepuff.class, DataSerializers.BYTE);
 
+	public static final DataParameter<Boolean> SHEARED = EntityDataManager.<Boolean>createKey(EntitySheepuff.class, DataSerializers.BOOLEAN);
+
+	public static final DataParameter<Boolean> PUFFY = EntityDataManager.<Boolean>createKey(EntitySheepuff.class, DataSerializers.BOOLEAN);
+
 	private SheepuffAIEatAetherGrass entityAIEatGrass;
 
 	private int sheepTimer, amountEaten;
@@ -72,7 +76,10 @@ public class EntitySheepuff extends EntityAetherAnimal
 	protected void entityInit()
     {
         super.entityInit();
+
         this.dataManager.register(FLEECE_COLOR, new Byte((byte)0));
+        this.dataManager.register(SHEARED, false);
+        this.dataManager.register(PUFFY, false);
     }
 
 	@Override
@@ -268,9 +275,10 @@ public class EntitySheepuff extends EntityAetherAnimal
     public void readEntityFromNBT(NBTTagCompound nbttagcompound)
     {
         super.readEntityFromNBT(nbttagcompound);
-        setSheared(nbttagcompound.getBoolean("Sheared"));
-		setPuffed(nbttagcompound.getBoolean("Puffed"));
-		setFleeceColor(nbttagcompound.getByte("Color"));
+
+        this.setSheared(nbttagcompound.getBoolean("Sheared"));
+        this.setPuffed(nbttagcompound.getBoolean("Puffed"));
+        this.setFleeceColor(nbttagcompound.getByte("Color"));
     }
 
     protected SoundEvent getAmbientSound()
@@ -288,7 +296,6 @@ public class EntitySheepuff extends EntityAetherAnimal
         return SoundEvents.ENTITY_SHEEP_DEATH;
     }
 
-	
 	public int getFleeceColor()
     {
         return this.dataManager.get(FLEECE_COLOR) & 15;
@@ -302,38 +309,22 @@ public class EntitySheepuff extends EntityAetherAnimal
 
     public boolean getSheared()
     {
-        return (this.dataManager.get(FLEECE_COLOR) & 0x10) != 0;
+        return this.dataManager.get(SHEARED);
     }
 
     public void setSheared(boolean flag)
     {
-        byte byte0 = this.dataManager.get(FLEECE_COLOR);
-        if(flag)
-        {
-        	this.dataManager.set(FLEECE_COLOR, Byte.valueOf((byte)(byte0 | 0x10)));
-        } 
-        else
-        {
-        	this.dataManager.set(FLEECE_COLOR, Byte.valueOf((byte)(byte0 & 0xffffffef)));
-        }
+        this.dataManager.set(SHEARED, flag);
     }
 
 	public boolean getPuffed()
     {
-        return (this.dataManager.get(FLEECE_COLOR) & 0x20) != 0;
+        return this.dataManager.get(PUFFY);
     }
 
 	public void setPuffed(boolean flag)
     {
-        byte byte0 = this.dataManager.get(FLEECE_COLOR);
-        if(flag)
-        {
-        	this.dataManager.set(FLEECE_COLOR, Byte.valueOf((byte)(byte0 | 0x20)));
-        } 
-        else
-        {
-        	this.dataManager.set(FLEECE_COLOR, Byte.valueOf((byte)(byte0 & 0xffffffdf)));
-        }
+        this.dataManager.set(PUFFY, flag);
     }
 
 	public static int getRandomFleeceColor(Random random)
