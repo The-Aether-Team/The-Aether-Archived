@@ -84,11 +84,6 @@ public class AetherBiome extends Biome
 		list.add(new SpawnListEntry(EntityZephyr.class, 5, 0, 1));
 	}
 
-    public List<Biome.SpawnListEntry> getSpawnableList(EnumCreatureType creatureType)
-    {
-        return Collections.<Biome.SpawnListEntry>emptyList();
-    }
-
 	@Override
     public int getSkyColorByTemp(float currentTemperature)
     {
