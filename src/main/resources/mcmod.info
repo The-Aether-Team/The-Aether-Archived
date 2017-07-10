@@ -2,8 +2,7 @@
 {
   "modid": "aether_legacy",
   "name": "Aether Legacy",
-  "description": "Aether Legacy, a fan update of Aether I which has been revamped for the latest version of Minecraft. This version of the aether includes multiplayer support to play with friends and others alike.",
-  "version": "v1.0",
+  "description": "Aether Legacy, a port of Aether I which has been updated to the latest version of Minecraft. This version of the aether includes multiplayer support to play with friends and others alike.",
   "mcversion": "1.10.2",
   "url": "https://www.moddinglegacy.com/",
   "updateUrl": "",
