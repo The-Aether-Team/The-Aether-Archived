@@ -88,7 +88,7 @@ public class AetherOverlay
             Tessellator tessellator = Tessellator.getInstance();
             VertexBuffer renderer = tessellator.getBuffer();
 
-    		float alpha = getCureAlpha((-(float)playerAether.poisonInstance().poisonTime % 50)) / 100.0F;
+    		float alpha = getCureAlpha(-((float)playerAether.poisonInstance().poisonTime + 100.0F) / 100.0F);
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
 
@@ -112,7 +112,7 @@ public class AetherOverlay
             GlStateManager.depthMask(true);
             GlStateManager.enableDepth();
             GlStateManager.enableAlpha();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.popMatrix();
     	}
     }
