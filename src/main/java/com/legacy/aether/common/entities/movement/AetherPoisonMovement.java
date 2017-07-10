@@ -59,12 +59,12 @@ public class AetherPoisonMovement
 
     public boolean curePoison(int i) 
     {
-        if (this.poisonTime == -500)
+        if (this.poisonTime == -100)
         {
             return false;
         }
 
-        this.poisonTime = -500 - i;
+        this.poisonTime = -100 - i;
 
         return true;
     }
