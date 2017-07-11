@@ -25,7 +25,7 @@ public class ZephyrAIShootTarget extends EntityAIBase
 	public ZephyrAIShootTarget(EntityZephyr zephyr)
 	{
 		this.zephyr = zephyr;
-		this.worldObj = zephyr.worldObj;
+		this.worldObj = zephyr.world;
 		this.attackCounter = 0;
 		this.base = (this.zephyr.getRNG().nextFloat() - this.zephyr.getRNG().nextFloat()) * 0.2F + 1.0F;
 		this.setMutexBits(4);
@@ -86,7 +86,7 @@ public class ZephyrAIShootTarget extends EntityAIBase
 
                     if (!this.worldObj.isRemote)
                     {
-                        this.worldObj.spawnEntityInWorld(projectile);
+                        this.worldObj.spawnEntity(projectile);
                     }
 
                     this.attackCounter = -40;

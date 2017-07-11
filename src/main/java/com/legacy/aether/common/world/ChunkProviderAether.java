@@ -293,7 +293,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 	}
 
 	@Override
-	public BlockPos getStrongholdGen(World worldIn, String p_180513_2_, BlockPos p_180513_3_) 
+	public BlockPos getStrongholdGen(World worldIn, String structureName, BlockPos position, boolean p_180513_4_) 
 	{
 		return null;
 	}

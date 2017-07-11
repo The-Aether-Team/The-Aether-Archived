@@ -20,7 +20,7 @@ public class GuiTreasureChest extends GuiContainer
 
     public GuiTreasureChest(InventoryPlayer playerInventory, TileEntityTreasureChest chestInventory)
     {
-        super(new ContainerChest(playerInventory, chestInventory, Minecraft.getMinecraft().thePlayer));
+        super(new ContainerChest(playerInventory, chestInventory, Minecraft.getMinecraft().player));
 
         this.allowUserInput = false;
 

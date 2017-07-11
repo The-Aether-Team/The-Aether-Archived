@@ -31,11 +31,11 @@ public class AbilityAccessories extends Ability
 			this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.zanite_pendant));
 		}
 
-		if (!this.player.worldObj.isRemote && this.playerAether.wearingAccessory(ItemsAether.ice_ring) || this.playerAether.wearingAccessory(ItemsAether.ice_pendant))
+		if (!this.player.world.isRemote && this.playerAether.wearingAccessory(ItemsAether.ice_ring) || this.playerAether.wearingAccessory(ItemsAether.ice_pendant))
 		{
-			int i = MathHelper.floor_double(this.player.posX);
-			int j = MathHelper.floor_double(this.player.getEntityBoundingBox().minY);
-			int k = MathHelper.floor_double(this.player.posZ);
+			int i = MathHelper.floor(this.player.posX);
+			int j = MathHelper.floor(this.player.getEntityBoundingBox().minY);
+			int k = MathHelper.floor(this.player.posZ);
 
 			for (int l = i - 1; l <= i + 1; l++)
 			{
@@ -43,21 +43,21 @@ public class AbilityAccessories extends Ability
 				{
 					for (int j1 = k - 1; j1 <= k + 1; j1++)
 					{
-						IBlockState state = this.player.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(l, i1, j1));
+						IBlockState state = this.player.world.getBlockState(new BlockPos.MutableBlockPos().setPos(l, i1, j1));
 						Block block = state.getBlock();
 						BlockPos pos = new BlockPos(l, i1, j1);
 
 						if (block == Blocks.WATER || block == Blocks.FLOWING_WATER)
 						{
 							if (((Integer)state.getValue(BlockLiquid.LEVEL)).intValue() == 0)
-							{ this.player.worldObj.setBlockState(pos, Blocks.ICE.getDefaultState()); }
-							else { this.player.worldObj.setBlockState(pos, Blocks.AIR.getDefaultState()); }
+							{ this.player.world.setBlockState(pos, Blocks.ICE.getDefaultState()); }
+							else { this.player.world.setBlockState(pos, Blocks.AIR.getDefaultState()); }
 						}
 						else if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA)
 						{
 							if (((Integer)state.getValue(BlockLiquid.LEVEL)).intValue() == 0)
-							{ this.player.worldObj.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState()); }
-							else { this.player.worldObj.setBlockState(pos, Blocks.AIR.getDefaultState()); }
+							{ this.player.world.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState()); }
+							else { this.player.world.setBlockState(pos, Blocks.AIR.getDefaultState()); }
 						}
 						else
 						{
@@ -106,7 +106,7 @@ public class AbilityAccessories extends Ability
 
 		if (this.playerAether.wearingAccessory(ItemsAether.regeneration_stone))
 		{
-			if(this.player.getHealth() < this.player.getMaxHealth() && (player.ticksExisted % 20 * 12) == 0)
+			if(this.player.getHealth() < this.player.getMaxHealth() && (this.player.ticksExisted % 20 * 12) == 0)
 			{
 				this.player.heal(1);
 			}
@@ -116,7 +116,7 @@ public class AbilityAccessories extends Ability
 		{
 			this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.phoenix_gloves));
 
-			if (this.playerAether.accessories.getStackFromItem(ItemsAether.phoenix_gloves) == null)
+			if (this.playerAether.accessories.getStackFromItem(ItemsAether.phoenix_gloves) == ItemStack.EMPTY)
 			{
 				this.playerAether.accessories.setInventorySlotContents(6, new ItemStack(ItemsAether.obsidian_gloves));
 			}

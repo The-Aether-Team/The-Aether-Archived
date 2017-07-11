@@ -41,12 +41,12 @@ public class ContainerIncubator extends Container
 
 	public boolean canInteractWith(EntityPlayer entityplayer)
     {
-        return this.incubator.isUseableByPlayer(entityplayer);
+        return this.incubator.isUsableByPlayer(entityplayer);
     }
 
     public ItemStack transferStackInSlot(EntityPlayer entityplayer, int i)
     {
-        ItemStack itemstack = null;
+        ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = (Slot)this.inventorySlots.get(i);
 
         if (slot != null && slot.getHasStack())
@@ -70,27 +70,27 @@ public class ContainerIncubator extends Container
             {
                 if (!this.mergeItemStack(itemstack1, 2, 38, true))
                 {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
             }
 
-            if (itemstack1.stackSize == 0)
-            {
-                slot.putStack((ItemStack)null);
-            }
-            else
-            {
-                slot.onSlotChanged();
-            }
+			if (itemstack1.getCount() == 0)
+			{
+				slot.putStack(ItemStack.EMPTY);
+			}
+			else
+			{
+				slot.onSlotChanged();
+			}
 
-            if (itemstack1.stackSize == itemstack.stackSize)
-            {
-                return null;
-            }
+			if (itemstack1.getCount() == itemstack.getCount())
+			{
+				return ItemStack.EMPTY;
+			}
 
-            slot.onPickupFromSlot(entityplayer, itemstack1);
+			slot.onTake(entityplayer, itemstack1);
         }
 
         return itemstack;

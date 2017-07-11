@@ -39,13 +39,13 @@ public class AetherEntityRenderer extends EntityRenderer
 	@Override
     public void getMouseOver(float partialTick)
     {
-		EntityPlayer entityPlayer = this.mc.thePlayer;
+		EntityPlayer entityPlayer = this.mc.player;
 
-		if (this.mc.thePlayer != null && entityPlayer.inventory.getCurrentItem() != null && PlayerAether.get(entityPlayer) != null && PlayerAether.get(entityPlayer).getReach() == 10.0D)
+		if (this.mc.player != null && entityPlayer.inventory.getCurrentItem() != null && PlayerAether.get(entityPlayer) != null && PlayerAether.get(entityPlayer).getReach() == 10.0D)
     	{
 			this.getExtendedReach(partialTick);
     	}
-		else if (this.mc.thePlayer != null && !this.mc.thePlayer.getPassengers().isEmpty() && this.mc.thePlayer.getPassengers().get(0) instanceof EntityAerbunny)
+		else if (this.mc.player != null && !this.mc.player.getPassengers().isEmpty() && this.mc.player.getPassengers().get(0) instanceof EntityAerbunny)
 		{
 			this.getMountRightClick(partialTick);
 		}
@@ -61,7 +61,7 @@ public class AetherEntityRenderer extends EntityRenderer
 
         if (entity != null)
         {
-            if (this.mc.theWorld != null)
+            if (this.mc.world != null)
             {
                 this.mc.mcProfiler.startSection("pick");
                 this.mc.pointedEntity = null;
@@ -94,7 +94,7 @@ public class AetherEntityRenderer extends EntityRenderer
                 this.pointedEntity = null;
                 Vec3d vec3d3 = null;
                 float f = 1.0F;
-                List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec3d1.xCoord * d0, vec3d1.yCoord * d0, vec3d1.zCoord * d0).expand((double)f, (double)f, (double)f), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
+                List<Entity> list = this.mc.world.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec3d1.xCoord * d0, vec3d1.yCoord * d0, vec3d1.zCoord * d0).expand((double)f, (double)f, (double)f), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
                 {
                     public boolean apply(@Nullable Entity p_apply_1_)
                     {
@@ -166,7 +166,7 @@ public class AetherEntityRenderer extends EntityRenderer
 
         if (entity != null)
         {
-            if (this.mc.theWorld != null)
+            if (this.mc.world != null)
             {
                 this.mc.mcProfiler.startSection("pick");
                 this.mc.pointedEntity = null;
@@ -186,7 +186,7 @@ public class AetherEntityRenderer extends EntityRenderer
                 this.pointedEntity = null;
                 Vec3d vec3d3 = null;
                 float f = 1.0F;
-                List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec3d1.xCoord * d0, vec3d1.yCoord * d0, vec3d1.zCoord * d0).expand((double)f, (double)f, (double)f), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
+                List<Entity> list = this.mc.world.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec3d1.xCoord * d0, vec3d1.yCoord * d0, vec3d1.zCoord * d0).expand((double)f, (double)f, (double)f), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
                 {
                     public boolean apply(@Nullable Entity p_apply_1_)
                     {

@@ -25,7 +25,7 @@ public class ItemHolystoneTool extends ItemAetherTool
 			EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ());
 			entityItem.setEntityItemStack(new ItemStack(ItemsAether.ambrosium_shard, 1));
 
-			world.spawnEntityInWorld(entityItem);
+			world.spawnEntity(entityItem);
 		}
 
 		return super.onBlockDestroyed(stack, world, state, pos, entityLiving);

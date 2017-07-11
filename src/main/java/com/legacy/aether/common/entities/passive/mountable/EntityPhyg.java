@@ -17,7 +17,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import com.legacy.aether.common.entities.util.EntitySaddleMount;
@@ -173,7 +172,7 @@ public class EntityPhyg extends EntitySaddleMount
 
 		if (!this.onGround && !this.isJumping)
 		{
-			if (this.onGround && !this.worldObj.isRemote)
+			if (this.onGround && !this.world.isRemote)
 			{
 				this.jumpsRemaining = this.maxJumps;
 			}
@@ -189,7 +188,7 @@ public class EntityPhyg extends EntitySaddleMount
 	@Override
 	protected void playStepSound(BlockPos pos, Block par4)
 	{
-		this.worldObj.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PIG_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+		this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PIG_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
 
 	@Override
@@ -213,7 +212,7 @@ public class EntityPhyg extends EntitySaddleMount
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable)
 	{
-		return new EntityPhyg(this.worldObj);
+		return new EntityPhyg(this.world);
 	}
 
 }

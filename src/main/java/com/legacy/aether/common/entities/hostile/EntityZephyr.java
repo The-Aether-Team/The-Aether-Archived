@@ -57,9 +57,9 @@ public class EntityZephyr extends EntityFlying implements IMob
     @Override
     public boolean getCanSpawnHere()
     {
-        BlockPos pos = new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY), MathHelper.floor_double(this.posZ));
+        BlockPos pos = new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY), MathHelper.floor(this.posZ));
 
-        return this.worldObj.getLight(pos) > 8 && this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox().expand(0D, 10D, 0D)) && this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.worldObj.containsAnyLiquid(this.getEntityBoundingBox());
+        return this.world.getLight(pos) > 8 && this.world.checkNoEntityCollision(this.getEntityBoundingBox().expand(0D, 10D, 0D)) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.world.containsAnyLiquid(this.getEntityBoundingBox());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class EntityZephyr extends EntityFlying implements IMob
     {
     	super.onEntityUpdate();
 
-    	if (this.worldObj.isRemote)
+    	if (this.world.isRemote)
     	{
     		this.shootingAI.updateTask();
     	}
@@ -88,7 +88,7 @@ public class EntityZephyr extends EntityFlying implements IMob
         	this.setAttackTarget(null);
         }
 
-        if(!this.worldObj.isRemote && this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+        if(!this.world.isRemote && this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
         {
         	this.setDead();
         }

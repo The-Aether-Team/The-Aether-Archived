@@ -231,18 +231,18 @@ public class PlayerAetherEvents
 
 		int achievementType = achievement == AchievementsAether.defeat_bronze ? 1 : achievement == AchievementsAether.defeat_silver ? 2 : 0;
 
-		if (!player.worldObj.isRemote && ((EntityPlayerMP)player).getStatFile().canUnlockAchievement(achievement) && !player.hasAchievement(achievement))
+		if (!player.world.isRemote && ((EntityPlayerMP)player).getStatFile().canUnlockAchievement(achievement) && !player.hasAchievement(achievement))
 		{
 			if (event.getAchievement() == AchievementsAether.enter_aether)
 			{
 				if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.lore_book)))
 				{
-					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, new ItemStack(ItemsAether.lore_book)));
+					player.world.spawnEntity(new EntityItem(player.world, player.posX, player.posY, player.posZ, new ItemStack(ItemsAether.lore_book)));
 				}
 
 				if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.golden_parachute)))
 				{
-					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, new ItemStack(ItemsAether.golden_parachute)));
+					player.world.spawnEntity(new EntityItem(player.world, player.posX, player.posY, player.posZ, new ItemStack(ItemsAether.golden_parachute)));
 				}
 			}
 

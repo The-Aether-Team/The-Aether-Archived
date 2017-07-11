@@ -40,7 +40,7 @@ public class AbilityRepulsion extends Ability
 	@Override
 	public void onUpdate() 
 	{
-		List<?> entities = this.player.worldObj.getEntitiesWithinAABBExcludingEntity(this.player, this.player.getEntityBoundingBox().expand(4.0D, 4.0D, 4.0D));
+		List<?> entities = this.player.world.getEntitiesWithinAABBExcludingEntity(this.player, this.player.getEntityBoundingBox().expand(4.0D, 4.0D, 4.0D));
 
 		for (int size = 0; size < entities.size(); ++size)
 		{
@@ -71,7 +71,7 @@ public class AbilityRepulsion extends Ability
 				projectile.motionX = x * 0.75F; projectile.motionY = y * 0.75F + 0.05D; projectile.motionZ = z * 0.75F;
 
 				this.setShooter(projectile, this.player);
-				player.worldObj.playSound(this.player, new BlockPos(this.player), SoundEvents.BLOCK_NOTE_SNARE, SoundCategory.PLAYERS, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F + 0.8F) * 1.1F);
+				player.world.playSound(this.player, new BlockPos(this.player), SoundEvents.BLOCK_NOTE_SNARE, SoundCategory.PLAYERS, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F + 0.8F) * 1.1F);
 
 				for (int pack = 0; pack < 12; ++pack)
 				{
@@ -83,7 +83,7 @@ public class AbilityRepulsion extends Ability
 					packY *= 0.625F;
 					packZ *= 0.625F;
 
-					player.worldObj.spawnParticle(EnumParticleTypes.FLAME, projectile.posX, projectile.posY, projectile.posZ, packX, packY, packZ);
+					player.world.spawnParticle(EnumParticleTypes.FLAME, projectile.posX, projectile.posY, projectile.posZ, packX, packY, packZ);
 				}
 				
 				this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.repulsion_shield));

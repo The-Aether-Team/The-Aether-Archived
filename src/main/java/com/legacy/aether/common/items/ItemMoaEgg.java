@@ -1,7 +1,5 @@
 package com.legacy.aether.common.items;
 
-import java.util.List;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -41,42 +40,43 @@ public class ItemMoaEgg extends Item
 	}
 
 	@Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+		ItemStack heldItem = playerIn.getHeldItem(hand);
+
 		if (playerIn.capabilities.isCreativeMode)
 		{
-			EntityMoa moa = new EntityMoa(worldIn, MoaColor.getColor(stack.getTagCompound().getInteger("color")));
+			EntityMoa moa = new EntityMoa(worldIn, MoaColor.getColor(heldItem.getTagCompound().getInteger("color")));
 
 			moa.moveToBlockPosAndAngles(pos.up(), 1.0F, 1.0F);
 			moa.setPlayerGrown(true);
 
 			if (!worldIn.isRemote)
 			{
-				worldIn.spawnEntityInWorld(moa);
+				worldIn.spawnEntity(moa);
 			}
 			
 			return EnumActionResult.SUCCESS;
 		}
 
-        return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+        return super.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
     }
 
 	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void getSubItems(Item item, CreativeTabs tabs, List creativeList)
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
 	{
 		int meta = 0;
 		
 		for (MoaColor color : MoaColor.colors)
 		{
-			ItemStack stack = new ItemStack(item, 1, meta);
+			ItemStack stack = new ItemStack(itemIn, 1, meta);
 			NBTTagCompound tag = new NBTTagCompound();
 			
 			tag.setInteger("color", color.ID);
 			tag.setBoolean("creativeSpawned", true);
 			
 			stack.setTagCompound(tag);
-			creativeList.add(stack);
+			subItems.add(stack);
 			
 			meta++;
 		}

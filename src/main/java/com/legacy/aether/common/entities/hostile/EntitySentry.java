@@ -101,12 +101,12 @@ public class EntitySentry extends EntityLiving implements IMob
     @Override
     public void onUpdate()
     {
-        if (!this.worldObj.isRemote && this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+        if (!this.world.isRemote && this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
         {
             this.isDead = true;
         }
 
-        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 8D);
+        EntityPlayer entityplayer = this.world.getClosestPlayerToEntity(this, 8D);
 
         if (entityplayer != null)
         {
@@ -156,7 +156,7 @@ public class EntitySentry extends EntityLiving implements IMob
 
     protected EntitySentry createInstance()
     {
-        return new EntitySentry(this.worldObj);
+        return new EntitySentry(this.world);
     }
 
     @Override
@@ -182,7 +182,7 @@ public class EntitySentry extends EntityLiving implements IMob
         {
         	entity.addVelocity(0.5D, 0.5D, 0.5D);
 
-            this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, 0.1F, false);
+            this.world.createExplosion(this, this.posX, this.posY, this.posZ, 0.1F, false);
 
             this.setDead(); this.setHealth(0.0F);
             this.playSound(SoundEvents.ENTITY_GENERIC_EXPLODE, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);

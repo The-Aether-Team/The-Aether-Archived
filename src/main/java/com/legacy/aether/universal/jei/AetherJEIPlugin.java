@@ -6,18 +6,57 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
+import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import mezz.jei.api.recipe.IRecipeWrapper;
+import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import net.minecraft.item.ItemStack;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.registry.AetherRegistry;
+import com.legacy.aether.common.registry.objects.AetherEnchantment;
+import com.legacy.aether.common.registry.objects.AetherFreezable;
 import com.legacy.aether.universal.jei.category.EnchanterRecipeCategory;
 import com.legacy.aether.universal.jei.category.FreezerRecipeCategory;
-import com.legacy.aether.universal.jei.handler.EnchanterRecipeHandler;
-import com.legacy.aether.universal.jei.handler.FreezerRecipeHandler;
+import com.legacy.aether.universal.jei.wrapper.EnchanterRecipeWrapper;
+import com.legacy.aether.universal.jei.wrapper.FreezerRecipeWrapper;
 
 @JEIPlugin
 public class AetherJEIPlugin implements IModPlugin
 {
+
+	@Override
+	public void register(IModRegistry registry)
+	{
+		registry.handleRecipes(AetherEnchantment.class, new IRecipeWrapperFactory<AetherEnchantment>() {
+
+			@Override
+			public IRecipeWrapper getRecipeWrapper(AetherEnchantment recipe) 
+			{
+				return new EnchanterRecipeWrapper(recipe);
+			}
+		}, "aether_legacy.enchantment");
+
+		registry.handleRecipes(AetherFreezable.class, new IRecipeWrapperFactory<AetherFreezable>() {
+
+			@Override
+			public IRecipeWrapper getRecipeWrapper(AetherFreezable recipe) 
+			{
+				return new FreezerRecipeWrapper(recipe);
+			}
+		}, "aether_legacy.freezable");
+
+		registry.addRecipeCatalyst(new ItemStack(BlocksAether.enchanter), "aether_legacy.enchantment");
+		registry.addRecipeCatalyst(new ItemStack(BlocksAether.freezer), "aether_legacy.freezable");
+
+		registry.addRecipes(AetherRegistry.getEnchantables(), "aether_legacy.enchantment");
+		registry.addRecipes(AetherRegistry.getFreezables(), "aether_legacy.freezable");
+	}
+
+	@Override
+	public void registerCategories(IRecipeCategoryRegistration registry) 
+	{
+		registry.addRecipeCategories(new EnchanterRecipeCategory(registry.getJeiHelpers().getGuiHelper()), new FreezerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+	}
 
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) 
@@ -29,21 +68,6 @@ public class AetherJEIPlugin implements IModPlugin
 	public void registerIngredients(IModIngredientRegistration registry)
 	{
 
-	}
-
-	@Override
-	public void register(IModRegistry registry)
-	{
-		registry.addRecipeCategories(new EnchanterRecipeCategory(registry.getJeiHelpers().getGuiHelper()),
-				new FreezerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
-
-		registry.addRecipeHandlers(new EnchanterRecipeHandler(), new FreezerRecipeHandler());
-
-		registry.addRecipeCategoryCraftingItem(new ItemStack(BlocksAether.enchanter), "aether_legacy.enchantment");
-		registry.addRecipeCategoryCraftingItem(new ItemStack(BlocksAether.freezer), "aether_legacy.freezable");
-
-		registry.addRecipes(AetherRegistry.getEnchantables());
-		registry.addRecipes(AetherRegistry.getFreezables());
 	}
 
 	@Override

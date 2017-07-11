@@ -96,7 +96,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 
 	public void setSnowballHeading(double d, double d1, double d2, float f, float f1)
 	{
-		float f2 = MathHelper.sqrt_double(d * d + d1 * d1 + d2 * d2);
+		float f2 = MathHelper.sqrt(d * d + d1 * d1 + d2 * d2);
 		d /= f2;
 		d1 /= f2;
 		d2 /= f2;
@@ -109,7 +109,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 		this.motionX = d;
 		this.motionY = d1;
 		this.motionZ = d2;
-		float f3 = MathHelper.sqrt_double(d * d + d2 * d2);
+		float f3 = MathHelper.sqrt(d * d + d2 * d2);
 		this.prevRotationYaw = this.rotationYaw = (float) ((Math.atan2(d, d2) * 180D) / 3.1415927410125732D);
 		this.prevRotationPitch = this.rotationPitch = (float) ((Math.atan2(d1, f3) * 180D) / 3.1415927410125732D);
 	}
@@ -122,7 +122,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 		this.motionZ = d2;
 		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
 		{
-			float f = MathHelper.sqrt_double(d * d + d2 * d2);
+			float f = MathHelper.sqrt(d * d + d2 * d2);
 			this.prevRotationYaw = this.rotationYaw = (float) ((Math.atan2(d, d2) * 180D) / 3.1415927410125732D);
 			this.prevRotationPitch = this.rotationPitch = (float) ((Math.atan2(d1, f) * 180D) / 3.1415927410125732D);
 		}
@@ -131,7 +131,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 	@Override
 	public void onUpdate()
 	{
-		this.worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.posX, this.posY + 0.2f, this.posZ, 1.0d, 1.0d, 1.0d);
+		this.world.spawnParticle(EnumParticleTypes.REDSTONE, this.posX, this.posY + 0.2f, this.posZ, 1.0d, 1.0d, 1.0d);
 
 		this.lastTickPosX = this.posX;
 		this.lastTickPosY = this.posY;
@@ -150,8 +150,8 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 
 		Vec3d vec3d = new Vec3d(this.posX, this.posY, this.posZ);
 		Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-		RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec3d, vec3d1, false, true, false);
-		RayTraceResult rayTraceResult = this.worldObj.rayTraceBlocks(vec3d, vec3d1, false, true, false);
+		RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec3d, vec3d1, false, true, false);
+		RayTraceResult rayTraceResult = this.world.rayTraceBlocks(vec3d, vec3d1, false, true, false);
 		vec3d = new Vec3d(this.posX, this.posY, this.posZ);
 		vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
@@ -160,11 +160,11 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 			vec3d1 = new Vec3d(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
 		}
 
-		if (!this.worldObj.isRemote && this.thrower != null)
+		if (!this.world.isRemote && this.thrower != null)
 		{
 			Entity entity = null;
 			Entity extraEntity = null;
-			List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expandXyz(8.0D));
+			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expandXyz(8.0D));
 			double d = 0.0D;
 			for (int l = 0; l < list.size(); l++)
 			{
@@ -208,16 +208,16 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 					for (int j1 = (int) (this.posZ - 3); j1 <= this.posZ + 3; j1++)
 					{
 						BlockPos prevBlockPos = new BlockPos(l, i1, j1);
-						if (this.worldObj.getBlockState(prevBlockPos).getBlock() instanceof BlockFlower && this.thrower != null && this.thrower instanceof EntityPlayer)
+						if (this.world.getBlockState(prevBlockPos).getBlock() instanceof BlockFlower && this.thrower != null && this.thrower instanceof EntityPlayer)
 						{
-							IBlockState prevBlockState = this.worldObj.getBlockState(prevBlockPos);
+							IBlockState prevBlockState = this.world.getBlockState(prevBlockPos);
 							Block prevBlock = prevBlockState.getBlock();
 
 							if (!this.harvestBlockBans.contains(prevBlock))
 							{
-								prevBlock.harvestBlock(this.thrower.worldObj, (EntityPlayer) this.thrower, prevBlockPos, prevBlockState, this.worldObj.getTileEntity(prevBlockPos), new ItemStack(ItemsAether.notch_hammer));
+								prevBlock.harvestBlock(this.thrower.world, (EntityPlayer) this.thrower, prevBlockPos, prevBlockState, this.world.getTileEntity(prevBlockPos), new ItemStack(ItemsAether.notch_hammer));
 
-								prevBlock.removedByPlayer(prevBlockState, this.thrower.worldObj, prevBlockPos, (EntityPlayer) this.thrower, false);
+								prevBlock.removedByPlayer(prevBlockState, this.thrower.world, prevBlockPos, (EntityPlayer) this.thrower, false);
 							}
 
 							continue;
@@ -272,16 +272,16 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 					for (int j1 = (int) (this.posZ - 3); j1 <= this.posZ + 3; j1++)
 					{
 						BlockPos prevBlockPos = new BlockPos(l, i1, j1);
-						if (this.worldObj.getBlockState(prevBlockPos).getBlock() instanceof BlockFlower && this.thrower != null && this.thrower instanceof EntityPlayer)
+						if (this.world.getBlockState(prevBlockPos).getBlock() instanceof BlockFlower && this.thrower != null && this.thrower instanceof EntityPlayer)
 						{
-							IBlockState prevBlockState = this.worldObj.getBlockState(prevBlockPos);
+							IBlockState prevBlockState = this.world.getBlockState(prevBlockPos);
 							Block prevBlock = prevBlockState.getBlock();
 
 							if (!this.harvestBlockBans.contains(prevBlock))
 							{
-								prevBlock.harvestBlock(this.thrower.worldObj, (EntityPlayer) this.thrower, prevBlockPos, prevBlockState, this.worldObj.getTileEntity(prevBlockPos), new ItemStack(ItemsAether.notch_hammer));
+								prevBlock.harvestBlock(this.thrower.world, (EntityPlayer) this.thrower, prevBlockPos, prevBlockState, this.world.getTileEntity(prevBlockPos), new ItemStack(ItemsAether.notch_hammer));
 
-								prevBlock.removedByPlayer(prevBlockState, this.thrower.worldObj, prevBlockPos, (EntityPlayer) this.thrower, false);
+								prevBlock.removedByPlayer(prevBlockState, this.thrower.world, prevBlockPos, (EntityPlayer) this.thrower, false);
 							}
 
 							continue;
@@ -292,11 +292,11 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 
 			for (int j = 0; j < 8; j++)
 			{
-				this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-				this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-				this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+				this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+				this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+				this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+				this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+				this.world.spawnParticle(EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
 			}
 
 			this.setDead();
@@ -305,7 +305,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 		this.posX += this.motionX;
 		this.posY += this.motionY;
 		this.posZ += this.motionZ;
-		float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+		float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 		this.rotationYaw = (float) ((Math.atan2(this.motionX, this.motionZ) * 180D) / 3.1415927410125732D);
 
 		for (this.rotationPitch = (float) ((Math.atan2(this.motionY, f) * 180D) / 3.1415927410125732D); this.rotationPitch - this.prevRotationPitch < -180F; this.prevRotationPitch -= 360F) { }
@@ -325,7 +325,7 @@ public class EntityHammerProjectile extends Entity implements IProjectile
 		{
 			for (int k = 0; k < 4; k++)
 			{
-				this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * 0.25D, this.posY - this.motionY * 0.25D, this.posZ - this.motionZ * 0.25D, this.motionX, this.motionY, this.motionZ);
+				this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * 0.25D, this.posY - this.motionY * 0.25D, this.posZ - this.motionZ * 0.25D, this.motionX, this.motionY, this.motionZ);
 			}
 
 			f1 = 0.8F;

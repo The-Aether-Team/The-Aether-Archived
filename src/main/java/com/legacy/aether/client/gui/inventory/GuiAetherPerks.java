@@ -45,10 +45,10 @@ public class GuiAetherPerks extends GuiScreen
 		super();
 
 		this.mc = Minecraft.getMinecraft();
-    	this.player = PlayerAether.get(this.mc.thePlayer);
+    	this.player = PlayerAether.get(this.mc.player);
     	this.moaSkin = this.player.donatorMoaSkin;
 
-		this.moa = this.player.thePlayer.getRidingEntity() instanceof EntityMoa ? (EntityMoa) this.player.thePlayer.getRidingEntity() : new EntityMoa(this.mc.theWorld, MoaColor.getColor(0));
+		this.moa = this.player.thePlayer.getRidingEntity() instanceof EntityMoa ? (EntityMoa) this.player.thePlayer.getRidingEntity() : new EntityMoa(this.mc.world, MoaColor.getColor(0));
 	}
 
 	@Override
@@ -283,7 +283,7 @@ public class GuiAetherPerks extends GuiScreen
     {
         this.drawGradientRect(0, 0, this.width, 50, -1072689136, -804253680);
 
-        if (this.mc.theWorld != null)
+        if (this.mc.world != null)
         {
             this.drawGradientRect(0, 0, this.width, this.height, -1072689136, -804253680);
         }

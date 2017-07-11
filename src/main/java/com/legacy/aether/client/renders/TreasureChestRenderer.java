@@ -37,7 +37,7 @@ public class TreasureChestRenderer extends TileEntitySpecialRenderer<TileEntityT
             return;
 		}
 
-		if (!par1TileEntityChest.hasWorldObj())
+		if (!par1TileEntityChest.hasWorld())
 		{
 			var9 = 0;
 		}

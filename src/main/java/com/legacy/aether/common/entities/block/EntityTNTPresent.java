@@ -1,6 +1,7 @@
 package com.legacy.aether.common.entities.block;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
@@ -54,7 +55,7 @@ public class EntityTNTPresent extends Entity
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
         this.motionY -= 0.03999999910593033D;
-        this.moveEntity(this.motionX, this.motionY, this.motionZ);
+        this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
         this.motionX *= 0.9800000190734863D;
         this.motionY *= 0.9800000190734863D;
         this.motionZ *= 0.9800000190734863D;
@@ -68,7 +69,7 @@ public class EntityTNTPresent extends Entity
 
         if (this.fuse-- <= 0)
         {
-            if (!this.worldObj.isRemote)
+            if (!this.world.isRemote)
             {
                 this.setDead();
                 this.explode();
@@ -76,14 +77,14 @@ public class EntityTNTPresent extends Entity
         }
         else
         {
-            this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D);
+            this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D);
         }
     }
 
     private void explode()
     {
         float f = 0.4F;
-        this.worldObj.createExplosion(this, this.posX, this.posY, this.posZ, f, true);
+        this.world.createExplosion(this, this.posX, this.posY, this.posZ, f, true);
     }
 
     protected void writeEntityToNBT(NBTTagCompound nbttagcompound)

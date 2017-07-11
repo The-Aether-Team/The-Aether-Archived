@@ -34,7 +34,7 @@ public class ZephyrAITravelCourse extends EntityAIBase
         double y = this.waypointY - this.zephyr.posY;
         double z = this.waypointZ - this.zephyr.posZ;
 
-        double distance = MathHelper.sqrt_double(x * x + y * y + z * z);
+        double distance = MathHelper.sqrt(x * x + y * y + z * z);
 
         if(distance < 1.0D || distance > 60D)
         {
@@ -75,7 +75,7 @@ public class ZephyrAITravelCourse extends EntityAIBase
         {
             axisalignedbb.offset(x, y, z);
 
-            if(this.zephyr.worldObj.getCollisionBoxes(this.zephyr, axisalignedbb).size() > 0)
+            if(this.zephyr.world.getCollisionBoxes(this.zephyr, axisalignedbb).size() > 0)
             {
                 return false;
             }

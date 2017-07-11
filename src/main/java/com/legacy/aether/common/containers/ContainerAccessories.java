@@ -26,7 +26,7 @@ public class ContainerAccessories extends ContainerPlayer
 
 	public ContainerAccessories(InventoryAccessories inventory, EntityPlayer player)
 	{
-		super(player.inventory, !player.worldObj.isRemote, player);
+		super(player.inventory, !player.world.isRemote, player);
 
 		this.player = player;
 		this.playerAether = PlayerAether.get(player);
@@ -36,16 +36,16 @@ public class ContainerAccessories extends ContainerPlayer
 		{
 			if (slot.slotNumber > 0 && slot.slotNumber < 5)
 			{
-				slot.xDisplayPosition += 18;
+				slot.xPos += 18;
 			}
 
 			if (slot.slotNumber > 4 && slot.slotNumber < 9)
 			{
-				slot.xDisplayPosition += 51;
+				slot.xPos += 51;
 			}
 			else if (slot.slotNumber == 45)
 			{
-				slot.xDisplayPosition += 39;
+				slot.xPos += 39;
 			}
 		}
 
@@ -104,7 +104,7 @@ public class ContainerAccessories extends ContainerPlayer
 				{
 					Slot accessorySlot = (SlotAccessory) this.inventorySlots.get(newSlotIndex);
 					accessorySlot.putStack(stack);
-					slot.putStack((ItemStack) null);
+					slot.putStack(ItemStack.EMPTY);
 
 					return stack;
 				}

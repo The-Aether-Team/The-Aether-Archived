@@ -1,7 +1,5 @@
 package com.legacy.aether.common.entities.util;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -83,26 +81,29 @@ public abstract class EntitySaddleMount extends EntityMountable
 	}
 
 	@Override
-    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, @Nullable ItemStack stack)
+    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand)
 	{
+		ItemStack heldItem = entityplayer.getHeldItem(hand);
+
 		if (!this.canSaddle())
 		{
-			return super.processInteract(entityplayer, hand, stack);
+			return super.processInteract(entityplayer, hand);
 		}
 		
 		if (!this.getSaddled())
 		{
-			if (entityplayer.inventory.getCurrentItem() != null && (entityplayer.inventory.getCurrentItem().getItem() == Items.SADDLE) && !this.isChild())
+			if (heldItem.getItem() == Items.SADDLE && !this.isChild())
 			{
 				if (!entityplayer.capabilities.isCreativeMode)
 				{
-					entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, null);
+					entityplayer.setHeldItem(hand, ItemStack.EMPTY);
 				}
 				
-				if (entityplayer.worldObj.isRemote)
+				if (entityplayer.world.isRemote)
 				{
-					entityplayer.worldObj.playSound(entityplayer, entityplayer.getPosition(), SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.AMBIENT, 1.0F, 1.0F);
+					entityplayer.world.playSound(entityplayer, entityplayer.getPosition(), SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.AMBIENT, 1.0F, 1.0F);
 				}
+
 				this.setSaddled(true);
 
 				return true;
@@ -112,7 +113,7 @@ public abstract class EntitySaddleMount extends EntityMountable
 		{
 			if (this.getPassengers().isEmpty())
 			{
-				if (!entityplayer.worldObj.isRemote)
+				if (!entityplayer.world.isRemote)
 				{
 					entityplayer.startRiding(this);
 					entityplayer.prevRotationYaw = entityplayer.rotationYaw = this.rotationYaw;
@@ -122,7 +123,7 @@ public abstract class EntitySaddleMount extends EntityMountable
 			}
 		}
 		
-		return super.processInteract(entityplayer, hand, stack);
+		return super.processInteract(entityplayer, hand);
 	}
 
 	@Override

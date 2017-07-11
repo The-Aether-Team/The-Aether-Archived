@@ -44,7 +44,7 @@ public class AetherPoisonMovement
 
         if (timeUntilHit == 0) 
         {
-            this.entityLiving.attackEntityFrom(DamageSource.generic, 1);
+            this.entityLiving.attackEntityFrom(DamageSource.GENERIC, 1);
         }
 
         this.poisonTime--;
@@ -71,7 +71,7 @@ public class AetherPoisonMovement
 
     public void distractEntity()
     {
-    	double gaussian = this.entityLiving.worldObj.rand.nextGaussian();
+    	double gaussian = this.entityLiving.world.rand.nextGaussian();
         double newMotD = 0.1D * gaussian;
         double newRotD = (Math.PI / 4D) * gaussian;
 

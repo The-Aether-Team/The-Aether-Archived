@@ -67,29 +67,9 @@ public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeW
 	}
 
 	@Override
-	public void drawAnimations(Minecraft minecraft)
-	{
-
-	}
-
-	@Override
 	public List<String>  getTooltipStrings(int mouseX, int mouseY)
 	{
 		return new ArrayList<String>();
-	}
-
-	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, EnchanterRecipeWrapper recipeWrapper)
-	{
-		IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
-
-		stacks.init(0, false, 30, 11);
-		stacks.init(1, false, 30, 47);
-		stacks.init(2, true, 90, 29);
-
-		stacks.set(0, recipeWrapper.enchantment.getEnchantmentInput());
-		stacks.set(1, new ItemStack(ItemsAether.ambrosium_shard));
-		stacks.set(2, recipeWrapper.enchantment.getEnchantedResult());
 	}
 
 	@Override
@@ -104,6 +84,12 @@ public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeW
 		stacks.set(0, recipeWrapper.enchantment.getEnchantmentInput());
 		stacks.set(1, new ItemStack(ItemsAether.ambrosium_shard));
 		stacks.set(2, recipeWrapper.enchantment.getEnchantedResult());
+	}
+
+	@Override
+	public String getModName()
+	{
+		return "aether_legacy";
 	}
 
 }

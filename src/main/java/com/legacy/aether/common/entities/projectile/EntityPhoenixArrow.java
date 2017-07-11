@@ -35,7 +35,7 @@ public class EntityPhoenixArrow extends EntityTippedArrow implements IProjectile
     {
         super.onUpdate();
 
-        if (this.worldObj.isRemote)
+        if (this.world.isRemote)
         {
             if (this.inGround)
             {
@@ -48,7 +48,7 @@ public class EntityPhoenixArrow extends EntityTippedArrow implements IProjectile
             {
             	if (this.isSpectral)
             	{
-                    this.worldObj.spawnParticle(EnumParticleTypes.SPELL_INSTANT, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+                    this.world.spawnParticle(EnumParticleTypes.SPELL_INSTANT, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
             	}
 
                 this.spawnPotionParticles(2);
@@ -60,7 +60,7 @@ public class EntityPhoenixArrow extends EntityTippedArrow implements IProjectile
     {
         for (int j = 0; j < particleCount; ++j)
         {
-            this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + (this.rand.nextGaussian() / 5D), this.posY + (this.rand.nextGaussian() / 5D), this.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
+            this.world.spawnParticle(EnumParticleTypes.FLAME, this.posX + (this.rand.nextGaussian() / 5D), this.posY + (this.rand.nextGaussian() / 5D), this.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
         }
     }
 

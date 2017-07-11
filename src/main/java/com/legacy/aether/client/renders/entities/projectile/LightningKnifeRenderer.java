@@ -36,7 +36,7 @@ public class LightningKnifeRenderer extends Render<EntityLightningKnife>
         GL11.glRotatef(90.0F, 1F, 0F, 0.25F);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glTranslatef(-0.5F, 0.0F, -0.5F);
-		Minecraft.getMinecraft().getItemRenderer().renderItem(Minecraft.getMinecraft().thePlayer, new ItemStack(ItemsAether.lightning_knife), TransformType.NONE);
+		Minecraft.getMinecraft().getItemRenderer().renderItem(Minecraft.getMinecraft().player, new ItemStack(ItemsAether.lightning_knife), TransformType.NONE);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }

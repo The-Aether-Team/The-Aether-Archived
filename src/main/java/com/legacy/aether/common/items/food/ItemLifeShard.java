@@ -31,19 +31,19 @@ public class ItemLifeShard extends Item
     }
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World worldIn, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand)
 	{
 		PlayerAether playerAether = PlayerAether.get(player);
+		ItemStack heldItem = player.getHeldItem(hand);
 
 		if (!worldIn.isRemote)
 		{
 			if (playerAether.getExtraHealth() < 20.0F)
 			{
 				playerAether.increaseMaxHP();
+				heldItem.shrink(1);
 
-				itemstack.stackSize--;
-				
-				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
 			}
 			else if (playerAether.getExtraHealth() >= 20.0F)
 			{
@@ -51,7 +51,7 @@ public class ItemLifeShard extends Item
 			}
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
+		return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
 	}
 
 }

@@ -55,7 +55,7 @@ public class EntityParachute extends Entity
 
     public void spawnExplosionParticle()
     {
-        if (this.worldObj.isRemote)
+        if (this.world.isRemote)
         {
             for (int i = 0; i < 1; ++i)
             {
@@ -63,12 +63,12 @@ public class EntityParachute extends Entity
                 double d1 = this.rand.nextGaussian() * 0.02D;
                 double d2 = this.rand.nextGaussian() * 0.02D;
                 double d3 = 10.0D;
-                this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d0 * d3, this.posY + (double)(this.rand.nextFloat() * this.height) - d1 * d3, this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d2 * d3, d0, d1, d2, new int[0]);
+                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d0 * d3, this.posY + (double)(this.rand.nextFloat() * this.height) - d1 * d3, this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d2 * d3, d0, d1, d2, new int[0]);
             }
         }
         else
         {
-            this.worldObj.setEntityState(this, (byte)20);
+            this.world.setEntityState(this, (byte)20);
         }
     }
 
@@ -115,7 +115,7 @@ public class EntityParachute extends Entity
 
 	private boolean isCollided()
 	{
-		List<?> list = this.worldObj.getCollisionBoxes(this, getEntityBoundingBox().expand(0.0D, 0.0D, 0.0D));
+		List<?> list = this.world.getCollisionBoxes(this, getEntityBoundingBox().expand(0.0D, 0.0D, 0.0D));
 		
 		for (int size = 0; size < list.size();)
 		{
@@ -129,7 +129,7 @@ public class EntityParachute extends Entity
 			return collision_list != this.rider.getEntityBoundingBox();
 		}
 
-		return this.worldObj.isAABBInMaterial(getEntityBoundingBox(), Material.WATER);
+		return this.world.isMaterialInBB(getEntityBoundingBox(), Material.WATER);
 	}
 
     @Override
@@ -150,7 +150,7 @@ public class EntityParachute extends Entity
     {
     	AxisAlignedBB boundingBox = player.getEntityBoundingBox();
 
-    	return world.getCollisionBoxes(player, boundingBox).size() == 0 && !world.isAABBInMaterial(boundingBox, Material.WATER);
+    	return world.getCollisionBoxes(player, boundingBox).size() == 0 && !world.isMaterialInBB(boundingBox, Material.WATER);
     }
     
     @Override

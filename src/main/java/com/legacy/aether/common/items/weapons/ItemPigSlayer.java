@@ -57,7 +57,7 @@ public class ItemPigSlayer extends ItemSword
                 double d1 = rand.nextGaussian() * 0.02D;
                 double d2 = rand.nextGaussian() * 0.02D;
                 double d3 = 5D;
-                entityliving.worldObj.spawnParticle(EnumParticleTypes.FLAME, (entityliving.posX + (double)(rand.nextFloat() * entityliving.width * 2.0F)) - (double)entityliving.width - d * d3, (entityliving.posY + (double)(rand.nextFloat() * entityliving.height)) - d1 * d3, (entityliving.posZ + (double)(rand.nextFloat() * entityliving.width * 2.0F)) - (double)entityliving.width - d2 * d3, d, d1, d2);
+                entityliving.world.spawnParticle(EnumParticleTypes.FLAME, (entityliving.posX + (double)(rand.nextFloat() * entityliving.width * 2.0F)) - (double)entityliving.width - d * d3, (entityliving.posY + (double)(rand.nextFloat() * entityliving.height)) - d1 * d3, (entityliving.posZ + (double)(rand.nextFloat() * entityliving.width * 2.0F)) - (double)entityliving.width - d2 * d3, d, d1, d2);
             }
 
 			entityliving.setDead();

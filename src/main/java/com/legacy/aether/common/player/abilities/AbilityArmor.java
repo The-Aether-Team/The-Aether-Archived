@@ -75,9 +75,9 @@ public class AbilityArmor extends Ability
 			this.player.extinguish();
 			this.player_movement.onUpdate();
 
-			if (this.player.worldObj.isRemote)
+			if (this.player.world.isRemote)
 			{
-				FMLClientHandler.instance().getClient().theWorld.spawnParticle(EnumParticleTypes.FLAME, this.player.posX + (this.rand.nextGaussian() / 5D), this.player.posY + (this.rand.nextGaussian() / 5D), this.player.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
+				FMLClientHandler.instance().getClient().world.spawnParticle(EnumParticleTypes.FLAME, this.player.posX + (this.rand.nextGaussian() / 5D), this.player.posY + (this.rand.nextGaussian() / 5D), this.player.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
 			}
 		}
 
@@ -95,11 +95,11 @@ public class AbilityArmor extends Ability
 
 	public void damagePhoenixArmor(EntityPlayer player, Item outcome, int slot)
 	{
-		player.inventory.armorInventory[slot].damageItem(1, player);
+		player.inventory.armorInventory.get(slot).damageItem(1, player);
 
-        if(player.inventory.armorInventory[slot].stackSize < 1)
+        if(player.inventory.armorInventory.get(slot).isEmpty())
         {
-        	player.inventory.armorInventory[slot] = new ItemStack(outcome, 1, 0);
+        	player.inventory.armorInventory.set(slot, new ItemStack(outcome, 1, 0));
 		}
 	}
 

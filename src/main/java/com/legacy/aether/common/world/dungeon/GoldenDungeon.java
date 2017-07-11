@@ -223,9 +223,10 @@ public class GoldenDungeon extends AetherDungeon
 		}
 
 		EntitySunSpirit boss = new EntitySunSpirit(world, x, y - 1, z, direction);
+
 		if (!world.isRemote)
 		{
-			world.spawnEntityInWorld(boss);
+			world.spawnEntity(boss);
 		}
 
 		return true;

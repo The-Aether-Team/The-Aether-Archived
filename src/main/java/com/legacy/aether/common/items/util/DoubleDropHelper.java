@@ -31,15 +31,15 @@ public class DoubleDropHelper
         	flag = false;
         }
 
-        if (block.canSilkHarvest(player.worldObj, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0)
+        if (block.canSilkHarvest(player.world, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0)
         {
-        	Block.spawnAsEntity(player.worldObj, pos, new ItemStack(block.getDefaultState().getBlock()));
+        	Block.spawnAsEntity(player.world, pos, new ItemStack(block.getDefaultState().getBlock()));
         	return;
         }
 
         if (!flag)
         {
-        	block.dropBlockAsItem(player.worldObj, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+        	block.dropBlockAsItem(player.world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
         	return;
         }
 
@@ -49,12 +49,12 @@ public class DoubleDropHelper
         {
             for (int i = 0; i < size; ++i)
             {
-            	block.dropBlockAsItem(player.worldObj, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+            	block.dropBlockAsItem(player.world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
             }
         }
         else
         {
-        	block.dropBlockAsItem(player.worldObj, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+        	block.dropBlockAsItem(player.world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
         }
 	}
 

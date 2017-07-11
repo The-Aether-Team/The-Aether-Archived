@@ -85,7 +85,7 @@ public class AetherWorldProvider extends WorldProvider
 	@Override
 	public IChunkGenerator createChunkGenerator()
 	{
-		return new ChunkProviderAether(this.worldObj, this.worldObj.getSeed());
+		return new ChunkProviderAether(this.world, this.world.getSeed());
 	}
 
     public boolean canDoLightning(Chunk chunk)
@@ -159,8 +159,9 @@ public class AetherWorldProvider extends WorldProvider
 	}
 
 	@Override
-	protected void createBiomeProvider()
+	protected void init()
 	{
+		this.hasSkyLight = true;
 		this.biomeProvider = new WorldChunkManagerAether();
 	}
 

@@ -43,9 +43,9 @@ public class PacketAccessory extends AetherPacket<PacketAccessory>
 	@Override
 	public void handleClient(PacketAccessory message, EntityPlayer player) 
 	{
-		if (player != null && player.worldObj != null)
+		if (player != null && player.world != null)
 		{
-			EntityPlayer parent = (EntityPlayer) player.worldObj.getEntityByID(message.entityID);
+			EntityPlayer parent = (EntityPlayer) player.world.getEntityByID(message.entityID);
 
 			if (parent != null)
 			{

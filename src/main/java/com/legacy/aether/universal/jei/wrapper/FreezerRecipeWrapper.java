@@ -7,7 +7,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
 import com.google.common.collect.Lists;
 import com.legacy.aether.common.registry.AetherRegistry;
@@ -44,37 +43,7 @@ public class FreezerRecipeWrapper implements IRecipeWrapper
 	}
 
 	@Override
-	public List<ItemStack> getInputs() 
-	{
-		return this.inputs;
-	}
-
-	@Override
-	public List<ItemStack> getOutputs() 
-	{
-		return this.outputs;
-	}
-
-	@Override
-	public List<FluidStack> getFluidInputs()
-	{
-		return null;
-	}
-
-	@Override
-	public List<FluidStack> getFluidOutputs() 
-	{
-		return null;
-	}
-
-	@Override
 	public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
-	{
-
-	}
-
-	@Override
-	public void drawAnimations(Minecraft minecraft, int recipeWidth, int recipeHeight) 
 	{
 
 	}

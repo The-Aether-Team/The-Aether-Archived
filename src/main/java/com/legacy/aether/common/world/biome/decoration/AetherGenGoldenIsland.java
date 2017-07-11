@@ -64,21 +64,21 @@ public class AetherGenGoldenIsland extends WorldGenerator
             {
                 for(int i3 = -l; i3 <= l; i3++)
                 {
-                    int k3 = MathHelper.floor_double(i2 * (1 + l2 / 240) / 0.8D);//MathHelper.floor_double(((double)i2 * (1.0D + (double)l2 / ((double)l * 10D))) / (double)f);
+                    int k3 = MathHelper.floor(i2 * (1 + l2 / 240) / 0.8D);
                     int i4 = l2;
 
                     if(l2 > 15)
                     {
-                        i4 = MathHelper.floor_double((double)i4 * 1.375D);
+                        i4 = MathHelper.floor((double)i4 * 1.375D);
                         i4 -= 6;
                     } 
                     else if(l2 < -15)
                     {
-                        i4 = MathHelper.floor_double((double)i4 * 1.3500000238418579D);
+                        i4 = MathHelper.floor((double)i4 * 1.3500000238418579D);
                         i4 += 6;
                     }
 
-                    int k4 = MathHelper.floor_double(i3 * (1 + l2 / 240) / 0.8D);// MathHelper.floor_double(((double)i3 * (1.0D + (double)l2 / ((double)l * 10D))) / (double)f);
+                    int k4 = MathHelper.floor(i3 * (1 + l2 / 240) / 0.8D);
 
                     if(Math.sqrt(k3 * k3 + i4 * i4 + k4 * k4) <= 24.0D)
                     {
@@ -133,15 +133,15 @@ public class AetherGenGoldenIsland extends WorldGenerator
         {
             float f2 = random.nextFloat() * 360F;
             float f3 = ((random.nextFloat() * 0.125F) + 0.7F) * (float)l;
-            int l4 = i + MathHelper.floor_double(Math.cos(f1 * f2) * (double)f3);
-            int k5 = j - MathHelper.floor_double((double)l * (double)random.nextFloat() * 0.29999999999999999D);
-            int i6 = k + MathHelper.floor_double(-Math.sin(f1 * f2) * (double)f3);
+            int l4 = i + MathHelper.floor(Math.cos(f1 * f2) * (double)f3);
+            int k5 = j - MathHelper.floor((double)l * (double)random.nextFloat() * 0.29999999999999999D);
+            int i6 = k + MathHelper.floor(-Math.sin(f1 * f2) * (double)f3);
             func_100008_b(world, random, l4, k5, i6, 8, true);
         }
 
         new GoldenDungeon().generate(world, random, i, j, k, j1);
 
-		int l3 = MathHelper.floor_double((double)l * 0.75D);
+		int l3 = MathHelper.floor((double)l * 0.75D);
 
 		for(int j4 = 0; j4 < l3; j4++)
 		{
@@ -175,21 +175,21 @@ public class AetherGenGoldenIsland extends WorldGenerator
             {
                 for(int i2 = -l; i2 <= l; i2++)
                 {
-                    int k2 = MathHelper.floor_double((double)i1 / (double)f);
+                    int k2 = MathHelper.floor((double)i1 / (double)f);
                     int i3 = k1;
 
                     if(k1 > 5)
                     {
-                        i3 = MathHelper.floor_double((double)i3 * 1.375D);
+                        i3 = MathHelper.floor((double)i3 * 1.375D);
                         i3 -= 2;
                     }
                     else if(k1 < -5)
                     {
-                        i3 = MathHelper.floor_double((double)i3 * 1.3500000238418579D);
+                        i3 = MathHelper.floor((double)i3 * 1.3500000238418579D);
                         i3 += 2;
                     }
 
-                    int k3 = MathHelper.floor_double((double)i2 / (double)f);
+                    int k3 = MathHelper.floor((double)i2 / (double)f);
 
                     if(Math.sqrt(k2 * k2 + i3 * i3 + k3 * k3) <= 8.0D)
                     {

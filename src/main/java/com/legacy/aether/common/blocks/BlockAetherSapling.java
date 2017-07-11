@@ -2,8 +2,6 @@ package com.legacy.aether.common.blocks;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -46,9 +44,11 @@ public class BlockAetherSapling extends BlockAetherFlower
 	}
 
 	@Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-		if (heldItem != null && heldItem.getItem() == Items.DYE && heldItem.getMetadata() == 15)
+		ItemStack heldItem = playerIn.getHeldItem(hand);
+
+		if (heldItem.getItem() == Items.DYE && heldItem.getMetadata() == 15)
 		{
             if (!worldIn.isRemote)
             {

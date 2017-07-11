@@ -1,7 +1,6 @@
 package com.legacy.aether.common.registry.creative_tabs;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -67,9 +66,9 @@ public class AetherCreativeTabs
 		}
 
 		@Override
-		public Item getTabIconItem()
+		public ItemStack getTabIconItem()
 		{
-			return stack.getItem();
+			return stack;
 		}
 		
 	}

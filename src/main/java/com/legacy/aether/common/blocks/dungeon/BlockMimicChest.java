@@ -1,7 +1,5 @@
 package com.legacy.aether.common.blocks.dungeon;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,7 +32,7 @@ public class BlockMimicChest extends BlockChest
     }
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		this.spawnMimic(worldIn, playerIn, pos);
 
@@ -60,7 +58,7 @@ public class BlockMimicChest extends BlockChest
 			EntityMimic mimic = new EntityMimic(world);
 			mimic.setAttackTarget(player);
             mimic.setPosition((double)pos.getX() + 0.5D, (double)pos.getY() + 1.5D, (double)pos.getZ() + 0.5D);
-			world.spawnEntityInWorld(mimic);
+			world.spawnEntity(mimic);
 		}
 
 		world.setBlockToAir(pos);

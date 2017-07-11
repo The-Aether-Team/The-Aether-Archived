@@ -35,7 +35,7 @@ public class FloatingBlockRenderer extends Render<EntityFloatingBlock>
         this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         IBlockState iblockstate = entityFloatingBlock.getBlockState();
         BlockPos blockpos = new BlockPos(entityFloatingBlock);
-        World world = entityFloatingBlock.worldObj;
+        World world = entityFloatingBlock.world;
 
         if (iblockstate != world.getBlockState(blockpos) && iblockstate.getRenderType() != EnumBlockRenderType.INVISIBLE)
         {

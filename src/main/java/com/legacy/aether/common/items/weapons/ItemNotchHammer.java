@@ -34,8 +34,10 @@ public class ItemNotchHammer extends ItemSword
     }
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand hand)
 	{
+		ItemStack heldItem = entityplayer.getHeldItem(hand);
+
 		if (entityplayer.capabilities.isCreativeMode)
 		{
 			world.playSound(entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F), false);
@@ -44,13 +46,13 @@ public class ItemNotchHammer extends ItemSword
 
 			if (!world.isRemote)
 			{
-				world.spawnEntityInWorld(this.hammerProjectile);
+				world.spawnEntity(this.hammerProjectile);
 			}
 		}
 		
-		else if (PlayerAether.get(entityplayer).setGeneralCooldown(200, itemstack.getDisplayName()))
+		else if (PlayerAether.get(entityplayer).setGeneralCooldown(200, heldItem.getDisplayName()))
 		{
-			itemstack.damageItem(1, entityplayer);
+			heldItem.damageItem(1, entityplayer);
 
 			world.playSound(entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F), false);
 
@@ -58,11 +60,11 @@ public class ItemNotchHammer extends ItemSword
 
 			if (!world.isRemote)
 			{
-				world.spawnEntityInWorld(this.hammerProjectile);
+				world.spawnEntity(this.hammerProjectile);
 			}
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
 	}
 
 }

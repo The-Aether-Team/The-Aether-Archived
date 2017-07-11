@@ -38,14 +38,14 @@ public class BlockDungeonTrap extends BlockDungeonBase
         	{
         		EntitySentry sentry = new EntitySentry(world, pos.getX() + 2D, pos.getY() + 1D, pos.getZ() + 2D);
         		if (!world.isRemote)
-        		world.spawnEntityInWorld(sentry);
+        		world.spawnEntity(sentry);
         	}
         	else if (type == EnumStoneType.Angelic || type == EnumStoneType.Light_angelic)
         	{
         		EntityValkyrie valkyrie = new EntityValkyrie(world);
         		valkyrie.setPosition(pos.getX() + 0.5D, pos.getY() + 1D, pos.getZ() + 0.5D);
         		if (!world.isRemote)
-        		world.spawnEntityInWorld(valkyrie);
+        		world.spawnEntity(valkyrie);
         	}
 
         	world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundCategory.PLAYERS, 1.0F, 1.5F);

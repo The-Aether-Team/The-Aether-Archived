@@ -6,11 +6,12 @@ import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
 import com.legacy.aether.common.containers.util.AccessoryType;
@@ -22,7 +23,7 @@ public class InventoryAccessories implements IInventory
 
 	public EntityPlayer player;
 
-    public ItemStack[] stacks = new ItemStack[8];
+    public NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(8, ItemStack.EMPTY);
 
     public static final String[] EMPTY_SLOT_NAMES = new String[] {"pendant", "cape", "shield", "misc", "ring", "ring", "gloves", "misc"};
 
@@ -35,13 +36,13 @@ public class InventoryAccessories implements IInventory
 
 	public void dropAllItems()
 	{
-		for (int slot = 0; slot < this.stacks.length; ++slot)
+		for (int slot = 0; slot < this.stacks.size(); ++slot)
 		{
-			if (this.stacks[slot] != null)
+			if (this.stacks.get(slot) != ItemStack.EMPTY)
 			{
-				this.player.dropItem(this.stacks[slot], true, true);
+				this.player.dropItem(this.stacks.get(slot), true, true);
 
-				this.stacks[slot] = null;
+				this.stacks.set(slot, ItemStack.EMPTY);
 			}
 		}
 	}
@@ -50,7 +51,7 @@ public class InventoryAccessories implements IInventory
 	{
 		ItemStack currentAccessory = this.getStackFromItem(itemStack.getItem());
 
-		if (currentAccessory != null)
+		if (currentAccessory != ItemStack.EMPTY)
 		{
 			if (!this.player.capabilities.isCreativeMode)
 			{
@@ -70,11 +71,11 @@ public class InventoryAccessories implements IInventory
 
 		ItemStack itemstack;
 
-		for (int i = 0; i < this.stacks.length; ++i)
+		for (int i = 0; i < this.stacks.size(); ++i)
 		{
-			itemstack = this.stacks[i];
+			itemstack = this.stacks.get(i);
 
-			if (itemstack != null && itemstack == this.getStackFromItem(item) && (item != null || itemstack.getItem() == item))
+			if (itemstack != ItemStack.EMPTY && itemstack == this.getStackFromItem(item) && (item != null || itemstack.getItem() == item))
 			{
 				if (itemstack.getTagCompound() != null && itemstack.getTagCompound().getBoolean("Unbreakable"))
 				{
@@ -82,8 +83,8 @@ public class InventoryAccessories implements IInventory
 				}
 				else
 				{
-					count += itemstack.stackSize;
-					this.stacks[i] = null;
+					count += itemstack.getCount();
+					this.stacks.set(i, ItemStack.EMPTY);
 				}
 			}
 		}
@@ -94,7 +95,7 @@ public class InventoryAccessories implements IInventory
 	@Override
 	public int getSizeInventory()
 	{
-		return this.stacks.length;
+		return this.stacks.size();
 	}
 
 	public boolean setInventoryAccessory(ItemStack stack)
@@ -108,9 +109,9 @@ public class InventoryAccessories implements IInventory
 
 			for (AccessoryType accessoryType : this.slotTypes)
 			{
-				if (type == accessoryType && this.stacks[stackIndex] == null)
+				if (type == accessoryType && this.stacks.get(stackIndex) == ItemStack.EMPTY)
 				{
-					this.stacks[stackIndex] = stack;
+					this.stacks.set(stackIndex, stack);
 
 					this.markDirty();
 
@@ -127,9 +128,10 @@ public class InventoryAccessories implements IInventory
 	@Override
 	public void setInventorySlotContents(int slotID, ItemStack stack)
 	{
-		if (slotID < this.stacks.length)
+		if (slotID < this.stacks.size())
 		{
-			this.stacks[slotID] = stack;
+			this.stacks.set(slotID, stack);
+
 			this.markDirty();
 		}
 	}
@@ -137,75 +139,71 @@ public class InventoryAccessories implements IInventory
 	@Override
 	public ItemStack getStackInSlot(int slotID)
 	{
-		return this.stacks[slotID];
+		return this.stacks.get(slotID);
 	}
 
 	public ItemStack getStackFromItem(Item item)
 	{
 		for (ItemStack stack : this.stacks)
 		{
-			if (stack != null && stack.getItem() instanceof ItemAccessory && stack.getItem() == item)
+			if (stack.getItem() instanceof ItemAccessory && stack.getItem() == item)
 			{
 				return stack;
 			}
 		}
 
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack decrStackSize(int slotID, int decreaseSize)
 	{
-		ItemStack[] accessories = this.stacks;
-
-		if (accessories[slotID] != null)
+		if (this.stacks.get(slotID) != ItemStack.EMPTY)
 		{
-			ItemStack itemstack;
+			ItemStack itemstack = ItemStack.EMPTY;
 
-			if (accessories[slotID].stackSize <= decreaseSize)
+			if (this.stacks.get(slotID).getCount() <= decreaseSize)
 			{
-				itemstack = accessories[slotID];
-				accessories[slotID] = null;
+				itemstack = this.stacks.get(slotID);
+
+				this.stacks.set(slotID, ItemStack.EMPTY);
 
 				this.markDirty();
+
 				return itemstack;
 			}
 			else
 			{
-				itemstack = accessories[slotID].splitStack(decreaseSize);
+				itemstack = this.stacks.get(slotID).splitStack(decreaseSize);
 
-				if (accessories[slotID].stackSize == 0)
+				if (this.stacks.get(slotID).getCount() == 0)
 				{
-					accessories[slotID] = null;
+					this.stacks.set(slotID, ItemStack.EMPTY);
 				}
 
 				this.markDirty();
+
 				return itemstack;
 			}
 
 		}
-		else
-		{
-			return null;
-		}
+
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int slotID)
 	{
-		ItemStack[] accessories = this.stacks;
-
-		if (accessories[slotID] != null)
+		if (this.stacks.get(slotID) != ItemStack.EMPTY)
 		{
-			ItemStack itemstack = accessories[slotID];
-			accessories[slotID] = null;
+			ItemStack itemstack = this.stacks.get(slotID);
+
+			this.stacks.set(slotID, ItemStack.EMPTY);
 
 			return itemstack;
 		}
-		else
-		{
-			return null;
-		}
+
+		return ItemStack.EMPTY;
 	}
 
 	@Override
@@ -233,7 +231,7 @@ public class InventoryAccessories implements IInventory
     }
 
 	@Override
-    public boolean isUseableByPlayer(EntityPlayer player)
+    public boolean isUsableByPlayer(EntityPlayer player)
     {
         return !player.isDead && player.getDistanceSqToEntity(this.player) <= 64.0D;
     }
@@ -258,62 +256,32 @@ public class InventoryAccessories implements IInventory
 
 	public void copyAccessories(InventoryAccessories accessories)
 	{
-		for (int size = 0; size < this.stacks.length; ++size)
+		for (int size = 0; size < this.stacks.size(); ++size)
 		{
-			this.stacks[size] = ItemStack.copyItemStack(accessories.stacks[size]);
+			this.stacks.set(size, accessories.stacks.get(size).copy());
 		}
 	}
 
-    public NBTTagList writeToNBT(NBTTagList tagList)
+    public void writeToNBT(NBTTagCompound compound)
     {
-    	NBTTagCompound tag;
-
-    	for (int size = 0; size < this.stacks.length; ++size)
-    	{
-    		ItemStack stack = this.stacks[size];
-    		
-    		if (stack != null)
-    		{
-    			tag = new NBTTagCompound();
-        		tag.setByte("accessories", (byte)size);
-        		stack.writeToNBT(tag);
-        		tagList.appendTag(tag);
-    		}
-    	}
-
-    	return tagList;
+    	ItemStackHelper.saveAllItems(compound, this.stacks);
     }
 
-    public void readFromNBT(NBTTagList tagList)
+    public void readFromNBT(NBTTagCompound compound)
     {
-        this.stacks = new ItemStack[8];
-        
-        for (int size = 0; size < tagList.tagCount(); ++size)
-        {
-        	NBTTagCompound tag = tagList.getCompoundTagAt(size);
-        	int slot = tag.getByte("accessories") & 255;
-        	ItemStack stack = ItemStack.loadItemStackFromNBT(tag);
-        	
-        	if (stack != null)
-        	{
-        		if (slot >= 0 && slot < this.stacks.length)
-        		{
-        			this.setInventorySlotContents(slot, stack);
-        		}
-        	}
-        }
+    	ItemStackHelper.loadAllItems(compound, this.stacks);
     }
 
 	public void writeData(ByteBuf dataOutput)
 	{
-		dataOutput.writeInt(this.stacks.length);
+		dataOutput.writeInt(this.stacks.size());
 
 		for (ItemStack stack : this.stacks)
 		{
 			PacketBuffer pb = new PacketBuffer(dataOutput);
 			try
 			{
-				pb.writeItemStackToBuffer(stack);
+				pb.writeItemStack(stack);
 			}
 			catch (Exception e)
 			{
@@ -326,22 +294,18 @@ public class InventoryAccessories implements IInventory
 	{
 		int amount = dataInput.readInt();
 
-		ItemStack[] stackArray = new ItemStack[amount];
-
 		for (int i = 0; i < amount; ++i)
 		{
 			PacketBuffer pb = new PacketBuffer(dataInput);
 			try
 			{
-				stackArray[i] = pb.readItemStackFromBuffer();
+				this.stacks.set(i, pb.readItemStack());
 			}
 			catch (IOException e)
 			{
 				e.printStackTrace();
 			}
 		}
-
-		this.stacks = stackArray;
 	}
 
 	@Override
@@ -355,9 +319,9 @@ public class InventoryAccessories implements IInventory
 	{
 		int count = 0;
 
-		for (int slot = 0; slot < this.stacks.length; ++slot)
+		for (int slot = 0; slot < this.stacks.size(); ++slot)
 		{
-			if (this.stacks[slot] != null)
+			if (this.stacks.get(slot) != ItemStack.EMPTY)
 			{
 				++count;
 			}
@@ -371,17 +335,31 @@ public class InventoryAccessories implements IInventory
 	{
 		ItemStack itemstack;
 
-		for (int slot = 0; slot < this.stacks.length; ++slot)
+		for (int slot = 0; slot < this.stacks.size(); ++slot)
 		{
-			itemstack = this.stacks[slot];
+			itemstack = this.stacks.get(slot);
 
-			if (itemstack != null)
+			if (itemstack != ItemStack.EMPTY)
 			{
-				this.stacks[slot] = null;
+				this.stacks.set(slot, ItemStack.EMPTY);
 			}
 		}
 
 		this.markDirty();
+	}
+
+	@Override
+	public boolean isEmpty() 
+	{
+		for (ItemStack stacks : this.stacks)
+		{
+			if (!stacks.isEmpty())
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }

@@ -56,7 +56,7 @@ public class BronzeDungeon extends AetherDungeon
 
 		if (!world.isRemote)
 		{
-			world.spawnEntityInWorld(slider);
+			world.spawnEntity(slider);
 		}
 
 		world.setBlockState(pos.add(7, -1, 7), BlocksAether.treasure_chest.getDefaultState());

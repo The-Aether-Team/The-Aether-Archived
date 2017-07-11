@@ -2,8 +2,6 @@ package com.legacy.aether.common.entities.bosses.sun_spirit;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -211,7 +209,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             double yCoord = this.getEntityBoundingBox().minY + this.rand.nextFloat() - 0.5D;
             double zCoord = this.posZ + (this.rand.nextFloat() - 0.5F) * this.rand.nextFloat();
 
-            this.worldObj.spawnParticle(EnumParticleTypes.FLAME, xCoord, yCoord, zCoord, 0.0D, -0.07500000298023224D, 0.0D);
+            this.world.spawnParticle(EnumParticleTypes.FLAME, xCoord, yCoord, zCoord, 0.0D, -0.07500000298023224D, 0.0D);
 
             this.burnEntities();
             this.evapWater();
@@ -303,7 +301,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
     public void burnEntities()
     {
-        List<?> entityList = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.0D, 4.0D, 0.0D));
+        List<?> entityList = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.0D, 4.0D, 0.0D));
 
         for (int ammount = 0; ammount < entityList.size(); ++ammount)
         {
@@ -319,8 +317,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
     public void evapWater()
     {
-        int var1 = MathHelper.floor_double(this.getEntityBoundingBox().minX + (this.getEntityBoundingBox().maxX - this.getEntityBoundingBox().minX) / 2.0D);
-        int var2 = MathHelper.floor_double(this.getEntityBoundingBox().minZ + (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) / 2.0D);
+        int var1 = MathHelper.floor(this.getEntityBoundingBox().minX + (this.getEntityBoundingBox().maxX - this.getEntityBoundingBox().minX) / 2.0D);
+        int var2 = MathHelper.floor(this.getEntityBoundingBox().minZ + (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) / 2.0D);
 
         byte radius = 10;
 
@@ -332,15 +330,15 @@ public class EntitySunSpirit extends EntityFlying implements IMob
                 {
                     int var7 = this.originPointY - 2 + var6;
 
-                    if (this.worldObj.getBlockState(new BlockPos(var4, var7, var5)).getMaterial() == Material.WATER)
+                    if (this.world.getBlockState(new BlockPos(var4, var7, var5)).getMaterial() == Material.WATER)
                     {
-                        this.worldObj.setBlockState(new BlockPos(var4, var7, var5), Blocks.AIR.getDefaultState());
+                        this.world.setBlockState(new BlockPos(var4, var7, var5), Blocks.AIR.getDefaultState());
 
-                        this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.HOSTILE, 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F, false);
+                        this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.HOSTILE, 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F, false);
 
                         for (int var8 = 0; var8 < 8; ++var8)
                         {
-                            this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)var4 + Math.random(), (double)var7 + 0.75D, (double)var5 + Math.random(), 0.0D, 0.0D, 0.0D);
+                            this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double)var4 + Math.random(), (double)var7 + 0.75D, (double)var5 + Math.random(), 0.0D, 0.0D, 0.0D);
                         }
                     }
                 }
@@ -350,7 +348,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
     public void makeFireBall(int var1)
     {
-    	this.worldObj.playSound(null, this.getPosition(), SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F,1.0F);
+    	this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F,1.0F);
 
         boolean shootIceyBall = false;
 
@@ -366,21 +364,21 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         {
         	if (shootIceyBall == false)
         	{
-        		EntityFireBall fireball = new EntityFireBall(this.worldObj, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D);
+        		EntityFireBall fireball = new EntityFireBall(this.world, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D);
 
-        		if (!this.worldObj.isRemote)
+        		if (!this.world.isRemote)
         		{
-            		this.worldObj.spawnEntityInWorld(fireball);
+            		this.world.spawnEntity(fireball);
         		}
         	}
         	
         	if (shootIceyBall == true)
         	{
-        		EntityIceyBall iceBall = new EntityIceyBall(this.worldObj, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D, false);
+        		EntityIceyBall iceBall = new EntityIceyBall(this.world, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D, false);
 
-        		if (!this.worldObj.isRemote)
+        		if (!this.world.isRemote)
         		{
-            		this.worldObj.spawnEntityInWorld(iceBall);
+            		this.world.spawnEntity(iceBall);
         		}
         	}
         }
@@ -388,13 +386,13 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
     public void summonFire()
     {
-        int x = MathHelper.floor_double(this.posX);
-        int z = MathHelper.floor_double(this.posZ);
+        int x = MathHelper.floor(this.posX);
+        int z = MathHelper.floor(this.posZ);
         int y = this.originPointY - 2;
 
-        if (this.worldObj.isAirBlock(new BlockPos(x, y, z)))
+        if (this.world.isAirBlock(new BlockPos(x, y, z)))
         {
-            this.worldObj.setBlockState(new BlockPos(x, y, z), Blocks.FIRE.getDefaultState());
+            this.world.setBlockState(new BlockPos(x, y, z), Blocks.FIRE.getDefaultState());
         }
     }
 
@@ -484,7 +482,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack)
+    public boolean processInteract(EntityPlayer player, EnumHand hand)
     {
         if (this.chatWithMe(player))
         {
@@ -521,12 +519,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
             if (flag)
             {
-                EntityFireMinion minion = new EntityFireMinion(this.worldObj);
+                EntityFireMinion minion = new EntityFireMinion(this.world);
                 minion.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
                 
-                if (!this.worldObj.isRemote)
+                if (!this.world.isRemote)
                 {
-                    this.worldObj.spawnEntityInWorld(minion);
+                    this.world.spawnEntity(minion);
                 }
             }
             return flag;
@@ -546,15 +544,15 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     @Override
     public EntityItem entityDropItem(ItemStack stack, float offsetY)
     {
-        if (stack.stackSize != 0 && stack.getItem() != null)
+        if (stack.getCount() != 0 && stack.getItem() != null)
         {
-            EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
+            EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY + (double)offsetY, this.posZ, stack);
             entityitem.setEntityInvulnerable(true);
             entityitem.setDefaultPickupDelay();
             if (captureDrops)
                 this.capturedDrops.add(entityitem);
             else
-                this.worldObj.spawnEntityInWorld(entityitem);
+                this.world.spawnEntity(entityitem);
             return entityitem;
         }
         else
@@ -575,8 +573,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob
                 {
                 	BlockPos pos = new BlockPos(this.originPointX + (this.direction == 0 ? -11 : 11), y, z);
 
-                	if (this.worldObj.getBlockState(pos).getBlock() != block.getBlock())
-                    this.worldObj.setBlockState(pos, block, 2);
+                	if (this.world.getBlockState(pos).getBlock() != block.getBlock())
+                    this.world.setBlockState(pos, block, 2);
                 }
             }
         }
@@ -588,8 +586,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob
                 {
                 	BlockPos pos = new BlockPos(x, y, this.originPointZ + (this.direction == 3 ? 11 : -11));
 
-                	if (this.worldObj.getBlockState(pos).getBlock() != block.getBlock())
-                    this.worldObj.setBlockState(pos, block, 2);
+                	if (this.world.getBlockState(pos).getBlock() != block.getBlock())
+                    this.world.setBlockState(pos, block, 2);
                 }
             }
         }
@@ -605,7 +603,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (z = this.originPointZ - 1; z < this.originPointZ + 2; ++z)
                 {
-                    this.worldObj.setBlockState(new BlockPos(this.originPointX + (this.direction == 0 ? 11 : -11), y, z), Blocks.AIR.getDefaultState());
+                    this.world.setBlockState(new BlockPos(this.originPointX + (this.direction == 0 ? 11 : -11), y, z), Blocks.AIR.getDefaultState());
                 }
             }
         }
@@ -615,7 +613,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (x = this.originPointX - 1; x < this.originPointX + 2; ++x)
                 {
-                    this.worldObj.setBlockState(new BlockPos(x, y, this.originPointZ + (this.direction == 3 ? -11 : 11)), Blocks.AIR.getDefaultState());
+                    this.world.setBlockState(new BlockPos(x, y, this.originPointZ + (this.direction == 3 ? -11 : 11)), Blocks.AIR.getDefaultState());
                 }
             }
         }
@@ -627,15 +625,15 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         		for (z = this.originPointZ - 20; z < this.originPointZ + 20; ++z)
         		{
         			BlockPos newPos = new BlockPos(x, y, z);
-        			IBlockState unlock_block = this.worldObj.getBlockState(newPos);
+        			IBlockState unlock_block = this.world.getBlockState(newPos);
 
         			if (unlock_block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire))
         			{
-        				this.worldObj.setBlockState(newPos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(unlock_block.getBlock().getMetaFromState(unlock_block))), 2);
+        				this.world.setBlockState(newPos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(unlock_block.getBlock().getMetaFromState(unlock_block))), 2);
         			}
         			else if (unlock_block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_hellfire))
         			{
-        				this.worldObj.setBlockState(newPos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(unlock_block.getBlock().getMetaFromState(unlock_block))), 2);
+        				this.world.setBlockState(newPos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(unlock_block.getBlock().getMetaFromState(unlock_block))), 2);
         			}
         		}
         	}

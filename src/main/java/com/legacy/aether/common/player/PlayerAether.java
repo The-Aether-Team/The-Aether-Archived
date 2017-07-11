@@ -12,17 +12,14 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -121,8 +118,8 @@ public class PlayerAether
 		{
 			if (this.leftCloud.isDead && this.rightCloud.isDead)
 			{
-				this.leftCloud = new EntityMiniCloud(this.thePlayer.worldObj, this.thePlayer, 0);
-				this.rightCloud = new EntityMiniCloud(this.thePlayer.worldObj, this.thePlayer, 1);
+				this.leftCloud = new EntityMiniCloud(this.thePlayer.world, this.thePlayer, 0);
+				this.rightCloud = new EntityMiniCloud(this.thePlayer.world, this.thePlayer, 1);
 			}
 		}
 
@@ -173,7 +170,7 @@ public class PlayerAether
 			this.thePlayer.addStat(AchievementsAether.enter_aether);
 		}
 
-		if (this.thePlayer.worldObj.isRemote)
+		if (this.thePlayer.world.isRemote)
 		{
 			this.prevPortalAnimTime = this.portalAnimTime;
 
@@ -244,7 +241,7 @@ public class PlayerAether
 
 	public void onPlayerDeath()
 	{
-		if (!this.thePlayer.worldObj.getGameRules().getBoolean("keepInventory"))
+		if (!this.thePlayer.world.getGameRules().getBoolean("keepInventory"))
 		{
 			this.accessories.dropAllItems();
 		}
@@ -275,7 +272,7 @@ public class PlayerAether
 		output.setString("notch_hammer_name", this.cooldownName);
 		output.setInteger("max_hammer_cooldown", this.cooldownMax);
 		output.setFloat("shards_used", this.lifeShardsUsed);
-		output.setTag("accessories", this.accessories.writeToNBT(new NBTTagList()));
+		this.accessories.writeToNBT(output);
 	}
 
 	public void loadNBTData(NBTTagCompound input)
@@ -289,7 +286,7 @@ public class PlayerAether
 		this.cooldownName = input.getString("notch_hammer_name");
 		this.cooldownMax = input.getInteger("max_hammer_cooldown");
 		this.lifeShardsUsed = input.getFloat("shards_used");
-		this.accessories.readFromNBT(input.getTagList("accessories", 10));
+		this.accessories.readFromNBT(input);
 	}
 
 	/*
@@ -334,7 +331,7 @@ public class PlayerAether
 	{
 		for (int index = 0; index < 8; index++)
 		{
-			if (this.getAccessoryStacks()[index] != null && this.getAccessoryStacks()[index].getItem() == item)
+			if (this.getAccessoryStacks().get(index).getItem() == item)
 			{
 				return true;
 			}
@@ -352,7 +349,7 @@ public class PlayerAether
 
 		for (int index = 0; index < 8; index++)
 		{
-			if (this.getAccessoryStacks()[index] != null && this.getAccessoryStacks()[index].getItem() == item)
+			if (this.getAccessoryStacks().get(index).getItem() == item)
 			{
 				count++;
 			}
@@ -364,11 +361,11 @@ public class PlayerAether
 	/*
 	 * Checks if the player is wearing the specified item as armor
 	 */
-	public boolean wearingArmor(Item itemID)
+	public boolean wearingArmor(Item item)
 	{
 		for (int index = 0; index < 4; index++)
 		{
-			if (this.thePlayer != null && this.thePlayer.inventory.armorInventory[index] != null && this.thePlayer.inventory.armorInventory[index].getItem() == itemID)
+			if (this.thePlayer != null && this.thePlayer.inventory.armorInventory.get(index).getItem() == item)
 			{
 				return true;
 			}
@@ -428,7 +425,7 @@ public class PlayerAether
 	/*
 	 * Instance of the accessories
 	 */
-	public ItemStack[] getAccessoryStacks() 
+	public NonNullList<ItemStack> getAccessoryStacks() 
 	{
 		return this.accessories.stacks;
 	}
@@ -458,9 +455,9 @@ public class PlayerAether
 
 		if(this.thePlayer.inventory.hasItemStack(new ItemStack(ItemsAether.cloud_parachute)))
 		{
-			parachute = new EntityParachute(this.thePlayer.worldObj, this.thePlayer, false);
+			parachute = new EntityParachute(this.thePlayer.world, this.thePlayer, false);
 			parachute.setPosition(this.thePlayer.posX, this.thePlayer.posY, this.thePlayer.posZ);
-			this.thePlayer.worldObj.spawnEntityInWorld(parachute);
+			this.thePlayer.world.spawnEntity(parachute);
 			this.thePlayer.inventory.deleteStack(new ItemStack(ItemsAether.cloud_parachute));
 		}
 		else
@@ -474,10 +471,10 @@ public class PlayerAether
 					if(itemstack != null && itemstack.getItem() == ItemsAether.golden_parachute)
 					{ 
 						itemstack.damageItem(1, this.thePlayer);
-						parachute = new EntityParachute(this.thePlayer.worldObj, this.thePlayer, true);
+						parachute = new EntityParachute(this.thePlayer.world, this.thePlayer, true);
 						parachute.setPosition(this.thePlayer.posX, this.thePlayer.posY, this.thePlayer.posZ);
 						this.thePlayer.inventory.setInventorySlotContents(i, itemstack);
-						this.thePlayer.worldObj.spawnEntityInWorld(parachute);
+						this.thePlayer.world.spawnEntity(parachute);
 					}
 				}
 			}
@@ -489,12 +486,12 @@ public class PlayerAether
 	 */
 	public boolean isInBlock(Block blockID)
 	{
-		int x = MathHelper.floor_double(this.thePlayer.posX);
-		int y = MathHelper.floor_double(this.thePlayer.posY);
-		int z = MathHelper.floor_double(this.thePlayer.posZ);
+		int x = MathHelper.floor(this.thePlayer.posX);
+		int y = MathHelper.floor(this.thePlayer.posY);
+		int z = MathHelper.floor(this.thePlayer.posZ);
 		BlockPos pos = new BlockPos(x, y, z);
 
-		return this.thePlayer.worldObj.getBlockState(pos).getBlock() == blockID || this.thePlayer.worldObj.getBlockState(pos.up()).getBlock() == blockID || this.thePlayer.worldObj.getBlockState(pos.down()).getBlock() == blockID;
+		return this.thePlayer.world.getBlockState(pos).getBlock() == blockID || this.thePlayer.world.getBlockState(pos.up()).getBlock() == blockID || this.thePlayer.world.getBlockState(pos.down()).getBlock() == blockID;
 	}
 
 	/*
@@ -692,7 +689,7 @@ public class PlayerAether
 	 */
 	public void updateAccessories()
 	{
-		if (!this.thePlayer.worldObj.isRemote)
+		if (!this.thePlayer.world.isRemote)
 		{
 			AetherNetworkingManager.sendToAll(new PacketAccessory(this));
 		}

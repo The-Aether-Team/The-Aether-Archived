@@ -1,7 +1,5 @@
 package com.legacy.aether.common.entities.passive.mountable;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -23,7 +21,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import com.legacy.aether.common.entities.util.EntitySaddleMount;
@@ -149,7 +146,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 				this.motionY *= 0.6D;
 			}
 
-			if (this.onGround && !this.worldObj.isRemote)
+			if (this.onGround && !this.world.isRemote)
 			{
 				this.jumpsRemaining = this.maxJumps;
 			}
@@ -157,40 +154,37 @@ public class EntityFlyingCow extends EntitySaddleMount
 	}
 
 	@Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack)
+    public boolean processInteract(EntityPlayer player, EnumHand hand)
 	{
-		if (stack != null)
+		ItemStack currentStack = player.getHeldItem(hand);
+
+		if (currentStack.getItem() == Items.BUCKET)
 		{
-			ItemStack currentStack = stack;
+			Item milk = Items.MILK_BUCKET;
 
-			if (currentStack.getItem() == Items.BUCKET)
+			if (currentStack.getCount() == 1)
 			{
-				Item milk = Items.MILK_BUCKET;
+				player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(milk));
+			}
+			else if (!player.inventory.addItemStackToInventory(new ItemStack(milk)))
+			{
+				if (!this.world.isRemote)
+				{
+					this.world.spawnEntity(new EntityItem(world, player.posX, player.posY, player.posZ, new ItemStack(milk)));
 
-				if (stack != null && stack.stackSize == 1)
-				{
-					player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(milk));
-				}
-				else if (!player.inventory.addItemStackToInventory(new ItemStack(milk)))
-				{
-					if (!this.worldObj.isRemote)
+					if (!player.capabilities.isCreativeMode)
 					{
-						this.worldObj.spawnEntityInWorld(new EntityItem(worldObj, player.posX, player.posY, player.posZ, new ItemStack(milk)));
-
-						if (!player.capabilities.isCreativeMode)
-						{
-							--stack.stackSize;
-						}
+						currentStack.shrink(1);
 					}
 				}
-				else if (!player.capabilities.isCreativeMode)
-				{
-					--stack.stackSize;
-				}
+			}
+			else if (!player.capabilities.isCreativeMode)
+			{
+				currentStack.shrink(1);
 			}
 		}
 
-		return super.processInteract(player, hand, stack);
+		return super.processInteract(player, hand);
 	}
 
 	@Override
@@ -220,13 +214,13 @@ public class EntityFlyingCow extends EntitySaddleMount
 	@Override
 	protected void playStepSound(BlockPos pos, Block par4)
 	{
-		this.worldObj.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_COW_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+		this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_COW_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable)
 	{
-		return new EntityFlyingCow(this.worldObj);
+		return new EntityFlyingCow(this.world);
 	}
 
 	protected void dropFewItems(boolean par1, int par2)

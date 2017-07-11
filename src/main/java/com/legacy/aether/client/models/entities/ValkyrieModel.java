@@ -319,7 +319,7 @@ public class ValkyrieModel extends ModelBiped
         if(this.swingProgress > -9990F) 
         {
             float f6 = swingProgress;
-            this.bipedBody2.rotateAngleY = this.bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(f6) * 3.141593F * 2.0F) * 0.2F;
+            this.bipedBody2.rotateAngleY = this.bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt(f6) * 3.141593F * 2.0F) * 0.2F;
             this.bipedRightArm.rotateAngleY += this.bipedBody.rotateAngleY;
             this.bipedLeftArm.rotateAngleY += this.bipedBody.rotateAngleY;
             this.bipedLeftArm.rotateAngleX += this.bipedBody.rotateAngleY;

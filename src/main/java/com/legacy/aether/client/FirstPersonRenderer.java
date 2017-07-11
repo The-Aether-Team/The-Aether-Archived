@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -42,10 +43,10 @@ public class FirstPersonRenderer
 	public FirstPersonRenderer(Minecraft mc, float tickTime)
 	{
 		this.mc = mc;
-		this.thePlayer = mc.thePlayer;
+		this.thePlayer = mc.player;
 		this.partialTickTime = tickTime;
 
-		this.player = PlayerAether.get(mc.thePlayer);
+		this.player = PlayerAether.get(mc.player);
 
         this.modelGlove = new ModelBiped(1.0F);
         this.isSlim = ((AbstractClientPlayer)this.thePlayer).getSkinType() == "slim" ? true : false;
@@ -63,9 +64,9 @@ public class FirstPersonRenderer
         this.mc.entityRenderer.enableLightmap();
         float f5 = this.thePlayer.getSwingProgress(this.partialTickTime);
         float f6 = MathHelper.sin(f5 * (float)Math.PI);
-        float f7 = MathHelper.sin(MathHelper.sqrt_float(f5) * (float)Math.PI);
+        float f7 = MathHelper.sin(MathHelper.sqrt(f5) * (float)Math.PI);
         boolean flag = this.thePlayer.getPrimaryHand() == EnumHandSide.RIGHT ? true : false;
-        GlStateManager.translate((flag ? -f7 : f7) * 0.3F, MathHelper.sin(MathHelper.sqrt_float(f5) * (float)Math.PI * 2.0F) * 0.4F, -f6 * 0.4F);
+        GlStateManager.translate((flag ? -f7 : f7) * 0.3F, MathHelper.sin(MathHelper.sqrt(f5) * (float)Math.PI * 2.0F) * 0.4F, -f6 * 0.4F);
         GlStateManager.translate((flag ? 0.8F : -0.8F) * 0.8F, -0.75F * 0.8F - (0.1F) * 0.6F, -0.9F * 0.8F);
         if (!flag)
         {
@@ -78,7 +79,7 @@ public class FirstPersonRenderer
         }
 		f5 = this.thePlayer.getSwingProgress(this.partialTickTime);
         f6 = MathHelper.sin(f5 * f5 * (float)Math.PI);
-        f7 = MathHelper.sin(MathHelper.sqrt_float(f5) * (float)Math.PI);
+        f7 = MathHelper.sin(MathHelper.sqrt(f5) * (float)Math.PI);
         GlStateManager.rotate((flag ? f7 : -f7) * 70.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate((flag ? -f6 : f6) * 20.0F, 0.0F, 0.0F, 1.0F);
         GlStateManager.translate(-1.0F, 3.6F, 3.5F);
@@ -128,8 +129,8 @@ public class FirstPersonRenderer
 
     private void setLightmap()
     {
-        AbstractClientPlayer abstractclientplayer = this.mc.thePlayer;
-        int i = this.mc.theWorld.getCombinedLight(new BlockPos(abstractclientplayer.posX, abstractclientplayer.posY + (double)abstractclientplayer.getEyeHeight(), abstractclientplayer.posZ), 0);
+        AbstractClientPlayer abstractclientplayer = this.mc.player;
+        int i = this.mc.world.getCombinedLight(new BlockPos(abstractclientplayer.posX, abstractclientplayer.posY + (double)abstractclientplayer.getEyeHeight(), abstractclientplayer.posZ), 0);
         float f = (float)(i & 65535);
         float f1 = (float)(i >> 16);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, f, f1);
@@ -144,7 +145,7 @@ public class FirstPersonRenderer
 			return;
 		}
 
-		if (accessories.stacks[6] != null && accessories.stacks[6].getItem() != null)
+		if (accessories.stacks.get(6) != ItemStack.EMPTY)
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.enableDepth();
@@ -169,13 +170,13 @@ public class FirstPersonRenderer
 
             this.modelBase.bipedRightArm.render(this.isSlim ? 0.0625F : 0.0625F);
 
-			if (accessories.stacks[6].getItem() instanceof ItemAccessory)
+			if (accessories.stacks.get(6).getItem() instanceof ItemAccessory)
 			{
-				ItemAccessory glove = (ItemAccessory) accessories.stacks[6].getItem();
+				ItemAccessory glove = (ItemAccessory) accessories.stacks.get(6).getItem();
 
 				this.renderEngine.bindTexture(glove.texture);
 
-				int colour = glove.getColorFromItemStack(accessories.stacks[6], 0);
+				int colour = glove.getColorFromItemStack(accessories.stacks.get(6), 0);
 				float red = ((colour >> 16) & 0xff) / 255F;
 				float green = ((colour >> 8) & 0xff) / 255F;
 				float blue = (colour & 0xff) / 255F;
@@ -207,7 +208,7 @@ public class FirstPersonRenderer
 
 	public boolean shouldRender()
 	{
-		if (this.player.thePlayer.inventory.getCurrentItem() == null && this.player.accessories.stacks[6] != null && this.mc.gameSettings.thirdPersonView == 0 && !((EntityPlayer) this.mc.getRenderViewEntity()).isPlayerSleeping() && !this.mc.gameSettings.hideGUI && !this.mc.playerController.isSpectatorMode() && !FMLClientHandler.instance().hasOptifine())
+		if (this.player.thePlayer.inventory.getCurrentItem() == null && this.player.accessories.stacks.get(6) != ItemStack.EMPTY && this.mc.gameSettings.thirdPersonView == 0 && !((EntityPlayer) this.mc.getRenderViewEntity()).isPlayerSleeping() && !this.mc.gameSettings.hideGUI && !this.mc.playerController.isSpectatorMode() && !FMLClientHandler.instance().hasOptifine())
 		{
 			return true;
 		}

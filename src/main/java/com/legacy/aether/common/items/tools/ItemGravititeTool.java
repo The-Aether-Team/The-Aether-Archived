@@ -21,9 +21,11 @@ public class ItemGravititeTool extends ItemAetherTool
 	}
 
 	@Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-    	if ((this.getStrVsBlock(stack, world.getBlockState(pos)) == this.efficiencyOnProperMaterial || ForgeHooks.isToolEffective(world, pos, stack)) && world.isAirBlock(pos.up()))
+		ItemStack heldItem = player.getHeldItem(hand);
+
+    	if ((this.getStrVsBlock(heldItem, world.getBlockState(pos)) == this.efficiencyOnProperMaterial || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isAirBlock(pos.up()))
     	{
         	if (world.getTileEntity(pos) != null)
         	{
@@ -33,11 +35,11 @@ public class ItemGravititeTool extends ItemAetherTool
         	if (!world.isRemote)
         	{
             	EntityFloatingBlock entity = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
-        		world.spawnEntityInWorld(entity);
+        		world.spawnEntity(entity);
         		world.setBlockToAir(pos);
         	}
 
-        	stack.damageItem(4, player);
+        	heldItem.damageItem(4, player);
     	}
 
         return EnumActionResult.SUCCESS;
