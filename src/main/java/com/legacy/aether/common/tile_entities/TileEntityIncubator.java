@@ -2,13 +2,14 @@ package com.legacy.aether.common.tile_entities;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,9 +23,9 @@ import com.legacy.aether.common.tile_entities.util.AetherTileEntity;
 public class TileEntityIncubator extends AetherTileEntity
 {
 
-	public EntityPlayer owner;
+    private NonNullList<ItemStack> incubatorItemStacks = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
 
-	private ItemStack IncubatorItemStacks[];
+	public EntityPlayer owner;
 
 	public int torchPower;
 
@@ -35,68 +36,86 @@ public class TileEntityIncubator extends AetherTileEntity
 	public TileEntityIncubator()
 	{
 		super("incubator");
-		this.IncubatorItemStacks = new ItemStack[2];
-		this.progress = 0;
+	}
+
+	@Override
+	public boolean isEmpty()
+	{
+		for (ItemStack stack : this.incubatorItemStacks)
+		{
+			if (!stack.isEmpty())
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override
 	public int getSizeInventory()
 	{
-		return this.IncubatorItemStacks.length;
+		return this.incubatorItemStacks.size();
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int i)
 	{
-		return this.IncubatorItemStacks[i];
+		return this.incubatorItemStacks.get(i);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int i, int j)
 	{
-		if (this.IncubatorItemStacks[i] != null)
+		if (this.incubatorItemStacks.get(i) != ItemStack.EMPTY)
 		{
-			if (this.IncubatorItemStacks[i].stackSize <= j)
+			if (this.incubatorItemStacks.get(i).getCount() <= j)
 			{
-				ItemStack itemstack = this.IncubatorItemStacks[i];
-				this.IncubatorItemStacks[i] = null;
+				ItemStack itemstack = this.incubatorItemStacks.get(i);
+
+				this.incubatorItemStacks.set(i, ItemStack.EMPTY);
+
 				return itemstack;
 			}
-			ItemStack itemstack1 = this.IncubatorItemStacks[i].splitStack(j);
-			if (this.IncubatorItemStacks[i].stackSize == 0)
+			else
 			{
-				this.IncubatorItemStacks[i] = null;
+				ItemStack itemstack = this.incubatorItemStacks.get(i).splitStack(j);
+
+				if (this.incubatorItemStacks.get(i).getCount() == 0)
+				{
+					this.incubatorItemStacks.set(i, ItemStack.EMPTY);
+				}
+
+				return itemstack;
 			}
-			return itemstack1;
 		}
-		else
-		{
-			return null;
-		}
+
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int par1)
 	{
-		if (this.IncubatorItemStacks[par1] != null)
+		if (this.incubatorItemStacks.get(par1) != ItemStack.EMPTY)
 		{
-			ItemStack var2 = this.IncubatorItemStacks[par1];
-			this.IncubatorItemStacks[par1] = null;
-			return var2;
+			ItemStack itemstack = this.incubatorItemStacks.get(par1);
+
+			this.incubatorItemStacks.set(par1, ItemStack.EMPTY);
+
+			return itemstack;
 		}
-		else
-		{
-			return null;
-		}
+
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack)
 	{
-		this.IncubatorItemStacks[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit())
+		this.incubatorItemStacks.set(i, itemstack);
+
+		if (itemstack != null && itemstack.getCount() > this.getInventoryStackLimit())
 		{
-			itemstack.stackSize = this.getInventoryStackLimit();
+			itemstack.setCount(this.getInventoryStackLimit());
 		}
 	}
 
@@ -104,38 +123,19 @@ public class TileEntityIncubator extends AetherTileEntity
 	public void readFromNBT(NBTTagCompound nbttagcompound)
 	{
 		super.readFromNBT(nbttagcompound);
-		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
-		this.IncubatorItemStacks = new ItemStack[this.getSizeInventory()];
-		for (int i = 0; i < nbttaglist.tagCount(); i++)
-		{
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte byte0 = nbttagcompound1.getByte("Slot");
-			if (byte0 >= 0 && byte0 < this.IncubatorItemStacks.length)
-			{
-				this.IncubatorItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-			}
-		}
 
 		this.progress = nbttagcompound.getShort("IncubateTime");
+
+		ItemStackHelper.loadAllItems(nbttagcompound, this.incubatorItemStacks);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound)
 	{
 		nbttagcompound.setShort("IncubateTime", (short) this.progress);
-		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < this.IncubatorItemStacks.length; i++)
-		{
-			if (this.IncubatorItemStacks[i] != null)
-			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte) i);
-				this.IncubatorItemStacks[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
 
-		nbttagcompound.setTag("Items", nbttaglist);
+		ItemStackHelper.saveAllItems(nbttagcompound, this.incubatorItemStacks);
+
 		return super.writeToNBT(nbttagcompound);
 	}
 
@@ -169,37 +169,37 @@ public class TileEntityIncubator extends AetherTileEntity
 		{
 			this.torchPower--;
 
-			if (this.getStackInSlot(1) != null)
+			if (this.getStackInSlot(1) != ItemStack.EMPTY)
 			{
 				this.progress++;
 			}
 		}
 
-		if (this.IncubatorItemStacks[1] == null || this.IncubatorItemStacks[1].getItem() != ItemsAether.moa_egg)
+		if (this.getStackInSlot(1) == ItemStack.EMPTY || this.getStackInSlot(1).getItem() != ItemsAether.moa_egg)
 		{
 			this.progress = 0;
 		}
 
 		if (this.progress >= this.secondsRequired)
 		{
-			if (this.IncubatorItemStacks[1] != null && this.IncubatorItemStacks[1].getItem() instanceof ItemMoaEgg)
+			if (this.getStackInSlot(1).getItem() instanceof ItemMoaEgg)
 			{
-				if (!this.worldObj.isRemote)
+				if (!this.world.isRemote)
 				{
-					ItemMoaEgg moaEgg = (ItemMoaEgg) this.IncubatorItemStacks[1].getItem();
+					ItemMoaEgg moaEgg = (ItemMoaEgg) this.getStackInSlot(1).getItem();
 
-					EntityMoa moa = new EntityMoa(this.worldObj);
+					EntityMoa moa = new EntityMoa(this.world);
 
 					moa.setPlayerGrown(true);
 					moa.setGrowingAge(-24000);
-					moa.setColor(moaEgg.getMoaColorFromItemStack(this.IncubatorItemStacks[1]));
+					moa.setColor(moaEgg.getMoaColorFromItemStack(this.getStackInSlot(1)));
 
-					for (int i = 0; this.worldObj.getBlockState(pos.up(i)).getBlock() != Blocks.AIR; i++)
+					for (int i = 0; this.world.getBlockState(pos.up(i)).getBlock() != Blocks.AIR; i++)
 					{
 						moa.setPositionAndUpdate(this.pos.getX() + 0.5D, this.pos.getY() + 1.5D, this.pos.getZ() + 0.5D);
 					}
 
-					this.worldObj.spawnEntityInWorld(moa);
+					this.world.spawnEntity(moa);
 
 					if (this.owner != null)
 					{
@@ -208,18 +208,19 @@ public class TileEntityIncubator extends AetherTileEntity
 				}
 			}
 
-			if (!this.worldObj.isRemote)
+			if (!this.world.isRemote)
 			{
 				this.decrStackSize(1, 1);
 			}
 
 			this.progress = 0;
 		}
-		if (this.torchPower <= 0 && this.IncubatorItemStacks[1] != null && this.IncubatorItemStacks[1].getItem() == ItemsAether.moa_egg && this.getStackInSlot(0) != null && this.getStackInSlot(0).getItem() == Item.getItemFromBlock(BlocksAether.ambrosium_torch))
+
+		if (this.torchPower <= 0 && this.getStackInSlot(1).getItem() == ItemsAether.moa_egg && this.getStackInSlot(0).getItem() == Item.getItemFromBlock(BlocksAether.ambrosium_torch))
 		{
 			this.torchPower += 1000;
 
-			if (!this.worldObj.isRemote)
+			if (!this.world.isRemote)
 			{
 				this.decrStackSize(0, 1);
 			}
@@ -227,9 +228,9 @@ public class TileEntityIncubator extends AetherTileEntity
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+	public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer)
 	{
-		return this.worldObj.getTileEntity(this.pos) != this ? false : par1EntityPlayer.getDistanceSq(this.pos.add(0.5D, 0.5D, 0.5D)) <= 64.0D;
+		return this.world.getTileEntity(this.pos) != this ? false : par1EntityPlayer.getDistanceSq(this.pos.add(0.5D, 0.5D, 0.5D)) <= 64.0D;
 	}
 
 	@Override
