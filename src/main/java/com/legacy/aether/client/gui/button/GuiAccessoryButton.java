@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiAccessoryButton extends GuiButton
 {
 
-    protected static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/inventory//button/cloud.png");
+    protected static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/inventory/button/cloud.png");
 
     protected static final ResourceLocation BUTTON_HOVERED_TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/inventory/button/cloud_hover.png");
 
