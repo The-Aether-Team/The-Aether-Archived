@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.projectile.PhoenixArrowRenderer;
-import com.legacy.aether.server.entities.projectile.EntityPhoenixArrow;
+import com.legacy.aether.common.entities.projectile.EntityPhoenixArrow;
 
 public class PhoenixArrowFactory implements IRenderFactory<EntityPhoenixArrow> 
 {

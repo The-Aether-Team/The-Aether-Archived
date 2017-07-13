@@ -1,7 +1,6 @@
 package com.legacy.aether.client.overlay;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -11,6 +10,7 @@ import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,15 +18,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import org.lwjgl.opengl.GL11;
-
-import com.legacy.aether.server.blocks.BlocksAether;
-import com.legacy.aether.server.entities.bosses.slider.EntitySlider;
-import com.legacy.aether.server.entities.bosses.sun_spirit.EntitySunSpirit;
-import com.legacy.aether.server.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
-import com.legacy.aether.server.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.server.items.ItemsAether;
-import com.legacy.aether.server.player.PlayerAether;
+import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.common.entities.bosses.slider.EntitySlider;
+import com.legacy.aether.common.entities.bosses.sun_spirit.EntitySunSpirit;
+import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.player.PlayerAether;
 
 @SideOnly(Side.CLIENT)
 public class AetherOverlay
@@ -90,7 +88,7 @@ public class AetherOverlay
             Tessellator tessellator = Tessellator.getInstance();
             VertexBuffer renderer = tessellator.getBuffer();
 
-    		float alpha = getCureAlpha((-(float)playerAether.poisonInstance().poisonTime % 50)) / 100.0F;
+    		float alpha = getCureAlpha(-((float)playerAether.poisonInstance().poisonTime + 100.0F) / 100.0F);
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
 
@@ -114,7 +112,7 @@ public class AetherOverlay
             GlStateManager.depthMask(true);
             GlStateManager.enableDepth();
             GlStateManager.enableAlpha();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.popMatrix();
     	}
     }
@@ -231,42 +229,39 @@ public class AetherOverlay
 		GlStateManager.popMatrix();
 	}
 
-	public static void renderPortal(float portalTime, int scaledWidth, int scaledHeight)
-	{
-		if (portalTime < 1.0F)
-		{
-			portalTime *= portalTime;
-			portalTime *= portalTime;
-			portalTime = portalTime * 0.8F + 0.2F;
-		}
+	public static void renderAetherPortal(float timeInPortal, ScaledResolution scaledRes)
+    {
+        if (timeInPortal < 1.0F)
+        {
+            timeInPortal = timeInPortal * timeInPortal;
+            timeInPortal = timeInPortal * timeInPortal;
+            timeInPortal = timeInPortal * 0.8F + 0.2F;
+        }
 
-		GlStateManager.pushMatrix();
-		GlStateManager.disableAlpha();
-		GlStateManager.disableDepth();
-		GlStateManager.depthMask(false);
-		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_CONSTANT_ALPHA);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, portalTime);
-		IBlockState portal =  BlocksAether.aether_portal.getDefaultState();
-        TextureAtlasSprite sprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(portal);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("aether_legacy", "textures/blocks/aether_portal.png"));
-		float f1 = sprite.getMinU();
-		float f2 = sprite.getMinV();
-		float f3 = sprite.getMaxU();
-		float f4 = sprite.getMaxV();
-		Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer renderer = tessellator.getBuffer();
-		renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-		renderer.pos(0.0D, scaledHeight, -90.0D).tex(f1, f4).endVertex();
-		renderer.pos(scaledWidth, scaledHeight, -90.0D).tex(f3, f4).endVertex();
-		renderer.pos(scaledWidth, 0.0D, -90.0D).tex(f3, f2).endVertex();
-		renderer.pos(0.0D, 0.0D, -90.0D).tex(f1, f2).endVertex();
-		tessellator.draw();
-		GlStateManager.depthMask(true);
-		GlStateManager.enableDepth();
-		GlStateManager.enableAlpha();
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.popMatrix();
-	}
+        GlStateManager.disableAlpha();
+        GlStateManager.disableDepth();
+        GlStateManager.depthMask(false);
+        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, timeInPortal);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        TextureAtlasSprite textureatlassprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(BlocksAether.aether_portal.getDefaultState());
+        float f = textureatlassprite.getMinU();
+        float f1 = textureatlassprite.getMinV();
+        float f2 = textureatlassprite.getMaxU();
+        float f3 = textureatlassprite.getMaxV();
+        Tessellator tessellator = Tessellator.getInstance();
+        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        vertexbuffer.pos(0.0D, (double)scaledRes.getScaledHeight(), -90.0D).tex((double)f, (double)f3).endVertex();
+        vertexbuffer.pos((double)scaledRes.getScaledWidth(), (double)scaledRes.getScaledHeight(), -90.0D).tex((double)f2, (double)f3).endVertex();
+        vertexbuffer.pos((double)scaledRes.getScaledWidth(), 0.0D, -90.0D).tex((double)f2, (double)f1).endVertex();
+        vertexbuffer.pos(0.0D, 0.0D, -90.0D).tex((double)f, (double)f1).endVertex();
+        tessellator.draw();
+        GlStateManager.depthMask(true);
+        GlStateManager.enableDepth();
+        GlStateManager.enableAlpha();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    }
 
 	public static void renderBossHP(Minecraft mc) 
 	{

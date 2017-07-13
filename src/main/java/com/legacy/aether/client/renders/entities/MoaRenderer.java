@@ -11,8 +11,8 @@ import org.lwjgl.opengl.GL11;
 import com.legacy.aether.client.models.entities.MoaModel;
 import com.legacy.aether.client.renders.entities.layer.MoaDonatorLayer;
 import com.legacy.aether.client.renders.entities.layer.MoaLayer;
-import com.legacy.aether.server.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.server.player.PlayerAether;
+import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.common.player.PlayerAether;
 
 public class MoaRenderer extends RenderLiving<EntityMoa>
 {

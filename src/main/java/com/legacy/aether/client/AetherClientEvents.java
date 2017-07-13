@@ -1,50 +1,54 @@
 package com.legacy.aether.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.network.play.client.CPacketClientStatus;
-import net.minecraft.stats.AchievementList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
-import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.PotionShiftEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import com.legacy.aether.client.gui.AetherLoadingScreen;
+import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.client.gui.inventory.GuiAccessories;
-import com.legacy.aether.server.containers.inventory.InventoryAccessories;
-import com.legacy.aether.server.items.ItemsAether;
-import com.legacy.aether.server.networking.AetherGuiHandler;
-import com.legacy.aether.server.networking.AetherNetworkingManager;
-import com.legacy.aether.server.networking.packets.PacketOpenContainer;
-import com.legacy.aether.server.player.PlayerAether;
+import com.legacy.aether.common.AetherConfig;
+import com.legacy.aether.common.containers.inventory.InventoryAccessories;
+import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.networking.AetherGuiHandler;
+import com.legacy.aether.common.networking.AetherNetworkingManager;
+import com.legacy.aether.common.networking.packets.PacketOpenContainer;
+import com.legacy.aether.common.player.PlayerAether;
 
 public class AetherClientEvents 
 {
 
 	@SubscribeEvent
-	public void onInventoryKeyPressed(KeyInputEvent event)
+	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
 	{
 		Minecraft mc = Minecraft.getMinecraft();
+		TickEvent.Phase phase = event.phase;
+		TickEvent.Type type = event.type;
 
-		if (mc.currentScreen == null && mc.theWorld != null)
+		if (phase == TickEvent.Phase.END)
 		{
-			if (mc.thePlayer != null && !mc.thePlayer.capabilities.isCreativeMode && mc.gameSettings.keyBindInventory.isPressed())
+			if (type.equals(TickEvent.Type.CLIENT))
 			{
-				if (!mc.thePlayer.hasAchievement(AchievementList.OPEN_INVENTORY))
+				if (!AetherConfig.triviaDisabled())
 				{
-		            mc.getConnection().sendPacket(new CPacketClientStatus(CPacketClientStatus.State.OPEN_INVENTORY_ACHIEVEMENT));
+					if (!(mc.loadingScreen instanceof AetherLoadingScreen))
+					{
+						mc.loadingScreen = new AetherLoadingScreen(mc);
+					}
 				}
-
-				AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
 			}
 		}
 	}
@@ -84,6 +88,27 @@ public class AetherClientEvents
 	}
 
 	@SubscribeEvent
+	public void onGuiOpened(GuiScreenEvent.InitGuiEvent.Post event)
+	{
+		if (event.getGui().getClass() == GuiInventory.class)
+		{
+			int guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiLeft", "field_147003_i");
+			int guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiTop", "field_147009_r");
+
+			event.getButtonList().add(new GuiAccessoryButton(guiLeft + 26, guiTop + 65));
+		}
+	}
+
+	@SubscribeEvent
+	public void onButtonPressed(GuiScreenEvent.ActionPerformedEvent.Pre event)
+	{
+		if (event.getGui().getClass() ==  GuiInventory.class && event.getButton().id == 18067)
+		{
+			AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
+		}
+	}
+
+	@SubscribeEvent
 	public void onRenderHand(RenderHandEvent event)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
@@ -118,34 +143,6 @@ public class AetherClientEvents
 		for (int i = 0; i < InventoryAccessories.EMPTY_SLOT_NAMES.length; ++i)
 		{
 			event.getMap().registerSprite(new ResourceLocation("aether_legacy", "items/slots/" + InventoryAccessories.EMPTY_SLOT_NAMES[i]));
-		}
-	}
-
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onGuiRender(InitGuiEvent.Post event)
-	{
-		ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
-
-		for (int size = 0; size < event.getButtonList().size(); ++size)
-		{
-			GuiButton button = event.getButtonList().get(size);
-
-			if (Loader.isModLoaded("Baubles"))
-			{
-				if (button.id == 55)
-				{
-					button.xPosition = (resolution.getScaledWidth() / 2) - 39;
-				}
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onStopPotionEffect(PotionShiftEvent event)
-	{
-		if (event.getGui() instanceof GuiAccessories)
-		{
-			event.setCanceled(true);
 		}
 	}
 

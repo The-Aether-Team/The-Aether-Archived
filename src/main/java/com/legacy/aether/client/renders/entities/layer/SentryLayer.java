@@ -1,43 +1,71 @@
 package com.legacy.aether.client.renders.entities.layer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelSlime;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
-
-import com.legacy.aether.server.entities.hostile.EntitySentry;
+import com.legacy.aether.common.entities.hostile.EntitySentry;
 
 public class SentryLayer implements LayerRenderer<EntitySentry>
 {
 
     private static final ResourceLocation TEXTURE_EYE = new ResourceLocation("aether_legacy", "textures/entities/sentry/eye.png");
 
-	@Override
-	public void doRenderLayer(EntitySentry sentry, float p_177141_2_, float p_177141_3_, float p_177141_4_, float p_177141_5_, float p_177141_6_, float p_177141_7_, float p_177141_8_)
-	{
-        if (sentry.getAttackTarget() != null)
-        {
-            Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(TEXTURE_EYE);
-            float f1 = 1.0F;
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glDisable(GL11.GL_ALPHA_TEST);
-            GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
-            char j = 61680;
-            int k = j % 65536;
-            int l = j / 65536;
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)k / 1.0F, (float)l / 1.0F);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, f1);
-        }
+	private final ModelSlime model;
 
+	public SentryLayer(ModelSlime model)
+	{
+		super();
+
+		this.model = model;
+	}
+
+	@Override
+	public void doRenderLayer(EntitySentry sentry, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
+	{
+		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+
+		if (sentry.isAwake())
+		{
+			renderManager.renderEngine.bindTexture(TEXTURE_EYE);
+
+	        GlStateManager.enableBlend();
+	        GlStateManager.disableAlpha();
+	        GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+
+	        if (sentry.isInvisible())
+	        {
+	            GlStateManager.depthMask(false);
+	        }
+	        else
+	        {
+	            GlStateManager.depthMask(true);
+	        }
+
+	        int i = 61680;
+	        int j = i % 65536;
+	        int k = i / 65536;
+	        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
+	        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+	        GlStateManager.translate(0.0D, 0.0D, -0.001D);
+	        this.model.render(sentry, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+	        i = sentry.getBrightnessForRender(partialTicks);
+	        j = i % 65536;
+	        k = i / 65536;
+	        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
+	        GlStateManager.disableBlend();
+	        GlStateManager.enableAlpha();
+		}
 	}
 
 	@Override
 	public boolean shouldCombineTextures() 
 	{
-		return false;
+		return true;
 	}
 
 }

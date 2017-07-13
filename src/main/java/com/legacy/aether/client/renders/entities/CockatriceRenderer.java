@@ -8,7 +8,7 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.models.entities.CockatriceModel;
-import com.legacy.aether.server.entities.hostile.EntityCockatrice;
+import com.legacy.aether.common.entities.hostile.EntityCockatrice;
 
 public class CockatriceRenderer extends RenderLiving<EntityCockatrice>
 {

@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-import com.legacy.aether.server.Aether;
+import com.legacy.aether.common.Aether;
 
 public class PhoenixBowDefinition implements ItemMeshDefinition
 {

@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 
-import com.legacy.aether.server.Aether;
+import com.legacy.aether.common.Aether;
 
 public class NotchHammerDefinition implements ItemMeshDefinition
 {

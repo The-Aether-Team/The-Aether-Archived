@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.FlyingCowRenderer;
-import com.legacy.aether.server.entities.passive.mountable.EntityFlyingCow;
+import com.legacy.aether.common.entities.passive.mountable.EntityFlyingCow;
 
 public class FlyingCowFactory implements IRenderFactory<EntityFlyingCow>
 {

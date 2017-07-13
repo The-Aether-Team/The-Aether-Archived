@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.models.entities.AerbunnyModel;
-import com.legacy.aether.server.entities.passive.mountable.EntityAerbunny;
+import com.legacy.aether.common.entities.passive.mountable.EntityAerbunny;
 
 public class AerbunnyRenderer extends RenderLiving<EntityAerbunny> 
 {
@@ -40,7 +40,7 @@ public class AerbunnyRenderer extends RenderLiving<EntityAerbunny>
             }
         }
 
-        this.model.puffiness = (float)entitybunny.getPuffiness() / 10.0F;
+        this.model.puffiness = (float)(entitybunny.getRidingEntity() != null ? entitybunny.getPuffinessClient() : entitybunny.getPuffiness()) / 10.0F;
     }
 
     protected void preRenderCallback(EntityAerbunny entitybunny, float f)

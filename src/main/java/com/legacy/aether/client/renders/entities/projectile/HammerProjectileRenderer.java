@@ -10,8 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.legacy.aether.server.entities.projectile.EntityHammerProjectile;
-import com.legacy.aether.server.items.ItemsAether;
+import com.legacy.aether.common.entities.projectile.EntityHammerProjectile;
+import com.legacy.aether.common.items.ItemsAether;
 
 public class HammerProjectileRenderer extends Render<EntityHammerProjectile>
 {

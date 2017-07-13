@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.SentryRenderer;
-import com.legacy.aether.server.entities.hostile.EntitySentry;
+import com.legacy.aether.common.entities.hostile.EntitySentry;
 
 public class SentryFactory implements IRenderFactory<EntitySentry>
 {

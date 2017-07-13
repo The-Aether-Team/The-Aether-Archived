@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import com.legacy.aether.server.entities.block.EntityFloatingBlock;
+import com.legacy.aether.common.entities.block.EntityFloatingBlock;
 
 public class FloatingBlockRenderer extends Render<EntityFloatingBlock>
 {

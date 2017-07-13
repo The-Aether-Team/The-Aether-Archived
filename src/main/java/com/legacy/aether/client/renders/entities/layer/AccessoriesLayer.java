@@ -13,11 +13,11 @@ import net.minecraft.util.math.MathHelper;
 
 import com.legacy.aether.client.models.attachments.ModelAetherWings;
 import com.legacy.aether.client.models.attachments.ModelHalo;
-import com.legacy.aether.server.containers.inventory.InventoryAccessories;
-import com.legacy.aether.server.items.ItemsAether;
-import com.legacy.aether.server.items.accessories.ItemAccessory;
-import com.legacy.aether.server.player.PlayerAether;
-import com.legacy.aether.server.player.perks.AetherRankings;
+import com.legacy.aether.common.containers.inventory.InventoryAccessories;
+import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.items.accessories.ItemAccessory;
+import com.legacy.aether.common.player.PlayerAether;
+import com.legacy.aether.common.player.perks.AetherRankings;
 
 public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 {
@@ -157,7 +157,15 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 					GlStateManager.color(red, green, blue);
 				}
 
-				manager.renderEngine.bindTexture(cape.texture);
+				if (player.getUniqueID().toString() == "47ec3a3b-3f41-49b6-b5a0-c39abb7b51ef")
+				{
+					manager.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/armor/accessory_swuff.png"));
+				}
+				else
+				{
+					manager.renderEngine.bindTexture(cape.texture);
+				}
+
 	            this.modelPlayer.renderCape(scale);
 	            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 	            GlStateManager.popMatrix();

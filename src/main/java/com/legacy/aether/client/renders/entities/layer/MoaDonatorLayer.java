@@ -7,9 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.MoaModel;
-import com.legacy.aether.server.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.server.player.PlayerAether;
-import com.legacy.aether.server.player.perks.util.DonatorMoaSkin;
+import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.common.player.PlayerAether;
+import com.legacy.aether.common.player.perks.util.DonatorMoaSkin;
 
 public class MoaDonatorLayer implements LayerRenderer<EntityMoa>
 {

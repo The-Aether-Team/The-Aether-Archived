@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.SliderRenderer;
-import com.legacy.aether.server.entities.bosses.slider.EntitySlider;
+import com.legacy.aether.common.entities.bosses.slider.EntitySlider;
 
 public class SliderFactory implements IRenderFactory<EntitySlider>
 {

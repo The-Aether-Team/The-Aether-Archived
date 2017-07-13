@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.models.entities.AechorPlantModel;
-import com.legacy.aether.server.entities.hostile.EntityAechorPlant;
+import com.legacy.aether.common.entities.hostile.EntityAechorPlant;
 
 public class AechorPlantRenderer extends RenderLiving<EntityAechorPlant>
 {

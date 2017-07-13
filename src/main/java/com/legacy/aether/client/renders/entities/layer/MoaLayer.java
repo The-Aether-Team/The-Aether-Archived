@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.MoaModel;
-import com.legacy.aether.server.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
 
 public class MoaLayer implements LayerRenderer<EntityMoa>
 {

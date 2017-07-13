@@ -17,7 +17,7 @@ import com.legacy.aether.client.gui.GuiAetherInGame;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.blocks.BlockRendering;
 import com.legacy.aether.client.renders.items.ItemRendering;
-import com.legacy.aether.server.ServerProxy;
+import com.legacy.aether.common.ServerProxy;
 
 public class ClientProxy extends ServerProxy
 {
@@ -42,7 +42,6 @@ public class ClientProxy extends ServerProxy
 		MinecraftForge.EVENT_BUS.register(new AetherClientEvents());
 
 		registerEvent(new AetherMusicHandler());
-		registerEvent(new ClientTickHandler());
 	}
 
 	@Override

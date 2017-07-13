@@ -9,14 +9,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
-import com.legacy.aether.server.containers.ContainerFreezer;
-import com.legacy.aether.server.tile_entities.TileEntityFreezer;
+import com.legacy.aether.common.containers.ContainerFreezer;
+import com.legacy.aether.common.tile_entities.TileEntityFreezer;
 
 @SideOnly(Side.CLIENT)
 public class GuiFreezer extends GuiContainer
 {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/enchanter.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/altar.png");
 
 	private TileEntityFreezer freezer;
 

@@ -47,6 +47,15 @@ public class AetherLoadingScreen extends LoadingScreenRenderer
     }
 
     @Override
+    public void displayLoadingString(String message)
+    {
+        this.systemTime = 0L;
+        this.message = message;
+        this.setLoadingProgress(-1);
+        this.systemTime = 0L;
+    }
+
+    @Override
     public void setLoadingProgress(int progress)
     {
         long i = Minecraft.getSystemTime();

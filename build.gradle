@@ -26,8 +26,14 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
-dependencies {
+repositories {
+    maven {
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+}
 
+dependencies {
+    deobfCompile "mezz.jei:jei_1.10.2:+"
 }
 
 processResources

@@ -12,13 +12,13 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.legacy.aether.server.containers.ContainerLore;
-import com.legacy.aether.server.registry.lore.AetherLoreEntry;
-import com.legacy.aether.server.registry.lore.EndLoreEntry;
-import com.legacy.aether.server.registry.lore.NetherLoreEntry;
-import com.legacy.aether.server.registry.lore.OverworldLoreEntry;
-import com.legacy.aether.server.registry.objects.EntryInformation;
-import com.legacy.aether.server.registry.objects.LoreEntry;
+import com.legacy.aether.common.containers.ContainerLore;
+import com.legacy.aether.common.registry.lore.AetherLoreEntry;
+import com.legacy.aether.common.registry.lore.EndLoreEntry;
+import com.legacy.aether.common.registry.lore.NetherLoreEntry;
+import com.legacy.aether.common.registry.lore.OverworldLoreEntry;
+import com.legacy.aether.common.registry.objects.EntryInformation;
+import com.legacy.aether.common.registry.objects.LoreEntry;
 
 public class GuiLore extends GuiContainer
 {

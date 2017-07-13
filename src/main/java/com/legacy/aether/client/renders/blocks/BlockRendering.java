@@ -9,26 +9,27 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
-import com.legacy.aether.server.Aether;
-import com.legacy.aether.server.blocks.BlocksAether;
-import com.legacy.aether.server.blocks.util.EnumCloudType;
-import com.legacy.aether.server.blocks.util.EnumCrystalType;
-import com.legacy.aether.server.blocks.util.EnumHolidayType;
-import com.legacy.aether.server.blocks.util.EnumLeafType;
-import com.legacy.aether.server.blocks.util.EnumLogType;
-import com.legacy.aether.server.blocks.util.EnumStoneType;
+import com.legacy.aether.client.renders.items.util.AetherColor;
+import com.legacy.aether.common.Aether;
+import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.common.blocks.util.EnumCloudType;
+import com.legacy.aether.common.blocks.util.EnumCrystalType;
+import com.legacy.aether.common.blocks.util.EnumHolidayType;
+import com.legacy.aether.common.blocks.util.EnumLeafType;
+import com.legacy.aether.common.blocks.util.EnumLogType;
+import com.legacy.aether.common.blocks.util.EnumStoneType;
 
 public class BlockRendering 
 {
 
 	public static void initialize()
 	{
-		register(BlocksAether.aether_grass, "aether_grass");
-		register(BlocksAether.aether_dirt, "aether_dirt");
-		register(BlocksAether.holystone, "holystone");
-		register(BlocksAether.mossy_holystone, "mossy_holystone");
-		register(BlocksAether.quicksoil, "quicksoil");
-		register(BlocksAether.ambrosium_ore, "ambrosium_ore");
+		registerD(BlocksAether.aether_grass, "aether_grass");
+		registerD(BlocksAether.aether_dirt, "aether_dirt");
+		registerD(BlocksAether.holystone, "holystone");
+		registerD(BlocksAether.mossy_holystone, "mossy_holystone");
+		registerD(BlocksAether.quicksoil, "quicksoil");
+		registerD(BlocksAether.ambrosium_ore, "ambrosium_ore");
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
 		register(BlocksAether.holystone_brick, "holystone_brick");
 		register(BlocksAether.icestone, "icestone");
@@ -110,7 +111,7 @@ public class BlockRendering
 			register(BlocksAether.holiday_leaves, meta, EnumHolidayType.getType(meta).getName());
 		}
 
-		for (int meta = 0; meta < EnumLogType.values().length; ++meta)
+		for (int meta = 0; meta < 16; ++meta)
 		{
 			register(BlocksAether.aether_log, meta, EnumLogType.getType(meta).getName());
 		}
@@ -133,7 +134,15 @@ public class BlockRendering
 		registerMetadata(BlocksAether.locked_dungeon_block, Aether.locate("carved_stone"), Aether.locate("sentry_stone"), Aether.locate("angelic_stone"), Aether.locate("light_angelic_stone"), Aether.locate("hellfire_stone"), Aether.locate("light_hellfire_stone"));
 		registerMetadata(BlocksAether.dungeon_trap, Aether.locate("carved_stone"), Aether.locate("sentry_stone"), Aether.locate("angelic_stone"), Aether.locate("light_angelic_stone"), Aether.locate("hellfire_stone"), Aether.locate("light_hellfire_stone"));
 
+		registerColor(BlocksAether.aercloud);
+
 		AetherEntityRenderingRegistry.registerTileEntities();
+	}
+
+	public static void registerD(Block block, String model)
+	{
+		register(block, 0, model);
+		register(block, 1, model);
 	}
 
 	public static void register(Block block, String model)
@@ -149,6 +158,12 @@ public class BlockRendering
 	public static void register(Block block, int meta, String model)
 	{
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), meta, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
+	}
+
+	public static void registerColor(Block item)
+	{
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new AetherColor(Item.getItemFromBlock(item)), item);
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new AetherColor(Item.getItemFromBlock(item)), item);
 	}
 
 	public static void registerMetadata(Block block, ResourceLocation... model)

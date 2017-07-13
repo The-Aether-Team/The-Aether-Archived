@@ -168,6 +168,27 @@
 	    "aether_legacy:projectile/dart_shooter/shoot"
 	]
   },
+  "aeboss.slider.awaken": {
+	"category": "hostile",
+	"subtitle": "Slider awakens",
+	"sounds": [
+	    "aether_legacy:aeboss/slider/awaken"
+	]
+  },
+  "aeboss.slider.collide": {
+	"category": "hostile",
+	"subtitle": "Slider collided",
+	"sounds": [
+	    "aether_legacy:aeboss/slider/collide"
+	]
+  },
+  "aeboss.slider.move": {
+	"category": "hostile",
+	"subtitle": "Slider moved",
+	"sounds": [
+	    "aether_legacy:aeboss/slider/move"
+	]
+  },
   "aeboss.slider.death": {
 	"category": "hostile",
 	"subtitle": "Slider death",

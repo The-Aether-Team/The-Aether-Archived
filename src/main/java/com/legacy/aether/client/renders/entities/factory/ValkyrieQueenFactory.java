@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.ValkyrieQueenRenderer;
-import com.legacy.aether.server.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
 
 public class ValkyrieQueenFactory implements IRenderFactory<EntityValkyrieQueen>
 {

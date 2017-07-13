@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.SliderModel;
 import com.legacy.aether.client.renders.entities.layer.SliderLayer;
-import com.legacy.aether.server.entities.bosses.slider.EntitySlider;
+import com.legacy.aether.common.entities.bosses.slider.EntitySlider;
 
 public class SliderRenderer extends RenderLiving<EntitySlider>
 {
@@ -22,7 +22,7 @@ public class SliderRenderer extends RenderLiving<EntitySlider>
 	public SliderRenderer(RenderManager renderManager)
     {
         super(renderManager, new SliderModel(0.0F, 12.0F), 1.5F);
-        this.addLayer(new SliderLayer());
+        this.addLayer(new SliderLayer((SliderModel) this.mainModel));
     }
 
 	@Override
