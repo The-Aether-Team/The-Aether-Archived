@@ -44,7 +44,7 @@ public class BlockBerryBush extends BlockAetherFlower
 	}
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, World world, BlockPos pos)
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
 	{
 		return this.FLOWER_AABB;
 	}

@@ -89,9 +89,9 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 	@Override
 	public void handleClient(PacketPerkChanged message, EntityPlayer player)
 	{
-		if (player != null && player.worldObj != null)
+		if (player != null && player.world != null)
 		{
-			EntityPlayer parent = (EntityPlayer) player.worldObj.getEntityByID(message.entityID);
+			EntityPlayer parent = (EntityPlayer) player.world.getEntityByID(message.entityID);
 
 			if (parent != null)
 			{
@@ -116,7 +116,7 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 	@Override
 	public void handleServer(PacketPerkChanged message, EntityPlayer player) 
 	{
-		if (player != null && player.worldObj != null && !player.worldObj.isRemote)
+		if (player != null && player.world != null && !player.world.isRemote)
 		{
 			AetherNetworkingManager.sendToAll(message);
 		}

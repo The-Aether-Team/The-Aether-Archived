@@ -32,9 +32,9 @@ public class BlockFloating extends Block
 	}
 
 	@Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
-		world.scheduleUpdate(pos, this, 3);
+		worldIn.scheduleUpdate(pos, this, 3);
     }
 
 	@Override
@@ -53,7 +53,7 @@ public class BlockFloating extends Block
 			if (!world.isRemote)
 			{
 				EntityFloatingBlock floating = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
-				world.spawnEntityInWorld(floating);
+				world.spawnEntity(floating);
 			}
 
 			world.setBlockToAir(pos);

@@ -67,29 +67,9 @@ public class FreezerRecipeCategory implements IRecipeCategory<FreezerRecipeWrapp
 	}
 
 	@Override
-	public void drawAnimations(Minecraft minecraft)
-	{
-
-	}
-
-	@Override
 	public List<String>  getTooltipStrings(int mouseX, int mouseY)
 	{
 		return new ArrayList<String>();
-	}
-
-	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, FreezerRecipeWrapper recipeWrapper)
-	{
-		IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
-
-		stacks.init(0, false, 30, 11);
-		stacks.init(1, false, 30, 47);
-		stacks.init(2, true, 90, 29);
-
-		stacks.set(0, recipeWrapper.freezable.getFreezableInput());
-		stacks.set(1, new ItemStack(BlocksAether.icestone));
-		stacks.set(2, recipeWrapper.freezable.getFrozenResult());
 	}
 
 	@Override
@@ -104,6 +84,12 @@ public class FreezerRecipeCategory implements IRecipeCategory<FreezerRecipeWrapp
 		stacks.set(0, recipeWrapper.freezable.getFreezableInput());
 		stacks.set(1, new ItemStack(BlocksAether.icestone));
 		stacks.set(2, recipeWrapper.freezable.getFrozenResult());
+	}
+
+	@Override
+	public String getModName()
+	{
+		return "aether_legacy";
 	}
 
 }

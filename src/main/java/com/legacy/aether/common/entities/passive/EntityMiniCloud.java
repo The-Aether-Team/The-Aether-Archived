@@ -167,7 +167,7 @@ public class EntityMiniCloud extends EntityFlying
                         double var1 = this.posX + Math.sin((double)var7 / -(180D / Math.PI)) * 1.6D;
                         double var3 = this.posY - -1.0D;
                         double var5 = this.posZ + Math.cos((double)var7 / -(180D / Math.PI)) * 1.6D;
-                        EntityIceyBall iceCrystal = new EntityIceyBall(this.worldObj, var1, var3, var5, true);
+                        EntityIceyBall iceCrystal = new EntityIceyBall(this.world, var1, var3, var5, true);
                         Vec3d var9 = this.getLookVec();
 
                         if (var9 != null)
@@ -179,12 +179,12 @@ public class EntityMiniCloud extends EntityFlying
 
                         iceCrystal.smacked = true;
 
-                        if (!this.worldObj.isRemote)
+                        if (!this.world.isRemote)
                         {
-                            this.worldObj.spawnEntityInWorld(iceCrystal);
+                            this.world.spawnEntity(iceCrystal);
                         }
 
-                        this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundsAether.zephyr_shoot, SoundCategory.NEUTRAL, 0.75F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+                        this.world.playSound(this.posX, this.posY, this.posZ, SoundsAether.zephyr_shoot, SoundCategory.NEUTRAL, 0.75F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 
                         this.shotTimer = 40;
                     }

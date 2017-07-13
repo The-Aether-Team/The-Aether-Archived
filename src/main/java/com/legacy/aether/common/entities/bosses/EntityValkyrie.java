@@ -225,7 +225,7 @@ public class EntityValkyrie extends EntityMob
             }
         }
 
-        if (this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL && (this.getAttackTarget() != null || this.angerLevel > 0))
+        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL && (this.getAttackTarget() != null || this.angerLevel > 0))
         {
         	this.angerLevel = 0;
             this.setAttackTarget(null);
@@ -317,7 +317,7 @@ public class EntityValkyrie extends EntityMob
 
     public boolean attackEntityFrom(DamageSource ds, float i) 
     {
-        if (ds.getEntity() instanceof EntityPlayer && worldObj.getDifficulty() != EnumDifficulty.PEACEFUL)
+        if (ds.getEntity() instanceof EntityPlayer && world.getDifficulty() != EnumDifficulty.PEACEFUL)
         {
             EntityPlayer player = (EntityPlayer)ds.getEntity();
 

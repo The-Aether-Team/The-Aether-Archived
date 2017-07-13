@@ -76,7 +76,7 @@ public class EntityLightningKnife extends Entity
 
     public void setThrowableHeading(double x, double y, double z, float velocity, float inaccuracy)
     {
-        float f2 = MathHelper.sqrt_double(x * x + y * y + z * z);
+        float f2 = MathHelper.sqrt(x * x + y * y + z * z);
         x /= (double)f2;
         y /= (double)f2;
         z /= (double)f2;
@@ -89,7 +89,7 @@ public class EntityLightningKnife extends Entity
         this.motionX = x;
         this.motionY = y;
         this.motionZ = z;
-        float f3 = MathHelper.sqrt_double(x * x + z * z);
+        float f3 = MathHelper.sqrt(x * x + z * z);
         this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(x, z) * 180.0D / Math.PI);
         this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(y, (double)f3) * 180.0D / Math.PI);
     }
@@ -103,7 +103,7 @@ public class EntityLightningKnife extends Entity
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F)
         {
-            float f = MathHelper.sqrt_double(d * d + d2 * d2);
+            float f = MathHelper.sqrt(d * d + d2 * d2);
             this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(d, d2) * 180.0D / Math.PI);
             this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(d1, (double)f) * 180.0D / Math.PI);
         }
@@ -123,7 +123,7 @@ public class EntityLightningKnife extends Entity
         Vec3d var15 = new Vec3d(this.posX, this.posY, this.posZ);
         Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
-        RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(var15, vec3d1, false, true, true);
+        RayTraceResult movingobjectposition = this.world.rayTraceBlocks(var15, vec3d1, false, true, true);
 
         var15 = new Vec3d(this.posX, this.posY, this.posZ);
         vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
@@ -133,10 +133,10 @@ public class EntityLightningKnife extends Entity
             vec3d1 = new Vec3d(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
         }
 
-        if (!this.worldObj.isRemote)
+        if (!this.world.isRemote)
         {
             Entity f = null;
-            List<?> f1 = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+            List<?> f1 = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
             double f2 = 0.0D;
 
             for (int f3 = 0; f3 < f1.size(); ++f3)
@@ -183,30 +183,30 @@ public class EntityLightningKnife extends Entity
 
                 }
 
-                var16 = MathHelper.floor_double(movingobjectposition.entityHit.getEntityBoundingBox().minX);
-                var17 = MathHelper.floor_double(movingobjectposition.entityHit.getEntityBoundingBox().minY);
-                var20 = MathHelper.floor_double(movingobjectposition.entityHit.getEntityBoundingBox().minZ);
+                var16 = MathHelper.floor(movingobjectposition.entityHit.getEntityBoundingBox().minX);
+                var17 = MathHelper.floor(movingobjectposition.entityHit.getEntityBoundingBox().minY);
+                var20 = MathHelper.floor(movingobjectposition.entityHit.getEntityBoundingBox().minZ);
 
-                lightning = new EntityLightningBolt(this.worldObj, (double)var16, (double)var17, (double)var20, false);
+                lightning = new EntityLightningBolt(this.world, (double)var16, (double)var17, (double)var20, false);
                 lightning.setLocationAndAngles((double)var16, (double)var17, (double)var20, this.rotationYaw, 0.0F);
 
-                this.worldObj.spawnEntityInWorld(lightning);
+                this.world.spawnEntity(lightning);
             }
             else
             {
-                var16 = MathHelper.floor_double(this.posX);
-                var17 = MathHelper.floor_double(this.posY);
-                var20 = MathHelper.floor_double(this.posZ);
+                var16 = MathHelper.floor(this.posX);
+                var17 = MathHelper.floor(this.posY);
+                var20 = MathHelper.floor(this.posZ);
 
-                lightning = new EntityLightningBolt(this.worldObj, this.posX, this.posY, this.posZ, false);
+                lightning = new EntityLightningBolt(this.world, this.posX, this.posY, this.posZ, false);
                 lightning.setLocationAndAngles((double)var16, (double)var17, (double)var20, this.rotationYaw, 0.0F);
 
-                this.worldObj.spawnEntityInWorld(lightning);
+                this.world.spawnEntity(lightning);
             }
 
             for (var16 = 0; var16 < 8; ++var16)
             {
-                this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+                this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
             }
 
             this.setDead();
@@ -216,7 +216,7 @@ public class EntityLightningKnife extends Entity
         this.posY += this.motionY;
         this.posZ += this.motionZ;
 
-        float var18 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
+        float var18 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
         this.rotationYaw = (float)(Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
@@ -251,7 +251,7 @@ public class EntityLightningKnife extends Entity
             for (int var22 = 0; var22 < 4; ++var22)
             {
                 float var23 = 0.25F;
-                this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var23, this.posY - this.motionY * (double)var23, this.posZ - this.motionZ * (double)var23, this.motionX, this.motionY, this.motionZ);
+                this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, this.posX - this.motionX * (double)var23, this.posY - this.motionY * (double)var23, this.posZ - this.motionZ * (double)var23, this.motionX, this.motionY, this.motionZ);
             }
 
             var19 = 0.8F;

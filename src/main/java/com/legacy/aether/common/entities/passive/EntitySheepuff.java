@@ -115,7 +115,7 @@ public class EntitySheepuff extends EntityAetherAnimal
     @Override
     public void onLivingUpdate()
     {
-        if (this.worldObj.isRemote)
+        if (this.world.isRemote)
         {
             this.sheepTimer = Math.max(0, this.sheepTimer - 1);
         }
@@ -165,7 +165,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 	@Override
 	protected void playStepSound(BlockPos pos, Block par4)
 	{
-		this.worldObj.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+		this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
 
     public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
@@ -174,7 +174,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 
         if(itemstack != null && itemstack.getItem() == Items.SHEARS && !this.getSheared())
         {
-            if(!this.worldObj.isRemote)
+            if(!this.world.isRemote)
             {
 				if(this.getPuffed())
 				{
@@ -206,15 +206,15 @@ public class EntitySheepuff extends EntityAetherAnimal
 
             if (this.getFleeceColor() != colorID)
             {
-                if (this.getPuffed() && itemstack.stackSize >= 2)
+                if (this.getPuffed() && itemstack.getCount() >= 2)
                 {
                     this.setFleeceColor(colorID);
-                    itemstack.stackSize -= 2;
+                    itemstack.shrink(2);
                 }
                 else if (!this.getPuffed())
                 {
                     this.setFleeceColor(colorID);
-                    --itemstack.stackSize;
+                    itemstack.shrink(1);
                 }
             }
         }
@@ -342,7 +342,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable)
 	{
-		return new EntitySheepuff(worldObj);
+		return new EntitySheepuff(world);
 	}
 
 }

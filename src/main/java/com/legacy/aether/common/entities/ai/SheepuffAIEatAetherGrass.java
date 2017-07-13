@@ -20,7 +20,7 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase
     public SheepuffAIEatAetherGrass(EntitySheepuff sheepuff)
     {
         this.sheepuff = sheepuff;
-        this.entityWorld = sheepuff.worldObj;
+        this.entityWorld = sheepuff.world;
         this.setMutexBits(7);
     }
 

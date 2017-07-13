@@ -1,7 +1,5 @@
 package com.legacy.aether.common.entities.passive.mountable;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -87,7 +85,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 	@Override
     public void spawnExplosionParticle()
     {
-        if (this.worldObj.isRemote)
+        if (this.world.isRemote)
         {
             for (int i = 0; i < 5; ++i)
             {
@@ -95,12 +93,12 @@ public class EntityAerbunny extends EntityAetherAnimal
                 double d1 = this.rand.nextGaussian() * 0.02D;
                 double d2 = this.rand.nextGaussian() * 0.02D;
                 double d3 = 10.0D;
-                this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d0 * d3, this.posY + (double)(this.rand.nextFloat() * this.height) - d1 * d3, this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d2 * d3, d0, d1, d2, new int[0]);
+                this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d0 * d3, this.posY + (double)(this.rand.nextFloat() * this.height) - d1 * d3, this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d2 * d3, d0, d1, d2, new int[0]);
             }
         }
         else
         {
-            this.worldObj.setEntityState(this, (byte)20);
+            this.world.setEntityState(this, (byte)20);
         }
     }
 
@@ -176,7 +174,7 @@ public class EntityAerbunny extends EntityAetherAnimal
         {
         	EntityPlayer player = (EntityPlayer) this.getRidingEntity();
 
-            if (this.worldObj.isRemote)
+            if (this.world.isRemote)
             {
                 for(int k = 0; k < 3; k++) 
                 {
@@ -184,7 +182,7 @@ public class EntityAerbunny extends EntityAetherAnimal
                     double d5 = (float)posY + height + 0.125F;
                     double d8 = (float)posZ + rand.nextFloat() * 0.25F;
                     float f1 = rand.nextFloat() * 360F;
-                    this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, -Math.sin(0.01745329F * f1) * 0.75D, d5 - 0.25D, Math.cos(0.01745329F * f1) * 0.75D, d2, 0.125D, d8, new int[0]);
+                    this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, -Math.sin(0.01745329F * f1) * 0.75D, d5 - 0.25D, Math.cos(0.01745329F * f1) * 0.75D, d2, 0.125D, d8, new int[0]);
                 }
             }
 
@@ -234,17 +232,17 @@ public class EntityAerbunny extends EntityAetherAnimal
     }
 
     @Override
-    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, @Nullable ItemStack stack)
+    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand)
     {
-        ItemStack itemstack = entityplayer.inventory.getCurrentItem();
+        ItemStack itemstack = entityplayer.getHeldItem(hand);
 
         if (itemstack != null && (itemstack.getItem() == Items.NAME_TAG))
         {
-            return super.processInteract(entityplayer, hand, itemstack);
+            return super.processInteract(entityplayer, hand);
         }
         else
         {
-        	this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundsAether.aerbunny_lift, SoundCategory.NEUTRAL, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+        	this.world.playSound(this.posX, this.posY, this.posZ, SoundsAether.aerbunny_lift, SoundCategory.NEUTRAL, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 
             if (this.isRiding())
             {
@@ -254,8 +252,6 @@ public class EntityAerbunny extends EntityAetherAnimal
             {
                 this.startRiding(entityplayer);
             }
-
-            //this.prevRotationYaw = this.rotationYaw = entityplayer.rotationYaw;
 
             return true;
         }
@@ -294,7 +290,7 @@ public class EntityAerbunny extends EntityAetherAnimal
     @Override
     public EntityAgeable createChild(EntityAgeable entityageable)
     {
-        return new EntityAerbunny(this.worldObj);
+        return new EntityAerbunny(this.world);
     }
 
 }

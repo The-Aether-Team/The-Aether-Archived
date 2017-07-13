@@ -1,7 +1,5 @@
 package com.legacy.aether.common.items.weapons.projectile;
 
-import java.util.List;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -12,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
@@ -47,12 +46,11 @@ public class ItemDartShooter extends Item
     }
 
 	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
 	{
 		for (int var4 = 0; var4 < EnumDartShooterType.values().length; ++var4)
 		{
-			par3List.add(new ItemStack(par1, 1, var4));
+			subItems.add(new ItemStack(itemIn, 1, var4));
 		}
 	}
 
@@ -63,10 +61,12 @@ public class ItemDartShooter extends Item
 		for (int i = 0; i < inv.getSizeInventory(); i++)
 		{
 			ItemStack stack = inv.getStackInSlot(i);
-			if (stack == null)
+
+			if (stack == ItemStack.EMPTY)
 			{
 				continue;
 			}
+
 			int damage = stack.getItemDamage();
 
 			if (maxDamage != 3)
@@ -75,15 +75,16 @@ public class ItemDartShooter extends Item
 				{
 					if (!player.capabilities.isCreativeMode)
 					{
-						stack.stackSize--;
+						stack.shrink(1);
 					}
 
-					if (stack.stackSize == 0)
+					if (stack.getCount() == 0)
 					{
-						stack = null;
+						stack = ItemStack.EMPTY;
 					}
 
 					inv.setInventorySlotContents(i, stack);
+
 					return damage;
 				}
 			}
@@ -91,15 +92,16 @@ public class ItemDartShooter extends Item
 			{
 				if (!player.capabilities.isCreativeMode)
 				{
-					stack.stackSize--;
+					stack.shrink(1);
 				}
 
-				if (stack.stackSize == 0)
+				if (stack.getCount() == 0)
 				{
-					stack = null;
+					stack = ItemStack.EMPTY;
 				}
 
 				inv.setInventorySlotContents(i, stack);
+
 				return 3;
 			}
 		}
@@ -114,22 +116,23 @@ public class ItemDartShooter extends Item
 	}
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand hand)
 	{
+		ItemStack heldItem = entityplayer.getHeldItem(hand);
 		int consume;
 
 		if (!(entityplayer.capabilities.isCreativeMode))
 		{
-			consume = this.consumeItem(entityplayer, ItemsAether.dart, itemstack.getItemDamage());
+			consume = this.consumeItem(entityplayer, ItemsAether.dart, heldItem.getItemDamage());
 		}
 		else
 		{
-			consume = itemstack.getItemDamage();
+			consume = heldItem.getItemDamage();
 		}
 
 		if (consume != -1)
 		{
-			world.playSound(entityplayer, entityplayer.getPosition(), SoundsAether.dart_shooter_shoot, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));//world.playSoundAtEntity(entityplayer, "random.drr", 2.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
+			world.playSound(entityplayer, entityplayer.getPosition(), SoundsAether.dart_shooter_shoot, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
 			EntityDartBase dart = null;
 
@@ -150,7 +153,7 @@ public class ItemDartShooter extends Item
 
 			if (!world.isRemote)
 			{
-				world.spawnEntityInWorld(dart);
+				world.spawnEntity(dart);
 
 				if (!(entityplayer.capabilities.isCreativeMode))
 				{
@@ -163,7 +166,7 @@ public class ItemDartShooter extends Item
 			}
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
 	}
 
 }

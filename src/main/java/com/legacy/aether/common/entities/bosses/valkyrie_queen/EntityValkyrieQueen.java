@@ -127,13 +127,13 @@ public class EntityValkyrieQueen extends EntityMob
         
         for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
         {
-            if (this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
+            if (this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
             {
             	this.dungeonEntranceZ = k;
-            	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
                 return;
             }
         }
@@ -149,19 +149,19 @@ public class EntityValkyrieQueen extends EntityMob
     private void unlockDoor() 
     {
     	IBlockState state = Blocks.AIR.getDefaultState();
-    	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ), state);
-    	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1), state);
-    	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1), state);
-    	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ), state);
+    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ), state);
+    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1), state);
+    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1), state);
+    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ), state);
     }
 
     private void unlockTreasure() 
     {
 		IBlockState state = Blocks.TRAPDOOR.getDefaultState();
-		this.worldObj.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
-		this.worldObj.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
-		this.worldObj.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
-		this.worldObj.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
+		this.world.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
+		this.world.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
+		this.world.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
+		this.world.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
 
         for (int x = this.dungeonX - 27; x < this.dungeonX + 30; x++)
         {
@@ -170,19 +170,19 @@ public class EntityValkyrieQueen extends EntityMob
                 for (int z = this.dungeonZ - 6; z < this.dungeonZ + 26; z++) 
                 {
                 	BlockPos pos = new BlockPos(x, y, z);
-                    IBlockState block = this.worldObj.getBlockState(pos);
+                    IBlockState block = this.world.getBlockState(pos);
                     
                     if (block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic))
                     {
-                    	this.worldObj.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                    	this.world.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
                     }
                     if (block == BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic)) 
                     {
-                    	this.worldObj.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                    	this.world.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
                     }
                     if (block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic)) 
                     {
-                    	this.worldObj.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic), 2);
+                    	this.world.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic), 2);
                     }
                 }
             }
@@ -208,17 +208,19 @@ public class EntityValkyrieQueen extends EntityMob
     {
         for (int i = 0; i < shots; i++) 
         {
-        	EntityThunderBall e1 = new EntityThunderBall(this.worldObj, this.posX - (this.motionX / 2D), this.posY, this.posZ - (this.motionZ / 2D), player);
-        	if (!this.worldObj.isRemote)
+        	EntityThunderBall e1 = new EntityThunderBall(this.world, this.posX - (this.motionX / 2D), this.posY, this.posZ - (this.motionZ / 2D), player);
+        	if (!this.world.isRemote)
         	{
-            	this.worldObj.spawnEntityInWorld(e1);
+            	this.world.spawnEntity(e1);
         	}
         }
     }
 
     @Override
-    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, ItemStack itemstack)
+    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand)
     {
+    	ItemStack itemstack = entityplayer.getHeldItem(hand);
+
 		faceEntity(entityplayer, 180F, 180F);
 		
 		if(this.isBossReady())
@@ -227,11 +229,11 @@ public class EntityValkyrieQueen extends EntityMob
 		}
 		else if(!this.isBossReady()) 
 		{
-            if(itemstack != null && itemstack.getItem() == ItemsAether.victory_medal && itemstack.stackSize >= 10) 
+            if(itemstack != null && itemstack.getItem() == ItemsAether.victory_medal && itemstack.getCount() >= 10) 
             {
-            	itemstack.stackSize -= 10;
+            	itemstack.shrink(10);
 
-                if(itemstack.stackSize <= 0) 
+                if(itemstack.getCount() <= 0) 
                 {
                     itemstack.damageItem(2, entityplayer);
                     entityplayer.inventory.removeStackFromSlot(entityplayer.inventory.currentItem);
@@ -323,7 +325,7 @@ public class EntityValkyrieQueen extends EntityMob
             }
         }
 
-        if (this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL && (this.getAttackTarget() != null || this.angerLevel > 0)) 
+        if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL && (this.getAttackTarget() != null || this.angerLevel > 0)) 
         {
         	this.angerLevel = 0;
             this.setAttackTarget(null);
@@ -410,7 +412,7 @@ public class EntityValkyrieQueen extends EntityMob
         {
         	EntityPlayer player = (EntityPlayer)ds.getEntity();
 
-        	if (this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+        	if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
         	{
         		this.spawnExplosionParticle();
         		chatItUp(player, "Sorry, I don't fight with weaklings.");
@@ -503,15 +505,15 @@ public class EntityValkyrieQueen extends EntityMob
     @Override
     public EntityItem entityDropItem(ItemStack stack, float offsetY)
     {
-        if (stack.stackSize != 0 && stack.getItem() != null)
+        if (stack.getCount() != 0 && stack.getItem() != null)
         {
-            EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
+            EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY + (double)offsetY, this.posZ, stack);
             entityitem.setEntityInvulnerable(true);
             entityitem.setDefaultPickupDelay();
             if (captureDrops)
                 this.capturedDrops.add(entityitem);
             else
-                this.worldObj.spawnEntityInWorld(entityitem);
+                this.world.spawnEntity(entityitem);
             return entityitem;
         }
         else
@@ -591,9 +593,9 @@ public class EntityValkyrieQueen extends EntityMob
     public boolean isAirySpace(int x, int y, int z)
     {
     	BlockPos pos = new BlockPos(x, y, z);
-    	IBlockState state = this.worldObj.getBlockState(new BlockPos(x, y, z));
+    	IBlockState state = this.world.getBlockState(new BlockPos(x, y, z));
 
-        return state == Blocks.AIR || state.getCollisionBoundingBox(worldObj, pos) == null;
+        return state == Blocks.AIR || state.getCollisionBoundingBox(world, pos) == null;
     }
 
     public boolean otherDimension()
@@ -609,10 +611,10 @@ public class EntityValkyrieQueen extends EntityMob
     @Override
     public boolean getCanSpawnHere() 
     {
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.getEntityBoundingBox().minY);
-        int k = MathHelper.floor_double(this.posZ);
-        return this.worldObj.getLight(new BlockPos(i, j, k)) > 8 && this.worldObj.checkBlockCollision(this.getEntityBoundingBox()) && this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0 && !this.worldObj.containsAnyLiquid(this.getEntityBoundingBox());
+        int i = MathHelper.floor(this.posX);
+        int j = MathHelper.floor(this.getEntityBoundingBox().minY);
+        int k = MathHelper.floor(this.posZ);
+        return this.world.getLight(new BlockPos(i, j, k)) > 8 && this.world.checkBlockCollision(this.getEntityBoundingBox()) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0 && !this.world.containsAnyLiquid(this.getEntityBoundingBox());
     }
 
     public int getMedals(EntityPlayer entityplayer)
@@ -625,7 +627,7 @@ public class EntityValkyrieQueen extends EntityMob
     		{
     			if (item.getItem() == ItemsAether.victory_medal)
     			{
-    				medals += item.stackSize;
+    				medals += item.getCount();
     			}
     		}
     	}

@@ -75,26 +75,26 @@ public class BlockAetherPortal extends BlockPortal
 	}
 
 	@Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
+    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
         EnumFacing.Axis enumfacing$axis = (EnumFacing.Axis)state.getValue(AXIS);
 
         if (enumfacing$axis == EnumFacing.Axis.X)
         {
-        	AetherPortalSize blockportal$size = new AetherPortalSize(world, pos, EnumFacing.Axis.X);
+        	AetherPortalSize blockportal$size = new AetherPortalSize(worldIn, pos, EnumFacing.Axis.X);
 
             if (!blockportal$size.isValid() || blockportal$size.portalBlockCount < blockportal$size.width * blockportal$size.height)
             {
-            	world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            	worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
             }
         }
         else if (enumfacing$axis == EnumFacing.Axis.Z)
         {
-            AetherPortalSize blockportal$size1 = new AetherPortalSize(world, pos, EnumFacing.Axis.Z);
+            AetherPortalSize blockportal$size1 = new AetherPortalSize(worldIn, pos, EnumFacing.Axis.Z);
 
             if (!blockportal$size1.isValid() || blockportal$size1.portalBlockCount < blockportal$size1.width * blockportal$size1.height)
             {
-            	world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            	worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
             }
         }
     }

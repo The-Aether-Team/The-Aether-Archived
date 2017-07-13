@@ -46,7 +46,7 @@ public class PacketOpenContainer extends AetherPacket<PacketOpenContainer>
 			player.openContainer = player.inventoryContainer;
 		}
 
-		player.openGui(Aether.instance, message.id, player.worldObj, (int) player.posX, (int) player.posY, (int) player.posZ);
+		player.openGui(Aether.instance, message.id, player.world, (int) player.posX, (int) player.posY, (int) player.posZ);
 	}
 
 }

@@ -30,9 +30,10 @@ public class ItemCloudStaff extends Item
     }
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer entityplayer, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand hand)
     {
 		PlayerAether playerAether = PlayerAether.get(entityplayer);
+		ItemStack heldItem = entityplayer.getHeldItem(hand);
 
 		if (playerAether.leftCloud == null && playerAether.rightCloud == null)
 		{
@@ -42,17 +43,17 @@ public class ItemCloudStaff extends Item
 
 		if (!playerAether.leftCloud.hasSpawned)
 		{
-			world.spawnEntityInWorld(playerAether.leftCloud);
+			world.spawnEntity(playerAether.leftCloud);
 			playerAether.leftCloud.hasSpawned = true;
 		}
 
 		if (!playerAether.rightCloud.hasSpawned)
 		{
-			world.spawnEntityInWorld(playerAether.rightCloud);
+			world.spawnEntity(playerAether.rightCloud);
 			playerAether.leftCloud.hasSpawned = true;
 		}
 
-    	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+    	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
     }
 
 }

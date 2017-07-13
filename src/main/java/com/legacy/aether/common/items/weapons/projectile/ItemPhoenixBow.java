@@ -1,7 +1,5 @@
 package com.legacy.aether.common.items.weapons.projectile;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -71,9 +69,9 @@ public class ItemPhoenixBow extends ItemBow
         }
     }
 
-    protected boolean isArrow(@Nullable ItemStack stack)
+    protected boolean isArrow(ItemStack stack)
     {
-        return stack != null && stack.getItem() instanceof ItemArrow;
+        return stack.getItem() instanceof ItemArrow;
     }
 
     @Override
@@ -86,12 +84,12 @@ public class ItemPhoenixBow extends ItemBow
             ItemStack itemstack = this.findAmmo(entityplayer);
 
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
-            i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer)entityLiving, i, itemstack != null || flag);
+            i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer)entityLiving, i, itemstack != ItemStack.EMPTY || flag);
             if (i < 0) return;
 
-            if (itemstack != null || flag)
+            if (itemstack != ItemStack.EMPTY || flag)
             {
-                if (itemstack == null)
+                if (itemstack == ItemStack.EMPTY)
                 {
                     itemstack = new ItemStack(Items.ARROW);
                 }
@@ -133,16 +131,16 @@ public class ItemPhoenixBow extends ItemBow
                             entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
                         }
 
-                        worldIn.spawnEntityInWorld(entityarrow);
+                        worldIn.spawnEntity(entityarrow);
                     }
 
                     worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
                     if (!flag1)
                     {
-                        --itemstack.stackSize;
+                    	itemstack.shrink(1);
 
-                        if (itemstack.stackSize == 0)
+                        if (itemstack.getCount() == 0)
                         {
                             entityplayer.inventory.deleteStack(itemstack);
                         }
@@ -195,21 +193,22 @@ public class ItemPhoenixBow extends ItemBow
     }
  
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
+    	ItemStack heldItem = playerIn.getHeldItem(hand);
         boolean flag = this.findAmmo(playerIn) != null;
 
-        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemStackIn, worldIn, playerIn, hand, flag);
+        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(heldItem, worldIn, playerIn, hand, flag);
         if (ret != null) return ret;
 
         if (!playerIn.capabilities.isCreativeMode && !flag)
         {
-            return !flag ? new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn) : new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
+            return !flag ? new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem) : new ActionResult<ItemStack>(EnumActionResult.PASS, heldItem);
         }
         else
         {
             playerIn.setActiveHand(hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
         }
     }
 

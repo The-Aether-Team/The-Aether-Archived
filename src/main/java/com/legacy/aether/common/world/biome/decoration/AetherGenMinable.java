@@ -50,12 +50,12 @@ public class AetherGenMinable extends WorldGenerator
             double d9 = random.nextDouble() * (double)this.numberOfBlocks / 16.0D;
             double d10 = (double)(MathHelper.sin((float)l * (float)Math.PI / (float)this.numberOfBlocks) + 1.0F) * d9 + 1.0D;
             double d11 = (double)(MathHelper.sin((float)l * (float)Math.PI / (float)this.numberOfBlocks) + 1.0F) * d9 + 1.0D;
-            int i1 = MathHelper.floor_double(d6 - d10 / 2.0D);
-            int j1 = MathHelper.floor_double(d7 - d11 / 2.0D);
-            int k1 = MathHelper.floor_double(d8 - d10 / 2.0D);
-            int l1 = MathHelper.floor_double(d6 + d10 / 2.0D);
-            int i2 = MathHelper.floor_double(d7 + d11 / 2.0D);
-            int j2 = MathHelper.floor_double(d8 + d10 / 2.0D);
+            int i1 = MathHelper.floor(d6 - d10 / 2.0D);
+            int j1 = MathHelper.floor(d7 - d11 / 2.0D);
+            int k1 = MathHelper.floor(d8 - d10 / 2.0D);
+            int l1 = MathHelper.floor(d6 + d10 / 2.0D);
+            int i2 = MathHelper.floor(d7 + d11 / 2.0D);
+            int j2 = MathHelper.floor(d8 + d10 / 2.0D);
 
             for (int k2 = i1; k2 <= l1; ++k2)
             {

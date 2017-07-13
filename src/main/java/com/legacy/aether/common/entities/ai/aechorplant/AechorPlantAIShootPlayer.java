@@ -52,7 +52,7 @@ public class AechorPlantAIShootPlayer extends EntityAIBase
 
 	public void shootAtPlayer()
 	{
-		if(this.shooter.worldObj.getDifficulty().equals(EnumDifficulty.PEACEFUL)) 
+		if(this.shooter.world.getDifficulty().equals(EnumDifficulty.PEACEFUL)) 
 		{
 			return;
 		}
@@ -66,13 +66,13 @@ public class AechorPlantAIShootPlayer extends EntityAIBase
 		x = x * distance;
 		z = z * distance;
 
-		EntityPoisonNeedle poisonNeedle = new EntityPoisonNeedle(this.shooter.worldObj, this.shooter);
+		EntityPoisonNeedle poisonNeedle = new EntityPoisonNeedle(this.shooter.world, this.shooter);
 
 		poisonNeedle.setAim(this.shooter, this.shooter.rotationPitch, this.shooter.rotationYaw, 0.0F, 0.5F, 1.0F);
 		poisonNeedle.posY = this.shooter.posY + 1D;
 
         this.shooter.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.shooter.getRNG().nextFloat() * 0.2F + 0.9F));
-		this.shooter.worldObj.spawnEntityInWorld(poisonNeedle);
+		this.shooter.world.spawnEntity(poisonNeedle);
 
 		poisonNeedle.setThrowableHeading(x, y, z, 0.285F + ((float)y * 0.05F), 1.0F);
 	}

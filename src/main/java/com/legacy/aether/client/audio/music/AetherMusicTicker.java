@@ -31,20 +31,20 @@ public class AetherMusicTicker implements ITickable
     {
        TrackType tracktype = this.getRandomTrack();
 
-        if (this.mc.thePlayer != null)
+        if (this.mc.player != null)
         {
-           	if (this.mc.thePlayer.dimension != AetherConfig.getAetherDimensionID())
+           	if (this.mc.player.dimension != AetherConfig.getAetherDimensionID())
            	{
            		this.stopMusic();
            	}
-           	else if (this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
+           	else if (this.mc.player.dimension == AetherConfig.getAetherDimensionID())
            	{
                 if (this.currentMusic != null)
                 {
                     if (!this.mc.getSoundHandler().isSoundPlaying(this.currentMusic))
                     {
                         this.currentMusic = null;
-                        this.timeUntilNextMusic = Math.min(MathHelper.getRandomIntegerInRange(this.rand, tracktype.getMinDelay(), tracktype.getMaxDelay()), this.timeUntilNextMusic);
+                        this.timeUntilNextMusic = Math.min(MathHelper.getInt(this.rand, tracktype.getMinDelay(), tracktype.getMaxDelay()), this.timeUntilNextMusic);
                     }
                 }
 

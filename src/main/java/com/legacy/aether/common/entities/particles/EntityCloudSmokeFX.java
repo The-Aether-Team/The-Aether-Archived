@@ -90,7 +90,7 @@ public class EntityCloudSmokeFX extends Particle
 		this.setParticleTextureIndex(7 - (this.particleAge * 8) / this.particleMaxAge);
 		this.motionY += this.riseRate;
 
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
+		this.move(this.motionX, this.motionY, this.motionZ);
 
 		if (this.posY == this.prevPosY)
 		{
@@ -102,7 +102,7 @@ public class EntityCloudSmokeFX extends Particle
 		this.motionY *= this.riseRate;
 		this.motionZ *= 0.95999997854232788D;
 
-		if (this.isCollided)
+		if (this.onGround)
 		{
 			this.motionX *= 0.69999998807907104D;
 			this.motionZ *= 0.69999998807907104D;

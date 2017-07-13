@@ -36,7 +36,7 @@ public class ItemZaniteArmor extends ItemAetherArmor
 
     	if (slot == this.armorType)
     	{
-    		multimap.put(SharedMonsterAttributes.ARMOR.getAttributeUnlocalizedName(), new AttributeModifier(ARMOR_RESISTANCE, "Armor modifier", (double)this.calculateIncrease(stack), 0));
+    		multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_RESISTANCE, "Armor modifier", (double)this.calculateIncrease(stack), 0));
     	}
 
 		return multimap;

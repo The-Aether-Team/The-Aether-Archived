@@ -29,7 +29,7 @@ public class ZephyrSnowballRenderer extends Render<EntityZephyrSnowball>
         GL11.glScalef(1.0F, 1.0F, 1.0F);
         GL11.glRotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-		Minecraft.getMinecraft().getItemRenderer().renderItem(Minecraft.getMinecraft().thePlayer, new ItemStack(Items.SNOWBALL), TransformType.NONE);
+		Minecraft.getMinecraft().getItemRenderer().renderItem(Minecraft.getMinecraft().player, new ItemStack(Items.SNOWBALL), TransformType.NONE);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }

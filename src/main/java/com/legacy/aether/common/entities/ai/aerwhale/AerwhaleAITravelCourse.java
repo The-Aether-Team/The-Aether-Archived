@@ -1,5 +1,6 @@
 package com.legacy.aether.common.entities.ai.aerwhale;
 
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.MathHelper;
@@ -25,7 +26,7 @@ public class AerwhaleAITravelCourse extends EntityAIBase
 	public AerwhaleAITravelCourse(EntityAerwhale aerwhale)
 	{
 		this.aerwhale = aerwhale;
-		this.worldObj = aerwhale.worldObj;
+		this.worldObj = aerwhale.world;
         this.setMutexBits(4);
 	}
 
@@ -144,7 +145,7 @@ public class AerwhaleAITravelCourse extends EntityAIBase
         	this.motionYaw += 10F;
         }
 
-        this.aerwhale.moveEntity(this.aerwhale.motionX, this.aerwhale.motionY, this.aerwhale.motionZ);
+        this.aerwhale.move(MoverType.SELF, this.aerwhale.motionX, this.aerwhale.motionY, this.aerwhale.motionZ);
     }
 
 	private int getCorrectCourse()

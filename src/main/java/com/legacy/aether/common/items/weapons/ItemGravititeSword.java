@@ -24,6 +24,7 @@ public class ItemGravititeSword extends ItemSword
         return material.getItem() == Item.getItemFromBlock(BlocksAether.enchanted_gravitite);
     }
 
+    @Override
     public boolean hitEntity(ItemStack itemstack, EntityLivingBase hitentity, EntityLivingBase player)
     {
         if (player != null && player instanceof EntityPlayer && (hitentity.hurtTime > 0 || hitentity.deathTime > 0))

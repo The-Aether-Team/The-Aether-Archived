@@ -71,7 +71,7 @@ public class EntityCockatrice extends EntityMob
 	@Override
     public float getBlockPathWeight(BlockPos pos)
     {
-    	return this.worldObj.getBlockState(pos).getBlock() == BlocksAether.aether_grass ? 10.0F : 0.0F;
+    	return this.world.getBlockState(pos).getBlock() == BlocksAether.aether_grass ? 10.0F : 0.0F;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class EntityCockatrice extends EntityMob
 
 		this.updateWingRotation();
 
-		if (!this.worldObj.isRemote && this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+		if (!this.world.isRemote && this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
 		{
 			this.setDead();
 		}
@@ -125,7 +125,7 @@ public class EntityCockatrice extends EntityMob
 
 	public void shootTarget()
 	{
-		if (this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL)
+		if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
 		{
 			return;
 		}
@@ -136,11 +136,11 @@ public class EntityCockatrice extends EntityMob
 		double d3 = 1.5D / Math.sqrt((d1 * d1) + (d2 * d2) + 0.1D);
 		d1 = d1 * d3;
 		d2 = d2 * d3;
-		EntityPoisonNeedle entityarrow = new EntityPoisonNeedle(this.worldObj, this);
+		EntityPoisonNeedle entityarrow = new EntityPoisonNeedle(this.world, this);
 		entityarrow.setAim(this, this.rotationPitch, this.rotationYaw, 0.0F, 1.0F, 1.0F);
 		entityarrow.posY = this.posY + 1.55D;
         this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-		this.worldObj.spawnEntityInWorld(entityarrow);
+		this.world.spawnEntity(entityarrow);
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class EntityCockatrice extends EntityMob
 		{
 			if (this.ticksUntilFlap == 0)
 			{
-				this.worldObj.playSound(null, new BlockPos(this), SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+				this.world.playSound(null, new BlockPos(this), SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
 
 				this.ticksUntilFlap = 11;
 			}

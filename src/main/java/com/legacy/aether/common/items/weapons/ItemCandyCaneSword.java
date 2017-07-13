@@ -25,6 +25,7 @@ public class ItemCandyCaneSword extends ItemSword
         return material.getItem() == ItemsAether.candy_cane;
     }
 
+    @Override
     public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase entityliving1)
     {
         if (entityliving.deathTime > 0)
@@ -33,7 +34,7 @@ public class ItemCandyCaneSword extends ItemSword
         }
         else
         {
-            if ((new Random()).nextBoolean() && entityliving1 != null && entityliving1 instanceof EntityPlayer && !entityliving1.worldObj.isRemote && entityliving.hurtTime > 0)
+            if ((new Random()).nextBoolean() && entityliving1 != null && entityliving1 instanceof EntityPlayer && !entityliving1.world.isRemote && entityliving.hurtTime > 0)
             {
                 entityliving.dropItem(ItemsAether.candy_cane, 1);
             }

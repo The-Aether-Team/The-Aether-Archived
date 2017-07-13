@@ -345,9 +345,10 @@ public class SilverDungeon extends AetherDungeon
 		EntityValkyrieQueen valk = new EntityValkyrieQueen(world, (double)pos.getX() + 40D, (double)pos.getY() + 1.5D, (double)pos.getZ() + 15D);
 		valk.setPosition(pos.getX() + 40, pos.getY() + 2, pos.getZ() + 15);
 		valk.setDungeon(pos.getX() + 26, pos.getY(), pos.getZ() + 5);
+
 		if (!world.isRemote)
 		{
-			world.spawnEntityInWorld(valk);
+			world.spawnEntity(valk);
 		}
 
 		setBlocks(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic), 20);

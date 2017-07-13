@@ -26,9 +26,9 @@ public class GuiAetherInGame extends Gui
 	@SubscribeEvent
 	public void onRenderBlockOverlay(RenderBlockOverlayEvent event)
 	{
-		if (this.mc.thePlayer != null)
+		if (this.mc.player != null)
 		{
-			PlayerAether player = PlayerAether.get(this.mc.thePlayer);
+			PlayerAether player = PlayerAether.get(this.mc.player);
 
 			if (player.isWearingPhoenixSet() && event.getOverlayType() == OverlayType.FIRE)
 			{
@@ -45,7 +45,7 @@ public class GuiAetherInGame extends Gui
 			return;
 		}
 
-		PlayerAether player = PlayerAether.get(this.mc.thePlayer);
+		PlayerAether player = PlayerAether.get(this.mc.player);
 
 		if (player.poisonInstance() != null)
 		{

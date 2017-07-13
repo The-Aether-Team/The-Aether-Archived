@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -59,20 +60,20 @@ public class EntityFloatingBlock extends Entity
         this.prevPosZ = this.posZ;
         ++this.timeFloated;
         this.motionY += 0.04D;
-        this.moveEntity(this.motionX, this.motionY, this.motionZ);
+        this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
         this.motionX *= 0.9800000190734863D;
         this.motionY *= 0.9800000190734863D;
         this.motionZ *= 0.9800000190734863D;
         BlockPos pos = new BlockPos(this);
         Block block = this.getBlockState().getBlock();
 
-        List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.0D, 1.0D, 0.0D));
+        List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.0D, 1.0D, 0.0D));
 
         for (int stack = 0; stack < list.size(); ++stack)
         {
-            if (list.get(stack) instanceof EntityFallingBlock && block.canPlaceBlockAt(this.worldObj, pos))
+            if (list.get(stack) instanceof EntityFallingBlock && block.canPlaceBlockAt(this.world, pos))
             {
-                this.worldObj.setBlockState(pos.up(), this.getBlockState(), 2);
+                this.world.setBlockState(pos.up(), this.getBlockState(), 2);
                 this.setDead();
             }
         }
@@ -84,14 +85,14 @@ public class EntityFloatingBlock extends Entity
             this.motionY *= -0.5D;
             this.setDead();
 
-            if (!block.canPlaceBlockAt(this.worldObj, pos) || BlockFloating.canContinue(this.worldObj, pos.up()) || !this.worldObj.setBlockState(pos, this.getBlockState(), 2))
+            if (!block.canPlaceBlockAt(this.world, pos) || BlockFloating.canContinue(this.world, pos.up()) || !this.world.setBlockState(pos, this.getBlockState(), 2))
             {
-            	block.dropBlockAsItem(this.worldObj, pos, this.getBlockState(), 0);
+            	block.dropBlockAsItem(this.world, pos, this.getBlockState(), 0);
             }
         }
         else if (this.timeFloated > 100)
         {
-        	block.dropBlockAsItem(this.worldObj, pos, this.getBlockState(), 0);
+        	block.dropBlockAsItem(this.world, pos, this.getBlockState(), 0);
 
             this.setDead();
         }

@@ -1,7 +1,5 @@
 package com.legacy.aether.common.items.tools;
 
-import java.util.List;
-
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,6 +20,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -50,12 +49,11 @@ public class ItemSkyrootBucket extends Item
 	}
 
 	@SideOnly(Side.CLIENT)
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	public void getSubItems(Item item, CreativeTabs tab, List list)
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
     	for (int meta = 0; meta < EnumSkyrootBucketType.values().length; ++meta)
     	{
-        	list.add(new ItemStack(this, 1, meta));
+    		subItems.add(new ItemStack(this, 1, meta));
     	}
     }
 
@@ -80,22 +78,23 @@ public class ItemSkyrootBucket extends Item
 	}
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
-		int meta = stack.getItemDamage();
+		ItemStack heldItem = player.getHeldItem(hand);
+		int meta = heldItem.getItemDamage();
 
 		/* Remedy and Poison Bucket checker */
 		if (EnumSkyrootBucketType.getType(meta) != EnumSkyrootBucketType.Water && EnumSkyrootBucketType.getType(meta) != EnumSkyrootBucketType.Empty)
 		{
 			player.setActiveHand(hand);
-			return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+			return new ActionResult<ItemStack>(EnumActionResult.PASS, heldItem);
 		}
 
 		/* Water and Empty Bucket Process */
 		boolean isEmpty = EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Empty;
 
 		RayTraceResult movingobjectposition = this.rayTrace(world, player, isEmpty);
-        ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, stack, movingobjectposition);
+        ActionResult<ItemStack> ret = ForgeEventFactory.onBucketUse(player, world, heldItem, movingobjectposition);
 
         if (ret != null) 
         {
@@ -104,12 +103,12 @@ public class ItemSkyrootBucket extends Item
 
         if (movingobjectposition == null)
         {
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, heldItem);
         }
 
         else if (movingobjectposition.typeOfHit != RayTraceResult.Type.BLOCK)
         {
-            return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+            return new ActionResult<ItemStack>(EnumActionResult.PASS, heldItem);
         }
         else
         {
@@ -117,13 +116,13 @@ public class ItemSkyrootBucket extends Item
 
             if (!world.isBlockModifiable(player, blockpos))
             {
-                return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+                return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
             }
             else if (isEmpty)
             {
-                if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, stack))
+                if (!player.canPlayerEdit(blockpos.offset(movingobjectposition.sideHit), movingobjectposition.sideHit, heldItem))
                 {
-                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
                 }
                 else
                 {
@@ -136,11 +135,11 @@ public class ItemSkyrootBucket extends Item
                     	player.addStat(StatList.getObjectUseStats(this));
                         player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 
-                        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(stack, player, ItemsAether.skyroot_bucket));
+                        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, this.fillBucket(heldItem, player, ItemsAether.skyroot_bucket));
                     }
                     else
                     {
-                        return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+                        return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
                     }
                 }
             }
@@ -149,18 +148,18 @@ public class ItemSkyrootBucket extends Item
                 boolean flag1 = world.getBlockState(blockpos).getBlock().isReplaceable(world, blockpos);
                 BlockPos blockpos1 = flag1 && movingobjectposition.sideHit == EnumFacing.UP ? blockpos : blockpos.offset(movingobjectposition.sideHit);
 
-                if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, stack))
+                if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, heldItem))
                 {
-                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
                 }
-                else if (this.tryPlaceContainedLiquid(player, world, stack, blockpos1))
+                else if (this.tryPlaceContainedLiquid(player, world, heldItem, blockpos1))
                 {
                 	player.addStat(StatList.getObjectUseStats(this));
-                    return !player.capabilities.isCreativeMode ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, new ItemStack(ItemsAether.skyroot_bucket)) : new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+                    return !player.capabilities.isCreativeMode ? new ActionResult<ItemStack>(EnumActionResult.SUCCESS, new ItemStack(ItemsAether.skyroot_bucket)) : new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
                 }
                 else
                 {
-                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+                    return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
                 }
             }
         }
@@ -172,7 +171,7 @@ public class ItemSkyrootBucket extends Item
         {
             return emptyBuckets;
         }
-        else if (--emptyBuckets.stackSize <= 0)
+        else if (emptyBuckets.getCount() - 1 <= 0)
         {
             return new ItemStack(fullBucket, 1, 1);
         }
@@ -234,20 +233,20 @@ public class ItemSkyrootBucket extends Item
     {
     	if (entityLiving instanceof EntityPlayer)
     	{
-    		return this.onEaten(stack, worldIn, (EntityPlayer) entityLiving);
+    		return this.onBucketUsed(stack, worldIn, (EntityPlayer) entityLiving);
     	}
 
     	return super.onItemUseFinish(stack, worldIn, entityLiving);
     }
 
-	public ItemStack onEaten(ItemStack itemstack, World world, EntityPlayer entityplayer)
+	public ItemStack onBucketUsed(ItemStack itemstack, World world, EntityPlayer entityplayer)
 	{
 		PlayerAether player = PlayerAether.get(entityplayer);
 		int meta = itemstack.getItemDamage();
 
 		if (!entityplayer.capabilities.isCreativeMode)
 		{
-			--itemstack.stackSize;
+			itemstack.shrink(1);
 		}
 
 		if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Poison)
@@ -266,7 +265,7 @@ public class ItemSkyrootBucket extends Item
 	        }
 		}
 
-		return itemstack.stackSize <= 0 ? new ItemStack(this, 1, 0) : itemstack;
+		return itemstack.getCount() <= 0 ? new ItemStack(this, 1, 0) : itemstack;
 	}
 
 	public int getMaxItemUseDuration(ItemStack itemstack)

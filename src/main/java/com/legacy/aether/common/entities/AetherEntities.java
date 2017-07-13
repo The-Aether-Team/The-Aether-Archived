@@ -86,12 +86,12 @@ public class AetherEntities
 
 	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID)
 	{
-		EntityRegistry.registerModEntity(entityClass, entityName, entityID, Aether.modid, 80, 3, true);
+		EntityRegistry.registerModEntity(Aether.locate(entityName), entityClass, entityName, entityID, Aether.modid, 80, 3, true);
 	}
 
 	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID, int primaryEggColor, int secondaryEggColor)
 	{
-		EntityRegistry.registerModEntity(entityClass, entityName, entityID, Aether.instance, 80, 3, false, primaryEggColor, secondaryEggColor);
+		EntityRegistry.registerModEntity(Aether.locate(entityName), entityClass, entityName, entityID, Aether.instance, 80, 3, false, primaryEggColor, secondaryEggColor);
 	}
 
 }

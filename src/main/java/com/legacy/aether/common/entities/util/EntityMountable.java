@@ -2,6 +2,7 @@ package com.legacy.aether.common.entities.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.datasync.DataParameter;
@@ -74,7 +75,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 	public void updateRider()
 	{
-		if ((this instanceof EntitySwet && ((EntitySwet)this).isFriendly() && !this.getPassengers().isEmpty() || !this.getPassengers().isEmpty()) && !this.worldObj.isRemote)
+		if ((this instanceof EntitySwet && ((EntitySwet)this).isFriendly() && !this.getPassengers().isEmpty() || !this.getPassengers().isEmpty()) && !this.world.isRemote)
 		{
 			Entity passenger = this.getPassengers().get(0);
 
@@ -144,7 +145,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 	        float f = (float)(MathHelper.atan2(d2, d01) * (180D / Math.PI)) - 90.0F;
 
-			if (player.moveStrafing != 0.0F && player.worldObj.isRemote)
+			if (player.moveStrafing != 0.0F && player.world.isRemote)
 			{
 		        this.rotationYaw = this.updateRotation(this.rotationYaw, f, 40.0F);
 			}
@@ -168,9 +169,9 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 				this.jumpPower = 0.0F;
 
-				if (!this.worldObj.isRemote)
+				if (!this.world.isRemote)
 				{
-					this.moveEntity(this.motionX, this.motionY, this.motionZ);
+					this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 				}
 			}
 
@@ -179,7 +180,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 			this.stepHeight = 1.0F;
 
-			if (!this.worldObj.isRemote)
+			if (!this.world.isRemote)
 			{
 				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.6F;
 				super.moveEntityWithHeading(par1, par2);
@@ -194,7 +195,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 			this.prevLimbSwingAmount = this.limbSwingAmount;
 			double d0 = this.posX - this.prevPosX;
 			double d1 = this.posZ - this.prevPosZ;
-			float f4 = MathHelper.sqrt_double(d0 * d0 + d1 * d1) * 4.0F;
+			float f4 = MathHelper.sqrt(d0 * d0 + d1 * d1) * 4.0F;
 
 			if (f4 > 1.0F)
 			{

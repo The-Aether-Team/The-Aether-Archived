@@ -81,9 +81,9 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		this.modelWings.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 		this.modelHalo.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 
-		if (accessories.stacks[0] != null)
+		if (accessories.stacks.get(0) != ItemStack.EMPTY)
 		{
-			ItemAccessory pendant = ((ItemAccessory) (accessories.stacks[0].getItem()));
+			ItemAccessory pendant = ((ItemAccessory) (accessories.stacks.get(0).getItem()));
 			manager.renderEngine.bindTexture(pendant.texture);
 			int colour = pendant.getColorFromItemStack(new ItemStack(pendant, 1, 0), 1);
 			float red = ((colour >> 16) & 0xff) / 255F;
@@ -104,9 +104,9 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			GlStateManager.color(1.0F, 1.0F, 1.0F);
 		}
 
-		if (accessories.stacks[1] != null && accessories.stacks[1].getItem() != ItemsAether.invisibility_cape)
+		if (accessories.stacks.get(1) != ItemStack.EMPTY && accessories.stacks.get(1).getItem() != ItemsAether.invisibility_cape)
 		{
-			ItemAccessory cape = ((ItemAccessory) (accessories.stacks[1].getItem()));
+			ItemAccessory cape = ((ItemAccessory) (accessories.stacks.get(1).getItem()));
 
 	        if (player.hasPlayerInfo() && !player.isInvisible())
 	        {
@@ -120,7 +120,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	            double d3 = (double)MathHelper.sin(f * (float)Math.PI / 180.0F);
 	            double d4 = (double)(-MathHelper.cos(f * (float)Math.PI / 180.0F));
 	            float f1 = (float)d1 * 10.0F;
-	            f1 = MathHelper.clamp_float(f1, -6.0F, 32.0F);
+	            f1 = MathHelper.clamp(f1, -6.0F, 32.0F);
 	            float f2 = (float)(d0 * d3 + d2 * d4) * 100.0F;
 	            float f3 = (float)(d0 * d4 - d2 * d3) * 100.0F;
 
@@ -142,7 +142,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	            GlStateManager.rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
 	            GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
 
-				int colour = cape.getColorFromItemStack(accessories.stacks[1], 0);
+				int colour = cape.getColorFromItemStack(accessories.stacks.get(1), 0);
 
 				float red = ((colour >> 16) & 0xff) / 255F;
 				float green = ((colour >> 8) & 0xff) / 255F;
@@ -172,12 +172,12 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	        }
 		}
 
-		if (accessories.stacks[6] != null)
+		if (accessories.stacks.get(6) != ItemStack.EMPTY)
 		{
-			ItemAccessory gloves = (ItemAccessory) accessories.stacks[6].getItem();
+			ItemAccessory gloves = (ItemAccessory) accessories.stacks.get(6).getItem();
 			this.manager.renderEngine.bindTexture(gloves.texture);
 
-			int colour = gloves.getColorFromItemStack(accessories.stacks[6], 0);
+			int colour = gloves.getColorFromItemStack(accessories.stacks.get(6), 0);
 
 			float red = ((colour >> 16) & 0xff) / 255F;
 			float green = ((colour >> 8) & 0xff) / 255F;
@@ -201,9 +201,9 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			GlStateManager.color(1.0F, 1.0F, 1.0F);
 		}
 
-		if (accessories.stacks[2] != null)
+		if (accessories.stacks.get(2) != ItemStack.EMPTY)
 		{
-			ItemAccessory shield = (ItemAccessory) accessories.stacks[2].getItem();
+			ItemAccessory shield = (ItemAccessory) accessories.stacks.get(2).getItem();
 
 			this.manager.renderEngine.bindTexture(shield.texture);
 

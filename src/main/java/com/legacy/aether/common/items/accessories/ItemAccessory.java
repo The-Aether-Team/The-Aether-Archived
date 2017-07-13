@@ -77,7 +77,7 @@ public class ItemAccessory extends Item
             if (entitylivingbase instanceof EntityPlayer)
             {
             	ItemStack itemstack = stack.copy();
-            	itemstack.stackSize = 1;
+            	itemstack.setCount(1);
             	
             	PlayerAether playerAether = PlayerAether.get((EntityPlayer) entitylivingbase);
 
@@ -86,7 +86,8 @@ public class ItemAccessory extends Item
             		BehaviorDefaultDispenseItem.doDispense(blockSource.getWorld(), itemstack, 6, (EnumFacing)blockSource.getBlockState().getValue(BlockDispenser.FACING), BlockDispenser.getDispensePosition(blockSource));
             	}
 
-            	--stack.stackSize;
+            	stack.shrink(1);
+
             	return stack;
             }
         }
@@ -95,17 +96,19 @@ public class ItemAccessory extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World worldIn, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand)
     {
-        if (itemStack != null)
-        {
-        	PlayerAether.get(player).accessories.setInventoryAccessory(itemStack.copy());
-        	--itemStack.stackSize;
+    	ItemStack heldItem = player.getHeldItem(hand);
 
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
+        if (heldItem != ItemStack.EMPTY)
+        {
+        	PlayerAether.get(player).accessories.setInventoryAccessory(heldItem.copy());
+        	heldItem.shrink(1);
+
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStack);
+        return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
     }
 
 	public AccessoryType getType()

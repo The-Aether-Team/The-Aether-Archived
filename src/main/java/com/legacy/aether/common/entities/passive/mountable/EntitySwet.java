@@ -2,8 +2,6 @@ package com.legacy.aether.common.entities.passive.mountable;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
@@ -93,7 +91,7 @@ public class EntitySwet extends EntityMountable
 				double d = (float) this.posX + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F;
 				double d1 = (float) this.posY + this.height;
 				double d2 = (float) this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F;
-				this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
+				this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
 			}
 		}
 
@@ -101,7 +99,7 @@ public class EntitySwet extends EntityMountable
 
 		if (this.getPassengers().isEmpty() && !this.isFriendly())
 		{
-			List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.5D, 0.75D, 0.5D));
+			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.5D, 0.75D, 0.5D));
 
 			int j = 0;
 
@@ -164,7 +162,7 @@ public class EntitySwet extends EntityMountable
 			float f1 = this.rand.nextFloat() * 0.5F + 0.25F;
 			float f2 = MathHelper.sin(f) * f1;
 			float f3 = MathHelper.cos(f) * f1;
-			this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + (double) f2, this.getEntityBoundingBox().minY + 1.25D, this.posZ + (double) f3, (double) f2 * 1.5D + this.motionX, 4D, (double) f3 * 1.5D + this.motionZ);
+			this.world.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + (double) f2, this.getEntityBoundingBox().minY + 1.25D, this.posZ + (double) f3, (double) f2 * 1.5D + this.motionX, 4D, (double) f3 * 1.5D + this.motionZ);
 		}
 
 		this.setDead();
@@ -460,7 +458,7 @@ public class EntitySwet extends EntityMountable
 						this.slimeJumpDelay = this.rand.nextInt(15);
 					}
 
-					int rotate = MathHelper.floor_double(rider.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+					int rotate = MathHelper.floor(rider.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
 					double x = Math.cos(this.getLookVec().xCoord);
 					double z = Math.cos(this.getLookVec().zCoord);
@@ -519,7 +517,7 @@ public class EntitySwet extends EntityMountable
 				this.stepHeight = 1.0F;
 				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.1F;
 
-				if (!this.worldObj.isRemote)
+				if (!this.world.isRemote)
 				{
 					this.setAIMoveSpeed((float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
 					super.moveEntityWithHeading(par1, par2);
@@ -608,12 +606,12 @@ public class EntitySwet extends EntityMountable
 
 	public void splorch()
 	{
-		this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_ATTACK, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+		this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_ATTACK, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 	}
 
 	public void splotch()
 	{
-		this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+		this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 	}
 
 	@Override
@@ -646,9 +644,9 @@ public class EntitySwet extends EntityMountable
 	}
 
 	@Override
-    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, @Nullable ItemStack stack)
+    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand)
 	{
-		if (!this.worldObj.isRemote)
+		if (!this.world.isRemote)
 		{
 			if (!this.isFriendly())
 			{
@@ -673,7 +671,7 @@ public class EntitySwet extends EntityMountable
 
 	protected Entity getPrey()
 	{
-		List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(6D, 6D, 6D));
+		List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(6D, 6D, 6D));
 		for (int i = 0; i < list.size(); i++)
 		{
 			Entity entity = (Entity) list.get(i);

@@ -3,7 +3,6 @@ package com.legacy.aether.common.entities.projectile.darts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +15,6 @@ import com.legacy.aether.common.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.networking.AetherNetworkingManager;
 import com.legacy.aether.common.networking.packets.PacketSendPoison;
-import com.legacy.aether.common.player.PlayerAether;
 
 public class EntityDartPoison extends EntityDartBase
 {
@@ -56,9 +54,9 @@ public class EntityDartPoison extends EntityDartBase
 
         	if (this.shootingEntity != null)
         	{
-                if (this.shootingEntity.worldObj instanceof WorldServer)
+                if (this.shootingEntity.world instanceof WorldServer)
                 {
-                	((WorldServer)this.shootingEntity.worldObj).spawnParticle(EnumParticleTypes.ITEM_CRACK, this.victim.posX, this.victim.getEntityBoundingBox().minY + this.victim.height * 0.8D, this.victim.posZ, 2, 0.0D, 0.0D, 0.0D, 0.0625D, new int[] {Item.getIdFromItem(Items.DYE), 1});
+                	((WorldServer)this.shootingEntity.world).spawnParticle(EnumParticleTypes.ITEM_CRACK, this.victim.posX, this.victim.getEntityBoundingBox().minY + this.victim.height * 0.8D, this.victim.posZ, 2, 0.0D, 0.0D, 0.0D, 0.0625D, new int[] {Item.getIdFromItem(Items.DYE), 1});
                 }
         	}
 
@@ -91,7 +89,7 @@ public class EntityDartPoison extends EntityDartBase
     	{
             EntityPlayer ent = (EntityPlayer)living;
 
-            if (!this.worldObj.isRemote)
+            if (!this.world.isRemote)
             {
             	AetherNetworkingManager.sendToAll(new PacketSendPoison(ent));
             }

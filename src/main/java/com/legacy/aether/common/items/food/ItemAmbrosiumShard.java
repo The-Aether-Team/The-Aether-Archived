@@ -22,8 +22,10 @@ public class ItemAmbrosiumShard extends Item
 	}
 
 	@Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+		ItemStack heldItem = playerIn.getHeldItem(hand);
+
     	if (worldIn.getBlockState(pos).getBlock() == BlocksAether.aether_grass)
     	{
     		worldIn.setBlockState(pos, BlocksAether.enchanted_aether_grass.getDefaultState());
@@ -35,28 +37,30 @@ public class ItemAmbrosiumShard extends Item
 
     	if (!playerIn.capabilities.isCreativeMode)
     	{
-        	--stack.stackSize;
+    		heldItem.shrink(1);
     	}
 
         return EnumActionResult.SUCCESS;
     }
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
+		ItemStack heldItem = playerIn.getHeldItem(hand);
+
     	if (playerIn.shouldHeal())
     	{
         	if (!playerIn.capabilities.isCreativeMode)
         	{
-            	--itemStackIn.stackSize;
+        		heldItem.shrink(1);
         	}
         	
     		playerIn.heal(2F);
 
-    		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+    		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
     	}
 
-    	return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
+    	return super.onItemRightClick(worldIn, playerIn, hand);
     }
 
 }

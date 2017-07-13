@@ -35,7 +35,7 @@ public class HammerProjectileRenderer extends Render<EntityHammerProjectile>
 		GL11.glTranslatef(-f4, -f5, 0.0F);
 		GL11.glScalef(f6, f6, f6);
 
-		Minecraft.getMinecraft().getItemRenderer().renderItem(Minecraft.getMinecraft().thePlayer, new ItemStack(ItemsAether.notch_hammer, 1, 1565), TransformType.NONE);
+		Minecraft.getMinecraft().getItemRenderer().renderItem(Minecraft.getMinecraft().player, new ItemStack(ItemsAether.notch_hammer, 1, 1565), TransformType.NONE);
 		GL11.glPopMatrix();
 	}
 

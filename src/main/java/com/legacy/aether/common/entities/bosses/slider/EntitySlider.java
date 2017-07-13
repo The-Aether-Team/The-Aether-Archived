@@ -161,7 +161,7 @@ public class EntitySlider extends EntityFlying
 			return;
 		}
 
-		if(!this.worldObj.isRemote) 
+		if(!this.world.isRemote) 
 		{
 			if (this.getAttackTarget() == null || this.getAttackTarget().isDead || this.getAttackTarget().getHealth() <= 0.0F) 
 			{
@@ -239,8 +239,8 @@ public class EntitySlider extends EntityFlying
 
 					if(this.crushedBlock)
 					{
-						this.worldObj.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 3F, (0.625F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
-						this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_collide, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+						this.world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 3F, (0.625F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F);
+						this.world.playSound(null, posX, posY, posZ, SoundsAether.slider_collide, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					}
 
 					this.stop();
@@ -367,7 +367,7 @@ public class EntitySlider extends EntityFlying
 						}
 					}
 
-					this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_move, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+					this.world.playSound(null, posX, posY, posZ, SoundsAether.slider_move, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.isMoving = true;
 				}
 			}
@@ -376,7 +376,7 @@ public class EntitySlider extends EntityFlying
 
 	private void destroyBlock(BlockPos pos)
 	{
-		IBlockState state = this.worldObj.getBlockState(pos);
+		IBlockState state = this.world.getBlockState(pos);
 
 		if(state.getBlock() == Blocks.AIR || state.getBlock() instanceof BlockDungeonBase) 
 		{
@@ -385,14 +385,14 @@ public class EntitySlider extends EntityFlying
 
 		Aether.proxy.spawnBlockBrokenFX(state, pos);
 
-		state.getBlock().breakBlock(this.worldObj, pos, state);
-		state.getBlock().dropBlockAsItem(this.worldObj, pos, state, 0);
+		state.getBlock().breakBlock(this.world, pos, state);
+		state.getBlock().dropBlockAsItem(this.world, pos, state, 0);
 
-		this.worldObj.setBlockToAir(pos);
+		this.world.setBlockToAir(pos);
 
 		this.crushedBlock = true;
 
-		Aether.proxy.spawnSmoke(this.worldObj, pos);
+		Aether.proxy.spawnSmoke(this.world, pos);
 	}
 
 	private void openDoor()
@@ -403,7 +403,7 @@ public class EntitySlider extends EntityFlying
 		{
 			for(int z = this.dungeonZ + 6; z < this.dungeonZ + 10; z++)
 			{
-				this.worldObj.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+				this.world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
 			}
 		}
 	}
@@ -419,7 +419,7 @@ public class EntitySlider extends EntityFlying
 			{
 				EntityLivingBase collidedEntity = (EntityLivingBase)entity;
 				collidedEntity.addVelocity(collidedEntity.motionY, 0.35D, collidedEntity.motionZ);
-				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_collide, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				this.world.playSound(null, posX, posY, posZ, SoundsAether.slider_collide, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
 				this.stop();
 			}
@@ -437,15 +437,15 @@ public class EntitySlider extends EntityFlying
     @Override
     public EntityItem entityDropItem(ItemStack stack, float offsetY)
     {
-        if (stack.stackSize != 0 && stack.getItem() != null)
+        if (stack.getCount() != 0 && stack.getItem() != null)
         {
-            EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
+            EntityItem entityitem = new EntityItem(this.world, this.posX, this.posY + (double)offsetY, this.posZ, stack);
             entityitem.setEntityInvulnerable(true);
             entityitem.setDefaultPickupDelay();
             if (captureDrops)
                 this.capturedDrops.add(entityitem);
             else
-                this.worldObj.spawnEntityInWorld(entityitem);
+                this.world.spawnEntity(entityitem);
             return entityitem;
         }
         else
@@ -519,7 +519,7 @@ public class EntitySlider extends EntityFlying
 
 				if(this.getHealth() <= 0)
 				{
-					this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, a, b, c, 0.0D, 0.0D, 0.0D);
+					this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, a, b, c, 0.0D, 0.0D, 0.0D);
 				} 
 
 				Aether.proxy.spawnBlockBrokenFX(Blocks.STONE.getDefaultState(), new BlockPos(a, b, c));
@@ -531,19 +531,19 @@ public class EntitySlider extends EntityFlying
 				unlockBlock(new BlockPos(dungeonX, dungeonY, dungeonZ));
 
 				IBlockState state = Blocks.TRAPDOOR.getDefaultState();
-				this.worldObj.setBlockState(new BlockPos(dungeonX + 7, dungeonY + 1, dungeonZ + 7), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
-				this.worldObj.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 7), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
-				this.worldObj.setBlockState(new BlockPos(dungeonX + 7, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
-				this.worldObj.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
+				this.world.setBlockState(new BlockPos(dungeonX + 7, dungeonY + 1, dungeonZ + 7), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
+				this.world.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 7), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
+				this.world.setBlockState(new BlockPos(dungeonX + 7, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
+				this.world.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
 				PlayerAether.get(player).setCurrentBoss(null);
 				player.addStat(AchievementsAether.defeat_bronze);
-				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_death, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				this.world.playSound(null, posX, posY, posZ, SoundsAether.slider_death, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.isDead = true;
 			}
 
 			if(!this.isAwake())
 			{
-				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_awaken, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				this.world.playSound(null, posX, posY, posZ, SoundsAether.slider_awaken, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.setAttackTarget(player);
 
 				int x = this.dungeonX + 15;
@@ -552,7 +552,7 @@ public class EntitySlider extends EntityFlying
 				{
 					for(int z = this.dungeonZ + 5; z < this.dungeonZ + 11; z++)
 					{
-						this.worldObj.setBlockState(new BlockPos(x, y, z), BlocksAether.locked_dungeon_block.getDefaultState());
+						this.world.setBlockState(new BlockPos(x, y, z), BlocksAether.locked_dungeon_block.getDefaultState());
 					}
 				}
 
@@ -600,12 +600,12 @@ public class EntitySlider extends EntityFlying
 
 	private void unlockBlock(BlockPos pos)
 	{	
-		IBlockState blockState = this.worldObj.getBlockState(pos);
+		IBlockState blockState = this.world.getBlockState(pos);
 		Block block = blockState.getBlock();
 
 		if(block == BlocksAether.locked_dungeon_block)
 		{
-			this.worldObj.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(block.getMetaFromState(blockState))), 2);
+			this.world.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(block.getMetaFromState(blockState))), 2);
 			this.unlockBlock(pos.east());
 			this.unlockBlock(pos.west());
 			this.unlockBlock(pos.up());
@@ -618,7 +618,7 @@ public class EntitySlider extends EntityFlying
 	@Override
     protected void collideWithNearbyEntities()
     {
-        List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+        List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
         if (list != null && !list.isEmpty())
         {

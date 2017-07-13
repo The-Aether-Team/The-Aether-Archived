@@ -40,7 +40,7 @@ public class ItemValkyrieTool extends ItemAetherTool
 		Vec3d playerVision = player.getLookVec();
 		AxisAlignedBB reachDistance = player.getEntityBoundingBox().expand(10.0F, 10.0F, 10.0F);
 
-		List<Entity> locatedEntities = player.worldObj.getEntitiesWithinAABB(Entity.class, reachDistance);
+		List<Entity> locatedEntities = player.world.getEntitiesWithinAABB(Entity.class, reachDistance);
 
 		Entity found = null;
 		double foundLen = 0.0D;

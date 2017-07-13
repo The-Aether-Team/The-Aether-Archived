@@ -40,7 +40,7 @@ public class AetherOverlay
  
     public static void renderPoison(Minecraft mc)
     {
-    	PlayerAether playerAether = PlayerAether.get(mc.thePlayer);
+    	PlayerAether playerAether = PlayerAether.get(mc.player);
 
     	if(playerAether.isPoisoned())
     	{
@@ -80,7 +80,7 @@ public class AetherOverlay
 
     public static void renderCure(Minecraft mc)
     {
-    	PlayerAether playerAether = PlayerAether.get(mc.thePlayer);
+    	PlayerAether playerAether = PlayerAether.get(mc.player);
 
     	if(playerAether.isCured())
     	{
@@ -134,9 +134,9 @@ public class AetherOverlay
 
 		mc.renderEngine.bindTexture(Gui.ICONS);
 
-		int bubbleAmount = PlayerAether.get(mc.thePlayer).getAccessoryCount(ItemsAether.iron_bubble);
+		int bubbleAmount = PlayerAether.get(mc.player).getAccessoryCount(ItemsAether.iron_bubble);
 
-		if (mc.playerController.shouldDrawHUD() && mc.thePlayer.isInWater() && mc.thePlayer.isInsideOfMaterial(Material.WATER))
+		if (mc.playerController.shouldDrawHUD() && mc.player.isInWater() && mc.player.isInsideOfMaterial(Material.WATER))
 		{
 			for (int i = 0; i < bubbleAmount; ++i)
 			{
@@ -153,7 +153,7 @@ public class AetherOverlay
 
 	public static void renderCooldown(Minecraft mc)
 	{
-		PlayerAether playerInfo = PlayerAether.get(mc.thePlayer);
+		PlayerAether playerInfo = PlayerAether.get(mc.player);
 
 		if (playerInfo.getCooldown() != 0)
 		{
@@ -190,7 +190,7 @@ public class AetherOverlay
 
 	public static void renderJumps(Minecraft mc)
 	{
-		EntityPlayer player = mc.thePlayer;
+		EntityPlayer player = mc.player;
 
 		if (player == null || player.getRidingEntity() == null || !(player.getRidingEntity() instanceof EntityMoa))
 		{
@@ -265,7 +265,7 @@ public class AetherOverlay
 
 	public static void renderBossHP(Minecraft mc) 
 	{
-		PlayerAether player = PlayerAether.get(mc.thePlayer);
+		PlayerAether player = PlayerAether.get(mc.player);
 
 		EntityLiving boss = (EntityLiving) player.getCurrentBoss();
 

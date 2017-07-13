@@ -1,9 +1,8 @@
 package com.legacy.aether.common.entities.passive.mountable;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
@@ -70,15 +69,15 @@ public class EntityMoa extends EntitySaddleMount
 	}
 
 	@Override
-    public void moveEntity(double x, double y, double z)
+    public void move(MoverType type, double x, double y, double z)
     {
 		if (!this.isSitting())
 		{
-			super.moveEntity(x, y, z);
+			super.move(type, x, y, z);
 		}
 		else
 		{
-			super.moveEntity(0, y, 0);
+			super.move(type, 0, y, 0);
 		}
     }
 
@@ -101,7 +100,7 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		super.entityInit();
 
-		MoaColor color = MoaColor.getRandomColor(this.worldObj);
+		MoaColor color = MoaColor.getRandomColor(this.world);
 
 		this.dataManager.register(MOA_COLOR, color.ID);
 		this.dataManager.register(REMAINING_JUMPS, color.jumps);
@@ -227,7 +226,7 @@ public class EntityMoa extends EntitySaddleMount
 			this.setHungry(true);
 		}
 
-		if (!this.worldObj.isRemote && !this.isChild() && this.getPassengers().isEmpty())
+		if (!this.world.isRemote && !this.isChild() && this.getPassengers().isEmpty())
 		{
 			if (this.secsUntilEgg > 0)
 			{
@@ -250,7 +249,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public void resetHunger()
 	{
-		if (!this.worldObj.isRemote)
+		if (!this.world.isRemote)
 		{
 			this.setHungry(false);
 		}
@@ -264,7 +263,7 @@ public class EntityMoa extends EntitySaddleMount
 		{
 			if (this.ticksUntilFlap == 0)
 			{
-				this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
 
 				this.ticksUntilFlap = 8;
 			}
@@ -301,14 +300,14 @@ public class EntityMoa extends EntitySaddleMount
 			if (!this.onGround)
 			{
 				this.motionY = 0.7D;
-				this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
 
-				if (!this.worldObj.isRemote)
+				if (!this.world.isRemote)
 				{
 					this.setRemainingJumps(this.getRemainingJumps() - 1);
 				}
 
-				if (!this.worldObj.isRemote)
+				if (!this.world.isRemote)
 				{
 					this.spawnExplosionParticle();
 				}
@@ -332,9 +331,11 @@ public class EntityMoa extends EntitySaddleMount
 	}
 
 	@Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack)
+    public boolean processInteract(EntityPlayer player, EnumHand hand)
 	{
-		if (stack != null && this.isPlayerGrown())
+		ItemStack stack = player.getHeldItem(hand);
+
+		if (stack != ItemStack.EMPTY && this.isPlayerGrown())
 		{
 			Item currentItem = stack.getItem();
 
@@ -344,7 +345,7 @@ public class EntityMoa extends EntitySaddleMount
 				{
 					if (!player.capabilities.isCreativeMode)
 					{
-						--stack.stackSize;
+						stack.shrink(1);
 					}
 
 					this.increaseAmountFed(1);
@@ -370,7 +371,7 @@ public class EntityMoa extends EntitySaddleMount
 			}
 		}
 
-		return super.processInteract(player, hand, stack);
+		return super.processInteract(player, hand);
 	}
 
 	@Override
@@ -426,7 +427,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	protected void playStepSound(BlockPos pos, Block par4)
 	{
-		this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PIG_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
+		this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PIG_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
 
 	@Override
@@ -439,7 +440,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public void fall()
 	{
-		boolean blockBeneath = !this.worldObj.isAirBlock(new BlockPos(this).down());
+		boolean blockBeneath = !this.world.isAirBlock(new BlockPos(this).down());
 
 		if (this.motionY < 0.0D && !this.isRiderSneaking())
 		{
@@ -470,6 +471,6 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public EntityAgeable createChild(EntityAgeable matingAnimal)
 	{
-		return new EntityMoa(this.worldObj, this.getColor());
+		return new EntityMoa(this.world, this.getColor());
 	}
 }

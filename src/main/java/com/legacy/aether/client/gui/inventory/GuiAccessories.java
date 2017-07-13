@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.resources.I18n;
@@ -81,7 +80,7 @@ public class GuiAccessories extends GuiContainer
 
 		if (button.id == 18067)
 		{
-			this.mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
+			this.mc.displayGuiScreen(new GuiInventory(mc.player));
 			AetherNetworkingManager.sendToServer(new PacketOpenContainer(-1));
 		}
     }
@@ -101,7 +100,7 @@ public class GuiAccessories extends GuiContainer
 
 		this.drawTexturedModalRect(this.width / 2 - 88, this.height / 2 - 166 / 2, 0, 0, 176, 166);
 
-		GuiInventory.drawEntityOnScreen(this.guiLeft + 35, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
+		GuiInventory.drawEntityOnScreen(this.guiLeft + 35, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.player);
 	}
 
 }

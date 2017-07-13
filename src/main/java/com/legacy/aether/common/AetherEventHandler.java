@@ -11,7 +11,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -20,7 +19,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
@@ -46,7 +44,7 @@ public class AetherEventHandler
 
 		if (player.dimension == AetherConfig.getAetherDimensionID())
 		{
-			if (currentStack != null && (currentStack.getItem() == Items.FLINT_AND_STEEL || currentStack.getItem() == Item.getItemFromBlock(Blocks.TORCH) || currentStack.getItem() == Items.FIRE_CHARGE))
+			if (currentStack.getItem() == Items.FLINT_AND_STEEL || currentStack.getItem() == Item.getItemFromBlock(Blocks.TORCH) || currentStack.getItem() == Items.FIRE_CHARGE)
 			{
 				for (int i = 0; i < 10; ++i)
 				{
@@ -71,9 +69,11 @@ public class AetherEventHandler
 			EntityPlayer player = event.getEntityPlayer();
 			ItemStack heldItem = player.getHeldItem(event.getHand());
 
-			if (heldItem != null && heldItem.getItem() == ItemsAether.skyroot_bucket && EnumSkyrootBucketType.getType(heldItem.getMetadata()) == EnumSkyrootBucketType.Empty)
+			if (heldItem.getItem() == ItemsAether.skyroot_bucket && EnumSkyrootBucketType.getType(heldItem.getMetadata()) == EnumSkyrootBucketType.Empty)
 			{
-	            if (--heldItem.stackSize == 0)
+				heldItem.shrink(1);
+
+	            if (heldItem.isEmpty())
 	            {
 	                player.setHeldItem(event.getHand(), new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Milk.meta));
 	            }
@@ -88,15 +88,9 @@ public class AetherEventHandler
 	@SubscribeEvent
 	public void onFillBucket(FillBucketEvent event)
 	{
-		ItemStack stack = event.getEmptyBucket();
-
-		if (stack == null)
-		{
-			return;
-		}
-
 		World worldObj = event.getWorld();
 		RayTraceResult target = event.getTarget();
+		ItemStack stack = event.getEmptyBucket();
 		EntityPlayer player = event.getEntityPlayer();
 
 		boolean isWater = (!AetherConfig.activateOnlyWithSkyroot() && stack.getItem() == Items.WATER_BUCKET) || stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
@@ -205,12 +199,13 @@ public class AetherEventHandler
 				EntityPlayer player = (EntityPlayer) source.getEntity();
 				ItemStack currentItem = player.inventory.getCurrentItem();
 
-				if (currentItem != null && currentItem.getItem() instanceof ItemSkyrootSword && !(entity instanceof EntityPlayer) && !(entity instanceof EntityWither))
+				if (currentItem.getItem() instanceof ItemSkyrootSword && !(entity instanceof EntityPlayer) && !(entity instanceof EntityWither))
 				{
 					for (EntityItem items : event.getDrops())
 					{
-						EntityItem item = new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, items.getEntityItem());
-						entity.worldObj.spawnEntityInWorld(item);
+						EntityItem item = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, items.getEntityItem());
+
+						entity.world.spawnEntity(item);
 					}
 				}
 			}

@@ -1,11 +1,10 @@
 package com.legacy.aether.common.items.weapons.projectile;
 
-import java.util.List;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 import com.legacy.aether.common.items.util.EnumDartType;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
@@ -34,12 +33,11 @@ public class ItemDart extends Item
 		return this.getUnlocalizedName() + "_" + EnumDartType.values()[i].toString();
 	}
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
         for (int var4 = 0; var4 < EnumDartType.values().length ; ++var4)
         {
-            par3List.add(new ItemStack(par1, 1, var4));
+        	subItems.add(new ItemStack(itemIn, 1, var4));
         }
     }
 

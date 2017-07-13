@@ -41,7 +41,7 @@ public class BlockPresent extends Block
 			{
 				if (!world.isRemote)
 				{
-					world.spawnEntityInWorld(new EntityXPOrb(world, pos.getX(), pos.getY(), pos.getZ(), size));
+					world.spawnEntity(new EntityXPOrb(world, pos.getX(), pos.getY(), pos.getZ(), size));
 				}
 			}
 		}
@@ -65,7 +65,7 @@ public class BlockPresent extends Block
 			
 			if (!world.isRemote)
 			{
-				world.spawnEntityInWorld(present);
+				world.spawnEntity(present);
 			}
 
 			world.playSound(null, pos, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);

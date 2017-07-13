@@ -75,9 +75,9 @@ public class EntityAechorPlant extends EntityAetherAnimal
  
         if (this.isServerWorld())
         {
-            this.worldObj.theProfiler.startSection("newAi");
+            this.world.theProfiler.startSection("newAi");
             this.updateEntityActionState();
-            this.worldObj.theProfiler.endSection();
+            this.world.theProfiler.endSection();
         }
 
 		if(this.hurtTime > 0) 
@@ -103,12 +103,12 @@ public class EntityAechorPlant extends EntityAetherAnimal
 
 		if(this.getAttackTarget() == null) 
 		{
-			EntityPlayer player = this.worldObj.getNearestAttackablePlayer(this, 10, 2);
+			EntityPlayer player = this.world.getNearestAttackablePlayer(this, 10, 2);
 
 			this.setAttackTarget(player);
 		}
 
-		if(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ))).getBlock() != BlocksAether.aether_grass)
+		if(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(MathHelper.floor(this.posX), MathHelper.floor(this.posY) - 1, MathHelper.floor(this.posZ))).getBlock() != BlocksAether.aether_grass)
 		{
 			this.setDead();
 		}
@@ -127,15 +127,15 @@ public class EntityAechorPlant extends EntityAetherAnimal
 	}
 
 	@Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack itemStack)
+    public boolean processInteract(EntityPlayer player, EnumHand hand)
 	{
-		ItemStack heldItem = itemStack;
+		ItemStack heldItem = player.getHeldItem(hand);
 
-		if(heldItem != null && !this.worldObj.isRemote)
+		if(heldItem != null && !this.world.isRemote)
 		{
 			if (heldItem.getItem() == ItemsAether.skyroot_bucket && EnumSkyrootBucketType.getType(heldItem.getMetadata()) == EnumSkyrootBucketType.Empty && this.poisonRemaining > 0)
 			{
-	            if (--heldItem.stackSize == 0)
+	            if (heldItem.getCount() - 1 == 0)
 	            {
 	                player.setHeldItem(hand, new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.meta));
 	            }
@@ -200,7 +200,7 @@ public class EntityAechorPlant extends EntityAetherAnimal
 	@Override
     public boolean getCanSpawnHere()
     {
-    	return this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) == 10.0F && this.worldObj.isDaytime();
+    	return this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) == 10.0F && this.world.isDaytime();
     }
 
 }

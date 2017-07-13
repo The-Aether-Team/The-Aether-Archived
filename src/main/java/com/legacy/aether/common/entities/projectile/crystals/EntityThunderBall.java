@@ -77,8 +77,8 @@ public class EntityThunderBall extends EntityFlying
 
 		else if(life <= 0)
 		{
-			EntityLightningBolt thunder = new EntityLightningBolt(this.worldObj, this.posX, this.posY, this.posZ, false);
-			this.worldObj.spawnEntityInWorld(thunder);
+			EntityLightningBolt thunder = new EntityLightningBolt(this.world, this.posX, this.posY, this.posZ, false);
+			this.world.spawnEntity(thunder);
 			this.isDead = true;
 		} 
 		else 
@@ -144,7 +144,7 @@ public class EntityThunderBall extends EntityFlying
 
 	public Entity findPlayerToAttack()
     {
-        EntityPlayer entityplayer = worldObj.getClosestPlayerToEntity(this, 16D);
+        EntityPlayer entityplayer = world.getClosestPlayerToEntity(this, 16D);
         
         if(entityplayer != null && canEntityBeSeen(entityplayer))
         {

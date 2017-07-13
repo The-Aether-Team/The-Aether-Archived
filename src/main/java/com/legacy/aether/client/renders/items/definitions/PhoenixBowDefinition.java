@@ -28,12 +28,12 @@ public class PhoenixBowDefinition implements ItemMeshDefinition
 	@Override
 	public ModelResourceLocation getModelLocation(ItemStack stack)
 	{
-		if (this.mc.thePlayer == null)
+		if (this.mc.player == null)
 		{
 			return this.bow;
 		}
 
-		EntityPlayer player = this.mc.thePlayer;
+		EntityPlayer player = this.mc.player;
 
 		if (player.getActiveHand() != null && player.getActiveItemStack() == stack)
 		{

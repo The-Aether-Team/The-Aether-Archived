@@ -22,25 +22,27 @@ public class ItemAetherParachute extends Item
 		this.setCreativeTab(AetherCreativeTabs.misc);
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand hand)
     {
+    	ItemStack heldItem = entityplayer.getHeldItem(hand);
+
     	if(EntityParachute.entityHasRoomForCloud(world, entityplayer))
     	{
 			if(this == ItemsAether.golden_parachute)
 			{
-				itemstack.damageItem(1, entityplayer);
+				heldItem.damageItem(1, entityplayer);
 			} 
 			else 
 			{
-				itemstack.stackSize--;
+				heldItem.shrink(1);
 			}
 
-			world.spawnEntityInWorld(new EntityParachute(world, entityplayer, this == ItemsAether.golden_parachute));
+			world.spawnEntity(new EntityParachute(world, entityplayer, this == ItemsAether.golden_parachute));
 
-	        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+	        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
     	}
 
-        return super.onItemRightClick(itemstack, world, entityplayer, hand);
+        return super.onItemRightClick(world, entityplayer, hand);
     }
 
 	public int getColorFromItemStack(ItemStack stack, int renderPass)

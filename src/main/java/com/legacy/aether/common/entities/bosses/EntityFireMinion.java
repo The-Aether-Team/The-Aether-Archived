@@ -52,7 +52,7 @@ public class EntityFireMinion extends EntityMob
             double d3 = posX + d * d1;
             double d4 = (this.getEntityBoundingBox().minY + d1) + 0.5D;
             double d5 = posZ + d2 * d1;
-            this.worldObj.spawnParticle(EnumParticleTypes.FLAME, d3, d4, d5, 0.0D, -0.075000002980232239D, 0.0D);
+            this.world.spawnParticle(EnumParticleTypes.FLAME, d3, d4, d5, 0.0D, -0.075000002980232239D, 0.0D);
         }
     }
 

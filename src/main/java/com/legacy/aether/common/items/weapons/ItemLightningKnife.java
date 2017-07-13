@@ -29,21 +29,24 @@ public class ItemLightningKnife extends Item
     	return ItemsAether.aether_loot;
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
+    	ItemStack heldItem = playerIn.getHeldItem(hand);
+
         if (!playerIn.capabilities.isCreativeMode)
         {
-            --itemStackIn.stackSize;
+        	heldItem.shrink(1);
         }
 
         worldIn.playSound(playerIn, playerIn.getPosition(), SoundsAether.projectile_shoot, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
         if (!worldIn.isRemote)
         {
-        	worldIn.spawnEntityInWorld(new EntityLightningKnife(worldIn, playerIn));
+        	worldIn.spawnEntity(new EntityLightningKnife(worldIn, playerIn));
         }
 
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
     }
 
 }

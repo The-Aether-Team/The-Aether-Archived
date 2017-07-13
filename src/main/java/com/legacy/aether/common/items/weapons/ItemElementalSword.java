@@ -35,8 +35,8 @@ public class ItemElementalSword extends ItemSword
 		}
 		else if (this == ItemsAether.lightning_sword)
 		{
-			EntityLightningBolt lightning = new EntityLightningBolt(entityliving1.worldObj, entityliving.posX, entityliving.posY, entityliving.posZ, false);
-			entityliving1.worldObj.spawnEntityInWorld(lightning);
+			EntityLightningBolt lightning = new EntityLightningBolt(entityliving1.world, entityliving.posX, entityliving.posY, entityliving.posZ, false);
+			entityliving1.world.spawnEntity(lightning);
 		}
 		else if (this == ItemsAether.holy_sword && entityliving.isEntityUndead())
 		{

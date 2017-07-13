@@ -75,7 +75,7 @@ public class EntityFireBall extends EntityFlying
 
     public void splode()
     {
-    	this.worldObj.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
+    	this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
 
         for (int var1 = 0; var1 < 40; ++var1)
         {
@@ -83,7 +83,7 @@ public class EntityFireBall extends EntityFlying
             double var4 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
             double var6 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
 
-            this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, var2, var4, var6);
+            this.world.spawnParticle(EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, var2, var4, var6);
         }
     }
 
@@ -109,33 +109,33 @@ public class EntityFireBall extends EntityFlying
 
         if (this.isCollided)
         {
-            int var1 = MathHelper.floor_double(this.posX);
-            int var2 = MathHelper.floor_double(this.getEntityBoundingBox().minY);
-            int var3 = MathHelper.floor_double(this.posZ);
+            int var1 = MathHelper.floor(this.posX);
+            int var2 = MathHelper.floor(this.getEntityBoundingBox().minY);
+            int var3 = MathHelper.floor(this.posZ);
 
-            if (this.smotionX > 0.0D && this.worldObj.getBlockState(new BlockPos(var1 + 1, var2, var3)).getBlock() != Blocks.AIR)
+            if (this.smotionX > 0.0D && this.world.getBlockState(new BlockPos(var1 + 1, var2, var3)).getBlock() != Blocks.AIR)
             {
                 this.motionX = this.smotionX = -this.smotionX;
             }
-            else if (this.smotionX < 0.0D && this.worldObj.getBlockState(new BlockPos(var1 - 1, var2, var3)).getBlock() != Blocks.AIR)
+            else if (this.smotionX < 0.0D && this.world.getBlockState(new BlockPos(var1 - 1, var2, var3)).getBlock() != Blocks.AIR)
             {
                 this.motionX = this.smotionX = -this.smotionX;
             }
 
-            if (this.smotionY > 0.0D && this.worldObj.getBlockState(new BlockPos(var1, var2 + 1, var3)).getBlock() != Blocks.AIR)
+            if (this.smotionY > 0.0D && this.world.getBlockState(new BlockPos(var1, var2 + 1, var3)).getBlock() != Blocks.AIR)
             {
                 this.motionY = this.smotionY = -this.smotionY;
             }
-            else if (this.smotionY < 0.0D && this.worldObj.getBlockState(new BlockPos(var1, var2 - 1, var3)).getBlock() != Blocks.AIR)
+            else if (this.smotionY < 0.0D && this.world.getBlockState(new BlockPos(var1, var2 - 1, var3)).getBlock() != Blocks.AIR)
             {
                 this.motionY = this.smotionY = -this.smotionY;
             }
 
-            if (this.smotionZ > 0.0D && this.worldObj.getBlockState(new BlockPos(var1, var2, var3 + 1)).getBlock() != Blocks.AIR)
+            if (this.smotionZ > 0.0D && this.world.getBlockState(new BlockPos(var1, var2, var3 + 1)).getBlock() != Blocks.AIR)
             {
                 this.motionZ = this.smotionZ = -this.smotionZ;
             }
-            else if (this.smotionZ < 0.0D && this.worldObj.getBlockState(new BlockPos(var1, var2, var3 - 1)).getBlock() != Blocks.AIR)
+            else if (this.smotionZ < 0.0D && this.world.getBlockState(new BlockPos(var1, var2, var3 - 1)).getBlock() != Blocks.AIR)
             {
                 this.motionZ = this.smotionZ = -this.smotionZ;
             }
