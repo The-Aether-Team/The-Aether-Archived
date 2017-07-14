@@ -56,12 +56,13 @@ public class AetherBiome extends Biome
 
     public float getSpawningChance()
     {
-        return 0.3F;
+        return 0.2F;
     }
 
 	private void addCreatureEntry(ArrayList<SpawnListEntry> list)
 	{
 		list.add(new SpawnListEntry(EntitySheepuff.class, 30, 4, 4));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 10, 1, 2));
 		list.add(new SpawnListEntry(EntityPhyg.class, 39, 4, 4));
 		list.add(new SpawnListEntry(EntityMoa.class, 40, 3, 3));
 		list.add(new SpawnListEntry(EntityFlyingCow.class, 46, 4, 4));
@@ -71,7 +72,6 @@ public class AetherBiome extends Biome
 	private void addMobEntry(ArrayList<SpawnListEntry> list)
 	{
 		list.add(new SpawnListEntry(EntitySwet.class, 20, 1, 2));
-		list.add(new SpawnListEntry(EntityAechorPlant.class, 70, 1, 2));
 		list.add(new SpawnListEntry(EntityCockatrice.class, 60, 1, 2));
 	}
 
