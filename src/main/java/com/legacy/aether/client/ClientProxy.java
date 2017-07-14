@@ -45,9 +45,9 @@ public class ClientProxy extends ServerProxy
 	}
 
 	@Override
-	public void sendMessage(EntityPlayer player, String message)
+	public void sendMessage(EntityPlayer unused, String message)
 	{
-		player.sendMessage(new TextComponentString(message));
+		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString(message));
 	}
 
 	@Override
