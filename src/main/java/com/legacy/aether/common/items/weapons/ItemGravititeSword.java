@@ -1,10 +1,11 @@
 package com.legacy.aether.common.items.weapons;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.network.play.server.SPacketEntityVelocity;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
@@ -27,13 +28,17 @@ public class ItemGravititeSword extends ItemSword
     @Override
     public boolean hitEntity(ItemStack itemstack, EntityLivingBase hitentity, EntityLivingBase player)
     {
-        if (player != null && player instanceof EntityPlayer && (hitentity.hurtTime > 0 || hitentity.deathTime > 0))
+        if ((hitentity.hurtTime > 0 || hitentity.deathTime > 0))
         {
             hitentity.addVelocity(0.0D, 1.0D, 0.0D);
-            itemstack.damageItem(1, player);
         }
 
-        return true;
+        if (hitentity instanceof EntityPlayerMP)
+        {
+            ((EntityPlayerMP)hitentity).connection.sendPacket(new SPacketEntityVelocity(hitentity));
+        }
+
+        return super.hitEntity(itemstack, hitentity, player);
     }
 
 }
