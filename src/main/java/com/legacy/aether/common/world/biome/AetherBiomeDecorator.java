@@ -14,7 +14,15 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import com.legacy.aether.common.AetherConfig;
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.util.EnumCloudType;
-import com.legacy.aether.common.world.biome.decoration.*;
+import com.legacy.aether.common.world.biome.decoration.AetherGenClouds;
+import com.legacy.aether.common.world.biome.decoration.AetherGenFloatingIsland;
+import com.legacy.aether.common.world.biome.decoration.AetherGenFoilage;
+import com.legacy.aether.common.world.biome.decoration.AetherGenHolidayTree;
+import com.legacy.aether.common.world.biome.decoration.AetherGenLiquids;
+import com.legacy.aether.common.world.biome.decoration.AetherGenMinable;
+import com.legacy.aether.common.world.biome.decoration.AetherGenOakTree;
+import com.legacy.aether.common.world.biome.decoration.AetherGenQuicksoil;
+import com.legacy.aether.common.world.biome.decoration.AetherGenSkyrootTree;
 
 public class AetherBiomeDecorator extends BiomeDecorator 
 {
@@ -67,15 +75,25 @@ public class AetherBiomeDecorator extends BiomeDecorator
 	@Override
     protected void genDecorations(Biome biomeGenBaseIn, World worldIn, Random random)
     {
-    	if (this.shouldSpawn(37))
+		if (this.shouldSpawn(37))
     	{
-    		this.crystal_island.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16), this.nextInt(64) + 32, this.nextInt(16)));
+    		this.crystal_island.generate(this.world, this.rand, this.chunkPos.add(8, this.nextInt(64) + 32, 8));
     	}
 
     	if (this.shouldSpawn(3))
     	{
         	this.spawnOre(BlocksAether.aether_dirt.getDefaultState(), 32, 20, 128);
     	}
+
+    	this.generateFoilage(BlocksAether.white_flower.getDefaultState());
+    	this.generateFoilage(BlocksAether.purple_flower.getDefaultState());
+
+    	this.spawnOre(BlocksAether.icestone.getDefaultState(), 16, 10, 128);
+    	this.spawnOre(BlocksAether.ambrosium_ore.getDefaultState(), 16, 15, 128);
+    	this.spawnOre(BlocksAether.zanite_ore.getDefaultState(), 8, 15, 64);
+    	this.spawnOre(BlocksAether.gravitite_ore.getDefaultState(), 6, 8, 40);
+
+    	this.generateFoilage(BlocksAether.berry_bush.getDefaultState());
 
 		if (this.shouldSpawn(2))
 		{
@@ -84,7 +102,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 		if (this.shouldSpawn(1))
 		{
-			this.skyroot_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16), 0, this.nextInt(16))));
+			this.skyroot_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(8) + 8, 0, this.nextInt(8) + 8)));
 		}
 
 		if (AetherConfig.shouldLoadHolidayContent())
@@ -95,18 +113,9 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			}
 		}
 
-    	this.generateFoilage(BlocksAether.white_flower.getDefaultState());
-    	this.generateFoilage(BlocksAether.purple_flower.getDefaultState());
-
-    	this.spawnOre(BlocksAether.icestone.getDefaultState(), 16, 10, 128);
-    	this.spawnOre(BlocksAether.ambrosium_ore.getDefaultState(), 16, 15, 128);
-    	this.spawnOre(BlocksAether.zanite_ore.getDefaultState(), 8, 15, 64);
-    	this.spawnOre(BlocksAether.gravitite_ore.getDefaultState(), 6, 8, 40);
-
     	this.generateClouds(EnumCloudType.Golden, 4, false, 50, this.nextInt(64) + 96);
     	this.generateClouds(EnumCloudType.Blue, 8, false, 26, this.nextInt(64) + 32);
     	this.generateClouds(EnumCloudType.Cold, 16, false, 14, this.nextInt(64) + 64);
-    	this.generateClouds(EnumCloudType.Cold, 64, true, 50, 0);
 
 		MutableBlockPos mutedPos = new MutableBlockPos();
 
@@ -128,8 +137,6 @@ public class AetherBiomeDecorator extends BiomeDecorator
 				}
 			}
 		}
-
-		this.generateFoilage(BlocksAether.berry_bush.getDefaultState());
     }
 
 	public int nextInt(int max)
@@ -176,7 +183,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
     		this.aerclouds.setCloudAmmount(size);
     		this.aerclouds.setFlat(flat);
 
-        	this.aerclouds.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16), y, this.nextInt(16)));
+        	this.aerclouds.generate(this.world, this.rand, this.chunkPos.add(8, y, 8));
     	}
     }
 
