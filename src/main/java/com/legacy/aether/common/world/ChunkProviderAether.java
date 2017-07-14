@@ -93,6 +93,31 @@ public class ChunkProviderAether implements  IChunkGenerator
 
                                 IBlockState filler = Blocks.AIR.getDefaultState();
 
+                            	if (d15 < -38D)
+                            	{
+                                	chunkPrimer.setBlockState(x1, 1, z1, BlocksAether.aercloud.getDefaultState());
+                            	}
+
+                                if (d15 < -39D && d15 > -43D)
+                                {
+                                	if (d15 < -41D)
+                                	{
+                                    	chunkPrimer.setBlockState(x1, 2, z1, BlocksAether.aercloud.getDefaultState());
+                                	}
+
+                                	chunkPrimer.setBlockState(x1, 1, z1, BlocksAether.aercloud.getDefaultState());
+                                }
+
+                                if (d15 < -44D && d15 > -46D)
+                                {
+                                	if (d15 < -44.25D)
+                                	{
+                                    	chunkPrimer.setBlockState(x1, 2, z1, BlocksAether.aercloud.getDefaultState());
+                                	}
+
+                                	chunkPrimer.setBlockState(x1, 1, z1, BlocksAether.aercloud.getDefaultState());
+                                }
+
                                 if(d15 > 0.0D)
                                 {
                                 	filler = BlocksAether.holystone.getDefaultState();
@@ -161,7 +186,6 @@ public class ChunkProviderAether implements  IChunkGenerator
 							{
 								chunkPrimer.setBlockState(k, k1, l, filler);
 							}
-
 						}
 						else if (j1 > 0)
 						{
@@ -287,7 +311,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 	}
 
 	@Override
-	public void recreateStructures(Chunk p_180514_1_, int p_180514_2_, int p_180514_3_)
+	public void recreateStructures(Chunk p_180514_1_, int x, int z)
 	{
 
 	}
