@@ -57,7 +57,7 @@ public class EntityAechorPlant extends EntityAetherAnimal
     @Override
     public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
     {
-    	return type == EnumCreatureType.CREATURE;
+    	return type == EnumCreatureType.MONSTER;
     }
 
 	@Override
