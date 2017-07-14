@@ -1,4 +1,4 @@
-# Item Names
+﻿# Item Names
 item.lore_book.name=Buch der Überlieferung
 item.MoaEgg.name=Moa Ei
 item.leather_gloves.name=Leder Handschuhe
@@ -206,36 +206,36 @@ tile.pink_aercloud.name=Pinke Aerwolke
 tile.skyroot_fence_gate.name=Himmelswurzel Zauntor
 
 # Entities
-entity.aether_legacy.aechor_plant.name=Aechor Pflanze
-entity.aether_legacy.cockatrice.name=Cockatrice
-entity.aether_legacy.mimic.name=Mimic
-entity.aether_legacy.sentry.name=Wache
-entity.aether_legacy.zephyr.name=Zephyr
-entity.aether_legacy.aerwhale.name=Aerwal
-entity.aether_legacy.aerbunny.name=Aerhase
-entity.aether_legacy.sheepuff.name=Schäffchen
-entity.aether_legacy.valkyrie.name=Valkyrie
-entity.aether_legacy.valkyrie_queen.name=Valkyrien Königin
-entity.aether_legacy.slider.name=Slider
-entity.aether_legacy.sun_spirit.name=Sonnengeist
-entity.aether_legacy.fire_minion.name=Feuerkreatur
-entity.aether_legacy.mini_cloud.name=Mini Wolke
-entity.aether_legacy.tnt_present.name=TNT Geschenk
-entity.aether_legacy.lightning_knife.name=Blitz Messer
-entity.aether_legacy.thunder_ball.name=Thundro Ball
-entity.aether_legacy.zephyr_snowball.name=Zephyr Schneeball
-entity.aether_legacy.floating_block.name=Schwimmender Block
-entity.aether_legacy.parachute.name=Fallschirm
-entity.aether_legacy.golden_dart.name=Goldener Pfeil
-entity.aether_legacy.poison_dart.name=Giftiger Pfeil
-entity.aether_legacy.enchanted_dart.name=Verzauberter Pfeil
-entity.aether_legacy.fire_ball.name=Feuriger Ball
-entity.aether_legacy.ice_ball.name=Eisiger Ball
-entity.aether_legacy.flying_cow.name=Fliegende Kuh
-entity.aether_legacy.phyg.name=Fliegendes Schwein
-entity.aether_legacy.swet.name=Swet
-entity.aether_legacy.moa.name=Moa
-entity.aether_legacy.whirly.name=Wirbelwind
+entity.aechor_plant.name=Aechor Pflanze
+entity.cockatrice.name=Cockatrice
+entity.mimic.name=Mimic
+entity.sentry.name=Wache
+entity.zephyr.name=Zephyr
+entity.aerwhale.name=Aerwal
+entity.aerbunny.name=Aerhase
+entity.sheepuff.name=Schäffchen
+entity.valkyrie.name=Valkyrie
+entity.valkyrie_queen.name=Valkyrien Königin
+entity.slider.name=Slider
+entity.sun_spirit.name=Sonnengeist
+entity.fire_minion.name=Feuerkreatur
+entity.mini_cloud.name=Mini Wolke
+entity.tnt_present.name=TNT Geschenk
+entity.lightning_knife.name=Blitz Messer
+entity.thunder_ball.name=Thundro Ball
+entity.zephyr_snowball.name=Zephyr Schneeball
+entity.floating_block.name=Schwimmender Block
+entity.parachute.name=Fallschirm
+entity.golden_dart.name=Goldener Pfeil
+entity.poison_dart.name=Giftiger Pfeil
+entity.enchanted_dart.name=Verzauberter Pfeil
+entity.fire_ball.name=Feuriger Ball
+entity.ice_ball.name=Eisiger Ball
+entity.flying_cow.name=Fliegende Kuh
+entity.phyg.name=Fliegendes Schwein
+entity.swet.name=Swet
+entity.moa.name=Moa
+entity.whirly.name=Wirbelwind
 
 # Achievements
 achievement.enter_aether=Feindliches Paradies
