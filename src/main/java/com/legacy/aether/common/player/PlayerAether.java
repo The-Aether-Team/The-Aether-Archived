@@ -126,6 +126,15 @@ public class PlayerAether
 			}
 		}
 
+		if (!this.thePlayer.onGround)
+ 		{
+ 			this.wingSinage += 0.75F;
+ 		}
+ 		else
+ 		{
+ 			this.wingSinage += 0.15F;
+ 		}
+
 		if (this.wingSinage > 3.141593F * 2F)
 		{
 			this.wingSinage -= 3.141593F * 2F;
