@@ -69,7 +69,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
     {
     	if (this.shouldSpawn(37))
     	{
-    		this.crystal_island.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16), this.nextInt(64) + 32, this.nextInt(16)));
+    		this.crystal_island.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16) + 8, this.nextInt(64) + 32, this.nextInt(16) + 8));
     	}
 
     	if (this.shouldSpawn(3))
