@@ -1,7 +1,6 @@
 package com.legacy.aether.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +8,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.GuiScreenEvent.PotionShiftEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -19,7 +17,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import com.legacy.aether.client.gui.AetherLoadingScreen;
 import com.legacy.aether.client.gui.button.GuiAccessoryButton;
-import com.legacy.aether.client.gui.inventory.GuiAccessories;
 import com.legacy.aether.common.AetherConfig;
 import com.legacy.aether.common.containers.inventory.InventoryAccessories;
 import com.legacy.aether.common.items.ItemsAether;
