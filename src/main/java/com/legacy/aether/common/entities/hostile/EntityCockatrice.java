@@ -162,7 +162,7 @@ public class EntityCockatrice extends EntityMob
 			{
 				this.worldObj.playSound(null, new BlockPos(this), SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
-				this.ticksUntilFlap = 11;
+				this.ticksUntilFlap = 8;
 			}
 			else
 			{
@@ -181,7 +181,7 @@ public class EntityCockatrice extends EntityMob
 			this.destPos = 0.0F;
 		}
 
-		this.wingRotation += 0.533F;
+		this.wingRotation += 1.233F;
 	}
 
 	@Override
