@@ -97,9 +97,8 @@ public class ItemAccessory extends Item
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStack, World worldIn, EntityPlayer player, EnumHand hand)
     {
-        if (itemStack != null)
+        if (itemStack != null && PlayerAether.get(player).accessories.setInventoryAccessory(itemStack.copy()))
         {
-        	PlayerAether.get(player).accessories.setInventoryAccessory(itemStack.copy());
         	--itemStack.stackSize;
 
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
