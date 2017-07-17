@@ -100,70 +100,70 @@
   },
   "aemob.moa.say": {
   	"category": "neutral",
-	"subtitle": "Moa calling",
+	"subtitle": "Moa calls",
 	"sounds": [
 	    "aether_legacy:aemob/moa/say"
 	]
   },
   "aemob.aerbunny.hurt": {
   	"category": "neutral",
-	"subtitle": "Aerbunny hurt",
+	"subtitle": "Aerbunny hurts",
 	"sounds": [
 	    "aether_legacy:aemob/aerbunny/hurt"
 	]
   },
   "aemob.aerbunny.death": {
   	"category": "neutral",
-	"subtitle": "Aerbunny death",
+	"subtitle": "Aerbunny dies",
 	"sounds": [
 	    "aether_legacy:aemob/aerbunny/death"
 	]
   },
   "aemob.aerbunny.lift": {
   	"category": "neutral",
-	"subtitle": "Aerbunny lifted",
+	"subtitle": "Aerbunny squeaks",
 	"sounds": [
 	    "aether_legacy:aemob/aerbunny/lift"
 	]
   },
   "aemob.zephyr.call": {
   	"category": "hostile",
-	"subtitle": "Zephyr calling",
+	"subtitle": "Zephyr blows",
 	"sounds": [
 	    "aether_legacy:aemob/zephyr/call"
 	]
   },
   "aemob.zephyr.shoot": {
   	"category": "hostile",
-	"subtitle": "Zephyr shooting",
+	"subtitle": "Zephyr spits",
 	"sounds": [
 	    "aether_legacy:aemob/zephyr/shoot"
 	]
   },
   "aemob.aerwhale.call": {
   	"category": "neutral",
-	"subtitle": "Aerwhale calling",
+	"subtitle": "Aerwhale whistles",
 	"sounds": [
 	    "aether_legacy:aemob/aerwhale/call"
 	]
   },
   "aemob.aerwhale.death": {
   	"category": "neutral",
-	"subtitle": "Aerwhale death",
+	"subtitle": "Aerwhale crys",
 	"sounds": [
 	    "aether_legacy:aemob/aerwhale/death"
 	]
   },
   "projectile.shoot": {
 	"category": "player",
-	"subtitle": "Projectile shot",
+	"subtitle": "Projectile shoots",
 	"sounds": [
 	    "aether_legacy:projectile/shoot"
 	]
   },
   "projectile.dart_shooter.shoot": {
 	"category": "player",
-	"subtitle": "Dart shot",
+	"subtitle": "Dart shoots",
 	"sounds": [
 	    "aether_legacy:projectile/dart_shooter/shoot"
 	]
@@ -177,21 +177,21 @@
   },
   "aeboss.slider.collide": {
 	"category": "hostile",
-	"subtitle": "Slider collided",
+	"subtitle": "Slider smashes",
 	"sounds": [
 	    "aether_legacy:aeboss/slider/collide"
 	]
   },
   "aeboss.slider.move": {
 	"category": "hostile",
-	"subtitle": "Slider moved",
+	"subtitle": "Slider slides",
 	"sounds": [
 	    "aether_legacy:aeboss/slider/move"
 	]
   },
   "aeboss.slider.death": {
 	"category": "hostile",
-	"subtitle": "Slider death",
+	"subtitle": "Slider breaks",
 	"sounds": [
 	    "aether_legacy:aeboss/slider/death"
 	]
