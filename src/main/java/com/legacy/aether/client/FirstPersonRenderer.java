@@ -208,7 +208,7 @@ public class FirstPersonRenderer
 
 	public boolean shouldRender()
 	{
-		if (this.player.thePlayer.inventory.getCurrentItem() == null && this.player.accessories.stacks.get(6) != ItemStack.EMPTY && this.mc.gameSettings.thirdPersonView == 0 && !((EntityPlayer) this.mc.getRenderViewEntity()).isPlayerSleeping() && !this.mc.gameSettings.hideGUI && !this.mc.playerController.isSpectatorMode() && !FMLClientHandler.instance().hasOptifine())
+		if (this.player.thePlayer.inventory.getCurrentItem() == ItemStack.EMPTY && this.player.accessories.stacks.get(6) != ItemStack.EMPTY && this.mc.gameSettings.thirdPersonView == 0 && !((EntityPlayer) this.mc.getRenderViewEntity()).isPlayerSleeping() && !this.mc.gameSettings.hideGUI && !this.mc.playerController.isSpectatorMode() && !FMLClientHandler.instance().hasOptifine())
 		{
 			return true;
 		}

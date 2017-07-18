@@ -65,7 +65,7 @@ public class ItemPhoenixBow extends ItemBow
                 }
             }
 
-            return null;
+            return ItemStack.EMPTY;
         }
     }
 

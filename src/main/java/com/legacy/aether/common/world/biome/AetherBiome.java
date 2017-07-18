@@ -6,6 +6,7 @@ import java.util.Random;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraftforge.fml.common.Loader;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.entities.hostile.EntityAechorPlant;
@@ -56,7 +57,7 @@ public class AetherBiome extends Biome
 
     public float getSpawningChance()
     {
-        return 0.3F;
+        return Loader.isModLoaded("sponge") ? 0.1F : 0.2F;
     }
 
 	private void addCreatureEntry(ArrayList<SpawnListEntry> list)
@@ -71,7 +72,7 @@ public class AetherBiome extends Biome
 	private void addMobEntry(ArrayList<SpawnListEntry> list)
 	{
 		list.add(new SpawnListEntry(EntitySwet.class, 20, 1, 2));
-		list.add(new SpawnListEntry(EntityAechorPlant.class, 70, 1, 2));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 40, 1, 2));
 		list.add(new SpawnListEntry(EntityCockatrice.class, 60, 1, 2));
 	}
 

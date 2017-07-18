@@ -28,10 +28,12 @@ public class ItemLoreBook extends Item
     	return ItemsAether.aether_loot;
     }
 
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+	@Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
     	playerIn.openGui(Aether.instance, AetherGuiHandler.lore, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
-    	return new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
+
+    	return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(hand));
     }
 
 }

@@ -102,10 +102,12 @@ public class ItemAccessory extends Item
 
         if (heldItem != ItemStack.EMPTY)
         {
-        	PlayerAether.get(player).accessories.setInventoryAccessory(heldItem.copy());
-        	heldItem.shrink(1);
+        	if (PlayerAether.get(player).accessories.setInventoryAccessory(heldItem.copy()))
+        	{
+            	heldItem.shrink(1);
 
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
+                return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
+        	}
         }
 
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);

@@ -61,7 +61,7 @@ public class GuiLore extends GuiContainer
         this.fontRendererObj.drawString("Item : ", 46, 72, 4210752);
         ItemStack searchedStack = ((ContainerLore)this.inventorySlots).loreSlot.getStackInSlot(0);
 
-        if (searchedStack != null)
+        if (searchedStack != ItemStack.EMPTY)
         {
         	Iterator<LoreEntry> entries = this.lore_pages.values().iterator();
         	

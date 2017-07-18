@@ -588,7 +588,14 @@ public class EntitySwet extends EntityMountable
 
 	public int getType()
 	{
-		return this.dataManager.get(SWET_TYPE);
+		Object obj = this.dataManager.get(SWET_TYPE);
+
+		if (!(obj instanceof Integer))
+		{
+			return 0;
+		}
+
+		return (Integer) obj;
 	}
 
 	private void setType(int type)

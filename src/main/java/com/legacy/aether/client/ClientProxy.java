@@ -45,9 +45,12 @@ public class ClientProxy extends ServerProxy
 	}
 
 	@Override
-	public void sendMessage(EntityPlayer player, String message)
+	public void sendMessage(EntityPlayer reciever, String message)
 	{
-		player.sendMessage(new TextComponentString(message));
+		if (this.getThePlayer() == reciever)
+		{
+			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString(message));
+		}
 	}
 
 	@Override
