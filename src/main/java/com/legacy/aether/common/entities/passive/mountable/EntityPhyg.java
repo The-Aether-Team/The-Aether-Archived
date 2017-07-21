@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 
 import com.legacy.aether.common.entities.util.EntitySaddleMount;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
+import com.legacy.aether.common.registry.sounds.SoundsAether;
 
 public class EntityPhyg extends EntitySaddleMount
 {
@@ -104,19 +105,19 @@ public class EntityPhyg extends EntitySaddleMount
 	@Override
 	protected SoundEvent getDeathSound()
 	{
-		return SoundEvents.ENTITY_PIG_DEATH;
+		return SoundsAether.phyg_death;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound()
 	{
-		return SoundEvents.ENTITY_PIG_HURT;
+		return SoundsAether.phyg_hurt;
 	}
 
 	@Override
 	protected SoundEvent getAmbientSound()
 	{
-		return SoundEvents.ENTITY_PIG_AMBIENT;
+		return SoundsAether.phyg_say;
 	}
 
 	@Override

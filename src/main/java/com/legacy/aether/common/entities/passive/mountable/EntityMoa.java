@@ -263,7 +263,7 @@ public class EntityMoa extends EntitySaddleMount
 		{
 			if (this.ticksUntilFlap == 0)
 			{
-				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
+				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsAether.moa_flap, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
 
 				this.ticksUntilFlap = 8;
 			}
@@ -300,7 +300,7 @@ public class EntityMoa extends EntitySaddleMount
 			if (!this.onGround)
 			{
 				this.motionY = 0.7D;
-				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
+				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsAether.moa_flap, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
 
 				if (!this.world.isRemote)
 				{

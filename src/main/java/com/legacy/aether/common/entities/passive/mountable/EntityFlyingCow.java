@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.common.entities.util.EntitySaddleMount;
+import com.legacy.aether.common.registry.sounds.SoundsAether;
 
 public class EntityFlyingCow extends EntitySaddleMount
 {
@@ -190,19 +191,19 @@ public class EntityFlyingCow extends EntitySaddleMount
 	@Override
 	protected SoundEvent getAmbientSound()
 	{
-		return SoundEvents.ENTITY_COW_AMBIENT;
+		return SoundsAether.flyingcow_say;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound()
 	{
-		return SoundEvents.ENTITY_COW_HURT;
+		return SoundsAether.flyingcow_hurt;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound()
 	{
-		return SoundEvents.ENTITY_COW_DEATH;
+		return SoundsAether.flyingcow_death;
 	}
 
 	@Override

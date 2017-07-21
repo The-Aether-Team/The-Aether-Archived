@@ -422,7 +422,7 @@ public class EntityValkyrie extends EntityMob
     @Override
     public boolean canDespawn() 
     {
-        return true;
+        return false;
     }
 
     protected SoundEvent getHurtSound()
