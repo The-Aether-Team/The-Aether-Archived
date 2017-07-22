@@ -100,70 +100,157 @@
   },
   "aemob.moa.say": {
   	"category": "neutral",
-	"subtitle": "Moa calling",
+	"subtitle": "Moa calls",
 	"sounds": [
 	    "aether_legacy:aemob/moa/say"
 	]
   },
+  "aemob.moa.flap": {
+  	"category": "neutral",
+	"subtitle": "Moa flaps",
+	"sounds": [
+	    "mob/bat/takeoff"
+	]
+  },
+  "aemob.sheepuff.say": {
+  	"category": "neutral",
+	"subtitle": "Sheepuff baahs",
+	"sounds": [
+	    "mob/sheep/say1",
+		"mob/sheep/say2",
+		"mob/sheep/say3"
+	]
+  },
+  "aemob.sheepuff.hurt": {
+  	"category": "neutral",
+	"subtitle": "Sheepuff hurts",
+	"sounds": [
+	    "mob/sheep/say1",
+		"mob/sheep/say2",
+		"mob/sheep/say3"
+	]
+  },
+  "aemob.sheepuff.death": {
+  	"category": "neutral",
+	"subtitle": "Sheepuff dies",
+	"sounds": [
+	    "mob/sheep/say1",
+		"mob/sheep/say2",
+		"mob/sheep/say3"
+	]
+  },
+  "aemob.flyingcow.say": {
+  	"category": "neutral",
+	"subtitle": "Flying Cow moos",
+	"sounds": [
+	    "mob/cow/say1",
+		"mob/cow/say2",
+		"mob/cow/say3",
+		"mob/cow/say4"
+	]
+  },
+  "aemob.flyingcow.hurt": {
+  	"category": "neutral",
+	"subtitle": "Flying Cow hurts",
+	"sounds": [
+	    "mob/cow/hurt1",
+		"mob/cow/hurt2",
+		"mob/cow/hurt3"
+	]
+  },
+  "aemob.flyingcow.death": {
+  	"category": "neutral",
+	"subtitle": "Flying Cow dies",
+	"sounds": [
+	    "mob/cow/hurt1",
+		"mob/cow/hurt2",
+		"mob/cow/hurt3"
+	]
+  },
+  "aemob.phyg.say": {
+  	"category": "neutral",
+	"subtitle": "Phyg oinks",
+	"sounds": [
+	    "mob/pig/say1",
+		"mob/pig/say2",
+		"mob/pig/say3"
+	]
+  },
+  "aemob.phyg.hurt": {
+  	"category": "neutral",
+	"subtitle": "Phyg hurts",
+	"sounds": [
+	    "mob/pig/say1",
+		"mob/pig/say2",
+		"mob/pig/say3"
+	]
+  },
+  "aemob.phyg.death": {
+  	"category": "neutral",
+	"subtitle": "Phyg dies",
+	"sounds": [
+	    "mob/pig/death"
+	]
+  },
   "aemob.aerbunny.hurt": {
   	"category": "neutral",
-	"subtitle": "Aerbunny hurt",
+	"subtitle": "Aerbunny squeals",
 	"sounds": [
 	    "aether_legacy:aemob/aerbunny/hurt"
 	]
   },
   "aemob.aerbunny.death": {
   	"category": "neutral",
-	"subtitle": "Aerbunny death",
+	"subtitle": "Aerbunny dies",
 	"sounds": [
 	    "aether_legacy:aemob/aerbunny/death"
 	]
   },
   "aemob.aerbunny.lift": {
   	"category": "neutral",
-	"subtitle": "Aerbunny lifted",
+	"subtitle": "Aerbunny squeaks",
 	"sounds": [
 	    "aether_legacy:aemob/aerbunny/lift"
 	]
   },
   "aemob.zephyr.call": {
   	"category": "hostile",
-	"subtitle": "Zephyr calling",
+	"subtitle": "Zephyr blows",
 	"sounds": [
 	    "aether_legacy:aemob/zephyr/call"
 	]
   },
   "aemob.zephyr.shoot": {
   	"category": "hostile",
-	"subtitle": "Zephyr shooting",
+	"subtitle": "Zephyr spits",
 	"sounds": [
 	    "aether_legacy:aemob/zephyr/shoot"
 	]
   },
   "aemob.aerwhale.call": {
   	"category": "neutral",
-	"subtitle": "Aerwhale calling",
+	"subtitle": "Aerwhale whistles",
 	"sounds": [
 	    "aether_legacy:aemob/aerwhale/call"
 	]
   },
   "aemob.aerwhale.death": {
   	"category": "neutral",
-	"subtitle": "Aerwhale death",
+	"subtitle": "Aerwhale crys",
 	"sounds": [
 	    "aether_legacy:aemob/aerwhale/death"
 	]
   },
   "projectile.shoot": {
 	"category": "player",
-	"subtitle": "Projectile shot",
+	"subtitle": "Projectile shoots",
 	"sounds": [
 	    "aether_legacy:projectile/shoot"
 	]
   },
   "projectile.dart_shooter.shoot": {
 	"category": "player",
-	"subtitle": "Dart shot",
+	"subtitle": "Dart shoots",
 	"sounds": [
 	    "aether_legacy:projectile/dart_shooter/shoot"
 	]
@@ -177,21 +264,21 @@
   },
   "aeboss.slider.collide": {
 	"category": "hostile",
-	"subtitle": "Slider collided",
+	"subtitle": "Slider smashes",
 	"sounds": [
 	    "aether_legacy:aeboss/slider/collide"
 	]
   },
   "aeboss.slider.move": {
 	"category": "hostile",
-	"subtitle": "Slider moved",
+	"subtitle": "Slider slides",
 	"sounds": [
 	    "aether_legacy:aeboss/slider/move"
 	]
   },
   "aeboss.slider.death": {
 	"category": "hostile",
-	"subtitle": "Slider death",
+	"subtitle": "Slider breaks",
 	"sounds": [
 	    "aether_legacy:aeboss/slider/death"
 	]

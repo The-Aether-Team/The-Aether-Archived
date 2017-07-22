@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
@@ -421,17 +422,17 @@ public class EntityValkyrie extends EntityMob
     @Override
     public boolean canDespawn() 
     {
-        return true;
+        return false;
     }
 
     protected SoundEvent getHurtSound()
     {
-    	return null;
+    	return SoundEvents.ENTITY_GENERIC_HURT;
     }
     
     protected SoundEvent getDeathSound()
     {
-       return null;
+       return SoundEvents.ENTITY_GENERIC_HURT;
     }
 
 }

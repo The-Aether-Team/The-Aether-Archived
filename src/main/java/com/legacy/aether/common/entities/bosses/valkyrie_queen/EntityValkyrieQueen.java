@@ -12,6 +12,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -635,16 +636,14 @@ public class EntityValkyrieQueen extends EntityMob
         return medals;
     }
 
-    @Override
     protected SoundEvent getHurtSound()
     {
-    	return null;
+    	return SoundEvents.ENTITY_GENERIC_HURT;
     }
-
-    @Override
+    
     protected SoundEvent getDeathSound()
     {
-        return null;
+       return SoundEvents.ENTITY_GENERIC_HURT;
     }
 
     public String getBossName()

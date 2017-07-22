@@ -31,6 +31,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.common.entities.ai.SheepuffAIEatAetherGrass;
+import com.legacy.aether.common.registry.sounds.SoundsAether;
 
 public class EntitySheepuff extends EntityAetherAnimal
 {
@@ -283,17 +284,17 @@ public class EntitySheepuff extends EntityAetherAnimal
 
     protected SoundEvent getAmbientSound()
     {
-        return SoundEvents.ENTITY_SHEEP_AMBIENT;
+        return SoundsAether.sheepuff_say;
     }
 
     protected SoundEvent getHurtSound()
     {
-        return SoundEvents.ENTITY_SHEEP_HURT;
+        return SoundsAether.sheepuff_hurt;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return SoundEvents.ENTITY_SHEEP_DEATH;
+        return SoundsAether.sheepuff_death;
     }
 
 	public int getFleeceColor()
