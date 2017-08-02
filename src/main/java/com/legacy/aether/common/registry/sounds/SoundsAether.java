@@ -9,7 +9,13 @@ import com.legacy.aether.common.Aether;
 public class SoundsAether
 {
 
-	public static SoundEvent moa_say;
+	public static SoundEvent moa_say, moa_flap;
+	
+	public static SoundEvent sheepuff_hurt, sheepuff_say, sheepuff_death;
+	
+	public static SoundEvent flyingcow_hurt, flyingcow_death, flyingcow_say;
+	
+	public static SoundEvent phyg_hurt, phyg_death, phyg_say;
 
 	public static SoundEvent aerbunny_hurt, aerbunny_death, aerbunny_lift;
 
@@ -19,6 +25,8 @@ public class SoundsAether
 
 	public static SoundEvent slider_collide, slider_move, slider_awaken, slider_death;
 
+	public static SoundEvent sun_spirit_shoot;
+	
 	public static SoundEvent aether_tune, ascending_dawn, welcoming_skies;
 
 	public static SoundEvent achievement_gen, achievement_bronze, achievement_silver;
@@ -30,6 +38,19 @@ public class SoundsAether
 	public static void initialization()
 	{
 		moa_say = register(Aether.locate("aemob.moa.say"));
+		moa_flap = register(Aether.locate("aemob.moa.flap"));
+		
+		sheepuff_say = register(Aether.locate("aemob.sheepuff.say"));
+		sheepuff_hurt = register(Aether.locate("aemob.sheepuff.hurt"));
+		sheepuff_death = register(Aether.locate("aemob.sheepuff.death"));
+		
+		flyingcow_say = register(Aether.locate("aemob.flyingcow.say"));
+		flyingcow_hurt = register(Aether.locate("aemob.flyingcow.hurt"));
+		flyingcow_death = register(Aether.locate("aemob.flyingcow.death"));
+		
+		phyg_say = register(Aether.locate("aemob.phyg.say"));
+		phyg_hurt = register(Aether.locate("aemob.phyg.hurt"));
+		phyg_death = register(Aether.locate("aemob.phyg.death"));
 
 		aerbunny_hurt = register(Aether.locate("aemob.aerbunny.hurt"));
 		aerbunny_death = register(Aether.locate("aemob.aerbunny.death"));
@@ -45,6 +66,8 @@ public class SoundsAether
 		slider_collide = register(Aether.locate("aeboss.slider.collide"));
 		slider_move = register(Aether.locate("aeboss.slider.move"));
 		slider_death = register(Aether.locate("aeboss.slider.death"));
+		
+		sun_spirit_shoot = register(Aether.locate("aeboss.sun_spirit.shoot"));
 
 		projectile_shoot = register(Aether.locate("projectile.shoot"));
 		dart_shooter_shoot = register(Aether.locate("projectile.dart_shooter.shoot"));
