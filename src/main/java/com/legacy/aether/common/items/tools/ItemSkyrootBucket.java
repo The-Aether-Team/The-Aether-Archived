@@ -178,7 +178,7 @@ public class ItemSkyrootBucket extends Item
         }
         else
         {
-            if (!player.inventory.addItemStackToInventory(new ItemStack(fullBucket)))
+            if (!player.inventory.addItemStackToInventory(new ItemStack(fullBucket, 1, 1)))
             {
                 player.dropItem(new ItemStack(fullBucket, 1, 1), false);
             }
