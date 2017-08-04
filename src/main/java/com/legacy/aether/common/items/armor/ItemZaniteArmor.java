@@ -2,16 +2,20 @@ package com.legacy.aether.common.items.armor;
 
 import java.util.UUID;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.common.ISpecialArmor;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-public class ItemZaniteArmor extends ItemAetherArmor
+public class ItemZaniteArmor extends ItemAetherArmor implements ISpecialArmor
 {
 
 	private final UUID ARMOR_RESISTANCE = UUID.fromString("d111114d-f592-4876-a2eb-26bbc974b0fd");
@@ -21,6 +25,24 @@ public class ItemZaniteArmor extends ItemAetherArmor
 	public ItemZaniteArmor(EntityEquipmentSlot armorType, ArmorMaterial material, String name, Item repair, int hex)
 	{
 		super(armorType, material, name, repair, hex);
+	}
+
+	@Override
+	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) 
+	{
+		return new ArmorProperties(0, this.calculateIncrease(armor) / 25D, Integer.MAX_VALUE);
+	}
+
+	@Override
+	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) 
+	{
+		return (int) this.calculateIncrease(armor);
+	}
+
+	@Override
+	public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) 
+	{
+		stack.damageItem(damage, entity);
 	}
 
 	@Override
