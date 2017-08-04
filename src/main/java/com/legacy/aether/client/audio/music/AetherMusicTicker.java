@@ -17,6 +17,7 @@ import com.legacy.aether.common.registry.sounds.SoundsAether;
 @SideOnly(Side.CLIENT)
 public class AetherMusicTicker implements ITickable
 {
+
     private final Random rand = new Random();
     private final Minecraft mc;
     private ISound currentMusic;
