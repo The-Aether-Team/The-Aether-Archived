@@ -79,6 +79,8 @@ public class EntityIceyBall extends EntityFlying
             this.splode();
             this.isDead = true;
         }
+
+        this.updateAnims();
     }
 
     public void splode()
@@ -96,6 +98,19 @@ public class EntityIceyBall extends EntityFlying
             var6 *= 0.5D;
 
             this.worldObj.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, this.posX, this.posY, this.posZ, var2, var4 + 0.125D, var6);
+        }
+    }
+
+    public void updateAnims()
+    {
+        for (int var1 = 0; var1 < 3; ++var1)
+        {
+            this.sinage[var1] += 0.3F + (float)var1 * 0.13F;
+
+            if (this.sinage[var1] > ((float)Math.PI * 2F))
+            {
+                this.sinage[var1] -= ((float)Math.PI * 2F);
+            }
         }
     }
 

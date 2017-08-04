@@ -71,6 +71,8 @@ public class EntityFireBall extends EntityFlying
             this.splode();
             this.isDead = true;
         }
+
+        this.updateAnims();
     }
 
     public void splode()
@@ -140,8 +142,6 @@ public class EntityFireBall extends EntityFlying
                 this.motionZ = this.smotionZ = -this.smotionZ;
             }
         }
-
-        this.updateAnims();
     }
 
     @Override
