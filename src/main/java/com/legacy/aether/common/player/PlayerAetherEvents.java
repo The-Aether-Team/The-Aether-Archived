@@ -28,10 +28,8 @@ import com.legacy.aether.common.Aether;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.networking.AetherNetworkingManager;
 import com.legacy.aether.common.networking.packets.PacketAchievement;
-import com.legacy.aether.common.networking.packets.PacketPerkChanged;
 import com.legacy.aether.common.player.capability.PlayerAetherProvider;
-import com.legacy.aether.common.player.perks.AetherPerks;
-import com.legacy.aether.common.player.perks.util.EnumAetherPerkType;
+import com.legacy.aether.common.player.perks.AetherPerkThread;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
 import com.legacy.aether.common.registry.objects.AetherAchievement;
 
@@ -151,11 +149,7 @@ public class PlayerAetherEvents
 		{
 			playerAether.accessories.markDirty();
 
-			boolean isDonator = AetherPerks.isDonator(player.getUniqueID());
-
-			playerAether.setDonator(isDonator);
-
-			AetherNetworkingManager.sendTo(new PacketPerkChanged(player.getEntityId(), EnumAetherPerkType.Information, isDonator), (EntityPlayerMP) player);
+			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(new AetherPerkThread(playerAether));
 		}
 	}
 
