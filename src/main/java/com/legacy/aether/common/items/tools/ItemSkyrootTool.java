@@ -1,5 +1,9 @@
 package com.legacy.aether.common.items.tools;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.items.util.EnumAetherToolType;
 
 public class ItemSkyrootTool extends ItemAetherTool
@@ -9,5 +13,11 @@ public class ItemSkyrootTool extends ItemAetherTool
 	{
 		super(ToolMaterial.WOOD, toolType);
 	}
+
+	@Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+    {
+    	return repair.getItem() == Item.getItemFromBlock(BlocksAether.skyroot_plank);
+    }
 
 }
