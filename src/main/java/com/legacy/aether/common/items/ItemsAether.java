@@ -9,6 +9,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.legacy.aether.common.Aether;
+import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.containers.util.AccessoryType;
 import com.legacy.aether.common.items.accessories.ItemAccessory;
 import com.legacy.aether.common.items.armor.ItemAetherArmor;
@@ -142,10 +143,10 @@ public class ItemsAether
 		zanite_leggings = register("zanite_leggings", new ItemZaniteArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
 		zanite_boots = register("zanite_boots", new ItemZaniteArmor(EntityEquipmentSlot.FEET, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
 
-		gravitite_helmet = register("gravitite_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "gravitite", null, 0xe752db));
-		gravitite_chestplate = register("gravitite_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "gravitite", null, 0xe752db));
-		gravitite_leggings = register("gravitite_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "gravitite", null, 0xe752db));
-		gravitite_boots = register("gravitite_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "gravitite", null, 0xe752db));
+		gravitite_helmet = register("gravitite_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
+		gravitite_chestplate = register("gravitite_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
+		gravitite_leggings = register("gravitite_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
+		gravitite_boots = register("gravitite_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
 
 		neptune_helmet = register("neptune_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
 		neptune_chestplate = register("neptune_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
