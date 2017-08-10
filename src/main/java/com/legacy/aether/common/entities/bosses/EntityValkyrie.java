@@ -8,9 +8,11 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -92,6 +94,49 @@ public class EntityValkyrie extends EntityMob
 
             this.chatTime = 60;
         }
+    }
+
+    @Override
+    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, ItemStack itemstack)
+    {
+		this.faceEntity(entityplayer, 180F, 180F);
+
+		ItemStack stack = entityplayer.getHeldItem(hand);
+
+		if(stack != null && stack.getItem() == ItemsAether.victory_medal && itemstack.stackSize >= 0) 
+		{
+			if(stack.stackSize >= 10)
+			{
+				this.chatItUp(entityplayer, "Umm... that's a nice pile of medallions you have there...");
+			}
+			else if(stack.stackSize >= 5)
+			{
+				this.chatItUp(entityplayer, "That's pretty impressive, but you won't defeat me.");
+			}
+			else 
+			{
+				this.chatItUp(entityplayer, "You think you're a tough guy, eh? Well, bring it on!");
+			}
+		}
+		else
+		{
+			int line = rand.nextInt(3);
+
+			if(line == 2) 
+			{
+				this.chatItUp(entityplayer, "What's that? You want to fight? Aww, what a cute little human.");
+			}
+			else if(line == 1)
+			{
+				this.chatItUp(entityplayer, "You're not thinking of fighting a big, strong Valkyrie are you?");
+			}
+			else 
+			{
+				this.chatItUp(entityplayer, "I don't think you should bother me, you could get really hurt.");
+			}
+		}
+
+		return true;
     }
 
     public void teleport(double x, double y, double z, int rad) 
