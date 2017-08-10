@@ -2,9 +2,6 @@ package com.legacy.aether.common.tile_entities;
 
 import java.util.Random;
 
-import com.legacy.aether.common.world.dungeon.*;
-
-import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -12,6 +9,10 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+
+import com.legacy.aether.common.world.dungeon.BronzeDungeon;
+import com.legacy.aether.common.world.dungeon.GoldenDungeon;
+import com.legacy.aether.common.world.dungeon.SilverDungeon;
 
 public class TileEntityTreasureChest extends TileEntityChest
 {

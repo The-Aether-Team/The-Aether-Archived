@@ -2,7 +2,6 @@ package com.legacy.aether.common.entities.hostile;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -54,11 +53,11 @@ public class EntityAechorPlant extends EntityAetherAnimal
     	this.tasks.addTask(0, new AechorPlantAIShootPlayer(this));
     }
 
-    @Override
-    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
-    {
-    	return type == EnumCreatureType.MONSTER;
-    }
+	@Override
+	public int getMaxSpawnedInChunk()
+	{
+		return 3;
+	}
 
 	@Override
 	public void onLivingUpdate() 
@@ -189,18 +188,6 @@ public class EntityAechorPlant extends EntityAetherAnimal
     protected boolean canDespawn()
     {
         return true;
-    }
-
-	@Override
-    public int getMaxSpawnedInChunk()
-    {
-        return 2;
-    }
-
-	@Override
-    public boolean getCanSpawnHere()
-    {
-    	return this.getBlockPathWeight(new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ)) == 10.0F && this.worldObj.isDaytime();
     }
 
 }

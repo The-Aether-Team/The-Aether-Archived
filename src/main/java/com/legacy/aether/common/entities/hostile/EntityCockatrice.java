@@ -1,6 +1,5 @@
 package com.legacy.aether.common.entities.hostile;
 
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -21,7 +20,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
-import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.common.entities.projectile.EntityPoisonNeedle;
 import com.legacy.aether.common.registry.sounds.SoundsAether;
@@ -63,22 +61,16 @@ public class EntityCockatrice extends EntityMob
     }
 
 	@Override
+    public boolean getCanSpawnHere()
+    {
+    	return this.rand.nextInt(25) == 0 && super.getCanSpawnHere();
+    }
+
+	@Override
 	public boolean isPotionApplicable(PotionEffect effect)
 	{
 		return effect.getPotion() == MobEffects.POISON ? false : super.isPotionApplicable(effect);
 	}
-
-	@Override
-    public float getBlockPathWeight(BlockPos pos)
-    {
-    	return this.worldObj.getBlockState(pos).getBlock() == BlocksAether.aether_grass ? 10.0F : 0.0F;
-    }
-
-    @Override
-    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
-    {
-    	return type == EnumCreatureType.MONSTER;
-    }
 
 	@Override
 	public void onUpdate()
@@ -200,12 +192,6 @@ public class EntityCockatrice extends EntityMob
 	{
 		super.readEntityFromNBT(nbttagcompound);
 	}
-
-	@Override
-    public int getMaxSpawnedInChunk()
-    {
-        return 1;
-    }
 
 	@Override
 	protected SoundEvent getAmbientSound()
