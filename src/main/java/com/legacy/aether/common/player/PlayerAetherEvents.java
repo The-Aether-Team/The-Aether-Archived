@@ -18,6 +18,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
+import net.minecraftforge.event.entity.player.PlayerEvent.Visibility;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
@@ -51,6 +52,17 @@ public class PlayerAetherEvents
 			{
 				event.addCapability(PLAYER_LOCATION,  provider);
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public void checkPlayerVisibility(Visibility event)
+	{
+		PlayerAether capability = PlayerAether.get(event.getEntityPlayer());
+
+		if (capability != null && capability.wearingAccessory(ItemsAether.invisibility_cape))
+		{
+			event.modifyVisibility(0.0D);
 		}
 	}
 
