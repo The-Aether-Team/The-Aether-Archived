@@ -157,7 +157,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 					GlStateManager.color(red, green, blue);
 				}
 
-				if (player.getUniqueID().toString() == "47ec3a3b-3f41-49b6-b5a0-c39abb7b51ef")
+				if (player.getUniqueID().toString().equals("47ec3a3b-3f41-49b6-b5a0-c39abb7b51ef"))
 				{
 					manager.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/armor/accessory_swuff.png"));
 				}
