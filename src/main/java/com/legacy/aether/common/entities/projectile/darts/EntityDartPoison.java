@@ -3,7 +3,6 @@ package com.legacy.aether.common.entities.projectile.darts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +15,6 @@ import com.legacy.aether.common.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.networking.AetherNetworkingManager;
 import com.legacy.aether.common.networking.packets.PacketSendPoison;
-import com.legacy.aether.common.player.PlayerAether;
 
 public class EntityDartPoison extends EntityDartBase
 {

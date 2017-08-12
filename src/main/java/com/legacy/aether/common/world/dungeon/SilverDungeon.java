@@ -15,8 +15,8 @@ import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.common.blocks.util.EnumCloudType;
 import com.legacy.aether.common.blocks.util.EnumStoneType;
+import com.legacy.aether.common.compatibility.AetherCompatibility;
 import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
-import com.legacy.aether.common.entities.util.MoaColor;
 import com.legacy.aether.common.items.ItemMoaEgg;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.world.biome.decoration.AetherGenClouds;
@@ -455,8 +455,8 @@ public class SilverDungeon extends AetherDungeon
 			case 2 :
 				return new ItemStack(ItemsAether.dart_shooter);
 			case 3 :
-				ItemStack stack = new ItemStack(ItemsAether.moa_egg, 1, 2);
-				stack.setTagCompound(ItemMoaEgg.getStackFromColor(MoaColor.getColor(2)).getTagCompound());
+				ItemStack stack = new ItemStack(ItemsAether.moa_egg, 1);
+				stack.setTagCompound(ItemMoaEgg.getStackFromColor(AetherCompatibility.getAetherRegistry().getMoaColor(2)).getTagCompound());
 				return stack;
 			case 4 :
 				return new ItemStack(ItemsAether.ambrosium_shard, random.nextInt(10) + 1);

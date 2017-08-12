@@ -11,7 +11,6 @@ import com.legacy.aether.client.renders.items.definitions.NotchHammerDefinition;
 import com.legacy.aether.client.renders.items.definitions.PhoenixBowDefinition;
 import com.legacy.aether.client.renders.items.util.AetherColor;
 import com.legacy.aether.common.Aether;
-import com.legacy.aether.common.entities.util.MoaColor;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.items.util.EnumDartShooterType;
 import com.legacy.aether.common.items.util.EnumDartType;
@@ -256,10 +255,7 @@ public class ItemRendering
 			register(ItemsAether.skyroot_bucket, meta, name);
 		}
 
-		for (int meta = 0; meta < MoaColor.colors.size(); ++meta)
-		{
-			register(ItemsAether.moa_egg, meta, "moa_egg");
-		}
+		register(ItemsAether.moa_egg, "moa_egg");
 
 		registerColor(ItemsAether.moa_egg);
 

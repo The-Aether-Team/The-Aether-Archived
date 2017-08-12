@@ -73,7 +73,7 @@ public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeW
 	}
 
 	@Override
-	public List<String>  getTooltipStrings(int mouseX, int mouseY)
+	public List<String> getTooltipStrings(int mouseX, int mouseY)
 	{
 		return new ArrayList<String>();
 	}
@@ -87,9 +87,9 @@ public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeW
 		stacks.init(1, false, 30, 47);
 		stacks.init(2, true, 90, 29);
 
-		stacks.set(0, recipeWrapper.enchantment.getEnchantmentInput());
+		//stacks.set(0, recipeWrapper.enchantment.getEnchantmentInput());
 		stacks.set(1, new ItemStack(ItemsAether.ambrosium_shard));
-		stacks.set(2, recipeWrapper.enchantment.getEnchantedResult());
+		//stacks.set(2, recipeWrapper.enchantment.getEnchantedResult());
 	}
 
 	@Override
@@ -101,9 +101,9 @@ public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeW
 		stacks.init(1, false, 30, 47);
 		stacks.init(2, true, 90, 29);
 
-		stacks.set(0, recipeWrapper.enchantment.getEnchantmentInput());
+		//stacks.set(0, recipeWrapper.enchantment.getEnchantmentInput());
 		stacks.set(1, new ItemStack(ItemsAether.ambrosium_shard));
-		stacks.set(2, recipeWrapper.enchantment.getEnchantedResult());
+		//stacks.set(2, recipeWrapper.enchantment.getEnchantedResult());
 	}
 
 }

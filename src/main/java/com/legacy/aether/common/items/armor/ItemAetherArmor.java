@@ -48,6 +48,11 @@ public class ItemAetherArmor extends ItemArmor
 		this.shouldDefualt = true;
 	}
 
+	public Item getRepairMaterial()
+	{
+		return this.source;
+	}
+
     public int getColorFromItemStack(ItemStack stack, int renderPass)
     {
 		return this.colorization != -1 ? this.colorization : 0;

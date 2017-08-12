@@ -26,6 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import com.legacy.aether.common.compatibility.AetherCompatibility;
 import com.legacy.aether.common.entities.util.EntitySaddleMount;
 import com.legacy.aether.common.entities.util.MoaColor;
 import com.legacy.aether.common.items.ItemMoaEgg;
@@ -101,10 +102,10 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		super.entityInit();
 
-		MoaColor color = MoaColor.getRandomColor(this.worldObj);
+		MoaColor color = AetherCompatibility.getAetherRegistry().getRandomColor(this.worldObj);
 
-		this.dataManager.register(MOA_COLOR, color.ID);
-		this.dataManager.register(REMAINING_JUMPS, color.jumps);
+		this.dataManager.register(MOA_COLOR, color.getID());
+		this.dataManager.register(REMAINING_JUMPS, color.getMoaProperties().getMaxJumps());
 		this.dataManager.register(PLAYER_GROWN, false);
 		this.dataManager.register(AMMOUNT_FEED, Byte.valueOf((byte) 0));
 		this.dataManager.register(HUNGRY, false);
@@ -192,12 +193,12 @@ public class EntityMoa extends EntitySaddleMount
 
 	public MoaColor getColor()
 	{
-		return MoaColor.getColor(this.dataManager.get(MOA_COLOR));
+		return AetherCompatibility.getAetherRegistry().getMoaColor(this.dataManager.get(MOA_COLOR));
 	}
 
 	public void setColor(MoaColor color)
 	{
-		this.dataManager.set(MOA_COLOR, color.ID);
+		this.dataManager.set(MOA_COLOR, color.getID());
 	}
 
 	@Override
@@ -205,7 +206,7 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		super.onUpdate();
 
-		this.setMaxJumps(getColor().jumps);
+		this.setMaxJumps(getColor().getMoaProperties().getMaxJumps());
 
 		if (this.isJumping)
 		{
@@ -323,7 +324,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public float getMountedMoveSpeed()
 	{
-		return this.getColor().ID == 1 ? 0.6F : 0.3F;
+		return this.getColor().getMoaProperties().getMoaSpeed();
 	}
 
 	public void setToAdult()
@@ -386,7 +387,7 @@ public class EntityMoa extends EntitySaddleMount
 
 		nbt.setBoolean("playerGrown", this.isPlayerGrown());
 		nbt.setInteger("remainingJumps", this.getRemainingJumps());
-		nbt.setInteger("color", this.getColor().ID);
+		nbt.setInteger("color", this.getColor().getID());
 		nbt.setByte("amountFed", this.getAmountFed());
 		nbt.setBoolean("isHungry", this.isHungry());
 		nbt.setBoolean("isSitting", this.isSitting());
@@ -399,7 +400,7 @@ public class EntityMoa extends EntitySaddleMount
 
 		this.setPlayerGrown(nbt.getBoolean("playerGrown"));
 		this.setRemainingJumps(nbt.getInteger("remainingJumps"));
-		this.setColor(MoaColor.getColor(nbt.getInteger("color")));
+		this.setColor(AetherCompatibility.getAetherRegistry().getMoaColor(nbt.getInteger("color")));
 		this.setAmountFed(nbt.getByte("amountFed"));
 		this.setHungry(nbt.getBoolean("isHungry"));
 		this.setSitting(nbt.getBoolean("isSitting"));

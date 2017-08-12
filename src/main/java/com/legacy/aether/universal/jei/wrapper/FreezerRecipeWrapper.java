@@ -10,8 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.google.common.collect.Lists;
-import com.legacy.aether.common.registry.AetherRegistry;
-import com.legacy.aether.common.registry.objects.AetherFreezable;
+import com.legacy.aether.common.freezables.IFreezableHandler;
 
 public class FreezerRecipeWrapper implements IRecipeWrapper
 {
@@ -20,27 +19,20 @@ public class FreezerRecipeWrapper implements IRecipeWrapper
 
 	private final ArrayList<ItemStack> outputs;
 
-	public AetherFreezable freezable;
+	public IFreezableHandler freezable;
 
-	public FreezerRecipeWrapper(AetherFreezable recipe)
+	public FreezerRecipeWrapper(IFreezableHandler recipe)
 	{
 		this.freezable = recipe;
 
 		this.inputs = Lists.newArrayList();
 		this.outputs = Lists.newArrayList();
-
-		for (AetherFreezable freezable : AetherRegistry.getFreezables())
-		{
-			this.inputs.add(freezable.getFreezableInput());
-			this.outputs.add(freezable.getFrozenResult());
-		}
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) 
 	{
-		ingredients.setInput(ItemStack.class, this.freezable.getFreezableInput());
-		ingredients.setOutput(ItemStack.class, this.freezable.getFrozenResult());
+
 	}
 
 	@Override

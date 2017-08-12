@@ -6,9 +6,11 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.common.compatibility.AetherCompatibility;
 import com.legacy.aether.common.entities.AetherEntities;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.networking.AetherNetworkingManager;
@@ -59,6 +61,12 @@ public class Aether
 		proxy.initialization();
 
 		ServerProxy.registerEvent(new AetherEventHandler());
+	}
+
+	@EventHandler
+	public void postInitialization(FMLPostInitializationEvent event)
+	{
+		AetherCompatibility.postInitialization();
 	}
 
 	public static ResourceLocation locate(String location)

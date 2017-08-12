@@ -1,18 +1,23 @@
 package com.legacy.aether.common.tile_entities;
 
+import java.util.Map;
+
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.items.ItemsAether;
-import com.legacy.aether.common.registry.AetherRegistry;
-import com.legacy.aether.common.registry.objects.AetherEnchantment;
+import com.legacy.aether.common.compatibility.AetherCompatibility;
+import com.legacy.aether.common.enchantments.AetherEnchantment;
+import com.legacy.aether.common.events.AetherEnchantmentEvent;
 import com.legacy.aether.common.tile_entities.util.AetherTileEntity;
 
 public class TileEntityEnchanter extends AetherTileEntity
@@ -54,64 +59,92 @@ public class TileEntityEnchanter extends AetherTileEntity
 			}
 		}
 
-		if (this.currentEnchantment != null && (this.enchantedItemStacks[0] == null || this.enchantedItemStacks[0].getItem() != this.currentEnchantment.getEnchantmentInput().getItem()))
+		if (this.currentEnchantment != null)
 		{
-			this.currentEnchantment = null;
-			this.enchantmentProgress = 0;
-		}
-
-		if (this.currentEnchantment != null && this.enchantmentProgress >= this.currentEnchantment.getTimeRequired())
-		{
-			if (!this.worldObj.isRemote)
+			if (this.getStackInSlot(0) == null || AetherCompatibility.getAetherRegistry().areEnchantmentsEqual(this.getStackInSlot(0), this.currentEnchantment))
 			{
-				if (this.enchantedItemStacks[2] == null)
-				{
-					this.setInventorySlotContents(2, new ItemStack(this.currentEnchantment.getEnchantedResult().getItem(), 1, this.currentEnchantment.getEnchantedResult().getItemDamage()));
-				}
-				else
-				{
-					this.setInventorySlotContents(2, new ItemStack(this.currentEnchantment.getEnchantedResult().getItem(), this.getStackInSlot(2).stackSize + 1, this.currentEnchantment.getEnchantedResult().getItemDamage()));
-				}
-
-				this.decrStackSize(0, 1);
+				this.currentEnchantment = null;
+				this.enchantmentProgress = 0;
 			}
 
-			this.enchantmentProgress = 0;
-		}
-
-		if (this.enchantmentTimeRemaining <= 0 && this.currentEnchantment != null && this.getStackInSlot(1) != null && this.getStackInSlot(1).getItem() == ItemsAether.ambrosium_shard)
-		{
-			this.enchantmentTimeRemaining += 500;
-
-			if (!this.worldObj.isRemote)
+			if (this.enchantmentProgress >= this.enchantmentTime)
 			{
-				this.decrStackSize(1, 1);
+				if (!this.worldObj.isRemote)
+				{
+					ItemStack result = this.currentEnchantment.getResult().copy();
+
+					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
+
+					if (this.getStackInSlot(2) != null)
+					{
+						result.stackSize = this.getStackInSlot(2).stackSize + 1;
+						this.setInventorySlotContents(2, result);
+					}
+					else
+					{
+						this.setInventorySlotContents(2, result);
+					}
+
+					if (this.getStackInSlot(0).getItem().getContainerItem() != null)
+					{
+						this.setInventorySlotContents(0, new ItemStack(this.getStackInSlot(0).getItem().getContainerItem()));
+					}
+					else
+					{
+						this.decrStackSize(0, 1);
+					}
+				}
+
+				this.enchantmentProgress = 0;
+
+				MinecraftForge.EVENT_BUS.post(new AetherEnchantmentEvent.Enchant(this, this.currentEnchantment));
+			}
+
+			if (this.enchantmentTimeRemaining <= 0 && AetherCompatibility.getAetherRegistry().isEnchantmentFuel(this.getStackInSlot(1)))
+			{
+				this.enchantmentTimeRemaining += AetherCompatibility.getAetherRegistry().getEnchantmentFuel(this.getStackInSlot(1));
+
+				if (!this.worldObj.isRemote)
+				{
+					this.decrStackSize(1, 1);
+				}
 			}
 		}
-
-		if (this.currentEnchantment == null)
+		else
 		{
 			ItemStack itemstack = this.getStackInSlot(0);
+			AetherEnchantment enchantment = AetherCompatibility.getAetherRegistry().getEnchantment(itemstack);
 
-			for (int i = 0; i < AetherRegistry.getEnchantmentSize(); i++)
+			if (enchantment != null)
 			{
-				AetherEnchantment enchantment = AetherRegistry.getEnchantment(i);
-
-				if (itemstack != null && enchantment != null && itemstack.getItem() == enchantment.getEnchantmentInput().getItem() && (itemstack.getItemDamage() == enchantment.getEnchantmentInput().getItemDamage() || itemstack.isItemStackDamageable()))
+				if (this.getStackInSlot(2) == null || AetherCompatibility.getAetherRegistry().isEnchantmentResult(this.getStackInSlot(2), enchantment))
 				{
-					if (this.enchantedItemStacks[2] == null)
+					this.currentEnchantment = enchantment;
+					this.enchantmentTime = this.currentEnchantment.getTimeRequired();
+					this.addEnchantmentWeight(itemstack);
+
+					AetherEnchantmentEvent.SetTime event = new AetherEnchantmentEvent.SetTime(this, this.enchantmentTime);
+
+					if (!MinecraftForge.EVENT_BUS.post(event))
 					{
-						this.currentEnchantment = enchantment;
-						this.enchantmentTime = this.currentEnchantment.getTimeRequired();
-					}
-					else if (this.enchantedItemStacks[2].getItem() == enchantment.getEnchantedResult().getItem() && enchantment.getEnchantmentInput().getMaxStackSize() > this.enchantedItemStacks[2].stackSize)
-					{
-						this.currentEnchantment = enchantment;
-						this.enchantmentTime = this.currentEnchantment.getTimeRequired();
+						this.enchantmentTime = event.getNewTime();
 					}
 				}
 			}
-		}	
+		}
+	}
+
+	public void addEnchantmentWeight(ItemStack stack)
+	{
+		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+
+		if (!enchantments.isEmpty())
+		{
+			for (int levels : enchantments.values())
+			{
+				this.enchantmentTime += (levels * 1250);
+			}
+		}
 	}
 
 	@Override
@@ -199,15 +232,11 @@ public class TileEntityEnchanter extends AetherTileEntity
 	public void setInventorySlotContents(int i, ItemStack itemstack)
 	{
 		this.enchantedItemStacks[i] = itemstack;
+
 		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit())
 		{
 			itemstack.stackSize = this.getInventoryStackLimit();
 		}
-	}
-
-	public static boolean isItemFuel(ItemStack fuel)
-	{
-		return fuel.getItem() == ItemsAether.ambrosium_shard;
 	}
 
 	@Override
@@ -272,29 +301,16 @@ public class TileEntityEnchanter extends AetherTileEntity
 		{
 			return false;
 		}
-		else if (slot == 1 && isItemFuel(stackInSlot))
+		else if (slot == 1 && AetherCompatibility.getAetherRegistry().isEnchantmentFuel(stackInSlot))
 		{
 			return true;
 		}
-		else if (slot == 0 && getEnchantmentResult(stackInSlot) != null)
+		else if (slot == 0 && AetherCompatibility.getAetherRegistry().isEnchantment(stackInSlot))
 		{
 			return true;
 		}
 
 		return false;
-	}
-
-	public static ItemStack getEnchantmentResult(ItemStack stack) 
-	{
-		for (AetherEnchantment enchants : AetherRegistry.getEnchantables())
-		{
-			if (enchants.getEnchantmentInput().getItem() == stack.getItem())
-			{
-				return enchants.getEnchantedResult().copy();
-			}
-		}
-
-		return null;
 	}
 
 	@Override

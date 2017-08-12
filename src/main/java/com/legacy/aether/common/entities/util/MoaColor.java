@@ -1,87 +1,74 @@
 package com.legacy.aether.common.entities.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 public class MoaColor
 {
 
-	public String name;
+	public String moaName;
 
-	public int ID, RGB, jumps, chance;
+	private MoaProperties properties;
 
-	private static int totalChance;
+	public int colorID, hexColor;
 
-	public static List<String> names = new ArrayList<String>();
+	public CreativeTabs creativeTab;
 
-	public static List<MoaColor> colors = new ArrayList<MoaColor>();
+	private static int moaColorID = -1;
 
-	static
+	public MoaColor(String moaName, int hexColor, MoaProperties properties)
 	{
-		new MoaColor(0, 0x7777ff, 3, 100, "Blue");
-		new MoaColor(1, -802168, 2, 50, "Orange");
-		new MoaColor(2, 0xffffff, 4, 20, "White");
-		new MoaColor(3, 0x222222, 8, 5, "Black");
+		this.colorID = ++moaColorID;
+
+		this.moaName = moaName;
+		this.hexColor = hexColor;
+		this.properties = properties;
+
+		this.creativeTab = AetherCreativeTabs.misc;
 	}
 
-	public MoaColor(int i, int j, int k, int l, String s)
+	public MoaColor(String moaName, int hexColor, MoaProperties properties, CreativeTabs creativeTab)
 	{
-		ID = i;
-		RGB = j;
-		jumps = k;
-		chance = l;
-		totalChance += l;
-		name = s;
-		colors.add(this);
-		names.add(name);
+		this(moaName, hexColor, properties);
+
+		this.creativeTab = creativeTab;
 	}
 
 	public ResourceLocation getTexture(boolean saddled)
-	{	
-		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + (saddled ? "saddle_" : "moa_") + name.toLowerCase() + ".png");
-	}
-
-	public static MoaColor getRandomColor(World world)
 	{
-		int i = world.rand.nextInt(totalChance);
-		
-		for(int j = 0; j < colors.size(); j++)
+		if (this.properties.hasCustomTexture())
 		{
-			if(i < colors.get(j).chance)
-			{
-				return colors.get(j);
-			}
-			else
-			{
-				i -= colors.get(j).chance;
-			}
+			return this.properties.getCustomTexture(saddled);
 		}
-		
-		return colors.get(0);
+
+		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + (saddled ? "saddle_" : "moa_") + this.moaName.toLowerCase() + ".png");
 	}
 
-	public static MoaColor getColor(int ID)
+	public MoaProperties getMoaProperties()
 	{
-		for(int i = 0; i < colors.size(); i++)
-		{
-			if(colors.get(i).ID == ID)
-			{
-				return colors.get(i);
-			}
-		}
-		
-		return colors.get(0);
+		return this.properties;
 	}
 
-	public static String[] getNames()
+	public CreativeTabs getCreativeTab()
 	{
-		String[] namesArray = new String[names.size()];
-		namesArray = names.toArray(namesArray);
-		
-		return namesArray;
+		return this.creativeTab;
+	}
+
+	public String getName()
+	{
+		return this.moaName;
+	}
+
+	public int getID()
+	{
+		return this.colorID;
+	}
+
+	public int getMoaEggColor()
+	{
+		return this.hexColor;
 	}
 
 }

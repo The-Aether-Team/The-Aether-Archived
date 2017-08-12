@@ -14,6 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import com.legacy.aether.common.compatibility.AetherCompatibility;
 import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.common.entities.util.MoaColor;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
@@ -21,12 +22,17 @@ import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 public class ItemMoaEgg extends Item
 {
 
-	protected ItemMoaEgg()
+	public ItemMoaEgg()
 	{
-		this.setHasSubtypes(true);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
+
+	@Override
+    public CreativeTabs[] getCreativeTabs()
+    {
+    	return CreativeTabs.CREATIVE_TAB_ARRAY;
+    }
 
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
@@ -35,7 +41,7 @@ public class ItemMoaEgg extends Item
 		{
 			if (stack.getTagCompound() == null)
 			{
-				stack.setTagCompound(ItemMoaEgg.getStackFromColor(MoaColor.getRandomColor(world)).getTagCompound());
+				stack.setTagCompound(ItemMoaEgg.getStackFromColor(AetherCompatibility.getAetherRegistry().getRandomColor(world)).getTagCompound());
 			}
 		}
 	}
@@ -45,7 +51,7 @@ public class ItemMoaEgg extends Item
     {
 		if (playerIn.capabilities.isCreativeMode)
 		{
-			EntityMoa moa = new EntityMoa(worldIn, MoaColor.getColor(stack.getTagCompound().getInteger("color")));
+			EntityMoa moa = new EntityMoa(worldIn, AetherCompatibility.getAetherRegistry().getMoaColor(stack.getTagCompound().getInteger("color")));
 
 			moa.moveToBlockPosAndAngles(pos.up(), 1.0F, 1.0F);
 			moa.setPlayerGrown(true);
@@ -63,22 +69,22 @@ public class ItemMoaEgg extends Item
 
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void getSubItems(Item item, CreativeTabs tabs, List creativeList)
+	public void getSubItems(Item item, CreativeTabs tab, List creativeList)
 	{
-		int meta = 0;
-		
-		for (MoaColor color : MoaColor.colors)
+		for (MoaColor color : AetherCompatibility.getAetherRegistry().getMoaColors())
 		{
-			ItemStack stack = new ItemStack(item, 1, meta);
+			ItemStack stack = new ItemStack(item, 1);
 			NBTTagCompound tag = new NBTTagCompound();
-			
-			tag.setInteger("color", color.ID);
+
+			tag.setInteger("color", color.getID());
 			tag.setBoolean("creativeSpawned", true);
-			
+
 			stack.setTagCompound(tag);
-			creativeList.add(stack);
-			
-			meta++;
+
+			if (tab == color.getCreativeTab())
+			{
+				creativeList.add(stack);
+			}
 		}
 	}
 
@@ -94,12 +100,12 @@ public class ItemMoaEgg extends Item
 
 		if (tag != null)
 		{
-			MoaColor color = MoaColor.getColor(tag.getInteger("color"));
+			MoaColor color = AetherCompatibility.getAetherRegistry().getMoaColor(tag.getInteger("color"));
 			
-			return color.RGB;
+			return color.getMoaEggColor();
 		}
 
-		return MoaColor.getColor(0).RGB;
+		return AetherCompatibility.getAetherRegistry().getMoaColor(0).getMoaEggColor();
 	}
 
 	public MoaColor getMoaColorFromItemStack(ItemStack stack)
@@ -108,12 +114,12 @@ public class ItemMoaEgg extends Item
 
 		if (tag != null)
 		{
-			MoaColor color = MoaColor.getColor(tag.getInteger("color"));
+			MoaColor color = AetherCompatibility.getAetherRegistry().getMoaColor(tag.getInteger("color"));
 			
 			return color;
 		}
 
-		return MoaColor.getColor(0);
+		return AetherCompatibility.getAetherRegistry().getMoaColor(0);
 	}
 
 	@Override
@@ -123,9 +129,9 @@ public class ItemMoaEgg extends Item
 
 		if (tag != null && stack.getTagCompound().hasKey("color"))
 		{
-			MoaColor color = MoaColor.getColor(tag.getInteger("color"));
+			MoaColor color = AetherCompatibility.getAetherRegistry().getMoaColor(tag.getInteger("color"));
 
-			return color.name + " Moa Egg";
+			return color.getName() + " Moa Egg";
 		}
 
 		return super.getUnlocalizedName();
@@ -143,7 +149,7 @@ public class ItemMoaEgg extends Item
 
 		NBTTagCompound tag = new NBTTagCompound();
 
-		tag.setInteger("color", color.ID);
+		tag.setInteger("color", color.getID());
 		tag.setBoolean("creativeSpawned", true);
 
 		stack.setTagCompound(tag);

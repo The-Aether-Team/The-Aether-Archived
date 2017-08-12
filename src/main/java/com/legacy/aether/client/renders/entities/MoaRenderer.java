@@ -20,6 +20,7 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 	public MoaRenderer(RenderManager renderManager)
 	{
 		super(renderManager, new MoaModel(), 1.0F);
+
 		this.addLayer(new MoaLayer(renderManager, (MoaModel) this.getMainModel()));
 		this.addLayer(new MoaDonatorLayer(renderManager, (MoaModel) this.getMainModel()));
 	}
@@ -37,7 +38,7 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 	{
 		return this.getWingRotation(entityliving, f);
 	}
-    
+
 	protected void scaleMoa(EntityMoa entityMoa)
 	{
 		float moaScale = entityMoa.isChild() ?  1.0f : 1.8f;
@@ -55,7 +56,7 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 	protected ResourceLocation getEntityTexture(EntityMoa entity)
 	{
 		EntityMoa moa = (EntityMoa)entity;
-		
+
 		if (!moa.getPassengers().isEmpty() && moa.getPassengers().get(0) instanceof EntityPlayer)
 		{
 			PlayerAether player = PlayerAether.get((EntityPlayer) moa.getPassengers().get(0));

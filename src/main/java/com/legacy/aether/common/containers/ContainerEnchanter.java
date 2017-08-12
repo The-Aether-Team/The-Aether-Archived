@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.common.compatibility.AetherCompatibility;
 import com.legacy.aether.common.containers.slots.SlotEnchanter;
 import com.legacy.aether.common.tile_entities.TileEntityEnchanter;
 
@@ -132,14 +133,14 @@ public class ContainerEnchanter extends Container
 			}
 			else if (par2 != 1 && par2 != 0)
 			{
-				if (TileEntityEnchanter.getEnchantmentResult(itemstack1) != null)
+				if (AetherCompatibility.getAetherRegistry().isEnchantment(itemstack))
 				{
 					if (!this.mergeItemStack(itemstack1, 0, 1, false))
 					{
 						return null;
 					}
 				}
-				else if (TileEntityEnchanter.isItemFuel(itemstack1))
+				else if (AetherCompatibility.getAetherRegistry().isEnchantmentFuel(itemstack1))
 				{
 					if (!this.mergeItemStack(itemstack1, 1, 2, false))
 					{
