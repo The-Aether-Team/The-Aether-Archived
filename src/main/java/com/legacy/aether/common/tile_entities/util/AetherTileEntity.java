@@ -1,6 +1,5 @@
 package com.legacy.aether.common.tile_entities.util;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -9,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public abstract class AetherTileEntity extends TileEntity implements ISidedInventory, IInventory, ITickable
 {
@@ -36,7 +35,7 @@ public abstract class AetherTileEntity extends TileEntity implements ISidedInven
 	@Override
 	public ITextComponent getDisplayName() 
 	{
-		return new TextComponentString(I18n.format("aether_tile." + name + ".name",  new Object[0]));
+		return new TextComponentTranslation("aether_tile." + name + ".name",  new Object[0]);
 	}
 
 	@Override
