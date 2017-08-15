@@ -104,9 +104,9 @@ public class AerwhaleAITravelCourse extends EntityAIBase
 
         this.aerwhale.rotationPitch *= 0.99D;
 
-        this.aerwhale.motionX += 0.005D * Math.cos((this.aerwhale.rotationYaw / 180D) * 3.1415926535897931D ) * Math.cos ((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
-        this.aerwhale.motionY += 0.005D * Math.sin((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D );
-        this.aerwhale.motionZ += 0.005D * Math.sin((this.aerwhale.rotationYaw / 180D) * 3.1415926535897931D ) * Math.cos ((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
+        this.aerwhale.motionX += 0.005D * Math.cos((this.aerwhale.rotationYaw / 180D) * 3.1415926535897931D) * Math.cos((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
+        this.aerwhale.motionY += 0.005D * Math.sin((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
+        this.aerwhale.motionZ += 0.005D * Math.sin((this.aerwhale.rotationYaw / 180D) * 3.1415926535897931D) * Math.cos((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
 
         this.aerwhale.motionX *= 0.98D;
         this.aerwhale.motionY *= 0.98D;
@@ -170,17 +170,18 @@ public class AerwhaleAITravelCourse extends EntityAIBase
     	double standard = 50D;
  
         float yaw = this.aerwhale.rotationYaw + rotationYawOffset;
-        float pitch = this.aerwhale.rotationPitch + rotationPitchOffset;
+        float pitch = this.aerwhale.rotationYaw + rotationYawOffset;
 
         float f3 = MathHelper.cos(-yaw * 0.01745329F - 3.141593F);
         float f4 = MathHelper.sin(-yaw * 0.01745329F - 3.141593F);
         float f5 = MathHelper.cos(-pitch * 0.01745329F);
 
         float f7 = f4 * f5;
+        float f8 = MathHelper.sin(-pitch * 0.01745329F);
         float f9 = f3 * f5;
 
         Vec3d vec3d = new Vec3d(this.aerwhale.getPosition());
-        Vec3d vec3d1 = vec3d.addVector((double)f7 * standard, (double)MathHelper.sin(-pitch * 0.01745329F) * standard, (double)f9 * standard);
+        Vec3d vec3d1 = vec3d.addVector((double)f7 * standard, (double)f8 * standard, (double)f9 * standard);
 
         RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec3d, vec3d1, false);
 

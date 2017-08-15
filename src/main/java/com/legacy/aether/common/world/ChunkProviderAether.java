@@ -282,26 +282,9 @@ public class ChunkProviderAether implements  IChunkGenerator
 	@Override
 	public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) 
 	{
-		if (creatureType == EnumCreatureType.CREATURE)
-		{
-			return this.worldObj.getBiome(pos).getSpawnableList(EnumCreatureType.CREATURE);
-		}
-		else if (creatureType == EnumCreatureType.MONSTER)
-		{
-			if (this.rand.nextInt(18) == 0)
-			{
-				return this.worldObj.getBiome(pos).getSpawnableList(EnumCreatureType.MONSTER);
-			}
-		}
-		else if (creatureType == EnumCreatureType.AMBIENT)
-		{
-			if (this.rand.nextInt(35) == 0)
-			{
-				return this.worldObj.getBiome(pos).getSpawnableList(EnumCreatureType.AMBIENT);
-			}
-		}
+		Biome biome = this.worldObj.getBiomeProvider().getBiome(pos);
 
-		return null;
+		return biome != null ? biome.getSpawnableList(creatureType) : null;
 	}
 
 	@Override

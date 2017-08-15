@@ -47,39 +47,26 @@ public class AetherBiome extends Biome
 
 		list.clear();
 
-		this.addFlyingEntry(list);
-
-		this.spawnableCaveCreatureList.addAll(list);
-
 		this.topBlock = BlocksAether.aether_grass.getDefaultState();
 		this.fillerBlock = BlocksAether.holystone.getDefaultState();
 	}
 
-    public float getSpawningChance()
-    {
-        return Loader.isModLoaded("sponge") ? 0.1F : 0.2F;
-    }
-
 	private void addCreatureEntry(ArrayList<SpawnListEntry> list)
 	{
-		list.add(new SpawnListEntry(EntitySheepuff.class, 30, 4, 4));
-		list.add(new SpawnListEntry(EntityPhyg.class, 39, 4, 4));
-		list.add(new SpawnListEntry(EntityMoa.class, 40, 3, 3));
-		list.add(new SpawnListEntry(EntityFlyingCow.class, 46, 4, 4));
-		list.add(new SpawnListEntry(EntityAerbunny.class, 36, 3, 3));
+		list.add(new SpawnListEntry(EntitySwet.class, 10, 4, 4));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 8, 3, 3));
+		list.add(new SpawnListEntry(EntitySheepuff.class, 10, 4, 4));
+		list.add(new SpawnListEntry(EntityPhyg.class, 12, 4, 4));
+		list.add(new SpawnListEntry(EntityMoa.class, 10, 3, 3));
+		list.add(new SpawnListEntry(EntityFlyingCow.class, 10, 4, 4));
+		list.add(new SpawnListEntry(EntityAerbunny.class, 11, 3, 3));
 	}
 
 	private void addMobEntry(ArrayList<SpawnListEntry> list)
 	{
-		list.add(new SpawnListEntry(EntitySwet.class, 20, 1, 2));
-		list.add(new SpawnListEntry(EntityAechorPlant.class, 40, 1, 2));
-		list.add(new SpawnListEntry(EntityCockatrice.class, 60, 1, 2));
-	}
-
-	private void addFlyingEntry(ArrayList<SpawnListEntry> list)
-	{
-		list.add(new SpawnListEntry(EntityAerwhale.class, 3, 1, 3));
-		list.add(new SpawnListEntry(EntityZephyr.class, 5, 0, 1));
+		list.add(new SpawnListEntry(EntityCockatrice.class, 3, 4, 4));
+		list.add(new SpawnListEntry(EntityAerwhale.class, 8, 3, 3));
+		list.add(new SpawnListEntry(EntityZephyr.class, 5, 1, 1));
 	}
 
 	@Override
@@ -88,21 +75,19 @@ public class AetherBiome extends Biome
     	return 0xC0C0FF; // Lavender Blue
     }
 
+	@Override
     public boolean canRain()
     {
     	return false;
     }
 
-    public Biome.TempCategory getTempCategory()
-    {
-    	return TempCategory.COLD;
-    }
-
+	@Override
     public BiomeDecorator createBiomeDecorator()
     {
     	return new AetherBiomeDecorator();
     }
 
+	@Override
     public WorldGenAbstractTree genBigTreeChance(Random rand)
     {
         return (WorldGenAbstractTree)(rand.nextInt(20) == 0 ? new AetherGenOakTree() : new AetherGenSkyrootTree(false));

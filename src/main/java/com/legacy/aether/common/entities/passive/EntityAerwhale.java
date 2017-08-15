@@ -1,7 +1,6 @@
 package com.legacy.aether.common.entities.passive;
 
 import net.minecraft.entity.EntityFlying;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.monster.IMob;
@@ -29,18 +28,6 @@ public class EntityAerwhale extends EntityFlying implements IMob
     }
 
     @Override
-    public void setLocationAndAngles(double x, double y, double z, float yaw, float pitch)
-    {
-        this.lastTickPosX = this.prevPosX = this.posX = x;
-        this.lastTickPosY = this.prevPosY = this.posY = y + 30;
-        this.lastTickPosZ = this.prevPosZ = this.posZ = z;
-        this.rotationYaw = yaw;
-        this.rotationPitch = pitch;
-
-        this.setPosition(this.posX, this.posY, this.posZ);
-    }
-
-    @Override
     protected void initEntityAI()
     {
     	this.tasks.addTask(0, new EntityAIUpdateState(this));
@@ -59,15 +46,15 @@ public class EntityAerwhale extends EntityFlying implements IMob
     @Override
     public boolean getCanSpawnHere()
     {
-        BlockPos pos = new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY), MathHelper.floor(this.posZ));
+    	BlockPos pos = new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY), MathHelper.floor(this.posZ));
 
-        return this.world.getLight(pos) > 8 && this.world.checkNoEntityCollision(this.getEntityBoundingBox().expand(0D, 30D, 0D)) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.world.containsAnyLiquid(this.getEntityBoundingBox());
+    	return this.rand.nextInt(65) == 0 && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0 && !this.world.containsAnyLiquid(this.getEntityBoundingBox()) && this.world.getLight(pos) > 8 && super.getCanSpawnHere();
     }
 
     @Override
-    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
+    public int getMaxSpawnedInChunk()
     {
-    	return type == EnumCreatureType.AMBIENT;
+        return 1;
     }
 
     @Override
@@ -94,12 +81,6 @@ public class EntityAerwhale extends EntityFlying implements IMob
     protected SoundEvent getDeathSound()
     {
         return SoundsAether.aerwhale_death;
-    }
-
-    @Override
-    public int getMaxSpawnedInChunk()
-    {
-        return 1;
     }
 
     @Override

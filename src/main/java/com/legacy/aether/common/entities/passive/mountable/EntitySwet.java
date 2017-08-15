@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -62,12 +61,6 @@ public class EntitySwet extends EntityMountable
 		this.ticker = 0;
 		this.slimeJumpDelay = this.rand.nextInt(20) + 10;
 	}
-
-    @Override
-    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount)
-    {
-    	return type == EnumCreatureType.MONSTER;
-    }
 
 	@Override
 	public void updateRidden()
@@ -703,11 +696,5 @@ public class EntitySwet extends EntityMountable
 	{
 		return null;
 	}
-
-	@Override
-    public int getMaxSpawnedInChunk()
-    {
-        return 6;
-    }
 
 }
