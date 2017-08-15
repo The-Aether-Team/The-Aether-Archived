@@ -47,7 +47,7 @@ public class AetherMusicHandler
 
 		if (category == SoundCategory.MUSIC)
 		{
-			if (this.musicTicker.playingMusic())
+			if (!sound.getSoundLocation().toString().contains("aether_legacy"))
 			{
 				event.setResultSound(null);
 
