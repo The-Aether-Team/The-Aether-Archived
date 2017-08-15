@@ -171,18 +171,24 @@ public class ItemSkyrootBucket extends Item
         {
             return emptyBuckets;
         }
-        else if (emptyBuckets.getCount() - 1 <= 0)
-        {
-            return new ItemStack(fullBucket, 1, 1);
-        }
         else
         {
-            if (!player.inventory.addItemStackToInventory(new ItemStack(fullBucket)))
-            {
-                player.dropItem(new ItemStack(fullBucket, 1, 1), false);
-            }
+        	ItemStack result = new ItemStack(fullBucket, 1, 1);
+        	emptyBuckets.shrink(1);
 
-            return emptyBuckets;
+        	if (emptyBuckets.getCount() <= 0)
+        	{
+        		return result;
+        	}
+        	else
+        	{
+                if (!player.inventory.addItemStackToInventory(result))
+                {
+                    player.dropItem(result, false);
+                }
+        	}
+
+        	return emptyBuckets;
         }
     }
 
