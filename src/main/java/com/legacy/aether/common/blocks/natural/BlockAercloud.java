@@ -61,6 +61,8 @@ public class BlockAercloud extends Block implements IAetherMeta
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
 	{
+    	entity.fallDistance = 0;
+
     	if (((EnumCloudType)state.getValue(cloud_type)).equals(EnumCloudType.Blue))
     	{
 			if (entity instanceof EntityPlayer)
@@ -113,8 +115,6 @@ public class BlockAercloud extends Block implements IAetherMeta
     			entity.motionY *= 0.005D;
     		}
     	}
-
-    	entity.fallDistance = 0;
 	}
 
 	@Override
@@ -186,6 +186,12 @@ public class BlockAercloud extends Block implements IAetherMeta
         }
 
         return !worldIn.getBlockState(pos.offset(side)).doesSideBlockRendering(worldIn, pos.offset(side), side.getOpposite());
+    }
+
+	@Override
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
     }
 
 	@Override
