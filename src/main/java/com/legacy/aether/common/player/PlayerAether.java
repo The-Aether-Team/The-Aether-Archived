@@ -64,7 +64,7 @@ public class PlayerAether
 
 	public Ability[] abilities;
 
-	private boolean isJumping, isDonator;
+	private boolean isJumping;
 
 	private float lifeShardsUsed;
 
@@ -670,15 +670,7 @@ public class PlayerAether
 	 */
 	public boolean isDonator()
 	{
-		return this.isDonator;
-	}
-
-	/*
-	 * Sets if the player is a donator or not
-	 */
-	public void setDonator(boolean isDonator)
-	{
-		this.isDonator = isDonator;
+		return true;
 	}
 
 	public void setInPortal()
