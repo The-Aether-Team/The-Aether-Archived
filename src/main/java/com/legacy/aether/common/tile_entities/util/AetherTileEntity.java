@@ -29,7 +29,7 @@ public abstract class AetherTileEntity extends TileEntity implements ISidedInven
 	@Override
 	public boolean hasCustomName() 
 	{
-		return true;
+		return false;
 	}
 
 	@Override
