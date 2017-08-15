@@ -3,10 +3,12 @@ package com.legacy.aether.common.items.tools;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.items.util.EnumAetherToolType;
 
@@ -16,6 +18,12 @@ public class ItemHolystoneTool extends ItemAetherTool
 	public ItemHolystoneTool(EnumAetherToolType toolType)
 	{
 		super(ToolMaterial.STONE, toolType);
+	}
+
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return repair.getItem() == Item.getItemFromBlock(BlocksAether.holystone);
 	}
 
     public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
