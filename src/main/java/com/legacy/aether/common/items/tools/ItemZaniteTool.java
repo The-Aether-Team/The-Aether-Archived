@@ -3,6 +3,7 @@ package com.legacy.aether.common.items.tools;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 
+import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.items.util.EnumAetherToolType;
 
 public class ItemZaniteTool extends ItemAetherTool
@@ -13,6 +14,12 @@ public class ItemZaniteTool extends ItemAetherTool
 	public ItemZaniteTool(EnumAetherToolType toolType) 
 	{
 		super(ToolMaterial.IRON, toolType);
+	}
+
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return repair.getItem() == ItemsAether.zanite_gemstone;
 	}
 
     @Override
