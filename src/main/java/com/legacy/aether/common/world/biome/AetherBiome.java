@@ -6,7 +6,6 @@ import java.util.Random;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraftforge.fml.common.Loader;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.entities.hostile.EntityAechorPlant;

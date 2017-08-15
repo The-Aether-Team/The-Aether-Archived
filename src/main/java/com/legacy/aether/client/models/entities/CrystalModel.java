@@ -69,12 +69,13 @@ public class CrystalModel extends ModelBase
 		GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
     }
 
-    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5) 
+    @Override
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
         for(int i = 0; i < 3; i ++) 
         {
-			head[i].rotateAngleY = f3 / 57.29578F;
-			head[i].rotateAngleX = f4 / 57.29578F;
+			head[i].rotateAngleY = netHeadYaw / 57.29578F;
+			head[i].rotateAngleX = headPitch / 57.29578F;
 		}
     }
 
