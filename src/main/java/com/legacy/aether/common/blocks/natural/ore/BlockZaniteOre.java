@@ -22,6 +22,26 @@ public class BlockZaniteOre extends Block
 	}
 
 	@Override
+    public int quantityDroppedWithBonus(int fortune, Random random)
+    {
+        if (fortune > 0 && Item.getItemFromBlock(this) != this.getItemDropped((IBlockState)this.getBlockState().getValidStates().iterator().next(), random, fortune))
+        {
+            int i = random.nextInt(fortune + 2) - 1;
+
+            if (i < 0)
+            {
+                i = 0;
+            }
+
+            return this.quantityDropped(random) * (i + 1);
+        }
+        else
+        {
+            return this.quantityDropped(random);
+        }
+    }
+
+	@Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
         return ItemsAether.zanite_gemstone;
