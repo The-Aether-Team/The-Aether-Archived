@@ -27,8 +27,10 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.portal.BlockAetherPortal;
+import com.legacy.aether.common.entities.bosses.EntityValkyrie;
 import com.legacy.aether.common.entities.passive.mountable.EntityFlyingCow;
 import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.common.items.dungeon.ItemDungeonKey;
 import com.legacy.aether.common.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.common.items.weapons.ItemSkyrootSword;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
@@ -199,13 +201,18 @@ public class AetherEventHandler
 				EntityPlayer player = (EntityPlayer) source.getEntity();
 				ItemStack currentItem = player.inventory.getCurrentItem();
 
-				if (currentItem.getItem() instanceof ItemSkyrootSword && !(entity instanceof EntityPlayer) && !(entity instanceof EntityWither))
+				if (currentItem.getItem() instanceof ItemSkyrootSword && !(entity instanceof EntityPlayer) && !(entity instanceof EntityWither) && !(entity instanceof EntityValkyrie))
 				{
 					for (EntityItem items : event.getDrops())
 					{
-						EntityItem item = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, items.getEntityItem());
+						ItemStack stack = items.getEntityItem();
 
-						entity.world.spawnEntity(item);
+						if (!(stack.getItem() instanceof ItemDungeonKey) && stack.getItem() != ItemsAether.victory_medal && stack.getItem() != Items.SKULL)
+						{
+							EntityItem item = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, items.getEntityItem());
+
+							entity.world.spawnEntity(item);
+						}
 					}
 				}
 			}
