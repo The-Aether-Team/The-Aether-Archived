@@ -333,7 +333,7 @@ public class ChunkProviderAether implements  IChunkGenerator
     		}
     	}
 
-		if (this.rand.nextInt(15) == 0)
+		if (this.rand.nextInt(11) == 0)
         {
 	        this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(this.rand.nextInt(16), this.rand.nextInt(64) + 32, this.rand.nextInt(16)));
         }
