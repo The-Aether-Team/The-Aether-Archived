@@ -2,7 +2,10 @@ package com.legacy.aether.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.renderer.InventoryEffectRenderer;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -87,19 +90,33 @@ public class AetherClientEvents
 	@SubscribeEvent
 	public void onGuiOpened(GuiScreenEvent.InitGuiEvent.Post event)
 	{
+		if (!(event.getGui() instanceof InventoryEffectRenderer))
+		{
+			return;
+		}
+
+		int guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiLeft", "field_147003_i");
+		int guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiTop", "field_147009_r");
+
 		if (event.getGui().getClass() == GuiInventory.class)
 		{
-			int guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiLeft", "field_147003_i");
-			int guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiTop", "field_147009_r");
-
 			event.getButtonList().add(new GuiAccessoryButton(guiLeft + 26, guiTop + 65));
+		}
+		else if (event.getGui() instanceof GuiContainerCreative)
+		{
+			GuiContainerCreative gui = (GuiContainerCreative) event.getGui();
+
+			if (gui.getSelectedTabIndex() == CreativeTabs.INVENTORY.getTabIndex())
+			{
+				event.getButtonList().add(new GuiAccessoryButton(guiLeft + 73, guiTop + 38));
+			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onButtonPressed(GuiScreenEvent.ActionPerformedEvent.Pre event)
 	{
-		if (event.getGui().getClass() ==  GuiInventory.class && event.getButton().id == 18067)
+		if ((event.getGui().getClass() ==  GuiInventory.class || event.getGui() instanceof GuiContainerCreative) && event.getButton().id == 18067)
 		{
 			AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
 		}
