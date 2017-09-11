@@ -16,6 +16,8 @@ public class AetherConfig
 
 	private static boolean skyrootBucketOnly;
 
+	private static boolean developer_mode;
+
 	public static void init(File location)
 	{
 		File newFile = new File(location + "/aether" + "/Aether_Legacy.cfg");
@@ -41,6 +43,8 @@ public class AetherConfig
 		skyrootBucketOnly = config.get("Misc", "Activate portal with only Skyroot bucket", false).getBoolean(false);
 
 		disable_trivia = config.get("Trivia", "Disable random trivia", false).getBoolean(false);
+
+		developer_mode = config.get("Developer Options", "Enable extra logging for certain features", false).getBoolean(false);
 
 		config.save();
 	}
@@ -68,6 +72,20 @@ public class AetherConfig
 	public static boolean activateOnlyWithSkyroot()
 	{
 		return AetherConfig.skyrootBucketOnly;
+	}
+
+	public static void autoDeveloperMode(String versionNumber)
+	{
+		if (versionNumber.contains("dev"))
+		{
+			developer_mode = true;
+			AetherLogger.print("It appears that you are using a development build of Aether Legacy. As such, developer mode has automatically been enabled regardless of configuration setting.");
+		}
+	}
+
+	public static boolean developerMode()
+	{
+		return AetherConfig.developer_mode;
 	}
 
 }
