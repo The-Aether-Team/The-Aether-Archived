@@ -20,7 +20,10 @@ public class AetherLogger
     {
         if (messageDeveloper.toString() == null)
         {
-            logDev.info(messageDeveloper.toString());
+            if(AetherConfig.developerMode())
+            {
+                logDev.info(messageDeveloper.toString());
+            }
         }
     }
 
