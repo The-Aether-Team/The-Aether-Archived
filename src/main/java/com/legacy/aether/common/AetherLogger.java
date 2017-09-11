@@ -8,6 +8,7 @@ public class AetherLogger
     public static final Logger log = LogManager.getLogger("[Aether Legacy]: ");
     public static final Logger logDev = LogManager.getLogger("[Aether Legacy Developer]: ");
 
+    //Just what you'd expect.
     public static void print(Object message)
     {
         if(message.toString() != null)
@@ -16,6 +17,7 @@ public class AetherLogger
         }
     }
 
+    //This method only prints to console when the developer mode config setting is enabled.
     public static void printDev(Object messageDeveloper)
     {
         if (messageDeveloper.toString() == null)

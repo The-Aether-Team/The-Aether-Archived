@@ -74,6 +74,8 @@ public class AetherConfig
 		return AetherConfig.skyrootBucketOnly;
 	}
 
+	//This method should be before the method below, because if it is below the developerMode() boolean method,
+	//I'm assuming that the original configuration developer mode setting will take place regardless of this method.
 	public static void autoDeveloperMode(String versionNumber)
 	{
 		if (versionNumber.contains("dev"))
