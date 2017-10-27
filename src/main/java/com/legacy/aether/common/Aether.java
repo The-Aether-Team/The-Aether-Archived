@@ -20,11 +20,15 @@ import com.legacy.aether.common.registry.sounds.SoundsAether;
 import com.legacy.aether.common.tile_entities.AetherTileEntities;
 import com.legacy.aether.common.world.AetherWorld;
 
-@Mod(name = "Aether Legacy", modid = Aether.modid, version = "v1.0.1", acceptedMinecraftVersions = "1.11.2")
+@Mod(name = "Aether Legacy", modid = Aether.modid, version = Aether.version, acceptedMinecraftVersions = "1.11.2")
 public class Aether 
 {
 
 	public static final String modid = "aether_legacy";
+
+	//If version number has "dev" in it, developer mode will automatically be enabled.
+	//This saves time and makes things much easier.
+	public static final String version = "v1.0.1-dev";
 
 	@Instance(Aether.modid)
 	public static Aether instance;
@@ -36,6 +40,7 @@ public class Aether
 	public void preInitialization(FMLPreInitializationEvent event)
 	{
 		AetherConfig.init(event.getModConfigurationDirectory());
+		AetherConfig.autoDeveloperMode(version);
 
 		AetherNetworkingManager.preInitialization();
 

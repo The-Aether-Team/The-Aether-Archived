@@ -1,5 +1,6 @@
 package com.legacy.aether.common.registry.achievements;
 
+import com.legacy.aether.common.AetherLogger;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -33,6 +34,7 @@ public class AchievementsAether
 		ACpage = new AchievementPage("Aether I", enter_aether, defeat_bronze, defeat_silver, defeat_gold, enchanter, incubator, blue_cloud, flying_pig, grav_tools, loreception);
 
 		AchievementPage.registerAchievementPage(ACpage);
+		AetherLogger.printDev("Achievements successfully registered."); //Obviously you can delete this later if you want.
 	}
 
 }
