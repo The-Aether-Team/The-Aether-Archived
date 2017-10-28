@@ -1,6 +1,9 @@
 # Item Names
 item.lore_book.name=Book of Lore
-item.MoaEgg.name=Moa Egg
+item.blue_moa_egg.name=Blue Moa Egg
+item.orange_moa_egg.name=Orange Moa Egg
+item.white_moa_egg.name=White Moa Egg
+item.black_moa_egg.name=Black Moa Egg
 item.leather_gloves.name=Leather Gloves
 item.chain_gloves.name=Chain Gloves
 item.golden_gloves.name=Golden Gloves
@@ -274,3 +277,30 @@ tab.aether_misc=Aether Miscellaneous
 
 # Tab Names
 tab.accessories.name=Accessories
+
+# Subtitles
+subtitles.aemob.moa.say=Moa calls
+subtitles.aemob.moa.flap=Moa flaps
+subtitles.aemob.phyg.say=Phyg oinks
+subtitles.aemob.phyg.hurt=Phyg hurts
+subtitles.aemob.phyg.death=Phyg dies
+subtitles.aemob.sheepuff.say=Sheepuff baahs
+subtitles.aemob.sheepuff.hurt=Sheepuff hurts
+subtitles.aemob.sheepuff.death=Sheepuff dies
+subtitles.aemob.flyingcow.say=Flying Cow moos
+subtitles.aemob.flyingcow.hurt=Flying Cow hurts
+subtitles.aemob.flyingcow.death=Flying Cow dies
+subtitles.aemob.aerbunny.hurt=Aerbunny squeals
+subtitles.aemob.aerbunny.death=Aerbunny dies
+subtitles.aemob.aerbunny.lift=Aerbunny squeaks
+subtitles.aemob.zephyr.say=Zephyr blows
+subtitles.aemob.zephyr.shoot=Zephyr spits
+subtitles.aemob.aerwhale.say=Aerwhale whistles
+subtitles.aemob.aerwhale.shoot=Aerwhale crys
+subtitles.aemisc.projectile.shoot=Poison Dart shot
+subtitles.aemisc.dart_shooter.shoot=Dart Shooter fired
+subtitles.aeboss.slider.awaken=Slider awakens
+subtitles.aeboss.slider.collide=Slider smashes
+subtitles.aeboss.slider.move=Slider slides
+subtitles.aeboss.slider.death=Slider breaks
+subtitles.aeboss.sun_spirit.move=Sun Spirit shoots
