@@ -67,7 +67,7 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 			}
 		}
 
-		return moa.getColor().getTexture(moa.getSaddled());
+		return moa.getMoaType().getTexture(moa.getSaddled());
 	}
 
 }

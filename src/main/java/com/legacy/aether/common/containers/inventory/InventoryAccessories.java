@@ -13,8 +13,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.ITextComponent;
 
-import com.legacy.aether.common.containers.util.AccessoryType;
-import com.legacy.aether.common.items.accessories.ItemAccessory;
+import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.accessories.AccessoryType;
+import com.legacy.aether.api.accessories.AetherAccessory;
 import com.legacy.aether.common.player.PlayerAether;
 
 public class InventoryAccessories implements IInventory
@@ -99,16 +100,15 @@ public class InventoryAccessories implements IInventory
 
 	public boolean setInventoryAccessory(ItemStack stack)
 	{
-		if (stack != null && stack.getItem() instanceof ItemAccessory)
+		if (stack != null && AetherRegistry.getInstance().isAccessory(stack))
 		{
-			ItemAccessory accessoryItem = (ItemAccessory) stack.getItem();
-			AccessoryType type = accessoryItem.getType();
+			AetherAccessory accessory = AetherRegistry.getInstance().getAccessory(stack);
 
 			int stackIndex = 0;
 
-			for (AccessoryType accessoryType : this.slotTypes)
+			for (AccessoryType type : this.slotTypes)
 			{
-				if (type == accessoryType && this.stacks[stackIndex] == null)
+				if (accessory.getAccessoryType() == type && this.stacks[stackIndex] == null)
 				{
 					this.stacks[stackIndex] = stack;
 
@@ -144,7 +144,7 @@ public class InventoryAccessories implements IInventory
 	{
 		for (ItemStack stack : this.stacks)
 		{
-			if (stack != null && stack.getItem() instanceof ItemAccessory && stack.getItem() == item)
+			if (stack != null && stack.getItem() == item)
 			{
 				return stack;
 			}

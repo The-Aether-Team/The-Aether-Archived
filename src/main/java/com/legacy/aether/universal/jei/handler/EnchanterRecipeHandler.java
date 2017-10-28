@@ -3,16 +3,16 @@ package com.legacy.aether.universal.jei.handler;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-import com.legacy.aether.common.enchantments.IEnchantmentHandler;
+import com.legacy.aether.api.enchantments.AetherEnchantment;
 import com.legacy.aether.universal.jei.wrapper.EnchanterRecipeWrapper;
 
-public class EnchanterRecipeHandler implements IRecipeHandler<IEnchantmentHandler>
+public class EnchanterRecipeHandler implements IRecipeHandler<AetherEnchantment>
 {
 
 	@Override
-	public Class<IEnchantmentHandler> getRecipeClass()
+	public Class<AetherEnchantment> getRecipeClass()
 	{
-		return IEnchantmentHandler.class;
+		return AetherEnchantment.class;
 	}
 
 	@Override
@@ -22,19 +22,19 @@ public class EnchanterRecipeHandler implements IRecipeHandler<IEnchantmentHandle
 	}
 
 	@Override
-	public String getRecipeCategoryUid(IEnchantmentHandler recipe) 
+	public String getRecipeCategoryUid(AetherEnchantment recipe) 
 	{
 		return this.getRecipeCategoryUid();
 	}
 
 	@Override
-	public IRecipeWrapper getRecipeWrapper(IEnchantmentHandler recipe) 
+	public IRecipeWrapper getRecipeWrapper(AetherEnchantment recipe) 
 	{
 		return new EnchanterRecipeWrapper(recipe);
 	}
 
 	@Override
-	public boolean isRecipeValid(IEnchantmentHandler recipe) 
+	public boolean isRecipeValid(AetherEnchantment recipe) 
 	{
 		return true;
 	}

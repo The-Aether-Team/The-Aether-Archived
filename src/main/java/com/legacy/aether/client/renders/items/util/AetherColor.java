@@ -39,7 +39,7 @@ public class AetherColor implements IItemColor, IBlockColor
 
 		if (this.item instanceof ItemMoaEgg)
 		{
-			return ((ItemMoaEgg)stack.getItem()).getColorFromItemStack(stack, 0);
+			return ((ItemMoaEgg)stack.getItem()).getColorFromItemStack(stack);
 		}
 
 		if (this.item == Item.getItemFromBlock(BlocksAether.aercloud))

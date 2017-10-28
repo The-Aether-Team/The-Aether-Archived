@@ -87,9 +87,9 @@ public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeW
 		stacks.init(1, false, 30, 47);
 		stacks.init(2, true, 90, 29);
 
-		//stacks.set(0, recipeWrapper.enchantment.getEnchantmentInput());
+		stacks.set(0, recipeWrapper.enchantment.getInput());
 		stacks.set(1, new ItemStack(ItemsAether.ambrosium_shard));
-		//stacks.set(2, recipeWrapper.enchantment.getEnchantedResult());
+		stacks.set(2, recipeWrapper.enchantment.getOutput());
 	}
 
 	@Override
@@ -101,9 +101,9 @@ public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeW
 		stacks.init(1, false, 30, 47);
 		stacks.init(2, true, 90, 29);
 
-		//stacks.set(0, recipeWrapper.enchantment.getEnchantmentInput());
+		stacks.set(0, recipeWrapper.enchantment.getInput());
 		stacks.set(1, new ItemStack(ItemsAether.ambrosium_shard));
-		//stacks.set(2, recipeWrapper.enchantment.getEnchantedResult());
+		stacks.set(2, recipeWrapper.enchantment.getOutput());
 	}
 
 }

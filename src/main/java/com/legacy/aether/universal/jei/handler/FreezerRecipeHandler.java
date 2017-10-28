@@ -3,16 +3,16 @@ package com.legacy.aether.universal.jei.handler;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 
-import com.legacy.aether.common.freezables.IFreezableHandler;
+import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.universal.jei.wrapper.FreezerRecipeWrapper;
 
-public class FreezerRecipeHandler implements IRecipeHandler<IFreezableHandler>
+public class FreezerRecipeHandler implements IRecipeHandler<AetherFreezable>
 {
 
 	@Override
-	public Class<IFreezableHandler> getRecipeClass()
+	public Class<AetherFreezable> getRecipeClass()
 	{
-		return IFreezableHandler.class;
+		return AetherFreezable.class;
 	}
 
 	@Override
@@ -22,19 +22,19 @@ public class FreezerRecipeHandler implements IRecipeHandler<IFreezableHandler>
 	}
 
 	@Override
-	public String getRecipeCategoryUid(IFreezableHandler recipe) 
+	public String getRecipeCategoryUid(AetherFreezable recipe) 
 	{
 		return this.getRecipeCategoryUid();
 	}
 
 	@Override
-	public IRecipeWrapper getRecipeWrapper(IFreezableHandler recipe) 
+	public IRecipeWrapper getRecipeWrapper(AetherFreezable recipe) 
 	{
 		return new FreezerRecipeWrapper(recipe);
 	}
 
 	@Override
-	public boolean isRecipeValid(IFreezableHandler recipe) 
+	public boolean isRecipeValid(AetherFreezable recipe) 
 	{
 		return true;
 	}

@@ -1,4 +1,4 @@
-package com.legacy.aether.common.entities.util;
+package com.legacy.aether.api.moa;
 
 import net.minecraft.util.ResourceLocation;
 

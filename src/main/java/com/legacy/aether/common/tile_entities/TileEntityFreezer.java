@@ -10,14 +10,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.compatibility.AetherCompatibility;
-import com.legacy.aether.common.events.AetherFreezerEvent;
-import com.legacy.aether.common.freezables.AetherFreezable;
+import com.legacy.aether.common.events.AetherHooks;
 import com.legacy.aether.common.tile_entities.util.AetherTileEntity;
 
 public class TileEntityFreezer extends AetherTileEntity
@@ -61,7 +60,7 @@ public class TileEntityFreezer extends AetherTileEntity
 
 		if (this.currentFreezable != null)
 		{
-			if (this.getStackInSlot(0) == null || AetherCompatibility.getAetherRegistry().areFreezablesEqual(this.getStackInSlot(0), this.currentFreezable))
+			if (this.getStackInSlot(0) == null || AetherRegistry.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
 			{
 				this.currentFreezable = null;
 				this.freezeProgress = 0;
@@ -71,7 +70,7 @@ public class TileEntityFreezer extends AetherTileEntity
 			{
 				if (!this.worldObj.isRemote)
 				{
-					ItemStack result = this.currentFreezable.getResult().copy();
+					ItemStack result = this.currentFreezable.getOutput().copy();
 
 					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
 
@@ -96,12 +95,12 @@ public class TileEntityFreezer extends AetherTileEntity
 				}
 
 				this.freezeProgress = 0;
-				MinecraftForge.EVENT_BUS.post(new AetherFreezerEvent.Freeze(this, this.currentFreezable));
+				AetherHooks.onItemFreeze(this, this.currentFreezable);
 			}
 
-			if (this.frozenTimeRemaining <= 0 && AetherCompatibility.getAetherRegistry().isFreezerFuel(this.getStackInSlot(1)))
+			if (this.frozenTimeRemaining <= 0 && AetherRegistry.getInstance().isFreezableFuel(this.getStackInSlot(1)))
 			{
-				this.frozenTimeRemaining += AetherCompatibility.getAetherRegistry().getFreezerFuel(this.getStackInSlot(1));
+				this.frozenTimeRemaining += AetherRegistry.getInstance().getFreezableFuel(this.getStackInSlot(1)).getTimeGiven();
 
 				if (!this.worldObj.isRemote)
 				{
@@ -112,20 +111,14 @@ public class TileEntityFreezer extends AetherTileEntity
 		else
 		{
 			ItemStack itemstack = this.getStackInSlot(0);
-			AetherFreezable freezable = AetherCompatibility.getAetherRegistry().getFreezable(itemstack);
+			AetherFreezable freezable = AetherRegistry.getInstance().getFreezable(itemstack);
 
-			if (this.getStackInSlot(2) == null || AetherCompatibility.getAetherRegistry().isFreezableResult(this.getStackInSlot(2), freezable))
+			if (this.getStackInSlot(2) == null || freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
 			{
 				this.currentFreezable = freezable;
 				this.freezeTime = this.currentFreezable.getTimeRequired();
 				this.addEnchantmentWeight(itemstack);
-
-				AetherFreezerEvent.SetTime event = new AetherFreezerEvent.SetTime(this, this.freezeTime);
-
-				if (!MinecraftForge.EVENT_BUS.post(event))
-				{
-					this.freezeTime = event.getNewTime();
-				}
+				this.freezeTime = AetherHooks.onSetFreezableTime(this, this.currentFreezable, this.freezeTime);
 			}
 		}
 	}
@@ -296,11 +289,11 @@ public class TileEntityFreezer extends AetherTileEntity
 	{
 		if (stackInSlot != null)
 		{
-			if (AetherCompatibility.getAetherRegistry().isFreezable(stackInSlot))
+			if (AetherRegistry.getInstance().hasFreezable(stackInSlot))
 			{
 				return true;
 			}
-			else if (slot == 1 && AetherCompatibility.getAetherRegistry().isFreezerFuel(stackInSlot))
+			else if (slot == 1 && AetherRegistry.getInstance().isFreezableFuel(stackInSlot))
 			{
 				return true;
 			}

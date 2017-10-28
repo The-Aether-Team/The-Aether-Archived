@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.legacy.aether.common.Aether;
 import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.containers.util.AccessoryType;
 import com.legacy.aether.common.items.accessories.ItemAccessory;
 import com.legacy.aether.common.items.armor.ItemAetherArmor;
 import com.legacy.aether.common.items.armor.ItemZaniteArmor;
@@ -204,40 +203,40 @@ public class ItemsAether
 		candy_cane_sword = register("candy_cane_sword", new ItemCandyCaneSword());
 		notch_hammer = register("notch_hammer", new ItemNotchHammer());
 
-		leather_gloves = register("leather_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xc65c35));
-		iron_gloves = register("iron_gloves", new ItemAccessory(AccessoryType.GLOVE));
-		golden_gloves = register("golden_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xeaee57));
-		chain_gloves = register("chain_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("chain"));
-		diamond_gloves = register("diamond_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x33ebcb));
+		leather_gloves = register("leather_gloves", new ItemAccessory().setColor(0xc65c35));
+		iron_gloves = register("iron_gloves", new ItemAccessory());
+		golden_gloves = register("golden_gloves", new ItemAccessory().setColor(0xeaee57));
+		chain_gloves = register("chain_gloves", new ItemAccessory().setTexture("chain"));
+		diamond_gloves = register("diamond_gloves", new ItemAccessory().setColor(0x33ebcb));
 
-		zanite_gloves = register("zanite_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x711ae8));
-		gravitite_gloves = register("gravitite_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xe752db));
-		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setColor(0x2654FF));
-		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("phoenix").setDungeonLoot().setColor(0xff7700).setMaxDamage(152));
-		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setColor(0x1b1447));
-		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setTexture("valkyrie"));
+		zanite_gloves = register("zanite_gloves", new ItemAccessory().setColor(0x711ae8));
+		gravitite_gloves = register("gravitite_gloves", new ItemAccessory().setColor(0xe752db));
+		neptune_gloves = register("neptune_gloves", new ItemAccessory().setDungeonLoot().setColor(0x2654FF));
+		phoenix_gloves = register("phoenix_gloves", new ItemAccessory().setTexture("phoenix").setDungeonLoot().setColor(0xff7700).setMaxDamage(152));
+		obsidian_gloves = register("obsidian_gloves", new ItemAccessory().setDungeonLoot().setColor(0x1b1447));
+		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory().setDungeonLoot().setTexture("valkyrie"));
 
-		iron_ring = register("iron_ring", new ItemAccessory(AccessoryType.RING));
-		golden_ring = register("golden_ring", new ItemAccessory(AccessoryType.RING).setColor(0xeaee57));
-		zanite_ring = register("zanite_ring", new ItemAccessory(AccessoryType.RING).setColor(0x711ae8).setMaxDamage(49));
-		ice_ring = register("ice_ring", new ItemAccessory(AccessoryType.RING).setColor(0x95e6e7).setMaxDamage(125));
+		iron_ring = register("iron_ring", new ItemAccessory());
+		golden_ring = register("golden_ring", new ItemAccessory().setColor(0xeaee57));
+		zanite_ring = register("zanite_ring", new ItemAccessory().setColor(0x711ae8).setMaxDamage(49));
+		ice_ring = register("ice_ring", new ItemAccessory().setColor(0x95e6e7).setMaxDamage(125));
 
-		iron_pendant = register("iron_pendant", new ItemAccessory(AccessoryType.PENDANT));
-		golden_pendant = register("golden_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0xeaee57));
-		zanite_pendant = register("zanite_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x711ae8).setMaxDamage(98));
-		ice_pendant = register("ice_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x95e6e7).setMaxDamage(250));
+		iron_pendant = register("iron_pendant", new ItemAccessory());
+		golden_pendant = register("golden_pendant", new ItemAccessory().setColor(0xeaee57));
+		zanite_pendant = register("zanite_pendant", new ItemAccessory().setColor(0x711ae8).setMaxDamage(98));
+		ice_pendant = register("ice_pendant", new ItemAccessory().setColor(0x95e6e7).setMaxDamage(250));
 
-		red_cape = register("red_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xe81111));
-		blue_cape = register("blue_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0x137fb7));
-		yellow_cape = register("yellow_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xcdcb0e));
-		white_cape = register("white_cape", new ItemAccessory(AccessoryType.CAPE));
-		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape").setDungeonLoot());
-		invisibility_cape = register("invisibility_cape", new ItemAccessory(AccessoryType.CAPE).setDungeonLoot());
-		agility_cape = register("agility_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("agility_cape").setDungeonLoot());
+		red_cape = register("red_cape", new ItemAccessory().setColor(0xe81111));
+		blue_cape = register("blue_cape", new ItemAccessory().setColor(0x137fb7));
+		yellow_cape = register("yellow_cape", new ItemAccessory().setColor(0xcdcb0e));
+		white_cape = register("white_cape", new ItemAccessory());
+		swet_cape = register("swet_cape", new ItemAccessory().setTexture("swet_cape").setDungeonLoot());
+		invisibility_cape = register("invisibility_cape", new ItemAccessory().setDungeonLoot());
+		agility_cape = register("agility_cape", new ItemAccessory().setTexture("agility_cape").setDungeonLoot());
 
-		golden_feather = register("golden_feather", new ItemAccessory(AccessoryType.MISC).setDungeonLoot());
-		regeneration_stone = register("regeneration_stone", new ItemAccessory(AccessoryType.MISC).setDungeonLoot());
-		iron_bubble = register("iron_bubble", new ItemAccessory(AccessoryType.MISC).setDungeonLoot());
+		golden_feather = register("golden_feather", new ItemAccessory().setDungeonLoot());
+		regeneration_stone = register("regeneration_stone", new ItemAccessory().setDungeonLoot());
+		iron_bubble = register("iron_bubble", new ItemAccessory().setDungeonLoot());
 
 		life_shard = register("life_shard", new ItemLifeShard());
 		cloud_staff = register("cloud_staff", new ItemCloudStaff());
@@ -251,7 +250,7 @@ public class ItemsAether
 		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", SoundsAether.ascending_dawn, "HEmile", "Ascending Dawn"));
 		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Void", "Welcoming Skies")).setCreativeTab(null);
 
-		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512));
+		repulsion_shield = register("repulsion_shield", new ItemAccessory().setTexture("repulsion").setDungeonLoot().setMaxDamage(512));
 		lore_book = register("lore_book", new ItemLoreBook());
 	}
 

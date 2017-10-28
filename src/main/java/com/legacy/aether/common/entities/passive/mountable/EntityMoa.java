@@ -26,9 +26,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import com.legacy.aether.common.compatibility.AetherCompatibility;
+import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.moa.AetherMoaType;
 import com.legacy.aether.common.entities.util.EntitySaddleMount;
-import com.legacy.aether.common.entities.util.MoaColor;
 import com.legacy.aether.common.items.ItemMoaEgg;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.sounds.SoundsAether;
@@ -36,7 +36,7 @@ import com.legacy.aether.common.registry.sounds.SoundsAether;
 public class EntityMoa extends EntitySaddleMount
 {
 
-	public static final DataParameter<Integer> MOA_COLOR = EntityDataManager.<Integer>createKey(EntityMoa.class, DataSerializers.VARINT);
+	public static final DataParameter<Integer> MOA_TYPE_ID = EntityDataManager.<Integer>createKey(EntityMoa.class, DataSerializers.VARINT);
 
 	public static final DataParameter<Integer> REMAINING_JUMPS = EntityDataManager.<Integer>createKey(EntityMoa.class, DataSerializers.VARINT);
 
@@ -56,19 +56,28 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		super(world);
 
-		this.initAI();
-
 		this.setSize(1.0F, 2.0F);
-		this.stepHeight = 1.0F;
 
+		this.stepHeight = 1.0F;
 		this.secsUntilEgg = this.getRandomEggTime();
 	}
 
-	public EntityMoa(World world, MoaColor color)
+	public EntityMoa(World world, AetherMoaType type)
 	{
 		this(world);
-		this.setColor(color);
+
+		this.setMoaType(type);
 	}
+
+	@Override
+    protected void initEntityAI()
+    {
+		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(2, new EntityAIWander(this, 0.30F));
+		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+		this.tasks.addTask(5, new EntityAILookIdle(this));
+		this.tasks.addTask(6, new EntityAIMate(this, 0.25F));
+    }
 
 	@Override
     public void moveEntity(double x, double y, double z)
@@ -83,38 +92,20 @@ public class EntityMoa extends EntitySaddleMount
 		}
     }
 
-	public int getRandomEggTime()
-	{
-		return 775 + this.rand.nextInt(50);
-	}
-
-	public void initAI()
-	{
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(2, new EntityAIWander(this, 0.30F));
-		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-		this.tasks.addTask(5, new EntityAILookIdle(this));
-		this.tasks.addTask(6, new EntityAIMate(this, 0.25F));
-	}
-
 	@Override
 	protected void entityInit()
 	{
 		super.entityInit();
 
-		MoaColor color = AetherCompatibility.getAetherRegistry().getRandomColor(this.worldObj);
+		AetherMoaType moaType = AetherRegistry.getInstance().getRandomMoaType();
 
-		this.dataManager.register(MOA_COLOR, color.getID());
-		this.dataManager.register(REMAINING_JUMPS, color.getMoaProperties().getMaxJumps());
+		this.dataManager.register(MOA_TYPE_ID, AetherRegistry.getInstance().getMoaTypeId(moaType));
+		this.dataManager.register(REMAINING_JUMPS, moaType.getMoaProperties().getMaxJumps());
+
 		this.dataManager.register(PLAYER_GROWN, false);
 		this.dataManager.register(AMMOUNT_FEED, Byte.valueOf((byte) 0));
 		this.dataManager.register(HUNGRY, false);
 		this.dataManager.register(SITTING, false);
-	}
-
-	public boolean isAIEnabled()
-	{
-		return true;
 	}
 
 	@Override
@@ -124,6 +115,11 @@ public class EntityMoa extends EntitySaddleMount
 
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
+	}
+
+	public int getRandomEggTime()
+	{
+		return 775 + this.rand.nextInt(50);
 	}
 
 	public boolean isSitting()
@@ -191,14 +187,14 @@ public class EntityMoa extends EntitySaddleMount
 		this.dataManager.set(REMAINING_JUMPS, jumps);
 	}
 
-	public MoaColor getColor()
+	public AetherMoaType getMoaType()
 	{
-		return AetherCompatibility.getAetherRegistry().getMoaColor(this.dataManager.get(MOA_COLOR));
+		return AetherRegistry.getInstance().getMoaType(this.dataManager.get(MOA_TYPE_ID));
 	}
 
-	public void setColor(MoaColor color)
+	public void setMoaType(AetherMoaType moaType)
 	{
-		this.dataManager.set(MOA_COLOR, color.getID());
+		this.dataManager.set(MOA_TYPE_ID, AetherRegistry.getInstance().getMoaTypeId(moaType));
 	}
 
 	@Override
@@ -206,7 +202,7 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		super.onUpdate();
 
-		this.setMaxJumps(getColor().getMoaProperties().getMaxJumps());
+		this.setMaxJumps(this.getMoaType().getMoaProperties().getMaxJumps());
 
 		if (this.isJumping)
 		{
@@ -240,7 +236,7 @@ public class EntityMoa extends EntitySaddleMount
 			else
 			{
 				this.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-				this.entityDropItem(ItemMoaEgg.getStackFromColor(this.getColor()), 0);
+				this.entityDropItem(ItemMoaEgg.getStackFromType(this.getMoaType()), 0);
 
 				this.secsUntilEgg = this.getRandomEggTime();
 			}
@@ -324,7 +320,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public float getMountedMoveSpeed()
 	{
-		return this.getColor().getMoaProperties().getMoaSpeed();
+		return this.getMoaType().getMoaProperties().getMoaSpeed();
 	}
 
 	public void setToAdult()
@@ -387,10 +383,10 @@ public class EntityMoa extends EntitySaddleMount
 
 		nbt.setBoolean("playerGrown", this.isPlayerGrown());
 		nbt.setInteger("remainingJumps", this.getRemainingJumps());
-		nbt.setInteger("color", this.getColor().getID());
 		nbt.setByte("amountFed", this.getAmountFed());
 		nbt.setBoolean("isHungry", this.isHungry());
 		nbt.setBoolean("isSitting", this.isSitting());
+		nbt.setInteger("typeId", AetherRegistry.getInstance().getMoaTypeId(this.getMoaType()));
 	}
 
 	@Override
@@ -400,7 +396,7 @@ public class EntityMoa extends EntitySaddleMount
 
 		this.setPlayerGrown(nbt.getBoolean("playerGrown"));
 		this.setRemainingJumps(nbt.getInteger("remainingJumps"));
-		this.setColor(AetherCompatibility.getAetherRegistry().getMoaColor(nbt.getInteger("color")));
+		this.setMoaType(AetherRegistry.getInstance().getMoaType(nbt.getInteger("typeId")));
 		this.setAmountFed(nbt.getByte("amountFed"));
 		this.setHungry(nbt.getBoolean("isHungry"));
 		this.setSitting(nbt.getBoolean("isSitting"));
@@ -471,6 +467,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public EntityAgeable createChild(EntityAgeable matingAnimal)
 	{
-		return new EntityMoa(this.worldObj, this.getColor());
+		return new EntityMoa(this.worldObj, this.getMoaType());
 	}
+
 }

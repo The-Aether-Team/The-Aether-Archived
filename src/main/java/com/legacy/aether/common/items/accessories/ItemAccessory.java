@@ -25,7 +25,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.base.Predicates;
 import com.legacy.aether.common.Aether;
-import com.legacy.aether.common.containers.util.AccessoryType;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
@@ -34,8 +33,6 @@ public class ItemAccessory extends Item
 {
 
 	public static final String ROOT = Aether.modAddress() + "textures/slots/slot_";
-
-	protected final AccessoryType accessoryType;
 
 	public ResourceLocation texture;
 
@@ -52,9 +49,8 @@ public class ItemAccessory extends Item
         }
     };
 
-	public ItemAccessory(AccessoryType type)
+	public ItemAccessory()
 	{
-		this.accessoryType = type;
 		this.texture = new ResourceLocation("aether_legacy", "textures/armor/accessory_base.png");
 		this.setMaxStackSize(1);
 		this.setCreativeTab(AetherCreativeTabs.accessories);
@@ -106,11 +102,6 @@ public class ItemAccessory extends Item
 
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStack);
     }
-
-	public AccessoryType getType()
-	{
-		return this.accessoryType;
-	}
 
     public Item setColor(int color)
     {

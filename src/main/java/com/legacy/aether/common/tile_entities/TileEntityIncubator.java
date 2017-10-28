@@ -9,13 +9,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.common.events.MoaEggEvent;
+import com.legacy.aether.common.events.AetherHooks;
 import com.legacy.aether.common.items.ItemMoaEgg;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
@@ -194,7 +193,7 @@ public class TileEntityIncubator extends AetherTileEntity
 
 					moa.setPlayerGrown(true);
 					moa.setGrowingAge(-24000);
-					moa.setColor(moaEgg.getMoaColorFromItemStack(this.IncubatorItemStacks[1]));
+					moa.setMoaType(moaEgg.getMoaTypeFromItemStack(this.IncubatorItemStacks[1]));
 
 					for (int i = 0; this.worldObj.getBlockState(pos.up(i)).getBlock() != Blocks.AIR; i++)
 					{
@@ -209,7 +208,7 @@ public class TileEntityIncubator extends AetherTileEntity
 					}
 				}
 
-				MinecraftForge.EVENT_BUS.post(new MoaEggEvent.Hatch(this, moaEgg.getMoaColorFromItemStack(this.IncubatorItemStacks[1])));
+				AetherHooks.onMoaHatched(moaEgg.getMoaTypeFromItemStack(this.IncubatorItemStacks[1]), this);
 			}
 
 			if (!this.worldObj.isRemote)

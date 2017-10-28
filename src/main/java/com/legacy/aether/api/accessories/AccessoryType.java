@@ -1,8 +1,4 @@
-package com.legacy.aether.common.containers.util;
-
-import net.minecraft.inventory.Slot;
-
-import com.legacy.aether.common.containers.slots.SlotAccessory;
+package com.legacy.aether.api.accessories;
 
 public enum AccessoryType
 {
@@ -37,21 +33,6 @@ public enum AccessoryType
 	public String getDisplayName()
 	{
 		return this.displayName;
-	}
-
-	public boolean isSlotValid(Slot slot)
-	{
-		if (slot instanceof SlotAccessory)
-		{
-			SlotAccessory accessorySlot = (SlotAccessory) slot;
-
-			if (accessorySlot.getAccessoryType().equals(this))
-			{
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }

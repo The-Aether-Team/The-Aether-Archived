@@ -10,7 +10,7 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 
 import org.lwjgl.input.Keyboard;
 
-import com.legacy.aether.common.compatibility.AetherCompatibility;
+import com.legacy.aether.api.AetherRegistry;
 import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.common.networking.AetherNetworkingManager;
 import com.legacy.aether.common.networking.packets.PacketPerkChanged;
@@ -48,7 +48,7 @@ public class GuiAetherPerks extends GuiScreen
     	this.player = PlayerAether.get(this.mc.thePlayer);
     	this.moaSkin = this.player.donatorMoaSkin;
 
-		this.moa = this.player.thePlayer.getRidingEntity() instanceof EntityMoa ? (EntityMoa) this.player.thePlayer.getRidingEntity() : new EntityMoa(this.mc.theWorld, AetherCompatibility.getAetherRegistry().getMoaColor(0));
+		this.moa = this.player.thePlayer.getRidingEntity() instanceof EntityMoa ? (EntityMoa) this.player.thePlayer.getRidingEntity() : new EntityMoa(this.mc.theWorld, AetherRegistry.getInstance().getMoaType(2));
 	}
 
 	@Override

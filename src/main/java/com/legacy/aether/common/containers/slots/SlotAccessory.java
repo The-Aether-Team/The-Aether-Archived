@@ -1,42 +1,50 @@
 package com.legacy.aether.common.containers.slots;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.accessories.AccessoryType;
+import com.legacy.aether.api.accessories.AetherAccessory;
 import com.legacy.aether.common.containers.inventory.InventoryAccessories;
-import com.legacy.aether.common.containers.util.AccessoryType;
-import com.legacy.aether.common.items.accessories.ItemAccessory;
+import com.legacy.aether.common.events.AetherHooks;
 
 public class SlotAccessory extends Slot
 {
 
+	private EntityPlayer instance;
+
 	private AccessoryType accessoryType;
 
-	public SlotAccessory(IInventory inventory, int slotID, AccessoryType accessoryType, int x, int y)
+	public SlotAccessory(IInventory inventory, int slotID, AccessoryType accessoryType, int x, int y, EntityPlayer instance)
 	{
 		super(inventory, slotID, x, y);
 		
+		this.instance = instance;
 		this.accessoryType = accessoryType;
 	}
 
 	@Override
-	public boolean isItemValid(ItemStack itemstack)
+	public boolean isItemValid(ItemStack stack)
 	{
-		if (itemstack.getItem() instanceof ItemAccessory)
+		if (AetherRegistry.getInstance().isAccessory(stack))
 		{
-			ItemAccessory accessory = (ItemAccessory)itemstack.getItem();
-			
-			return accessory.getType() == this.accessoryType;
+			AetherAccessory accessory = AetherRegistry.getInstance().getAccessory(stack);
+
+			if (accessory.getAccessoryType() == this.getAccessoryType())
+			{
+				return AetherHooks.isValidAccessory(this.instance, accessory);
+			}
 		}
-		else
-		{
-			return false;
-		}
+
+		return false;
 	}
 
+	@Override
     @SideOnly(Side.CLIENT)
     public String getSlotTexture()
     {

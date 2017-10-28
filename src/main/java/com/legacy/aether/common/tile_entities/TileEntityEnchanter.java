@@ -10,14 +10,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.enchantments.AetherEnchantment;
 import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.compatibility.AetherCompatibility;
-import com.legacy.aether.common.enchantments.AetherEnchantment;
-import com.legacy.aether.common.events.AetherEnchantmentEvent;
+import com.legacy.aether.common.events.AetherHooks;
 import com.legacy.aether.common.tile_entities.util.AetherTileEntity;
 
 public class TileEntityEnchanter extends AetherTileEntity
@@ -61,7 +60,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 		if (this.currentEnchantment != null)
 		{
-			if (this.getStackInSlot(0) == null || AetherCompatibility.getAetherRegistry().areEnchantmentsEqual(this.getStackInSlot(0), this.currentEnchantment))
+			if (this.getStackInSlot(0) == null || AetherRegistry.getInstance().getEnchantment(this.getStackInSlot(0)).equals(this.currentEnchantment))
 			{
 				this.currentEnchantment = null;
 				this.enchantmentProgress = 0;
@@ -71,7 +70,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 			{
 				if (!this.worldObj.isRemote)
 				{
-					ItemStack result = this.currentEnchantment.getResult().copy();
+					ItemStack result = this.currentEnchantment.getOutput().copy();
 
 					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
 
@@ -97,12 +96,12 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 				this.enchantmentProgress = 0;
 
-				MinecraftForge.EVENT_BUS.post(new AetherEnchantmentEvent.Enchant(this, this.currentEnchantment));
+				AetherHooks.onItemEnchant(this, this.currentEnchantment);
 			}
 
-			if (this.enchantmentTimeRemaining <= 0 && AetherCompatibility.getAetherRegistry().isEnchantmentFuel(this.getStackInSlot(1)))
+			if (this.enchantmentTimeRemaining <= 0 && AetherRegistry.getInstance().isEnchantmentFuel(this.getStackInSlot(1)))
 			{
-				this.enchantmentTimeRemaining += AetherCompatibility.getAetherRegistry().getEnchantmentFuel(this.getStackInSlot(1));
+				this.enchantmentTimeRemaining += AetherRegistry.getInstance().getEnchantmentFuel(this.getStackInSlot(1)).getTimeGiven();
 
 				if (!this.worldObj.isRemote)
 				{
@@ -113,22 +112,16 @@ public class TileEntityEnchanter extends AetherTileEntity
 		else
 		{
 			ItemStack itemstack = this.getStackInSlot(0);
-			AetherEnchantment enchantment = AetherCompatibility.getAetherRegistry().getEnchantment(itemstack);
+			AetherEnchantment enchantment = AetherRegistry.getInstance().getEnchantment(itemstack);
 
 			if (enchantment != null)
 			{
-				if (this.getStackInSlot(2) == null || AetherCompatibility.getAetherRegistry().isEnchantmentResult(this.getStackInSlot(2), enchantment))
+				if (this.getStackInSlot(2) == null || enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
 				{
 					this.currentEnchantment = enchantment;
 					this.enchantmentTime = this.currentEnchantment.getTimeRequired();
 					this.addEnchantmentWeight(itemstack);
-
-					AetherEnchantmentEvent.SetTime event = new AetherEnchantmentEvent.SetTime(this, this.enchantmentTime);
-
-					if (!MinecraftForge.EVENT_BUS.post(event))
-					{
-						this.enchantmentTime = event.getNewTime();
-					}
+					this.enchantmentTime = AetherHooks.onSetEnchantmentTime(this, this.currentEnchantment, this.enchantmentTime);
 				}
 			}
 		}
@@ -301,11 +294,11 @@ public class TileEntityEnchanter extends AetherTileEntity
 		{
 			return false;
 		}
-		else if (slot == 1 && AetherCompatibility.getAetherRegistry().isEnchantmentFuel(stackInSlot))
+		else if (slot == 1 && AetherRegistry.getInstance().isEnchantmentFuel(stackInSlot))
 		{
 			return true;
 		}
-		else if (slot == 0 && AetherCompatibility.getAetherRegistry().isEnchantment(stackInSlot))
+		else if (slot == 0 && AetherRegistry.getInstance().hasEnchantment(stackInSlot))
 		{
 			return true;
 		}

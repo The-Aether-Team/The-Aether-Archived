@@ -10,7 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.google.common.collect.Lists;
-import com.legacy.aether.common.enchantments.IEnchantmentHandler;
+import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.enchantments.AetherEnchantment;
 
 public class EnchanterRecipeWrapper implements IRecipeWrapper
 {
@@ -19,20 +20,28 @@ public class EnchanterRecipeWrapper implements IRecipeWrapper
 
 	private final ArrayList<ItemStack> outputs;
 
-	public IEnchantmentHandler enchantment;
+	public AetherEnchantment enchantment;
 
-	public EnchanterRecipeWrapper(IEnchantmentHandler recipe)
+	public EnchanterRecipeWrapper(AetherEnchantment recipe)
 	{
 		this.enchantment = recipe;
 
 		this.inputs = Lists.newArrayList();
 		this.outputs = Lists.newArrayList();
+
+
+		for (AetherEnchantment enchantment : AetherRegistry.getInstance().getEnchantmentValues())
+		{
+			this.inputs.add(enchantment.getInput());
+			this.outputs.add(enchantment.getOutput());
+		}
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) 
 	{
-
+		ingredients.setInput(ItemStack.class, this.enchantment.getInput());
+		ingredients.setInput(ItemStack.class, this.enchantment.getOutput());
 	}
 
 	@Override

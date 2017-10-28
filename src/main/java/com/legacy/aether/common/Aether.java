@@ -6,18 +6,16 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.compatibility.AetherCompatibility;
 import com.legacy.aether.common.entities.AetherEntities;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.networking.AetherNetworkingManager;
 import com.legacy.aether.common.player.capability.PlayerAetherManager;
+import com.legacy.aether.common.registry.AetherRegistries;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
-import com.legacy.aether.common.registry.recipes.AetherRecipes;
 import com.legacy.aether.common.registry.sounds.SoundsAether;
 import com.legacy.aether.common.tile_entities.AetherTileEntities;
 import com.legacy.aether.common.world.AetherWorld;
@@ -52,7 +50,7 @@ public class Aether
 		AetherEntities.initialization();
 		BlocksAether.initialization();
 		ItemsAether.initialization();
-		AetherRecipes.initialization();
+		AetherRegistries.initialization();
 		AchievementsAether.initialization();
 		AetherTileEntities.initialization();
 		AetherCreativeTabs.initialization();
@@ -61,12 +59,6 @@ public class Aether
 		proxy.initialization();
 
 		ServerProxy.registerEvent(new AetherEventHandler());
-	}
-
-	@EventHandler
-	public void postInitialization(FMLPostInitializationEvent event)
-	{
-		AetherCompatibility.postInitialization();
 	}
 
 	public static ResourceLocation locate(String location)

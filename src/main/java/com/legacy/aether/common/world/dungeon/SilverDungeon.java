@@ -11,11 +11,11 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import com.legacy.aether.api.AetherRegistry;
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.common.blocks.util.EnumCloudType;
 import com.legacy.aether.common.blocks.util.EnumStoneType;
-import com.legacy.aether.common.compatibility.AetherCompatibility;
 import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
 import com.legacy.aether.common.items.ItemMoaEgg;
 import com.legacy.aether.common.items.ItemsAether;
@@ -455,9 +455,7 @@ public class SilverDungeon extends AetherDungeon
 			case 2 :
 				return new ItemStack(ItemsAether.dart_shooter);
 			case 3 :
-				ItemStack stack = new ItemStack(ItemsAether.moa_egg, 1);
-				stack.setTagCompound(ItemMoaEgg.getStackFromColor(AetherCompatibility.getAetherRegistry().getMoaColor(2)).getTagCompound());
-				return stack;
+				return ItemMoaEgg.getStackFromType(AetherRegistry.getInstance().getMoaType(2));
 			case 4 :
 				return new ItemStack(ItemsAether.ambrosium_shard, random.nextInt(10) + 1);
 			case 5 :
