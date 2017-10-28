@@ -25,6 +25,8 @@ public class SoundsAether
 
 	public static SoundEvent slider_collide, slider_move, slider_awaken, slider_death;
 
+	public static SoundEvent sun_spirit_shoot;
+
 	public static SoundEvent aether_tune, ascending_dawn, welcoming_skies;
 
 	public static SoundEvent achievement_gen, achievement_bronze, achievement_silver;
@@ -64,6 +66,8 @@ public class SoundsAether
 		slider_collide = register(Aether.locate("aeboss.slider.collide"));
 		slider_move = register(Aether.locate("aeboss.slider.move"));
 		slider_death = register(Aether.locate("aeboss.slider.death"));
+
+		sun_spirit_shoot = register(Aether.locate("aeboss.sun_spirit.shoot"));
 
 		projectile_shoot = register(Aether.locate("projectile.shoot"));
 		dart_shooter_shoot = register(Aether.locate("projectile.dart_shooter.shoot"));

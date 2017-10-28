@@ -41,6 +41,7 @@ import com.legacy.aether.common.entities.util.AetherNameGen;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
+import com.legacy.aether.common.registry.sounds.SoundsAether;
 
 public class EntitySunSpirit extends EntityFlying implements IMob
 {
@@ -348,7 +349,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
     public void makeFireBall(int var1)
     {
-    	this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F,1.0F);
+    	this.world.playSound(null, this.getPosition(), SoundsAether.sun_spirit_shoot, SoundCategory.HOSTILE, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F,1.0F);
 
         boolean shootIceyBall = false;
 
