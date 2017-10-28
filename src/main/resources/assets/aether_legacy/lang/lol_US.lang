@@ -1,7 +1,10 @@
 #Translated by Bailey (KingPhygieBoo)
 # itum naems
 item.lore_book.name=Book ov Story
-item.MoaEgg.name=bird egg
+item.blue_moa_egg.name=sonic color bird egg
+item.orange_moa_egg.name=orange bird egg
+item.white_moa_egg.name=brighter bird egg
+item.black_moa_egg.name= dark bird egg
 item.leather_gloves.name=Lethur Hand Socks
 item.chain_gloves.name=CLINKY GLOOVEZ
 item.golden_gloves.name=Goldan Mittens
