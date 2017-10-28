@@ -64,7 +64,7 @@ public class PlayerAether
 
 	public Ability[] abilities;
 
-	private boolean isJumping, isDonator;
+	private boolean isJumping, isDonator = true;
 
 	private float lifeShardsUsed;
 

@@ -30,7 +30,6 @@ import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.networking.AetherNetworkingManager;
 import com.legacy.aether.common.networking.packets.PacketAchievement;
 import com.legacy.aether.common.player.capability.PlayerAetherProvider;
-import com.legacy.aether.common.player.perks.AetherPerkThread;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
 import com.legacy.aether.common.registry.objects.AetherAchievement;
 
@@ -160,8 +159,6 @@ public class PlayerAetherEvents
 		if (playerAether != null)
 		{
 			playerAether.accessories.markDirty();
-
-			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(new AetherPerkThread(playerAether));
 		}
 	}
 
