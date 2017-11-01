@@ -63,9 +63,9 @@ public class AetherBiome extends Biome
 
 	private void addMobEntry(ArrayList<SpawnListEntry> list)
 	{
-		list.add(new SpawnListEntry(EntityCockatrice.class, 3, 4, 4));
-		list.add(new SpawnListEntry(EntityAerwhale.class, 8, 3, 3));
-		list.add(new SpawnListEntry(EntityZephyr.class, 5, 1, 1));
+		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
+		list.add(new SpawnListEntry(EntityAerwhale.class, 7, 3, 3));
+		list.add(new SpawnListEntry(EntityZephyr.class, 4, 1, 1));
 	}
 
 	@Override
