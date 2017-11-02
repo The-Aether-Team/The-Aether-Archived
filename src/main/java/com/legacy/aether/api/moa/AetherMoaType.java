@@ -3,8 +3,6 @@ package com.legacy.aether.api.moa;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 
-import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
-
 public class AetherMoaType extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherMoaType>
 {
 
@@ -19,7 +17,7 @@ public class AetherMoaType extends net.minecraftforge.fml.common.registry.IForge
 		this.hexColor = hexColor;
 		this.properties = properties;
 
-		this.creativeTab = AetherCreativeTabs.misc;
+		this.creativeTab = CreativeTabs.MISC;
 	}
 
 	public AetherMoaType(int hexColor, MoaProperties properties, CreativeTabs creativeTab)

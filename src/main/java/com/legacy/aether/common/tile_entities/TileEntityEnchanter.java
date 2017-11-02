@@ -60,7 +60,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 		if (this.currentEnchantment != null)
 		{
-			if (this.getStackInSlot(0) == null || AetherRegistry.getInstance().getEnchantment(this.getStackInSlot(0)).equals(this.currentEnchantment))
+			if (this.getStackInSlot(0) == null || AetherRegistry.getInstance().hasEnchantment(this.getStackInSlot(0)) && AetherRegistry.getInstance().getEnchantment(this.getStackInSlot(0)).equals(this.currentEnchantment))
 			{
 				this.currentEnchantment = null;
 				this.enchantmentProgress = 0;
@@ -111,17 +111,20 @@ public class TileEntityEnchanter extends AetherTileEntity
 		}
 		else
 		{
-			ItemStack itemstack = this.getStackInSlot(0);
-			AetherEnchantment enchantment = AetherRegistry.getInstance().getEnchantment(itemstack);
-
-			if (enchantment != null)
+			if (this.getStackInSlot(0) != null)
 			{
-				if (this.getStackInSlot(2) == null || enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
+				ItemStack itemstack = this.getStackInSlot(0);
+				AetherEnchantment enchantment = AetherRegistry.getInstance().getEnchantment(itemstack);
+
+				if (enchantment != null)
 				{
-					this.currentEnchantment = enchantment;
-					this.enchantmentTime = this.currentEnchantment.getTimeRequired();
-					this.addEnchantmentWeight(itemstack);
-					this.enchantmentTime = AetherHooks.onSetEnchantmentTime(this, this.currentEnchantment, this.enchantmentTime);
+					if (this.getStackInSlot(2) == null || enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
+					{
+						this.currentEnchantment = enchantment;
+						this.enchantmentTime = this.currentEnchantment.getTimeRequired();
+						this.addEnchantmentWeight(itemstack);
+						this.enchantmentTime = AetherHooks.onSetEnchantmentTime(this, this.currentEnchantment, this.enchantmentTime);
+					}
 				}
 			}
 		}

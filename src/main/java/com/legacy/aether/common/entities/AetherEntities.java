@@ -1,8 +1,12 @@
 package com.legacy.aether.common.entities;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
+import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.moa.AetherMoaType;
+import com.legacy.aether.api.moa.MoaProperties;
 import com.legacy.aether.common.Aether;
 import com.legacy.aether.common.entities.block.EntityFloatingBlock;
 import com.legacy.aether.common.entities.block.EntityTNTPresent;
@@ -36,9 +40,12 @@ import com.legacy.aether.common.entities.projectile.crystals.EntityThunderBall;
 import com.legacy.aether.common.entities.projectile.darts.EntityDartEnchanted;
 import com.legacy.aether.common.entities.projectile.darts.EntityDartGolden;
 import com.legacy.aether.common.entities.projectile.darts.EntityDartPoison;
+import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
 public class AetherEntities 
 {
+
+	public static AetherMoaType BLUE_MOA, ORANGE_MOA, WHITE_MOA, BLACK_MOA;
 
 	public static void initialization()
 	{
@@ -80,6 +87,11 @@ public class AetherEntities
 		register(EntityHammerProjectile.class, "hammer_projectile", 29);
 		register(EntityLightningKnife.class, "lightning_knife", 30);
 		register(EntityParachute.class, "parachute", 31);
+
+		BLUE_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "blue"), new AetherMoaType(0x7777FF, new MoaProperties(3, 100, 0.3F), AetherCreativeTabs.misc));
+		ORANGE_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "orange"), new AetherMoaType(-0xC3D78, new MoaProperties(2, 50, 0.6F), AetherCreativeTabs.misc));
+		WHITE_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "white"), new AetherMoaType(0xFFFFFF, new MoaProperties(4, 20, 0.3F), AetherCreativeTabs.misc));
+		BLACK_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "black"), new AetherMoaType(0x222222, new MoaProperties(8, 5, 0.3F), AetherCreativeTabs.misc));
 
 		DataSerializerRegistry.initialize();
 	}

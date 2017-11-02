@@ -14,7 +14,6 @@ import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
 import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.api.freezables.AetherFreezableFuel;
 import com.legacy.aether.api.moa.AetherMoaType;
-import com.legacy.aether.api.moa.MoaProperties;
 import com.legacy.aether.common.Aether;
 
 public class AetherRegistry
@@ -40,66 +39,70 @@ public class AetherRegistry
     	this.iFreezableRegistry = PersistentRegistryManager.createRegistry(Aether.locate("freezables"), AetherFreezable.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
     	this.iFreezableFuelRegistry = PersistentRegistryManager.createRegistry(Aether.locate("freezable_fuels"), AetherFreezableFuel.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
     	this.iMoaTypeRegistry = PersistentRegistryManager.createRegistry(Aether.locate("moa_types"), AetherMoaType.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
-
-    	initialization();
     }
 
-    private void initialization()
-    {
-    	register(new ResourceLocation("aether_legacy", "blue"), new AetherMoaType(0x7777FF, new MoaProperties(3, 100, 0.3F)));
-    	register(new ResourceLocation("aether_legacy", "orange"), new AetherMoaType(-0xC3D78, new MoaProperties(2, 50, 0.6F)));
-    	register(new ResourceLocation("aether_legacy", "white"), new AetherMoaType(0xFFFFFF, new MoaProperties(4, 20, 0.3F)));
-    	register(new ResourceLocation("aether_legacy", "black"), new AetherMoaType(0x222222, new MoaProperties(8, 5, 0.3F)));
-    }
-
-    public void register(AetherAccessory type)
+    public AetherAccessory register(AetherAccessory type)
     {
     	ItemStack stack = type.getAccessoryStack();
     	ResourceLocation registryName = new ResourceLocation(Aether.modid, stack.getItem().getRegistryName().getResourcePath() + "_meta_" + stack.getMetadata());
 
     	this.iAccessoryRegistry.register(type.setRegistryName(registryName));
+
+    	return type;
     }
 
-    public void register(AetherEnchantment type)
+    public AetherEnchantment register(AetherEnchantment type)
     {
     	ItemStack stack = type.getInput();
     	ResourceLocation registryName = new ResourceLocation(Aether.modid, stack.getItem().getRegistryName().getResourcePath() + "_meta_" + stack.getMetadata());
 
     	this.iEnchantmentRegistry.register(type.setRegistryName(registryName));
+
+    	return type;
     }
 
-    public void register(AetherEnchantmentFuel type)
+    public AetherEnchantmentFuel register(AetherEnchantmentFuel type)
     {
     	ItemStack stack = type.getFuelStack();
     	ResourceLocation registryName = new ResourceLocation(Aether.modid, stack.getItem().getRegistryName().getResourcePath() + "_meta_" + stack.getMetadata());
 
     	this.iEnchantmentFuelRegistry.register(type.setRegistryName(registryName));
+
+    	return type;
     }
 
-    public void register(AetherFreezable type)
+    public AetherFreezable register(AetherFreezable type)
     {
     	ItemStack stack = type.getInput();
     	ResourceLocation registryName = new ResourceLocation(Aether.modid, stack.getItem().getRegistryName().getResourcePath() + "_meta_" + stack.getMetadata());
 
     	this.iFreezableRegistry.register(type.setRegistryName(registryName));
+
+    	return type;
     }
 
-    public void register(AetherFreezableFuel type)
+    public AetherFreezableFuel register(AetherFreezableFuel type)
     {
     	ItemStack stack = type.getFuelStack();
     	ResourceLocation registryName = new ResourceLocation(Aether.modid, stack.getItem().getRegistryName().getResourcePath() + "_meta_" + stack.getMetadata());
 
     	this.iFreezableFuelRegistry.register(type.setRegistryName(registryName));
+
+    	return type;
     }
 
-    public void register(String modId, String name, AetherMoaType type)
+    public AetherMoaType register(String modId, String name, AetherMoaType type)
     {
     	this.iMoaTypeRegistry.register(type.setRegistryName(modId, name));
+
+    	return type;
     }
 
-    public void register(ResourceLocation registryName, AetherMoaType type)
+    public AetherMoaType register(ResourceLocation registryName, AetherMoaType type)
     {
     	this.iMoaTypeRegistry.register(type.setRegistryName(registryName));
+
+    	return type;
     }
 
     public boolean isAccessory(ItemStack stack)

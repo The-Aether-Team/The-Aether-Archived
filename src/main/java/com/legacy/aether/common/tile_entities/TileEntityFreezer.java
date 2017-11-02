@@ -60,7 +60,7 @@ public class TileEntityFreezer extends AetherTileEntity
 
 		if (this.currentFreezable != null)
 		{
-			if (this.getStackInSlot(0) == null || AetherRegistry.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
+			if (this.getStackInSlot(0) == null || AetherRegistry.getInstance().hasFreezable(this.getStackInSlot(0)) && AetherRegistry.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
 			{
 				this.currentFreezable = null;
 				this.freezeProgress = 0;
@@ -108,7 +108,7 @@ public class TileEntityFreezer extends AetherTileEntity
 				}
 			}
 		}
-		else
+		else if (this.getStackInSlot(0) != null)
 		{
 			ItemStack itemstack = this.getStackInSlot(0);
 			AetherFreezable freezable = AetherRegistry.getInstance().getFreezable(itemstack);
