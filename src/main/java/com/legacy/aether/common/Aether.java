@@ -73,7 +73,7 @@ public class Aether
 
 	public static String doubleDropNotifier()
 	{
-		return modid + "_double_drops";
+		return "double_drops";
 	}
 
 }

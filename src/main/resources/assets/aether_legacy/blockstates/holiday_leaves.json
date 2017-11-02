@@ -1,27 +1,9 @@
 {
 	"variants": {
-		"check_decay=true,decayable=true,holiday_leaves=holiday_leaves": {
+		"holiday_leaves=holiday_leaves": {
 			"model": "aether_legacy:holiday_leaves"
 		},
-		"check_decay=true,decayable=false,holiday_leaves=holiday_leaves": {
-			"model": "aether_legacy:holiday_leaves"
-		},
-		"check_decay=false,decayable=true,holiday_leaves=holiday_leaves": {
-			"model": "aether_legacy:holiday_leaves"
-		},
-		"check_decay=false,decayable=false,holiday_leaves=holiday_leaves": {
-			"model": "aether_legacy:holiday_leaves"
-		},
-		"check_decay=true,decayable=true,holiday_leaves=decorated_holiday_leaves": {
-			"model": "aether_legacy:decorated_holiday_leaves"
-		},
-		"check_decay=true,decayable=false,holiday_leaves=decorated_holiday_leaves": {
-			"model": "aether_legacy:decorated_holiday_leaves"
-		},
-		"check_decay=false,decayable=true,holiday_leaves=decorated_holiday_leaves": {
-			"model": "aether_legacy:decorated_holiday_leaves"
-		},
-		"check_decay=false,decayable=false,holiday_leaves=decorated_holiday_leaves": {
+		"holiday_leaves=decorated_holiday_leaves": {
 			"model": "aether_legacy:decorated_holiday_leaves"
 		}
 	}

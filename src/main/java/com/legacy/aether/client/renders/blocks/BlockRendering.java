@@ -1,22 +1,33 @@
 package com.legacy.aether.client.renders.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.items.util.AetherColor;
 import com.legacy.aether.common.Aether;
 import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.common.blocks.decorative.BlockAetherFenceGate;
+import com.legacy.aether.common.blocks.natural.BlockAetherDirt;
+import com.legacy.aether.common.blocks.natural.BlockAetherGrass;
+import com.legacy.aether.common.blocks.natural.BlockAetherLeaves;
+import com.legacy.aether.common.blocks.natural.BlockAetherLog;
+import com.legacy.aether.common.blocks.natural.BlockCrystalLeaves;
+import com.legacy.aether.common.blocks.natural.BlockHolidayLeaves;
+import com.legacy.aether.common.blocks.natural.BlockHolystone;
+import com.legacy.aether.common.blocks.natural.BlockQuicksoil;
+import com.legacy.aether.common.blocks.natural.ore.BlockAmbrosiumOre;
 import com.legacy.aether.common.blocks.util.EnumCloudType;
-import com.legacy.aether.common.blocks.util.EnumCrystalType;
-import com.legacy.aether.common.blocks.util.EnumHolidayType;
-import com.legacy.aether.common.blocks.util.EnumLeafType;
-import com.legacy.aether.common.blocks.util.EnumLogType;
 import com.legacy.aether.common.blocks.util.EnumStoneType;
 
 public class BlockRendering 
@@ -24,12 +35,18 @@ public class BlockRendering
 
 	public static void initialize()
 	{
-		registerD(BlocksAether.aether_grass, "aether_grass");
-		registerD(BlocksAether.aether_dirt, "aether_dirt");
-		registerD(BlocksAether.holystone, "holystone");
-		registerD(BlocksAether.mossy_holystone, "mossy_holystone");
-		registerD(BlocksAether.quicksoil, "quicksoil");
-		registerD(BlocksAether.ambrosium_ore, "ambrosium_ore");
+        registerBlockWithStateMapper(BlocksAether.aether_grass, (new StateMap.Builder()).ignore(BlockAetherGrass.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.aether_dirt, (new StateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.holystone, (new StateMap.Builder()).ignore(BlockHolystone.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.mossy_holystone, (new StateMap.Builder()).ignore(BlockHolystone.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.quicksoil, (new StateMap.Builder()).ignore(BlockQuicksoil.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.ambrosium_ore, (new StateMap.Builder()).ignore(BlockAmbrosiumOre.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.aether_log, (new StateMap.Builder()).ignore(BlockAetherLog.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.aether_leaves, (new StateMap.Builder()).ignore(BlockAetherLeaves.CHECK_DECAY).ignore(BlockAetherLeaves.DECAYABLE).build());
+        registerBlockWithStateMapper(BlocksAether.crystal_leaves, (new StateMap.Builder()).ignore(BlockCrystalLeaves.CHECK_DECAY).ignore(BlockCrystalLeaves.DECAYABLE).build());
+        registerBlockWithStateMapper(BlocksAether.holiday_leaves, (new StateMap.Builder()).ignore(BlockHolidayLeaves.CHECK_DECAY).ignore(BlockHolidayLeaves.DECAYABLE).build());
+        registerBlockWithStateMapper(BlocksAether.skyroot_fence_gate, (new StateMap.Builder()).ignore(BlockAetherFenceGate.POWERED).build());
+
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
 		register(BlocksAether.holystone_brick, "holystone_brick");
 		register(BlocksAether.icestone, "icestone");
@@ -48,7 +65,7 @@ public class BlockRendering
 		register(BlocksAether.berry_bush, "berry_bush");
 		register(BlocksAether.berry_bush_stem, "berry_bush_stem");
 		register(BlocksAether.white_flower, "white_flower");
-		register(BlocksAether.purple_flower, "purple_flower");
+		register(BlocksAether.purple_flower,  "purple_flower");
 		register(BlocksAether.skyroot_sapling, "skyroot_sapling");
 		register(BlocksAether.golden_oak_sapling, "golden_oak_sapling");
 		register(BlocksAether.treasure_chest, "treasure_chest");
@@ -96,26 +113,6 @@ public class BlockRendering
 			register(BlocksAether.aercloud, meta, EnumCloudType.getType(meta).getName());
 		}
 
-		for (int meta = 0; meta < EnumLeafType.values().length; ++meta)
-		{
-			register(BlocksAether.aether_leaves, meta, EnumLeafType.getType(meta).getName());
-		}
-
-		for (int meta = 0; meta < EnumCrystalType.values().length; ++meta)
-		{
-			register(BlocksAether.crystal_leaves, meta, EnumCrystalType.getType(meta).getName());
-		}
-
-		for (int meta = 0; meta < EnumCrystalType.values().length; ++meta)
-		{
-			register(BlocksAether.holiday_leaves, meta, EnumHolidayType.getType(meta).getName());
-		}
-
-		for (int meta = 0; meta < 16; ++meta)
-		{
-			register(BlocksAether.aether_log, meta, EnumLogType.getType(meta).getName());
-		}
-
 		for (int meta = 0; meta < EnumStoneType.values().length; ++meta)
 		{
 			String name = EnumStoneType.getType(meta).getName();
@@ -139,10 +136,44 @@ public class BlockRendering
 		AetherEntityRenderingRegistry.registerTileEntities();
 	}
 
-	public static void registerD(Block block, String model)
+	public static void registerBlockWithStateMapper(Block block)
 	{
-		register(block, 0, model);
-		register(block, 1, model);
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().registerBlockWithStateMapper(block, new StateMapperBase() 
+		{
+			@Override
+			protected ModelResourceLocation getModelResourceLocation(IBlockState state)
+			{
+				return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
+			}
+			
+		});
+
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), new ItemMeshDefinition() 
+		{
+			@Override
+			public ModelResourceLocation getModelLocation(ItemStack stack) 
+			{
+				return new ModelResourceLocation(stack.getItem().getRegistryName(), "inventory");
+			}
+		});
+	}
+
+	public static void registerBlockWithStateMapper(Block block, IStateMapper mapper)
+	{
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().registerBlockWithStateMapper(block, mapper);
+
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), new ItemMeshDefinition() 
+		{
+			@Override
+			@SuppressWarnings("deprecation")
+			public ModelResourceLocation getModelLocation(ItemStack stack) 
+			{
+				Block block = Block.getBlockFromItem(stack.getItem());
+				IBlockState state = block.getStateFromMeta(stack.getMetadata());
+
+				return Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().getBlockStateMapper().getVariants(block).get(state);
+			}
+		});
 	}
 
 	public static void register(Block block, String model)

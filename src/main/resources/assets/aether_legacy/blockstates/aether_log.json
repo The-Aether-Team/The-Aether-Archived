@@ -1,51 +1,27 @@
 {
 	"variants": {
-		"aether_legacy_double_drops=true,aether_logs=golden_oak_log,axis=x": {
+		"aether_logs=golden_oak_log,axis=x": {
 			"model": "aether_legacy:golden_oak_log", "x": 90, "y": 90
 		},
-		"aether_legacy_double_drops=true,aether_logs=golden_oak_log,axis=y": {
+		"aether_logs=golden_oak_log,axis=y": {
 			"model": "aether_legacy:golden_oak_log"
 		},
-		"aether_legacy_double_drops=true,aether_logs=golden_oak_log,axis=z": {
+		"aether_logs=golden_oak_log,axis=z": {
 			"model": "aether_legacy:golden_oak_log", "x": 90
 		},
-		"aether_legacy_double_drops=true,aether_logs=golden_oak_log,axis=none": {
+		"aether_logs=golden_oak_log,axis=none": {
 			"model": "aether_legacy:golden_oak_log_bark"
 		},
-		"aether_legacy_double_drops=false,aether_logs=golden_oak_log,axis=x": {
-			"model": "aether_legacy:golden_oak_log", "x": 90, "y": 90
-		},
-		"aether_legacy_double_drops=false,aether_logs=golden_oak_log,axis=y": {
-			"model": "aether_legacy:golden_oak_log"
-		},
-		"aether_legacy_double_drops=false,aether_logs=golden_oak_log,axis=z": {
-			"model": "aether_legacy:golden_oak_log", "x": 90
-		},
-		"aether_legacy_double_drops=false,aether_logs=golden_oak_log,axis=none": {
-			"model": "aether_legacy:golden_oak_log_bark"
-		},
-		"aether_legacy_double_drops=true,aether_logs=skyroot_log,axis=x": {
+		"aether_logs=skyroot_log,axis=x": {
 			"model": "aether_legacy:skyroot_log", "x": 90, "y": 90
 		},
-		"aether_legacy_double_drops=true,aether_logs=skyroot_log,axis=y": {
+		"aether_logs=skyroot_log,axis=y": {
 			"model": "aether_legacy:skyroot_log"
 		},
-		"aether_legacy_double_drops=true,aether_logs=skyroot_log,axis=z": {
+		"aether_logs=skyroot_log,axis=z": {
 			"model": "aether_legacy:skyroot_log", "x": 90
 		},
-		"aether_legacy_double_drops=true,aether_logs=skyroot_log,axis=none": {
-			"model": "aether_legacy:skyroot_log_bark"
-		},
-		"aether_legacy_double_drops=false,aether_logs=skyroot_log,axis=x": {
-			"model": "aether_legacy:skyroot_log", "x": 90, "y": 90
-		},
-		"aether_legacy_double_drops=false,aether_logs=skyroot_log,axis=y": {
-			"model": "aether_legacy:skyroot_log"
-		},
-		"aether_legacy_double_drops=false,aether_logs=skyroot_log,axis=z": {
-			"model": "aether_legacy:skyroot_log", "x": 90
-		},
-		"aether_legacy_double_drops=false,aether_logs=skyroot_log,axis=none": {
+		"aether_logs=skyroot_log,axis=none": {
 			"model": "aether_legacy:skyroot_log_bark"
 		}
 	}
