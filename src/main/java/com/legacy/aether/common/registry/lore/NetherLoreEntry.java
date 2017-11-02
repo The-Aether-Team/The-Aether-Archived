@@ -43,6 +43,9 @@ public class NetherLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(Items.QUARTZ), "Nether Quartz", "Obtained by mining Quartz", "Ore. Used to make", "Quartz blocks.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.NETHERBRICK), "Nether Brick", "Obtained by smelting", "Netherrack. Used to", "make Nether Brick Blocks.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.GOLD_NUGGET), "Golden Nugget", "Obtained by killing Pigman.", "Used to create gold ingots.", "", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.NETHER_WART_BLOCK), "Nether Wart Block", "Decorative blocks", "crafted using Nether", "wart.", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.RED_NETHER_BRICK), "Red Nether Brick", "Decorative Nether Brick", "variant.", "", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.MAGMA), "Magma Block", "Light emitting", "Nether block that", "causes damage when", "walked on.", "", ""));
 
 		return this;
 	}

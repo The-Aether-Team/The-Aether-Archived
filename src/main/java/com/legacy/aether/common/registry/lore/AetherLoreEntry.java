@@ -28,6 +28,8 @@ public class AetherLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(BlocksAether.aercloud, 1, 0), "Cold Aercloud", "A cold cloud found", "in the aether dimension.", "Used to make Parachutes", "and break falls.", "", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.aercloud, 1, 1), "Blue Aercloud", "A cloud formed", "with bouncy properties.", "Soars entities high", "up into the air.", "", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.aercloud, 1, 2), "Golden Aercloud", "A golden cloud", "which can be used", "to craft parachutes", "which have a", "longer durability.", ""));
+		information.add(new EntryInformation(new ItemStack(BlocksAether.aercloud, 1, 3), "Pink Aercloud", "A pink cloud", "with healing abilities.", "Only found naturally", "on the official", "server.", ""));
+
 		information.add(new EntryInformation(new ItemStack(BlocksAether.quicksoil), "Quicksoil", "A block with extreme", "slipery properties. Be", "cautious when around", "these blocks.", "", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.icestone), "Icestone", "Used to freeze", "surrounding liquids and", "is the fuel", "for Freezers.", "", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.ambrosium_ore), "Ambrosium Ore", "Holystone which", "contains Ambrosium inside.", "Can be double", "dropped with", "Skyroot Tools.", ""));
@@ -57,7 +59,7 @@ public class AetherLoreEntry extends LoreEntry
 		/* Items */
 		information.add(new EntryInformation(new ItemStack(ItemsAether.zanite_gemstone), "Zanite Gemstone", "obtained by mining", "Zanite Ore. Used", "for crafting Zanite", "Tools.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.ambrosium_shard), "Ambrosium Shard", "obtained by mining", "Ambrosium Ore. Used", "as enchanter fuel.", "Can be eaten", "to restore a", "little health."));
-		information.add(new EntryInformation(new ItemStack(ItemsAether.golden_amber), "Golden Amber", "obtained by mining", "Golden Oak Logs", "with a Gravitite", "Axe. Used to", "craft Golden darts.", ""));
+		information.add(new EntryInformation(new ItemStack(ItemsAether.golden_amber), "Golden Amber", "obtained by chopping", "Golden Oak Logs", "with a Gravitite", "Axe. Used to", "craft Golden darts.", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.aechor_petal), "Aechor Petal", "obtained by Aechor", "Plants. Used to", "feed Moa's in their", "baby form.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.skyroot_pickaxe), "Skyroot Pickaxe", "Contains a special", "double drop ability.", "", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.skyroot_axe), "Skyroot Axe", "Contains a special", "double drop ability.", "", "", "", ""));
@@ -105,6 +107,8 @@ public class AetherLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(ItemsAether.valkyrie_boots), "Valkyrie Boots", "Has high ammount", "of protection.", "When fully worn,", "temporary flight is", "unlocked.", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.valkyrie_gloves), "Valkyrie Gloves", "Has high ammount", "of protection.", "When fully worn,", "temporary flight is", "unlocked.", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.blue_berry), "Blueberry", "The main food", "source in the Aether.", "Easy to obtain,", "minimal hunger", "restoration.", ""));
+		information.add(new EntryInformation(new ItemStack(ItemsAether.enchanted_blueberry), "Enchanted Blueberry", "A great food", "source from the Aether.", "Made by Enchanting", "a Blueberry.", "", ""));
+
 		information.add(new EntryInformation(new ItemStack(ItemsAether.white_apple), "White Apple", "The only known", "cure for deady poison.", "", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.regeneration_stone), "Regeneration Stone", "Enchanted Holystone", "which gives off", "regenerative effects.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.candy_cane), "Candy Cane", "Holiday goodies", "from presents.", "", "", "", ""));

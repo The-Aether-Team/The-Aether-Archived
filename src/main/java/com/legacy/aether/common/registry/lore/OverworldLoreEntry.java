@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.Loader;
 
 import com.legacy.aether.common.registry.objects.EntryInformation;
 import com.legacy.aether.common.registry.objects.LoreEntry;
@@ -57,7 +58,8 @@ public class OverworldLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(Blocks.LAPIS_ORE), "Lapis Ore", "An ore containing", "Lapis Lazuli. Once mined", "will release an", "abundance of Lapis.", "Used for Enchanting.", ""));
 		information.add(new EntryInformation(new ItemStack(Blocks.REDSTONE_ORE), "Redstone Ore", "An ore containing", "Redstone. Once mined", "will release an", "abundance of Redstone.", "", ""));
 		information.add(new EntryInformation(new ItemStack(Blocks.EMERALD_ORE), "Emerald Ore", "An ore containing", "Emerald. once mined", "will release an Emerald.", "Found only on", "Extreme Hill Biomes.", ""));
-		information.add(new EntryInformation(new ItemStack(Blocks.SPONGE), "Sponge", "Absorbs any Nearby", "water around it.", "", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.SPONGE), "Sponge", "It's a Sponge", "what did you expect?", "", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.SPONGE, 1, 1), "Wet Sponge", "Can be smelted", "into a Sponge.", "", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Blocks.GLASS), "Glass", "Crafted from smelting", "Sand in a Furnace.", "Used as decoration and", "can be used to make", "Glass Panes", "(Dyeable)"));
 		information.add(new EntryInformation(new ItemStack(Blocks.STAINED_GLASS), "Stained Glass", "Glass stained from", "using dye on a", "Glass block.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Blocks.STAINED_GLASS_PANE), "Stained Glass Pane", "Glass Pane stained", "from using dye on", "a Glass Panes block.", "", "", ""));
@@ -91,7 +93,12 @@ public class OverworldLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(Blocks.FURNACE), "Furnace", "A coal powered", "machine which will", "smelt specific items", "to form new materials.", "", ""));
 		information.add(new EntryInformation(new ItemStack(Blocks.LADDER), "Ladder", "Used to elevate players", "from one area to another.", "", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Blocks.RAIL), "Rail", "Used as the base for", "minecart movement and", "transportation.", "", "", ""));
-
+		information.add(new EntryInformation(new ItemStack(Blocks.BONE_BLOCK), "Bone Block", "Found undergroud", "in fossil formations.", "", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.BARRIER), "Barrier Block", "A hidden block.", "Invisible, and", "unbreakable in", "survival.", "", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.COMMAND_BLOCK), "Impulse Command Block", "A hidden block.", "Can send commands", "when activated with", "a Redstone impulse.", "", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.REPEATING_COMMAND_BLOCK), "Repeating Command Block", "A hidden block.", "Can send commands", "every tick", "when activated with", "a Redstone current.", ""));
+		information.add(new EntryInformation(new ItemStack(Blocks.CHAIN_COMMAND_BLOCK), "Chain Command Block", "A hidden block.", "Can chain commands", "though themselves", "when activated with", "a Redstone impulse.", ""));
+		
 		information.add(new EntryInformation(new ItemStack(Items.BUCKET), "Bucket", "Used to carry", "liquids ranging from", "Lava to even", "Milk.", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.LAVA_BUCKET), "Lava Bucket", "A bucket filled", "with Lava. Can", "be used to create", "Obsidian.", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.WATER_BUCKET), "Water Bucket", "A bucket filled", "with Water. Can", "be used to activate", "Aether Portals.", "", ""));
@@ -218,8 +225,20 @@ public class OverworldLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(Items.DYE, 1, 15), "Bone Meal", "Crafted from Bones, used", "to decorate natural", "areas.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.SADDLE), "Saddle", "An item used to mount", "on specific mobs. Allows", "for proper control", "on a mount.", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.CARROT_ON_A_STICK), "Carrot on a Stick", "Bait used to", "steer pigs in any", "direction the stick", "is pointed at.", "", ""));
-		information.add(new EntryInformation(new ItemStack(Items.ELYTRA), "Elytra", "Wings used to allow", "the player real-time", "flight.", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Items.BEETROOT), "Beetroot", "Crop only found", "in Villages. Can", "also be made", "into Soup.", "", ""));
+		information.add(new EntryInformation(new ItemStack(Items.TOTEM), "Totem of Undying", "Found in Woodland", "Mansions. Can", "be held in the", "offhand to save", "you from death.", ""));
+		information.add(new EntryInformation(new ItemStack(Items.field_191525_da), "Iron Nugget", "Obtained by smelting", "Iron Tools.", "Used to create Iron", "Ingots.", "", ""));
+		information.add(new EntryInformation(new ItemStack(Items.BEETROOT_SOUP), "Beetroot Soup", "A soup made from", "Beetroot and a bowl.", "", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Items.SPAWN_EGG), "Spawn Egg", "An egg that spawns", "a mob when right-clicked.", "", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Items.POTIONITEM), "Potion", "A drinkable potion.", "", "", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Items.SPLASH_POTION), "Splash Potion", "A throwable potion", "made with a potion", "and Gunpowder.", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Items.LINGERING_POTION), "Lingering Potion", "A throwable potion", "made with a potion", "and Dragon's Breath.", "", "", ""));
 
+		//Loader.isModLoaded("sponge");
+		//{
+		//information.add(new EntryInformation(new ItemStack(Blocks.SPONGE), "Sponge", "Sponge is a", "terrible API, and", "this server happens", "to be running it.", "~KingPhygieBoo", ""));
+		//}
+		
 		return this;
 	}
 
