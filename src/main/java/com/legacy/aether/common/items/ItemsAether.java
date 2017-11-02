@@ -206,7 +206,7 @@ public class ItemsAether
 
 		leather_gloves = register("leather_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xc65c35));
 		iron_gloves = register("iron_gloves", new ItemAccessory(AccessoryType.GLOVE));
-		golden_gloves = register("golden_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xeaee57));
+		golden_gloves = register("golden_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xFBF424));
 		chain_gloves = register("chain_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("chain"));
 		diamond_gloves = register("diamond_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x33ebcb));
 
