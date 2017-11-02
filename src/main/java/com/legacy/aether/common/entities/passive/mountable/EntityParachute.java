@@ -85,7 +85,7 @@ public class EntityParachute extends Entity
 			this.setDead();
 		}
 
-		if (this.rider != null)
+		if (this.rider != null && !this.rider.isElytraFlying())
 		{
 			if (this.rider.motionY < -0.25F)
 			{

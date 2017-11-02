@@ -122,7 +122,7 @@ public class AbilityAccessories extends Ability
 			}
 		}
 
-		if (this.playerAether.wearingAccessory(ItemsAether.golden_feather))
+		if (this.playerAether.wearingAccessory(ItemsAether.golden_feather) && !this.player.isElytraFlying())
 		{
 			if (!this.player.onGround && this.player.motionY < 0.0D && !this.player.isInWater() && !this.player.isSneaking())
 			{

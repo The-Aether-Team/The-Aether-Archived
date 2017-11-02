@@ -194,7 +194,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 
             player.fallDistance = 0.0F;
 
-            if(!player.onGround)
+            if(!player.onGround && !player.isElytraFlying())
             {
             	if (!player.capabilities.isFlying)
             	{
