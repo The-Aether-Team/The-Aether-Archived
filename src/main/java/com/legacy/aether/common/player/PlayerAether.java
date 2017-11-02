@@ -173,7 +173,6 @@ public class PlayerAether
 			if (this.thePlayer.posY < -2)
 			{
 				this.teleportPlayer(false);
-				this.thePlayer.setPositionAndUpdate(thePlayer.posX, 256, thePlayer.posZ);
 			}
 
 			this.thePlayer.addStat(AchievementsAether.enter_aether);
