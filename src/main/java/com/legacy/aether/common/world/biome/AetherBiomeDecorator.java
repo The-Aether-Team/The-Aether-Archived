@@ -91,7 +91,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
     	this.spawnOre(BlocksAether.icestone.getDefaultState(), 16, 10, 128);
     	this.spawnOre(BlocksAether.ambrosium_ore.getDefaultState(), 16, 15, 128);
     	this.spawnOre(BlocksAether.zanite_ore.getDefaultState(), 8, 15, 64);
-    	this.spawnOre(BlocksAether.gravitite_ore.getDefaultState(), 6, 8, 40);
+    	this.spawnOre(BlocksAether.gravitite_ore.getDefaultState(), 6, 8, 32);
 
     	this.generateFoilage(BlocksAether.berry_bush.getDefaultState());
 
