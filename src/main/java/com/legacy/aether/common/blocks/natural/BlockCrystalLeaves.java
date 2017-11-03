@@ -29,6 +29,7 @@ import com.legacy.aether.common.blocks.util.EnumCrystalType;
 import com.legacy.aether.common.blocks.util.EnumLeafType;
 import com.legacy.aether.common.blocks.util.IAetherMeta;
 import com.legacy.aether.common.entities.particles.EntityBlueFX;
+import com.legacy.aether.common.entities.particles.EntityCrystalFX;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
@@ -100,7 +101,7 @@ public class BlockCrystalLeaves extends BlockLeaves implements IAetherMeta
 	                double d3 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 	                double d4 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 	                double d5 = ((double)random.nextFloat() - 0.5D) * 0.5D;
-	                EntityBlueFX particle = new EntityBlueFX(world, d, d1, d2, d3, d4, d5);
+	                EntityCrystalFX particle = new EntityCrystalFX(world, d, d1, d2, d3, d4, d5);
 	                FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
 	            }
 	        }
