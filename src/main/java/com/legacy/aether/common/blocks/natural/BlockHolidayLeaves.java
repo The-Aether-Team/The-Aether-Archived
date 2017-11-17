@@ -92,9 +92,9 @@ public class BlockHolidayLeaves extends BlockLeaves implements IAetherMeta
 	        {
 	            for (int l = 0; l < 15; ++l)
 	            {
-	                double d = (double)pos.getX() + ((double)random.nextFloat() - 0.5D) * 6.0D;
-	                double d1 = (double)pos.getY() + ((double)random.nextFloat() - 0.5D) * 6.0D;
-	                double d2 = (double)pos.getZ() + ((double)random.nextFloat() - 0.5D) * 6.0D;
+	                double d = (double)pos.getX() + ((double)random.nextFloat() - 0.5D) * 8.0D;
+	                double d1 = (double)pos.getY() + ((double)random.nextFloat() - 0.5D) * 8.0D;
+	                double d2 = (double)pos.getZ() + ((double)random.nextFloat() - 0.5D) * 8.0D;
 	                double d3 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 	                double d4 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 	                double d5 = ((double)random.nextFloat() - 0.5D) * 0.5D;
