@@ -43,7 +43,7 @@ public class EntityAechorPlant extends EntityAetherAnimal
     {
         super.applyEntityAttributes();
 
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(15.0D);
         this.setHealth(20F);
     }
 

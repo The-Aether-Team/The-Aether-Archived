@@ -1,6 +1,7 @@
 package com.legacy.aether.common.entities.hostile;
 
 import net.minecraft.entity.EntityFlying;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.IMob;
@@ -39,6 +40,15 @@ public class EntityZephyr extends EntityFlying implements IMob
         this.tasks.addTask(2, new ZephyrAITravelCourse(this));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
+    }
+    
+    @Override
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(5D);
+		this.setHealth(5);
     }
 
     @Override
