@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.util.EnumStoneType;
+import com.legacy.aether.common.entities.bosses.EntityFireMinion;
 import com.legacy.aether.common.entities.bosses.EntityValkyrie;
 import com.legacy.aether.common.entities.hostile.EntitySentry;
 
@@ -46,6 +47,13 @@ public class BlockDungeonTrap extends BlockDungeonBase
         		valkyrie.setPosition(pos.getX() + 0.5D, pos.getY() + 1D, pos.getZ() + 0.5D);
         		if (!world.isRemote)
         		world.spawnEntity(valkyrie);
+        	}
+        	else if (type == EnumStoneType.Hellfire || type == EnumStoneType.Light_hellfire)
+        	{
+        		EntityFireMinion minion = new EntityFireMinion(world);
+        		minion.setPosition(pos.getX() + 0.5D, pos.getY() + 1D, pos.getZ() + 0.5D);
+        		if (!world.isRemote)
+        		world.spawnEntity(minion);
         	}
 
         	world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundCategory.PLAYERS, 1.0F, 1.5F);
