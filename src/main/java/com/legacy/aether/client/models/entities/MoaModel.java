@@ -1,8 +1,11 @@
 package com.legacy.aether.client.models.entities;
 
+import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.math.MathHelper;
 
 public class MoaModel extends ModelBase
@@ -18,8 +21,9 @@ public class MoaModel extends ModelBase
 
     public ModelRenderer feather1, feather2, feather3;
 
-    public MoaModel()
+    public MoaModel(float scale)
     {
+    	
         this.head = new ModelRenderer(this, 0, 13);
         this.head.addBox(-2.0F, -4.0F, -6.0F, 4, 4, 8, 0.0F);
         this.head.setRotationPoint(0.0F, (float)(-8 + 16), -4.0F);
@@ -29,15 +33,15 @@ public class MoaModel extends ModelBase
         this.jaw.setRotationPoint(0.0F, (float)(-8 + 16), -4.0F);
 
         this.body = new ModelRenderer(this, 0, 0);
-        this.body.addBox(-3.0F, -3.0F, 0.0F, 6, 8, 5, 0.0F);
+        this.body.addBox(-3.0F, -3.0F, 0.0F, 6, 8, 5, scale);
         this.body.setRotationPoint(0.0F, (float)(0 + 16), 0.0F);
 
         this.legs = new ModelRenderer(this, 22, 0);
-        this.legs.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2);
+        this.legs.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2, scale);
         this.legs.setRotationPoint(-2.0F, (float)(0 + 16), 1.0F);
 
         this.legs2 = new ModelRenderer(this, 22, 0);
-        this.legs2.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2);
+        this.legs2.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2, scale);
         this.legs2.setRotationPoint(2.0F, (float)(0 + 16), 1.0F);
 
         this.wings = new ModelRenderer(this, 52, 0);
@@ -84,6 +88,8 @@ public class MoaModel extends ModelBase
 
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
+    	EntityMoa moa = (EntityMoa)entityIn;
+    	
     	this.head.rotateAngleX = headPitch / 57.29578F;
     	this.head.rotateAngleY = netHeadYaw / 57.29578F;
 
@@ -119,6 +125,37 @@ public class MoaModel extends ModelBase
         	this.wings.rotateAngleZ = 0.0F;
         	this.wings2.rotateAngleZ = 0.0F;
         }
+        
+        if (moa.isSitting()) //TODO: Sitting animation. This will look almost like a sitting duck.
+        {
+            this.head.setRotationPoint(0.0F, (float)(-8 + 24), -4.0F);
+            this.jaw.setRotationPoint(0.0F, (float)(-8 + 24), -4.0F);
+            this.body.setRotationPoint(0.0F, (float)(0 + 24), 0.0F);
+            this.legs.setRotationPoint(-2.0F, (float)(0 + 24), 1.0F);
+            this.legs2.setRotationPoint(2.0F, (float)(0 + 24), 1.0F);
+            this.neck.setRotationPoint(0.0F, (float)(-2 + 24), -4.0F);    
+            this.feather1.setRotationPoint(0.0F, (float)(1 + 24), 1.0F);
+            this.feather2.setRotationPoint(0.0F, (float)(1 + 24), 1.0F);
+            this.feather3.setRotationPoint(0.0F, (float)(1 + 24), 1.0F);
+            
+            this.jaw.rotateAngleX = -0.3F;
+            this.head.rotateAngleX = 0F;
+            
+            this.wings.rotationPointY = 22F;
+        	this.wings2.rotationPointY = 22F;
+        }     
+        else
+        {
+            this.head.setRotationPoint(0.0F, (float)(-8 + 16), -4.0F);
+            this.jaw.setRotationPoint(0.0F, (float)(-8 + 16), -4.0F);
+            this.body.setRotationPoint(0.0F, (float)(0 + 16), 0.0F);
+            this.legs.setRotationPoint(-2.0F, (float)(0 + 16), 1.0F);
+            this.legs2.setRotationPoint(2.0F, (float)(0 + 16), 1.0F);       
+            this.neck.setRotationPoint(0.0F, (float)(-2 + 16), -4.0F);       
+            this.feather1.setRotationPoint(0.0F, (float)(1 + 16), 1.0F);
+            this.feather2.setRotationPoint(0.0F, (float)(1 + 16), 1.0F);
+            this.feather3.setRotationPoint(0.0F, (float)(1 + 16), 1.0F);
+        }
 
         this.feather1.rotateAngleY = -0.375F;
         this.feather2.rotateAngleY = 0.0F;
@@ -131,5 +168,4 @@ public class MoaModel extends ModelBase
         this.neck.rotateAngleY = head.rotateAngleY;
         this.jaw.rotateAngleX += 0.35F;
     }
-
 }

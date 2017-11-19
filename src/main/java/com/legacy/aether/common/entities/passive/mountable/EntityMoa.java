@@ -55,11 +55,19 @@ public class EntityMoa extends EntitySaddleMount
 		super(world);
 
 		this.initAI();
-
-		this.setSize(1.0F, 2.0F);
+		
 		this.stepHeight = 1.0F;
 
 		this.secsUntilEgg = this.getRandomEggTime();
+		
+		if (this.isSitting())
+		{
+			this.setSize(1.0F, 1.0F);
+		}
+		else
+		{
+			this.setSize(1.0F, 2.0F);	
+		}
 	}
 
 	public EntityMoa(World world, MoaColor color)
@@ -367,11 +375,15 @@ public class EntityMoa extends EntitySaddleMount
 				stack.damageItem(2, player);
 
 				this.setSitting(this.isSitting() ? false : true);
+				if (!this.world.isRemote)
+				{
+					this.spawnExplosionParticle();
+				}
 
 				return true;
 			}
 		}
-
+		
 		return super.processInteract(player, hand);
 	}
 
@@ -466,7 +478,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public double getMountedYOffset()
 	{
-		return 1.25D;
+		return this.isSitting() ? 0.25D: 1.25D;
 	}
 
 	@Override
