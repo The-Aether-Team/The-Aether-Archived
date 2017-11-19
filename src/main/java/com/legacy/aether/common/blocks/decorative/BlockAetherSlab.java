@@ -50,6 +50,7 @@ public class BlockAetherSlab extends BlockSlab
     	else if (this == BlocksAether.holystone_brick_double_slab) { return BlocksAether.holystone_brick_slab; }
     	else if (this == BlocksAether.holystone_double_slab) { return BlocksAether.holystone_slab; }
     	else if (this == BlocksAether.mossy_holystone_double_slab) { return BlocksAether.mossy_holystone_slab; }
+    	else if (this == BlocksAether.aerogel_double_slab) { return BlocksAether.aerogel_slab; }
     	else { return this; }
     }
 

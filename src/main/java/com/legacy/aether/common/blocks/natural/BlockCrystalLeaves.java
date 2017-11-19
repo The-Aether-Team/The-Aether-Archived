@@ -28,7 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.common.blocks.util.EnumCrystalType;
 import com.legacy.aether.common.blocks.util.EnumLeafType;
 import com.legacy.aether.common.blocks.util.IAetherMeta;
-import com.legacy.aether.common.entities.particles.EntityBlueFX;
 import com.legacy.aether.common.entities.particles.EntityCrystalFX;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
