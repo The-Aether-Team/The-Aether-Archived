@@ -5,7 +5,6 @@ import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.util.math.MathHelper;
 
 public class MoaModel extends ModelBase
@@ -37,11 +36,11 @@ public class MoaModel extends ModelBase
         this.body.setRotationPoint(0.0F, (float)(0 + 16), 0.0F);
 
         this.legs = new ModelRenderer(this, 22, 0);
-        this.legs.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2, scale);
+        this.legs.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2, 0.0F);
         this.legs.setRotationPoint(-2.0F, (float)(0 + 16), 1.0F);
 
         this.legs2 = new ModelRenderer(this, 22, 0);
-        this.legs2.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2, scale);
+        this.legs2.addBox(-1.0F, -1.0F, -1.0F, 2, 9, 2, 0.0F);
         this.legs2.setRotationPoint(2.0F, (float)(0 + 16), 1.0F);
 
         this.wings = new ModelRenderer(this, 52, 0);
@@ -73,11 +72,17 @@ public class MoaModel extends ModelBase
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
+    	EntityMoa moa = (EntityMoa) entityIn;
+    	
+    	if (!moa.isSitting())
+    	{
+    		this.legs.render(scale);
+    		this.legs2.render(scale);
+    	}
+    	
         this.head.render(scale);
         this.jaw.render(scale);
         this.body.render(scale);
-        this.legs.render(scale);
-        this.legs2.render(scale);
         this.wings.render(scale);
         this.wings2.render(scale);
         this.neck.render(scale);
@@ -126,7 +131,7 @@ public class MoaModel extends ModelBase
         	this.wings2.rotateAngleZ = 0.0F;
         }
         
-        if (moa.isSitting()) //TODO: Sitting animation. This will look almost like a sitting duck.
+        if (moa.isSitting())
         {
             this.head.setRotationPoint(0.0F, (float)(-8 + 24), -4.0F);
             this.jaw.setRotationPoint(0.0F, (float)(-8 + 24), -4.0F);

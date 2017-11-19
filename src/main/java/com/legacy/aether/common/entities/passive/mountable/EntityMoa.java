@@ -60,14 +60,7 @@ public class EntityMoa extends EntitySaddleMount
 
 		this.secsUntilEgg = this.getRandomEggTime();
 		
-		if (this.isSitting())
-		{
-			this.setSize(1.0F, 1.0F);
-		}
-		else
-		{
-			this.setSize(1.0F, 2.0F);	
-		}
+		this.setSize(1.0F, 2.0F);
 	}
 
 	public EntityMoa(World world, MoaColor color)
