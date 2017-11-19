@@ -84,7 +84,7 @@ public class EntitySwet extends EntityMountable
 				double d = (float) this.posX + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F;
 				double d1 = (float) this.posY + this.height;
 				double d2 = (float) this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F;
-				this.world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
+				this.world.spawnParticle(EnumParticleTypes.WATER_SPLASH, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
 			}
 		}
 
