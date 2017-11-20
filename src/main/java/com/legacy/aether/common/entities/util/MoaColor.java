@@ -41,7 +41,7 @@ public class MoaColor
 
 	public ResourceLocation getTexture()
 	{	
-		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + (/*saddled ? "saddle_" : */"moa_") + name.toLowerCase() + ".png");
+		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + ("moa_") + name.toLowerCase() + ".png");
 	}
 
 	public static MoaColor getRandomColor(World world)
