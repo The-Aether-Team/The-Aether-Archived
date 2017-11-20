@@ -55,9 +55,9 @@ public class EntityCockatrice extends EntityMob
         super.applyEntityAttributes();
 
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
-		this.setHealth(10);
+		this.setHealth(20);
     }
 
 	@Override
