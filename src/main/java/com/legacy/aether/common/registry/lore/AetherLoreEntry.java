@@ -183,6 +183,7 @@ public class AetherLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(ItemsAether.welcoming_skies), "Welcoming Skies", "A mixed song", "from a companion", "Voyed.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.repulsion_shield), "Repulsion Shield", "A shield which", "repels almost all", "projectiles back to", "their owners.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.lore_book), "Book of Lore", "A collection of", "information written down", "by one person.", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(ItemsAether.swetty_ball), "Swet Ball", "The Aether's substitiute", "for Slimeballs.", "Can be used to", "make Leads and", "Sticky Pistons.", ""));
 
 		return this;
 	}

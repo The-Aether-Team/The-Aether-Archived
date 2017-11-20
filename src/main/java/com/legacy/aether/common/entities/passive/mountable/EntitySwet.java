@@ -689,6 +689,11 @@ public class EntitySwet extends EntityMountable
 	{
 		ItemStack droppedItem = new ItemStack(this.getType() == 1 ? BlocksAether.aercloud : Blocks.GLOWSTONE, 1, this.getType() == 1 ? 1 : 0);
 		this.entityDropItem(droppedItem, 0F);
+		
+		if (this.getType() == 1);
+		{
+			this.dropItem(ItemsAether.swetty_ball, 1);
+		}
 	}
 
 	@Override

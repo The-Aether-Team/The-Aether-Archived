@@ -126,7 +126,7 @@ item.dart_golden.name=Golden Dart
 item.dart_poison.name=Poison Dart
 item.dart_enchanted.name=Enchanted Dart
 item.enchanted_blueberry.name=Enchanted Berry
-'item.swetty_ball.name=Swetty Ball
+item.swetty_ball.name=Swet Ball
 
 # Block Names
 tile.aether_portal.name=Aether Portal

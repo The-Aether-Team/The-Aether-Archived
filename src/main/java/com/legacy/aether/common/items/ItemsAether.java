@@ -55,7 +55,7 @@ public class ItemsAether
 
 	public static EnumRarity aether_loot = EnumHelper.addRarity("aether_legacy_loot", TextFormatting.GREEN, "Aether Loot");
 
-	public static Item zanite_gemstone, ambrosium_shard, golden_amber, aechor_petal;
+	public static Item zanite_gemstone, ambrosium_shard, golden_amber, aechor_petal, swetty_ball;
 
 	public static Item skyroot_pickaxe, skyroot_axe, skyroot_shovel, skyroot_sword;
 
@@ -117,6 +117,7 @@ public class ItemsAether
 		ambrosium_shard = register("ambrosium_shard", new ItemAmbrosiumShard());
 		golden_amber = register("golden_amber", new ItemAether(AetherCreativeTabs.material));
 		aechor_petal = register("aechor_petal", new ItemAether(AetherCreativeTabs.material));
+		swetty_ball = register("swetty_ball", new ItemAether(AetherCreativeTabs.material));
 
 		skyroot_pickaxe = register("skyroot_pickaxe", new ItemSkyrootTool(EnumAetherToolType.PICKAXE));
 		skyroot_axe = register("skyroot_axe", new ItemSkyrootTool(EnumAetherToolType.AXE));

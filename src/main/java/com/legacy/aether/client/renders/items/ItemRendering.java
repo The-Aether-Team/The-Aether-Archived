@@ -29,6 +29,7 @@ public class ItemRendering
 		register(ItemsAether.golden_amber, "golden_amber");
 		register(ItemsAether.aechor_petal, "aechor_petal");
 		register(ItemsAether.skyroot_stick, "skyroot_stick");
+		register(ItemsAether.swetty_ball, "swetty_ball");
 
 		register(ItemsAether.skyroot_pickaxe, "skyroot_pickaxe");
 		register(ItemsAether.skyroot_axe, "skyroot_axe");
