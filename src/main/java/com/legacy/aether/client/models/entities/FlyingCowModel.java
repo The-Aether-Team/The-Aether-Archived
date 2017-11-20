@@ -12,9 +12,9 @@ public class FlyingCowModel extends ModelQuadruped
     ModelRenderer horn1;
     ModelRenderer horn2;
 
-    public FlyingCowModel()
+    public FlyingCowModel(float scale)
     {
-        super(12, 0.0F);
+        super(12, scale);
         this.head = new ModelRenderer(this, 0, 0);
         this.head.addBox(-4.0F, -4.0F, -6.0F, 8, 8, 6, 0.0F);
         this.head.setRotationPoint(0.0F, 4.0F, -8.0F);
@@ -29,7 +29,7 @@ public class FlyingCowModel extends ModelQuadruped
         this.udders.setRotationPoint(0.0F, 14.0F, 6.0F);
         this.udders.rotateAngleX = ((float)Math.PI / 2F);
         this.body = new ModelRenderer(this, 18, 4);
-        this.body.addBox(-6.0F, -10.0F, -7.0F, 12, 18, 10, 0.0F);
+        this.body.addBox(-6.0F, -10.0F, -7.0F, 12, 18, 10, scale);
         this.body.setRotationPoint(0.0F, 5.0F, 2.0F);
         --this.leg1.rotationPointX;
         ++this.leg2.rotationPointX;

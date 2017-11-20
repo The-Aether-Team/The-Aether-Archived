@@ -9,8 +9,8 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.models.entities.MoaModel;
+import com.legacy.aether.client.renders.entities.layer.LayerMoaSaddle;
 import com.legacy.aether.client.renders.entities.layer.MoaDonatorLayer;
-import com.legacy.aether.client.renders.entities.layer.MoaLayer;
 import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.common.player.PlayerAether;
 
@@ -19,9 +19,9 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 
 	public MoaRenderer(RenderManager renderManager)
 	{
-		super(renderManager, new MoaModel(), 1.0F);
+		super(renderManager, new MoaModel(0.0F), 1.0F);
 
-		this.addLayer(new MoaLayer(renderManager, (MoaModel) this.getMainModel()));
+		this.addLayer(new LayerMoaSaddle(this));
 		this.addLayer(new MoaDonatorLayer(renderManager, (MoaModel) this.getMainModel()));
 	}
 
