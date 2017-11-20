@@ -28,6 +28,7 @@ public class AetherLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(BlocksAether.aercloud, 1, 0), "Cold Aercloud", "A cold cloud found", "in the aether dimension.", "Used to make Parachutes", "and break falls.", "", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.aercloud, 1, 1), "Blue Aercloud", "A cloud formed", "with bouncy properties.", "Soars entities high", "up into the air.", "", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.aercloud, 1, 2), "Golden Aercloud", "A golden cloud", "which can be used", "to craft parachutes", "which have a", "longer durability.", ""));
+		information.add(new EntryInformation(new ItemStack(BlocksAether.aercloud, 1, 3), "Pink Aercloud", "A pink cloud", "with healing abilities.", "Only found naturally", "on the official", "server.", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.quicksoil), "Quicksoil", "A block with extreme", "slipery properties. Be", "cautious when around", "these blocks.", "", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.icestone), "Icestone", "Used to freeze", "surrounding liquids and", "is the fuel", "for Freezers.", "", ""));
 		information.add(new EntryInformation(new ItemStack(BlocksAether.ambrosium_ore), "Ambrosium Ore", "Holystone which", "contains Ambrosium inside.", "Can be double", "dropped with", "Skyroot Tools.", ""));
@@ -179,6 +180,8 @@ public class AetherLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(ItemsAether.welcoming_skies), "Welcoming Skies", "A mixed song", "from a companion", "Voyed.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.repulsion_shield), "Repulsion Shield", "A shield which", "repels almost all", "projectiles back to", "their owners.", "", ""));
 		information.add(new EntryInformation(new ItemStack(ItemsAether.lore_book), "Book of Lore", "A collection of", "information written down", "by one person.", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(ItemsAether.swetty_ball), "Swet Ball", "The Aether's substitiute", "for Slimeballs.", "Can be used to", "make Leads and", "Sticky Pistons.", ""));
+		information.add(new EntryInformation(new ItemStack(ItemsAether.enchanted_blueberry), "Enchanted Blueberry", "A great food", "source from the Aether.", "Made by Enchanting", "a Blueberry.", "", ""));
 
 		return this;
 	}
