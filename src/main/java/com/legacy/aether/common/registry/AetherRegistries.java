@@ -231,7 +231,6 @@ public class AetherRegistries
 		register(new ItemStack(Items.SIGN, 3), "XXX", "XXX", " Y ", 'X', BlocksAether.skyroot_plank, 'Y', ItemsAether.skyroot_stick);
 		register(new ItemStack(BlocksAether.ambrosium_torch, 2), "Z", "Y", 'Z', ItemsAether.ambrosium_shard, 'Y', ItemsAether.skyroot_stick);
 		register(new ItemStack(Items.LEAD, 2), new Object[] {"YY ", "YX ", "  Y", 'Y', Items.STRING, 'X', ItemsAether.swetty_ball});
-        register(new ItemStack(Blocks.SLIME_BLOCK, 1), "XXX", "XXX", "XXX", 'X', ItemsAether.swetty_ball);
 		
 		register(new ItemStack(ItemsAether.cloud_parachute, 1), "XX", "XX", 'X', new ItemStack(BlocksAether.aercloud, 1));
 		register(new ItemStack(ItemsAether.golden_parachute, 1), "XX", "XX", 'X', new ItemStack(BlocksAether.aercloud, 1, 2));
@@ -239,7 +238,6 @@ public class AetherRegistries
 		register(new ItemStack(Blocks.CHEST, 1), "XXX", "X X", "XXX", 'X', BlocksAether.skyroot_plank);
 		register(new ItemStack(ItemsAether.skyroot_bucket, 1, 0), "Z Z", " Z ", 'Z', BlocksAether.skyroot_plank);
 		register(new ItemStack(Blocks.CRAFTING_TABLE, 1), "XX", "XX", 'X', BlocksAether.skyroot_plank);
-        register(new ItemStack(Blocks.STICKY_PISTON, 1), new Object[] {"S", "P", 'S', ItemsAether.swetty_ball, 'P', Blocks.PISTON});
 
 		register(new ItemStack(ItemsAether.gravitite_helmet, 1), "XXX", "X X", 'X', BlocksAether.enchanted_gravitite);
 		register(new ItemStack(ItemsAether.gravitite_chestplate, 1), "X X", "XXX", "XXX", 'X', BlocksAether.enchanted_gravitite);
