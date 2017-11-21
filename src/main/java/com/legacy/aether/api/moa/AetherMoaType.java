@@ -34,7 +34,7 @@ public class AetherMoaType extends net.minecraftforge.fml.common.registry.IForge
 			return this.properties.getCustomTexture(saddled);
 		}
 
-		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + (saddled ? "saddle_" : "moa_") + this.getRegistryName().getResourcePath().toLowerCase() + ".png");
+		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + ("moa_") + this.getRegistryName().getResourcePath().toLowerCase() + ".png");
 	}
 
 	public MoaProperties getMoaProperties()

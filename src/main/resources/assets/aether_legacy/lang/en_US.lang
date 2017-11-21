@@ -126,6 +126,7 @@ item.dart_golden.name=Golden Dart
 item.dart_poison.name=Poison Dart
 item.dart_enchanted.name=Enchanted Dart
 item.enchanted_blueberry.name=Enchanted Berry
+item.swetty_ball.name=Swet Ball
 
 # Block Names
 tile.aether_portal.name=Aether Portal
@@ -185,6 +186,7 @@ tile.hellfire_wall.name=Hellfire Wall
 tile.holystone_wall.name=Holystone Wall
 tile.holystone_brick_wall.name=Holystone Brick Wall
 tile.mossy_holystone_wall.name=Mossy Holystone Wall
+tile.aerogel_wall.name=Aerogel Wall
 tile.carved_stairs.name=Carved Stairs
 tile.angelic_stairs.name=Angelic Stairs
 tile.hellfire_stairs.name=Hellfire Stairs
@@ -192,6 +194,7 @@ tile.skyroot_stairs.name=Skyroot Stairs
 tile.mossy_holystone_stairs.name=Mossy Holystone Stairs
 tile.holystone_stairs.name=Holystone Stairs
 tile.holystone_brick_stairs.name=Holystone Brick Stairs
+tile.aerogel_stairs.name=Aerogel Stairs
 skyroot_slab.name=Skyroot Slab
 tile.skyroot_double_slab.name=Skyroot Double Slab
 carved_slab.name=Carved Slab
@@ -206,6 +209,8 @@ mossy_holystone_slab.name=Mossy Holystone Slab
 tile.mossy_holystone_double_slab.name=Mossy Holystone Double Slab
 holystone_brick_slab.name=Holystone Brick Slab
 tile.holystone_brick_double_slab.name=Holystone Brick Double Slab
+aerogel_slab.name=Aerogel Slab
+tile.aerogel_double_slab.name=Aerogel Double Slab
 tile.pink_aercloud.name=Pink Aercloud
 tile.skyroot_fence_gate.name=Skyroot Fence Gate
 

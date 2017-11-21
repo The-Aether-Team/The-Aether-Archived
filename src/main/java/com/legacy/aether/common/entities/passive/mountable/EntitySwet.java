@@ -86,7 +86,7 @@ public class EntitySwet extends EntityMountable
 				double d = (float) this.posX + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F;
 				double d1 = (float) this.posY + this.height;
 				double d2 = (float) this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F;
-				this.worldObj.spawnParticle(EnumParticleTypes.WATER_BUBBLE, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
+				this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
 			}
 		}
 
@@ -691,6 +691,11 @@ public class EntitySwet extends EntityMountable
 	{
 		ItemStack droppedItem = new ItemStack(this.getType() == 1 ? BlocksAether.aercloud : Blocks.GLOWSTONE, 1, this.getType() == 1 ? 1 : 0);
 		this.entityDropItem(droppedItem, 0F);
+		
+		if (this.getType() == 1);
+		{
+			this.dropItem(ItemsAether.swetty_ball, 1);
+		}
 	}
 
 	@Override

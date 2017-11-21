@@ -83,6 +83,7 @@ public class BlockRendering
 		register(BlocksAether.holystone_brick_wall, "holystone_brick_wall");
 		register(BlocksAether.mossy_holystone_wall, "mossy_holystone_wall");
 		register(BlocksAether.holystone_wall, "holystone_wall");
+		register(BlocksAether.aerogel_wall, "aerogel_wall");
 
 		register(BlocksAether.skyroot_stairs, "skyroot_stairs");
 		register(BlocksAether.carved_stairs, "carved_stairs");
@@ -91,7 +92,8 @@ public class BlockRendering
 		register(BlocksAether.holystone_brick_stairs, "holystone_brick_stairs");
 		register(BlocksAether.holystone_stairs, "holystone_stairs");
 		register(BlocksAether.mossy_holystone_stairs, "mossy_holystone_stairs");
-
+		register(BlocksAether.aerogel_stairs, "aerogel_stairs");
+		
 		register(BlocksAether.skyroot_double_slab, "skyroot_double_slab");
 		register(BlocksAether.carved_double_slab, "carved_double_slab");
 		register(BlocksAether.angelic_double_slab, "angelic_double_slab");
@@ -99,6 +101,7 @@ public class BlockRendering
 		register(BlocksAether.holystone_double_slab, "holystone_double_slab");
 		register(BlocksAether.mossy_holystone_double_slab, "mossy_holystone_double_slab");
 		register(BlocksAether.holystone_brick_double_slab, "holystone_brick_double_slab");
+		register(BlocksAether.aerogel_double_slab, "aerogel_double_slab");
 
 		register(BlocksAether.skyroot_slab, "skyroot_slab");
 		register(BlocksAether.carved_slab, "carved_slab");
@@ -107,6 +110,7 @@ public class BlockRendering
 		register(BlocksAether.holystone_slab, "holystone_slab");
 		register(BlocksAether.mossy_holystone_slab, "mossy_holystone_slab");
 		register(BlocksAether.holystone_brick_slab, "holystone_brick_slab");
+		register(BlocksAether.aerogel_slab, "aerogel_slab");
 
 		for (int meta = 0; meta < EnumCloudType.values().length; ++meta)
 		{

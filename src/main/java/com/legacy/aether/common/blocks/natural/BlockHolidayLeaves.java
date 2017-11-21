@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.common.blocks.util.EnumHolidayType;
 import com.legacy.aether.common.blocks.util.EnumLeafType;
 import com.legacy.aether.common.blocks.util.IAetherMeta;
-import com.legacy.aether.common.entities.particles.EntityPurpleFX;
+import com.legacy.aether.common.entities.particles.EntityHolidayFX;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
 public class BlockHolidayLeaves extends BlockLeaves implements IAetherMeta
@@ -97,7 +97,7 @@ public class BlockHolidayLeaves extends BlockLeaves implements IAetherMeta
 	                double d3 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 	                double d4 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 	                double d5 = ((double)random.nextFloat() - 0.5D) * 0.5D;
-	                EntityPurpleFX particle = new EntityPurpleFX(world, d, d1, d2, d3, d4, d5);
+	                EntityHolidayFX particle = new EntityHolidayFX(world, d, d1, d2, d3, d4, d5);
 	                FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
 	            }
 	        }

@@ -113,7 +113,7 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		super.applyEntityAttributes();
 
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(35.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
 	}
 
@@ -362,6 +362,10 @@ public class EntityMoa extends EntitySaddleMount
 				stack.damageItem(2, player);
 
 				this.setSitting(this.isSitting() ? false : true);
+				if (!this.worldObj.isRemote)
+				{
+					this.spawnExplosionParticle();
+				}
 
 				return true;
 			}
@@ -461,7 +465,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public double getMountedYOffset()
 	{
-		return 1.25D;
+		return this.isSitting() ? 0.25D: 1.25D;
 	}
 
 	@Override
