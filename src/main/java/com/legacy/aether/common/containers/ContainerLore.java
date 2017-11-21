@@ -33,7 +33,7 @@ public class ContainerLore extends Container
 
         this.loreSlot = new InventoryLore(inventory.player);
 
-        this.addSlotToContainer(new Slot(this.loreSlot, 0, 82, 66));
+        this.addSlotToContainer(new Slot(this.loreSlot, 0, 104, -4));
     }
 
     protected void retrySlotClick(int var1, int var2, boolean var3, EntityPlayer var4) {}
