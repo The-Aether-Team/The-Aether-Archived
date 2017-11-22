@@ -26,15 +26,16 @@ public class EntityFloatingBlock extends Entity
 	public EntityFloatingBlock(World worldIn)
 	{
 		super(worldIn);
+
+        this.setSize(1.0F, 1.0F);
 	}
 
 	public EntityFloatingBlock(World world, BlockPos pos, IBlockState state)
 	{
-		super(world);
+		this(world);
         this.preventEntitySpawning = true;
 		this.motionX = this.motionY = this.motionZ = 0;
 
-        this.setSize(0.98F, 0.98F);
         this.setState(state);
 		this.setPosition(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
 	}
