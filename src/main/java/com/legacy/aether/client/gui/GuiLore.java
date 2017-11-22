@@ -1,26 +1,19 @@
 package com.legacy.aether.client.gui;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import java.io.IOException;
 
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import com.legacy.aether.client.gui.button.GuiLoreButton;
 import com.legacy.aether.common.containers.ContainerLore;
 import com.legacy.aether.common.registry.AetherLore;
-import com.legacy.aether.common.registry.lore.AetherLoreEntry;
-import com.legacy.aether.common.registry.lore.EndLoreEntry;
-import com.legacy.aether.common.registry.lore.NetherLoreEntry;
-import com.legacy.aether.common.registry.lore.OverworldLoreEntry;
-import com.legacy.aether.common.registry.objects.EntryInformation;
-import com.legacy.aether.common.registry.objects.LoreEntry;
 
 public class GuiLore extends GuiContainer
 {
@@ -29,7 +22,13 @@ public class GuiLore extends GuiContainer
 
     private static final ResourceLocation TEXTURE_LORE_BOOK = new ResourceLocation("aether_legacy", "textures/gui/lore_book.png");
 
-	private HashMap<String, LoreEntry> lore_pages = new HashMap<String, LoreEntry>();
+	private String stringToLoad;
+
+	private ItemStack currentItem;
+
+	private GuiButton previousPage, nextPage;
+
+	private int pageNumber;
 
     public GuiLore(InventoryPlayer inventoryplayer)
     {
@@ -41,27 +40,35 @@ public class GuiLore extends GuiContainer
     public void initGui()
     {
     	super.initGui();
-		registerSection("Overworld Lore", new OverworldLoreEntry().initEntries()); //199 Complete
-		registerSection("Nether Lore", new NetherLoreEntry().initEntries()); // 22 Complete
-		registerSection("End Lore", new EndLoreEntry().initEntries()); //11 Complete
-		registerSection("Aether Lore", new AetherLoreEntry().initEntries()); //157 Complete
+
+    	this.previousPage = new GuiLoreButton(19, this.width / 2 - 110, this.height / 2 + 72, 20, 20, "<");
+    	this.nextPage = new GuiLoreButton(20, this.width / 2 + 90, this.height / 2 + 72, 20, 20, ">");
+
+    	this.addButton(this.previousPage);
+    	this.addButton(this.nextPage);
     }
 
-	public void registerSection(String name, LoreEntry lore)
-	{
-		lore_pages.put(name, lore);
-	}
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException
+    {
+    	if (this.previousPage == button)
+    	{
+    		--this.pageNumber;
+    	}
+    	else if (this.nextPage == button)
+    	{
+    		++this.pageNumber;
+    	}
+    }
 
-	public LoreEntry getSection(String name)
-	{
-		return lore_pages.get(name);
-	}
-
+    @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2)
     {
+    	this.fontRendererObj.drawString("Prev.", 16, 160, 4210752);
+    	this.fontRendererObj.drawString("Next", 218, 160, 4210752);
+
         this.fontRendererObj.drawString("Book", 32, -5, 4210752);
         this.fontRendererObj.drawString("of Lore:", 24, 4, 4210752);
-        //this.fontRendererObj.drawString("Add Object", 70, 0, 4210752);
 
         this.fontRendererObj.drawString("Item :", 75, 0, 4210752);
 
@@ -69,62 +76,48 @@ public class GuiLore extends GuiContainer
 
         if (searchedStack != null)
         {
-			this.drawCenteredString(this.fontRendererObj, searchedStack.getRarity().rarityColor.toString() + searchedStack.getItem().getItemStackDisplayName(searchedStack), 71, 18, 4210752);
+        	if (this.currentItem == null || (searchedStack.getItem() != this.currentItem.getItem() || searchedStack.getMetadata() != this.currentItem.getMetadata()))
+        	{
+        		this.pageNumber = 0;
+        		this.stringToLoad = AetherLore.getLoreEntry(searchedStack);
+            	this.currentItem = searchedStack;
+        	}
+
+        	int nameSize = 0;
+
+        	for (String name : this.fontRendererObj.listFormattedStringToWidth(searchedStack.getItem().getItemStackDisplayName(searchedStack), 109))
+        	{
+        		this.drawCenteredString(this.fontRendererObj, searchedStack.getRarity().rarityColor.toString() + name, 71, 18 + (10 * nameSize), 4210752);
+
+        		++nameSize;
+        	}
 
 			int size = 0;
 
-			for (String lore : this.fontRendererObj.listFormattedStringToWidth(AetherLore.getLoreEntry(searchedStack), 111))
+			for (String lore : this.fontRendererObj.listFormattedStringToWidth(this.stringToLoad, 109))
 			{
-				this.fontRendererObj.drawString(lore, ((size >= 6 ? 184 : 71) - this.fontRendererObj.getStringWidth(lore) / 2), (size >= 6 ? -68 : 28) + (10 * size), 4210752);
-				//this.drawCenteredString(this.fontRendererObj, lore, size >= 6 ? 182 : 71, (size >= 6 ? -70 : 28) + (10 * size), 4210752);
+				if (size >= 15 * this.pageNumber && size + (nameSize - 1) <= 15 * (this.pageNumber + 1))
+				{
+					int actualSize = this.pageNumber >= 1 ? size - ((15 - (nameSize - 1)) * this.pageNumber) : size + (nameSize - 1);
+	
+					this.fontRendererObj.drawString(lore, (((actualSize >= 6 ? 184 : 71)) - this.fontRendererObj.getStringWidth(lore) / 2), (actualSize >= 6 ? -68 : 28) + (10 * actualSize), 4210752);
+				}
 
 				size++;
 			}
 
-			//this.fontRendererObj.drawSplitString(str, x, y, wrapWidth, textColor);
+			this.previousPage.enabled = this.pageNumber != 0;
+			this.nextPage.enabled = size > (15 * (this.pageNumber + 1));
         }
-        /*ItemStack searchedStack = ((ContainerLore)this.inventorySlots).loreSlot.getStackInSlot(0);
-
-        if (searchedStack != null)
+        else
         {
-        	Iterator<LoreEntry> entries = this.lore_pages.values().iterator();
-        	
-        	while(entries.hasNext())
-        	{
-        		Iterator<EntryInformation> entry_contents = entries.next().EntryInformation().iterator();
-        		
-        		while (entry_contents.hasNext())
-        		{
-        			EntryInformation information = entry_contents.next();
-    				Item loreItem = information.base.getItem();
-        			
-        			if (loreItem != null && (information.base.getItemDamage() == searchedStack.getItemDamage() || information.base.isItemStackDamageable()) && loreItem == searchedStack.getItem())
-        			{
-        				//GlStateManager.pushMatrix();
-
-        				this.drawCenteredString(this.fontRendererObj, information.base.getRarity().rarityColor.toString() + information.s, 71, 18, 4210752);
-
-        				this.fontRendererObj.drawSplitString(information.s1 + " " + information.s2 + " " + information.s3 + " " + information.s4, 18, 30, 120, 4210752);
-                        //this.fontRendererObj.drawStringWithShadow(information.base.getRarity().rarityColor.toString() + information.s, 18, 18, 4210752);
-                        //this.fontRendererObj.drawString(information.s1, 134, 28, 4210752);
-                        //this.fontRendererObj.drawString(information.s2, 134, 38, 4210752);
-                        //this.fontRendererObj.drawString(information.s3, 134, 48, 4210752);
-                        //this.fontRendererObj.drawString(information.s4, 134, 58, 4210752);
-                        //this.fontRendererObj.drawString(information.s5, 134, 68, 4210752);
-                        //this.fontRendererObj.drawString(information.s6, 134, 78, 4210752);
-
-        				//GlStateManager.popMatrix();
-        			}
-        		}
-        	}
-       	}*/
+        	this.pageNumber = 0;
+        	this.stringToLoad = "";
+        	this.currentItem = null;
+        }
     }
 
-    public void onGuiClosed()
-    {
-        super.onGuiClosed();
-    }
-
+    @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i1, int i2)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -138,6 +131,6 @@ public class GuiLore extends GuiContainer
         this.mc.renderEngine.bindTexture(TEXTURE_LORE_BOOK);
         Gui.drawModalRectWithCustomSizedTexture(j - 1, k - 20, 0, 0, this.xSize + 20, this.ySize - 60, 275, 315);
         Gui.drawModalRectWithCustomSizedTexture(j + 90, k - 5, 0, 225, this.xSize + 20, this.ySize - 177, 500, 500);
-        //Gui.drawScaledCustomSizeModalRect(j - 1, k - 20, 200, 200, 100, 100, this.xSize + 20, this.ySize + 120, 100, 100);
     }
+
 }
