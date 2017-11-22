@@ -1,12 +1,6 @@
 {
 	"variants": {
-		"aether_legacy_double_drops=true": [
-			{ "model": "aether_legacy:quicksoil" },
-			{ "model": "aether_legacy:quicksoil", "y": 90 },
-			{ "model": "aether_legacy:quicksoil", "y": 180 },
-			{ "model": "aether_legacy:quicksoil", "y": 270 }
-		],
-		"aether_legacy_double_drops=false": [
+		"normal": [
 			{ "model": "aether_legacy:quicksoil" },
 			{ "model": "aether_legacy:quicksoil", "y": 90 },
 			{ "model": "aether_legacy:quicksoil", "y": 180 },
