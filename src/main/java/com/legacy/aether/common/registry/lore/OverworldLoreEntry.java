@@ -212,6 +212,7 @@ public class OverworldLoreEntry extends LoreEntry
 		information.add(new EntryInformation(new ItemStack(Items.PUMPKIN_SEEDS), "Pumpkin Seeds", "Found in dungeons.", "Used to grow Pumpkins.", "", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.PRISMARINE_SHARD), "Prismarine Shard", "Obtained from killing", "Guardians. Used to create Prismarine", "Blocks and Sea Lanterns.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.PRISMARINE_CRYSTALS), "Prismarine Crystals", "Obtained from killing", "Guardians. Used to create", "Sea Lanterns", "", "", ""));
+		information.add(new EntryInformation(new ItemStack(Items.PRISMARINE_CRYSTALS), "Prismarine Crystals", "Obtained from killing", "Guardians. Used to create", "Sea Lanterns", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.DYE, 1, 3), "Cocoa Beans", "Found in Jungles.", "Used to make Cookies.", "", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.DYE), "Ink Sac", "Obtained from killing Squids.", "Used to create book", "and quils.", "", "", ""));
 		information.add(new EntryInformation(new ItemStack(Items.DYE, 1, 4), "Lapis Lazuli", "Obtained from mining Lapis", "Ore. Used to enchant", "items in the enchantment", "table.", "", ""));
