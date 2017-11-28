@@ -57,13 +57,13 @@ public class AetherRegistries
 		registry.register(new AetherAccessory(ItemsAether.zanite_pendant, AccessoryType.PENDANT));
 		registry.register(new AetherAccessory(ItemsAether.ice_pendant, AccessoryType.PENDANT));
 
-		registry.register(new AetherAccessory(ItemsAether.red_cape, AccessoryType.GLOVE));
-		registry.register(new AetherAccessory(ItemsAether.blue_cape, AccessoryType.GLOVE));
-		registry.register(new AetherAccessory(ItemsAether.yellow_cape, AccessoryType.GLOVE));
-		registry.register(new AetherAccessory(ItemsAether.white_cape, AccessoryType.GLOVE));
-		registry.register(new AetherAccessory(ItemsAether.swet_cape, AccessoryType.GLOVE));
-		registry.register(new AetherAccessory(ItemsAether.invisibility_cape, AccessoryType.GLOVE));
-		registry.register(new AetherAccessory(ItemsAether.agility_cape, AccessoryType.GLOVE));
+		registry.register(new AetherAccessory(ItemsAether.red_cape, AccessoryType.CAPE));
+		registry.register(new AetherAccessory(ItemsAether.blue_cape, AccessoryType.CAPE));
+		registry.register(new AetherAccessory(ItemsAether.yellow_cape, AccessoryType.CAPE));
+		registry.register(new AetherAccessory(ItemsAether.white_cape, AccessoryType.CAPE));
+		registry.register(new AetherAccessory(ItemsAether.swet_cape, AccessoryType.CAPE));
+		registry.register(new AetherAccessory(ItemsAether.invisibility_cape, AccessoryType.CAPE));
+		registry.register(new AetherAccessory(ItemsAether.agility_cape, AccessoryType.CAPE));
 
 		registry.register(new AetherAccessory(ItemsAether.golden_feather, AccessoryType.MISC));
 		registry.register(new AetherAccessory(ItemsAether.regeneration_stone, AccessoryType.MISC));
