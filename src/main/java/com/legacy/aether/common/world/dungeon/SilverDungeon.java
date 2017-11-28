@@ -39,6 +39,28 @@ public class SilverDungeon extends AetherDungeon
     	this.clouds.setFlat(false);
     }
 
+    public void generateDoorX(World world, int x, int y, int z, int yF, int zF)
+    {
+		for(int yFinal = y; yFinal < y + yF; yFinal++)
+		{
+			for(int zFinal = z; zFinal < z + zF; zFinal++)
+			{
+				this.setBlockAndNotifyAdequately(world, new BlockPos(x, yFinal, zFinal), Blocks.AIR.getDefaultState());
+			}
+		}
+    }
+
+    public void generateDoorZ(World world, int z, int x, int y, int xF, int yF)
+    {
+		for(int xFinal = x; xFinal < x + xF; xFinal++)
+		{
+			for(int yFinal = y; yFinal < y + yF; yFinal++)
+			{
+				this.setBlockAndNotifyAdequately(world, new BlockPos(xFinal, yFinal, z), Blocks.AIR.getDefaultState());
+			}
+		}
+    }
+
     public boolean generate(World world, Random random, BlockPos pos)
     {
 		replaceAir = true;
@@ -118,11 +140,17 @@ public class SilverDungeon extends AetherDungeon
 			addPlaneY(world, random, new PositionData(pos.getX() - 1, pos.getY() + 15 + y, pos.getZ() - 1 + 2 * y), new PositionData(57, 0, 32 - 4 * y));
 		}
 
+		int firstStaircaseZ = 0;
+		int secondStaircaseZ = 0;
+		int finalStaircaseZ = 0;
+
 		int row = random.nextInt(3);
 		addStaircase(world, random, new PositionData(pos.getX() + 19, pos.getY(), pos.getZ() + 5 + row * 7), 10);
 		rooms[2][0][row] = 2;
 		rooms[2][1][row] = 2;
-		rooms[2][2][row] = 1; 
+		rooms[2][2][row] = 1;
+		finalStaircaseZ = row;
+
 		int x = pos.getX() + 25;
 		int y;
 		int z;
@@ -139,11 +167,13 @@ public class SilverDungeon extends AetherDungeon
 		addStaircase(world, random, new PositionData(pos.getX() + 12, pos.getY(), pos.getZ() + 5 + row * 7), 5);
 		rooms[1][0][row] = 1;
 		rooms[1][1][row] = 1;
+		firstStaircaseZ = row;
 
 		row = random.nextInt(3);
 		addStaircase(world, random, new PositionData(pos.getX() + 5, pos.getY() + 5, pos.getZ() + 5 + row * 7), 5);
-		rooms[0][0][row] = 1; 
-		rooms[0][1][row] = 1;
+		rooms[0][1][row] = 1; 
+		rooms[0][2][row] = 1;
+		secondStaircaseZ = row;
 
 		for(int p = 0; p < 3; p++)
 		{
@@ -151,123 +181,166 @@ public class SilverDungeon extends AetherDungeon
 			{
 				for(int r = 0; r < 3; r++)
 				{
-					int type = rooms[p][q][r];
-
-					if(p + 1 < 3 && (type == 0 || type == 1 || random.nextBoolean()) && type != 2)
+					if (p == 0 && q != 0 && secondStaircaseZ == r)
 					{
-						int newType = rooms[p + 1][q][r];
-
-						if(newType != 2 && !(newType == 1 && type == 1))
+						if (r == 0)
 						{
-							rooms[p][q][r] = 3;
-							type = 3;
-							x = pos.getX() + 11 + 7 * p;
-
-							for(y = pos.getY() + 5 * q; y < pos.getY() + 2 + 5 * q; y++)
-							{
-								for(z = pos.getZ() + 7 + 7 * r; z < pos.getZ() + 9 + 7 * r; z++)
-								{
-									this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
-								}
-							}
-						}	
+							this.generateDoorX(world, pos.getX() + 11 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+							this.generateDoorZ(world, pos.getZ() - 3 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+						}
+						else if (r == 1)
+						{
+							this.generateDoorX(world, pos.getX() + 11 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+							this.generateDoorZ(world, pos.getZ() + 4 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+							this.generateDoorZ(world, pos.getZ() + 11 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+						}
+						else if (r == 2)
+						{
+							this.generateDoorX(world, pos.getX() + 11 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+							this.generateDoorZ(world, pos.getZ() + 4 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+						}
 					}
-
-					if(p - 1 > 0 && (type == 0 || type == 1 || random.nextBoolean()) && type != 2)
+					else if (p == 1 && q != 2 && firstStaircaseZ == r)
 					{
-						int newType = rooms[p - 1][q][r];
-
-						if(newType != 2 && !(newType == 1 && type == 1))
+						if (firstStaircaseZ != finalStaircaseZ)
 						{
-							rooms[p][q][r] = 4;
-							type = 4;
-							x = pos.getX() + 4 + 7 * p;
+							this.generateDoorX(world, pos.getX() + 11 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+						}
 
-							for(y = pos.getY() + 5 * q; y < pos.getY() + 2 + 5 * q; y++)
-							{
-								for(z = pos.getZ() + 7 + 7 * r; z < pos.getZ() + 9 + 7 * r; z++)
-								{
-									this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
-								}
-							}
-						}	
+						if (r == 0)
+						{
+							this.generateDoorZ(world, pos.getZ() + 11 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+							this.generateDoorX(world, pos.getX() + 4 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+						}
+						else if (r == 1)
+						{
+							this.generateDoorZ(world, pos.getZ() + 4 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+							this.generateDoorZ(world, pos.getZ() + 11 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+							this.generateDoorX(world, pos.getX() + 4 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+						}
+						else if (r == 2)
+						{
+							this.generateDoorZ(world, pos.getZ() + 4 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+							this.generateDoorX(world, pos.getX() + 4 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+						}
 					}
-					
-					if(r + 1 < 3 && (type == 0 || type == 1 || random.nextBoolean()) && type != 2)
+					else if (p == 2 && finalStaircaseZ == r)
 					{
-						int newType = rooms[p][q][r + 1];
-
-						if(newType != 2 && !(newType == 1 && type == 1))
+						if (q == 0)
 						{
-							rooms[p][q][r] = 5;
-							type = 5;
-							z = pos.getZ() + 11 + 7 * r;
-
-							for(y = pos.getY() + 5 * q; y < pos.getY() + 2 + 5 * q; y++)
-							{
-								for(x = pos.getX() + 7 + 7 * p; x < pos.getX() + 9 + 7 * p; x++)
-								{
-									this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
-								}
-							}
-						}	
-					}
-
-					if(r - 1 > 0 && (type == 0 || type == 1 || random.nextBoolean()) && type != 2)
-					{
-						int newType = rooms[p][q][r - 1];
-
-						if(newType != 2 && !(newType == 1 && type == 1))
+							this.generateDoorX(world, pos.getX() + 11 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+						}
+						else if (q == 2)
 						{
-							rooms[p][q][r] = 6;
-							type = 6;
-							z = pos.getZ() + 4 + 7 * r;
-
-							for(y = pos.getY() + 5 * q; y < pos.getY() + 2 + 5 * q; y++)
+							if (r == 0)
 							{
-								for(x = pos.getX() + 7 + 7 * p; x < pos.getX() + 9 + 7 * p; x++)
-								{
-									this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
-								}
+								this.generateDoorX(world, pos.getX() + 4 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+								this.generateDoorZ(world, pos.getZ() + 11 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
 							}
-						}	
-					}
-
-					int roomType = random.nextInt(3);
-
-					if(type >= 3)
-					{
-						this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + p * 7, pos.getY() - 1 + q * 5, pos.getZ() + 7 + r * 7), BlocksAether.dungeon_trap.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic));
-
-						switch(roomType)
-						{
-							case 1 :
+							else if (r == 1)
 							{
-								addPlaneY(world, random, new PositionData(pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r), new PositionData(2, 0, 2));
-								int u = pos.getX() + 7 + 7 * p + random.nextInt(2);
-								int v = pos.getZ() + 7 + 7 * r + random.nextInt(2);
-								if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(u, pos.getY() + 5 * q + 1, v)).getBlock() == Blocks.AIR)
-								{
-									this.setBlockAndNotifyAdequately(world, new BlockPos(u, pos.getY() + 5 * q + 1, v), Blocks.CHEST.getDefaultState());
-									TileEntityChest chest = (TileEntityChest)world.getTileEntity(new BlockPos(u, pos.getY() + 5 * q + 1, v));
-
-									for(u = 0; u < 3 + random.nextInt(3); u++)
-									{
-										chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), this.getNormalLoot(random));
-									}
-								}
-								break;
+								this.generateDoorX(world, pos.getX() + 4 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+								this.generateDoorZ(world, pos.getZ() + 4 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+								this.generateDoorZ(world, pos.getZ() + 11 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
 							}
-							case 2 :
+							else if (r == 2)
 							{
-								addPlaneY(world, random, new PositionData(pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r), new PositionData(2, 0, 2));
-								this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + 7 * p + random.nextInt(2), pos.getY() + 5 * q + 1, pos.getZ() + 7 + 7 * r + random.nextInt(2)), BlocksAether.chest_mimic.getDefaultState());
-								this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + 7 * p + random.nextInt(2), pos.getY() + 5 * q + 1, pos.getZ() + 7 + 7 * r + random.nextInt(2)), BlocksAether.chest_mimic.getDefaultState());
-								break;
+								this.generateDoorX(world, pos.getX() + 4 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+								this.generateDoorZ(world, pos.getZ() + 4 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
 							}
 						}
-					}					
+					}
+					else
+					{
+						int type = this.rooms[p][q][r];
 
+						if(p + 1 < 3)
+						{
+							int newType = this.rooms[p + 1][q][r];
+
+							if(newType != 2 && !(newType == 1 && type == 1))
+							{
+								this.rooms[p][q][r] = 3;
+								type = 3;
+
+								this.generateDoorX(world, pos.getX() + 11 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+							}	
+						}
+
+						if(p - 1 > 0)
+						{
+							int newType = this.rooms[p - 1][q][r];
+
+							if(newType != 2 && !(newType == 1 && type == 1))
+							{
+								this.rooms[p][q][r] = 4;
+								type = 4;
+
+								this.generateDoorX(world, pos.getX() + 4 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r, 2, 2);
+							}	
+						}
+
+						if(r + 1 < 3)
+						{
+							int newType = this.rooms[p][q][r + 1];
+
+							if(newType != 2 && !(newType == 1 && type == 1))
+							{
+								this.rooms[p][q][r] = 5;
+								type = 5;
+
+								this.generateDoorZ(world, pos.getZ() + 11 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+							}	
+						}
+
+						if(r - 1 > 0)
+						{
+							int newType = this.rooms[p][q][r - 1];
+
+							if(newType != 2 && !(newType == 1 && type == 1))
+							{
+								this.rooms[p][q][r] = 6;
+								type = 6;
+
+								this.generateDoorZ(world, pos.getZ() + 4 + 7 * r, pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, 2, 2);
+							}	
+						}
+
+						int roomType = random.nextInt(3);
+
+						if(type >= 3)
+						{
+							this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + p * 7, pos.getY() - 1 + q * 5, pos.getZ() + 7 + r * 7), BlocksAether.dungeon_trap.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic));
+
+							switch(roomType)
+							{
+								case 1 :
+								{
+									this.addPlaneY(world, random, new PositionData(pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r), new PositionData(2, 0, 2));
+									int u = pos.getX() + 7 + 7 * p + random.nextInt(2);
+									int v = pos.getZ() + 7 + 7 * r + random.nextInt(2);
+									if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(u, pos.getY() + 5 * q + 1, v)).getBlock() == Blocks.AIR)
+									{
+										this.setBlockAndNotifyAdequately(world, new BlockPos(u, pos.getY() + 5 * q + 1, v), Blocks.CHEST.getDefaultState());
+										TileEntityChest chest = (TileEntityChest)world.getTileEntity(new BlockPos(u, pos.getY() + 5 * q + 1, v));
+
+										for(u = 0; u < 3 + random.nextInt(3); u++)
+										{
+											chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), this.getNormalLoot(random));
+										}
+									}
+									break;
+								}
+								case 2 :
+								{
+									this.addPlaneY(world, random, new PositionData(pos.getX() + 7 + 7 * p, pos.getY() + 5 * q, pos.getZ() + 7 + 7 * r), new PositionData(2, 0, 2));
+									this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + 7 * p + random.nextInt(2), pos.getY() + 5 * q + 1, pos.getZ() + 7 + 7 * r + random.nextInt(2)), BlocksAether.chest_mimic.getDefaultState());
+									this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + 7 + 7 * p + random.nextInt(2), pos.getY() + 5 * q + 1, pos.getZ() + 7 + 7 * r + random.nextInt(2)), BlocksAether.chest_mimic.getDefaultState());
+									break;
+								}
+							}
+						}	
+					}			
 				}
 			}
 		}
