@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.client.models.entities.FlyingCowModel;
 import com.legacy.aether.client.renders.entities.FlyingCowRenderer;
-import com.legacy.aether.common.entities.passive.mountable.EntityFlyingCow;
+import com.legacy.aether.entities.passive.mountable.EntityFlyingCow;
 
 @SideOnly(Side.CLIENT)
 public class LayerFlyingCowSaddle implements LayerRenderer<EntityFlyingCow>

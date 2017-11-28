@@ -14,8 +14,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import com.legacy.aether.common.Aether;
-import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.Aether;
+import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.universal.jei.wrapper.EnchanterRecipeWrapper;
 
 public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeWrapper>

@@ -9,7 +9,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.legacy.aether.common.items.armor.ItemAetherArmor;
+import com.legacy.aether.items.armor.ItemAetherArmor;
 
 public class ModelColoredArmor extends ModelBiped
 {

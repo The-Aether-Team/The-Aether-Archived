@@ -5,10 +5,10 @@ import net.minecraft.world.EnumDifficulty;
 
 import com.legacy.aether.client.gui.dialogue.DialogueOption;
 import com.legacy.aether.client.gui.dialogue.GuiDialogue;
-import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
-import com.legacy.aether.common.items.ItemsAether;
-import com.legacy.aether.common.networking.AetherNetworkingManager;
-import com.legacy.aether.common.networking.packets.PacketInitiateValkyrieFight;
+import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketInitiateValkyrieFight;
 
 public class GuiValkyrieDialogue extends GuiDialogue
 {

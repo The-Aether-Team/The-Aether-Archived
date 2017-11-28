@@ -8,13 +8,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
 import net.minecraftforge.fml.common.registry.PersistentRegistryManager;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.api.accessories.AetherAccessory;
 import com.legacy.aether.api.enchantments.AetherEnchantment;
 import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
 import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.api.freezables.AetherFreezableFuel;
 import com.legacy.aether.api.moa.AetherMoaType;
-import com.legacy.aether.common.Aether;
 
 public class AetherRegistry
 {

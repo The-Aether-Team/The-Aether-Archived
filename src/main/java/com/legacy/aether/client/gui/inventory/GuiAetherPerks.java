@@ -10,14 +10,14 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 
 import org.lwjgl.input.Keyboard;
 
-import com.legacy.aether.common.entities.AetherEntities;
-import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.common.networking.AetherNetworkingManager;
-import com.legacy.aether.common.networking.packets.PacketPerkChanged;
-import com.legacy.aether.common.player.PlayerAether;
-import com.legacy.aether.common.player.perks.AetherRankings;
-import com.legacy.aether.common.player.perks.util.DonatorMoaSkin;
-import com.legacy.aether.common.player.perks.util.EnumAetherPerkType;
+import com.legacy.aether.entities.AetherEntities;
+import com.legacy.aether.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketPerkChanged;
+import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.player.perks.AetherRankings;
+import com.legacy.aether.player.perks.util.DonatorMoaSkin;
+import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 
 public class GuiAetherPerks extends GuiScreen 
 {

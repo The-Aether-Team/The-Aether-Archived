@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.renders.entities.layer.LayerPhygSaddle;
 import com.legacy.aether.client.renders.entities.layer.PhygWingLayer;
-import com.legacy.aether.common.entities.passive.mountable.EntityPhyg;
+import com.legacy.aether.entities.passive.mountable.EntityPhyg;
 
 public class PhygRenderer extends RenderLiving<EntityPhyg>
 {

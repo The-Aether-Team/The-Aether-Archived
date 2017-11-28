@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.SunSpiritModel;
-import com.legacy.aether.common.entities.bosses.EntityFireMinion;
+import com.legacy.aether.entities.bosses.EntityFireMinion;
 
 public class FireMinionRenderer extends RenderBiped<EntityFireMinion>
 {

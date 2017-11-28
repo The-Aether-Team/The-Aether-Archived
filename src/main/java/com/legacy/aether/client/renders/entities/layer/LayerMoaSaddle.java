@@ -2,8 +2,9 @@ package com.legacy.aether.client.renders.entities.layer;
 
 import com.legacy.aether.client.models.entities.MoaModel;
 import com.legacy.aether.client.renders.entities.MoaRenderer;
-import com.legacy.aether.common.entities.AetherEntities;
-import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.entities.AetherEntities;
+import com.legacy.aether.entities.passive.mountable.EntityMoa;
+
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

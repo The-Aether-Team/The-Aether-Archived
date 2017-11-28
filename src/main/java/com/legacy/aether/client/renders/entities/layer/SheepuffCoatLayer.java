@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import com.legacy.aether.client.models.entities.SheepuffModel;
 import com.legacy.aether.client.models.entities.SheepuffedModel;
 import com.legacy.aether.client.renders.entities.SheepuffRenderer;
-import com.legacy.aether.common.entities.passive.EntitySheepuff;
+import com.legacy.aether.entities.passive.EntitySheepuff;
 
 public class SheepuffCoatLayer implements LayerRenderer<EntitySheepuff>
 {

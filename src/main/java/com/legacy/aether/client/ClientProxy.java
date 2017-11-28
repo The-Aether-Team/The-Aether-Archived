@@ -12,12 +12,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
+import com.legacy.aether.ServerProxy;
 import com.legacy.aether.client.audio.AetherMusicHandler;
 import com.legacy.aether.client.gui.GuiAetherInGame;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.blocks.BlockRendering;
 import com.legacy.aether.client.renders.items.ItemRendering;
-import com.legacy.aether.common.ServerProxy;
 
 public class ClientProxy extends ServerProxy
 {

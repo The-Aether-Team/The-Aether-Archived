@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.CrystalModel;
-import com.legacy.aether.common.entities.projectile.crystals.EntityIceyBall;
+import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
 
 public class IceyBallRenderer extends RenderLiving<EntityIceyBall>
 {

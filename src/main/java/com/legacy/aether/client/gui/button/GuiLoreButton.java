@@ -1,6 +1,6 @@
 package com.legacy.aether.client.gui.button;
 
-import com.legacy.aether.common.Aether;
+import com.legacy.aether.Aether;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

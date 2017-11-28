@@ -13,22 +13,22 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.decorative.BlockAetherFenceGate;
+import com.legacy.aether.blocks.natural.BlockAetherDirt;
+import com.legacy.aether.blocks.natural.BlockAetherGrass;
+import com.legacy.aether.blocks.natural.BlockAetherLeaves;
+import com.legacy.aether.blocks.natural.BlockAetherLog;
+import com.legacy.aether.blocks.natural.BlockCrystalLeaves;
+import com.legacy.aether.blocks.natural.BlockHolidayLeaves;
+import com.legacy.aether.blocks.natural.BlockHolystone;
+import com.legacy.aether.blocks.natural.BlockQuicksoil;
+import com.legacy.aether.blocks.natural.ore.BlockAmbrosiumOre;
+import com.legacy.aether.blocks.util.EnumCloudType;
+import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.items.util.AetherColor;
-import com.legacy.aether.common.Aether;
-import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.blocks.decorative.BlockAetherFenceGate;
-import com.legacy.aether.common.blocks.natural.BlockAetherDirt;
-import com.legacy.aether.common.blocks.natural.BlockAetherGrass;
-import com.legacy.aether.common.blocks.natural.BlockAetherLeaves;
-import com.legacy.aether.common.blocks.natural.BlockAetherLog;
-import com.legacy.aether.common.blocks.natural.BlockCrystalLeaves;
-import com.legacy.aether.common.blocks.natural.BlockHolidayLeaves;
-import com.legacy.aether.common.blocks.natural.BlockHolystone;
-import com.legacy.aether.common.blocks.natural.BlockQuicksoil;
-import com.legacy.aether.common.blocks.natural.ore.BlockAmbrosiumOre;
-import com.legacy.aether.common.blocks.util.EnumCloudType;
-import com.legacy.aether.common.blocks.util.EnumStoneType;
 
 public class BlockRendering 
 {

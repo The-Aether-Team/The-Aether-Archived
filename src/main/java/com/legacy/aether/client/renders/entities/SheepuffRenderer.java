@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.SheepuffWoolModel;
 import com.legacy.aether.client.renders.entities.layer.SheepuffCoatLayer;
-import com.legacy.aether.common.entities.passive.EntitySheepuff;
+import com.legacy.aether.entities.passive.EntitySheepuff;
 
 public class SheepuffRenderer extends RenderLiving<EntitySheepuff>
 {

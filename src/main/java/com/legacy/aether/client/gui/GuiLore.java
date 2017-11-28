@@ -12,8 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.gui.button.GuiLoreButton;
-import com.legacy.aether.common.containers.ContainerLore;
-import com.legacy.aether.common.registry.AetherLore;
+import com.legacy.aether.containers.ContainerLore;
+import com.legacy.aether.registry.AetherLore;
 
 public class GuiLore extends GuiContainer
 {

@@ -10,8 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.legacy.aether.common.entities.projectile.EntityLightningKnife;
-import com.legacy.aether.common.items.ItemsAether;
+import com.legacy.aether.entities.projectile.EntityLightningKnife;
+import com.legacy.aether.items.ItemsAether;
 
 public class LightningKnifeRenderer extends Render<EntityLightningKnife> 
 {

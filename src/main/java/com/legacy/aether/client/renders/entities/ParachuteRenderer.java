@@ -8,10 +8,10 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 
-import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.blocks.natural.BlockAercloud;
-import com.legacy.aether.common.blocks.util.EnumCloudType;
-import com.legacy.aether.common.entities.passive.mountable.EntityParachute;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.natural.BlockAercloud;
+import com.legacy.aether.blocks.util.EnumCloudType;
+import com.legacy.aether.entities.passive.mountable.EntityParachute;
 
 public class ParachuteRenderer extends Render<EntityParachute>
 {

@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.common.tile_entities.TileEntityTreasureChest;
+import com.legacy.aether.tile_entities.TileEntityTreasureChest;
 
 @SideOnly(Side.CLIENT)
 public class GuiTreasureChest extends GuiContainer

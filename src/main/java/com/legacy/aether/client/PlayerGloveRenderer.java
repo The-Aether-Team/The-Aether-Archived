@@ -10,9 +10,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
 
-import com.legacy.aether.common.items.ItemsAether;
-import com.legacy.aether.common.items.accessories.ItemAccessory;
-import com.legacy.aether.common.player.PlayerAether;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.items.accessories.ItemAccessory;
+import com.legacy.aether.player.PlayerAether;
 
 public class PlayerGloveRenderer
 {

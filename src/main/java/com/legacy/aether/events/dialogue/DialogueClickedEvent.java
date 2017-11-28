@@ -1,0 +1,37 @@
+package com.legacy.aether.events.dialogue;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.eventhandler.Event;
+
+public class DialogueClickedEvent extends Event
+{
+
+	private EntityPlayer player;
+
+	private String dialogueName;
+
+	private int dialogueId;
+
+	public DialogueClickedEvent(EntityPlayer player, String dialogueName, int dialogueId)
+	{
+		this.player = player;
+		this.dialogueName = dialogueName;
+		this.dialogueId = dialogueId;
+	}
+
+	public EntityPlayer getPlayer()
+	{
+		return this.player;
+	}
+
+	public String getDialogueName()
+	{
+		return this.dialogueName;
+	}
+
+	public int getDialogueId()
+	{
+		return this.dialogueId;
+	}
+
+}
