@@ -19,6 +19,7 @@ import com.legacy.aether.common.entities.hostile.EntityAechorPlant;
 import com.legacy.aether.common.entities.hostile.EntityCockatrice;
 import com.legacy.aether.common.entities.hostile.EntityMimic;
 import com.legacy.aether.common.entities.hostile.EntitySentry;
+import com.legacy.aether.common.entities.hostile.EntityWhirlwind;
 import com.legacy.aether.common.entities.hostile.EntityZephyr;
 import com.legacy.aether.common.entities.passive.EntityAerwhale;
 import com.legacy.aether.common.entities.passive.EntityMiniCloud;
@@ -87,6 +88,7 @@ public class AetherEntities
 		register(EntityHammerProjectile.class, "hammer_projectile", 29);
 		register(EntityLightningKnife.class, "lightning_knife", 30);
 		register(EntityParachute.class, "parachute", 31);
+		register(EntityWhirlwind.class, "whirlwind", 32, 0x9fc3f7, 0xffffff);
 
 		BLUE_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "blue"), new AetherMoaType(0x7777FF, new MoaProperties(3, 100, 0.3F), AetherCreativeTabs.misc));
 		ORANGE_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "orange"), new AetherMoaType(-0xC3D78, new MoaProperties(2, 50, 0.6F), AetherCreativeTabs.misc));
