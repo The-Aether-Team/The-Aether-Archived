@@ -8,7 +8,6 @@ import net.minecraftforge.common.AchievementPage;
 
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.items.ItemsAether;
-import com.legacy.aether.common.registry.objects.AetherAchievement;
 
 public class AchievementsAether 
 {

@@ -178,6 +178,35 @@ public class EntityAerwhale extends EntityFlying implements IMob
         	this.motionYaw += 10F;
         }
 
+        if (this.posY < -64.0D)
+        {
+            this.kill();
+        }
+
+        this.worldObj.theProfiler.startSection("ai");
+
+        if (this.isMovementBlocked())
+        {
+            this.isJumping = false;
+            this.moveStrafing = 0.0F;
+            this.moveForward = 0.0F;
+            this.randomYawVelocity = 0.0F;
+        }
+
+        this.worldObj.theProfiler.endSection();
+
+        this.worldObj.theProfiler.startSection("push");
+        this.collideWithNearbyEntities();
+        this.worldObj.theProfiler.endSection();
+
+        ++this.entityAge;
+        this.worldObj.theProfiler.startSection("checkDespawn");
+        this.despawnEntity();
+        this.worldObj.theProfiler.endSection();
+        this.worldObj.theProfiler.startSection("goalSelector");
+        this.tasks.onUpdateTasks();
+        this.worldObj.theProfiler.endSection();
+
         super.onEntityUpdate();
 
         this.moveEntity(this.motionX, this.motionY, this.motionZ);

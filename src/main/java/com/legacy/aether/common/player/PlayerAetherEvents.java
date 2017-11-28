@@ -31,7 +31,7 @@ import com.legacy.aether.common.networking.AetherNetworkingManager;
 import com.legacy.aether.common.networking.packets.PacketAchievement;
 import com.legacy.aether.common.player.capability.PlayerAetherProvider;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
-import com.legacy.aether.common.registry.objects.AetherAchievement;
+import com.legacy.aether.common.registry.achievements.AetherAchievement;
 
 public class PlayerAetherEvents
 {
