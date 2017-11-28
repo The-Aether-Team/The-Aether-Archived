@@ -16,16 +16,17 @@ import com.legacy.aether.common.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.common.entities.projectile.darts.EntityDartEnchanted;
 import com.legacy.aether.common.entities.projectile.darts.EntityDartGolden;
 
-public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
+public class DartBaseRenderer extends Render<EntityDartBase>
 {
 
-    public DartBaseRenderer(RenderManager renderManager) 
+	public DartBaseRenderer(RenderManager renderManager) 
     {
 		super(renderManager);
+
 		this.shadowSize = 0.0F;
 	}
 
-	public void renderDart(DART dart, double d, double d1, double d2, float f, float f1)
+	public void renderDart(EntityDartBase dart, double d, double d1, double d2, float f, float f1)
     {
 		if (dart.isInvisible())
 		{
@@ -92,13 +93,16 @@ public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
         GL11.glPopMatrix();
     }
 
-    public void doRender(DART entity, double d, double d1, double d2, float f, float f1)
+	@Override
+    public void doRender(EntityDartBase entity, double d, double d1, double d2, float f, float f1)
     {
         this.renderDart(entity, d, d1, d2, f, f1);
+
         super.doRender(entity, d, d1, d2, f, f1);
     }
 
-    protected ResourceLocation getEntityTexture(DART entity)
+	@Override
+    protected ResourceLocation getEntityTexture(EntityDartBase entity)
     {
     	String base = entity instanceof EntityDartGolden ? "golden" : entity instanceof EntityDartEnchanted ? "enchanted" : "poison";
         return new ResourceLocation("aether_legacy", "textures/entities/projectile/dart/" + base + (entity instanceof EntityPoisonNeedle ? "_needle" : "_dart") + ".png");
