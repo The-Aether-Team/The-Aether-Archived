@@ -10,7 +10,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.common.Aether;
 import com.legacy.aether.common.networking.packets.PacketAccessory;
 import com.legacy.aether.common.networking.packets.PacketAchievement;
+import com.legacy.aether.common.networking.packets.PacketDialogueClicked;
+import com.legacy.aether.common.networking.packets.PacketDisplayDialogue;
 import com.legacy.aether.common.networking.packets.PacketGameType;
+import com.legacy.aether.common.networking.packets.PacketInitiateValkyrieFight;
 import com.legacy.aether.common.networking.packets.PacketOpenContainer;
 import com.legacy.aether.common.networking.packets.PacketPerkChanged;
 import com.legacy.aether.common.networking.packets.PacketSendPoison;
@@ -33,6 +36,11 @@ public class AetherNetworkingManager
 		INSTANCE.registerMessage(PacketSendPoison.class, PacketSendPoison.class, discriminant++, Side.CLIENT);
 
 		INSTANCE.registerMessage(PacketGameType.class, PacketGameType.class, discriminant++, Side.SERVER);
+
+		INSTANCE.registerMessage(PacketInitiateValkyrieFight.class, PacketInitiateValkyrieFight.class, discriminant++, Side.SERVER);
+
+		INSTANCE.registerMessage(PacketDisplayDialogue.class, PacketDisplayDialogue.class, discriminant++, Side.CLIENT);
+		INSTANCE.registerMessage(PacketDialogueClicked.class, PacketDialogueClicked.class, discriminant++, Side.SERVER);
 
 		INSTANCE.registerMessage(PacketAchievement.class, PacketAchievement.class, discriminant++, Side.CLIENT);
 

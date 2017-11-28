@@ -35,6 +35,7 @@ import com.legacy.aether.common.Aether;
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.common.blocks.util.EnumStoneType;
+import com.legacy.aether.common.entities.bosses.IAetherBoss;
 import com.legacy.aether.common.entities.util.AetherNameGen;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.items.tools.ItemAetherTool;
@@ -43,7 +44,7 @@ import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
 import com.legacy.aether.common.registry.sounds.SoundsAether;
 
-public class EntitySlider extends EntityFlying 
+public class EntitySlider extends EntityFlying implements IAetherBoss
 {
 
 	public static final DataParameter<String> SLIDER_NAME = EntityDataManager.<String>createKey(EntitySlider.class, DataSerializers.STRING);
@@ -695,6 +696,7 @@ public class EntitySlider extends EntityFlying
 		return this.dataManager.get(SLIDER_NAME);
 	}
 
+    @Override
 	public String getBossTitle()
 	{
 		return this.getBossName() + ", the Slider";

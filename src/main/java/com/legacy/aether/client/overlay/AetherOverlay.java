@@ -19,9 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.entities.bosses.slider.EntitySlider;
-import com.legacy.aether.common.entities.bosses.sun_spirit.EntitySunSpirit;
-import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.legacy.aether.common.entities.bosses.IAetherBoss;
 import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.player.PlayerAether;
@@ -269,20 +267,13 @@ public class AetherOverlay
 
 		EntityLiving boss = (EntityLiving) player.getCurrentBoss();
 
-		if (player.getCurrentBoss() != null) 
+		if (player.getCurrentBoss() instanceof IAetherBoss) 
 		{
-			String bossTitle = "";
+			String bossTitle = ((IAetherBoss)player.getCurrentBoss()).getBossTitle();
 			ScaledResolution scaledresolution = new ScaledResolution(mc);
 
 	        int healthRemaining = (int) (boss.getHealth() / boss.getMaxHealth() * 256F);
 			int width = scaledresolution.getScaledWidth();
-
-			if (boss instanceof EntitySlider) 
-			{ bossTitle = ((EntitySlider)boss).getBossTitle(); }
-			else if (boss instanceof EntityValkyrieQueen)
-			{ bossTitle = ((EntityValkyrieQueen)boss).getBossTitle(); }
-			else
-			{ bossTitle = ((EntitySunSpirit)boss).getBossTitle(); }
 
 			GlStateManager.pushMatrix();
 

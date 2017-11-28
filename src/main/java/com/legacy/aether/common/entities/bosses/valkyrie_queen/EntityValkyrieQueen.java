@@ -27,22 +27,25 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
+import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
 import com.legacy.aether.common.Aether;
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.common.blocks.util.EnumStoneType;
 import com.legacy.aether.common.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.common.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
+import com.legacy.aether.common.entities.bosses.IAetherBoss;
 import com.legacy.aether.common.entities.projectile.crystals.EntityThunderBall;
 import com.legacy.aether.common.entities.util.AetherNameGen;
 import com.legacy.aether.common.items.ItemsAether;
 import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
 
-public class EntityValkyrieQueen extends EntityMob 
+public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 {
 
 	public static final DataParameter<String> VALKYRIE_NAME = EntityDataManager.<String>createKey(EntityValkyrieQueen.class, DataSerializers.STRING);
@@ -221,8 +224,16 @@ public class EntityValkyrieQueen extends EntityMob
     public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, ItemStack itemstack)
     {
 		faceEntity(entityplayer, 180F, 180F);
-		
-		if(this.isBossReady())
+
+		if (this.isBossReady())
+		{
+			this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
+		}
+		else if (this.worldObj.isRemote)
+		{
+			FMLClientHandler.instance().getClient().displayGuiScreen(new GuiValkyrieDialogue(this));
+		}
+		/*if(this.isBossReady())
 		{
 			this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
 		}
@@ -245,7 +256,7 @@ public class EntityValkyrieQueen extends EntityMob
             {
             	this.chatItUp(entityplayer, "Show me 10 victory medals, and I will fight you.");
 			}
-		}
+		}*/
 
         return true;
     }
@@ -653,7 +664,8 @@ public class EntityValkyrieQueen extends EntityMob
     {
     	this.dataManager.set(VALKYRIE_NAME, name);
     }
-	
+
+    @Override
 	public String getBossTitle()
 	{
 	   return this.getBossName() + ", the Valkyrie Queen";

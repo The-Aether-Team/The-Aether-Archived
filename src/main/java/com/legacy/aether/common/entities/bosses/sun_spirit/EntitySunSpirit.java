@@ -37,6 +37,7 @@ import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.common.blocks.util.EnumStoneType;
 import com.legacy.aether.common.entities.bosses.EntityFireMinion;
+import com.legacy.aether.common.entities.bosses.IAetherBoss;
 import com.legacy.aether.common.entities.projectile.crystals.EntityFireBall;
 import com.legacy.aether.common.entities.projectile.crystals.EntityIceyBall;
 import com.legacy.aether.common.entities.util.AetherNameGen;
@@ -45,7 +46,7 @@ import com.legacy.aether.common.player.PlayerAether;
 import com.legacy.aether.common.registry.achievements.AchievementsAether;
 import com.legacy.aether.common.registry.sounds.SoundsAether;
 
-public class EntitySunSpirit extends EntityFlying implements IMob
+public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 {
 
 	public static final DataParameter<String> SUN_SPIRIT_NAME = EntityDataManager.<String>createKey(EntitySunSpirit.class, DataSerializers.STRING);
@@ -661,6 +662,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     	this.dataManager.set(SUN_SPIRIT_NAME, name);
     }
 
+    @Override
     public String getBossTitle()
     {
         return this.getBossName() + ", the Sun Spirit";
