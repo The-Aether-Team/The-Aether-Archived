@@ -16,6 +16,8 @@ public class GuiTreasureChest extends GuiContainer
 {
     private static final ResourceLocation CHEST_GUI_TEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
 
+    private final String chestType;
+
     private final int inventoryRows;
 
     public GuiTreasureChest(InventoryPlayer playerInventory, TileEntityTreasureChest chestInventory)
@@ -27,6 +29,23 @@ public class GuiTreasureChest extends GuiContainer
         this.inventoryRows = chestInventory.getSizeInventory() / 9;
 
         this.ySize = 114 + this.inventoryRows * 18;
+
+        if (chestInventory.getKind() == 0)
+        {
+			this.chestType = "Slider Treasure Chest";
+        }
+        else if (chestInventory.getKind() == 1)
+        {
+			this.chestType = "Valkyrie Queen Treasure Chest";
+        }
+        else if (chestInventory.getKind() == 2)
+        {
+			this.chestType = "Sun Spirit Treasure Chest";
+        }
+        else
+        {
+        	this.chestType = "Platinum Treasure Chest";
+        }
     }
 
     /**
@@ -34,7 +53,7 @@ public class GuiTreasureChest extends GuiContainer
      */
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString("Treasure Chest", 8, 6, 4210752);
+        this.fontRendererObj.drawString(this.chestType, 8, 6, 4210752);
     }
 
     /**
