@@ -51,7 +51,7 @@ public class AetherRankings
 
 	public static boolean isRankedPlayer(UUID uuid)
 	{
-		if (ranks.get("Celeberity-" + uuid.toString()) != null)
+		if (ranks.get("Celebrity-" + uuid.toString()) != null)
 		{
 			return true;
 		}
@@ -81,7 +81,7 @@ public class AetherRankings
 
 	public static void addCelebrityRank(String uuid)
 	{
-		ranks.put("Celeberity-" + uuid, getUUID(uuid));
+		ranks.put("Celebrity-" + uuid, getUUID(uuid));
 	}
 
 	public static void addDeveloperRank(String uuid)
