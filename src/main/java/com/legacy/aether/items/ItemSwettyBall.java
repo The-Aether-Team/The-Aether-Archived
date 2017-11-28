@@ -1,6 +1,4 @@
-package com.legacy.aether.common.items;
-
-import com.legacy.aether.common.blocks.BlocksAether;
+package com.legacy.aether.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +10,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import com.legacy.aether.blocks.BlocksAether;
 
 public class ItemSwettyBall extends Item
 {
