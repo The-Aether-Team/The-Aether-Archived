@@ -245,6 +245,15 @@ public class EntityMoa extends EntitySaddleMount
 		this.fallDistance = 0.0F;
 	}
 
+	@Override
+	public void moveEntityWithHeading(float par1, float par2)
+	{
+		if (!this.isSitting())
+		{
+			super.moveEntityWithHeading(par1, par2);
+		}
+	}
+
 	public void resetHunger()
 	{
 		if (!this.worldObj.isRemote)
