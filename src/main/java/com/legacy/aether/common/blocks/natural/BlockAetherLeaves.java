@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.common.blocks.BlocksAether;
 import com.legacy.aether.common.blocks.util.EnumLeafType;
 import com.legacy.aether.common.blocks.util.IAetherMeta;
-import com.legacy.aether.common.entities.particles.EntityGoldenFX;
+import com.legacy.aether.common.entities.particles.ParticleGoldenOakLeaves;
 import com.legacy.aether.common.registry.creative_tabs.AetherCreativeTabs;
 
 public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
@@ -107,8 +107,7 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 					double d4 = (random.nextFloat() - 0.5D) * 0.5D;
 					double d5 = (random.nextFloat() - 0.5D) * 0.5D;
 
-					EntityGoldenFX obj = new EntityGoldenFX(world, d, d1, d2, d3, d4, d5);
-					FMLClientHandler.instance().getClient().effectRenderer.addEffect(obj);
+					FMLClientHandler.instance().getClient().effectRenderer.addEffect(new ParticleGoldenOakLeaves(world, d, d1, d2, d3, d4, d5));
 				}
 			}
 		}
