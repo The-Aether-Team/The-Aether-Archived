@@ -1,4 +1,4 @@
-package com.legacy.aether.events.moas;
+package com.legacy.aether.api.events.moas;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 

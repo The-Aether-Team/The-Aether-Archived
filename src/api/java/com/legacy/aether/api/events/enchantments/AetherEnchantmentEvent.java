@@ -1,9 +1,9 @@
-package com.legacy.aether.events.enchantments;
+package com.legacy.aether.api.events.enchantments;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import com.legacy.aether.api.enchantments.AetherEnchantment;
-import com.legacy.aether.tile_entities.TileEntityEnchanter;
 
 public class AetherEnchantmentEvent extends Event
 {
@@ -15,7 +15,7 @@ public class AetherEnchantmentEvent extends Event
 
 	public static class SetTimeEvent extends AetherEnchantmentEvent
 	{
-		private TileEntityEnchanter tileEntity;
+		private TileEntity tileEntity;
 
 		private AetherEnchantment enchantment;
 
@@ -23,7 +23,7 @@ public class AetherEnchantmentEvent extends Event
 
 		private int newTime;
 
-		public SetTimeEvent(TileEntityEnchanter tileEntity, AetherEnchantment enchantment, int original)
+		public SetTimeEvent(TileEntity tileEntity, AetherEnchantment enchantment, int original)
 		{
 			this.tileEntity = tileEntity;
 			this.enchantment = enchantment;
@@ -32,7 +32,7 @@ public class AetherEnchantmentEvent extends Event
 			this.setNewTime(original);
 		}
 
-		public TileEntityEnchanter getTileEntity()
+		public TileEntity getTileEntity()
 		{
 			return this.tileEntity;
 		}
@@ -60,17 +60,17 @@ public class AetherEnchantmentEvent extends Event
 
 	public static class EnchantEvent extends AetherEnchantmentEvent
 	{
-		private TileEntityEnchanter tileEntity;
+		private TileEntity tileEntity;
 
 		private AetherEnchantment enchantent;
 
-		public EnchantEvent(TileEntityEnchanter tileEntity, AetherEnchantment enchantment)
+		public EnchantEvent(TileEntity tileEntity, AetherEnchantment enchantment)
 		{
 			this.tileEntity = tileEntity;
 			this.enchantent = enchantment;
 		}
 
-		public TileEntityEnchanter getTileEntity()
+		public TileEntity getTileEntity()
 		{
 			return this.tileEntity;
 		}

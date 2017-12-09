@@ -1,9 +1,9 @@
-package com.legacy.aether.events.freezables;
+package com.legacy.aether.api.events.freezables;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import com.legacy.aether.api.freezables.AetherFreezable;
-import com.legacy.aether.tile_entities.TileEntityFreezer;
 
 public class AetherFreezableEvent extends Event
 {
@@ -15,7 +15,7 @@ public class AetherFreezableEvent extends Event
 
 	public static class SetTimeEvent extends AetherFreezableEvent
 	{
-		private TileEntityFreezer tileEntity;
+		private TileEntity tileEntity;
 
 		private AetherFreezable freezable;
 
@@ -23,7 +23,7 @@ public class AetherFreezableEvent extends Event
 
 		private int newTime;
 
-		public SetTimeEvent(TileEntityFreezer tileEntity, AetherFreezable freezable, int original)
+		public SetTimeEvent(TileEntity tileEntity, AetherFreezable freezable, int original)
 		{
 			this.tileEntity = tileEntity;
 			this.freezable = freezable;
@@ -32,7 +32,7 @@ public class AetherFreezableEvent extends Event
 			this.setNewTime(original);
 		}
 
-		public TileEntityFreezer getTileEntity()
+		public TileEntity getTileEntity()
 		{
 			return this.tileEntity;
 		}
@@ -60,17 +60,17 @@ public class AetherFreezableEvent extends Event
 
 	public static class FreezeEvent extends AetherFreezableEvent
 	{
-		private TileEntityFreezer tileEntity;
+		private TileEntity tileEntity;
 
 		private AetherFreezable freezable;
 
-		public FreezeEvent(TileEntityFreezer tileEntity, AetherFreezable freezable)
+		public FreezeEvent(TileEntity tileEntity, AetherFreezable freezable)
 		{
 			this.tileEntity = tileEntity;
 			this.freezable = freezable;
 		}
 
-		public TileEntityFreezer getTileEntity()
+		public TileEntity getTileEntity()
 		{
 			return this.tileEntity;
 		}

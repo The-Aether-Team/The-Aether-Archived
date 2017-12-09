@@ -1,4 +1,4 @@
-package com.legacy.aether.events.accessories;
+package com.legacy.aether.api.events.accessories;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 

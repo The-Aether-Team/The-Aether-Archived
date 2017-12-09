@@ -1,4 +1,4 @@
-package com.legacy.aether.events.accessories;
+package com.legacy.aether.api.events.accessories;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
