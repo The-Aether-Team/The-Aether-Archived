@@ -9,8 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import com.google.common.collect.Lists;
-import com.legacy.aether.common.registry.AetherRegistry;
-import com.legacy.aether.common.registry.objects.AetherFreezable;
+import com.legacy.aether.registry.AetherRegistry;
+import com.legacy.aether.registry.objects.AetherFreezable;
 
 public class FreezerRecipeWrapper implements IRecipeWrapper
 {

@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.tileentity.TileEntityChest;
 
-import com.legacy.aether.common.tile_entities.TileEntityChestMimic;
+import com.legacy.aether.tile_entities.TileEntityChestMimic;
 
 public class ChestMimicRenderer extends TileEntityChestRenderer
 {

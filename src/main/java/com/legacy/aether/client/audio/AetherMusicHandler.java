@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.client.audio.music.AetherMusicTicker;
-import com.legacy.aether.common.registry.sounds.SoundsAether;
+import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class AetherMusicHandler 
 {

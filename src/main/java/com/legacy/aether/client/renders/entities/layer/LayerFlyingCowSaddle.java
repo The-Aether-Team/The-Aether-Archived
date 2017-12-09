@@ -2,7 +2,8 @@ package com.legacy.aether.client.renders.entities.layer;
 
 import com.legacy.aether.client.models.entities.FlyingCowModel;
 import com.legacy.aether.client.renders.entities.FlyingCowRenderer;
-import com.legacy.aether.common.entities.passive.mountable.EntityFlyingCow;
+import com.legacy.aether.entities.passive.mountable.EntityFlyingCow;
+
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;

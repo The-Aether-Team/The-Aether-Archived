@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.SunSpiritRenderer;
-import com.legacy.aether.common.entities.bosses.sun_spirit.EntitySunSpirit;
+import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
 
 public class SunSpiritFactory implements IRenderFactory<EntitySunSpirit>
 {

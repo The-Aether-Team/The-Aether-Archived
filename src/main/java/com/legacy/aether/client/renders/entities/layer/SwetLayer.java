@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 
 import com.legacy.aether.client.renders.entities.SwetRenderer;
-import com.legacy.aether.common.entities.passive.mountable.EntitySwet;
+import com.legacy.aether.entities.passive.mountable.EntitySwet;
 
 public class SwetLayer implements LayerRenderer<EntitySwet> 
 {

@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.TNTPresentRenderer;
-import com.legacy.aether.common.entities.block.EntityTNTPresent;
+import com.legacy.aether.entities.block.EntityTNTPresent;
 
 public class TNTPresentFactory  implements IRenderFactory<EntityTNTPresent>
 {

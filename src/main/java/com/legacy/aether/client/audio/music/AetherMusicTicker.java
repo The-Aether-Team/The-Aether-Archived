@@ -11,8 +11,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.common.AetherConfig;
-import com.legacy.aether.common.registry.sounds.SoundsAether;
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.registry.sounds.SoundsAether;
 
 @SideOnly(Side.CLIENT)
 public class AetherMusicTicker implements ITickable

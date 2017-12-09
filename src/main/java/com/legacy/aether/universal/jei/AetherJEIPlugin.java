@@ -11,10 +11,10 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import net.minecraft.item.ItemStack;
 
-import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.registry.AetherRegistry;
-import com.legacy.aether.common.registry.objects.AetherEnchantment;
-import com.legacy.aether.common.registry.objects.AetherFreezable;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.registry.AetherRegistry;
+import com.legacy.aether.registry.objects.AetherEnchantment;
+import com.legacy.aether.registry.objects.AetherFreezable;
 import com.legacy.aether.universal.jei.category.EnchanterRecipeCategory;
 import com.legacy.aether.universal.jei.category.FreezerRecipeCategory;
 import com.legacy.aether.universal.jei.wrapper.EnchanterRecipeWrapper;

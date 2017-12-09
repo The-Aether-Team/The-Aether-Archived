@@ -8,16 +8,16 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.util.EnumCloudType;
+import com.legacy.aether.blocks.util.EnumCrystalType;
+import com.legacy.aether.blocks.util.EnumHolidayType;
+import com.legacy.aether.blocks.util.EnumLeafType;
+import com.legacy.aether.blocks.util.EnumLogType;
+import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.items.util.AetherColor;
-import com.legacy.aether.common.Aether;
-import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.blocks.util.EnumCloudType;
-import com.legacy.aether.common.blocks.util.EnumCrystalType;
-import com.legacy.aether.common.blocks.util.EnumHolidayType;
-import com.legacy.aether.common.blocks.util.EnumLeafType;
-import com.legacy.aether.common.blocks.util.EnumLogType;
-import com.legacy.aether.common.blocks.util.EnumStoneType;
 
 public class BlockRendering 
 {

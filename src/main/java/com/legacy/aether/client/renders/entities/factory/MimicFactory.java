@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.MimicRenderer;
-import com.legacy.aether.common.entities.hostile.EntityMimic;
+import com.legacy.aether.entities.hostile.EntityMimic;
 
 public class MimicFactory implements IRenderFactory<EntityMimic>
 {

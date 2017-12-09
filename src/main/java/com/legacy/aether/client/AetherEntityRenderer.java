@@ -20,8 +20,8 @@ import net.minecraft.util.math.Vec3d;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.legacy.aether.common.entities.passive.mountable.EntityAerbunny;
-import com.legacy.aether.common.player.PlayerAether;
+import com.legacy.aether.entities.passive.mountable.EntityAerbunny;
+import com.legacy.aether.player.PlayerAether;
 
 public class AetherEntityRenderer extends EntityRenderer
 {

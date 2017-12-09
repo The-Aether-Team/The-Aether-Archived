@@ -18,15 +18,15 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.client.gui.AetherLoadingScreen;
 import com.legacy.aether.client.gui.button.GuiAccessoryButton;
-import com.legacy.aether.common.AetherConfig;
-import com.legacy.aether.common.containers.inventory.InventoryAccessories;
-import com.legacy.aether.common.items.ItemsAether;
-import com.legacy.aether.common.networking.AetherGuiHandler;
-import com.legacy.aether.common.networking.AetherNetworkingManager;
-import com.legacy.aether.common.networking.packets.PacketOpenContainer;
-import com.legacy.aether.common.player.PlayerAether;
+import com.legacy.aether.containers.inventory.InventoryAccessories;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.networking.AetherGuiHandler;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketOpenContainer;
+import com.legacy.aether.player.PlayerAether;
 
 public class AetherClientEvents 
 {

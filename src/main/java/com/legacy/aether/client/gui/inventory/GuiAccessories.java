@@ -13,11 +13,11 @@ import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.client.gui.button.GuiButtonPerks;
-import com.legacy.aether.common.containers.ContainerAccessories;
-import com.legacy.aether.common.networking.AetherNetworkingManager;
-import com.legacy.aether.common.networking.packets.PacketOpenContainer;
-import com.legacy.aether.common.player.PlayerAether;
-import com.legacy.aether.common.player.perks.AetherRankings;
+import com.legacy.aether.containers.ContainerAccessories;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketOpenContainer;
+import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.player.perks.AetherRankings;
 
 public class GuiAccessories extends GuiContainer
 {

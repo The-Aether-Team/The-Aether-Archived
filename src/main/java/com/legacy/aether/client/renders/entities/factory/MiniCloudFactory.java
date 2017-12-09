@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.MiniCloudRenderer;
-import com.legacy.aether.common.entities.passive.EntityMiniCloud;
+import com.legacy.aether.entities.passive.EntityMiniCloud;
 
 public class MiniCloudFactory implements IRenderFactory<EntityMiniCloud>
 {

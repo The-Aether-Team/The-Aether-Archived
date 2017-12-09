@@ -14,8 +14,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-import com.legacy.aether.common.Aether;
-import com.legacy.aether.common.blocks.BlocksAether;
+import com.legacy.aether.Aether;
+import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.universal.jei.wrapper.FreezerRecipeWrapper;
 
 public class FreezerRecipeCategory implements IRecipeCategory<FreezerRecipeWrapper>

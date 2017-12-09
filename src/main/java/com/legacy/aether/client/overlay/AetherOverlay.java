@@ -18,13 +18,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.common.blocks.BlocksAether;
-import com.legacy.aether.common.entities.bosses.slider.EntitySlider;
-import com.legacy.aether.common.entities.bosses.sun_spirit.EntitySunSpirit;
-import com.legacy.aether.common.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
-import com.legacy.aether.common.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.common.items.ItemsAether;
-import com.legacy.aether.common.player.PlayerAether;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.entities.bosses.slider.EntitySlider;
+import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
+import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.legacy.aether.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.player.PlayerAether;
 
 @SideOnly(Side.CLIENT)
 public class AetherOverlay

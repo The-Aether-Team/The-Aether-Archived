@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
-import com.legacy.aether.common.entities.passive.EntitySheepuff;
+import com.legacy.aether.entities.passive.EntitySheepuff;
 
 public class SheepuffModel extends ModelQuadruped
 {

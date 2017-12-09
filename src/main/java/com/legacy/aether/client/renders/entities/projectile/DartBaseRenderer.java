@@ -11,10 +11,10 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.legacy.aether.common.entities.projectile.EntityPoisonNeedle;
-import com.legacy.aether.common.entities.projectile.darts.EntityDartBase;
-import com.legacy.aether.common.entities.projectile.darts.EntityDartEnchanted;
-import com.legacy.aether.common.entities.projectile.darts.EntityDartGolden;
+import com.legacy.aether.entities.projectile.EntityPoisonNeedle;
+import com.legacy.aether.entities.projectile.darts.EntityDartBase;
+import com.legacy.aether.entities.projectile.darts.EntityDartEnchanted;
+import com.legacy.aether.entities.projectile.darts.EntityDartGolden;
 
 public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
 {

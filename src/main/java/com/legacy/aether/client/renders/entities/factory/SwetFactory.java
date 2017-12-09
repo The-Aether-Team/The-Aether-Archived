@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.SwetRenderer;
-import com.legacy.aether.common.entities.passive.mountable.EntitySwet;
+import com.legacy.aether.entities.passive.mountable.EntitySwet;
 
 public class SwetFactory implements IRenderFactory<EntitySwet>
 {

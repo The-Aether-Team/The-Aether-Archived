@@ -12,8 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.legacy.aether.common.blocks.dungeon.BlockTreasureChest;
-import com.legacy.aether.common.tile_entities.TileEntityTreasureChest;
+import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
+import com.legacy.aether.tile_entities.TileEntityTreasureChest;
 
 public class TreasureChestRenderer extends TileEntitySpecialRenderer<TileEntityTreasureChest>
 {

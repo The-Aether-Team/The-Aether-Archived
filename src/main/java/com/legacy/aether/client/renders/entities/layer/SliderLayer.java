@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.client.models.entities.SliderModel;
-import com.legacy.aether.common.entities.bosses.slider.EntitySlider;
+import com.legacy.aether.entities.bosses.slider.EntitySlider;
 
 public class SliderLayer implements LayerRenderer<EntitySlider>
 {

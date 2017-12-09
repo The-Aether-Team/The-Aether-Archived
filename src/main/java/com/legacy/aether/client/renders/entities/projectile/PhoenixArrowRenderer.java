@@ -11,7 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.legacy.aether.common.entities.projectile.EntityPhoenixArrow;
+import com.legacy.aether.entities.projectile.EntityPhoenixArrow;
 
 public class PhoenixArrowRenderer extends Render<EntityPhoenixArrow>
 {

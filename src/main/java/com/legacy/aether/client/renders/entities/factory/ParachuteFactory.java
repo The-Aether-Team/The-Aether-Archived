@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 import com.legacy.aether.client.renders.entities.ParachuteRenderer;
-import com.legacy.aether.common.entities.passive.mountable.EntityParachute;
+import com.legacy.aether.entities.passive.mountable.EntityParachute;
 
 public class ParachuteFactory implements IRenderFactory<EntityParachute>
 {
