@@ -19,7 +19,7 @@ public class EntityZephyrSnowball extends EntityThrowable
     {
     	super(worldIn);
 
-        this.setSize(0.5F, 0.5F);
+        this.setSize(1.0F, 1.0F);
     }
 
 	public EntityZephyrSnowball(World worldIn, double x, double y, double z)
