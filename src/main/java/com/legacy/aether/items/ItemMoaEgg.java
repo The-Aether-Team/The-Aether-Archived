@@ -117,7 +117,7 @@ public class ItemMoaEgg extends Item
 		{
 			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
 
-			return new TextComponentTranslation("item." + moaType.getRegistryName().getResourcePath().replace(" ", "_").toLowerCase() + "_moa_egg.name",  new Object[0]).getFormattedText();
+			return "item." + moaType.getRegistryName().getResourcePath().replace(" ", "_").toLowerCase() + "_moa_egg.name";
 		}
 
 		return super.getUnlocalizedName();
@@ -126,7 +126,7 @@ public class ItemMoaEgg extends Item
 	@Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-    	return getUnlocalizedName(stack);
+    	return super.getItemStackDisplayName(stack).replace(".name", "");
     }
 
 	public static ItemStack getStackFromType(AetherMoaType type)
