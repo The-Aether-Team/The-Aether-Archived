@@ -9,7 +9,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.containers.inventory.InventoryAccessories;
 import com.legacy.aether.containers.slots.SlotAccessory;
@@ -98,9 +98,9 @@ public class ContainerAccessories extends ContainerPlayer
 			{
 				int newSlotIndex = -1;
 
-				if (AetherRegistry.getInstance().isAccessory(stack))
+				if (AetherAPI.getInstance().isAccessory(stack))
 				{
-					newSlotIndex = this.getAccessorySlot(AetherRegistry.getInstance().getAccessory(stack).getAccessoryType());
+					newSlotIndex = this.getAccessorySlot(AetherAPI.getInstance().getAccessory(stack).getAccessoryType());
 				}
 
 				if (newSlotIndex != -1)

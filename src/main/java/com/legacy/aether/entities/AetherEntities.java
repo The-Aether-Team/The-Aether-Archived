@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.moa.AetherMoaType;
 import com.legacy.aether.api.moa.MoaProperties;
 import com.legacy.aether.entities.block.EntityFloatingBlock;
@@ -90,10 +90,10 @@ public class AetherEntities
 		register(EntityParachute.class, "parachute", 31);
 		register(EntityWhirlwind.class, "whirlwind", 32, 0x9fc3f7, 0xffffff);
 
-		BLUE_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "blue"), new AetherMoaType(0x7777FF, new MoaProperties(3, 100, 0.3F), AetherCreativeTabs.misc));
-		ORANGE_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "orange"), new AetherMoaType(-0xC3D78, new MoaProperties(2, 50, 0.6F), AetherCreativeTabs.misc));
-		WHITE_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "white"), new AetherMoaType(0xFFFFFF, new MoaProperties(4, 20, 0.3F), AetherCreativeTabs.misc));
-		BLACK_MOA = AetherRegistry.getInstance().register(new ResourceLocation("aether_legacy", "black"), new AetherMoaType(0x222222, new MoaProperties(8, 5, 0.3F), AetherCreativeTabs.misc));
+		BLUE_MOA = AetherAPI.getInstance().register(new ResourceLocation("aether_legacy", "blue"), new AetherMoaType(0x7777FF, new MoaProperties(3, 100, 0.3F), AetherCreativeTabs.misc));
+		ORANGE_MOA = AetherAPI.getInstance().register(new ResourceLocation("aether_legacy", "orange"), new AetherMoaType(-0xC3D78, new MoaProperties(2, 50, 0.6F), AetherCreativeTabs.misc));
+		WHITE_MOA = AetherAPI.getInstance().register(new ResourceLocation("aether_legacy", "white"), new AetherMoaType(0xFFFFFF, new MoaProperties(4, 20, 0.3F), AetherCreativeTabs.misc));
+		BLACK_MOA = AetherAPI.getInstance().register(new ResourceLocation("aether_legacy", "black"), new AetherMoaType(0x222222, new MoaProperties(8, 5, 0.3F), AetherCreativeTabs.misc));
 
 		DataSerializerRegistry.initialize();
 	}

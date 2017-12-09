@@ -13,10 +13,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.enchantments.AetherEnchantment;
+import com.legacy.aether.api.events.AetherHooks;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.events.AetherHooks;
 import com.legacy.aether.tile_entities.util.AetherTileEntity;
 
 public class TileEntityEnchanter extends AetherTileEntity
@@ -60,7 +60,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 		if (this.currentEnchantment != null)
 		{
-			if (this.getStackInSlot(0) == null || AetherRegistry.getInstance().hasEnchantment(this.getStackInSlot(0)) && AetherRegistry.getInstance().getEnchantment(this.getStackInSlot(0)).equals(this.currentEnchantment))
+			if (this.getStackInSlot(0) == null || AetherAPI.getInstance().hasEnchantment(this.getStackInSlot(0)) && AetherAPI.getInstance().getEnchantment(this.getStackInSlot(0)).equals(this.currentEnchantment))
 			{
 				this.currentEnchantment = null;
 				this.enchantmentProgress = 0;
@@ -99,9 +99,9 @@ public class TileEntityEnchanter extends AetherTileEntity
 				AetherHooks.onItemEnchant(this, this.currentEnchantment);
 			}
 
-			if (this.enchantmentTimeRemaining <= 0 && AetherRegistry.getInstance().isEnchantmentFuel(this.getStackInSlot(1)))
+			if (this.enchantmentTimeRemaining <= 0 && AetherAPI.getInstance().isEnchantmentFuel(this.getStackInSlot(1)))
 			{
-				this.enchantmentTimeRemaining += AetherRegistry.getInstance().getEnchantmentFuel(this.getStackInSlot(1)).getTimeGiven();
+				this.enchantmentTimeRemaining += AetherAPI.getInstance().getEnchantmentFuel(this.getStackInSlot(1)).getTimeGiven();
 
 				if (!this.worldObj.isRemote)
 				{
@@ -114,7 +114,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 			if (this.getStackInSlot(0) != null)
 			{
 				ItemStack itemstack = this.getStackInSlot(0);
-				AetherEnchantment enchantment = AetherRegistry.getInstance().getEnchantment(itemstack);
+				AetherEnchantment enchantment = AetherAPI.getInstance().getEnchantment(itemstack);
 
 				if (enchantment != null)
 				{
@@ -297,11 +297,11 @@ public class TileEntityEnchanter extends AetherTileEntity
 		{
 			return false;
 		}
-		else if (slot == 1 && AetherRegistry.getInstance().isEnchantmentFuel(stackInSlot))
+		else if (slot == 1 && AetherAPI.getInstance().isEnchantmentFuel(stackInSlot))
 		{
 			return true;
 		}
-		else if (slot == 0 && AetherRegistry.getInstance().hasEnchantment(stackInSlot))
+		else if (slot == 0 && AetherAPI.getInstance().hasEnchantment(stackInSlot))
 		{
 			return true;
 		}

@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.moa.AetherMoaType;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
@@ -39,7 +39,7 @@ public class ItemMoaEgg extends Item
     {
 		if (playerIn.capabilities.isCreativeMode)
 		{
-			EntityMoa moa = new EntityMoa(worldIn, AetherRegistry.getInstance().getMoaType(stack.getTagCompound().getInteger("typeId")));
+			EntityMoa moa = new EntityMoa(worldIn, AetherAPI.getInstance().getMoaType(stack.getTagCompound().getInteger("typeId")));
 
 			moa.moveToBlockPosAndAngles(pos.up(), 1.0F, 1.0F);
 			moa.setPlayerGrown(true);
@@ -58,11 +58,11 @@ public class ItemMoaEgg extends Item
 	@Override
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
 	{
-		for (int moaTypeSize = 0; moaTypeSize < AetherRegistry.getInstance().getMoaTypeSize(); ++moaTypeSize)
+		for (int moaTypeSize = 0; moaTypeSize < AetherAPI.getInstance().getMoaTypeSize(); ++moaTypeSize)
 		{
 			ItemStack stack = new ItemStack(this);
 			NBTTagCompound compound = new NBTTagCompound();
-			AetherMoaType moaType = AetherRegistry.getInstance().getMoaType(moaTypeSize);
+			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(moaTypeSize);
 
 			if (moaType.getCreativeTab() == tab)
 			{
@@ -86,12 +86,12 @@ public class ItemMoaEgg extends Item
 
 		if (tag != null)
 		{
-			AetherMoaType moaType = AetherRegistry.getInstance().getMoaType(tag.getInteger("typeId"));
+			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
 
 			return moaType.getMoaEggColor();
 		}
 
-		return AetherRegistry.getInstance().getMoaType(0).getMoaEggColor();
+		return AetherAPI.getInstance().getMoaType(0).getMoaEggColor();
 	}
 
 	public AetherMoaType getMoaTypeFromItemStack(ItemStack stack)
@@ -100,12 +100,12 @@ public class ItemMoaEgg extends Item
 
 		if (tag != null)
 		{
-			AetherMoaType moaType = AetherRegistry.getInstance().getMoaType(tag.getInteger("typeId"));
+			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
 
 			return moaType;
 		}
 
-		return AetherRegistry.getInstance().getMoaType(0);
+		return AetherAPI.getInstance().getMoaType(0);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class ItemMoaEgg extends Item
 
 		if (tag != null && stack.getTagCompound().hasKey("typeId"))
 		{
-			AetherMoaType moaType = AetherRegistry.getInstance().getMoaType(tag.getInteger("typeId"));
+			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
 
 			return new TextComponentTranslation("item." + moaType.getRegistryName().getResourcePath().replace(" ", "_").toLowerCase() + "_moa_egg.name",  new Object[0]).getFormattedText();
 		}
@@ -135,7 +135,7 @@ public class ItemMoaEgg extends Item
 
 		NBTTagCompound tag = new NBTTagCompound();
 
-		tag.setInteger("typeId", AetherRegistry.getInstance().getMoaTypeId(type));
+		tag.setInteger("typeId", AetherAPI.getInstance().getMoaTypeId(type));
 
 		stack.setTagCompound(tag);
 

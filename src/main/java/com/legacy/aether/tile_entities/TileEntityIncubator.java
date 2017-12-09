@@ -12,9 +12,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.api.events.AetherHooks;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.events.AetherHooks;
 import com.legacy.aether.items.ItemMoaEgg;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.achievements.AchievementsAether;

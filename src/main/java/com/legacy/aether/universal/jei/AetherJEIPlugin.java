@@ -8,7 +8,7 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 import net.minecraft.item.ItemStack;
 
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.universal.jei.category.EnchanterRecipeCategory;
 import com.legacy.aether.universal.jei.category.FreezerRecipeCategory;
@@ -42,8 +42,8 @@ public class AetherJEIPlugin implements IModPlugin
 		registry.addRecipeCategoryCraftingItem(new ItemStack(BlocksAether.enchanter), "aether_legacy.enchantment");
 		registry.addRecipeCategoryCraftingItem(new ItemStack(BlocksAether.freezer), "aether_legacy.freezable");
 
-		registry.addRecipes(AetherRegistry.getInstance().getEnchantmentValues());
-		registry.addRecipes(AetherRegistry.getInstance().getFreezableValues());
+		registry.addRecipes(AetherAPI.getInstance().getEnchantmentValues());
+		registry.addRecipes(AetherAPI.getInstance().getFreezableValues());
 	}
 
 	@Override

@@ -13,10 +13,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.events.AetherHooks;
 import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.events.AetherHooks;
 import com.legacy.aether.tile_entities.util.AetherTileEntity;
 
 public class TileEntityFreezer extends AetherTileEntity
@@ -60,7 +60,7 @@ public class TileEntityFreezer extends AetherTileEntity
 
 		if (this.currentFreezable != null)
 		{
-			if (this.getStackInSlot(0) == null || AetherRegistry.getInstance().hasFreezable(this.getStackInSlot(0)) && AetherRegistry.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
+			if (this.getStackInSlot(0) == null || AetherAPI.getInstance().hasFreezable(this.getStackInSlot(0)) && AetherAPI.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
 			{
 				this.currentFreezable = null;
 				this.freezeProgress = 0;
@@ -98,9 +98,9 @@ public class TileEntityFreezer extends AetherTileEntity
 				AetherHooks.onItemFreeze(this, this.currentFreezable);
 			}
 
-			if (this.frozenTimeRemaining <= 0 && AetherRegistry.getInstance().isFreezableFuel(this.getStackInSlot(1)))
+			if (this.frozenTimeRemaining <= 0 && AetherAPI.getInstance().isFreezableFuel(this.getStackInSlot(1)))
 			{
-				this.frozenTimeRemaining += AetherRegistry.getInstance().getFreezableFuel(this.getStackInSlot(1)).getTimeGiven();
+				this.frozenTimeRemaining += AetherAPI.getInstance().getFreezableFuel(this.getStackInSlot(1)).getTimeGiven();
 
 				if (!this.worldObj.isRemote)
 				{
@@ -111,7 +111,7 @@ public class TileEntityFreezer extends AetherTileEntity
 		else if (this.getStackInSlot(0) != null)
 		{
 			ItemStack itemstack = this.getStackInSlot(0);
-			AetherFreezable freezable = AetherRegistry.getInstance().getFreezable(itemstack);
+			AetherFreezable freezable = AetherAPI.getInstance().getFreezable(itemstack);
 
 			if (this.getStackInSlot(2) == null || freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
 			{
@@ -289,11 +289,11 @@ public class TileEntityFreezer extends AetherTileEntity
 	{
 		if (stackInSlot != null)
 		{
-			if (AetherRegistry.getInstance().hasFreezable(stackInSlot))
+			if (AetherAPI.getInstance().hasFreezable(stackInSlot))
 			{
 				return true;
 			}
-			else if (slot == 1 && AetherRegistry.getInstance().isFreezableFuel(stackInSlot))
+			else if (slot == 1 && AetherAPI.getInstance().isFreezableFuel(stackInSlot))
 			{
 				return true;
 			}

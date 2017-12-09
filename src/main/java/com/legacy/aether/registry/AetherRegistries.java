@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.api.accessories.AetherAccessory;
 import com.legacy.aether.api.enchantments.AetherEnchantment;
@@ -32,7 +32,7 @@ public class AetherRegistries
 
 	public static void initializeAccessories()
 	{
-		AetherRegistry registry = AetherRegistry.getInstance();
+		AetherAPI registry = AetherAPI.getInstance();
 
 		registry.register(new AetherAccessory(ItemsAether.leather_gloves, AccessoryType.GLOVE));
 		registry.register(new AetherAccessory(ItemsAether.iron_gloves, AccessoryType.GLOVE));
@@ -74,7 +74,7 @@ public class AetherRegistries
 
 	public static void initializeEnchantments()
 	{
-		AetherRegistry registry = AetherRegistry.getInstance();
+		AetherAPI registry = AetherAPI.getInstance();
 
 		registry.register(new AetherEnchantment(ItemsAether.skyroot_pickaxe, 225));
 		registry.register(new AetherEnchantment(ItemsAether.skyroot_axe, 225));
@@ -120,7 +120,7 @@ public class AetherRegistries
 		registry.register(new AetherEnchantment(Items.BOW, 4000));
 		registry.register(new AetherEnchantment(Items.FISHING_ROD, 600));
 
-		registry.register(new AetherEnchantment(Items.RECORD_11, ItemsAether.aether_tune, 2500));
+		/*registry.register(new AetherEnchantment(Items.RECORD_11, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_13, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_BLOCKS, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_CAT, ItemsAether.aether_tune, 2500));
@@ -130,7 +130,7 @@ public class AetherRegistries
 		registry.register(new AetherEnchantment(Items.RECORD_STAL, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_STRAD, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_WAIT, ItemsAether.aether_tune, 2500));
-		registry.register(new AetherEnchantment(Items.RECORD_WARD, ItemsAether.aether_tune, 2500));
+		registry.register(new AetherEnchantment(Items.RECORD_WARD, ItemsAether.aether_tune, 2500));*/
 
 		registry.register(new AetherEnchantment(Items.WOODEN_PICKAXE, 225));
 		registry.register(new AetherEnchantment(Items.WOODEN_AXE, 225));
@@ -182,7 +182,7 @@ public class AetherRegistries
 
 	public static void initializeFreezables()
 	{
-		AetherRegistry registry = AetherRegistry.getInstance();
+		AetherAPI registry = AetherAPI.getInstance();
 
 		registry.register(new AetherFreezable(BlocksAether.aercloud, new ItemStack(BlocksAether.aercloud, 1, 1), 100));
 		registry.register(new AetherFreezable(BlocksAether.aether_leaves, BlocksAether.crystal_leaves, 150));

@@ -13,7 +13,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.ITextComponent;
 
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.api.accessories.AetherAccessory;
 import com.legacy.aether.player.PlayerAether;
@@ -100,9 +100,9 @@ public class InventoryAccessories implements IInventory
 
 	public boolean setInventoryAccessory(ItemStack stack)
 	{
-		if (stack != null && AetherRegistry.getInstance().isAccessory(stack))
+		if (stack != null && AetherAPI.getInstance().isAccessory(stack))
 		{
-			AetherAccessory accessory = AetherRegistry.getInstance().getAccessory(stack);
+			AetherAccessory accessory = AetherAPI.getInstance().getAccessory(stack);
 
 			int stackIndex = 0;
 

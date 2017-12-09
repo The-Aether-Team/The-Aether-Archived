@@ -26,7 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import com.legacy.aether.api.AetherRegistry;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.moa.AetherMoaType;
 import com.legacy.aether.entities.util.EntitySaddleMount;
 import com.legacy.aether.items.ItemMoaEgg;
@@ -97,9 +97,9 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		super.entityInit();
 
-		AetherMoaType moaType = AetherRegistry.getInstance().getRandomMoaType();
+		AetherMoaType moaType = AetherAPI.getInstance().getRandomMoaType();
 
-		this.dataManager.register(MOA_TYPE_ID, AetherRegistry.getInstance().getMoaTypeId(moaType));
+		this.dataManager.register(MOA_TYPE_ID, AetherAPI.getInstance().getMoaTypeId(moaType));
 		this.dataManager.register(REMAINING_JUMPS, moaType.getMoaProperties().getMaxJumps());
 
 		this.dataManager.register(PLAYER_GROWN, false);
@@ -189,12 +189,12 @@ public class EntityMoa extends EntitySaddleMount
 
 	public AetherMoaType getMoaType()
 	{
-		return AetherRegistry.getInstance().getMoaType(this.dataManager.get(MOA_TYPE_ID));
+		return AetherAPI.getInstance().getMoaType(this.dataManager.get(MOA_TYPE_ID));
 	}
 
 	public void setMoaType(AetherMoaType moaType)
 	{
-		this.dataManager.set(MOA_TYPE_ID, AetherRegistry.getInstance().getMoaTypeId(moaType));
+		this.dataManager.set(MOA_TYPE_ID, AetherAPI.getInstance().getMoaTypeId(moaType));
 	}
 
 	@Override
@@ -399,7 +399,7 @@ public class EntityMoa extends EntitySaddleMount
 		nbt.setByte("amountFed", this.getAmountFed());
 		nbt.setBoolean("isHungry", this.isHungry());
 		nbt.setBoolean("isSitting", this.isSitting());
-		nbt.setInteger("typeId", AetherRegistry.getInstance().getMoaTypeId(this.getMoaType()));
+		nbt.setInteger("typeId", AetherAPI.getInstance().getMoaTypeId(this.getMoaType()));
 	}
 
 	@Override
@@ -409,7 +409,7 @@ public class EntityMoa extends EntitySaddleMount
 
 		this.setPlayerGrown(nbt.getBoolean("playerGrown"));
 		this.setRemainingJumps(nbt.getInteger("remainingJumps"));
-		this.setMoaType(AetherRegistry.getInstance().getMoaType(nbt.getInteger("typeId")));
+		this.setMoaType(AetherAPI.getInstance().getMoaType(nbt.getInteger("typeId")));
 		this.setAmountFed(nbt.getByte("amountFed"));
 		this.setHungry(nbt.getBoolean("isHungry"));
 		this.setSitting(nbt.getBoolean("isSitting"));
