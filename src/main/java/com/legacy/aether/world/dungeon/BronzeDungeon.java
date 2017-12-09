@@ -44,7 +44,6 @@ public class BronzeDungeon extends AetherDungeon
 			return false;
 		}
 
-		System.out.println(pos.toString() + " NEW DUNGEON 2");
 		setBlocks(this.lockedBlock(), this.lockedLightBlock(), 20);
 
 		addHollowBox(world, random, new PositionData(pos.getX(), pos.getY(), pos.getZ()), new PositionData(16, 12, 16));
@@ -237,7 +236,7 @@ public class BronzeDungeon extends AetherDungeon
 		replaceAir = false;
 		boolean tunnelling = true;
 		boolean flag;
-		int dir = 0;
+		int dir = random.nextInt(3);
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
