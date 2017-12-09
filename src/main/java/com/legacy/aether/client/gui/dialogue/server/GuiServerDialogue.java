@@ -26,7 +26,7 @@ public class GuiServerDialogue extends GuiDialogue
 			dialogueOptions.add(new DialogueOption(dialogueForOption));
 		}
 
-        this.addDialogueOptions((DialogueOption[]) dialogueOptions.toArray());
+        this.addDialogueOptions(dialogueOptions.toArray(new DialogueOption[] {}));
 	}
 
 	@Override

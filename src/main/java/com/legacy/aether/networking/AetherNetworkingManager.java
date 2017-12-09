@@ -12,11 +12,9 @@ import com.legacy.aether.networking.packets.PacketAccessory;
 import com.legacy.aether.networking.packets.PacketAchievement;
 import com.legacy.aether.networking.packets.PacketDialogueClicked;
 import com.legacy.aether.networking.packets.PacketDisplayDialogue;
-import com.legacy.aether.networking.packets.PacketGameType;
 import com.legacy.aether.networking.packets.PacketInitiateValkyrieFight;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
 import com.legacy.aether.networking.packets.PacketPerkChanged;
-import com.legacy.aether.networking.packets.PacketSendPoison;
 
 public class AetherNetworkingManager
 {
@@ -32,10 +30,6 @@ public class AetherNetworkingManager
 		INSTANCE.registerMessage(PacketOpenContainer.class, PacketOpenContainer.class, discriminant++, Side.SERVER);
 
 		INSTANCE.registerMessage(PacketAccessory.class, PacketAccessory.class, discriminant++, Side.CLIENT);
-
-		INSTANCE.registerMessage(PacketSendPoison.class, PacketSendPoison.class, discriminant++, Side.CLIENT);
-
-		INSTANCE.registerMessage(PacketGameType.class, PacketGameType.class, discriminant++, Side.SERVER);
 
 		INSTANCE.registerMessage(PacketInitiateValkyrieFight.class, PacketInitiateValkyrieFight.class, discriminant++, Side.SERVER);
 

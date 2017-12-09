@@ -52,7 +52,6 @@ public class PacketInitiateValkyrieFight extends AetherPacket<PacketInitiateValk
 
 		if (entity instanceof EntityValkyrieQueen)
 		{
-			System.out.println("rawr");
 			((EntityValkyrieQueen)entity).setBossReady(true);
 			PlayerAether.get(player).setCurrentBoss((EntityValkyrieQueen)entity);
 		}

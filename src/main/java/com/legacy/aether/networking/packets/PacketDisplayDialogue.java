@@ -1,6 +1,7 @@
 package com.legacy.aether.networking.packets;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +18,17 @@ public class PacketDisplayDialogue extends AetherPacket<PacketDisplayDialogue>
 	public PacketDisplayDialogue()
 	{
 		
+	}
+
+	public PacketDisplayDialogue(String dialogueName, String dialogue, String... dialogueText)
+	{
+		this(dialogueName, dialogue, (ArrayList<String>) null);
+
+		ArrayList<String> array = new ArrayList<String>();
+
+		array.addAll(Arrays.asList(dialogueText));
+
+		this.dialogueText = array;
 	}
 
 	public PacketDisplayDialogue(String dialogueName, String dialogue, ArrayList<String> dialogueText)
