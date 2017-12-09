@@ -398,7 +398,7 @@ public class EntityWhirlwind extends EntityAetherAnimal
 		int k = MathHelper.floor_double(this.posZ);
 		BlockPos pos = new BlockPos(i, j, k);
 
-		return this.worldObj.getBlockState(pos.down()).getBlock() == BlocksAether.aether_grass && this.worldObj.getLight(pos) > 8 && this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox()) && this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.worldObj.containsAnyLiquid(this.getEntityBoundingBox());
+		return this.rand.nextInt(120) == 0 && this.worldObj.getBlockState(pos.down()).getBlock() == BlocksAether.aether_grass && this.worldObj.getLight(pos) > 8 && this.worldObj.checkNoEntityCollision(this.getEntityBoundingBox()) && this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.worldObj.containsAnyLiquid(this.getEntityBoundingBox());
 	}
 
     public EntityPlayer findClosestPlayer()

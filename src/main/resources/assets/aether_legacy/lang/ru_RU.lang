@@ -1,4 +1,4 @@
-# Перевод от Андрея Ласькова 
+﻿# Перевод от Андрея Ласькова 
 # https://vk.com/rio192
 # Rio192AL@yandex.ru
 # Item Names
@@ -238,7 +238,7 @@ entity.flying_cow.name=Летающая Корова
 entity.phyg.name=Летающая Свинья
 entity.swet.name=Слайм
 entity.moa.name=Моа
-entity.whirly.name=Вихрь
+entity.whirlwind.name=Вихрь
 
 # Achievements
 achievement.enter_aether=Враждебный Рай!

@@ -244,7 +244,7 @@ entity.aether_legacy.flying_cow.name=Flying Cow
 entity.aether_legacy.phyg.name=Phyg
 entity.aether_legacy.swet.name=Swet
 entity.aether_legacy.moa.name=Moa
-entity.aether_legacy.whirly.name=Whirlwind
+entity.aether_legacy.whirlwind.name=Whirlwind
 
 # Achievements
 achievement.enter_aether=Hostile Paradise

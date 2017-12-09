@@ -1,4 +1,4 @@
-
+﻿
 # Haku98翻译
 # Email:jiastku98@outlook.com
 # Item Names
@@ -239,7 +239,7 @@ entity.aether_legacy.flying_cow.name=以太牛
 entity.aether_legacy.phyg.name=以太猪
 entity.aether_legacy.swet.name=史维特
 entity.aether_legacy.moa.name=恐鸟
-entity.aether_legacy.whirly.name=旋风
+entity.aether_legacy.whirlwind.name=旋风
 
 # Achievements
 achievement.enter_aether=敌对的天堂

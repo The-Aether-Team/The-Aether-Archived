@@ -1,4 +1,4 @@
-# Item Names
+﻿# Item Names
 item.lore_book.name=Buch der Überlieferung
 item.MoaEgg.name=Moa Ei
 item.leather_gloves.name=Leder Handschuhe
@@ -235,7 +235,7 @@ entity.aether_legacy.flying_cow.name=Fliegende Kuh
 entity.aether_legacy.phyg.name=Fliegendes Schwein
 entity.aether_legacy.swet.name=Swet
 entity.aether_legacy.moa.name=Moa
-entity.aether_legacy.whirly.name=Wirbelwind
+entity.aether_legacy.whirlwind.name=Wirbelwind
 
 # Achievements
 achievement.enter_aether=Feindliches Paradies
