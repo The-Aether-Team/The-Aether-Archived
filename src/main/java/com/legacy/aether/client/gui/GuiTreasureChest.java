@@ -32,15 +32,15 @@ public class GuiTreasureChest extends GuiContainer
 
         if (chestInventory.getKind() == 0)
         {
-			this.chestType = "Slider Treasure Chest";
+			this.chestType = "Bronze Treasure Chest";
         }
         else if (chestInventory.getKind() == 1)
         {
-			this.chestType = "Valkyrie Queen Treasure Chest";
+			this.chestType = "Silver Treasure Chest";
         }
         else if (chestInventory.getKind() == 2)
         {
-			this.chestType = "Sun Spirit Treasure Chest";
+			this.chestType = "Gold Treasure Chest";
         }
         else
         {
