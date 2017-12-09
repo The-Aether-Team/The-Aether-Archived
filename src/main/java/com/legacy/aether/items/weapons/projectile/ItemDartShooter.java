@@ -129,7 +129,7 @@ public class ItemDartShooter extends Item
 
 		if (consume != -1)
 		{
-			world.playSound(entityplayer, entityplayer.getPosition(), SoundsAether.dart_shooter_shoot, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));//world.playSoundAtEntity(entityplayer, "random.drr", 2.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
+			world.playSound(entityplayer, entityplayer.getPosition(), SoundsAether.dart_shooter_shoot, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
 			EntityDartBase dart = null;
 
@@ -146,10 +146,9 @@ public class ItemDartShooter extends Item
 				dart = new EntityDartGolden(world, entityplayer);
 			}
 
-			dart.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.0F, 1.0F);
-
 			if (!world.isRemote)
 			{
+				dart.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.0F, 1.0F);
 				world.spawnEntityInWorld(dart);
 
 				if (!(entityplayer.capabilities.isCreativeMode))

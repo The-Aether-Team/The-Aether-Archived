@@ -7,14 +7,15 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
 import com.legacy.aether.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketSendPoison;
+import com.legacy.aether.player.PlayerAether;
 
 public class EntityDartPoison extends EntityDartBase
 {
@@ -77,25 +78,25 @@ public class EntityDartPoison extends EntityDartBase
     }
 
     @Override
-    protected void arrowHit(EntityLivingBase living)
+    protected void onHit(RayTraceResult raytraceResultIn)
     {
-    	super.arrowHit(living);
-
-    	this.victim = living;
-    	this.poison = new AetherPoisonMovement(this.victim);
-    	this.poison.afflictPoison();
-
-    	if (living instanceof EntityPlayer)
+    	if (raytraceResultIn.typeOfHit == Type.ENTITY && raytraceResultIn.entityHit != this.shootingEntity && raytraceResultIn.entityHit instanceof EntityLivingBase)
     	{
-            EntityPlayer ent = (EntityPlayer)living;
+    		EntityLivingBase entityHit = (EntityLivingBase) raytraceResultIn.entityHit;
 
-            if (!this.worldObj.isRemote)
-            {
-            	AetherNetworkingManager.sendToAll(new PacketSendPoison(ent));
-            }
+    		if (entityHit instanceof EntityPlayer)
+    		{
+    			PlayerAether.get((EntityPlayer) entityHit).afflictPoison();
+    		}
+    		else
+    		{
+            	this.victim = (EntityLivingBase) raytraceResultIn.entityHit;
+            	this.poison = new AetherPoisonMovement(this.victim);
+            	this.poison.afflictPoison();
+    		}
+
+        	this.isDead = false;
     	}
-
-    	this.isDead = false;
     }
 
     @Override

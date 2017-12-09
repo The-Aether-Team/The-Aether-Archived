@@ -19,8 +19,6 @@ import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 public class ItemNotchHammer extends ItemSword
 {
 
-	public EntityHammerProjectile hammerProjectile;
-
 	public ItemNotchHammer()
 	{
 		super(ToolMaterial.IRON);
@@ -40,25 +38,24 @@ public class ItemNotchHammer extends ItemSword
 		{
 			world.playSound(entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F), false);
 
-			this.hammerProjectile = new EntityHammerProjectile(world, entityplayer);
-
 			if (!world.isRemote)
 			{
-				world.spawnEntityInWorld(this.hammerProjectile);
+				EntityHammerProjectile hammerProjectile = new EntityHammerProjectile(world, entityplayer);
+				hammerProjectile.setHeadingFromThrower(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.5F, 1.0F);
+				world.spawnEntityInWorld(hammerProjectile);
 			}
 		}
-		
 		else if (PlayerAether.get(entityplayer).setGeneralCooldown(200, itemstack.getDisplayName()))
 		{
 			itemstack.damageItem(1, entityplayer);
 
 			world.playSound(entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F), false);
 
-			this.hammerProjectile = new EntityHammerProjectile(world, entityplayer);
-
 			if (!world.isRemote)
 			{
-				world.spawnEntityInWorld(this.hammerProjectile);
+				EntityHammerProjectile hammerProjectile = new EntityHammerProjectile(world, entityplayer);
+				hammerProjectile.setHeadingFromThrower(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.5F, 1.0F);
+				world.spawnEntityInWorld(hammerProjectile);
 			}
 		}
 
