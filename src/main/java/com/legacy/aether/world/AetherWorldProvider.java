@@ -1,11 +1,16 @@
 package com.legacy.aether.world;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class AetherWorldProvider extends WorldProvider
 {
@@ -152,5 +157,18 @@ public class AetherWorldProvider extends WorldProvider
 	{
 		return AetherWorld.aether_dimension_type;
 	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+    public net.minecraftforge.client.IRenderHandler getWeatherRenderer()
+    {
+    	return new IRenderHandler()
+    	{
+			@Override
+			public void render(float partialTicks, net.minecraft.client.multiplayer.WorldClient world, net.minecraft.client.Minecraft mc)
+			{
+
+			}};
+    }
 
 }
