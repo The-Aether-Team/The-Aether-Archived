@@ -27,6 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -34,6 +35,7 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
+import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
 import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
 import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
@@ -220,33 +222,15 @@ public class EntityValkyrieQueen extends EntityMob
     @Override
     public boolean processInteract(EntityPlayer entityplayer, EnumHand hand)
     {
-    	ItemStack itemstack = entityplayer.getHeldItem(hand);
-
 		faceEntity(entityplayer, 180F, 180F);
 		
-		if(this.isBossReady())
+		if (this.isBossReady())
 		{
 			this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
 		}
-		else if(!this.isBossReady()) 
+		else if (this.world.isRemote)
 		{
-            if(itemstack != null && itemstack.getItem() == ItemsAether.victory_medal && itemstack.getCount() >= 10) 
-            {
-            	itemstack.shrink(10);
-
-                if(itemstack.getCount() <= 0) 
-                {
-                    itemstack.damageItem(2, entityplayer);
-                    entityplayer.inventory.removeStackFromSlot(entityplayer.inventory.currentItem);
-					chatTime = 0;
-					this.chatItUp(entityplayer, "Very well, attack me when you wish to begin.");
-					this.setBossReady(true);
-                }
-			}
-            else
-            {
-            	this.chatItUp(entityplayer, "Show me 10 victory medals, and I will fight you.");
-			}
+			FMLClientHandler.instance().getClient().displayGuiScreen(new GuiValkyrieDialogue(this));
 		}
 
         return true;

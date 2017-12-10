@@ -160,7 +160,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
         this.velocity = 0.5D - (double)this.getHealth() / 70.0D * 0.2D;
         this.width = this.height = 2.0F;
-       // this.rotationYaw = this.rotationYawHead += 10;
 
         if (this.getAttackTarget() instanceof EntityPlayer)
         {
