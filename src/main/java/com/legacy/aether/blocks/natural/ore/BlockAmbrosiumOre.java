@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import com.legacy.aether.Aether;
@@ -37,6 +38,12 @@ public class BlockAmbrosiumOre extends Block
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE));
 	}
+
+    @Override
+    public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune)
+    {
+        return MathHelper.getInt(new Random(), 0, 2);
+    }
 
 	@Override
     public int quantityDroppedWithBonus(int fortune, Random random)
