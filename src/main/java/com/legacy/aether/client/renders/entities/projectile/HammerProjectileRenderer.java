@@ -1,17 +1,14 @@
 package com.legacy.aether.client.renders.entities.projectile;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.legacy.aether.entities.projectile.EntityHammerProjectile;
-import com.legacy.aether.items.ItemsAether;
 
 public class HammerProjectileRenderer extends Render<EntityHammerProjectile>
 {
@@ -19,24 +16,33 @@ public class HammerProjectileRenderer extends Render<EntityHammerProjectile>
 	public HammerProjectileRenderer(RenderManager renderManager) 
 	{
 		super(renderManager);
+
 		this.shadowSize = 0.0F;
 	}
 
 	public void doRenderNotchWave(EntityHammerProjectile notchwave, double par2, double par4, double par6, float par8, float par9)
 	{
-		float f4 = 0.6F, f5 = 0.4F, f6 = 1.5F;
+		GlStateManager.pushMatrix();
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.translate(par2, par4, par6);
 
-		GL11.glPushMatrix();
-		GL11.glTranslatef((float) par2, (float) par4, (float) par6);
-		GL11.glRotatef(180F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-		GL11.glRotatef(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        this.bindTexture(this.getEntityTexture(notchwave));
 
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glTranslatef(-f4, -f5, 0.0F);
-		GL11.glScalef(f6, f6, f6);
+        Tessellator tessellator = Tessellator.getInstance();
+        VertexBuffer vertex = tessellator.getBuffer();
 
-		Minecraft.getMinecraft().getItemRenderer().renderItem(Minecraft.getMinecraft().player, new ItemStack(ItemsAether.notch_hammer, 1, 1565), TransformType.NONE);
-		GL11.glPopMatrix();
+        GlStateManager.rotate(180F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+
+        vertex.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
+        vertex.pos(-0.5F, -0.25F, 0.0F).tex(0.0F, 0.0F).normal(0.0F, 1.0F, 0.0F).endVertex();
+        vertex.pos(0.5F, -0.25F, 0.0F).tex(0.0F, 1.0F).normal(0.0F, 1.0F, 0.0F).endVertex();
+        vertex.pos(0.5F, 0.75F, 0.0F).tex(1.0F, 1.0F).normal(0.0F, 1.0F, 0.0F).endVertex();
+        vertex.pos(-0.5F, 0.75F, 0.0F).tex(1.0F, 0.0F).normal(0.0F, 1.0F, 0.0F).endVertex();
+        tessellator.draw();
+
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.popMatrix();
 	}
 
 	@Override
