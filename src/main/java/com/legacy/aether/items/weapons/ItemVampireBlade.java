@@ -20,6 +20,12 @@ public class ItemVampireBlade extends ItemSword
     }
 
 	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return false;
+	}
+
+	@Override
     public EnumRarity getRarity(ItemStack stack)
     {
     	return ItemsAether.aether_loot;
