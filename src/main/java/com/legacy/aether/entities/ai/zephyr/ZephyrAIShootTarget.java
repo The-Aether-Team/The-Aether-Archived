@@ -77,7 +77,7 @@ public class ZephyrAIShootTarget extends EntityAIBase
                 {
                 	this.zephyr.playSound(SoundsAether.zephyr_shoot, 3F, this.base);
 
-                    EntityZephyrSnowball projectile = new EntityZephyrSnowball(this.worldObj, this.zephyr, x, y, z);
+                    EntityZephyrSnowball projectile = new EntityZephyrSnowball(this.worldObj, this.zephyr);
                     Vec3d lookVector = this.zephyr.getLook(1.0F);
 
                     projectile.posX = this.zephyr.posX + lookVector.xCoord * 4D;
@@ -86,6 +86,7 @@ public class ZephyrAIShootTarget extends EntityAIBase
 
                     if (!this.worldObj.isRemote)
                     {
+                    	projectile.setThrowableHeading(x, y, z, 1.2F, 1.0F);
                         this.worldObj.spawnEntity(projectile);
                     }
 

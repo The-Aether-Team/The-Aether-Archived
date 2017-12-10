@@ -43,7 +43,9 @@ public class ItemLightningKnife extends Item
 
         if (!worldIn.isRemote)
         {
-        	worldIn.spawnEntity(new EntityLightningKnife(worldIn, playerIn));
+        	EntityLightningKnife lightningKnife = new EntityLightningKnife(worldIn, playerIn);
+        	lightningKnife.setHeadingFromThrower(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
+        	worldIn.spawnEntity(lightningKnife);
         }
 
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);

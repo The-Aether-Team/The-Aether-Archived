@@ -107,7 +107,6 @@ public class AbilityRepulsion extends Ability
 			ent instanceof EntityThrowable ? ((EntityThrowable)ent).getThrower() :
 				ent instanceof EntityDartBase ? ((EntityDartBase)ent).shootingEntity :
 					ent instanceof EntityFireball ? ((EntityFireball)ent).shootingEntity :
-						ent instanceof EntityZephyrSnowball ? ((EntityZephyrSnowball)ent).shootingEntity :
 							null;
 	}
 
@@ -128,10 +127,6 @@ public class AbilityRepulsion extends Ability
 		else if (ent instanceof EntityDartBase)
 		{
 			((EntityDartBase)ent).shootingEntity = shooter;
-		}
-		else if (ent instanceof EntityZephyrSnowball)
-		{
-			((EntityZephyrSnowball)ent).shootingEntity = shooter;
 		}
 	}
 

@@ -19,8 +19,6 @@ import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 public class ItemNotchHammer extends ItemSword
 {
 
-	public EntityHammerProjectile hammerProjectile;
-
 	public ItemNotchHammer()
 	{
 		super(ToolMaterial.IRON);
@@ -36,35 +34,34 @@ public class ItemNotchHammer extends ItemSword
 	@Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand hand)
 	{
-		ItemStack heldItem = entityplayer.getHeldItem(hand);
+		ItemStack itemstack = entityplayer.getHeldItem(hand);
 
 		if (entityplayer.capabilities.isCreativeMode)
 		{
 			world.playSound(entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F), false);
 
-			this.hammerProjectile = new EntityHammerProjectile(world, entityplayer);
-
 			if (!world.isRemote)
 			{
-				world.spawnEntity(this.hammerProjectile);
+				EntityHammerProjectile hammerProjectile = new EntityHammerProjectile(world, entityplayer);
+				hammerProjectile.setHeadingFromThrower(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.5F, 1.0F);
+				world.spawnEntity(hammerProjectile);
 			}
 		}
-		
-		else if (PlayerAether.get(entityplayer).setGeneralCooldown(200, heldItem.getDisplayName()))
+		else if (PlayerAether.get(entityplayer).setGeneralCooldown(200, itemstack.getDisplayName()))
 		{
-			heldItem.damageItem(1, entityplayer);
+			itemstack.damageItem(1, entityplayer);
 
 			world.playSound(entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F), false);
 
-			this.hammerProjectile = new EntityHammerProjectile(world, entityplayer);
-
 			if (!world.isRemote)
 			{
-				world.spawnEntity(this.hammerProjectile);
+				EntityHammerProjectile hammerProjectile = new EntityHammerProjectile(world, entityplayer);
+				hammerProjectile.setHeadingFromThrower(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.5F, 1.0F);
+				world.spawnEntity(hammerProjectile);
 			}
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
 	}
 
 }
