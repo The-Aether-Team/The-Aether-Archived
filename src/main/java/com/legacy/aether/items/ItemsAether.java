@@ -9,8 +9,8 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.containers.util.AccessoryType;
 import com.legacy.aether.items.accessories.ItemAccessory;
 import com.legacy.aether.items.armor.ItemAetherArmor;
 import com.legacy.aether.items.armor.ItemZaniteArmor;

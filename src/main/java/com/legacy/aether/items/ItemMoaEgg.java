@@ -1,7 +1,6 @@
 package com.legacy.aether.items;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,40 +12,32 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.moa.AetherMoaType;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.entities.util.MoaColor;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemMoaEgg extends Item
 {
 
-	protected ItemMoaEgg()
+	public ItemMoaEgg()
 	{
-		this.setHasSubtypes(true);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5)
-	{
-		if (!world.isRemote)
-		{
-			if (stack.getTagCompound() == null)
-			{
-				stack.setTagCompound(ItemMoaEgg.getStackFromColor(MoaColor.getRandomColor(world)).getTagCompound());
-			}
-		}
-	}
+    public CreativeTabs[] getCreativeTabs()
+    {
+    	return CreativeTabs.CREATIVE_TAB_ARRAY;
+    }
 
 	@Override
     public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-		ItemStack heldItem = playerIn.getHeldItem(hand);
-
 		if (playerIn.capabilities.isCreativeMode)
 		{
-			EntityMoa moa = new EntityMoa(worldIn, MoaColor.getColor(heldItem.getTagCompound().getInteger("color")));
+			EntityMoa moa = new EntityMoa(worldIn, AetherAPI.getInstance().getMoaType(playerIn.getHeldItem(hand).getTagCompound().getInteger("typeId")));
 
 			moa.moveToBlockPosAndAngles(pos.up(), 1.0F, 1.0F);
 			moa.setPlayerGrown(true);
@@ -63,22 +54,21 @@ public class ItemMoaEgg extends Item
     }
 
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
 	{
-		int meta = 0;
-		
-		for (MoaColor color : MoaColor.colors)
+		for (int moaTypeSize = 0; moaTypeSize < AetherAPI.getInstance().getMoaTypeSize(); ++moaTypeSize)
 		{
-			ItemStack stack = new ItemStack(itemIn, 1, meta);
-			NBTTagCompound tag = new NBTTagCompound();
-			
-			tag.setInteger("color", color.ID);
-			tag.setBoolean("creativeSpawned", true);
-			
-			stack.setTagCompound(tag);
-			subItems.add(stack);
-			
-			meta++;
+			ItemStack stack = new ItemStack(this);
+			NBTTagCompound compound = new NBTTagCompound();
+			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(moaTypeSize);
+
+			if (moaType.getCreativeTab() == tab)
+			{
+				compound.setInteger("typeId", moaTypeSize);
+				stack.setTagCompound(compound);
+
+				subItems.add(stack);
+			}
 		}
 	}
 
@@ -88,32 +78,32 @@ public class ItemMoaEgg extends Item
 		return true;
 	}
 
-	public int getColorFromItemStack(ItemStack stack, int pass)
+	public int getColorFromItemStack(ItemStack stack)
 	{
 		NBTTagCompound tag = stack.getTagCompound();
 
 		if (tag != null)
 		{
-			MoaColor color = MoaColor.getColor(tag.getInteger("color"));
-			
-			return color.RGB;
+			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
+
+			return moaType.getMoaEggColor();
 		}
 
-		return MoaColor.getColor(0).RGB;
+		return AetherAPI.getInstance().getMoaType(0).getMoaEggColor();
 	}
 
-	public MoaColor getMoaColorFromItemStack(ItemStack stack)
+	public AetherMoaType getMoaTypeFromItemStack(ItemStack stack)
 	{
 		NBTTagCompound tag = stack.getTagCompound();
 
 		if (tag != null)
 		{
-			MoaColor color = MoaColor.getColor(tag.getInteger("color"));
-			
-			return color;
+			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
+
+			return moaType;
 		}
 
-		return MoaColor.getColor(0);
+		return AetherAPI.getInstance().getMoaType(0);
 	}
 
 	@Override
@@ -121,11 +111,11 @@ public class ItemMoaEgg extends Item
 	{
 		NBTTagCompound tag = stack.getTagCompound();
 
-		if (tag != null && stack.getTagCompound().hasKey("color"))
+		if (tag != null && stack.getTagCompound().hasKey("typeId"))
 		{
-			MoaColor color = MoaColor.getColor(tag.getInteger("color"));
+			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
 
-			return color.name + " Moa Egg";
+			return "item." + moaType.getRegistryName().getResourcePath().replace(" ", "_").toLowerCase() + "_moa_egg.name";
 		}
 
 		return super.getUnlocalizedName();
@@ -134,17 +124,16 @@ public class ItemMoaEgg extends Item
 	@Override
     public String getItemStackDisplayName(ItemStack stack)
     {
-    	return getUnlocalizedName(stack);
+    	return super.getItemStackDisplayName(stack).replace(".name", "");
     }
 
-	public static ItemStack getStackFromColor(MoaColor color)
+	public static ItemStack getStackFromType(AetherMoaType type)
 	{
 		ItemStack stack = new ItemStack(ItemsAether.moa_egg);
 
 		NBTTagCompound tag = new NBTTagCompound();
 
-		tag.setInteger("color", color.ID);
-		tag.setBoolean("creativeSpawned", true);
+		tag.setInteger("typeId", AetherAPI.getInstance().getMoaTypeId(type));
 
 		stack.setTagCompound(tag);
 

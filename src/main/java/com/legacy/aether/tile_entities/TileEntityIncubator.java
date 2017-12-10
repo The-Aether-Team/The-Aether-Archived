@@ -13,6 +13,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.api.events.AetherHooks;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.items.ItemMoaEgg;
@@ -184,15 +185,15 @@ public class TileEntityIncubator extends AetherTileEntity
 		{
 			if (this.getStackInSlot(1).getItem() instanceof ItemMoaEgg)
 			{
+				ItemMoaEgg moaEgg = (ItemMoaEgg) this.getStackInSlot(1).getItem();
+
 				if (!this.world.isRemote)
 				{
-					ItemMoaEgg moaEgg = (ItemMoaEgg) this.getStackInSlot(1).getItem();
-
 					EntityMoa moa = new EntityMoa(this.world);
 
 					moa.setPlayerGrown(true);
 					moa.setGrowingAge(-24000);
-					moa.setColor(moaEgg.getMoaColorFromItemStack(this.getStackInSlot(1)));
+					moa.setMoaType(moaEgg.getMoaTypeFromItemStack(this.getStackInSlot(1)));
 
 					for (int i = 0; this.world.getBlockState(pos.up(i)).getBlock() != Blocks.AIR; i++)
 					{
@@ -206,6 +207,8 @@ public class TileEntityIncubator extends AetherTileEntity
 						this.owner.addStat(AchievementsAether.incubator);
 					}
 				}
+
+				AetherHooks.onMoaHatched(moaEgg.getMoaTypeFromItemStack(this.getStackInSlot(1)), this);
 			}
 
 			if (!this.world.isRemote)

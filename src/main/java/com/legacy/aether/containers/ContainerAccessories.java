@@ -9,10 +9,10 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.containers.inventory.InventoryAccessories;
 import com.legacy.aether.containers.slots.SlotAccessory;
-import com.legacy.aether.containers.util.AccessoryType;
-import com.legacy.aether.items.accessories.ItemAccessory;
 import com.legacy.aether.player.PlayerAether;
 
 public class ContainerAccessories extends ContainerPlayer
@@ -57,21 +57,26 @@ public class ContainerAccessories extends ContainerPlayer
 			{
 				AccessoryType type = this.playerAether.accessories.slotTypes[slotID];
 
-				this.addSlotToContainer(new SlotAccessory(inventoryInstance, slotID, type, 59 + x * 18, 8 + y * 18));
+				this.addSlotToContainer(new SlotAccessory(inventoryInstance, slotID, type, 59 + x * 18, 8 + y * 18, player));
 				slotID++;
 			}
 		}
 	}
 
-	public int getAccessorySlotID(AccessoryType type)
+	public int getAccessorySlot(AccessoryType type)
 	{
 		int slotID = 0;
 
 		for (Slot checkSlot : (List<Slot>) this.inventorySlots)
 		{
-			if (type.isSlotValid(checkSlot) && checkSlot.getStack() == null)
+			if (checkSlot instanceof SlotAccessory && !checkSlot.getHasStack())
 			{
-				return slotID;
+				SlotAccessory accessorySlot = (SlotAccessory) checkSlot;
+
+				if (accessorySlot.getAccessoryType() == type)
+				{
+					return slotID;
+				}
 			}
 
 			slotID++;
@@ -93,11 +98,9 @@ public class ContainerAccessories extends ContainerPlayer
 			{
 				int newSlotIndex = -1;
 
-				if (stack.getItem() instanceof ItemAccessory)
+				if (AetherAPI.getInstance().isAccessory(stack))
 				{
-					ItemAccessory accessory = (ItemAccessory) stack.getItem();
-
-					newSlotIndex = this.getAccessorySlotID(accessory.getType());
+					newSlotIndex = this.getAccessorySlot(AetherAPI.getInstance().getAccessory(stack).getAccessoryType());
 				}
 
 				if (newSlotIndex != -1)

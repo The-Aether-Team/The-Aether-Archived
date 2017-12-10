@@ -11,10 +11,10 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
 import net.minecraft.item.ItemStack;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.enchantments.AetherEnchantment;
+import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.registry.AetherRegistry;
-import com.legacy.aether.registry.objects.AetherEnchantment;
-import com.legacy.aether.registry.objects.AetherFreezable;
 import com.legacy.aether.universal.jei.category.EnchanterRecipeCategory;
 import com.legacy.aether.universal.jei.category.FreezerRecipeCategory;
 import com.legacy.aether.universal.jei.wrapper.EnchanterRecipeWrapper;
@@ -48,8 +48,8 @@ public class AetherJEIPlugin implements IModPlugin
 		registry.addRecipeCatalyst(new ItemStack(BlocksAether.enchanter), "aether_legacy.enchantment");
 		registry.addRecipeCatalyst(new ItemStack(BlocksAether.freezer), "aether_legacy.freezable");
 
-		registry.addRecipes(AetherRegistry.getEnchantables(), "aether_legacy.enchantment");
-		registry.addRecipes(AetherRegistry.getFreezables(), "aether_legacy.freezable");
+		registry.addRecipes(AetherAPI.getInstance().getEnchantmentValues(), "aether_legacy.enchantment");
+		registry.addRecipes(AetherAPI.getInstance().getFreezableValues(), "aether_legacy.freezable");
 	}
 
 	@Override

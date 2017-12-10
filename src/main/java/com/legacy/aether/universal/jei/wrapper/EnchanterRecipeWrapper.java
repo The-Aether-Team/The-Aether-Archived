@@ -9,8 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import com.google.common.collect.Lists;
-import com.legacy.aether.registry.AetherRegistry;
-import com.legacy.aether.registry.objects.AetherEnchantment;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.enchantments.AetherEnchantment;
 
 public class EnchanterRecipeWrapper implements IRecipeWrapper
 {
@@ -28,18 +28,18 @@ public class EnchanterRecipeWrapper implements IRecipeWrapper
 		this.inputs = Lists.newArrayList();
 		this.outputs = Lists.newArrayList();
 
-		for (AetherEnchantment enchantment : AetherRegistry.getEnchantables())
+		for (AetherEnchantment enchantment : AetherAPI.getInstance().getEnchantmentValues())
 		{
-			this.inputs.add(enchantment.getEnchantmentInput());
-			this.outputs.add(enchantment.getEnchantedResult());
+			this.inputs.add(enchantment.getInput());
+			this.outputs.add(enchantment.getOutput());
 		}
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) 
 	{
-		ingredients.setInput(ItemStack.class, this.enchantment.getEnchantmentInput());
-		ingredients.setOutput(ItemStack.class, this.enchantment.getEnchantedResult());
+		ingredients.setInput(ItemStack.class, this.enchantment.getInput());
+		ingredients.setOutput(ItemStack.class, this.enchantment.getOutput());
 	}
 
 	@Override

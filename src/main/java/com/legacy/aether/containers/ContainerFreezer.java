@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.containers.slots.SlotFreezer;
 import com.legacy.aether.tile_entities.TileEntityFreezer;
 
@@ -132,18 +133,18 @@ public class ContainerFreezer extends Container
 			}
 			else if (par2 != 1 && par2 != 0)
 			{
-				if (TileEntityFreezer.getFreezableResult(itemstack1) != null)
+				if (AetherAPI.getInstance().hasFreezable(itemstack1))
 				{
 					if (!this.mergeItemStack(itemstack1, 0, 1, false))
 					{
-						return ItemStack.EMPTY;
+						return null;
 					}
 				}
-				else if (TileEntityFreezer.isItemFuel(itemstack1))
+				else if (AetherAPI.getInstance().isFreezableFuel(itemstack1))
 				{
 					if (!this.mergeItemStack(itemstack1, 1, 2, false))
 					{
-						return ItemStack.EMPTY;
+						return null;
 					}
 				}
 				else if (par2 >= 3 && par2 < 30)

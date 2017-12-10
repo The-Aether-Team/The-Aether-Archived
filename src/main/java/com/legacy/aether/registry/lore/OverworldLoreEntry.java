@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.Loader;
 
 import com.legacy.aether.registry.objects.EntryInformation;
 import com.legacy.aether.registry.objects.LoreEntry;

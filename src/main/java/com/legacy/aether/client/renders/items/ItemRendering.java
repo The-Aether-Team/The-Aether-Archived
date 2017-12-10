@@ -11,7 +11,6 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.client.renders.items.definitions.NotchHammerDefinition;
 import com.legacy.aether.client.renders.items.definitions.PhoenixBowDefinition;
 import com.legacy.aether.client.renders.items.util.AetherColor;
-import com.legacy.aether.entities.util.MoaColor;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumDartShooterType;
 import com.legacy.aether.items.util.EnumDartType;
@@ -237,6 +236,8 @@ public class ItemRendering
 		register(ItemsAether.golden_parachute, "golden_parachute");
 		register(ItemsAether.lore_book, "lore_book");
 
+		register(ItemsAether.moa_egg, "moa_egg");
+
 		registerDefinition(ItemsAether.phoenix_bow, new PhoenixBowDefinition());
 		registerDefinition(ItemsAether.notch_hammer, new NotchHammerDefinition());
 
@@ -255,11 +256,6 @@ public class ItemRendering
 			String base = EnumSkyrootBucketType.values()[meta].toString();
 			String name = base == "empty" ? "skyroot_bucket" : "skyroot_" + base + "_bucket";
 			register(ItemsAether.skyroot_bucket, meta, name);
-		}
-
-		for (int meta = 0; meta < MoaColor.colors.size(); ++meta)
-		{
-			register(ItemsAether.moa_egg, meta, "moa_egg");
 		}
 
 		registerColor(ItemsAether.moa_egg);

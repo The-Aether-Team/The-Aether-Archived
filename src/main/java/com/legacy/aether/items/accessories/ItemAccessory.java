@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.base.Predicates;
 import com.legacy.aether.Aether;
-import com.legacy.aether.containers.util.AccessoryType;
+import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;

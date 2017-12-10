@@ -81,9 +81,9 @@ public class FreezerRecipeCategory implements IRecipeCategory<FreezerRecipeWrapp
 		stacks.init(1, false, 30, 47);
 		stacks.init(2, true, 90, 29);
 
-		stacks.set(0, recipeWrapper.freezable.getFreezableInput());
+		stacks.set(0, recipeWrapper.freezable.getInput());
 		stacks.set(1, new ItemStack(BlocksAether.icestone));
-		stacks.set(2, recipeWrapper.freezable.getFrozenResult());
+		stacks.set(2, recipeWrapper.freezable.getOutput());
 	}
 
 	@Override

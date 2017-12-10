@@ -56,7 +56,7 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 	{
 		EntityMoa moa = (EntityMoa)entity;
 		
-		if (!moa.getPassengers().isEmpty() && moa.getPassengers().get(0) instanceof EntityPlayer)
+		if (moa.isBeingRidden() && moa.getPassengers().get(0) instanceof EntityPlayer)
 		{
 			PlayerAether player = PlayerAether.get((EntityPlayer) moa.getPassengers().get(0));
 
@@ -66,7 +66,7 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 			}
 		}
 
-		return moa.getColor().getTexture();
+		return moa.getMoaType().getTexture(moa.isBeingRidden());
 	}
 
 }

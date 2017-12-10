@@ -9,8 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 import com.google.common.collect.Lists;
-import com.legacy.aether.registry.AetherRegistry;
-import com.legacy.aether.registry.objects.AetherFreezable;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.freezables.AetherFreezable;
 
 public class FreezerRecipeWrapper implements IRecipeWrapper
 {
@@ -28,18 +28,18 @@ public class FreezerRecipeWrapper implements IRecipeWrapper
 		this.inputs = Lists.newArrayList();
 		this.outputs = Lists.newArrayList();
 
-		for (AetherFreezable freezable : AetherRegistry.getFreezables())
+		for (AetherFreezable freezable : AetherAPI.getInstance().getFreezableValues())
 		{
-			this.inputs.add(freezable.getFreezableInput());
-			this.outputs.add(freezable.getFrozenResult());
+			this.inputs.add(freezable.getInput());
+			this.outputs.add(freezable.getOutput());
 		}
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) 
 	{
-		ingredients.setInput(ItemStack.class, this.freezable.getFreezableInput());
-		ingredients.setOutput(ItemStack.class, this.freezable.getFrozenResult());
+		ingredients.setInput(ItemStack.class, this.freezable.getInput());
+		ingredients.setOutput(ItemStack.class, this.freezable.getOutput());
 	}
 
 	@Override
