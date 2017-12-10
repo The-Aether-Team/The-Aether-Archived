@@ -2,6 +2,8 @@ package com.legacy.aether.client.renders;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -11,36 +13,37 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.client.renders.entities.factory.AechorPlantFactory;
-import com.legacy.aether.client.renders.entities.factory.AerbunnyFactory;
-import com.legacy.aether.client.renders.entities.factory.AerwhaleFactory;
-import com.legacy.aether.client.renders.entities.factory.CockatriceFactory;
-import com.legacy.aether.client.renders.entities.factory.DartFactory;
-import com.legacy.aether.client.renders.entities.factory.FireBallFactory;
-import com.legacy.aether.client.renders.entities.factory.FireMinionFactory;
-import com.legacy.aether.client.renders.entities.factory.FloatingBlockFactory;
-import com.legacy.aether.client.renders.entities.factory.FlyingCowFactory;
-import com.legacy.aether.client.renders.entities.factory.HammerProjectileFactory;
-import com.legacy.aether.client.renders.entities.factory.IceyBallFactory;
-import com.legacy.aether.client.renders.entities.factory.LightningKnifeFactory;
-import com.legacy.aether.client.renders.entities.factory.MimicFactory;
-import com.legacy.aether.client.renders.entities.factory.MiniCloudFactory;
-import com.legacy.aether.client.renders.entities.factory.MoaFactory;
-import com.legacy.aether.client.renders.entities.factory.ParachuteFactory;
-import com.legacy.aether.client.renders.entities.factory.PhoenixArrowFactory;
-import com.legacy.aether.client.renders.entities.factory.PhygFactory;
-import com.legacy.aether.client.renders.entities.factory.SentryFactory;
-import com.legacy.aether.client.renders.entities.factory.SheepuffFactory;
-import com.legacy.aether.client.renders.entities.factory.SliderFactory;
-import com.legacy.aether.client.renders.entities.factory.SunSpiritFactory;
-import com.legacy.aether.client.renders.entities.factory.SwetFactory;
-import com.legacy.aether.client.renders.entities.factory.TNTPresentFactory;
-import com.legacy.aether.client.renders.entities.factory.ThunderBallFactory;
-import com.legacy.aether.client.renders.entities.factory.ValkyrieFactory;
-import com.legacy.aether.client.renders.entities.factory.ValkyrieQueenFactory;
-import com.legacy.aether.client.renders.entities.factory.ZephyrFactory;
-import com.legacy.aether.client.renders.entities.factory.ZephyrSnowballFactory;
+import com.legacy.aether.client.renders.entities.AechorPlantRenderer;
+import com.legacy.aether.client.renders.entities.AerbunnyRenderer;
+import com.legacy.aether.client.renders.entities.AerwhaleRenderer;
+import com.legacy.aether.client.renders.entities.CockatriceRenderer;
+import com.legacy.aether.client.renders.entities.FireMinionRenderer;
+import com.legacy.aether.client.renders.entities.FloatingBlockRenderer;
+import com.legacy.aether.client.renders.entities.FlyingCowRenderer;
+import com.legacy.aether.client.renders.entities.MimicRenderer;
+import com.legacy.aether.client.renders.entities.MiniCloudRenderer;
+import com.legacy.aether.client.renders.entities.MoaRenderer;
+import com.legacy.aether.client.renders.entities.ParachuteRenderer;
+import com.legacy.aether.client.renders.entities.PhygRenderer;
+import com.legacy.aether.client.renders.entities.SentryRenderer;
+import com.legacy.aether.client.renders.entities.SheepuffRenderer;
+import com.legacy.aether.client.renders.entities.SliderRenderer;
+import com.legacy.aether.client.renders.entities.SunSpiritRenderer;
+import com.legacy.aether.client.renders.entities.SwetRenderer;
+import com.legacy.aether.client.renders.entities.TNTPresentRenderer;
+import com.legacy.aether.client.renders.entities.ValkyrieQueenRenderer;
+import com.legacy.aether.client.renders.entities.ValkyrieRenderer;
+import com.legacy.aether.client.renders.entities.WhirlwindRenderer;
+import com.legacy.aether.client.renders.entities.ZephyrRenderer;
 import com.legacy.aether.client.renders.entities.layer.AccessoriesLayer;
+import com.legacy.aether.client.renders.entities.projectile.DartBaseRenderer;
+import com.legacy.aether.client.renders.entities.projectile.FireBallRenderer;
+import com.legacy.aether.client.renders.entities.projectile.HammerProjectileRenderer;
+import com.legacy.aether.client.renders.entities.projectile.IceyBallRenderer;
+import com.legacy.aether.client.renders.entities.projectile.LightningKnifeRenderer;
+import com.legacy.aether.client.renders.entities.projectile.PhoenixArrowRenderer;
+import com.legacy.aether.client.renders.entities.projectile.ThunderBallRenderer;
+import com.legacy.aether.client.renders.entities.projectile.ZephyrSnowballRenderer;
 import com.legacy.aether.entities.block.EntityFloatingBlock;
 import com.legacy.aether.entities.block.EntityTNTPresent;
 import com.legacy.aether.entities.bosses.EntityFireMinion;
@@ -52,6 +55,7 @@ import com.legacy.aether.entities.hostile.EntityAechorPlant;
 import com.legacy.aether.entities.hostile.EntityCockatrice;
 import com.legacy.aether.entities.hostile.EntityMimic;
 import com.legacy.aether.entities.hostile.EntitySentry;
+import com.legacy.aether.entities.hostile.EntityWhirlwind;
 import com.legacy.aether.entities.hostile.EntityZephyr;
 import com.legacy.aether.entities.passive.EntityAerwhale;
 import com.legacy.aether.entities.passive.EntityMiniCloud;
@@ -65,14 +69,11 @@ import com.legacy.aether.entities.passive.mountable.EntitySwet;
 import com.legacy.aether.entities.projectile.EntityHammerProjectile;
 import com.legacy.aether.entities.projectile.EntityLightningKnife;
 import com.legacy.aether.entities.projectile.EntityPhoenixArrow;
-import com.legacy.aether.entities.projectile.EntityPoisonNeedle;
 import com.legacy.aether.entities.projectile.EntityZephyrSnowball;
 import com.legacy.aether.entities.projectile.crystals.EntityFireBall;
 import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
 import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
-import com.legacy.aether.entities.projectile.darts.EntityDartEnchanted;
-import com.legacy.aether.entities.projectile.darts.EntityDartGolden;
-import com.legacy.aether.entities.projectile.darts.EntityDartPoison;
+import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.tile_entities.TileEntityChestMimic;
 import com.legacy.aether.tile_entities.TileEntityTreasureChest;
 
@@ -82,48 +83,46 @@ public class AetherEntityRenderingRegistry
 	public static void initialize()
 	{
 		/* Misc */
-		register(EntityHammerProjectile.class, new HammerProjectileFactory());
-		register(EntityFloatingBlock.class, new FloatingBlockFactory());
-		register(EntityParachute.class, new ParachuteFactory());
-		register(EntityZephyrSnowball.class, new ZephyrSnowballFactory());
-		register(EntityPhoenixArrow.class, new PhoenixArrowFactory());
-		register(EntityLightningKnife.class, new LightningKnifeFactory());
+		register(EntityHammerProjectile.class, HammerProjectileRenderer.class);
+		register(EntityFloatingBlock.class, FloatingBlockRenderer.class);
+		register(EntityParachute.class, ParachuteRenderer.class);
+		register(EntityZephyrSnowball.class, ZephyrSnowballRenderer.class);
+		register(EntityPhoenixArrow.class, PhoenixArrowRenderer.class);
+		register(EntityLightningKnife.class, LightningKnifeRenderer.class);
 
 		/* Darts */
-		register(EntityDartEnchanted.class, new DartFactory<EntityDartEnchanted>());
-		register(EntityPoisonNeedle.class, new DartFactory<EntityPoisonNeedle>());
-		register(EntityDartGolden.class, new DartFactory<EntityDartGolden>());
-		register(EntityDartPoison.class, new DartFactory<EntityDartPoison>());
+		register(EntityDartBase.class, DartBaseRenderer.class);
 
 		/* Crystals */
-		register(EntityFireBall.class, new FireBallFactory());
-		register(EntityIceyBall.class, new IceyBallFactory());
-		register(EntityThunderBall.class, new ThunderBallFactory());
+		register(EntityFireBall.class, FireBallRenderer.class);
+		register(EntityIceyBall.class, IceyBallRenderer.class);
+		register(EntityThunderBall.class, ThunderBallRenderer.class);
 
 		/* Bosses */
-		register(EntitySlider.class, new SliderFactory());
-		register(EntityValkyrieQueen.class, new ValkyrieQueenFactory());
-		register(EntitySunSpirit.class, new SunSpiritFactory());
+		register(EntitySlider.class, SliderRenderer.class);
+		register(EntityValkyrieQueen.class, ValkyrieQueenRenderer.class);
+		register(EntitySunSpirit.class, SunSpiritRenderer.class);
 
 		/* Hostile */
-		register(EntityMimic.class, new MimicFactory());
-		register(EntitySentry.class, new SentryFactory());
-		register(EntityAechorPlant.class, new AechorPlantFactory());
-		register(EntityFireMinion.class, new FireMinionFactory());
-		register(EntityZephyr.class, new ZephyrFactory());
-		register(EntityValkyrie.class, new ValkyrieFactory());
-		register(EntityCockatrice.class, new CockatriceFactory());
+		register(EntityMimic.class, MimicRenderer.class);
+		register(EntitySentry.class, SentryRenderer.class);
+		register(EntityAechorPlant.class, AechorPlantRenderer.class);
+		register(EntityFireMinion.class, FireMinionRenderer.class);
+		register(EntityZephyr.class, ZephyrRenderer.class);
+		register(EntityValkyrie.class, ValkyrieRenderer.class);
+		register(EntityCockatrice.class, CockatriceRenderer.class);
 
 		/* Passive */
-		register(EntityMoa.class, new MoaFactory());
-		register(EntityPhyg.class, new PhygFactory());
-		register(EntityFlyingCow.class, new FlyingCowFactory());
-		register(EntitySheepuff.class, new SheepuffFactory());
-		register(EntityAerwhale.class, new AerwhaleFactory());
-		register(EntityAerbunny.class, new AerbunnyFactory());
-		register(EntitySwet.class, new SwetFactory());
-		register(EntityMiniCloud.class, new MiniCloudFactory());
-		register(EntityTNTPresent.class, new TNTPresentFactory());
+		register(EntityMoa.class, MoaRenderer.class);
+		register(EntityPhyg.class, PhygRenderer.class);
+		register(EntityFlyingCow.class, FlyingCowRenderer.class);
+		register(EntitySheepuff.class, SheepuffRenderer.class);
+		register(EntityAerwhale.class, AerwhaleRenderer.class);
+		register(EntityAerbunny.class, AerbunnyRenderer.class);
+		register(EntitySwet.class, SwetRenderer.class);
+		register(EntityMiniCloud.class, MiniCloudRenderer.class);
+		register(EntityTNTPresent.class, TNTPresentRenderer.class);
+		register(EntityWhirlwind.class, WhirlwindRenderer.class);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -145,9 +144,25 @@ public class AetherEntityRenderingRegistry
 		default_render.addLayer(new AccessoriesLayer(false, (ModelPlayer) default_render.getMainModel()));
 	}
 
-	public static <ENTITY extends Entity> void register(Class<ENTITY> classes, IRenderFactory<? super ENTITY> factory)
+	public static <ENTITY extends Entity> void register(Class<ENTITY> classes, final Class<? extends Render<ENTITY>> render)
 	{
-		RenderingRegistry.registerEntityRenderingHandler(classes, factory);
+		RenderingRegistry.registerEntityRenderingHandler(classes, new IRenderFactory<ENTITY>() {
+
+			@Override
+			public Render<ENTITY> createRenderFor(RenderManager manager) 
+			{
+				try
+				{
+					return render.getConstructor(RenderManager.class).newInstance(manager);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+
+				return null;
+			}
+		});
 	}
 
 }

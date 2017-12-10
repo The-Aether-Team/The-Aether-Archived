@@ -16,16 +16,17 @@ import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.entities.projectile.darts.EntityDartEnchanted;
 import com.legacy.aether.entities.projectile.darts.EntityDartGolden;
 
-public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
+public class DartBaseRenderer extends Render<EntityDartBase>
 {
 
-    public DartBaseRenderer(RenderManager renderManager) 
+	public DartBaseRenderer(RenderManager renderManager) 
     {
 		super(renderManager);
+
 		this.shadowSize = 0.0F;
 	}
 
-	public void renderDart(DART dart, double d, double d1, double d2, float f, float f1)
+	public void renderDart(EntityDartBase dart, double d, double d1, double d2, float f, float f1)
     {
 		if (dart.isInvisible())
 		{
@@ -62,13 +63,16 @@ public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
         GL11.glScalef(f10, f10, f10);
         GL11.glTranslatef(-4.0F, 0.0F, 0.0F);
         GL11.glNormal3f(f10, 0.0F, 0.0F);
+
         renderWorld.begin(7, DefaultVertexFormats.POSITION_TEX);
         renderWorld.pos(-7.0D, -2.0D, -2.0D).tex((double)f6, (double)f8).endVertex();
         renderWorld.pos(-7.0D, -2.0D, 2.0D).tex((double)f7, (double)f8).endVertex();
         renderWorld.pos(-7.0D, 2.0D, 2.0D).tex((double)f7, (double)f9).endVertex();
         renderWorld.pos(-7.0D, 2.0D, -2.0D).tex((double)f6, (double)f9).endVertex();
         tessellator.draw();
+
         GL11.glNormal3f(-f10, 0.0F, 0.0F);
+
         renderWorld.begin(7, DefaultVertexFormats.POSITION_TEX);
         renderWorld.pos(-7.0D, 2.0D, -2.0D).tex((double)f6, (double)f8).endVertex();
         renderWorld.pos(-7.0D, 2.0D, 2.0D).tex((double)f7, (double)f8).endVertex();
@@ -80,6 +84,7 @@ public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
         {
             GL11.glRotatef(72.0F, 1.0F, 0.0F, 0.0F);
             GL11.glNormal3f(0.0F, 0.0F, f10);
+
             renderWorld.begin(7, DefaultVertexFormats.POSITION_TEX);
             renderWorld.pos(-8.0D, -2.0D, 0.0D).tex((double)f2, (double)f4).endVertex();
             renderWorld.pos(8.0D, -2.0D, 0.0D).tex((double)f3, (double)f4).endVertex();
@@ -92,13 +97,16 @@ public class DartBaseRenderer<DART extends EntityDartBase> extends Render<DART>
         GL11.glPopMatrix();
     }
 
-    public void doRender(DART entity, double d, double d1, double d2, float f, float f1)
+	@Override
+    public void doRender(EntityDartBase entity, double d, double d1, double d2, float f, float f1)
     {
         this.renderDart(entity, d, d1, d2, f, f1);
+
         super.doRender(entity, d, d1, d2, f, f1);
     }
 
-    protected ResourceLocation getEntityTexture(DART entity)
+	@Override
+    protected ResourceLocation getEntityTexture(EntityDartBase entity)
     {
     	String base = entity instanceof EntityDartGolden ? "golden" : entity instanceof EntityDartEnchanted ? "enchanted" : "poison";
         return new ResourceLocation("aether_legacy", "textures/entities/projectile/dart/" + base + (entity instanceof EntityPoisonNeedle ? "_needle" : "_dart") + ".png");
