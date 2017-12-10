@@ -10,6 +10,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.hostile.EntityAechorPlant;
 import com.legacy.aether.entities.hostile.EntityCockatrice;
+import com.legacy.aether.entities.hostile.EntityWhirlwind;
 import com.legacy.aether.entities.hostile.EntityZephyr;
 import com.legacy.aether.entities.passive.EntityAerwhale;
 import com.legacy.aether.entities.passive.EntitySheepuff;
@@ -63,6 +64,7 @@ public class AetherBiome extends Biome
 
 	private void addMobEntry(ArrayList<SpawnListEntry> list)
 	{
+		list.add(new SpawnListEntry(EntityWhirlwind.class, 8, 2, 2));
 		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
 		list.add(new SpawnListEntry(EntityAerwhale.class, 7, 3, 3));
 		list.add(new SpawnListEntry(EntityZephyr.class, 4, 1, 1));
