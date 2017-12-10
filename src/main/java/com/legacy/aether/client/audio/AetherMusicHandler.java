@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.client.audio.music.AetherMusicTicker;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
@@ -47,15 +48,19 @@ public class AetherMusicHandler
 
 		if (category == SoundCategory.MUSIC)
 		{
-			if (!sound.getSoundLocation().toString().contains("aether_legacy"))
+			if (this.mc.player != null && this.mc.player.dimension == AetherConfig.getAetherDimensionID())
 			{
-				event.setResultSound(null);
+				if (!sound.getSoundLocation().toString().contains("aether_legacy") && (this.musicTicker.playingMusic() || !this.musicTicker.playingMusic()))
+				{
+					event.setResultSound(null);
 
-				return;
+					return;
+				}
 			}
 		}
 		else if (category == SoundCategory.RECORDS)
 		{
+			this.musicTicker.stopMusic();
 			this.mc.getSoundHandler().stopSounds();
 
 			return;
