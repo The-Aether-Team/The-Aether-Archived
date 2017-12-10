@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.cache.LoadingCache;
-import com.legacy.aether.entities.particles.EntityBlueFX;
+import com.legacy.aether.entities.particles.ParticleAetherPortal;
 import com.legacy.aether.player.PlayerAether;
 
 public class BlockAetherPortal extends BlockPortal
@@ -129,7 +129,7 @@ public class BlockAetherPortal extends BlockPortal
                 d5 = (double)(rand.nextFloat() * 2.0F * (float)j);
             }
 
-            EntityBlueFX particle = new EntityBlueFX(world, d0, d1, d2, d3, d4, d5);
+            ParticleAetherPortal particle = new ParticleAetherPortal(world, d0, d1, d2, d3, d4, d5);
             FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
         }
 	}

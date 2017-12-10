@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.blocks.util.EnumCrystalType;
 import com.legacy.aether.blocks.util.EnumLeafType;
 import com.legacy.aether.blocks.util.IAetherMeta;
-import com.legacy.aether.entities.particles.EntityCrystalFX;
+import com.legacy.aether.entities.particles.ParticleCrystalLeaves;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
@@ -100,7 +100,8 @@ public class BlockCrystalLeaves extends BlockLeaves implements IAetherMeta
 	                double d3 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 	                double d4 = ((double)random.nextFloat() - 0.5D) * 0.5D;
 	                double d5 = ((double)random.nextFloat() - 0.5D) * 0.5D;
-	                EntityCrystalFX particle = new EntityCrystalFX(world, d, d1, d2, d3, d4, d5);
+
+	                ParticleCrystalLeaves particle = new ParticleCrystalLeaves(world, d, d1, d2, d3, d4, d5);
 	                FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
 	            }
 	        }
