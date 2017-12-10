@@ -1,27 +1,9 @@
 {
 	"variants": {
-		"check_decay=true,crystal_leaves=crystal_leaves,decayable=true": {
+		"crystal_leaves=crystal_leaves": {
 			"model": "aether_legacy:crystal_leaves"
 		},
-		"check_decay=true,crystal_leaves=crystal_leaves,decayable=false": {
-			"model": "aether_legacy:crystal_leaves"
-		},
-		"check_decay=false,crystal_leaves=crystal_leaves,decayable=true": {
-			"model": "aether_legacy:crystal_leaves"
-		},
-		"check_decay=false,crystal_leaves=crystal_leaves,decayable=false": {
-			"model": "aether_legacy:crystal_leaves"
-		},
-		"check_decay=true,crystal_leaves=crystal_fruit_leaves,decayable=true": {
-			"model": "aether_legacy:crystal_fruit_leaves"
-		},
-		"check_decay=true,crystal_leaves=crystal_fruit_leaves,decayable=false": {
-			"model": "aether_legacy:crystal_fruit_leaves"
-		},
-		"check_decay=false,crystal_leaves=crystal_fruit_leaves,decayable=true": {
-			"model": "aether_legacy:crystal_fruit_leaves"
-		},
-		"check_decay=false,crystal_leaves=crystal_fruit_leaves,decayable=false": {
+		"crystal_leaves=crystal_fruit_leaves": {
 			"model": "aether_legacy:crystal_fruit_leaves"
 		}
 	}
