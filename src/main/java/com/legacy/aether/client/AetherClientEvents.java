@@ -11,8 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
-import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -123,17 +123,9 @@ public class AetherClientEvents
 	}
 
 	@SubscribeEvent
-	public void onRenderHand(RenderHandEvent event)
+	public void onRenderHand(RenderSpecificHandEvent event)
 	{
-		Minecraft mc = Minecraft.getMinecraft();
-		FirstPersonRenderer render = new FirstPersonRenderer(mc, event.getPartialTicks());
-
-		if (render.shouldRender())
-		{
-			mc.entityRenderer.enableLightmap();
-			render.render();
-			mc.entityRenderer.disableLightmap();
-		}
+		PlayerGloveRenderer.renderItemFirstPerson(Minecraft.getMinecraft().player, event.getPartialTicks(), event.getInterpolatedPitch(), event.getHand(), event.getSwingProgress(), event.getItemStack(), event.getEquipProgress());
 	}
 
 	@SubscribeEvent

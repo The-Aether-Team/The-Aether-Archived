@@ -37,7 +37,7 @@ public class ItemAccessory extends Item
 
 	protected final AccessoryType accessoryType;
 
-	public ResourceLocation texture;
+	public ResourceLocation texture, texture_slim;
 
 	private int colorHex = 0xdddddd;
 
@@ -55,7 +55,8 @@ public class ItemAccessory extends Item
 	public ItemAccessory(AccessoryType type)
 	{
 		this.accessoryType = type;
-		this.texture = new ResourceLocation("aether_legacy", "textures/armor/accessory_base.png");
+		this.texture = Aether.locate("textures/armor/accessory_base.png");
+		this.texture_slim = Aether.locate("textures/armor/accessory_base_slim.png");
 		this.setMaxStackSize(1);
 		this.setCreativeTab(AetherCreativeTabs.accessories);
         BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, DISPENSER_BEHAVIOR);
@@ -144,7 +145,9 @@ public class ItemAccessory extends Item
 
     public ItemAccessory setTexture(String location)
     {
-    	texture = new ResourceLocation("aether_legacy", "textures/armor/accessory_" + location + ".png");
+    	this.texture = new ResourceLocation("aether_legacy", "textures/armor/accessory_" + location + ".png");
+		this.texture_slim = Aether.locate("textures/armor/accessory_" + location + "_slim.png");
+
     	return this;
     }
 
