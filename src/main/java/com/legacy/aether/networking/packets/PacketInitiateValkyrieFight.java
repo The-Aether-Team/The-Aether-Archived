@@ -6,6 +6,7 @@ import com.legacy.aether.player.PlayerAether;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 public class PacketInitiateValkyrieFight extends AetherPacket<PacketInitiateValkyrieFight>
 {
@@ -46,7 +47,7 @@ public class PacketInitiateValkyrieFight extends AetherPacket<PacketInitiateValk
 	@Override
 	public void handleServer(PacketInitiateValkyrieFight message, EntityPlayer player) 
 	{
-		player.inventory.setInventorySlotContents(message.slotId, null);
+		player.inventory.setInventorySlotContents(message.slotId, ItemStack.EMPTY);
 
 		Entity entity = player.world.getEntityByID(message.entityId);
 
