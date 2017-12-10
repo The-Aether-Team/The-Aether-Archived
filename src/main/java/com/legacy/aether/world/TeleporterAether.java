@@ -47,6 +47,8 @@ public class TeleporterAether extends Teleporter
     {
     	if (!this.portalSpawn)
     	{
+    		entityIn.setPositionAndUpdate(entityIn.posX, 256, entityIn.posZ);
+
     		return;
     	}
 
