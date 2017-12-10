@@ -71,6 +71,14 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	{
 		this.updateRider();
 		super.onUpdate();
+
+		if (this.isBeingRidden() && this.isRiding())
+		{
+			for (Entity entity : this.getPassengers())
+			{
+				entity.dismountRidingEntity();
+			}
+		}
 	}
 
 	public void updateRider()

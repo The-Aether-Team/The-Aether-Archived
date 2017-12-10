@@ -111,7 +111,7 @@ public abstract class EntitySaddleMount extends EntityMountable
 		}
 		else
 		{
-			if (this.getPassengers().isEmpty())
+			if (!this.isBeingRidden() && !this.isRiding())
 			{
 				if (!entityplayer.world.isRemote)
 				{
