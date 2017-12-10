@@ -17,6 +17,14 @@ public class GuiAccessoryButton extends GuiButton
 		super(18067, x, y, 12, 12, "");
 	}
 
+	public GuiAccessoryButton setPosition(int x, int y)
+	{
+		this.xPosition = x;
+		this.yPosition = y;
+
+		return this;
+	}
+
 	@Override  
     public void drawButton(Minecraft mc, int mouseX, int mouseY)
     {
