@@ -3,6 +3,7 @@ package com.legacy.aether.tile_entities;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -90,6 +91,17 @@ public class TileEntityTreasureChest extends TileEntityChest
         NBTTagCompound var1 = new NBTTagCompound();
         this.writeToNBT(var1);
         return new SPacketUpdateTileEntity(this.pos, 191, var1);
+    }
+
+    @Override
+    public void openInventory(EntityPlayer player)
+    {
+    	super.openInventory(player);
+
+    	if (player instanceof EntityPlayerMP)
+    	{
+    		((EntityPlayerMP)player).connection.sendPacket(this.getUpdatePacket());
+    	}
     }
 
     @Override

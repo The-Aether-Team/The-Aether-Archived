@@ -378,21 +378,23 @@ public class BlockTreasureChest extends BlockContainer
 	@Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
+		if (worldIn.isRemote)
+		{
+			return true;
+		}
+
         TileEntityTreasureChest treasurechest = (TileEntityTreasureChest)worldIn.getTileEntity(pos);
 
         ItemStack guiID = playerIn.getHeldItem(hand);
-        
+
         if (treasurechest.isLocked())
         {
-            if (guiID == ItemStack.EMPTY || guiID.getItem() != ItemsAether.dungeon_key)
+            if (guiID == null || guiID != null && guiID.getItem() != ItemsAether.dungeon_key)
             {
                 return false;
             }
 
-            if (!worldIn.isRemote)
-            {
-                treasurechest.unlock(guiID.getItemDamage());
-            }
+            treasurechest.unlock(guiID.getItemDamage());
 
             guiID.shrink(1);
         }
