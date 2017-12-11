@@ -119,7 +119,7 @@ public class ItemsAether
 		ambrosium_shard = register("ambrosium_shard", new ItemAmbrosiumShard());
 		golden_amber = register("golden_amber", new ItemAether(AetherCreativeTabs.material));
 		aechor_petal = register("aechor_petal", new ItemAether(AetherCreativeTabs.material));
-		swetty_ball = register("swetty_ball", new ItemAether(AetherCreativeTabs.material));
+		swetty_ball = register("swetty_ball", new ItemSwettyBall(AetherCreativeTabs.material));
 
 		skyroot_pickaxe = register("skyroot_pickaxe", new ItemSkyrootTool(EnumAetherToolType.PICKAXE));
 		skyroot_axe = register("skyroot_axe", new ItemSkyrootTool(EnumAetherToolType.AXE));
