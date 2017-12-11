@@ -5,6 +5,7 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -16,7 +17,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
+import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.portal.BlockAetherPortal;
 import com.legacy.aether.entities.bosses.EntityValkyrie;
@@ -146,43 +147,13 @@ public class AetherEventHandler
 	}
 
 	@SubscribeEvent
-	public void onItemPickedUp(EntityItemPickupEvent event)
-	{
-		if (event.getItem().getItem() != null && event.getItem().getItem().getItem() == Item.getItemFromBlock(BlocksAether.aether_log))
-		{
-			//event.getEntityPlayer().addStat(AchievementList.MINE_WOOD);
-		}
-	}
-
-	@SubscribeEvent
 	public void onCrafting(ItemCraftedEvent event)
 	{
-		EntityPlayer player = event.player;
 		ItemStack stack = event.crafting;
 
-		if (stack.getItem() == ItemsAether.holystone_pickaxe)
+		if (isGravititeTool(stack.getItem()) && event.player instanceof EntityPlayerMP)
 		{
-			//player.addStat(AchievementList.BUILD_BETTER_PICKAXE);
-		}
-
-		if (stack.getItem() == ItemsAether.skyroot_pickaxe)
-		{
-			//player.addStat(AchievementList.BUILD_PICKAXE);
-		}
-
-		if (stack.getItem() == ItemsAether.skyroot_sword)
-		{
-			//player.addStat(AchievementList.BUILD_SWORD);
-		}
-
-		if (stack.getItem() == Item.getItemFromBlock(BlocksAether.enchanter))
-		{
-			//player.addStat(AchievementsAether.enchanter);
-		}
-
-		if (isGravititeTool(stack.getItem()))
-		{
-			//player.addStat(AchievementsAether.grav_tools);
+			AetherAdvancements.GRAV_TOOLSET_TRIGGER.trigger((EntityPlayerMP) event.player);
 		}
 	}
 
