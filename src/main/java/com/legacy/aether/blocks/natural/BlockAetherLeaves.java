@@ -116,13 +116,13 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 	}
 
 	@Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (int j = 0; j < EnumLeafType.values().length; ++j)
         {
         	EnumLeafType leafType = EnumLeafType.values()[j];
 
-            list.add(new ItemStack(itemIn, 1, leafType.getMeta()));
+            list.add(new ItemStack(this, 1, leafType.getMeta()));
         }
     }
 

@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherEnchantment extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherEnchantment>
+public class AetherEnchantment extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherEnchantment>
 {
 
 	public int timeRequired;

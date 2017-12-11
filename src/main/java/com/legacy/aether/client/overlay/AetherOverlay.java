@@ -4,11 +4,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -46,7 +46,7 @@ public class AetherOverlay
     	{
             ScaledResolution scaledresolution = new ScaledResolution(mc);
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer renderer = tessellator.getBuffer();
+            BufferBuilder renderer = tessellator.getBuffer();
 
     		float alpha = getPoisonAlpha((float)(playerAether.poisonInstance().poisonTime % 50) / 50F);
 
@@ -86,7 +86,7 @@ public class AetherOverlay
     	{
             ScaledResolution scaledresolution = new ScaledResolution(mc);
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer renderer = tessellator.getBuffer();
+            BufferBuilder renderer = tessellator.getBuffer();
 
     		float alpha = getCureAlpha(-((float)playerAether.poisonInstance().poisonTime + 100.0F) / 100.0F);
             int width = scaledresolution.getScaledWidth();
@@ -162,7 +162,7 @@ public class AetherOverlay
 			int cooldownRemaining = (int) ((float) (playerInfo.getCooldown()) / (float) (playerInfo.getCooldownMax()) * 128F);
 			int width = scaledresolution.getScaledWidth();
 
-			mc.fontRendererObj.drawStringWithShadow(playerInfo.getCooldownName() + " Cooldown", (width / 2) - (mc.fontRendererObj.getStringWidth(playerInfo.getCooldownName() + " Cooldown") / 2), 32, 0xffffffff);
+			mc.fontRenderer.drawStringWithShadow(playerInfo.getCooldownName() + " Cooldown", (width / 2) - (mc.fontRenderer.getStringWidth(playerInfo.getCooldownName() + " Cooldown") / 2), 32, 0xffffffff);
 
 	        GlStateManager.pushMatrix();
 
@@ -250,7 +250,7 @@ public class AetherOverlay
         float f2 = textureatlassprite.getMaxU();
         float f3 = textureatlassprite.getMaxV();
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        BufferBuilder vertexbuffer = tessellator.getBuffer();
         vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
         vertexbuffer.pos(0.0D, (double)scaledRes.getScaledHeight(), -90.0D).tex((double)f, (double)f3).endVertex();
         vertexbuffer.pos((double)scaledRes.getScaledWidth(), (double)scaledRes.getScaledHeight(), -90.0D).tex((double)f2, (double)f3).endVertex();
@@ -286,7 +286,7 @@ public class AetherOverlay
 
 			GlStateManager.pushMatrix();
 
-	        mc.fontRendererObj.drawStringWithShadow(bossTitle, width / 2 - (mc.fontRendererObj.getStringWidth(bossTitle) / 2), 2, 0xffffffff);
+	        mc.fontRenderer.drawStringWithShadow(bossTitle, width / 2 - (mc.fontRenderer.getStringWidth(bossTitle) / 2), 2, 0xffffffff);
 
 	        mc.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/gui/boss_bar.png"));
 
@@ -309,7 +309,7 @@ public class AetherOverlay
 		float var7 = 0.00390625F;
 		float var8 = 0.00390625F;
 		Tessellator var9 = Tessellator.getInstance();
-        VertexBuffer renderer = var9.getBuffer();
+		BufferBuilder renderer = var9.getBuffer();
 		renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
 		renderer.pos((double) (x + 0), (double) (y + height), (double) zLevel).tex((double) ((float) (u + 0) * var7), (double) ((float) (v + height) * var8)).endVertex();
 		renderer.pos((double) (x + width), (double) (y + height), (double) zLevel).tex((double) ((float) (u + width) * var7), (double) ((float) (v + height) * var8)).endVertex();

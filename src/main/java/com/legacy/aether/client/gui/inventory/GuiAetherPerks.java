@@ -127,27 +127,27 @@ public class GuiAetherPerks extends GuiScreen
 
     	this.enableHalo.displayString = this.enableHalo.displayString + Boolean.toString(this.player.shouldRenderHalo ? false : true);
 
-        this.moaEye = new GuiTextField(1, this.fontRendererObj, (this.width / 2) + 105, 70, 45, 20);
+        this.moaEye = new GuiTextField(1, this.fontRenderer, (this.width / 2) + 105, 70, 45, 20);
         this.moaEye.setMaxStringLength(6);
         this.moaEye.setText(Integer.toHexString(this.player.donatorMoaSkin.getEyeColor()));
 
-        this.moaWingMarking = new GuiTextField(5, this.fontRendererObj, (this.width / 2) + 105, this.height - 40, 45, 20);
+        this.moaWingMarking = new GuiTextField(5, this.fontRenderer, (this.width / 2) + 105, this.height - 40, 45, 20);
         this.moaWingMarking.setMaxStringLength(6);
         this.moaWingMarking.setText(Integer.toHexString(this.player.donatorMoaSkin.getWingMarkingColor()));
 
-        this.moaWing = new GuiTextField(10, this.fontRendererObj, (this.width / 2) + 105, this.height / 2 + 15, 45, 20);
+        this.moaWing = new GuiTextField(10, this.fontRenderer, (this.width / 2) + 105, this.height / 2 + 15, 45, 20);
         this.moaWing.setMaxStringLength(6);
         this.moaWing.setText(Integer.toHexString(this.player.donatorMoaSkin.getWingColor()));
 
-        this.moaBody = new GuiTextField(14, this.fontRendererObj, (this.width / 2) - 155, this.height / 2 + 15, 45, 20);
+        this.moaBody = new GuiTextField(14, this.fontRenderer, (this.width / 2) - 155, this.height / 2 + 15, 45, 20);
         this.moaBody.setMaxStringLength(6);
         this.moaBody.setText(Integer.toHexString(this.player.donatorMoaSkin.getBodyColor()));
 
-        this.moaBodyMarking = new GuiTextField(18, this.fontRendererObj, (this.width / 2) - 155, this.height - 40, 45, 20);
+        this.moaBodyMarking = new GuiTextField(18, this.fontRenderer, (this.width / 2) - 155, this.height - 40, 45, 20);
         this.moaBodyMarking.setMaxStringLength(6);
         this.moaBodyMarking.setText(Integer.toHexString(this.player.donatorMoaSkin.getMarkingColor()));
 
-        this.moaOutside = new GuiTextField(22, this.fontRendererObj, (this.width / 2) - 155, 70, 45, 20);
+        this.moaOutside = new GuiTextField(22, this.fontRenderer, (this.width / 2) - 155, 70, 45, 20);
         this.moaOutside.setMaxStringLength(6);
         this.moaOutside.setText(Integer.toHexString(this.player.donatorMoaSkin.getOutsideColor()));
     }
@@ -240,7 +240,7 @@ public class GuiAetherPerks extends GuiScreen
     {
         this.drawDefaultBackground();
 
-        this.drawCenteredString(this.fontRendererObj, "Donator Options", 45, 4, 16777215);
+        this.drawCenteredString(this.fontRenderer, "Donator Options", 45, 4, 16777215);
 
         if (this.enableMoaEditor)
         {
@@ -248,19 +248,19 @@ public class GuiAetherPerks extends GuiScreen
 
         	/* Left Side*/
 
-            this.drawString(this.fontRendererObj, "Leg/Beak Color", (this.width / 2) - 170, 55, 16777215);
+            this.drawString(this.fontRenderer, "Leg/Beak Color", (this.width / 2) - 170, 55, 16777215);
 
-            this.drawString(this.fontRendererObj, "Body Color", (this.width / 2) - 160, this.height / 2, 16777215);
+            this.drawString(this.fontRenderer, "Body Color", (this.width / 2) - 160, this.height / 2, 16777215);
 
-            this.drawString(this.fontRendererObj, "Body Marking Color", (this.width / 2) - 180, this.height - 55, 16777215);
+            this.drawString(this.fontRenderer, "Body Marking Color", (this.width / 2) - 180, this.height - 55, 16777215);
 
         	/* Right Side */
 
-            this.drawString(this.fontRendererObj, "Eye Color", (this.width / 2) + 104, 55, 16777215);
+            this.drawString(this.fontRenderer, "Eye Color", (this.width / 2) + 104, 55, 16777215);
 
-            this.drawString(this.fontRendererObj, "Wing Color", (this.width / 2) + 102, this.height / 2, 16777215);
+            this.drawString(this.fontRenderer, "Wing Color", (this.width / 2) + 102, this.height / 2, 16777215);
 
-            this.drawString(this.fontRendererObj, "Wing Marking Color", (this.width / 2) + 82, this.height - 55, 16777215);
+            this.drawString(this.fontRenderer, "Wing Marking Color", (this.width / 2) + 82, this.height - 55, 16777215);
 
             this.moaWingMarking.drawTextBox();
             this.moaWing.drawTextBox();

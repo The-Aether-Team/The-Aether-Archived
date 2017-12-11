@@ -11,7 +11,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -26,7 +25,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.blocks.util.EnumCloudType;
 import com.legacy.aether.blocks.util.IAetherMeta;
-import com.legacy.aether.registry.achievements.AchievementsAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class BlockAercloud extends Block implements IAetherMeta
@@ -69,7 +67,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 			{
 				EntityPlayer player = (EntityPlayer) entity;
 
-				player.addStat(AchievementsAether.blue_cloud);
+				//player.addStat(AchievementsAether.blue_cloud);
 
 				if (player.isSneaking())
 				{
@@ -130,7 +128,7 @@ public class BlockAercloud extends Block implements IAetherMeta
     }
 
 	@Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (int j = 0; j < EnumCloudType.values().length; ++j)
         {
@@ -138,7 +136,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 
         	if (cloud_type != EnumCloudType.Pink)
         	{
-                list.add(new ItemStack(itemIn, 1, cloud_type.getMeta()));
+                list.add(new ItemStack(this, 1, cloud_type.getMeta()));
         	}
         }
     }

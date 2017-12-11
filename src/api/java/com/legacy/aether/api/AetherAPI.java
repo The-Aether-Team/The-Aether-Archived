@@ -5,8 +5,9 @@ import java.util.Random;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
-import net.minecraftforge.fml.common.registry.PersistentRegistryManager;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+import net.minecraftforge.registries.RegistryBuilder;
 
 import com.legacy.aether.api.accessories.AetherAccessory;
 import com.legacy.aether.api.enchantments.AetherEnchantment;
@@ -18,26 +19,30 @@ import com.legacy.aether.api.moa.AetherMoaType;
 public class AetherAPI
 {
 
-    private final FMLControlledNamespacedRegistry<AetherAccessory> iAccessoryRegistry;
-    private final FMLControlledNamespacedRegistry<AetherEnchantment> iEnchantmentRegistry;
-    private final FMLControlledNamespacedRegistry<AetherEnchantmentFuel> iEnchantmentFuelRegistry;
-    private final FMLControlledNamespacedRegistry<AetherFreezable> iFreezableRegistry;
-    private final FMLControlledNamespacedRegistry<AetherFreezableFuel> iFreezableFuelRegistry;
-    private final FMLControlledNamespacedRegistry<AetherMoaType> iMoaTypeRegistry;
+    private final IForgeRegistry<AetherAccessory> iAccessoryRegistry;
+    private final IForgeRegistry<AetherEnchantment> iEnchantmentRegistry;
+    private final IForgeRegistry<AetherEnchantmentFuel> iEnchantmentFuelRegistry;
+    private final IForgeRegistry<AetherFreezable> iFreezableRegistry;
+    private final IForgeRegistry<AetherFreezableFuel> iFreezableFuelRegistry;
+    private final IForgeRegistry<AetherMoaType> iMoaTypeRegistry;
 
     private static final int MAX_REGISTRY_ID = Short.MAX_VALUE - 1;
    
     private static final AetherAPI instance = new AetherAPI();
 
-    @SuppressWarnings("deprecation")
 	public AetherAPI()
     {
-    	this.iAccessoryRegistry = PersistentRegistryManager.createRegistry(new ResourceLocation("aetherAPI:accessories"), AetherAccessory.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
-    	this.iEnchantmentRegistry = PersistentRegistryManager.createRegistry(new ResourceLocation("aetherAPI:enchantments"), AetherEnchantment.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
-    	this.iEnchantmentFuelRegistry = PersistentRegistryManager.createRegistry(new ResourceLocation("aetherAPI:enchantment_fuels"), AetherEnchantmentFuel.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
-    	this.iFreezableRegistry = PersistentRegistryManager.createRegistry(new ResourceLocation("aetherAPI:freezables"), AetherFreezable.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
-    	this.iFreezableFuelRegistry = PersistentRegistryManager.createRegistry(new ResourceLocation("aetherAPI:freezable_fuels"), AetherFreezableFuel.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
-    	this.iMoaTypeRegistry = PersistentRegistryManager.createRegistry(new ResourceLocation("aetherAPI:moa_types"), AetherMoaType.class, null, 0, MAX_REGISTRY_ID, false, null, null, null, null);
+    	this.iAccessoryRegistry = makeRegistry(new ResourceLocation("aetherAPI:accessories"), AetherAccessory.class, 0, MAX_REGISTRY_ID).create();
+    	this.iEnchantmentRegistry = makeRegistry(new ResourceLocation("aetherAPI:enchantments"), AetherEnchantment.class, 0, MAX_REGISTRY_ID).create();
+    	this.iEnchantmentFuelRegistry = makeRegistry(new ResourceLocation("aetherAPI:enchantment_fuels"), AetherEnchantmentFuel.class, 0, MAX_REGISTRY_ID).create();
+    	this.iFreezableRegistry = makeRegistry(new ResourceLocation("aetherAPI:freezables"), AetherFreezable.class, 0, MAX_REGISTRY_ID).create();
+    	this.iFreezableFuelRegistry = makeRegistry(new ResourceLocation("aetherAPI:freezable_fuels"), AetherFreezableFuel.class, 0, MAX_REGISTRY_ID).create();
+    	this.iMoaTypeRegistry = makeRegistry(new ResourceLocation("aetherAPI:moa_types"), AetherMoaType.class, 0, MAX_REGISTRY_ID).create();
+    }
+
+    private static <T extends IForgeRegistryEntry<T>> RegistryBuilder<T> makeRegistry(ResourceLocation name, Class<T> type, int min, int max)
+    {
+        return new RegistryBuilder<T>().setName(name).setType(type).setIDRange(min, max).addCallback(new NamespacedWrapper.Factory<T>());
     }
 
     public AetherAccessory register(AetherAccessory type)
@@ -115,7 +120,7 @@ public class AetherAPI
 	{
     	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
 
-		return this.iAccessoryRegistry.getObject(registryName);
+		return this.iAccessoryRegistry.getValue(registryName);
 	}
 
 	public boolean hasEnchantment(ItemStack stack) 
@@ -129,7 +134,7 @@ public class AetherAPI
 	{
     	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
 
-		return this.iEnchantmentRegistry.getObject(registryName);
+		return this.iEnchantmentRegistry.getValue(registryName);
 	}
 
 	public boolean isEnchantmentFuel(ItemStack stack) 
@@ -143,7 +148,7 @@ public class AetherAPI
 	{
     	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
 
-		return this.iEnchantmentFuelRegistry.getObject(registryName);
+		return this.iEnchantmentFuelRegistry.getValue(registryName);
 	}
 
 	public boolean hasFreezable(ItemStack stack) 
@@ -157,7 +162,7 @@ public class AetherAPI
 	{
     	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
 
-		return this.iFreezableRegistry.getObject(registryName);
+		return this.iFreezableRegistry.getValue(registryName);
 	}
 
 	public boolean isFreezableFuel(ItemStack stack) 
@@ -171,7 +176,7 @@ public class AetherAPI
 	{
     	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
 
-		return this.iFreezableFuelRegistry.getObject(registryName);
+		return this.iFreezableFuelRegistry.getValue(registryName);
 	}
 
     public List<AetherEnchantment> getEnchantmentValues()
@@ -186,17 +191,17 @@ public class AetherAPI
 
     public int getMoaTypeId(AetherMoaType type)
     {
-    	return this.iMoaTypeRegistry.getId(type);
+    	return this.iMoaTypeRegistry.getValues().indexOf(type);
     }
 
     public AetherMoaType getMoaType(int id)
     {
-    	return this.iMoaTypeRegistry.getObjectById(id);
+    	return this.iMoaTypeRegistry.getValues().get(id);
     }
 
     public AetherMoaType getRandomMoaType()
     {
-    	return this.iMoaTypeRegistry.getRandomObject(new Random());
+    	return this.iMoaTypeRegistry.getValues().get(new Random().nextInt(this.getMoaTypeSize()));
     }
 
     public int getMoaTypeSize()

@@ -45,7 +45,7 @@ public class DoubleDropHelper
 
         ItemSkyrootTool skyrootTool = (ItemSkyrootTool) stack.getItem();
 
-        if (skyrootTool.getStrVsBlock(stack, state) == skyrootTool.getEffectiveSpeed())
+        if (skyrootTool.getDestroySpeed(stack, state) == skyrootTool.getEffectiveSpeed())
         {
             for (int i = 0; i < size; ++i)
             {

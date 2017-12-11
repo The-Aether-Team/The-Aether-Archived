@@ -178,7 +178,7 @@ public class EntityWhirlwind extends EntityAetherAnimal
             double d9 = (float)entity.posX;
             double d11 = (float)entity.posY - entity.getYOffset() * 0.6F;
             double d13 = (float)entity.posZ;
-            double d15 = this.getDistanceToEntity(entity);
+            double d15 = this.getDistance(entity);
             double d17 = d11 - this.posY;
 
             if(d15 <= 1.5D + d17)
@@ -445,7 +445,7 @@ public class EntityWhirlwind extends EntityAetherAnimal
     @Override
     public boolean isOnLadder()
     {
-        return isCollidedHorizontally;
+        return collidedHorizontally;
     }
 
 	@Override

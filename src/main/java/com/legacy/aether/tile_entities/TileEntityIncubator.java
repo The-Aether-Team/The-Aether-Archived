@@ -18,7 +18,6 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.items.ItemMoaEgg;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.registry.achievements.AchievementsAether;
 import com.legacy.aether.tile_entities.util.AetherTileEntity;
 
 public class TileEntityIncubator extends AetherTileEntity
@@ -204,7 +203,7 @@ public class TileEntityIncubator extends AetherTileEntity
 
 					if (this.owner != null)
 					{
-						this.owner.addStat(AchievementsAether.incubator);
+						//this.owner.addStat(AchievementsAether.incubator);
 					}
 				}
 

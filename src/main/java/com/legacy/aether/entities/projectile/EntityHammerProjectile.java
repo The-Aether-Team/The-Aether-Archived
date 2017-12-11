@@ -70,7 +70,7 @@ public class EntityHammerProjectile extends EntityThrowable
         vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
         Entity entity = null;
-        List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expandXyz(8.0D));
+        List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(this.motionX, this.motionY, this.motionZ).grow(8.0D));
         double d0 = 0.0D;
         boolean flag = false;
 
@@ -92,7 +92,7 @@ public class EntityHammerProjectile extends EntityThrowable
                 else
                 {
                     flag = false;
-                    AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expandXyz(3.0D);
+                    AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().grow(3.0D);
                     RayTraceResult raytraceresult1 = axisalignedbb.calculateIntercept(vec3d, vec3d1);
 
                     if (raytraceresult1 != null)
@@ -130,7 +130,7 @@ public class EntityHammerProjectile extends EntityThrowable
         {
             if (raytraceresult.typeOfHit == RayTraceResult.Type.ENTITY && raytraceresult.entityHit != this.getThrower())
             {
-                if(!net.minecraftforge.common.ForgeHooks.onThrowableImpact(this, raytraceresult))
+               if (!net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult))
                 this.onRangedImpact(raytraceresult);
             }
         }

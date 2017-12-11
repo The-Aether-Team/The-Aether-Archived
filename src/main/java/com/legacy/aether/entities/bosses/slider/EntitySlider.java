@@ -40,7 +40,6 @@ import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.tools.ItemAetherTool;
 import com.legacy.aether.items.util.EnumAetherToolType;
 import com.legacy.aether.player.PlayerAether;
-import com.legacy.aether.registry.achievements.AchievementsAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntitySlider extends EntityFlying 
@@ -96,9 +95,9 @@ public class EntitySlider extends EntityFlying
         return SoundEvents.AMBIENT_CAVE;
     }
 
-    @Override
-    protected SoundEvent getHurtSound()
-    {
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source)
+	{
         return SoundEvents.BLOCK_STONE_STEP;
     }
 
@@ -172,7 +171,7 @@ public class EntitySlider extends EntityFlying
 
 			if(this.isMoving) 
 			{
-				if(this.isCollided) 
+				if(this.collided) 
 				{
 					double x, y, z;
 					x = posX - 0.5D;
@@ -480,12 +479,12 @@ public class EntitySlider extends EntityFlying
 	@Override
 	public boolean attackEntityFrom(DamageSource ds, float var2)
 	{
-		if(ds.getEntity() == null || !(ds.getEntity() instanceof EntityPlayer))
+		if(ds.getImmediateSource() == null || !(ds.getImmediateSource() instanceof EntityPlayer))
 		{
 			return false;
 		}
 
-		EntityPlayer player = (EntityPlayer)ds.getEntity();
+		EntityPlayer player = (EntityPlayer)ds.getImmediateSource();
 		ItemStack stack = player.inventory.getCurrentItem();
 
 		if (stack == null || stack.getItem() == null)
@@ -536,7 +535,7 @@ public class EntitySlider extends EntityFlying
 				this.world.setBlockState(new BlockPos(dungeonX + 7, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
 				this.world.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
 				PlayerAether.get(player).setCurrentBoss(null);
-				player.addStat(AchievementsAether.defeat_bronze);
+				//player.addStat(AchievementsAether.defeat_bronze);
 				this.world.playSound(null, posX, posY, posZ, SoundsAether.slider_death, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.isDead = true;
 			}

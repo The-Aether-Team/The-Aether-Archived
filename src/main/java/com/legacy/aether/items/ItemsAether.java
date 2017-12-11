@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.api.accessories.AccessoryType;
@@ -110,6 +110,8 @@ public class ItemsAether
 	public static Item repulsion_shield;
 
 	public static Item lore_book;
+
+	public static IForgeRegistry<Item> itemRegistry;
 
 	public static void initialization()
 	{
@@ -259,7 +261,7 @@ public class ItemsAether
 	public static Item register(String name, Item item)
 	{
 		item.setUnlocalizedName(name);
-		GameRegistry.register(item.setRegistryName(Aether.locate(name)));
+		itemRegistry.register(item.setRegistryName(Aether.locate(name)));
 
 		return item;
 	}

@@ -206,7 +206,7 @@ public class EntitySentry extends EntityLiving implements IMob
     }
 
     @Override
-    protected SoundEvent getHurtSound()
+    protected SoundEvent getHurtSound(DamageSource source)
     {
         return SoundEvents.ENTITY_SLIME_JUMP;
     }

@@ -34,7 +34,7 @@ public class ItemGravititeTool extends ItemAetherTool
     {
 		ItemStack heldItem = player.getHeldItem(hand);
 
-    	if ((this.getStrVsBlock(heldItem, world.getBlockState(pos)) == this.efficiencyOnProperMaterial || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isAirBlock(pos.up()))
+    	if ((this.getDestroySpeed(heldItem, world.getBlockState(pos)) == this.efficiency || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isAirBlock(pos.up()))
     	{
         	if (world.getTileEntity(pos) != null || world.getBlockState(pos).getBlock().getBlockHardness(world.getBlockState(pos), world, pos) == -1.0F)
         	{

@@ -42,7 +42,7 @@ public class TNTPresentRenderer extends Render<EntityTNTPresent>
         this.bindEntityTexture(entity);
         GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(-0.5F, -0.5F, 0.5F);
-        blockrendererdispatcher.renderBlockBrightness(BlocksAether.present.getDefaultState(), entity.getBrightness(partialTicks));
+        blockrendererdispatcher.renderBlockBrightness(BlocksAether.present.getDefaultState(), entity.getBrightness());
         GlStateManager.translate(0.0F, 0.0F, 1.0F);
 
         if (this.renderOutlines)

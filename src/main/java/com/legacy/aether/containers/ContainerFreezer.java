@@ -50,9 +50,10 @@ public class ContainerFreezer extends Container
 	public void addListener(IContainerListener par1ICrafting)
 	{
 		super.addListener(par1ICrafting);
-		par1ICrafting.sendProgressBarUpdate(this, 0, this.freezer.frozenTimeRemaining);
-		par1ICrafting.sendProgressBarUpdate(this, 1, this.freezer.freezeProgress);
-		par1ICrafting.sendProgressBarUpdate(this, 2, this.freezer.freezeTime);
+
+		par1ICrafting.sendWindowProperty(this, 0, this.freezer.frozenTimeRemaining);
+		par1ICrafting.sendWindowProperty(this, 1, this.freezer.freezeProgress);
+		par1ICrafting.sendWindowProperty(this, 2, this.freezer.freezeTime);
 	}
 
 	@Override
@@ -66,17 +67,17 @@ public class ContainerFreezer extends Container
 
 			if (this.lastCookTime != this.freezer.frozenTimeRemaining)
 			{
-				icrafting.sendProgressBarUpdate(this, 0, this.freezer.frozenTimeRemaining);
+				icrafting.sendWindowProperty(this, 0, this.freezer.frozenTimeRemaining);
 			}
 
 			if (this.lastBurnTime != this.freezer.freezeProgress)
 			{
-				icrafting.sendProgressBarUpdate(this, 1, this.freezer.freezeProgress);
+				icrafting.sendWindowProperty(this, 1, this.freezer.freezeProgress);
 			}
 
 			if (this.lastItemBurnTime != this.freezer.freezeTime)
 			{
-				icrafting.sendProgressBarUpdate(this, 2, this.freezer.freezeTime);
+				icrafting.sendWindowProperty(this, 2, this.freezer.freezeTime);
 			}
 		}
 

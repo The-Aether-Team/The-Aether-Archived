@@ -66,8 +66,8 @@ public class GuiAccessories extends GuiContainer
 
 	private void setButtonPosition(GuiButton button, int xPosition, int yPosition)
 	{
-		button.xPosition = xPosition;
-		button.yPosition = yPosition;
+		button.x = xPosition;
+		button.y = yPosition;
 	}
 
 	@Override
@@ -86,14 +86,22 @@ public class GuiAccessories extends GuiContainer
     }
 
 	@Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        this.drawDefaultBackground();
+    	super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
+	@Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-        this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 115, 8, 4210752);
+        this.fontRenderer.drawString(I18n.format("container.crafting", new Object[0]), 115, 8, 4210752);
     }
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-	{
+	{;
 		GL11.glColor3d(1.0D, 1.0D, 1.0D);
 
 		this.mc.renderEngine.bindTexture(ACCESSORIES);

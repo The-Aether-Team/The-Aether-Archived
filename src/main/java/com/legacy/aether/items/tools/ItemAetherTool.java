@@ -35,19 +35,19 @@ public abstract class ItemAetherTool extends ItemTool
         if (toolType == EnumAetherToolType.PICKAXE)
         {
         	this.toolClass = "pickaxe";
-        	this.damageVsEntity = 1.0F + toolMaterial.getDamageVsEntity();
+        	this.attackDamage = 1.0F + toolMaterial.getAttackDamage();
         	this.attackSpeed = -2.8F;
         }
         else if (toolType == EnumAetherToolType.AXE)
         {
         	this.toolClass = "axe";
-            this.damageVsEntity = ATTACK_DAMAGES[toolMaterial.ordinal()] + toolMaterial.getDamageVsEntity();
+            this.attackDamage = ATTACK_DAMAGES[toolMaterial.ordinal()] + toolMaterial.getAttackDamage();
             this.attackSpeed = ATTACK_SPEEDS[toolMaterial.ordinal()];
         }
         else if (toolType == EnumAetherToolType.SHOVEL)
         {
         	this.toolClass = "shovel";
-        	this.damageVsEntity = 1.5F + toolMaterial.getDamageVsEntity();
+        	this.attackDamage = 1.5F + toolMaterial.getAttackDamage();
         	this.attackSpeed = -3.0F;
         }
 	}
@@ -70,15 +70,15 @@ public abstract class ItemAetherTool extends ItemTool
 	}
 
 	@Override
-	public float getStrVsBlock(ItemStack stack, IBlockState block)
-	{
+    public float getDestroySpeed(ItemStack stack, IBlockState block)
+    {
         for (String type : getToolClasses(stack))
         {
             if (block.getBlock().isToolEffective(type, block))
-                return efficiencyOnProperMaterial;
+                return efficiency;
         }
 
-		return this.toolType.getStrVsBlock(stack, block) == 4.0F ? this.efficiencyOnProperMaterial : 1.0F;
+		return this.toolType.getStrVsBlock(stack, block) == 4.0F ? this.efficiency : 1.0F;
 	}
 
     @Override
@@ -89,7 +89,7 @@ public abstract class ItemAetherTool extends ItemTool
 
     public float getEffectiveSpeed()
     {
-    	return this.efficiencyOnProperMaterial;
+    	return this.efficiency;
     }
 
 }

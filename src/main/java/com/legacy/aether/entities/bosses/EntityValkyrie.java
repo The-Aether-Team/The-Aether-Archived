@@ -252,7 +252,7 @@ public class EntityValkyrie extends EntityMob
     	this.lastMotionY = motionY;
         super.onUpdate();
         
-        if (!this.onGround && this.getAttackTarget() != null && this.lastMotionY >= 0.0D && this.motionY < 0.0D && getDistanceToEntity(this.getAttackTarget()) <= 16F && canEntityBeSeen(this.getAttackTarget())) 
+        if (!this.onGround && this.getAttackTarget() != null && this.lastMotionY >= 0.0D && this.motionY < 0.0D && getDistance(this.getAttackTarget()) <= 16F && canEntityBeSeen(this.getAttackTarget())) 
         {
             double a = this.getAttackTarget().posX - posX;
             double b = this.getAttackTarget().posZ - posZ;
@@ -363,9 +363,9 @@ public class EntityValkyrie extends EntityMob
 
     public boolean attackEntityFrom(DamageSource ds, float i) 
     {
-        if (ds.getEntity() instanceof EntityPlayer && world.getDifficulty() != EnumDifficulty.PEACEFUL)
+        if (ds.getImmediateSource() instanceof EntityPlayer && world.getDifficulty() != EnumDifficulty.PEACEFUL)
         {
-            EntityPlayer player = (EntityPlayer)ds.getEntity();
+            EntityPlayer player = (EntityPlayer)ds.getImmediateSource();
 
             if (this.getAttackTarget() == null)
             {
@@ -391,9 +391,9 @@ public class EntityValkyrie extends EntityMob
             	this.teleTimer -= 10;
             }
 
-            if (ds.getEntity() instanceof EntityLivingBase)
+            if (ds.getImmediateSource() instanceof EntityLivingBase)
             {
-                becomeAngryAt((EntityLivingBase) ds.getEntity());
+                becomeAngryAt((EntityLivingBase) ds.getImmediateSource());
             }
         } 
         else

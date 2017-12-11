@@ -49,7 +49,7 @@ public class GuiDialogue extends GuiScreen
         {
             option.setDialogueId(lineNumber);
             option.setXPosition((this.width / 2) - (option.getWidth() / 2));
-            option.setYPosition((this.height / 2) + this.fontRendererObj.listFormattedStringToWidth(this.dialogue, 300).size() * 12 + 12 * lineNumber);
+            option.setYPosition((this.height / 2) + this.fontRenderer.listFormattedStringToWidth(this.dialogue, 300).size() * 12 + 12 * lineNumber);
 
             lineNumber++;
         }
@@ -86,12 +86,12 @@ public class GuiDialogue extends GuiScreen
 
         int optionWidth = 0;
 
-        for (String theDialogue : this.fontRendererObj.listFormattedStringToWidth(this.dialogue, 300))
+        for (String theDialogue : this.fontRenderer.listFormattedStringToWidth(this.dialogue, 300))
         {
-            int stringWidth = this.fontRendererObj.getStringWidth(theDialogue);
+            int stringWidth = this.fontRenderer.getStringWidth(theDialogue);
 
         	this.drawGradientRect(this.width / 2 - stringWidth / 2 - 2, this.height / 2 + optionWidth * 12 - 2, this.width / 2 + stringWidth / 2 + 2, this.height / 2 + optionWidth * 10 + 10, 0x66000000, 0x66000000);
-        	this.drawString(this.fontRendererObj, theDialogue, this.width / 2 - stringWidth / 2, this.height / 2 + optionWidth * 10, 0xffffff);
+        	this.drawString(this.fontRenderer, theDialogue, this.width / 2 - stringWidth / 2, this.height / 2 + optionWidth * 10, 0xffffff);
         	++optionWidth;
         }
 

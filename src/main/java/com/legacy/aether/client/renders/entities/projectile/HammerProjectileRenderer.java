@@ -1,8 +1,8 @@
 package com.legacy.aether.client.renders.entities.projectile;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -29,7 +29,7 @@ public class HammerProjectileRenderer extends Render<EntityHammerProjectile>
         this.bindTexture(this.getEntityTexture(notchwave));
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertex = tessellator.getBuffer();
+        BufferBuilder vertex = tessellator.getBuffer();
 
         GlStateManager.rotate(180F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);

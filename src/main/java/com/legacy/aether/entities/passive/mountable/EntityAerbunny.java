@@ -186,7 +186,7 @@ public class EntityAerbunny extends EntityAetherAnimal
                 }
             }
 
-            this.getNavigator().clearPathEntity();
+            this.getNavigator().clearPath();
 
             this.setRotation(player.rotationYaw, player.rotationPitch);
 
@@ -266,7 +266,7 @@ public class EntityAerbunny extends EntityAetherAnimal
     @Override
     public boolean attackEntityFrom(DamageSource source, float damage)
     {
-        return source.getEntity() == this.getRidingEntity() ? false : super.attackEntityFrom(source, damage);
+        return source.getImmediateSource() == this.getRidingEntity() ? false : super.attackEntityFrom(source, damage);
     }
 
     @Override
@@ -276,7 +276,7 @@ public class EntityAerbunny extends EntityAetherAnimal
     }
 
     @Override
-    protected SoundEvent getHurtSound()
+    protected SoundEvent getHurtSound(DamageSource source)
     {
         return SoundsAether.aerbunny_hurt;
     }

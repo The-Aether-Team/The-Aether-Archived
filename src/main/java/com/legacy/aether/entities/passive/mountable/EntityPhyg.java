@@ -14,13 +14,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.util.EntitySaddleMount;
-import com.legacy.aether.registry.achievements.AchievementsAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityPhyg extends EntitySaddleMount
@@ -95,11 +95,6 @@ public class EntityPhyg extends EntitySaddleMount
 			this.aimingForFold = 1.0F;
 		}
 
-		if (!this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayer)
-		{
-			((EntityPlayer)this.getPassengers().get(0)).addStat(AchievementsAether.flying_pig);
-		}
-
 		this.ticks++;
 
 		this.wingAngle = this.wingFold * (float) Math.sin(this.ticks / 31.83098862F);
@@ -115,7 +110,7 @@ public class EntityPhyg extends EntitySaddleMount
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
+	protected SoundEvent getHurtSound(DamageSource source)
 	{
 		return SoundsAether.phyg_hurt;
 	}

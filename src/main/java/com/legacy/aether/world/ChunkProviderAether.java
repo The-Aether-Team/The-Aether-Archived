@@ -14,7 +14,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -266,7 +266,7 @@ public class ChunkProviderAether implements  IChunkGenerator
     }
 
 	@Override
-	public Chunk provideChunk(int x, int z)
+	public Chunk generateChunk(int x, int z) 
 	{
 		ChunkPrimer chunkPrimer = new ChunkPrimer();
 
@@ -300,7 +300,13 @@ public class ChunkProviderAether implements  IChunkGenerator
 	}
 
 	@Override
-	public BlockPos getStrongholdGen(World worldIn, String structureName, BlockPos position, boolean p_180513_4_) 
+	public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos) 
+	{
+		return false;
+	}
+
+	@Override
+	public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) 
 	{
 		return null;
 	}

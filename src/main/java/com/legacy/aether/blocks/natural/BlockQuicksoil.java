@@ -27,8 +27,8 @@ public class BlockQuicksoil extends Block
 	{
 		super(Material.SAND);
 
-		this.slipperiness = 1.1F;
 		this.setHardness(0.5F);
+		this.setDefaultSlipperiness(1.1F);
 		this.setSoundType(SoundType.SAND);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE));

@@ -30,6 +30,12 @@ public class DataSerializerRegistry
         {
             return new DataParameter<IBlockState>(id, this);
         }
+
+		@Override
+		public IBlockState copyValue(IBlockState value)
+		{
+			return null;
+		}
     };
 
     public static final DataSerializer<UUID> UUID_SERIALIZER = new DataSerializer<UUID>()
@@ -50,6 +56,12 @@ public class DataSerializerRegistry
 		public DataParameter<UUID> createKey(int id)
 		{
 			return new DataParameter<UUID>(id, this);
+		}
+
+		@Override
+		public UUID copyValue(UUID value) 
+		{
+			return null;
 		}
     };
 

@@ -2,10 +2,12 @@ package com.legacy.aether.client.renders.items;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.client.renders.items.definitions.NotchHammerDefinition;
@@ -21,7 +23,8 @@ import com.legacy.aether.items.util.EnumSkyrootBucketType;
 public class ItemRendering
 {
 
-	public static void initialize()
+	@SubscribeEvent
+	public void onModelRegisterEvent(ModelRegistryEvent event)
 	{
 		register(ItemsAether.zanite_gemstone, "zanite_gemstone");
 		register(ItemsAether.ambrosium_shard, "ambrosium_shard");
@@ -47,76 +50,34 @@ public class ItemRendering
 		register(ItemsAether.valkyrie_shovel, "valkyrie_shovel");
 
 		register(ItemsAether.zanite_helmet, "zanite_helmet");
-		registerColor(ItemsAether.zanite_helmet);
-
 		register(ItemsAether.zanite_chestplate, "zanite_chestplate");
-		registerColor(ItemsAether.zanite_chestplate);
-
 		register(ItemsAether.zanite_leggings, "zanite_leggings");
-		registerColor(ItemsAether.zanite_leggings);
-
 		register(ItemsAether.zanite_boots, "zanite_boots");
-		registerColor(ItemsAether.zanite_boots);
 
 		register(ItemsAether.gravitite_helmet, "gravitite_helmet");
-		registerColor(ItemsAether.gravitite_helmet);
-
 		register(ItemsAether.gravitite_chestplate, "gravitite_chestplate");
-		registerColor(ItemsAether.gravitite_chestplate);
-
 		register(ItemsAether.gravitite_leggings, "gravitite_leggings");
-		registerColor(ItemsAether.gravitite_leggings);
-
 		register(ItemsAether.gravitite_boots, "gravitite_boots");
-		registerColor(ItemsAether.gravitite_boots);
 
 		register(ItemsAether.neptune_helmet, "neptune_helmet");
-		registerColor(ItemsAether.neptune_helmet);
-
 		register(ItemsAether.neptune_chestplate, "neptune_chestplate");
-		registerColor(ItemsAether.neptune_chestplate);
-
 		register(ItemsAether.neptune_leggings, "neptune_leggings");
-		registerColor(ItemsAether.neptune_leggings);
-
 		register(ItemsAether.neptune_boots, "neptune_boots");
-		registerColor(ItemsAether.neptune_boots);
 
 		register(ItemsAether.phoenix_helmet, "phoenix_helmet");
-		registerColor(ItemsAether.phoenix_helmet);
-
 		register(ItemsAether.phoenix_chestplate, "phoenix_chestplate");
-		registerColor(ItemsAether.phoenix_chestplate);
-
 		register(ItemsAether.phoenix_leggings, "phoenix_leggings");
-		registerColor(ItemsAether.phoenix_leggings);
-
 		register(ItemsAether.phoenix_boots, "phoenix_boots");
-		registerColor(ItemsAether.phoenix_boots);
 
 		register(ItemsAether.valkyrie_helmet, "valkyrie_helmet");
-		registerColor(ItemsAether.valkyrie_helmet);
-
 		register(ItemsAether.valkyrie_chestplate, "valkyrie_chestplate");
-		registerColor(ItemsAether.valkyrie_chestplate);
-
 		register(ItemsAether.valkyrie_leggings, "valkyrie_leggings");
-		registerColor(ItemsAether.valkyrie_leggings);
-
 		register(ItemsAether.valkyrie_boots, "valkyrie_boots");
-		registerColor(ItemsAether.valkyrie_boots);
 
 		register(ItemsAether.obsidian_helmet, "obsidian_helmet");
-		registerColor(ItemsAether.obsidian_helmet);
-
 		register(ItemsAether.obsidian_chestplate, "obsidian_chestplate");
-		registerColor(ItemsAether.obsidian_chestplate);
-
 		register(ItemsAether.obsidian_leggings, "obsidian_leggings");
-		registerColor(ItemsAether.obsidian_leggings);
-
 		register(ItemsAether.obsidian_boots, "obsidian_boots");
-		registerColor(ItemsAether.obsidian_boots);
 
 		register(ItemsAether.blue_berry, "blue_berry");
 		register(ItemsAether.white_apple, "white_apple");
@@ -131,76 +92,32 @@ public class ItemRendering
 		register(ItemsAether.gravitite_sword, "gravitite_sword");
 
 		register(ItemsAether.leather_gloves, "leather_gloves");
-		registerColor(ItemsAether.leather_gloves);
-
 		register(ItemsAether.iron_gloves, "iron_gloves");
-		registerColor(ItemsAether.iron_gloves);
-
 		register(ItemsAether.golden_gloves, "golden_gloves");
-		registerColor(ItemsAether.golden_gloves);
-
 		register(ItemsAether.chain_gloves, "chain_gloves");
-		registerColor(ItemsAether.chain_gloves);
-
 		register(ItemsAether.diamond_gloves, "diamond_gloves");
-		registerColor(ItemsAether.diamond_gloves);
-
 		register(ItemsAether.zanite_gloves, "zanite_gloves");
-		registerColor(ItemsAether.zanite_gloves);
-
 		register(ItemsAether.gravitite_gloves, "gravitite_gloves");
-		registerColor(ItemsAether.gravitite_gloves);
-
 		register(ItemsAether.neptune_gloves, "neptune_gloves");
-		registerColor(ItemsAether.neptune_gloves);
-
 		register(ItemsAether.phoenix_gloves, "phoenix_gloves");
-		registerColor(ItemsAether.phoenix_gloves);
-
 		register(ItemsAether.obsidian_gloves, "obsidian_gloves");
-		registerColor(ItemsAether.obsidian_gloves);
-
 		register(ItemsAether.valkyrie_gloves, "valkyrie_gloves");
-		registerColor(ItemsAether.valkyrie_gloves);
 
 		register(ItemsAether.iron_ring, "iron_ring");
-		registerColor(ItemsAether.iron_ring);
-
 		register(ItemsAether.golden_ring, "golden_ring");
-		registerColor(ItemsAether.golden_ring);
-
 		register(ItemsAether.zanite_ring, "zanite_ring");
-		registerColor(ItemsAether.zanite_ring);
-
 		register(ItemsAether.ice_ring, "ice_ring");
-		registerColor(ItemsAether.ice_ring);
 
 		register(ItemsAether.iron_pendant, "iron_pendant");
-		registerColor(ItemsAether.iron_pendant);
-
 		register(ItemsAether.golden_pendant, "golden_pendant");
-		registerColor(ItemsAether.golden_pendant);
-
 		register(ItemsAether.zanite_pendant, "zanite_pendant");
-		registerColor(ItemsAether.zanite_pendant);
-
 		register(ItemsAether.ice_pendant, "ice_pendant");
-		registerColor(ItemsAether.ice_pendant);
 
 		register(ItemsAether.red_cape, "red_cape");
-		registerColor(ItemsAether.red_cape);
-
 		register(ItemsAether.blue_cape, "blue_cape");
-		registerColor(ItemsAether.blue_cape);
-
 		register(ItemsAether.yellow_cape, "yellow_cape");
-		registerColor(ItemsAether.yellow_cape);
-
 		register(ItemsAether.swet_cape, "swet_cape");
-
 		register(ItemsAether.white_cape, "white_cape");
-		registerColor(ItemsAether.white_cape);
-
 		register(ItemsAether.agility_cape, "agility_cape");
 		register(ItemsAether.invisibility_cape, "invisibility_cape");
 
@@ -258,8 +175,6 @@ public class ItemRendering
 			register(ItemsAether.skyroot_bucket, meta, name);
 		}
 
-		registerColor(ItemsAether.moa_egg);
-
 		for (int meta = 0; meta < EnumDartShooterType.values().length; ++meta)
 		{
 			register(ItemsAether.dart_shooter, meta, EnumDartShooterType.values()[meta].toString() + "_dart_shooter");
@@ -279,19 +194,71 @@ public class ItemRendering
 		registerMeta(ItemsAether.notch_hammer, Aether.locate("notch_hammer"), Aether.locate("hammer_projectile"));
 	}
 
+	public static void registerColors()
+	{
+		registerColor(ItemsAether.zanite_helmet);
+		registerColor(ItemsAether.zanite_chestplate);
+		registerColor(ItemsAether.zanite_leggings);
+		registerColor(ItemsAether.zanite_boots);
+		registerColor(ItemsAether.gravitite_helmet);
+		registerColor(ItemsAether.gravitite_chestplate);
+		registerColor(ItemsAether.gravitite_leggings);
+		registerColor(ItemsAether.gravitite_boots);
+		registerColor(ItemsAether.neptune_helmet);
+		registerColor(ItemsAether.neptune_chestplate);
+		registerColor(ItemsAether.neptune_leggings);
+		registerColor(ItemsAether.neptune_boots);
+		registerColor(ItemsAether.phoenix_helmet);
+		registerColor(ItemsAether.phoenix_chestplate);
+		registerColor(ItemsAether.phoenix_leggings);
+		registerColor(ItemsAether.phoenix_boots);
+		registerColor(ItemsAether.valkyrie_helmet);
+		registerColor(ItemsAether.valkyrie_chestplate);
+		registerColor(ItemsAether.valkyrie_leggings);
+		registerColor(ItemsAether.valkyrie_boots);
+		registerColor(ItemsAether.obsidian_helmet);
+		registerColor(ItemsAether.obsidian_chestplate);
+		registerColor(ItemsAether.obsidian_leggings);
+		registerColor(ItemsAether.obsidian_boots);
+		registerColor(ItemsAether.leather_gloves);
+		registerColor(ItemsAether.iron_gloves);
+		registerColor(ItemsAether.golden_gloves);
+		registerColor(ItemsAether.chain_gloves);
+		registerColor(ItemsAether.diamond_gloves);
+		registerColor(ItemsAether.zanite_gloves);
+		registerColor(ItemsAether.gravitite_gloves);
+		registerColor(ItemsAether.neptune_gloves);
+		registerColor(ItemsAether.phoenix_gloves);
+		registerColor(ItemsAether.obsidian_gloves);
+		registerColor(ItemsAether.valkyrie_gloves);
+		registerColor(ItemsAether.iron_ring);
+		registerColor(ItemsAether.golden_ring);
+		registerColor(ItemsAether.zanite_ring);
+		registerColor(ItemsAether.ice_ring);
+		registerColor(ItemsAether.iron_pendant);
+		registerColor(ItemsAether.golden_pendant);
+		registerColor(ItemsAether.zanite_pendant);
+		registerColor(ItemsAether.ice_pendant);
+		registerColor(ItemsAether.red_cape);
+		registerColor(ItemsAether.blue_cape);
+		registerColor(ItemsAether.yellow_cape);
+		registerColor(ItemsAether.white_cape);
+		registerColor(ItemsAether.moa_egg);
+	}
+
 	public static void register(Item item, int meta, String model)
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, meta, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
+		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
 	}
 
 	public static void register(Item item, String model)
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
+		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
 	}
 
 	public static void registerDefinition(Item item, ItemMeshDefinition definition)
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, definition);
+		ModelLoader.setCustomMeshDefinition(item, definition);
 	}
 
 	public static void registerColor(Item item)
@@ -301,7 +268,7 @@ public class ItemRendering
 
 	public static void registerMeta(Item item, ResourceLocation... model)
 	{
-		ModelBakery.registerItemVariants(item, model);
+		ModelLoader.registerItemVariants(item, model);
 	}
 
 }

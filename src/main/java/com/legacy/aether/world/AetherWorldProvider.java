@@ -5,7 +5,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -73,12 +73,6 @@ public class AetherWorldProvider extends WorldProvider
     }
 
 	@Override
-	public String getDepartMessage()
-	{
-		return "Descending from the Aether";
-	}
-
-	@Override
 	public Vec3d getFogColor(float f, float f1)
 	{
 		int i = 0x8080a0;
@@ -112,12 +106,6 @@ public class AetherWorldProvider extends WorldProvider
 	public double getVoidFogYFactor()
 	{
 		return 100;
-	}
-
-	@Override
-	public String getWelcomeMessage()
-	{
-		return "Ascending to the Aether";
 	}
 
 	@Override

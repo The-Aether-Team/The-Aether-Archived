@@ -26,7 +26,7 @@ public abstract class EntitySaddleMount extends EntityMountable
 	@Override
 	public boolean attackEntityFrom(DamageSource damagesource, float i)
 	{
-		if ((damagesource.getEntity() instanceof EntityPlayer) && (!this.getPassengers().isEmpty()  && this.getPassengers().get(0) == damagesource.getEntity()))
+		if ((damagesource.getImmediateSource() instanceof EntityPlayer) && (!this.getPassengers().isEmpty()  && this.getPassengers().get(0) == damagesource.getImmediateSource()))
 		{
 			return false;
 		}

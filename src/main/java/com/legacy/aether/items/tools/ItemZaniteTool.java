@@ -23,7 +23,7 @@ public class ItemZaniteTool extends ItemAetherTool
 	}
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state)
+    public float getDestroySpeed(ItemStack stack, IBlockState state)
     {
 		return this.calculateIncrease(stack, this.toolType.getStrVsBlock(stack, state));
     }

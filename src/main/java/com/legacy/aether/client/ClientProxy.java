@@ -25,23 +25,29 @@ public class ClientProxy extends ServerProxy
 	@Override
 	public void preInitialization()
 	{
+		registerEvent(new BlockRendering());
+		registerEvent(new ItemRendering());
 		AetherEntityRenderingRegistry.initialize();
 	}
 
 	@Override
 	public void initialization()
 	{
-		Minecraft.getMinecraft().entityRenderer = new AetherEntityRenderer(Minecraft.getMinecraft(), Minecraft.getMinecraft().getResourceManager());
+		BlockRendering.registerColors();
+		ItemRendering.registerColors();
 
 		AetherEntityRenderingRegistry.initializePlayerLayers();
-
-		BlockRendering.initialize();
-		ItemRendering.initialize();
 
 		MinecraftForge.EVENT_BUS.register(new GuiAetherInGame(Minecraft.getMinecraft()));
 		MinecraftForge.EVENT_BUS.register(new AetherClientEvents());
 
 		registerEvent(new AetherMusicHandler());
+	}
+
+	@Override
+	public void postInitialization() 
+	{
+
 	}
 
 	@Override

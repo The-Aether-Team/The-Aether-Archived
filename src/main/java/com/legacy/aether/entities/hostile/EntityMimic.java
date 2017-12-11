@@ -99,14 +99,14 @@ public class EntityMimic extends EntityMob
 	@Override
 	public boolean attackEntityFrom(DamageSource ds, float var2)
 	{
-		if (ds.getEntity() instanceof EntityMimic)
+		if (ds.getImmediateSource() instanceof EntityMimic)
 		{
 			return false;
 		}
 
-		if (ds.getEntity() instanceof EntityLivingBase)
+		if (ds.getImmediateSource() instanceof EntityLivingBase)
 		{
-			this.setAttackTarget((EntityLivingBase) ds.getEntity());
+			this.setAttackTarget((EntityLivingBase) ds.getImmediateSource());
 		}
 		return super.attackEntityFrom(ds, var2);
 	}

@@ -13,6 +13,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -81,7 +82,7 @@ public class EntityCockatrice extends EntityMob
 		{
 			EntityPlayer player = (EntityPlayer) this.getAttackTarget();
 
-			if (player.capabilities.isCreativeMode || this.getHealth() <= 0.0F || this.isDead || this.getAttackTarget().isDead || this.getAttackTarget().getDistanceToEntity(this) > 12D)
+			if (player.capabilities.isCreativeMode || this.getHealth() <= 0.0F || this.isDead || this.getAttackTarget().isDead || this.getAttackTarget().getDistance(this) > 12D)
 			{
 				this.setAttackTarget(null);
 				this.shootTime = 0;
@@ -129,7 +130,7 @@ public class EntityCockatrice extends EntityMob
 		d1 = d1 * d3;
 		d2 = d2 * d3;
 		EntityPoisonNeedle entityarrow = new EntityPoisonNeedle(this.world, this);
-		entityarrow.setAim(this, this.rotationPitch, this.rotationYaw, 0.0F, 1.0F, 1.0F);
+		entityarrow.shoot(this, this.rotationPitch, this.rotationYaw, 0.0F, 1.0F, 1.0F);
 		entityarrow.posY = this.posY + 1.55D;
         this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		this.world.spawnEntity(entityarrow);
@@ -200,7 +201,7 @@ public class EntityCockatrice extends EntityMob
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
+	protected SoundEvent getHurtSound(DamageSource source)
 	{
 		return SoundsAether.moa_say;
 	}

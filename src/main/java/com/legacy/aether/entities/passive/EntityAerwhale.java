@@ -5,6 +5,7 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -181,10 +182,10 @@ public class EntityAerwhale extends EntityFlying implements IMob
 
         if (this.posY < -64.0D)
         {
-            this.kill();
+        	this.setDead();
         }
 
-        this.world.theProfiler.startSection("ai");
+        this.world.profiler.startSection("ai");
 
         if (this.isMovementBlocked())
         {
@@ -194,19 +195,18 @@ public class EntityAerwhale extends EntityFlying implements IMob
             this.randomYawVelocity = 0.0F;
         }
 
-        this.world.theProfiler.endSection();
+        this.world.profiler.endSection();
 
-        this.world.theProfiler.startSection("push");
+        this.world.profiler.startSection("push");
         this.collideWithNearbyEntities();
-        this.world.theProfiler.endSection();
+        this.world.profiler.endSection();
 
-        ++this.entityAge;
-        this.world.theProfiler.startSection("checkDespawn");
+        this.world.profiler.startSection("checkDespawn");
         this.despawnEntity();
-        this.world.theProfiler.endSection();
-        this.world.theProfiler.startSection("goalSelector");
+        this.world.profiler.endSection();
+        this.world.profiler.startSection("goalSelector");
         this.tasks.onUpdateTasks();
-        this.world.theProfiler.endSection();
+        this.world.profiler.endSection();
 
         super.onEntityUpdate();
 
@@ -272,7 +272,7 @@ public class EntityAerwhale extends EntityFlying implements IMob
     }
 
     @Override
-    protected SoundEvent getHurtSound()
+    protected SoundEvent getHurtSound(DamageSource source)
     {
         return SoundsAether.aerwhale_death;
     }

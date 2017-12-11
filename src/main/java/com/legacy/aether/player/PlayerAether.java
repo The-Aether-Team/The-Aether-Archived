@@ -40,7 +40,6 @@ import com.legacy.aether.player.abilities.AbilityRepulsion;
 import com.legacy.aether.player.capability.PlayerAetherManager;
 import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.DonatorMoaSkin;
-import com.legacy.aether.registry.achievements.AchievementsAether;
 import com.legacy.aether.world.TeleporterAether;
 
 public class PlayerAether
@@ -92,7 +91,7 @@ public class PlayerAether
 
 		this.donatorMoaSkin = new DonatorMoaSkin();
 		this.poison = new AetherPoisonMovement(player);
-		this.accessories = new InventoryAccessories(this);
+		this.accessories = new InventoryAccessories(player);
 
 		this.abilities = new Ability [] {new AbilityArmor(this), new AbilityAccessories(this), new AbilityFlight(this), new AbilityRepulsion(this)};
 	}
@@ -175,8 +174,11 @@ public class PlayerAether
 				this.teleportPlayer(false);
 			}
 
-			this.thePlayer.addStat(AchievementsAether.enter_aether);
+			//this.thePlayer
+			//this.thePlayer.addStat(AchievementsAether.enter_aether);
 		}
+
+		this.updatePlayerReach();
 
 		if (this.thePlayer.world.isRemote)
 		{
@@ -232,8 +234,6 @@ public class PlayerAether
                     --this.portalCooldown;
                 }
 			}
-
-			((EntityPlayerMP) this.thePlayer).interactionManager.setBlockReachDistance(this.getReach());
 		}
 	}
 
@@ -320,16 +320,14 @@ public class PlayerAether
 	/*
 	 * Gets the player reach at the current point in time
 	 */
-	public double getReach()
+	public void updatePlayerReach()
 	{
 		ItemStack stack = this.thePlayer.inventory.getCurrentItem();
-		
-		if (stack != null && this.extendedReachItems.contains(stack.getItem()))
-		{
-			return 10.0D;
-		}
 
-		return this.thePlayer.capabilities.isCreativeMode ? 5.0F : 4.5F;
+		if (stack != null && this.extendedReachItems.contains(stack.getItem()) && this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue() != 10.0D)
+		{
+	        this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).setBaseValue(10.0D);
+		}
 	}
 
 	/*
@@ -453,7 +451,7 @@ public class PlayerAether
 
 			int transferToID = player.dimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
 
-			scm.transferPlayerToDimension(player, transferToID, new TeleporterAether(shouldSpawnPortal, FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(transferToID)));
+			scm.transferPlayerToDimension(player, transferToID, new TeleporterAether(shouldSpawnPortal, FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(transferToID)));
 		}
 	}
 

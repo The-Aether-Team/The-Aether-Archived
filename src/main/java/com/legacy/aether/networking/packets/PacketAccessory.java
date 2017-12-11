@@ -13,8 +13,6 @@ public class PacketAccessory extends AetherPacket<PacketAccessory>
 
 	private int entityID;
 
-	private ByteBuf buf;
-
 	public PacketAccessory()
 	{
 		
@@ -30,7 +28,9 @@ public class PacketAccessory extends AetherPacket<PacketAccessory>
 	public void fromBytes(ByteBuf buf) 
 	{
 		this.entityID = buf.readInt();
-		this.buf = buf;
+
+		this.accessories = new InventoryAccessories(null);
+		this.accessories.readData(buf);
 	}
 
 	@Override
@@ -49,7 +49,8 @@ public class PacketAccessory extends AetherPacket<PacketAccessory>
 
 			if (parent != null)
 			{
-				PlayerAether.get(parent).accessories.readData(message.buf);
+				message.accessories.player = parent;
+				PlayerAether.get(parent).accessories = message.accessories;
 			}
 		}
 	}

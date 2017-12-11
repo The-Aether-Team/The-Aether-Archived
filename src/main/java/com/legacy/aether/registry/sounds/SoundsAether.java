@@ -2,7 +2,7 @@ package com.legacy.aether.registry.sounds;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import com.legacy.aether.Aether;
 
@@ -34,6 +34,8 @@ public class SoundsAether
 	public static SoundEvent projectile_shoot, dart_shooter_shoot;
 
 	public static SoundEvent aether1, aether2, aether3, aether4, aether_menu;
+
+	public static IForgeRegistry<SoundEvent> soundRegistry;
 
 	public static void initialization()
 	{
@@ -92,7 +94,9 @@ public class SoundsAether
 	{
 		SoundEvent sound = new SoundEvent(location);
 
-		return GameRegistry.register(sound, location);
+		soundRegistry.register(sound.setRegistryName(location));
+
+		return sound;
 	}
 
 }

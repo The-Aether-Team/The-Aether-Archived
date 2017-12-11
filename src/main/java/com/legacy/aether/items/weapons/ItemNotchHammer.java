@@ -49,7 +49,7 @@ public class ItemNotchHammer extends ItemSword
 			if (!world.isRemote)
 			{
 				EntityHammerProjectile hammerProjectile = new EntityHammerProjectile(world, entityplayer);
-				hammerProjectile.setHeadingFromThrower(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.5F, 1.0F);
+				hammerProjectile.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.5F, 1.0F);
 				world.spawnEntity(hammerProjectile);
 			}
 		}
@@ -62,7 +62,7 @@ public class ItemNotchHammer extends ItemSword
 			if (!world.isRemote)
 			{
 				EntityHammerProjectile hammerProjectile = new EntityHammerProjectile(world, entityplayer);
-				hammerProjectile.setHeadingFromThrower(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.5F, 1.0F);
+				hammerProjectile.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.5F, 1.0F);
 				world.spawnEntity(hammerProjectile);
 			}
 		}

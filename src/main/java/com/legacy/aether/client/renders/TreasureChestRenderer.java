@@ -1,7 +1,5 @@
 package com.legacy.aether.client.renders;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelLargeChest;
@@ -27,13 +25,13 @@ public class TreasureChestRenderer extends TileEntitySpecialRenderer<TileEntityT
 	private final ModelChest largeChestModel = new ModelLargeChest();
 
 	@Override
-	public void renderTileEntityAt(@Nullable TileEntityTreasureChest par1TileEntityChest, double posX, double posZ, double par7, float par8, int p_180535_9_) 
+	public void render(TileEntityTreasureChest par1TileEntityChest, double posX, double posY, double posZ, float partialTicks, int destroyStage, float alpha) 
 	{
 		int var9;
 
 		if (par1TileEntityChest == null)
 		{
-			TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEntityTreasureChest(), 0.0, 0.0, 0.0, 0f);
+			TileEntityRendererDispatcher.instance.render(new TileEntityTreasureChest(), 0.0, 0.0, 0.0, 0f);
             return;
 		}
 
@@ -72,7 +70,7 @@ public class TreasureChestRenderer extends TileEntitySpecialRenderer<TileEntityT
 
 			GL11.glPushMatrix();
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-			GL11.glTranslatef((float) posX, (float) posZ + 1.0F, (float) par7 + 1.0F);
+			GL11.glTranslatef((float) posX, (float) posY + 1.0F, (float) posZ + 1.0F);
 			GL11.glScalef(1.0F, -1.0F, -1.0F);
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 			short var11 = 0;
@@ -109,12 +107,12 @@ public class TreasureChestRenderer extends TileEntitySpecialRenderer<TileEntityT
 
 			GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
 			GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-			float var12 = par1TileEntityChest.prevLidAngle + (par1TileEntityChest.lidAngle - par1TileEntityChest.prevLidAngle) * par8;
+			float var12 = par1TileEntityChest.prevLidAngle + (par1TileEntityChest.lidAngle - par1TileEntityChest.prevLidAngle) * partialTicks;
 			float var13;
 
 			if (par1TileEntityChest.adjacentChestZNeg != null)
 			{
-				var13 = par1TileEntityChest.adjacentChestZNeg.prevLidAngle + (par1TileEntityChest.adjacentChestZNeg.lidAngle - par1TileEntityChest.adjacentChestZNeg.prevLidAngle) * par8;
+				var13 = par1TileEntityChest.adjacentChestZNeg.prevLidAngle + (par1TileEntityChest.adjacentChestZNeg.lidAngle - par1TileEntityChest.adjacentChestZNeg.prevLidAngle) * partialTicks;
 
 				if (var13 > var12)
 				{
@@ -124,7 +122,7 @@ public class TreasureChestRenderer extends TileEntitySpecialRenderer<TileEntityT
 
 			if (par1TileEntityChest.adjacentChestXNeg != null)
 			{
-				var13 = par1TileEntityChest.adjacentChestXNeg.prevLidAngle + (par1TileEntityChest.adjacentChestXNeg.lidAngle - par1TileEntityChest.adjacentChestXNeg.prevLidAngle) * par8;
+				var13 = par1TileEntityChest.adjacentChestXNeg.prevLidAngle + (par1TileEntityChest.adjacentChestXNeg.lidAngle - par1TileEntityChest.adjacentChestXNeg.prevLidAngle) * partialTicks;
 
 				if (var13 > var12)
 				{

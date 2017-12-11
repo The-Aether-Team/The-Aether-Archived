@@ -126,7 +126,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
     }
 
 	@Override
-	public void moveEntityWithHeading(float par1, float par2)
+    public void travel(float strafe, float vertical, float forward)
 	{
 		Entity entity = this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
 
@@ -139,12 +139,13 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 			this.rotationYawHead = player.rotationYawHead;
 
-			par1 = player.moveStrafing;
-			par2 = player.moveForward;
+			strafe = player.moveStrafing;
+			vertical = player.moveVertical;
+			forward = player.moveForward;
 
-			if (par2 <= 0.0F)
+			if (forward <= 0.0F)
 			{
-				par2 *= 0.25F;
+				forward *= 0.25F;
 				this.field_110285_bP = 0;
 			}
 
@@ -160,7 +161,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 			if (PlayerAether.get(player).isJumping())
 			{
-				onMountedJump(par1, par2);
+				onMountedJump(strafe, forward);
 			}
 
 			if (this.jumpPower > 0.0F && !this.isMountJumping() && (this.onGround || this.canJumpMidAir))
@@ -191,7 +192,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 			if (!this.world.isRemote)
 			{
 				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.6F;
-				super.moveEntityWithHeading(par1, par2);
+				super.travel(strafe, vertical, forward);
 			}
 
 			if (this.onGround)
@@ -217,7 +218,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 		{
 			this.stepHeight = 0.5F;
 			this.jumpMovementFactor = 0.02F;
-			super.moveEntityWithHeading(par1, par2);
+			super.travel(strafe, vertical, forward);
 		}
 	}
 

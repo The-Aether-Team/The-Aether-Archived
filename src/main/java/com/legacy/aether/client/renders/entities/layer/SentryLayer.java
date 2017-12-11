@@ -53,7 +53,7 @@ public class SentryLayer implements LayerRenderer<EntitySentry>
 	        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 	        GlStateManager.translate(0.0D, 0.0D, -0.001D);
 	        this.model.render(sentry, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-	        i = sentry.getBrightnessForRender(partialTicks);
+	        i = sentry.getBrightnessForRender();
 	        j = i % 65536;
 	        k = i / 65536;
 	        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);

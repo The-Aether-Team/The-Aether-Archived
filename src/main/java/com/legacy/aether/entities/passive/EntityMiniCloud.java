@@ -50,7 +50,7 @@ public class EntityMiniCloud extends EntityFlying
 
     public void getTargetPos()
     {
-        if (this.getDistanceToEntity(this.owner) > 2.0F)
+        if (this.getDistance(this.owner) > 2.0F)
         {
             this.targetX = this.owner.posX;
             this.targetY = this.owner.posY - 0.10000000149011612D;
@@ -172,9 +172,9 @@ public class EntityMiniCloud extends EntityFlying
 
                         if (var9 != null)
                         {
-                        	iceCrystal.smotionX = var9.xCoord * 1.5D;
-                        	iceCrystal.smotionY = var9.yCoord * 1.5D;
-                        	iceCrystal.smotionZ = var9.zCoord * 1.5D;
+                        	iceCrystal.smotionX = var9.x * 1.5D;
+                        	iceCrystal.smotionY = var9.y * 1.5D;
+                        	iceCrystal.smotionZ = var9.z * 1.5D;
                         }
 
                         iceCrystal.smacked = true;
@@ -204,7 +204,7 @@ public class EntityMiniCloud extends EntityFlying
 
     public boolean attackEntityFrom(DamageSource var1, float var2)
     {
-    	if (var1.getEntity() == this.owner || var1.getDamageType() == "inWall")
+    	if (var1.getImmediateSource() == this.owner || var1.getDamageType() == "inWall")
     	{
     		return false;
     	}

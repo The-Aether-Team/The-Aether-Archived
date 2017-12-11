@@ -14,6 +14,8 @@ public class ServerProxy
 
 	public void initialization() { }
 
+	public void postInitialization() { }
+
 	public EntityPlayer getThePlayer() { return null; }
 
 	public void sendMessage(EntityPlayer player, String message) { }

@@ -1,7 +1,7 @@
 package com.legacy.aether.client.renders.entities.projectile;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -32,7 +32,7 @@ public class PhoenixArrowRenderer extends Render<EntityPhoenixArrow>
             GL11.glRotatef(var1.prevRotationYaw + (var1.rotationYaw - var1.prevRotationYaw) * var9 - 90.0F, 0.0F, 1.0F, 0.0F);
             GL11.glRotatef(var1.prevRotationPitch + (var1.rotationPitch - var1.prevRotationPitch) * var9, 0.0F, 0.0F, 1.0F);
             Tessellator var10 = Tessellator.getInstance();
-            VertexBuffer renderer = var10.getBuffer();
+            BufferBuilder renderer = var10.getBuffer();
             byte var11 = 0;
             float var12 = 0.0F;
             float var13 = 0.5F;

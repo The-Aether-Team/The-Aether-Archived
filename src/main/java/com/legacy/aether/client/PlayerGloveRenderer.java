@@ -143,7 +143,7 @@ public class PlayerGloveRenderer
 		PlayerAether playerAether = PlayerAether.get(player);
 		ItemStack accessoryStack = playerAether.accessories.stacks.get(6);
 
-		if (accessoryStack != null && accessoryStack.getItem() instanceof ItemAccessory)
+		if (accessoryStack.getItem() instanceof ItemAccessory)
 		{
 	        boolean flag = enumhandside != EnumHandSide.LEFT;
 	        float f = flag ? 1.0F : -1.0F;

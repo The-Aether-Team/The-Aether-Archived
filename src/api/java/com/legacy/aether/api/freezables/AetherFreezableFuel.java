@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherFreezableFuel extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherFreezableFuel>
+public class AetherFreezableFuel extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherFreezableFuel>
 {
 
 	public int timeGiven;

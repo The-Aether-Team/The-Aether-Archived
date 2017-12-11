@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -245,11 +246,11 @@ public class EntityMoa extends EntitySaddleMount
 	}
 
 	@Override
-	public void moveEntityWithHeading(float par1, float par2)
+    public void travel(float strafe, float vertical, float forward)
 	{
 		if (!this.isSitting())
 		{
-			super.moveEntityWithHeading(par1, par2);
+			super.travel(strafe, vertical, forward);
 		}
 	}
 
@@ -423,7 +424,7 @@ public class EntityMoa extends EntitySaddleMount
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
+	protected SoundEvent getHurtSound(DamageSource source)
 	{
 		return SoundsAether.moa_say;
 	}

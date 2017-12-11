@@ -16,8 +16,7 @@ public class BlockQuicksoilGlass extends BlockBreakable
 	{
 		super(Material.GLASS, false);
 
-		this.slipperiness = 1.1F;
-
+		this.setDefaultSlipperiness(1.1F);
 		this.setLightLevel(0.7375F);
 		this.setHardness(0.2F);
 		this.setLightOpacity(0);

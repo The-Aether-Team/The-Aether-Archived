@@ -50,9 +50,10 @@ public class ContainerEnchanter extends Container
 	public void addListener(IContainerListener par1ICrafting)
 	{
 		super.addListener(par1ICrafting);
-		par1ICrafting.sendProgressBarUpdate(this, 0, this.enchanter.enchantmentTimeRemaining);
-		par1ICrafting.sendProgressBarUpdate(this, 1, this.enchanter.enchantmentProgress);
-		par1ICrafting.sendProgressBarUpdate(this, 2, this.enchanter.enchantmentTime);
+
+		par1ICrafting.sendWindowProperty(this, 0, this.enchanter.enchantmentTimeRemaining);
+		par1ICrafting.sendWindowProperty(this, 1, this.enchanter.enchantmentProgress);
+		par1ICrafting.sendWindowProperty(this, 2, this.enchanter.enchantmentTime);
 	}
 
 	@Override
@@ -66,17 +67,17 @@ public class ContainerEnchanter extends Container
 
 			if (this.lastCookTime != this.enchanter.enchantmentTimeRemaining)
 			{
-				icrafting.sendProgressBarUpdate(this, 0, this.enchanter.enchantmentTimeRemaining);
+				icrafting.sendWindowProperty(this, 0, this.enchanter.enchantmentTimeRemaining);
 			}
 
 			if (this.lastBurnTime != this.enchanter.enchantmentProgress)
 			{
-				icrafting.sendProgressBarUpdate(this, 1, this.enchanter.enchantmentProgress);
+				icrafting.sendWindowProperty(this, 1, this.enchanter.enchantmentProgress);
 			}
 
 			if (this.lastItemBurnTime != this.enchanter.enchantmentTime)
 			{
-				icrafting.sendProgressBarUpdate(this, 2, this.enchanter.enchantmentTime);
+				icrafting.sendWindowProperty(this, 2, this.enchanter.enchantmentTime);
 			}
 		}
 

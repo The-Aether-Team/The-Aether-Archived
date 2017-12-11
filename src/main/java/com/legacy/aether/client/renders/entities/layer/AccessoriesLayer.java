@@ -81,7 +81,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		this.modelWings.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 		this.modelHalo.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 
-		if (accessories.stacks.get(0) != ItemStack.EMPTY)
+		if (accessories.stacks.get(0).getItem() instanceof ItemAccessory)
 		{
 			ItemAccessory pendant = ((ItemAccessory) (accessories.stacks.get(0).getItem()));
 			manager.renderEngine.bindTexture(pendant.texture);
@@ -104,7 +104,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			GlStateManager.color(1.0F, 1.0F, 1.0F);
 		}
 
-		if (accessories.stacks.get(1) != ItemStack.EMPTY && accessories.stacks.get(1).getItem() != ItemsAether.invisibility_cape)
+		if (accessories.stacks.get(1).getItem() instanceof ItemAccessory && accessories.stacks.get(1).getItem() != ItemsAether.invisibility_cape)
 		{
 			ItemAccessory cape = ((ItemAccessory) (accessories.stacks.get(1).getItem()));
 
@@ -172,7 +172,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	        }
 		}
 
-		if (accessories.stacks.get(6) != ItemStack.EMPTY)
+		if (accessories.stacks.get(6).getItem() instanceof ItemAccessory)
 		{
 			ItemAccessory gloves = (ItemAccessory) accessories.stacks.get(6).getItem();
 			this.manager.renderEngine.bindTexture(gloves.texture);
@@ -201,7 +201,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			GlStateManager.color(1.0F, 1.0F, 1.0F);
 		}
 
-		if (accessories.stacks.get(2) != ItemStack.EMPTY)
+		if (accessories.stacks.get(2).getItem() instanceof ItemAccessory)
 		{
 			ItemAccessory shield = (ItemAccessory) accessories.stacks.get(2).getItem();
 

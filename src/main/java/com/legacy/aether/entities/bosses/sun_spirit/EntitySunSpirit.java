@@ -40,7 +40,6 @@ import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
 import com.legacy.aether.entities.util.AetherNameGen;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
-import com.legacy.aether.registry.achievements.AchievementsAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntitySunSpirit extends EntityFlying implements IMob
@@ -194,7 +193,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
                 this.chatLine(player, "\u00a7bSuch bitter cold... is this the feeling... of pain?");
                 this.chatCount = 100;
 
-                player.addStat(AchievementsAether.defeat_gold);
+                //player.addStat(AchievementsAether.defeat_gold);
 
                 this.setDoor(Blocks.AIR.getDefaultState());
                 this.unlockTreasure();	
@@ -512,7 +511,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        if (source.getEntity() instanceof EntityIceyBall)
+        if (source.getImmediateSource() instanceof EntityIceyBall)
         {
             this.velocity = 0.5D - (double)this.getHealth() / 70.0D * 0.2D;
             boolean flag = super.attackEntityFrom(source, amount);

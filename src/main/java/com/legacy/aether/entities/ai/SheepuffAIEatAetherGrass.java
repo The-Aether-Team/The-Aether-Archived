@@ -41,7 +41,7 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase
     {
         this.eatingGrassTimer = 40;
         this.entityWorld.setEntityState(this.sheepuff, (byte)10);
-        this.sheepuff.getNavigator().clearPathEntity();
+        this.sheepuff.getNavigator().clearPath();
     }
 
     public void resetTask()

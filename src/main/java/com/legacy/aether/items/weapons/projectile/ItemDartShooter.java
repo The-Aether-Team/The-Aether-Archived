@@ -46,11 +46,16 @@ public class ItemDartShooter extends Item
     }
 
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
 	{
+		if (tab != this.getCreativeTab())
+		{
+			return;
+		}
+
 		for (int var4 = 0; var4 < EnumDartShooterType.values().length; ++var4)
 		{
-			subItems.add(new ItemStack(itemIn, 1, var4));
+			subItems.add(new ItemStack(this, 1, var4));
 		}
 	}
 
@@ -151,7 +156,7 @@ public class ItemDartShooter extends Item
 
 			if (!world.isRemote)
 			{
-				dart.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.0F, 1.0F);
+				dart.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.0F, 1.0F);
 				world.spawnEntity(dart);
 
 				if (!(entityplayer.capabilities.isCreativeMode))

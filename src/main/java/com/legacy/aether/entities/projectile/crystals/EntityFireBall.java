@@ -109,7 +109,7 @@ public class EntityFireBall extends EntityFlying
         this.motionY = this.smotionY;
         this.motionZ = this.smotionZ;
 
-        if (this.isCollided)
+        if (this.collided)
         {
             int var1 = MathHelper.floor(this.posX);
             int var2 = MathHelper.floor(this.getEntityBoundingBox().minY);
@@ -194,15 +194,15 @@ public class EntityFireBall extends EntityFlying
     @Override
     public boolean attackEntityFrom(DamageSource var1, float var2)
     {
-        if (var1.getEntity() != null)
+        if (var1.getImmediateSource() != null)
         {
-            Vec3d var3 = var1.getEntity().getLookVec();
+            Vec3d var3 = var1.getImmediateSource().getLookVec();
 
             if (var3 != null)
             {
-                this.smotionX = var3.xCoord;
-                this.smotionY = var3.yCoord;
-                this.smotionZ = var3.zCoord;
+                this.smotionX = var3.x;
+                this.smotionY = var3.y;
+                this.smotionZ = var3.z;
             }
 
             this.smacked = true;

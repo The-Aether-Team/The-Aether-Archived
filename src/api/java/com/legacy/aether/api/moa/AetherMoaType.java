@@ -3,7 +3,7 @@ package com.legacy.aether.api.moa;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 
-public class AetherMoaType extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherMoaType>
+public class AetherMoaType extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherMoaType>
 {
 
 	private MoaProperties properties;

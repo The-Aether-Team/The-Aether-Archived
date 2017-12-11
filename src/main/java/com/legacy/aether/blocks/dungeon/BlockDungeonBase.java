@@ -9,7 +9,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -83,13 +82,13 @@ public class BlockDungeonBase extends Block implements IAetherMeta
     }
 
 	@Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (int j = 0; j < EnumStoneType.values().length; ++j)
         {
         	EnumStoneType enumdyecolor = EnumStoneType.values()[j];
 
-            list.add(new ItemStack(itemIn, 1, enumdyecolor.getMeta()));
+            list.add(new ItemStack(this, 1, enumdyecolor.getMeta()));
         }
     }
 

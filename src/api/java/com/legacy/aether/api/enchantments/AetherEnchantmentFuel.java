@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherEnchantmentFuel extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherEnchantmentFuel>
+public class AetherEnchantmentFuel extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherEnchantmentFuel>
 {
 
 	public int timeGiven;

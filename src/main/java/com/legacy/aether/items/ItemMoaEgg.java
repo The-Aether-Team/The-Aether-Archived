@@ -54,7 +54,7 @@ public class ItemMoaEgg extends Item
     }
 
 	@Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
 	{
 		for (int moaTypeSize = 0; moaTypeSize < AetherAPI.getInstance().getMoaTypeSize(); ++moaTypeSize)
 		{

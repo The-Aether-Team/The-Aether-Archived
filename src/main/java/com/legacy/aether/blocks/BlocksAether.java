@@ -5,8 +5,9 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.container.BlockEnchanter;
@@ -105,6 +106,15 @@ public class BlocksAether
 
 	public static Block holiday_leaves, present;
 
+	public static IForgeRegistry<Block> blockRegistry;
+
+	public static IForgeRegistry<Item> itemRegistry;
+
+	public static boolean canInitialize()
+	{
+		return blockRegistry != null && itemRegistry != null;
+	}
+
 	public static void initialization()
 	{
 		aether_grass = register("aether_grass", new BlockAetherGrass());
@@ -193,8 +203,8 @@ public class BlocksAether
 	{
 		slab1.setCreativeTab(AetherCreativeTabs.blocks);
 
-		GameRegistry.register(slab1.setRegistryName(Aether.locate(name)));
-		GameRegistry.register(new ItemAetherSlab(slab1, (BlockSlab) slab1, (BlockSlab) slab2).setRegistryName(Aether.locate(name)));
+		blockRegistry.register(slab1.setRegistryName(Aether.locate(name)));
+		itemRegistry.register(new ItemAetherSlab(slab1, (BlockSlab) slab1, (BlockSlab) slab2).setRegistryName(Aether.locate(name)));
 
 		return slab1;
 	}
@@ -204,16 +214,16 @@ public class BlocksAether
 		block.setUnlocalizedName(name);
 		block.setCreativeTab(AetherCreativeTabs.blocks);
 
-		GameRegistry.register(block.setRegistryName(Aether.locate(name)));
-		GameRegistry.register(new ItemBlock(block).setRegistryName(Aether.locate(name)));
+		blockRegistry.register(block.setRegistryName(Aether.locate(name)));
+		itemRegistry.register(new ItemBlock(block).setRegistryName(Aether.locate(name)));
 
 		return block;
 	}
 
 	public static Block registerMeta(String name, Block block)
 	{
-		GameRegistry.register(block.setRegistryName(Aether.locate(name)));
-		GameRegistry.register(new ItemSubtype(block).setRegistryName(Aether.locate(name)));
+		blockRegistry.register(block.setRegistryName(Aether.locate(name)));
+		itemRegistry.register(new ItemSubtype(block).setRegistryName(Aether.locate(name)));
 
 		return block;
 	}

@@ -121,7 +121,7 @@ public class EntityIceyBall extends EntityFlying
         this.motionY = this.smotionY;
         this.motionZ = this.smotionZ;
 
-        if (this.isCollided)
+        if (this.collided)
         {
             if (this.smacked)
             {
@@ -207,15 +207,15 @@ public class EntityIceyBall extends EntityFlying
 
     public boolean attackEntityFrom(DamageSource var1, float var2)
     {
-        if (var1.getEntity() != null && var1.getEntity() instanceof EntityPlayer)
+        if (var1.getImmediateSource() != null && var1.getImmediateSource() instanceof EntityPlayer)
         {
-            Vec3d var3 = var1.getEntity().getLookVec();
+            Vec3d var3 = var1.getImmediateSource().getLookVec();
 
             if (var3 != null)
             {
-                this.smotionX = var3.xCoord;
-                this.smotionY = var3.yCoord;
-                this.smotionZ = var3.zCoord;
+                this.smotionX = var3.x;
+                this.smotionY = var3.y;
+                this.smotionZ = var3.z;
             }
 
             this.smacked = true;

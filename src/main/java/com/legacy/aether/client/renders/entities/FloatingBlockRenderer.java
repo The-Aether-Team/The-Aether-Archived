@@ -2,9 +2,9 @@ package com.legacy.aether.client.renders.entities;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -45,7 +45,7 @@ public class FloatingBlockRenderer extends Render<EntityFloatingBlock>
                 GlStateManager.translate((float)d, (float)d1, (float)d2);
                 GlStateManager.disableLighting();
                 Tessellator tessellator = Tessellator.getInstance();
-                VertexBuffer worldrenderer = tessellator.getBuffer();
+                BufferBuilder worldrenderer = tessellator.getBuffer();
                 worldrenderer.begin(7, DefaultVertexFormats.BLOCK);
                 int i = blockpos.getX();
                 int j = blockpos.getY();

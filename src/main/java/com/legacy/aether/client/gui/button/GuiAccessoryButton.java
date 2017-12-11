@@ -19,16 +19,16 @@ public class GuiAccessoryButton extends GuiButton
 
 	public GuiAccessoryButton setPosition(int x, int y)
 	{
-		this.xPosition = x;
-		this.yPosition = y;
+		this.x = x;
+		this.y = y;
 
 		return this;
 	}
 
 	@Override  
-    public void drawButton(Minecraft mc, int mouseX, int mouseY)
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks)
     {
-        this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+        this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
 
     	if (this.visible)
     	{
@@ -38,7 +38,7 @@ public class GuiAccessoryButton extends GuiButton
             mc.getTextureManager().bindTexture(i == 2 ? BUTTON_HOVERED_TEXTURE : BUTTON_TEXTURE);
             GlStateManager.enableBlend();
 
-            drawModalRectWithCustomSizedTexture(this.xPosition - 1, this.yPosition, 0, 0, 14, 14, 14, 14);
+            drawModalRectWithCustomSizedTexture(this.x - 1, this.y, 0, 0, 14, 14, 14, 14);
 
             GlStateManager.popMatrix();
     	}

@@ -9,7 +9,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.AchievementList;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -33,7 +32,6 @@ import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.dungeon.ItemDungeonKey;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.items.weapons.ItemSkyrootSword;
-import com.legacy.aether.registry.achievements.AchievementsAether;
 
 public class AetherEventHandler 
 {
@@ -50,7 +48,7 @@ public class AetherEventHandler
 			{
 				for (int i = 0; i < 10; ++i)
 				{
-					event.getWorld().spawnParticle(EnumParticleTypes.SMOKE_LARGE, event.getHitVec().xCoord, event.getHitVec().yCoord, event.getHitVec().zCoord, 0.0D, 0.0D, 0.0D, new int [] {});
+					event.getWorld().spawnParticle(EnumParticleTypes.SMOKE_LARGE, event.getHitVec().x, event.getHitVec().y, event.getHitVec().z, 0.0D, 0.0D, 0.0D, new int [] {});
 				}
 
 				event.setCanceled(true);
@@ -150,9 +148,9 @@ public class AetherEventHandler
 	@SubscribeEvent
 	public void onItemPickedUp(EntityItemPickupEvent event)
 	{
-		if (event.getItem().getEntityItem() != null && event.getItem().getEntityItem().getItem() == Item.getItemFromBlock(BlocksAether.aether_log))
+		if (event.getItem().getItem() != null && event.getItem().getItem().getItem() == Item.getItemFromBlock(BlocksAether.aether_log))
 		{
-			event.getEntityPlayer().addStat(AchievementList.MINE_WOOD);
+			//event.getEntityPlayer().addStat(AchievementList.MINE_WOOD);
 		}
 	}
 
@@ -164,27 +162,27 @@ public class AetherEventHandler
 
 		if (stack.getItem() == ItemsAether.holystone_pickaxe)
 		{
-			player.addStat(AchievementList.BUILD_BETTER_PICKAXE);
+			//player.addStat(AchievementList.BUILD_BETTER_PICKAXE);
 		}
 
 		if (stack.getItem() == ItemsAether.skyroot_pickaxe)
 		{
-			player.addStat(AchievementList.BUILD_PICKAXE);
+			//player.addStat(AchievementList.BUILD_PICKAXE);
 		}
 
 		if (stack.getItem() == ItemsAether.skyroot_sword)
 		{
-			player.addStat(AchievementList.BUILD_SWORD);
+			//player.addStat(AchievementList.BUILD_SWORD);
 		}
 
 		if (stack.getItem() == Item.getItemFromBlock(BlocksAether.enchanter))
 		{
-			player.addStat(AchievementsAether.enchanter);
+			//player.addStat(AchievementsAether.enchanter);
 		}
 
 		if (isGravititeTool(stack.getItem()))
 		{
-			player.addStat(AchievementsAether.grav_tools);
+			//player.addStat(AchievementsAether.grav_tools);
 		}
 	}
 
@@ -196,20 +194,20 @@ public class AetherEventHandler
 			EntityLivingBase entity = event.getEntityLiving();
 			EntityDamageSource source = (EntityDamageSource) event.getSource();
 
-			if (source.getEntity() instanceof EntityPlayer)
+			if (source.getImmediateSource() instanceof EntityPlayer)
 			{
-				EntityPlayer player = (EntityPlayer) source.getEntity();
+				EntityPlayer player = (EntityPlayer) source.getImmediateSource();
 				ItemStack currentItem = player.inventory.getCurrentItem();
 
 				if (currentItem.getItem() instanceof ItemSkyrootSword && !(entity instanceof EntityPlayer) && !(entity instanceof EntityWither) && !(entity instanceof EntityValkyrie))
 				{
 					for (EntityItem items : event.getDrops())
 					{
-						ItemStack stack = items.getEntityItem();
+						ItemStack stack = items.getItem();
 
 						if (!(stack.getItem() instanceof ItemDungeonKey) && stack.getItem() != ItemsAether.victory_medal && stack.getItem() != Items.SKULL)
 						{
-							EntityItem item = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, items.getEntityItem());
+							EntityItem item = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, items.getItem());
 
 							entity.world.spawnEntity(item);
 						}

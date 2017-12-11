@@ -23,12 +23,12 @@ public class AetherLiquidMovement
 
 		if (player.isInWater())
 		{
-			player.moveRelative(movementLR, movementFB, 0.03F);
+			player.moveRelative(movementLR, 0.0F, movementFB, 0.03F);
 		}
 
 		if (player.isInLava())
 		{
-			player.moveRelative(movementLR, movementFB, 0.06F);
+			player.moveRelative(movementLR, 0.0F, movementFB, 0.06F);
 		}
 	}
 

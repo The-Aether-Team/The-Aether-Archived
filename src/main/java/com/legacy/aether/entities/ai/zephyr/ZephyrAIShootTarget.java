@@ -59,7 +59,7 @@ public class ZephyrAIShootTarget extends EntityAIBase
         		return;
         	}
 
-        	if (this.zephyr.getAttackTarget().getDistanceSqToEntity(this.zephyr) < 4096.0D  && this.zephyr.canEntityBeSeen(this.zephyr.getAttackTarget()))
+        	if (this.zephyr.getAttackTarget().getDistanceSq(this.zephyr) < 4096.0D  && this.zephyr.canEntityBeSeen(this.zephyr.getAttackTarget()))
         	{
                 double x = this.zephyr.getAttackTarget().posX - this.zephyr.posX;
                 double y = (this.zephyr.getAttackTarget().getEntityBoundingBox().minY + (this.zephyr.getAttackTarget().height / 2.0F)) - (this.zephyr.posY + (this.zephyr.height / 2.0F));
@@ -80,13 +80,13 @@ public class ZephyrAIShootTarget extends EntityAIBase
                     EntityZephyrSnowball projectile = new EntityZephyrSnowball(this.worldObj, this.zephyr);
                     Vec3d lookVector = this.zephyr.getLook(1.0F);
 
-                    projectile.posX = this.zephyr.posX + lookVector.xCoord * 4D;
+                    projectile.posX = this.zephyr.posX + lookVector.x * 4D;
                     projectile.posY = this.zephyr.posY + (double)(this.zephyr.height / 2.0F) + 0.5D;
-                    projectile.posZ = this.zephyr.posZ + lookVector.zCoord * 4D;
+                    projectile.posZ = this.zephyr.posZ + lookVector.z * 4D;
 
                     if (!this.worldObj.isRemote)
                     {
-                    	projectile.setThrowableHeading(x, y, z, 1.2F, 1.0F);
+                    	projectile.shoot(x, y, z, 1.2F, 1.0F);
                         this.worldObj.spawnEntity(projectile);
                     }
 

@@ -80,7 +80,7 @@ public class EntityFloatingBlock extends Entity
             }
         }
 
-        if (this.isCollidedVertically && !this.onGround)
+        if (this.collidedVertically && !this.onGround)
         {
             this.motionX *= 0.699999988079071D;
             this.motionZ *= 0.699999988079071D;

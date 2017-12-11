@@ -61,7 +61,7 @@ public class SliderLayer implements LayerRenderer<EntitySlider>
 	        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
 	        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 	        this.model.render(slider, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-	        i = slider.getBrightnessForRender(partialTicks);
+	        i = slider.getBrightnessForRender();
 	        j = i % 65536;
 	        k = i / 65536;
 	        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);

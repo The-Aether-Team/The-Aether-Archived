@@ -76,7 +76,7 @@ public class GuiAetherButton extends GuiButton
 	}
 
 	@Override
-	public void drawButton(Minecraft minecraft, int i, int j)
+    public void drawButton(Minecraft minecraft, int i, int j, float partialTicks)
 	{
 		if (!this.visible)
 		{
@@ -86,28 +86,28 @@ public class GuiAetherButton extends GuiButton
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		FontRenderer fontrenderer = minecraft.fontRendererObj;
+		FontRenderer fontrenderer = minecraft.fontRenderer;
 		minecraft.renderEngine.bindTexture(buttonTextures);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		boolean flag = i >= this.xPosition && j >= this.yPosition && i < this.xPosition + this.width && j < this.yPosition + this.height;
+		boolean flag = i >= this.x && j >= this.y && i < this.x + this.width && j < this.y + this.height;
 		int k = this.getHoverState(flag);
-		this.drawTexturedModalRect(this.xPosition + this.scrollHeight - 90, this.yPosition, 0, 46 + k * 20, this.width / 2, this.height);
-		this.drawTexturedModalRect(this.xPosition + this.scrollHeight + this.width / 2 - 90, this.yPosition, 200 - this.width / 2, 46 + k * 20, this.width / 2, this.height);
+		this.drawTexturedModalRect(this.x + this.scrollHeight - 90, this.y, 0, 46 + k * 20, this.width / 2, this.height);
+		this.drawTexturedModalRect(this.x + this.scrollHeight + this.width / 2 - 90, this.y, 200 - this.width / 2, 46 + k * 20, this.width / 2, this.height);
 		this.mouseDragged(minecraft, i, j);
 
 		GL11.glDisable(GL11.GL_BLEND);
 
 		if (!this.enabled)
 		{
-			this.drawString(fontrenderer, this.displayString, this.xPosition + this.width / 10 + this.scrollHeight - 80, this.yPosition + (this.height - 8) / 2, -6250336);
+			this.drawString(fontrenderer, this.displayString, this.x + this.width / 10 + this.scrollHeight - 80, this.y + (this.height - 8) / 2, -6250336);
 		}
 		else if (flag)
 		{
-			this.drawString(fontrenderer, this.displayString, this.xPosition + this.width / 10 + this.scrollHeight - 80, this.yPosition + (this.height - 8) / 2, 0x77cccc);
+			this.drawString(fontrenderer, this.displayString, this.x + this.width / 10 + this.scrollHeight - 80, this.y + (this.height - 8) / 2, 0x77cccc);
 		}
 		else
 		{
-			this.drawString(fontrenderer, this.displayString, this.xPosition + this.width / 10 + this.scrollHeight - 80, this.yPosition + (this.height - 8) / 2, 14737632);
+			this.drawString(fontrenderer, this.displayString, this.x + this.width / 10 + this.scrollHeight - 80, this.y + (this.height - 8) / 2, 14737632);
 		}
 	}
 
@@ -124,7 +124,7 @@ public class GuiAetherButton extends GuiButton
 	@Override
 	public boolean mousePressed(Minecraft var1, int var2, int var3)
 	{
-		return this.enabled && this.visible && var2 >= this.xPosition && var3 >= this.yPosition && var2 < this.xPosition + this.width && var3 < this.yPosition + this.height;
+		return this.enabled && this.visible && var2 >= this.x && var3 >= this.y && var2 < this.x + this.width && var3 < this.y + this.height;
 	}
 
 }

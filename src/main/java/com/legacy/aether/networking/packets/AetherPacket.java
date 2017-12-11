@@ -20,7 +20,7 @@ public abstract class AetherPacket<Packet extends IMessage> implements IMessage,
 		}
 		else if (context.side == Side.SERVER)
 		{
-			this.handleServer(message, context.getServerHandler().playerEntity);
+			this.handleServer(message, context.getServerHandler().player);
 		}
 
 		return null;

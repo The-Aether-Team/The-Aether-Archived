@@ -1,0 +1,42 @@
+package com.legacy.aether.advancements;
+
+import java.lang.reflect.Method;
+
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.ICriterionTrigger;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+
+import com.legacy.aether.Aether;
+
+public class AetherAdvancements 
+{
+	public static MountTrigger MOUNT_TRIGGER;
+
+	public static LoreItemTrigger LORE_ITEM_TRIGGER;
+
+    @SuppressWarnings("unchecked")
+	private static <T extends ICriterionTrigger<?>> T register(T criterion)
+    {
+    	Method method = ReflectionHelper.findMethod(CriteriaTriggers.class, "register", "func_192118_a", ICriterionTrigger.class);
+    	method.setAccessible(true);
+
+		try 
+		{
+			criterion = (T) method.invoke(null, criterion);
+			System.out.println(criterion);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+    	return criterion;
+    }
+
+    public static void initialization()
+    {
+    	MOUNT_TRIGGER = register(new MountTrigger(Aether.locate("mount_entity")));
+    	LORE_ITEM_TRIGGER = register(new LoreItemTrigger(Aether.locate("lore_item")));
+    }
+
+}

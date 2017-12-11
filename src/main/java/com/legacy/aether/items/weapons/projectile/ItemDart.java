@@ -33,11 +33,17 @@ public class ItemDart extends Item
 		return this.getUnlocalizedName() + "_" + EnumDartType.values()[i].toString();
 	}
 
-	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
+		if (tab != this.getCreativeTab())
+		{
+			return;
+		}
+
         for (int var4 = 0; var4 < EnumDartType.values().length ; ++var4)
         {
-        	subItems.add(new ItemStack(itemIn, 1, var4));
+        	subItems.add(new ItemStack(this, 1, var4));
         }
     }
 

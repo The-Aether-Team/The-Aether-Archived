@@ -30,7 +30,7 @@ public class ParachuteRenderer extends Render<EntityParachute>
 
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)d - 0.5F, (float)d1 - 0.5F, (float)d2 + 0.5F);
-        Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(state, entityParachute.getBrightness(f1));
+        Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(state, entityParachute.getBrightness());
         GlStateManager.popMatrix();
 
         super.doRender(entityParachute, d, d1, d2, f, f1);

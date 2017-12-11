@@ -9,15 +9,16 @@ import com.legacy.aether.tile_entities.TileEntityChestMimic;
 public class ChestMimicRenderer extends TileEntityChestRenderer
 {
 
-    public void renderTileEntityAt(TileEntityChest te, double x, double y, double z, float partialTicks, int destroyStage)
+	@Override
+	public void render(TileEntityChest par1TileEntityChest, double x, double y, double z, float partialTicks, int destroyStage, float alpha) 
     {
-    	if (te == null)
+    	if (par1TileEntityChest == null)
     	{
-    		TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEntityChestMimic(), 0, 0, 0, 0);
+    		TileEntityRendererDispatcher.instance.render(new TileEntityChestMimic(), 0, 0, 0, 0);
     		return;
     	}
     	
-    	super.renderTileEntityAt(te, x, y, z, partialTicks, destroyStage);
+    	super.render(par1TileEntityChest, x, y, z, partialTicks, destroyStage, alpha);
     }
 
 }

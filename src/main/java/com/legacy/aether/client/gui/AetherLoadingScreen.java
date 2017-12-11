@@ -4,10 +4,10 @@ import net.minecraft.client.LoadingScreenRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 
@@ -68,7 +68,7 @@ public class AetherLoadingScreen extends LoadingScreenRenderer
             int k = scaledresolution.getScaledWidth();
             int l = scaledresolution.getScaledHeight();
 
-            this.mc.fontRendererObj.drawStringWithShadow(this.currentDisplayedTrivia, (k - this.mc.fontRendererObj.getStringWidth(this.currentDisplayedTrivia)) / 2, l - 16, 0xffff99);
+            this.mc.fontRenderer.drawStringWithShadow(this.currentDisplayedTrivia, (k - this.mc.fontRenderer.getStringWidth(this.currentDisplayedTrivia)) / 2, l - 16, 0xffff99);
             if (OpenGlHelper.isFramebufferEnabled())
             {
                 this.framebuffer.framebufferClear();
@@ -96,7 +96,7 @@ public class AetherLoadingScreen extends LoadingScreenRenderer
                 if (!net.minecraftforge.fml.client.FMLClientHandler.instance().handleLoadingScreen(scaledresolution)) //FML Don't render while FML's pre-screen is rendering
                 {
                     Tessellator tessellator = Tessellator.getInstance();
-                    VertexBuffer worldrenderer = tessellator.getBuffer();
+                    BufferBuilder worldrenderer = tessellator.getBuffer();
                     this.mc.getTextureManager().bindTexture(Gui.OPTIONS_BACKGROUND);
                     float f = 32.0F;
                     worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
@@ -128,14 +128,14 @@ public class AetherLoadingScreen extends LoadingScreenRenderer
 
                     GlStateManager.enableBlend();
                     GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                    this.mc.fontRendererObj.drawStringWithShadow(this.currentlyDisplayedText, (float)((k - this.mc.fontRendererObj.getStringWidth(this.currentlyDisplayedText)) / 2), (float)(l / 2 - 4 - 16), 16777215);
-                    this.mc.fontRendererObj.drawStringWithShadow(this.message, (float)((k - this.mc.fontRendererObj.getStringWidth(this.message)) / 2), (float)(l / 2 - 4 + 8), 16777215);
-                    this.mc.fontRendererObj.drawStringWithShadow(this.currentDisplayedTrivia, (k - this.mc.fontRendererObj.getStringWidth(this.currentDisplayedTrivia)) / 2, l - 16, 0xffff99);
+                    this.mc.fontRenderer.drawStringWithShadow(this.currentlyDisplayedText, (float)((k - this.mc.fontRenderer.getStringWidth(this.currentlyDisplayedText)) / 2), (float)(l / 2 - 4 - 16), 16777215);
+                    this.mc.fontRenderer.drawStringWithShadow(this.message, (float)((k - this.mc.fontRenderer.getStringWidth(this.message)) / 2), (float)(l / 2 - 4 + 8), 16777215);
+                    this.mc.fontRenderer.drawStringWithShadow(this.currentDisplayedTrivia, (k - this.mc.fontRenderer.getStringWidth(this.currentDisplayedTrivia)) / 2, l - 16, 0xffff99);
                 }
             }
             catch (java.io.IOException e)
             {
-                com.google.common.base.Throwables.propagate(e);
+                throw new RuntimeException(e);
             }
 
             this.framebuffer.unbindFramebuffer();

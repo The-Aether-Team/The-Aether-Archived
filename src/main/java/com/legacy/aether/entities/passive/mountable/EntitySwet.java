@@ -185,7 +185,7 @@ public class EntitySwet extends EntityMountable
 	@Override
 	public boolean attackEntityFrom(DamageSource damageSource, float i)
 	{
-		Entity entity = damageSource.getEntity();
+		Entity entity = damageSource.getImmediateSource();
 
 		if (this.hops == 3 && entity == null && this.getHealth() > 1)
 		{
@@ -244,7 +244,7 @@ public class EntitySwet extends EntityMountable
 	public void onEntityUpdate()
 	{
 		super.onEntityUpdate();
-		this.entityAge++; 
+		this.addGrowth(1);; 
 
 		if (this.isFriendly() && !this.getPassengers().isEmpty())
 		{
@@ -340,7 +340,7 @@ public class EntitySwet extends EntityMountable
 			}
 			else if (this.getAttackTarget() != null && this.getPassengers().isEmpty())
 			{
-				if (this.getDistanceToEntity(this.getAttackTarget()) <= 9F)
+				if (this.getDistance(this.getAttackTarget()) <= 9F)
 				{
 					if (this.onGround && this.canEntityBeSeen(this.getAttackTarget()))
 					{
@@ -406,7 +406,8 @@ public class EntitySwet extends EntityMountable
 		return this.rand.nextInt(20) + 10;
 	}
 
-	public void moveEntityWithHeading(float par1, float par2)
+	@Override
+    public void travel(float strafe, float vertical, float forward)
 	{
 		EntityPlayer rider = !this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayer ? (EntityPlayer) this.getPassengers().get(0) : null;
 
@@ -432,10 +433,11 @@ public class EntitySwet extends EntityMountable
 
 				if (this.onGround && this.slimeJumpDelay-- <= 0)
 				{
-					par1 = rider.moveStrafing * 2F;
-					par2 = rider.moveForward * 2;
+					strafe = rider.moveStrafing * 2.0F;
+					vertical = rider.moveVertical * 2.0F;
+					forward = rider.moveForward * 2.0F;
 
-					if (par1 != 0.0f || par2 != 0.0f)
+					if (strafe != 0.0f || forward != 0.0f)
 					{
 						this.jump();
 						this.onGround = false;
@@ -453,22 +455,22 @@ public class EntitySwet extends EntityMountable
 
 					int rotate = MathHelper.floor(rider.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
-					double x = Math.cos(this.getLookVec().xCoord);
-					double z = Math.cos(this.getLookVec().zCoord);
+					double x = Math.cos(this.getLookVec().x);
+					double z = Math.cos(this.getLookVec().z);
 
-					if (par2 > 0.0F)
+					if (forward > 0.0F)
 					{
-						this.motionX = this.getLookVec().xCoord / 2;
-						this.motionZ = this.getLookVec().zCoord / 2;
+						this.motionX = this.getLookVec().x / 2;
+						this.motionZ = this.getLookVec().z / 2;
 					}
 
-					if (par2 < 0.0F)
+					if (forward < 0.0F)
 					{
-						this.motionX = -this.getLookVec().xCoord / 2;
-						this.motionZ = -this.getLookVec().zCoord / 2;
+						this.motionX = -this.getLookVec().x / 2;
+						this.motionZ = -this.getLookVec().z / 2;
 					}
 
-					if (par1 > 0.0F)
+					if (strafe > 0.0F)
 					{
 						if (rotate <= 1)
 						{
@@ -482,7 +484,7 @@ public class EntitySwet extends EntityMountable
 						}
 					}
 
-					if (par1 < 0.0F)
+					if (strafe < 0.0F)
 					{
 						if (rotate <= 1)
 						{
@@ -501,9 +503,9 @@ public class EntitySwet extends EntityMountable
 					return;
 				}
 
-				if (par2 <= 0.0F)
+				if (forward <= 0.0F)
 				{
-					par2 *= 0.25F;
+					forward *= 0.25F;
 					this.field_110285_bP = 0;
 				}
 
@@ -513,21 +515,21 @@ public class EntitySwet extends EntityMountable
 				if (!this.world.isRemote)
 				{
 					this.setAIMoveSpeed((float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
-					super.moveEntityWithHeading(par1, par2);
+					super.travel(strafe, vertical, forward);
 				}
 			}
 			else
 			{
 				this.stepHeight = 0.5F;
 				this.jumpMovementFactor = 0.02F;
-				super.moveEntityWithHeading(this.moveForward, this.moveStrafing);
+				super.travel(this.moveForward, this.moveVertical, this.moveStrafing);
 			}
 		}
 		else
 		{
 			this.stepHeight = 0.5F;
 			this.jumpMovementFactor = 0.02F;
-			super.moveEntityWithHeading(this.moveForward, this.moveStrafing);
+			super.travel(this.moveForward, this.moveVertical, this.moveStrafing);
 		}
 	}
 
@@ -615,7 +617,7 @@ public class EntitySwet extends EntityMountable
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
+	protected SoundEvent getHurtSound(DamageSource source)
 	{
 		return SoundEvents.ENTITY_SLIME_SQUISH;
 	}

@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherFreezable extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherFreezable>
+public class AetherFreezable extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherFreezable>
 {
 
 	public int timeRequired;

@@ -74,9 +74,9 @@ public class EntityAechorPlant extends EntityAetherAnimal
  
         if (this.isServerWorld())
         {
-            this.world.theProfiler.startSection("newAi");
+            this.world.profiler.startSection("newAi");
             this.updateEntityActionState();
-            this.world.theProfiler.endSection();
+            this.world.profiler.endSection();
         }
 
 		if(this.hurtTime > 0) 

@@ -6,17 +6,15 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.entities.AetherEntities;
-import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.player.capability.PlayerAetherManager;
 import com.legacy.aether.registry.AetherRegistries;
-import com.legacy.aether.registry.achievements.AchievementsAether;
-import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
-import com.legacy.aether.registry.sounds.SoundsAether;
+import com.legacy.aether.registry.AetherRegistryEvent;
 import com.legacy.aether.tile_entities.AetherTileEntities;
 import com.legacy.aether.world.AetherWorld;
 
@@ -39,9 +37,12 @@ public class Aether
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
 	{
+		ServerProxy.registerEvent(new AetherRegistryEvent());
+
 		AetherConfig.init(event.getModConfigurationDirectory());
 		AetherConfig.autoDeveloperMode(version);
 
+		AetherAdvancements.initialization();
 		AetherNetworkingManager.preInitialization();
 
 		proxy.preInitialization();
@@ -51,19 +52,20 @@ public class Aether
 	public void initialization(FMLInitializationEvent event)
 	{
 		PlayerAetherManager.initialization();
-		SoundsAether.initialization();
 		AetherEntities.initialization();
-		BlocksAether.initialization();
-		ItemsAether.initialization();
 		AetherRegistries.initialization();
-		AchievementsAether.initialization();
 		AetherTileEntities.initialization();
-		AetherCreativeTabs.initialization();
 		AetherWorld.initialization();
 
-		proxy.initialization();
-
 		ServerProxy.registerEvent(new AetherEventHandler());
+
+		proxy.initialization();
+	}
+
+	@EventHandler
+	public void postInitialization(FMLPostInitializationEvent event)
+	{
+		proxy.postInitialization();
 	}
 
 	public static ResourceLocation locate(String location)

@@ -42,7 +42,6 @@ import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
 import com.legacy.aether.entities.util.AetherNameGen;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
-import com.legacy.aether.registry.achievements.AchievementsAether;
 
 public class EntityValkyrieQueen extends EntityMob 
 {
@@ -291,7 +290,7 @@ public class EntityValkyrieQueen extends EntityMob
     	this.lastMotionY = motionY;
         super.onUpdate();
 
-        if (!this.onGround && this.getAttackTarget() != null && this.lastMotionY >= 0.0D && motionY < 0.0D && getDistanceToEntity(this.getAttackTarget()) <= 16F && canEntityBeSeen(this.getAttackTarget())) 
+        if (!this.onGround && this.getAttackTarget() != null && this.lastMotionY >= 0.0D && motionY < 0.0D && getDistance(this.getAttackTarget()) <= 16F && canEntityBeSeen(this.getAttackTarget())) 
         {
             double a = this.getAttackTarget().posX - posX;
             double b = this.getAttackTarget().posZ - posZ;
@@ -338,7 +337,7 @@ public class EntityValkyrieQueen extends EntityMob
         	if (this.getAttackTarget() instanceof EntityPlayer)
         	{
             	chatItUp((EntityPlayer) this.getAttackTarget(), "You are truly... a mighty warrior...");
-            	((EntityPlayer)this.getAttackTarget()).addStat(AchievementsAether.defeat_silver);
+            	//((EntityPlayer)this.getAttackTarget()).addStat(AchievementsAether.defeat_silver);
             	PlayerAether.get((EntityPlayer) this.getAttackTarget()).setCurrentBoss(null);
         	}
         	spawnExplosionParticle();
@@ -393,9 +392,9 @@ public class EntityValkyrieQueen extends EntityMob
     @Override
     public boolean attackEntityFrom(DamageSource ds, float i) 
     {
-        if (ds.getEntity() instanceof EntityPlayer) 
+        if (ds.getImmediateSource() instanceof EntityPlayer) 
         {
-        	EntityPlayer player = (EntityPlayer)ds.getEntity();
+        	EntityPlayer player = (EntityPlayer)ds.getImmediateSource();
 
         	if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
         	{
@@ -438,8 +437,8 @@ public class EntityValkyrieQueen extends EntityMob
                 {
                 	this.chatTime = 0;
                     chatItUp(player, "This will be your final battle!");
-                    if (ds.getEntity() instanceof EntityLivingBase)
-                    becomeAngryAt((EntityLivingBase) ds.getEntity());
+                    if (ds.getImmediateSource() instanceof EntityLivingBase)
+                    becomeAngryAt((EntityLivingBase) ds.getImmediateSource());
                 }
                 else
                 {

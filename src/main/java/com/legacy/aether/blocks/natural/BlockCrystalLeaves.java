@@ -13,7 +13,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -109,13 +108,13 @@ public class BlockCrystalLeaves extends BlockLeaves implements IAetherMeta
 	}
 
 	@Override
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list)
+    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
         for (int j = 0; j < EnumLeafType.values().length; ++j)
         {
         	EnumLeafType enumdyecolor = EnumLeafType.values()[j];
 
-            list.add(new ItemStack(itemIn, 1, enumdyecolor.getMeta()));
+            list.add(new ItemStack(this, 1, enumdyecolor.getMeta()));
         }
     }
 

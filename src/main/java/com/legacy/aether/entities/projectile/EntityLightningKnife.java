@@ -35,7 +35,7 @@ public class EntityLightningKnife extends EntityThrowable
 			{
 				if (this.world instanceof WorldServer)
 				{
-					((WorldServer)this.world).addWeatherEffect(new EntityLightningBolt(this.world, result.hitVec.xCoord, result.hitVec.yCoord, result.hitVec.zCoord, false));
+					((WorldServer)this.world).addWeatherEffect(new EntityLightningBolt(this.world, result.hitVec.x, result.hitVec.y, result.hitVec.z, false));
 				}
 			}
 

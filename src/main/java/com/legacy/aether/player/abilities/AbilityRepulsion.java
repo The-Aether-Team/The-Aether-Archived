@@ -93,7 +93,7 @@ public class AbilityRepulsion extends Ability
 
 	public boolean onPlayerAttacked(DamageSource source)
 	{
-		if (isProjectile(source.getEntity()))
+		if (isProjectile(source.getImmediateSource()))
 		{
 			return false;
 		}

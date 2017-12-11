@@ -5,8 +5,6 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumDungeonKeyType;
@@ -23,9 +21,14 @@ public class ItemDungeonKey extends Item
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
-	@SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+	@Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
+		if (tab != this.getCreativeTab())
+		{
+			return;
+		}
+
     	for (int meta = 0; meta < EnumDungeonKeyType.values().length; ++meta)
     	{
     		subItems.add(new ItemStack(this, 1, meta));

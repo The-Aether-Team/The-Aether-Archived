@@ -128,7 +128,7 @@ public class TeleporterAether extends Teleporter
             d1 = Math.abs(MathHelper.pct(d1 - (double)(blockpattern$patternhelper.getForwards().rotateY().getAxisDirection() == EnumFacing.AxisDirection.NEGATIVE ? 1 : 0), d2, d2 - (double)blockpattern$patternhelper.getWidth()));
             double d22 = MathHelper.pct(blockpos.getY() - 1.0D, (double)blockpattern$patternhelper.getFrontTopLeft().getY(), (double)(blockpattern$patternhelper.getFrontTopLeft().getY() - blockpattern$patternhelper.getHeight()));
 
-            double d6 = (double)(blockpattern$patternhelper.getFrontTopLeft().getY() + 1) - new Vec3d(d1, d22, 0.0D).yCoord * (double)blockpattern$patternhelper.getHeight();
+            double d6 = (double)(blockpattern$patternhelper.getFrontTopLeft().getY() + 1) - new Vec3d(d1, d22, 0.0D).y * (double)blockpattern$patternhelper.getHeight();
 
             if (flag1)
             {
@@ -137,11 +137,11 @@ public class TeleporterAether extends Teleporter
 
             if (blockpattern$patternhelper.getForwards().getAxis() == EnumFacing.Axis.X)
             {
-                d7 = d2 + (1.0D - new Vec3d(d1, d22, 0.0D).xCoord) * (double)blockpattern$patternhelper.getWidth() * (double)blockpattern$patternhelper.getForwards().rotateY().getAxisDirection().getOffset();
+                d7 = d2 + (1.0D - new Vec3d(d1, d22, 0.0D).x) * (double)blockpattern$patternhelper.getWidth() * (double)blockpattern$patternhelper.getForwards().rotateY().getAxisDirection().getOffset();
             }
             else
             {
-                d5 = d2 + (1.0D - new Vec3d(d1, d22, 0.0D).xCoord) * (double)blockpattern$patternhelper.getWidth() * (double)blockpattern$patternhelper.getForwards().rotateY().getAxisDirection().getOffset();
+                d5 = d2 + (1.0D - new Vec3d(d1, d22, 0.0D).x) * (double)blockpattern$patternhelper.getWidth() * (double)blockpattern$patternhelper.getForwards().rotateY().getAxisDirection().getOffset();
             }
 
             float f = 0.0F;

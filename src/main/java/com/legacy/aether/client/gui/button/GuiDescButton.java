@@ -15,25 +15,25 @@ public class GuiDescButton extends GuiButton
 		this.descText = descText;
 	}
 
-    public void drawButton(Minecraft mc, int mouseX, int mouseY)
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks)
     {
-    	super.drawButton(mc, mouseX, mouseY);
+    	super.drawButton(mc, mouseX, mouseY, partialTicks);
 
-        FontRenderer fontrenderer = mc.fontRendererObj;
+        FontRenderer fontrenderer = mc.fontRenderer;
 
     	if (this.visible && this.hovered)
     	{
     		if (this.displayString == "Q")
     		{
-        		this.drawCenteredString(fontrenderer, this.descText, this.xPosition + (this.width + 50) / 2, this.yPosition + (this.height + 24) / 2, 0xfffffF);
+        		this.drawCenteredString(fontrenderer, this.descText, this.x + (this.width + 50) / 2, this.y + (this.height + 24) / 2, 0xfffffF);
     		}
     		else if (this.displayString == "W")
     		{
-        		this.drawCenteredString(fontrenderer, this.descText, this.xPosition + (this.width - 50) / 2, this.yPosition + (this.height + 24) / 2, 0xfffffF);
+        		this.drawCenteredString(fontrenderer, this.descText, this.x + (this.width - 50) / 2, this.y + (this.height + 24) / 2, 0xfffffF);
     		}
     		else
     		{
-        		this.drawCenteredString(fontrenderer, this.descText, this.xPosition + this.width / 2, this.yPosition + (this.height + 24) / 2, 0xfffffF);
+        		this.drawCenteredString(fontrenderer, this.descText, this.x + this.width / 2, this.y + (this.height + 24) / 2, 0xfffffF);
     		}
     	}
     }

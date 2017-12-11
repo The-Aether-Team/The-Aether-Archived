@@ -31,7 +31,7 @@ public class ItemHolystoneTool extends ItemAetherTool
 		if (!world.isRemote && world.rand.nextInt(100) <= 5)
 		{
 			EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ());
-			entityItem.setEntityItemStack(new ItemStack(ItemsAether.ambrosium_shard, 1));
+			entityItem.setItem(new ItemStack(ItemsAether.ambrosium_shard, 1));
 
 			world.spawnEntity(entityItem);
 		}

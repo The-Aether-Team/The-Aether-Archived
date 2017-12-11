@@ -29,7 +29,7 @@ public class AechorPlantAIShootPlayer extends EntityAIBase
 	@Override
 	public void updateTask()
 	{
-		double distanceToPlayer = this.shooter.getAttackTarget().getDistanceToEntity(this.shooter);
+		double distanceToPlayer = this.shooter.getAttackTarget().getDistance(this.shooter);
 		double lookDistance = 5.5D + ((double)this.shooter.size / 2D);
 
 		if(this.shooter.getAttackTarget().isDead || distanceToPlayer > lookDistance) 
@@ -68,13 +68,13 @@ public class AechorPlantAIShootPlayer extends EntityAIBase
 
 		EntityPoisonNeedle poisonNeedle = new EntityPoisonNeedle(this.shooter.world, this.shooter);
 
-		poisonNeedle.setAim(this.shooter, this.shooter.rotationPitch, this.shooter.rotationYaw, 0.0F, 0.5F, 1.0F);
+		poisonNeedle.shoot(this.shooter, this.shooter.rotationPitch, this.shooter.rotationYaw, 0.0F, 0.5F, 1.0F);
 		poisonNeedle.posY = this.shooter.posY + 1D;
 
         this.shooter.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.shooter.getRNG().nextFloat() * 0.2F + 0.9F));
 		this.shooter.world.spawnEntity(poisonNeedle);
 
-		poisonNeedle.setThrowableHeading(x, y, z, 0.285F + ((float)y * 0.05F), 1.0F);
+		poisonNeedle.shoot(x, y, z, 0.285F + ((float)y * 0.05F), 1.0F);
 	}
 
 }

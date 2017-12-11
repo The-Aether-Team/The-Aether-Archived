@@ -31,9 +31,9 @@ public class InventoryAccessories implements IInventory
 
     public AccessoryType[] slotTypes = new AccessoryType[] {AccessoryType.PENDANT, AccessoryType.CAPE, AccessoryType.SHIELD, AccessoryType.MISC, AccessoryType.RING, AccessoryType.RING, AccessoryType.GLOVE, AccessoryType.MISC};
 
-    public InventoryAccessories(PlayerAether playerAether)
+    public InventoryAccessories(EntityPlayer thePlayer)
     {
-        this.player = playerAether.thePlayer;
+        this.player = thePlayer;
     }
 
 	public void dropAllItems()
@@ -234,7 +234,7 @@ public class InventoryAccessories implements IInventory
 	@Override
     public boolean isUsableByPlayer(EntityPlayer player)
     {
-        return !player.isDead && player.getDistanceSqToEntity(this.player) <= 64.0D;
+        return !player.isDead && player.getDistanceSq(this.player) <= 64.0D;
     }
 
 	@Override
@@ -275,8 +275,6 @@ public class InventoryAccessories implements IInventory
 
 	public void writeData(ByteBuf dataOutput)
 	{
-		dataOutput.writeInt(this.stacks.size());
-
 		for (ItemStack stack : this.stacks)
 		{
 			PacketBuffer pb = new PacketBuffer(dataOutput);
@@ -293,9 +291,7 @@ public class InventoryAccessories implements IInventory
 
 	public void readData(ByteBuf dataInput)
 	{
-		int amount = dataInput.readInt();
-
-		for (int i = 0; i < amount; ++i)
+		for (int i = 0; i < this.stacks.size(); ++i)
 		{
 			PacketBuffer pb = new PacketBuffer(dataInput);
 			try

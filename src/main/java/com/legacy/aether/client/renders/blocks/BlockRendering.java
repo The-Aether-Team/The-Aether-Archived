@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -12,6 +11,9 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
@@ -33,8 +35,10 @@ import com.legacy.aether.client.renders.items.util.AetherColor;
 public class BlockRendering 
 {
 
-	public static void initialize()
+	@SubscribeEvent
+	public void onModelRegisterEvent(ModelRegistryEvent event)
 	{
+		System.out.println("RUNRUNRUNRUNRURUNRRNUR");
         registerBlockWithStateMapper(BlocksAether.aether_grass, (new StateMap.Builder()).ignore(BlockAetherGrass.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.aether_dirt, (new StateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.holystone, (new StateMap.Builder()).ignore(BlockHolystone.double_drop).build());
@@ -131,14 +135,17 @@ public class BlockRendering
 		registerMetadata(BlocksAether.locked_dungeon_block, Aether.locate("carved_stone"), Aether.locate("sentry_stone"), Aether.locate("angelic_stone"), Aether.locate("light_angelic_stone"), Aether.locate("hellfire_stone"), Aether.locate("light_hellfire_stone"));
 		registerMetadata(BlocksAether.dungeon_trap, Aether.locate("carved_stone"), Aether.locate("sentry_stone"), Aether.locate("angelic_stone"), Aether.locate("light_angelic_stone"), Aether.locate("hellfire_stone"), Aether.locate("light_hellfire_stone"));
 
-		registerColor(BlocksAether.aercloud);
-
 		AetherEntityRenderingRegistry.registerTileEntities();
+	}
+
+	public static void registerColors()
+	{
+		registerColor(BlocksAether.aercloud);
 	}
 
 	public static void registerBlockWithStateMapper(Block block)
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().registerBlockWithStateMapper(block, new StateMapperBase() 
+		ModelLoader.setCustomStateMapper(block, new StateMapperBase() 
 		{
 			@Override
 			protected ModelResourceLocation getModelResourceLocation(IBlockState state)
@@ -148,7 +155,7 @@ public class BlockRendering
 			
 		});
 
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), new ItemMeshDefinition() 
+		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(block), new ItemMeshDefinition() 
 		{
 			@Override
 			public ModelResourceLocation getModelLocation(ItemStack stack) 
@@ -160,9 +167,9 @@ public class BlockRendering
 
 	public static void registerBlockWithStateMapper(Block block, IStateMapper mapper)
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().registerBlockWithStateMapper(block, mapper);
+		ModelLoader.setCustomStateMapper(block, mapper);
 
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), new ItemMeshDefinition() 
+		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(block), new ItemMeshDefinition() 
 		{
 			@Override
 			@SuppressWarnings("deprecation")
@@ -178,17 +185,17 @@ public class BlockRendering
 
 	public static void register(Block block, String model)
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
 	}
 
 	public static void register(Block block, ItemMeshDefinition definition)
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), definition);
+		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(block), definition);
 	}
 
 	public static void register(Block block, int meta, String model)
 	{
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), meta, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(Aether.modAddress() + model, "inventory"));
 	}
 
 	public static void registerColor(Block item)
@@ -199,7 +206,7 @@ public class BlockRendering
 
 	public static void registerMetadata(Block block, ResourceLocation... model)
 	{
-		ModelBakery.registerItemVariants(Item.getItemFromBlock(block), model);
+		ModelLoader.registerItemVariants(Item.getItemFromBlock(block), model);
 	}
 
 }

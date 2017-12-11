@@ -2,20 +2,18 @@ package com.legacy.aether.player;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandClearInventory;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.Achievement;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.CommandEvent;
+import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.entity.player.PlayerEvent.Visibility;
@@ -26,12 +24,9 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketAchievement;
 import com.legacy.aether.player.capability.PlayerAetherProvider;
-import com.legacy.aether.registry.achievements.AchievementsAether;
-import com.legacy.aether.registry.objects.AetherAchievement;
 
 public class PlayerAetherEvents
 {
@@ -39,12 +34,11 @@ public class PlayerAetherEvents
 	private static final ResourceLocation PLAYER_LOCATION = new ResourceLocation(Aether.modid, "aether_players");
 
 	@SubscribeEvent
-	@SuppressWarnings("deprecation")
-	public void PlayerConstructingEvent(AttachCapabilitiesEvent.Entity event)
+	public void PlayerConstructingEvent(AttachCapabilitiesEvent<Entity> event)
 	{
-		if ((event.getEntity() instanceof EntityPlayer))
+		if ((event.getObject() instanceof EntityPlayer))
 		{
-			EntityPlayer player = (EntityPlayer) event.getEntity();
+			EntityPlayer player = (EntityPlayer) event.getObject();
 			PlayerAetherProvider provider = new PlayerAetherProvider(new PlayerAether(player));
 
 			if (PlayerAether.get(player) == null)
@@ -83,6 +77,15 @@ public class PlayerAetherEvents
 				newPlayer.portalCooldown = original.portalCooldown;
 				newPlayer.loadNBTData(data);
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerMount(EntityMountEvent event)
+	{
+		if (event.getEntityMounting() instanceof EntityPlayerMP)
+		{
+			AetherAdvancements.MOUNT_TRIGGER.trigger(((EntityPlayerMP)event.getEntityMounting()), event.getEntityBeingMounted());
 		}
 	}
 
@@ -221,7 +224,7 @@ public class PlayerAetherEvents
 		}
 	}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void onAchievementGet(AchievementEvent event)
 	{
 		Achievement achievement = event.getAchievement();
@@ -251,6 +254,6 @@ public class PlayerAetherEvents
 
 			AetherNetworkingManager.sendTo(new PacketAchievement(achievementType), (EntityPlayerMP) player);
 		}
-	}
+	}*/
 
 }

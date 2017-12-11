@@ -27,8 +27,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
@@ -48,9 +46,14 @@ public class ItemSkyrootBucket extends Item
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
-	@SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+	@Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
+		if (tab != this.getCreativeTab())
+		{
+			return;
+		}
+
     	for (int meta = 0; meta < EnumSkyrootBucketType.values().length; ++meta)
     	{
     		subItems.add(new ItemStack(this, 1, meta));

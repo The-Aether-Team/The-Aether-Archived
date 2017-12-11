@@ -1,7 +1,7 @@
 package com.legacy.aether.client.renders.entities.projectile;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -39,7 +39,7 @@ public class DartBaseRenderer extends Render<EntityDartBase>
         GL11.glRotatef(dart.prevRotationYaw + (dart.rotationYaw - dart.prevRotationYaw) * f1 - 90.0F, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(dart.prevRotationPitch + (dart.rotationPitch - dart.prevRotationPitch) * f1, 0.0F, 0.0F, 1.0F);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer renderWorld = tessellator.getBuffer();
+        BufferBuilder renderWorld = tessellator.getBuffer();
         byte i = 1;
         float f2 = 0.0F;
         float f3 = 0.5F;
