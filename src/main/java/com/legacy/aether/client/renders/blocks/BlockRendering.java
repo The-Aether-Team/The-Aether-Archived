@@ -38,7 +38,6 @@ public class BlockRendering
 	@SubscribeEvent
 	public void onModelRegisterEvent(ModelRegistryEvent event)
 	{
-		System.out.println("RUNRUNRUNRUNRURUNRRNUR");
         registerBlockWithStateMapper(BlocksAether.aether_grass, (new StateMap.Builder()).ignore(BlockAetherGrass.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.aether_dirt, (new StateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.holystone, (new StateMap.Builder()).ignore(BlockHolystone.double_drop).build());

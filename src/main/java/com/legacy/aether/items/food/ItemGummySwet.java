@@ -20,7 +20,6 @@ public class ItemGummySwet extends ItemAetherFood
 		super(20);
 
 		this.setHasSubtypes(true);
-		System.out.println("HELP - " + AetherCreativeTabs.food);
 		this.setCreativeTab(AetherCreativeTabs.food);
 	}
 
