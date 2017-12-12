@@ -254,7 +254,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
 			GlStateManager.rotate(var4, 0.0F, 1.0F, 0.0F);
 			GlStateManager.rotate(var5, 1.0F, 0.0F, 0.0F);
-			GlStateManager.translate(0.0F, -0.8F, 0.0F);
+			GlStateManager.translate(0.0F, -0.7F, 0.0F);
 
 			this.manager.renderEngine.bindTexture(TEXTURE_HALO);
 
