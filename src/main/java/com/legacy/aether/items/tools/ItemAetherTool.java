@@ -6,9 +6,11 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.util.NonNullList;
 
 import com.legacy.aether.items.util.EnumAetherToolType;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
@@ -29,7 +31,7 @@ public abstract class ItemAetherTool extends ItemTool
 	public ItemAetherTool(ToolMaterial toolMaterial, EnumAetherToolType toolType)
 	{
 		super(1.0F, 2.0F, toolMaterial, toolType.getToolBlockSet());
-		this.setCreativeTab(AetherCreativeTabs.tools);
+
 		this.toolType = toolType;
 		
         if (toolType == EnumAetherToolType.PICKAXE)
@@ -51,6 +53,15 @@ public abstract class ItemAetherTool extends ItemTool
         	this.attackSpeed = -3.0F;
         }
 	}
+
+	@Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+    {
+    	if (tab == AetherCreativeTabs.tools)
+    	{
+            items.add(new ItemStack(this));
+    	}
+    }
 
 	@Override
     public int getHarvestLevel(ItemStack stack, String toolClass, @Nullable EntityPlayer player, @Nullable IBlockState blockState)

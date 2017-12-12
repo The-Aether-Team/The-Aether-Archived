@@ -1,5 +1,6 @@
 package com.legacy.aether.items.weapons.projectile;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +18,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,7 +36,15 @@ public class ItemPhoenixBow extends ItemBow
     	super();
         this.maxStackSize = 1;
         this.setMaxDamage(384);
-        this.setCreativeTab(AetherCreativeTabs.weapons);
+    }
+
+	@Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+    {
+    	if (tab == AetherCreativeTabs.weapons)
+    	{
+            items.add(new ItemStack(this));
+    	}
     }
 
 	@Override

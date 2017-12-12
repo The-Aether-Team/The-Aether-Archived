@@ -2,11 +2,13 @@ package com.legacy.aether.items.weapons;
 
 import java.util.Random;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.util.NonNullList;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.ItemsAether;
@@ -18,7 +20,15 @@ public class ItemHolystoneSword extends ItemSword
     public ItemHolystoneSword()
     {
         super(ToolMaterial.STONE);
-        this.setCreativeTab(AetherCreativeTabs.weapons);
+    }
+
+	@Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+    {
+    	if (tab == AetherCreativeTabs.weapons)
+    	{
+            items.add(new ItemStack(this));
+    	}
     }
 
     @Override

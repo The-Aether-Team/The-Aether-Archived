@@ -1,11 +1,13 @@
 package com.legacy.aether.items.weapons;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.util.NonNullList;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -20,7 +22,15 @@ public class ItemZaniteSword extends ItemSword
     public ItemZaniteSword()
     {
         super(ToolMaterial.IRON);
-        this.setCreativeTab(AetherCreativeTabs.weapons);
+    }
+
+	@Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+    {
+    	if (tab == AetherCreativeTabs.weapons)
+    	{
+            items.add(new ItemStack(this));
+    	}
     }
 
     @Override

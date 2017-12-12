@@ -1,6 +1,7 @@
 package com.legacy.aether.items.armor;
 
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -8,6 +9,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -35,7 +37,6 @@ public class ItemAetherArmor extends ItemArmor
 
 		this.source = repair;
 		this.armorName = name;
-		this.setCreativeTab(AetherCreativeTabs.armor);
 	}
 
 	public ItemAetherArmor(EntityEquipmentSlot armorType, ArmorMaterial material, String name, Item repair, int hex)
@@ -47,6 +48,15 @@ public class ItemAetherArmor extends ItemArmor
 		this.colorization = hex;
 		this.shouldDefualt = true;
 	}
+
+	@Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+    {
+    	if (tab == AetherCreativeTabs.armor)
+    	{
+            items.add(new ItemStack(this));
+    	}
+    }
 
     public int getColorFromItemStack(ItemStack stack, int renderPass)
     {
