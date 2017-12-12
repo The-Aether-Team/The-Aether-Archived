@@ -1,10 +1,13 @@
 package com.legacy.aether.player;
 
+import net.minecraft.advancements.Advancement;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandClearInventory;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -14,6 +17,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.entity.player.PlayerEvent.Visibility;
@@ -26,6 +30,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import com.legacy.aether.Aether;
 import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketAchievement;
 import com.legacy.aether.player.capability.PlayerAetherProvider;
 
 public class PlayerAetherEvents
@@ -224,22 +230,24 @@ public class PlayerAetherEvents
 		}
 	}
 
-	/*@SubscribeEvent
-	public void onAchievementGet(AchievementEvent event)
+	@SubscribeEvent
+	public void onAchievementGet(AdvancementEvent event)
 	{
-		Achievement achievement = event.getAchievement();
+		Advancement advancement = event.getAdvancement();
 		EntityPlayer player = event.getEntityPlayer();
 
-		if (!(achievement instanceof AetherAchievement))
+		String unlocalizedName = advancement.getDisplayText().getUnformattedText();
+
+		if (!unlocalizedName.contains("aether_legacy"))
 		{
 			return;
 		}
 
-		int achievementType = achievement == AchievementsAether.defeat_bronze ? 1 : achievement == AchievementsAether.defeat_silver ? 2 : 0;
+		int achievementType = unlocalizedName.contains("bronze_dungeon") ? 1 : unlocalizedName.contains("silver_dungeon") ? 2 : 0;
 
-		if (!player.world.isRemote && ((EntityPlayerMP)player).getStatFile().canUnlockAchievement(achievement) && !player.hasAchievement(achievement))
+		if (!player.world.isRemote)
 		{
-			if (event.getAchievement() == AchievementsAether.enter_aether)
+			if (unlocalizedName.contains("enter_aether"))
 			{
 				if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.lore_book)))
 				{
@@ -254,6 +262,6 @@ public class PlayerAetherEvents
 
 			AetherNetworkingManager.sendTo(new PacketAchievement(achievementType), (EntityPlayerMP) player);
 		}
-	}*/
+	}
 
 }
