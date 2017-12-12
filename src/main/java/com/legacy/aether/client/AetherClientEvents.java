@@ -184,7 +184,7 @@ public class AetherClientEvents
 	}
 
 	@SubscribeEvent
-	public void onTextureStichedEvent(TextureStitchEvent event)
+	public void onTextureStichedEvent(TextureStitchEvent.Pre event)
 	{
 		for (int i = 0; i < InventoryAccessories.EMPTY_SLOT_NAMES.length; ++i)
 		{

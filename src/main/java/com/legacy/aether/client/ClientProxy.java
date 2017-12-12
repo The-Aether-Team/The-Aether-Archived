@@ -28,6 +28,8 @@ public class ClientProxy extends ServerProxy
 		registerEvent(new BlockRendering());
 		registerEvent(new ItemRendering());
 		AetherEntityRenderingRegistry.initialize();
+
+		MinecraftForge.EVENT_BUS.register(new AetherClientEvents());
 	}
 
 	@Override
@@ -39,7 +41,6 @@ public class ClientProxy extends ServerProxy
 		AetherEntityRenderingRegistry.initializePlayerLayers();
 
 		MinecraftForge.EVENT_BUS.register(new GuiAetherInGame(Minecraft.getMinecraft()));
-		MinecraftForge.EVENT_BUS.register(new AetherClientEvents());
 
 		registerEvent(new AetherMusicHandler());
 	}
