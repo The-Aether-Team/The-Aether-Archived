@@ -15,11 +15,12 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.management.PlayerList;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -443,18 +444,41 @@ public class PlayerAether
 	 */
 	private void teleportPlayer(boolean shouldSpawnPortal) 
 	{
-		this.thePlayer.dismountRidingEntity();
-		this.thePlayer.removePassengers();
-
 		if (this.thePlayer instanceof EntityPlayerMP)
 		{
-			EntityPlayerMP player = (EntityPlayerMP) this.thePlayer;
-			PlayerList scm = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList();
+			int previousDimension = this.thePlayer.dimension;
+			int transferDimension = previousDimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
 
-			int transferToID = player.dimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
+			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+			TeleporterAether teleporter = new TeleporterAether(shouldSpawnPortal, server.worldServerForDimension(transferDimension));
 
-			scm.transferPlayerToDimension(player, transferToID, new TeleporterAether(shouldSpawnPortal, FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(transferToID)));
+			for (Entity passenger : this.thePlayer.getPassengers())
+			{
+				transferEntity(shouldSpawnPortal, passenger, server.worldServerForDimension(previousDimension), server.worldServerForDimension(transferDimension));
+				passenger.dismountRidingEntity();
+			}
+
+			server.getPlayerList().transferPlayerToDimension((EntityPlayerMP) this.thePlayer, transferDimension, teleporter);
+
+			if (this.thePlayer.getRidingEntity() != null)
+			{
+				transferEntity(shouldSpawnPortal, this.thePlayer.getRidingEntity(), server.worldServerForDimension(previousDimension), server.worldServerForDimension(transferDimension));
+			}
 		}
+	}
+
+	/*
+	 * The teleporter which sends any extra entities to the Aether/Overworld
+	 */
+	private static void transferEntity(boolean shouldSpawnPortal, Entity entityIn, WorldServer previousWorldIn, WorldServer newWorldIn)
+	{
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+
+		entityIn.dimension = newWorldIn.provider.getDimension();
+		previousWorldIn.removeEntityDangerously(entityIn);
+		entityIn.isDead = false;
+
+		server.getPlayerList().transferEntityToWorld(entityIn, previousWorldIn.provider.getDimension(), previousWorldIn, newWorldIn, new TeleporterAether(shouldSpawnPortal, newWorldIn));
 	}
 
 	private void activateParachute()
