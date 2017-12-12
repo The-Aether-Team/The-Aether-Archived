@@ -18,15 +18,13 @@ import com.legacy.aether.registry.AetherRegistryEvent;
 import com.legacy.aether.tile_entities.AetherTileEntities;
 import com.legacy.aether.world.AetherWorld;
 
-@Mod(name = "Aether Legacy", modid = Aether.modid, version = Aether.version, acceptedMinecraftVersions = "1.11.2")
+@Mod(name = "Aether Legacy", modid = Aether.modid, version = Aether.version, acceptedMinecraftVersions = "1.12.2")
 public class Aether 
 {
 
 	public static final String modid = "aether_legacy";
 
-	//If version number has "dev" in it, developer mode will automatically be enabled.
-	//This saves time and makes things much easier.
-	public static final String version = "v1.0.1-dev";
+	public static final String version = "v1.0";
 
 	@Instance(Aether.modid)
 	public static Aether instance;
