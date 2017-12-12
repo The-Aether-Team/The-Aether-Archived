@@ -36,7 +36,7 @@ public class PlayerGloveRenderer
 
     	GlStateManager.pushMatrix();
 
-        if (stack == null)
+        if (stack.isEmpty())
         {
             if (flag && !player.isInvisible())
             {
@@ -63,7 +63,7 @@ public class PlayerGloveRenderer
 		PlayerAether playerAether = PlayerAether.get(player);
 		ItemStack accessoryStack = playerAether.accessories.stacks.get(6);
 
-		if (accessoryStack != null && accessoryStack.getItem() instanceof ItemAccessory && !player.isInvisible())
+		if (!accessoryStack.isEmpty() && accessoryStack.getItem() instanceof ItemAccessory && !player.isInvisible())
 		{
             GlStateManager.disableCull();
             GlStateManager.pushMatrix();
@@ -143,7 +143,7 @@ public class PlayerGloveRenderer
 		PlayerAether playerAether = PlayerAether.get(player);
 		ItemStack accessoryStack = playerAether.accessories.stacks.get(6);
 
-		if (accessoryStack.getItem() instanceof ItemAccessory)
+		if (!accessoryStack.isEmpty() && accessoryStack.getItem() instanceof ItemAccessory)
 		{
 	        boolean flag = enumhandside != EnumHandSide.LEFT;
 	        float f = flag ? 1.0F : -1.0F;
