@@ -13,9 +13,11 @@
   	"parent": "aether_legacy:enter_aether",
 	"criteria": {
 		"enter_aether": {
-			"trigger": "minecraft:placed_block",
+			"trigger": "aether_legacy:craft_item",
 			"conditions": {
-				"block": "aether_legacy:enchanter"
+				"item": {
+					"item": "aether_legacy:enchanter"
+				}
 			}
 		}
 	}

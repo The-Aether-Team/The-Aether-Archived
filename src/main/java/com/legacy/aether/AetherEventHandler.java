@@ -149,11 +149,14 @@ public class AetherEventHandler
 	@SubscribeEvent
 	public void onCrafting(ItemCraftedEvent event)
 	{
-		ItemStack stack = event.crafting;
-
-		if (isGravititeTool(stack.getItem()) && event.player instanceof EntityPlayerMP)
+		if (event.player instanceof EntityPlayerMP)
 		{
-			AetherAdvancements.GRAV_TOOLSET_TRIGGER.trigger((EntityPlayerMP) event.player);
+			if (this.isGravititeTool(event.crafting.getItem()))
+			{
+				AetherAdvancements.GRAV_TOOLSET_TRIGGER.trigger((EntityPlayerMP) event.player);
+			}
+
+			AetherAdvancements.CRAFT_ITEM_TRIGGER.trigger((EntityPlayerMP) event.player, event.crafting);
 		}
 	}
 
