@@ -30,12 +30,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
 import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
 import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
@@ -227,12 +227,21 @@ public class EntityValkyrieQueen extends EntityMob
 		{
 			this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
 		}
-		else if (this.world.isRemote)
+		else
 		{
-			FMLClientHandler.instance().getClient().displayGuiScreen(new GuiValkyrieDialogue(this));
+			this.displayValkyrieDialogue();
 		}
 
         return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void displayValkyrieDialogue()
+    {
+		if (this.world.isRemote)
+		{
+			FMLClientHandler.instance().getClient().displayGuiScreen(new com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue(this));
+		}
     }
 
     @Override
