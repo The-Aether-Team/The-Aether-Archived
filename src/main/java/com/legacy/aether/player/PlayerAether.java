@@ -74,7 +74,7 @@ public class PlayerAether
 
 	public int timeInPortal, portalCooldown;
 
-	public boolean hasTeleported = false, inPortal = false, hasReach = false;
+	public boolean hasTeleported = false, inPortal = false;
 
 	private String cooldownName = "Hammer of Notch";
 
@@ -325,15 +325,13 @@ public class PlayerAether
 	{
 		ItemStack stack = this.thePlayer.getHeldItemMainhand();
 
-		if (!this.hasReach && this.extendedReachItems.contains(stack.getItem()))
+		if (!this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).hasModifier(this.reachModifier) && this.extendedReachItems.contains(stack.getItem()))
 		{
 			this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).applyModifier(this.reachModifier);
-			this.hasReach = true;
 		}
-		else if (this.hasReach && !this.extendedReachItems.contains(stack.getItem()))
+		else if (this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).hasModifier(this.reachModifier) && !this.extendedReachItems.contains(stack.getItem()))
 		{
 			this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).removeModifier(this.reachModifier);
-			this.hasReach = false;
 		}
 	}
 
