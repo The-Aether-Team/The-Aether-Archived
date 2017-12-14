@@ -30,12 +30,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
 import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
 import com.legacy.aether.entities.bosses.IAetherBoss;
@@ -229,36 +229,21 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 		{
 			this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
 		}
-		else if (this.worldObj.isRemote)
+		else
 		{
-			FMLClientHandler.instance().getClient().displayGuiScreen(new GuiValkyrieDialogue(this));
+			this.displayValkyrieDialogue();
 		}
-		/*if(this.isBossReady())
-		{
-			this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
-		}
-		else if(!this.isBossReady()) 
-		{
-            if(itemstack != null && itemstack.getItem() == ItemsAether.victory_medal && itemstack.stackSize >= 10) 
-            {
-            	itemstack.stackSize -= 10;
-
-                if(itemstack.stackSize <= 0) 
-                {
-                    itemstack.damageItem(2, entityplayer);
-                    entityplayer.inventory.removeStackFromSlot(entityplayer.inventory.currentItem);
-					chatTime = 0;
-					this.chatItUp(entityplayer, "Very well, attack me when you wish to begin.");
-					this.setBossReady(true);
-                }
-			}
-            else
-            {
-            	this.chatItUp(entityplayer, "Show me 10 victory medals, and I will fight you.");
-			}
-		}*/
 
         return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void displayValkyrieDialogue()
+    {
+		if (this.worldObj.isRemote)
+		{
+			FMLClientHandler.instance().getClient().displayGuiScreen(new com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue(this));
+		}
     }
 
     @Override
