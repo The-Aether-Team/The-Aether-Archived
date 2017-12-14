@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketDisplayDialogue extends AetherPacket<PacketDisplayDialogue>
 {
@@ -67,6 +69,7 @@ public class PacketDisplayDialogue extends AetherPacket<PacketDisplayDialogue>
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void handleClient(PacketDisplayDialogue message, EntityPlayer player) 
 	{
 		FMLClientHandler.instance().getClient().displayGuiScreen(new com.legacy.aether.client.gui.dialogue.server.GuiServerDialogue(message.dialogueName, message.dialogue, message.dialogueText));

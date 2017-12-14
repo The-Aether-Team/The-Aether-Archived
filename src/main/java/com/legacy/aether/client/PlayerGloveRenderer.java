@@ -36,7 +36,7 @@ public class PlayerGloveRenderer
 
     	GlStateManager.pushMatrix();
 
-        if (stack == null)
+        if (stack.isEmpty())
         {
             if (flag && !player.isInvisible())
             {
@@ -45,7 +45,7 @@ public class PlayerGloveRenderer
         }
         else if (stack.getItem() instanceof net.minecraft.item.ItemMap)
         {
-            if (flag && player.getHeldItemOffhand() == null)
+            if (flag && player.getHeldItemOffhand().isEmpty())
             {
                 renderMapFirstPerson(player, interpPitch, equipProgress, swingProgress);
             }
