@@ -94,6 +94,7 @@ public class SoundsAether
 	{
 		SoundEvent sound = new SoundEvent(location);
 
+		if (soundRegistry != null)
 		soundRegistry.register(sound.setRegistryName(location));
 
 		return sound;

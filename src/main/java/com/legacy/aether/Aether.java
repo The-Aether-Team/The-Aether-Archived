@@ -15,6 +15,7 @@ import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.player.capability.PlayerAetherManager;
 import com.legacy.aether.registry.AetherRegistries;
 import com.legacy.aether.registry.AetherRegistryEvent;
+import com.legacy.aether.registry.sounds.SoundsAether;
 import com.legacy.aether.tile_entities.AetherTileEntities;
 import com.legacy.aether.world.AetherWorld;
 
@@ -40,6 +41,7 @@ public class Aether
 		AetherConfig.init(event.getModConfigurationDirectory());
 		AetherConfig.autoDeveloperMode(version);
 
+		SoundsAether.initialization();
 		AetherAdvancements.initialization();
 		AetherNetworkingManager.preInitialization();
 
