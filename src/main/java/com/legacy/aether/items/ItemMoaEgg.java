@@ -62,7 +62,7 @@ public class ItemMoaEgg extends Item
 			NBTTagCompound compound = new NBTTagCompound();
 			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(moaTypeSize);
 
-			if (moaType.getCreativeTab() == tab)
+			if (moaType.getCreativeTab() == tab || tab == CreativeTabs.SEARCH)
 			{
 				compound.setInteger("typeId", moaTypeSize);
 				stack.setTagCompound(compound);

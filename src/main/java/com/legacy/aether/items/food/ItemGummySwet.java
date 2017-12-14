@@ -26,7 +26,7 @@ public class ItemGummySwet extends ItemAetherFood
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
 	{
-		if (tab != this.getCreativeTab())
+		if (tab != this.getCreativeTab() || tab == CreativeTabs.SEARCH)
 		{
 			return;
 		}

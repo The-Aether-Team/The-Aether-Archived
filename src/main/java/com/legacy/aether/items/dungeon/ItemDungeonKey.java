@@ -24,7 +24,7 @@ public class ItemDungeonKey extends Item
 	@Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-		if (tab != this.getCreativeTab())
+		if (tab != this.getCreativeTab() || tab == CreativeTabs.SEARCH)
 		{
 			return;
 		}

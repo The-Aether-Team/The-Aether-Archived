@@ -35,7 +35,7 @@ public class ItemDart extends Item
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-		if (tab != AetherCreativeTabs.weapons)
+		if (tab != AetherCreativeTabs.weapons || tab == CreativeTabs.SEARCH)
 		{
 			return;
 		}
