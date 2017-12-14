@@ -74,7 +74,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 		if (this.currentEnchantment != null)
 		{
-			if (this.getStackInSlot(0) == null || AetherAPI.getInstance().hasEnchantment(this.getStackInSlot(0)) && AetherAPI.getInstance().getEnchantment(this.getStackInSlot(0)).equals(this.currentEnchantment))
+			if (this.getStackInSlot(0).isEmpty() || AetherAPI.getInstance().hasEnchantment(this.getStackInSlot(0)) && AetherAPI.getInstance().getEnchantment(this.getStackInSlot(0)).equals(this.currentEnchantment))
 			{
 				this.currentEnchantment = null;
 				this.enchantmentProgress = 0;
@@ -88,7 +88,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
 
-					if (this.getStackInSlot(2) != null)
+					if (!this.getStackInSlot(2).isEmpty())
 					{
 						result.setCount(this.getStackInSlot(2).getCount() + 1);
 						this.setInventorySlotContents(2, result);
@@ -125,14 +125,14 @@ public class TileEntityEnchanter extends AetherTileEntity
 		}
 		else
 		{
-			if (this.getStackInSlot(0) != null)
+			if (!this.getStackInSlot(0).isEmpty())
 			{
 				ItemStack itemstack = this.getStackInSlot(0);
 				AetherEnchantment enchantment = AetherAPI.getInstance().getEnchantment(itemstack);
 
 				if (enchantment != null)
 				{
-					if (this.getStackInSlot(2) == null || enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
+					if (this.getStackInSlot(2).isEmpty() || enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
 					{
 						this.currentEnchantment = enchantment;
 						this.enchantmentTime = this.currentEnchantment.getTimeRequired();

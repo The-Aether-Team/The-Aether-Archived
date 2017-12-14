@@ -74,7 +74,7 @@ public class TileEntityFreezer extends AetherTileEntity
 
 		if (this.currentFreezable != null)
 		{
-			if (this.getStackInSlot(0) == null || AetherAPI.getInstance().hasFreezable(this.getStackInSlot(0)) && AetherAPI.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
+			if (this.getStackInSlot(0).isEmpty() || AetherAPI.getInstance().hasFreezable(this.getStackInSlot(0)) && AetherAPI.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
 			{
 				this.currentFreezable = null;
 				this.freezeProgress = 0;
@@ -88,7 +88,7 @@ public class TileEntityFreezer extends AetherTileEntity
 
 					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
 
-					if (this.getStackInSlot(2) != null)
+					if (!this.getStackInSlot(2).isEmpty())
 					{
 						result.setCount(this.getStackInSlot(2).getCount() + 1);
 						this.setInventorySlotContents(2, result);
@@ -122,12 +122,12 @@ public class TileEntityFreezer extends AetherTileEntity
 				}
 			}
 		}
-		else if (this.getStackInSlot(0) != null)
+		else if (!this.getStackInSlot(0).isEmpty())
 		{
 			ItemStack itemstack = this.getStackInSlot(0);
 			AetherFreezable freezable = AetherAPI.getInstance().getFreezable(itemstack);
 
-			if (this.getStackInSlot(2) == null || freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
+			if (this.getStackInSlot(2).isEmpty() || freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
 			{
 				this.currentFreezable = freezable;
 				this.freezeTime = this.currentFreezable.getTimeRequired();
