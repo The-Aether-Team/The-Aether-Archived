@@ -175,7 +175,7 @@ public class TileEntityIncubator extends AetherTileEntity
 			}
 		}
 
-		if (this.getStackInSlot(1) == ItemStack.EMPTY || this.getStackInSlot(1).getItem() != ItemsAether.moa_egg)
+		if (this.getStackInSlot(1).isEmpty() || this.getStackInSlot(1).getItem() != ItemsAether.moa_egg)
 		{
 			this.progress = 0;
 		}
