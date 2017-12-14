@@ -77,7 +77,7 @@ public class InventoryAccessories implements IInventory
 		{
 			itemstack = this.stacks.get(i);
 
-			if (itemstack != ItemStack.EMPTY && itemstack == this.getStackFromItem(item) && (item != null || itemstack.getItem() == item))
+			if (!itemstack.isEmpty() && itemstack == this.getStackFromItem(item) && (item != null || itemstack.getItem() == item))
 			{
 				if (itemstack.getTagCompound() != null && itemstack.getTagCompound().getBoolean("Unbreakable"))
 				{
@@ -102,7 +102,7 @@ public class InventoryAccessories implements IInventory
 
 	public boolean setInventoryAccessory(ItemStack stack)
 	{
-		if (stack != ItemStack.EMPTY && AetherAPI.getInstance().isAccessory(stack))
+		if (!stack.isEmpty() && AetherAPI.getInstance().isAccessory(stack))
 		{
 			AetherAccessory accessory = AetherAPI.getInstance().getAccessory(stack);
 
@@ -110,7 +110,7 @@ public class InventoryAccessories implements IInventory
 
 			for (AccessoryType type : this.slotTypes)
 			{
-				if (accessory.getAccessoryType() == type && this.stacks.get(stackIndex) == ItemStack.EMPTY)
+				if (accessory.getAccessoryType() == type && this.stacks.get(stackIndex).isEmpty())
 				{
 					this.stacks.set(stackIndex, stack);
 
@@ -159,7 +159,7 @@ public class InventoryAccessories implements IInventory
 	@Override
 	public ItemStack decrStackSize(int slotID, int decreaseSize)
 	{
-		if (this.stacks.get(slotID) != ItemStack.EMPTY)
+		if (!this.stacks.get(slotID).isEmpty())
 		{
 			ItemStack itemstack = ItemStack.EMPTY;
 
@@ -195,7 +195,7 @@ public class InventoryAccessories implements IInventory
 	@Override
 	public ItemStack removeStackFromSlot(int slotID)
 	{
-		if (this.stacks.get(slotID) != ItemStack.EMPTY)
+		if (!this.stacks.get(slotID).isEmpty())
 		{
 			ItemStack itemstack = this.stacks.get(slotID);
 
@@ -322,7 +322,7 @@ public class InventoryAccessories implements IInventory
 
 		for (int slot = 0; slot < this.stacks.size(); ++slot)
 		{
-			if (this.stacks.get(slot) != ItemStack.EMPTY)
+			if (!this.stacks.get(slot).isEmpty())
 			{
 				++count;
 			}
@@ -340,7 +340,7 @@ public class InventoryAccessories implements IInventory
 		{
 			itemstack = this.stacks.get(slot);
 
-			if (itemstack != ItemStack.EMPTY)
+			if (!itemstack.isEmpty())
 			{
 				this.stacks.set(slot, ItemStack.EMPTY);
 			}

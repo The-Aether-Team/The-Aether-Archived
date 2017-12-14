@@ -137,14 +137,14 @@ public class ContainerFreezer extends Container
 				{
 					if (!this.mergeItemStack(itemstack1, 0, 1, false))
 					{
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}
 				else if (AetherAPI.getInstance().isFreezableFuel(itemstack1))
 				{
 					if (!this.mergeItemStack(itemstack1, 1, 2, false))
 					{
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}
 				else if (par2 >= 3 && par2 < 30)

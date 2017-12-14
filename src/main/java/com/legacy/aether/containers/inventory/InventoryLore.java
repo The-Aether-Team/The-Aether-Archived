@@ -23,7 +23,7 @@ public class InventoryLore extends InventoryBasic
 	@Override
     public void setInventorySlotContents(int index, @Nullable ItemStack stack)
     {
-    	if (player != null && stack != null && stack.getItem() == ItemsAether.lore_book)
+    	if (player != null && !stack.isEmpty() && stack.getItem() == ItemsAether.lore_book)
     	{
     		player.addStat(AchievementsAether.loreception);
     	}
