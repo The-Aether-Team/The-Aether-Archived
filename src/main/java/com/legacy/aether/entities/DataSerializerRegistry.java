@@ -34,7 +34,7 @@ public class DataSerializerRegistry
 		@Override
 		public IBlockState copyValue(IBlockState value)
 		{
-			return null;
+			return value;
 		}
     };
 
@@ -61,7 +61,7 @@ public class DataSerializerRegistry
 		@Override
 		public UUID copyValue(UUID value) 
 		{
-			return null;
+			return value;
 		}
     };
 
