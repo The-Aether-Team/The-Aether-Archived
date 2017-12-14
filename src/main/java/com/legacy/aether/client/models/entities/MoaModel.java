@@ -74,7 +74,7 @@ public class MoaModel extends ModelBase
     {
     	EntityMoa moa = (EntityMoa) entityIn;
     	
-    	if (!moa.isSitting())
+    	if (!moa.isSitting() || (!moa.onGround && moa.isSitting()))
     	{
     		this.legs.render(scale);
     		this.legs2.render(scale);

@@ -248,10 +248,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
     public void travel(float strafe, float vertical, float forward)
 	{
-		if (!this.isSitting())
-		{
-			super.travel(strafe, vertical, forward);
-		}
+		super.travel(strafe, vertical, forward);
 	}
 
 	public void resetHunger()
