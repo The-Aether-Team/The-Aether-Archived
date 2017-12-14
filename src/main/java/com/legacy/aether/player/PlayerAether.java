@@ -50,7 +50,9 @@ public class PlayerAether
 
 	private UUID healthUUID = UUID.fromString("df6eabe7-6947-4a56-9099-002f90370706");
 
-	private AttributeModifier healthModifier;
+	private UUID extendedReachUUID = UUID.fromString("df6eabe7-6947-4a56-9099-002f90370707");
+
+	private AttributeModifier healthModifier, reachModifier;
 
 	public InventoryAccessories accessories;
 
@@ -72,7 +74,7 @@ public class PlayerAether
 
 	public int timeInPortal, portalCooldown;
 
-	public boolean hasTeleported = false, inPortal = false;
+	public boolean hasTeleported = false, inPortal = false, hasReach = false;
 
 	private String cooldownName = "Hammer of Notch";
 
@@ -93,6 +95,7 @@ public class PlayerAether
 		this.donatorMoaSkin = new DonatorMoaSkin();
 		this.poison = new AetherPoisonMovement(player);
 		this.accessories = new InventoryAccessories(player);
+		this.reachModifier = new AttributeModifier(this.extendedReachUUID, "Aether Reach Modifier", 5.0D, 0);
 
 		this.abilities = new Ability [] {new AbilityArmor(this), new AbilityAccessories(this), new AbilityFlight(this), new AbilityRepulsion(this)};
 	}
@@ -174,9 +177,6 @@ public class PlayerAether
 			{
 				this.teleportPlayer(false);
 			}
-
-			//this.thePlayer
-			//this.thePlayer.addStat(AchievementsAether.enter_aether);
 		}
 
 		this.updatePlayerReach();
@@ -323,11 +323,17 @@ public class PlayerAether
 	 */
 	public void updatePlayerReach()
 	{
-		ItemStack stack = this.thePlayer.inventory.getCurrentItem();
+		ItemStack stack = this.thePlayer.getHeldItemMainhand();
 
-		if (stack != null && this.extendedReachItems.contains(stack.getItem()) && this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue() != 10.0D)
+		if (!this.hasReach && this.extendedReachItems.contains(stack.getItem()))
 		{
-	        this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).setBaseValue(10.0D);
+			this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).applyModifier(this.reachModifier);
+			this.hasReach = true;
+		}
+		else if (this.hasReach && !this.extendedReachItems.contains(stack.getItem()))
+		{
+			this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).removeModifier(this.reachModifier);
+			this.hasReach = false;
 		}
 	}
 
