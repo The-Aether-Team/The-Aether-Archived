@@ -1,5 +1,6 @@
 package com.legacy.aether.entities.hostile;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -106,7 +107,19 @@ public class EntityMimic extends EntityMob
 
 		if (ds.getImmediateSource() instanceof EntityLivingBase)
 		{
-			this.setAttackTarget((EntityLivingBase) ds.getImmediateSource());
+			EntityLivingBase attacker = (EntityLivingBase) ds.getImmediateSource();
+			if (attacker instanceof EntityPlayer)
+			{
+				EntityPlayer player = (EntityPlayer) attacker;
+				if(!player.capabilities.isCreativeMode)
+				{
+					this.setAttackTarget(attacker);
+				}
+			}
+			else
+			{
+				this.setAttackTarget(attacker);
+			}
 		}
 		return super.attackEntityFrom(ds, var2);
 	}
