@@ -74,7 +74,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 		if (this.currentEnchantment != null)
 		{
-			if (this.getStackInSlot(0).isEmpty() || AetherAPI.getInstance().hasEnchantment(this.getStackInSlot(0)) && AetherAPI.getInstance().getEnchantment(this.getStackInSlot(0)).equals(this.currentEnchantment))
+			if (this.getStackInSlot(0).isEmpty())
 			{
 				this.currentEnchantment = null;
 				this.enchantmentProgress = 0;
@@ -113,7 +113,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 				AetherHooks.onItemEnchant(this, this.currentEnchantment);
 			}
 
-			if (this.enchantmentTimeRemaining <= 0 && AetherAPI.getInstance().isEnchantmentFuel(this.getStackInSlot(1)))
+			if (this.enchantmentTimeRemaining <= 0 && !this.getStackInSlot(1).isEmpty() && AetherAPI.getInstance().isEnchantmentFuel(this.getStackInSlot(1)))
 			{
 				this.enchantmentTimeRemaining += AetherAPI.getInstance().getEnchantmentFuel(this.getStackInSlot(1)).getTimeGiven();
 
