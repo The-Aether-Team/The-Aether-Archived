@@ -56,7 +56,10 @@ public class BlockMimicChest extends BlockChest
 		if (!world.isRemote)
 		{
 			EntityMimic mimic = new EntityMimic(world);
-			mimic.setAttackTarget(player);
+			if (!player.capabilities.isCreativeMode)
+			{
+				mimic.setAttackTarget(player);
+			}
             mimic.setPosition((double)pos.getX() + 0.5D, (double)pos.getY() + 1.5D, (double)pos.getZ() + 0.5D);
 			world.spawnEntity(mimic);
 		}
