@@ -2,6 +2,8 @@ package com.legacy.aether.tile_entities;
 
 import java.util.Map;
 
+import com.legacy.aether.AetherLogger;
+import jline.internal.Nullable;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.ItemStackHelper;
@@ -74,10 +76,12 @@ public class TileEntityFreezer extends AetherTileEntity
 
 		if (this.currentFreezable != null)
 		{
-			if (this.getStackInSlot(0).isEmpty() || AetherAPI.getInstance().hasFreezable(this.getStackInSlot(0)) && AetherAPI.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
+			if (this.getStackInSlot(0).isEmpty())
 			{
 				this.currentFreezable = null;
 				this.freezeProgress = 0;
+
+				return;
 			}
 
 			if (this.freezeProgress >= this.currentFreezable.getTimeRequired())
@@ -112,7 +116,7 @@ public class TileEntityFreezer extends AetherTileEntity
 				AetherHooks.onItemFreeze(this, this.currentFreezable);
 			}
 
-			if (this.frozenTimeRemaining <= 0 && AetherAPI.getInstance().isFreezableFuel(this.getStackInSlot(1)))
+			if (this.frozenTimeRemaining <= 0 && !this.getStackInSlot(1).isEmpty() && AetherAPI.getInstance().isFreezableFuel(this.getStackInSlot(1)))
 			{
 				this.frozenTimeRemaining += AetherAPI.getInstance().getFreezableFuel(this.getStackInSlot(1)).getTimeGiven();
 
@@ -127,12 +131,15 @@ public class TileEntityFreezer extends AetherTileEntity
 			ItemStack itemstack = this.getStackInSlot(0);
 			AetherFreezable freezable = AetherAPI.getInstance().getFreezable(itemstack);
 
-			if (this.getStackInSlot(2).isEmpty() || freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
+			if (freezable != null)
 			{
-				this.currentFreezable = freezable;
-				this.freezeTime = this.currentFreezable.getTimeRequired();
-				this.addEnchantmentWeight(itemstack);
-				this.freezeTime = AetherHooks.onSetFreezableTime(this, this.currentFreezable, this.freezeTime);
+				if (this.getStackInSlot(2).isEmpty() || freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
+				{
+					this.currentFreezable = freezable;
+					this.freezeTime = this.currentFreezable.getTimeRequired();
+					this.addEnchantmentWeight(itemstack);
+					this.freezeTime = AetherHooks.onSetFreezableTime(this, this.currentFreezable, this.freezeTime);
+				}
 			}
 		}
 	}
