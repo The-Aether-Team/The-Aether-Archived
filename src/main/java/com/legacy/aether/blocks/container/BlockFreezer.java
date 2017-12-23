@@ -2,9 +2,6 @@ package com.legacy.aether.blocks.container;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,15 +12,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.tile_entities.TileEntityFreezer;
 
-public class BlockFreezer extends BlockContainer 
+public class BlockFreezer extends BlockAetherContainer 
 {
 
 	public BlockFreezer() 
@@ -46,7 +46,32 @@ public class BlockFreezer extends BlockContainer
     }
 
 	@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    @SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
+    {
+		TileEntityFreezer tileentity = (TileEntityFreezer)world.getTileEntity(pos);
+
+		if(tileentity.isBurning())
+		{
+			float f = (float)pos.getX() + 0.5F;
+			float f1 = (float)pos.getY() + 1.0F + (random.nextFloat() * 6F) / 16F;
+			float f2 = (float)pos.getZ() + 0.5F;
+
+			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, f, f1, f2, 0.0D, 0.0D, 0.0D);
+
+	        for (int var1 = 0; var1 < 3; ++var1)
+	        {
+	            double var4 = (double)((random.nextFloat() - 0.5F) * 0.5F);
+
+	            var4 *= 0.5D;
+
+	            world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, f, f1, f2, 0.0D, var4 + 0.075D, 0.0D);
+	        }
+		}
+    }
+
+	@Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
     	player.openGui(Aether.instance, AetherGuiHandler.freezer, world, pos.getX(), pos.getY(), pos.getZ());
 

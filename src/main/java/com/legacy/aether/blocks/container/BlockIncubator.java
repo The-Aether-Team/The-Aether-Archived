@@ -2,9 +2,6 @@ package com.legacy.aether.blocks.container;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +20,7 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.tile_entities.TileEntityIncubator;
 
-public class BlockIncubator extends BlockContainer
+public class BlockIncubator extends BlockAetherContainer
 {
 
 	public BlockIncubator()
@@ -46,7 +43,7 @@ public class BlockIncubator extends BlockContainer
     }
 
 	@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
     {
     	player.openGui(Aether.instance, AetherGuiHandler.incubator, world, pos.getX(), pos.getY(), pos.getZ());
 

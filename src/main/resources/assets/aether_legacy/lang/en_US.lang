@@ -246,6 +246,11 @@ entity.aether_legacy.swet.name=Swet
 entity.aether_legacy.moa.name=Moa
 entity.aether_legacy.whirlwind.name=Whirlwind
 
+# Containers
+container.aether_legacy.incubator=Incubator
+container.aether_legacy.altar=Altar
+container.aether_legacy.freezer=Freezer
+
 # Achievements
 achievement.enter_aether=Hostile Paradise
 achievement.blue_aercloud=To infinity and beyond!

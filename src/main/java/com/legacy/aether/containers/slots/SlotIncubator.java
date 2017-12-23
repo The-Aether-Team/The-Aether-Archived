@@ -1,7 +1,6 @@
 package com.legacy.aether.containers.slots;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -15,21 +14,12 @@ public class SlotIncubator extends Slot
 
 	private EntityPlayer player;
 
-    public SlotIncubator(TileEntityIncubator inv, int slot, int x, int y, EntityPlayer player)
+    public SlotIncubator(TileEntityIncubator incubator, int slot, int x, int y, EntityPlayer player)
     {
-        super((IInventory) inv, slot, x, y);
-        this.incubator = (TileEntityIncubator) inv;
+        super(incubator, slot, x, y);
+
         this.player = player;
-    }
-
-    public boolean isItemValid(ItemStack stack)
-    {
-        return stack.getItem() == ItemsAether.moa_egg;
-    }
-
-    public int getSlotStackLimit()
-    {
-        return 1;
+        this.incubator = incubator;
     }
 
     @Override
@@ -40,4 +30,15 @@ public class SlotIncubator extends Slot
     	this.incubator.owner = player;
     }
 
+    @Override
+    public boolean isItemValid(ItemStack stack)
+    {
+        return stack.getItem() == ItemsAether.moa_egg;
+    }
+
+    @Override
+    public int getSlotStackLimit()
+    {
+        return 1;
+    }
 }

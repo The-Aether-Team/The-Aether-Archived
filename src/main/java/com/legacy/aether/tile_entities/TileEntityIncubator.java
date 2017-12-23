@@ -1,16 +1,10 @@
 package com.legacy.aether.tile_entities;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.api.events.AetherHooks;
 import com.legacy.aether.blocks.BlocksAether;
@@ -25,79 +19,31 @@ public class TileEntityIncubator extends AetherTileEntity
 
 	public EntityPlayer owner;
 
-	private ItemStack IncubatorItemStacks[];
-
-	public int torchPower;
-
 	public int progress;
 
-	public int secondsRequired = 1200;
+	public int powerRemaining;
+
+	public int ticksRequired = 5700;
+
+	private ItemStack[] incubatorItemStacks = new ItemStack[2];
 
 	public TileEntityIncubator()
 	{
 		super("incubator");
-		this.IncubatorItemStacks = new ItemStack[2];
-		this.progress = 0;
 	}
 
 	@Override
-	public int getSizeInventory()
+	public ItemStack[] getTileInventory() 
 	{
-		return this.IncubatorItemStacks.length;
+		return this.incubatorItemStacks;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int i)
+	public void onSlotChanged(int index) 
 	{
-		return this.IncubatorItemStacks[i];
-	}
-
-	@Override
-	public ItemStack decrStackSize(int i, int j)
-	{
-		if (this.IncubatorItemStacks[i] != null)
+		if (index == 1)
 		{
-			if (this.IncubatorItemStacks[i].stackSize <= j)
-			{
-				ItemStack itemstack = this.IncubatorItemStacks[i];
-				this.IncubatorItemStacks[i] = null;
-				return itemstack;
-			}
-			ItemStack itemstack1 = this.IncubatorItemStacks[i].splitStack(j);
-			if (this.IncubatorItemStacks[i].stackSize == 0)
-			{
-				this.IncubatorItemStacks[i] = null;
-			}
-			return itemstack1;
-		}
-		else
-		{
-			return null;
-		}
-	}
-
-	@Override
-	public ItemStack removeStackFromSlot(int par1)
-	{
-		if (this.IncubatorItemStacks[par1] != null)
-		{
-			ItemStack var2 = this.IncubatorItemStacks[par1];
-			this.IncubatorItemStacks[par1] = null;
-			return var2;
-		}
-		else
-		{
-			return null;
-		}
-	}
-
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack)
-	{
-		this.IncubatorItemStacks[i] = itemstack;
-		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit())
-		{
-			itemstack.stackSize = this.getInventoryStackLimit();
+			this.progress = 0;
 		}
 	}
 
@@ -105,70 +51,39 @@ public class TileEntityIncubator extends AetherTileEntity
 	public void readFromNBT(NBTTagCompound nbttagcompound)
 	{
 		super.readFromNBT(nbttagcompound);
-		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
-		this.IncubatorItemStacks = new ItemStack[this.getSizeInventory()];
-		for (int i = 0; i < nbttaglist.tagCount(); i++)
-		{
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte byte0 = nbttagcompound1.getByte("Slot");
-			if (byte0 >= 0 && byte0 < this.IncubatorItemStacks.length)
-			{
-				this.IncubatorItemStacks[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-			}
-		}
 
-		this.progress = nbttagcompound.getShort("IncubateTime");
+		this.progress = nbttagcompound.getInteger("IncubationProgress");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound)
 	{
-		nbttagcompound.setShort("IncubateTime", (short) this.progress);
-		NBTTagList nbttaglist = new NBTTagList();
-		for (int i = 0; i < this.IncubatorItemStacks.length; i++)
-		{
-			if (this.IncubatorItemStacks[i] != null)
-			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte) i);
-				this.IncubatorItemStacks[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
+		nbttagcompound.setShort("IncubationProgress", (short) this.progress);
 
-		nbttagcompound.setTag("Items", nbttaglist);
 		return super.writeToNBT(nbttagcompound);
 	}
 
-	@Override
-	public int getInventoryStackLimit()
+	public int getProgressScaled(int i)
 	{
-		return 64;
+		return (this.progress * i) / this.ticksRequired;
 	}
 
-	@SideOnly(Side.CLIENT)
-	public int getCookProgressScaled(int i)
+	public int getPowerTimeRemainingScaled(int i)
 	{
-		return (this.progress * i) / this.secondsRequired;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public int getBurnTimeRemainingScaled(int i)
-	{
-		return (this.torchPower * i) / 500;
+		return (this.powerRemaining * i) / 500;
 	}
 
 	public boolean isBurning()
 	{
-		return this.torchPower > 0;
+		return this.getField(1) > 0;
 	}
 
 	@Override
 	public void update()
 	{
-		if (this.torchPower > 0)
+		if (this.powerRemaining > 0)
 		{
-			this.torchPower--;
+			this.powerRemaining--;
 
 			if (this.getStackInSlot(1) != null)
 			{
@@ -176,16 +91,11 @@ public class TileEntityIncubator extends AetherTileEntity
 			}
 		}
 
-		if (this.IncubatorItemStacks[1] == null || this.IncubatorItemStacks[1].getItem() != ItemsAether.moa_egg)
+		if (this.progress >= this.ticksRequired)
 		{
-			this.progress = 0;
-		}
-
-		if (this.progress >= this.secondsRequired)
-		{
-			if (this.IncubatorItemStacks[1] != null && this.IncubatorItemStacks[1].getItem() instanceof ItemMoaEgg)
+			if (this.getStackInSlot(1) != null && this.getStackInSlot(1).getItem() instanceof ItemMoaEgg)
 			{
-				ItemMoaEgg moaEgg = (ItemMoaEgg) this.IncubatorItemStacks[1].getItem();
+				ItemMoaEgg moaEgg = (ItemMoaEgg) this.getStackInSlot(1).getItem();
 
 				if (!this.worldObj.isRemote)
 				{
@@ -193,11 +103,11 @@ public class TileEntityIncubator extends AetherTileEntity
 
 					moa.setPlayerGrown(true);
 					moa.setGrowingAge(-24000);
-					moa.setMoaType(moaEgg.getMoaTypeFromItemStack(this.IncubatorItemStacks[1]));
+					moa.setMoaType(moaEgg.getMoaTypeFromItemStack(this.getStackInSlot(1)));
 
-					for (int i = 0; this.worldObj.getBlockState(pos.up(i)).getBlock() != Blocks.AIR; i++)
+					for (int safeY = 0; !this.worldObj.isAirBlock(this.pos.up(safeY)); safeY++)
 					{
-						moa.setPositionAndUpdate(this.pos.getX() + 0.5D, this.pos.getY() + 1.5D, this.pos.getZ() + 0.5D);
+						moa.setPositionAndUpdate(this.pos.getX() + 0.5D, this.pos.getY() + safeY + 1.5D, this.pos.getZ() + 0.5D);
 					}
 
 					this.worldObj.spawnEntityInWorld(moa);
@@ -208,7 +118,7 @@ public class TileEntityIncubator extends AetherTileEntity
 					}
 				}
 
-				AetherHooks.onMoaHatched(moaEgg.getMoaTypeFromItemStack(this.IncubatorItemStacks[1]), this);
+				AetherHooks.onMoaHatched(moaEgg.getMoaTypeFromItemStack(this.getStackInSlot(1)), this);
 			}
 
 			if (!this.worldObj.isRemote)
@@ -218,47 +128,70 @@ public class TileEntityIncubator extends AetherTileEntity
 
 			this.progress = 0;
 		}
-		if (this.torchPower <= 0 && this.IncubatorItemStacks[1] != null && this.IncubatorItemStacks[1].getItem() == ItemsAether.moa_egg && this.getStackInSlot(0) != null && this.getStackInSlot(0).getItem() == Item.getItemFromBlock(BlocksAether.ambrosium_torch))
-		{
-			this.torchPower += 1000;
 
-			if (!this.worldObj.isRemote)
+		if (this.powerRemaining <= 0)
+		{
+			if (this.getStackInSlot(1) != null && this.getStackInSlot(1).getItem() == ItemsAether.moa_egg && this.getStackInSlot(0) != null && this.getStackInSlot(0).getItem() == Item.getItemFromBlock(BlocksAether.ambrosium_torch))
 			{
-				this.decrStackSize(0, 1);
+				this.powerRemaining += 1000;
+
+				if (!this.worldObj.isRemote)
+				{
+					this.decrStackSize(0, 1);
+				}
+			}
+			else
+			{
+				this.powerRemaining = 0;
+				this.progress = 0;
 			}
 		}
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
+	public boolean isValidSlotItem(int index, ItemStack itemstack)
 	{
-		return this.worldObj.getTileEntity(this.pos) != this ? false : par1EntityPlayer.getDistanceSq(this.pos.add(0.5D, 0.5D, 0.5D)) <= 64.0D;
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
-		this.readFromNBT(pkt.getNbtCompound());
-	}
-
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
-		NBTTagCompound var1 = new NBTTagCompound();
-		this.writeToNBT(var1);
-		return new SPacketUpdateTileEntity(this.pos, 1, var1);
-	}
-
-	@Override
-	public boolean isValidSlotItem(int i, ItemStack itemstack)
-	{
-		return (i == 0 && itemstack.getItem() == Item.getItemFromBlock(BlocksAether.ambrosium_torch) ? true : (i == 1 && itemstack.getItem() == ItemsAether.moa_egg));
+		return (index == 0 && itemstack.getItem() == Item.getItemFromBlock(BlocksAether.ambrosium_torch) ? true : (index == 1 && itemstack.getItem() == ItemsAether.moa_egg));
 	}
 
 	@Override
 	public int[] getSlotsForFace(EnumFacing side)
 	{
 		return side == EnumFacing.DOWN ? new int[] {} : new int[] {0, 1};
+	}
+
+	@Override
+	public int getField(int id)
+	{
+		if (id == 0)
+		{
+			return this.progress;
+		}
+		else if (id == 1)
+		{
+			return this.powerRemaining;
+		}
+
+		return 0; 
+	}
+
+	@Override
+	public void setField(int id, int value) 
+	{ 
+		if (id == 0)
+		{
+			this.progress = value;
+		}
+		else if (id == 1)
+		{
+			this.powerRemaining = value;
+		}
+	}
+
+	@Override
+	public int getFieldCount() 
+	{
+		return 2; 
 	}
 
 }

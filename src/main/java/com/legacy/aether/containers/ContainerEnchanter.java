@@ -6,8 +6,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.containers.slots.SlotEnchanter;
@@ -18,11 +16,7 @@ public class ContainerEnchanter extends Container
 
 	private TileEntityEnchanter enchanter;
 
-	private int lastCookTime;
-
-	private int lastBurnTime;
-
-	private int lastItemBurnTime;
+	public int progress, ticksRequired, powerRemaining;
 
 	public ContainerEnchanter(InventoryPlayer par1InventoryPlayer, TileEntityEnchanter tileEntityEnchanter)
 	{
@@ -46,63 +40,46 @@ public class ContainerEnchanter extends Container
 		}
 	}
 
-	@Override
-	public void addListener(IContainerListener par1ICrafting)
-	{
-		super.addListener(par1ICrafting);
-		par1ICrafting.sendProgressBarUpdate(this, 0, this.enchanter.enchantmentTimeRemaining);
-		par1ICrafting.sendProgressBarUpdate(this, 1, this.enchanter.enchantmentProgress);
-		par1ICrafting.sendProgressBarUpdate(this, 2, this.enchanter.enchantmentTime);
-	}
+    @Override
+    public void addListener(IContainerListener listener)
+    {
+        super.addListener(listener);
+
+        listener.sendAllWindowProperties(this, this.enchanter);
+    }
+
+    @Override
+    public void detectAndSendChanges()
+    {
+        super.detectAndSendChanges();
+
+        for (int i = 0; i < this.listeners.size(); ++i)
+        {
+            IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
+
+            if (this.progress != this.enchanter.getField(0))
+            {
+                icontainerlistener.sendProgressBarUpdate(this, 0, this.enchanter.getField(0));
+            }
+            else if (this.powerRemaining != this.enchanter.getField(1))
+            {
+                icontainerlistener.sendProgressBarUpdate(this, 1, this.enchanter.getField(1));
+            }
+            else if (this.ticksRequired != this.enchanter.getField(2))
+            {
+                icontainerlistener.sendProgressBarUpdate(this, 2, this.enchanter.getField(2));
+            }
+        }
+
+        this.progress = this.enchanter.getField(0);
+        this.powerRemaining = this.enchanter.getField(1);
+        this.ticksRequired = this.enchanter.getField(2);
+    }
 
 	@Override
-	public void detectAndSendChanges()
+	public void updateProgressBar(int id, int value)
 	{
-		super.detectAndSendChanges();
-
-		for (int i = 0; i < this.listeners.size(); ++i)
-		{
-			IContainerListener icrafting = (IContainerListener) this.listeners.get(i);
-
-			if (this.lastCookTime != this.enchanter.enchantmentTimeRemaining)
-			{
-				icrafting.sendProgressBarUpdate(this, 0, this.enchanter.enchantmentTimeRemaining);
-			}
-
-			if (this.lastBurnTime != this.enchanter.enchantmentProgress)
-			{
-				icrafting.sendProgressBarUpdate(this, 1, this.enchanter.enchantmentProgress);
-			}
-
-			if (this.lastItemBurnTime != this.enchanter.enchantmentTime)
-			{
-				icrafting.sendProgressBarUpdate(this, 2, this.enchanter.enchantmentTime);
-			}
-		}
-
-		this.lastCookTime = this.enchanter.enchantmentTimeRemaining;
-		this.lastBurnTime = this.enchanter.enchantmentProgress;
-		this.lastItemBurnTime = this.enchanter.enchantmentTime;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void updateProgressBar(int par1, int par2)
-	{
-		if (par1 == 0)
-		{
-			this.enchanter.enchantmentTimeRemaining = par2;
-		}
-
-		if (par1 == 1)
-		{
-			this.enchanter.enchantmentProgress = par2;
-		}
-
-		if (par1 == 2)
-		{
-			this.enchanter.enchantmentTime = par2;
-		}
+		this.enchanter.setField(id, value);
 	}
 
 	@Override
