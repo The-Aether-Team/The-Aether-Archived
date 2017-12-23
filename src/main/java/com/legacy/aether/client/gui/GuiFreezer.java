@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.containers.ContainerFreezer;
 import com.legacy.aether.tile_entities.TileEntityFreezer;
 
@@ -16,7 +17,7 @@ import com.legacy.aether.tile_entities.TileEntityFreezer;
 public class GuiFreezer extends GuiContainer
 {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/altar.png");
+	private static final ResourceLocation TEXTURE = Aether.locate("textures/gui/altar.png");
 
 	private TileEntityFreezer freezer;
 
@@ -29,7 +30,7 @@ public class GuiFreezer extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2)
 	{
-		String freezerName = "Freezer";
+		String freezerName = this.freezer.getDisplayName().getFormattedText();
 
 		this.fontRendererObj.drawString(freezerName, this.xSize / 2 - this.fontRendererObj.getStringWidth(freezerName) / 2, 6, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
