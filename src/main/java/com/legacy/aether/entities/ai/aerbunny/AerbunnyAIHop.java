@@ -22,7 +22,9 @@ public class AerbunnyAIHop extends EntityAIBase
 
     public void updateTask()
     {
-        this.aerbunny.getJumpHelper().setJumping();
-    }
+    	if(aerbunny.moveForward != 0.0F)
+    	{
+    	this.aerbunny.getJumpHelper().setJumping();
+    	}    }
 
 }

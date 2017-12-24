@@ -1,5 +1,6 @@
 package com.legacy.aether.client.renders.entities;
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -24,6 +25,11 @@ public class AerbunnyRenderer extends RenderLiving<EntityAerbunny>
 
     protected void rotateAerbunny(EntityAerbunny entitybunny)
     {
+    	if (!entitybunny.isRiding())
+    	{
+    		GlStateManager.translate(0, 0.2D, 0);
+    	}
+    	
         if (!entitybunny.onGround)
         {
             if (entitybunny.motionY > 0.5D)
