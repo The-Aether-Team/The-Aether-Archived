@@ -99,41 +99,49 @@ public class EntityValkyrie extends EntityMob
     @Override
     public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, ItemStack itemstack)
     {
-		this.faceEntity(entityplayer, 180F, 180F);
-
 		ItemStack stack = entityplayer.getHeldItem(hand);
 
-		if(stack != null && stack.getItem() == ItemsAether.victory_medal && itemstack.stackSize >= 0) 
-		{
-			if(stack.stackSize >= 10)
+		if (this.getAttackTarget() == null)
+		{			
+			this.faceEntity(entityplayer, 180F, 180F);
+			
+			if(stack.getItem() == ItemsAether.victory_medal && itemstack.stackSize >= 0) 
 			{
-				this.chatItUp(entityplayer, "Umm... that's a nice pile of medallions you have there...");
+				if(stack.stackSize >= 10)
+				{
+					this.chatItUp(entityplayer, "Umm... that's a nice pile of medallions you have there...");
+				}
+				else if(stack.stackSize >= 5)
+				{
+					this.chatItUp(entityplayer, "That's pretty impressive, but you won't defeat me.");
+				}
+				else 
+				{
+					this.chatItUp(entityplayer, "You think you're a tough guy, eh? Well, bring it on!");
+				}
 			}
-			else if(stack.stackSize >= 5)
+		
+			else
 			{
-				this.chatItUp(entityplayer, "That's pretty impressive, but you won't defeat me.");
-			}
-			else 
-			{
-				this.chatItUp(entityplayer, "You think you're a tough guy, eh? Well, bring it on!");
+				int line = rand.nextInt(3);
+			
+				if(line == 2) 
+				{
+				this.chatItUp(entityplayer, "What's that? You want to fight? Aww, what a cute little human.");
+				}
+				else if(line == 1)
+				{
+				this.chatItUp(entityplayer, "You're not thinking of fighting a big, strong Valkyrie are you?");
+				}
+				else 
+				{
+					this.chatItUp(entityplayer, "I don't think you should bother me, you could get really hurt.");
+				}
 			}
 		}
 		else
 		{
-			int line = rand.nextInt(3);
-
-			if(line == 2) 
-			{
-				this.chatItUp(entityplayer, "What's that? You want to fight? Aww, what a cute little human.");
-			}
-			else if(line == 1)
-			{
-				this.chatItUp(entityplayer, "You're not thinking of fighting a big, strong Valkyrie are you?");
-			}
-			else 
-			{
-				this.chatItUp(entityplayer, "I don't think you should bother me, you could get really hurt.");
-			}
+			return false;
 		}
 
 		return true;
