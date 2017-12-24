@@ -6,8 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
@@ -31,6 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.entities.ai.SheepuffAIEatAetherGrass;
+import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntitySheepuff extends EntityAetherAnimal
@@ -59,6 +62,8 @@ public class EntitySheepuff extends EntityAetherAnimal
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
+        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
         this.tasks.addTask(5, this.entityAIEatGrass = new SheepuffAIEatAetherGrass(this));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
@@ -168,7 +173,12 @@ public class EntitySheepuff extends EntityAetherAnimal
 	{
 		this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
-
+	
+	public boolean isBreedingItem(ItemStack stack)
+    {
+        return stack.getItem() == ItemsAether.blue_berry;
+    }
+	
     public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
     {
         ItemStack itemstack = player.inventory.getCurrentItem();
