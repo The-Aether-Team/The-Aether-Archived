@@ -29,8 +29,8 @@ public class Aether
 	@Instance(Aether.modid)
 	public static Aether instance;
 
-	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.common.ServerProxy")
-	public static ServerProxy proxy;
+	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.CommonProxy")
+	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
@@ -58,7 +58,7 @@ public class Aether
 
 		proxy.initialization();
 
-		ServerProxy.registerEvent(new AetherEventHandler());
+		CommonProxy.registerEvent(new AetherEventHandler());
 	}
 
 	public static ResourceLocation locate(String location)
