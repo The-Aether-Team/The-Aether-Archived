@@ -8,6 +8,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.util.EntitySaddleMount;
+import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityFlyingCow extends EntitySaddleMount
@@ -62,6 +64,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
 		this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
+		this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
 		this.tasks.addTask(4, new EntityAIFollowParent(this, 1.25D));
 		this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
@@ -160,6 +163,11 @@ public class EntityFlyingCow extends EntitySaddleMount
 			}
 		}
 	}
+	
+	public boolean isBreedingItem(ItemStack stack)
+    {
+        return stack.getItem() == ItemsAether.blue_berry;
+    }
 
 	@Override
     public boolean processInteract(EntityPlayer player, EnumHand hand)
