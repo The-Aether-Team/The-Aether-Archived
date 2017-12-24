@@ -345,6 +345,11 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		this.setGrowingAge(0);
 	}
+	
+	public boolean isBreedingItem(ItemStack stack)
+    {
+        return false;
+    }
 
 	@Override
     public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack)

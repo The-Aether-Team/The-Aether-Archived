@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.items.ItemsAether;
 
 public abstract class EntityAetherAnimal extends EntityAnimal
 {
@@ -26,10 +27,9 @@ public abstract class EntityAetherAnimal extends EntityAnimal
     	return this.worldObj.getBlockState(pos.down()).getBlock() == this.spawnableBlock ? 10.0F : this.worldObj.getLightBrightness(pos) - 0.5F;
     }
 
-	@Override
-    public boolean isBreedingItem(ItemStack stack)
+	public boolean isBreedingItem(ItemStack stack)
     {
-		return false;
+        return stack.getItem() == ItemsAether.blue_berry;
     }
 
 }
