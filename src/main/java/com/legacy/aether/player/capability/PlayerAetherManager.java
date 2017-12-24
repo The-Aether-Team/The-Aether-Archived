@@ -1,6 +1,6 @@
 package com.legacy.aether.player.capability;
 
-import com.legacy.aether.ServerProxy;
+import com.legacy.aether.CommonProxy;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.PlayerAetherEvents;
 import com.legacy.aether.player.perks.AetherRankings;
@@ -21,7 +21,7 @@ public class PlayerAetherManager
 
 		AetherRankings.initialization();
 
-		ServerProxy.registerEvent(new PlayerAetherEvents());
+		CommonProxy.registerEvent(new PlayerAetherEvents());
 	}
 
 }
