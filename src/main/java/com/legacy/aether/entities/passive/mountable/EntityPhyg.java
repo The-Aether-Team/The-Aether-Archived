@@ -13,6 +13,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -20,7 +21,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.util.EntitySaddleMount;
+import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.achievements.AchievementsAether;
+import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityPhyg extends EntitySaddleMount
 {
@@ -56,6 +59,7 @@ public class EntityPhyg extends EntitySaddleMount
     {
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
+		this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
 		this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
 		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 		this.tasks.addTask(5, new EntityAILookIdle(this));
@@ -69,8 +73,19 @@ public class EntityPhyg extends EntitySaddleMount
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-		this.setHealth(20);
+		this.setHealth(10);
+		
+		if (this.getSaddled())
+		{
+			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
+			this.setHealth(20);
+		}
 	}
+	
+	public boolean isBreedingItem(ItemStack stack)
+    {
+        return stack.getItem() == ItemsAether.blue_berry;
+    }
 
 	@Override
 	public void onUpdate()
@@ -104,19 +119,19 @@ public class EntityPhyg extends EntitySaddleMount
 	@Override
 	protected SoundEvent getDeathSound()
 	{
-		return SoundEvents.ENTITY_PIG_DEATH;
+		return SoundsAether.phyg_death;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound()
 	{
-		return SoundEvents.ENTITY_PIG_HURT;
+		return SoundsAether.phyg_hurt;
 	}
 
 	@Override
 	protected SoundEvent getAmbientSound()
 	{
-		return SoundEvents.ENTITY_PIG_AMBIENT;
+		return SoundsAether.phyg_say;
 	}
 
 	@Override

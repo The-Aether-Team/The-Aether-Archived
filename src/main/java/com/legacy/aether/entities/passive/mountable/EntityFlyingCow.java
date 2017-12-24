@@ -1,7 +1,5 @@
 package com.legacy.aether.entities.passive.mountable;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -10,6 +8,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
@@ -25,7 +24,11 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.entities.util.EntitySaddleMount;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityFlyingCow extends EntitySaddleMount
 {
@@ -62,6 +65,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
 		this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
+		this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
 		this.tasks.addTask(4, new EntityAIFollowParent(this, 1.25D));
 		this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
@@ -74,6 +78,12 @@ public class EntityFlyingCow extends EntitySaddleMount
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20000000298023224D);
+		
+		if (this.getSaddled())
+		{
+			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
+			this.setHealth(20);
+		}
 	}
 
 	@Override
@@ -154,6 +164,11 @@ public class EntityFlyingCow extends EntitySaddleMount
 			}
 		}
 	}
+	
+	public boolean isBreedingItem(ItemStack stack)
+    {
+        return stack.getItem() == ItemsAether.blue_berry;
+    }
 
 	@Override
     public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack)
@@ -195,19 +210,19 @@ public class EntityFlyingCow extends EntitySaddleMount
 	@Override
 	protected SoundEvent getAmbientSound()
 	{
-		return SoundEvents.ENTITY_COW_AMBIENT;
+		return SoundsAether.flyingcow_say;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound()
 	{
-		return SoundEvents.ENTITY_COW_HURT;
+		return SoundsAether.flyingcow_hurt;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound()
 	{
-		return SoundEvents.ENTITY_COW_DEATH;
+		return SoundsAether.flyingcow_death;
 	}
 
 	@Override
