@@ -116,6 +116,11 @@ public abstract class AetherTileEntity extends TileEntity implements ISidedInven
 				this.setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(nbttagcompound1));
 			}
 		}
+
+        if (nbttagcompound.hasKey("CustomName", 8))
+        {
+            this.customTileName = nbttagcompound.getString("CustomName");
+        }
 	}
 
 	@Override
@@ -135,6 +140,12 @@ public abstract class AetherTileEntity extends TileEntity implements ISidedInven
 		}
 
 		nbttagcompound.setTag("Items", nbttaglist);
+
+        if (this.hasCustomName())
+        {
+        	nbttagcompound.setString("CustomName", this.customTileName);
+        }
+
 		return super.writeToNBT(nbttagcompound);
 	}
 
