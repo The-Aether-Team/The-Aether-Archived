@@ -241,11 +241,6 @@ public class EntityAerbunny extends EntityAetherAnimal
         return false;
     }
     
-    public boolean isBreedingItem(ItemStack stack)
-    {
-        return stack.getItem() == ItemsAether.blue_berry;
-    }
-    
     @Override
     public boolean processInteract(EntityPlayer entityplayer, EnumHand hand)
     {

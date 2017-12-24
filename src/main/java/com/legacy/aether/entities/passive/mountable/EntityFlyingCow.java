@@ -162,11 +162,6 @@ public class EntityFlyingCow extends EntitySaddleMount
 			}
 		}
 	}
-	
-	public boolean isBreedingItem(ItemStack stack)
-    {
-        return stack.getItem() == ItemsAether.blue_berry;
-    }
 
 	@Override
     public boolean processInteract(EntityPlayer player, EnumHand hand)

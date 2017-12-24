@@ -116,6 +116,11 @@ public class EntityMoa extends EntitySaddleMount
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(35.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
 	}
+	
+	public boolean isBreedingItem(ItemStack stack)
+    {
+        return false;
+    }
 
 	public int getRandomEggTime()
 	{
