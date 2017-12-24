@@ -174,11 +174,6 @@ public class EntitySheepuff extends EntityAetherAnimal
 		this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
 	
-	public boolean isBreedingItem(ItemStack stack)
-    {
-        return stack.getItem() == ItemsAether.blue_berry;
-    }
-	
     public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
     {
         ItemStack itemstack = player.inventory.getCurrentItem();
@@ -230,7 +225,7 @@ public class EntitySheepuff extends EntityAetherAnimal
             }
         }
 
-        return false;
+        return super.processInteract(player, hand);
     }
 
     protected void jump()

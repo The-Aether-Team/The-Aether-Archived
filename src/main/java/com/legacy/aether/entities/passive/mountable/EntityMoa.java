@@ -259,6 +259,11 @@ public class EntityMoa extends EntitySaddleMount
 	{
 		super.travel(strafe, vertical, forward);
 	}
+	
+	public boolean isBreedingItem(ItemStack stack)
+    {
+        return false;
+    }
 
 	public void resetHunger()
 	{

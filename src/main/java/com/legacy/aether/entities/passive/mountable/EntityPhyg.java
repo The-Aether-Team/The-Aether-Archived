@@ -8,12 +8,12 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
@@ -60,7 +60,7 @@ public class EntityPhyg extends EntitySaddleMount
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
 		this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-		this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
 		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 		this.tasks.addTask(5, new EntityAILookIdle(this));
 		this.tasks.addTask(5, new EntityAIFollowParent(this, 1.1D));
@@ -81,11 +81,6 @@ public class EntityPhyg extends EntitySaddleMount
 			this.setHealth(20);
 		}
 	}
-	
-	public boolean isBreedingItem(ItemStack stack)
-    {
-        return stack.getItem() == ItemsAether.blue_berry;
-    }
 
 	@Override
 	public void onUpdate()
