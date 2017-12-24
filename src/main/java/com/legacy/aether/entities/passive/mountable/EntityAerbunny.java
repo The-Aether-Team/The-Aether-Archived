@@ -1,10 +1,11 @@
 package com.legacy.aether.entities.passive.mountable;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +21,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.entities.ai.aerbunny.AerbunnyAIHop;
 import com.legacy.aether.entities.passive.EntityAetherAnimal;
+import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
@@ -50,7 +54,10 @@ public class EntityAerbunny extends EntityAetherAnimal
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIWander(this, 2D, 6));
+        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 10.0F));
+        this.tasks.addTask(5, new EntityAILookIdle(this));
         this.tasks.addTask(6, new AerbunnyAIHop(this));
     }
 
@@ -163,7 +170,10 @@ public class EntityAerbunny extends EntityAetherAnimal
 
         if (this.isJumping && !this.isInWater() && !this.isInLava() && !this.onGround && this.jumpTicks == 0 && this.jumps > 0)
         {
-            this.jump();
+        	if(this.moveForward != 0.0F)
+            {
+                this.jump();
+            }
             this.jumpTicks = 10;
         }
 
@@ -232,15 +242,20 @@ public class EntityAerbunny extends EntityAetherAnimal
     {
         return false;
     }
-
+    
+    public boolean isBreedingItem(ItemStack stack)
+    {
+        return stack.getItem() == ItemsAether.blue_berry;
+    }
+    
     @Override
     public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, @Nullable ItemStack stack)
     {
-        ItemStack itemstack = entityplayer.inventory.getCurrentItem();
+        ItemStack itemstack = entityplayer.getHeldItem(hand);
 
-        if (itemstack != null && (itemstack.getItem() == Items.NAME_TAG))
+        if (stack != null && (itemstack.getItem() == Items.NAME_TAG || itemstack.getItem() == ItemsAether.blue_berry))
         {
-            return super.processInteract(entityplayer, hand, itemstack);
+            return super.processInteract(entityplayer, hand, stack);
         }
         else
         {
@@ -254,8 +269,6 @@ public class EntityAerbunny extends EntityAetherAnimal
             {
                 this.startRiding(entityplayer);
             }
-
-            //this.prevRotationYaw = this.rotationYaw = entityplayer.rotationYaw;
 
             return true;
         }
