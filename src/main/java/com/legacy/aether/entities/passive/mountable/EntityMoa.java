@@ -20,6 +20,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -222,6 +223,14 @@ public class EntityMoa extends EntitySaddleMount
 		else if (!this.isHungry())
 		{
 			this.setHungry(true);
+		}
+		
+		if(this.world.isRemote && isHungry() && isChild())
+		{
+			if(rand.nextInt(10) == 0)
+			{
+            this.world.spawnParticle(EnumParticleTypes.VILLAGER_ANGRY, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + 1, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, 0.0D, 0.0D, 0.0D, new int[0]);
+			}
 		}
 
 		if (!this.world.isRemote && !this.isChild() && this.getPassengers().isEmpty())
