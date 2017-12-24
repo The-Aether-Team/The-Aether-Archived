@@ -253,9 +253,6 @@ public class EntityValkyrie extends EntityMob
         {
         	this.chatTime--;
         }
-        
-        System.out.print(getAttackTarget());
-       //System.out.println("w");
     }
 
     @Override
