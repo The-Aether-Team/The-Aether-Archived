@@ -99,41 +99,50 @@ public class EntityValkyrie extends EntityMob
     @Override
     public boolean processInteract(EntityPlayer entityplayer, EnumHand hand)
     {
-		this.faceEntity(entityplayer, 180F, 180F);
 
 		ItemStack stack = entityplayer.getHeldItem(hand);
 
-		if(stack.getItem() == ItemsAether.victory_medal && stack.getCount() >= 0) 
-		{
-			if(stack.getCount() >= 10)
+		if (this.getAttackTarget() == null)
+		{			
+			this.faceEntity(entityplayer, 180F, 180F);
+			
+			if(stack.getItem() == ItemsAether.victory_medal && stack.getCount() >= 0) 
 			{
-				this.chatItUp(entityplayer, "Umm... that's a nice pile of medallions you have there...");
+				if(stack.getCount() >= 10)
+				{
+					this.chatItUp(entityplayer, "Umm... that's a nice pile of medallions you have there...");
+				}
+				else if(stack.getCount() >= 5)
+				{
+					this.chatItUp(entityplayer, "That's pretty impressive, but you won't defeat me.");
+				}
+				else 
+				{
+					this.chatItUp(entityplayer, "You think you're a tough guy, eh? Well, bring it on!");
+				}
 			}
-			else if(stack.getCount() >= 5)
+		
+			else
 			{
-				this.chatItUp(entityplayer, "That's pretty impressive, but you won't defeat me.");
-			}
-			else 
-			{
-				this.chatItUp(entityplayer, "You think you're a tough guy, eh? Well, bring it on!");
+				int line = rand.nextInt(3);
+			
+				if(line == 2) 
+				{
+				this.chatItUp(entityplayer, "What's that? You want to fight? Aww, what a cute little human.");
+				}
+				else if(line == 1)
+				{
+				this.chatItUp(entityplayer, "You're not thinking of fighting a big, strong Valkyrie are you?");
+				}
+				else 
+				{
+					this.chatItUp(entityplayer, "I don't think you should bother me, you could get really hurt.");
+				}
 			}
 		}
 		else
 		{
-			int line = rand.nextInt(3);
-
-			if(line == 2) 
-			{
-				this.chatItUp(entityplayer, "What's that? You want to fight? Aww, what a cute little human.");
-			}
-			else if(line == 1)
-			{
-				this.chatItUp(entityplayer, "You're not thinking of fighting a big, strong Valkyrie are you?");
-			}
-			else 
-			{
-				this.chatItUp(entityplayer, "I don't think you should bother me, you could get really hurt.");
-			}
+			return false;
 		}
 
 		return true;
@@ -244,6 +253,9 @@ public class EntityValkyrie extends EntityMob
         {
         	this.chatTime--;
         }
+        
+        System.out.print(getAttackTarget());
+       //System.out.println("w");
     }
 
     @Override
