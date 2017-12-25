@@ -82,7 +82,7 @@ public class EntityMimic extends EntityMob
 
     protected SoundEvent getDeathSound()
     {
-        return SoundEvents.BLOCK_WOOD_BREAK;
+        return SoundEvents.BLOCK_CHEST_CLOSE;
     }
 
     protected float getSoundVolume()
