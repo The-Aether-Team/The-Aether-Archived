@@ -4,11 +4,8 @@ import java.util.Map;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,64 +20,52 @@ import com.legacy.aether.tile_entities.util.AetherTileEntity;
 public class TileEntityFreezer extends AetherTileEntity
 {
 
-    private NonNullList<ItemStack> frozenItemStacks = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
+	public int progress, ticksRequired, powerRemaining;
 
-	public int freezeProgress, freezeTime, frozenTimeRemaining;
+	private NonNullList<ItemStack> frozenItemStacks = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
 
 	private AetherFreezable currentFreezable;
 
 	public TileEntityFreezer() 
 	{
 		super("freezer");
-
-		this.freezeProgress = 0;
-		this.frozenTimeRemaining = 0;
-		this.freezeTime = 0;
 	}
 
 	@Override
-	public boolean isEmpty()
+	public NonNullList<ItemStack> getTileInventory() 
 	{
-		for (ItemStack stack : this.frozenItemStacks)
-		{
-			if (!stack.isEmpty())
-			{
-				return false;
-			}
-		}
+		return this.frozenItemStacks;
+	}
 
-		return true;
+	@Override
+	public void onSlotChanged(int index)
+	{
+
 	}
 
 	@Override
 	public void update()
 	{
-		if (this.frozenTimeRemaining > 0)
+		if (this.powerRemaining > 0)
 		{
-			this.frozenTimeRemaining--;
+			this.powerRemaining--;
 
 			if (this.currentFreezable != null)
 			{
 				if (this.world.getBlockState(this.getPos().down()).getBlock() == BlocksAether.icestone)
 				{
-					this.freezeProgress += 2;
+					this.progress += 2;
 				}
 				else
 				{
-					this.freezeProgress++;
+					this.progress++;
 				}
 			}
 		}
 
 		if (this.currentFreezable != null)
 		{
-			if (this.getStackInSlot(0).isEmpty() || AetherAPI.getInstance().hasFreezable(this.getStackInSlot(0)) && AetherAPI.getInstance().getFreezable(this.getStackInSlot(0)).equals(this.currentFreezable))
-			{
-				this.currentFreezable = null;
-				this.freezeProgress = 0;
-			}
-
-			if (this.freezeProgress >= this.currentFreezable.getTimeRequired())
+			if (this.progress >= this.currentFreezable.getTimeRequired())
 			{
 				if (!this.world.isRemote)
 				{
@@ -91,6 +76,7 @@ public class TileEntityFreezer extends AetherTileEntity
 					if (!this.getStackInSlot(2).isEmpty())
 					{
 						result.setCount(this.getStackInSlot(2).getCount() + 1);
+
 						this.setInventorySlotContents(2, result);
 					}
 					else
@@ -98,9 +84,9 @@ public class TileEntityFreezer extends AetherTileEntity
 						this.setInventorySlotContents(2, result);
 					}
 
-					if (this.getStackInSlot(0).getItem().getContainerItem() != null)
+					if (this.getStackInSlot(0).getItem().hasContainerItem(this.getStackInSlot(0)))
 					{
-						this.setInventorySlotContents(0, new ItemStack(this.getStackInSlot(0).getItem().getContainerItem()));
+						this.setInventorySlotContents(0, this.getStackInSlot(0).getItem().getContainerItem(this.getStackInSlot(0)));
 					}
 					else
 					{
@@ -108,17 +94,31 @@ public class TileEntityFreezer extends AetherTileEntity
 					}
 				}
 
-				this.freezeProgress = 0;
+				this.progress = 0;
 				AetherHooks.onItemFreeze(this, this.currentFreezable);
 			}
 
-			if (this.frozenTimeRemaining <= 0 && AetherAPI.getInstance().isFreezableFuel(this.getStackInSlot(1)))
+			if (this.getStackInSlot(0).isEmpty() || (!this.getStackInSlot(0).isEmpty() && AetherAPI.getInstance().getFreezable(this.getStackInSlot(0)) != this.currentFreezable))
 			{
-				this.frozenTimeRemaining += AetherAPI.getInstance().getFreezableFuel(this.getStackInSlot(1)).getTimeGiven();
+				this.currentFreezable = null;
+				this.progress = 0;
+			}
 
-				if (!this.world.isRemote)
+			if (this.powerRemaining <= 0)
+			{
+				if (!this.getStackInSlot(1).isEmpty() && AetherAPI.getInstance().isFreezableFuel(this.getStackInSlot(1)))
 				{
-					this.decrStackSize(1, 1);
+					this.powerRemaining += AetherAPI.getInstance().getFreezableFuel(this.getStackInSlot(1)).getTimeGiven();
+
+					if (!this.world.isRemote)
+					{
+						this.decrStackSize(1, 1);
+					}
+				}
+				else
+				{
+					this.currentFreezable = null;
+					this.progress = 0;
 				}
 			}
 		}
@@ -127,12 +127,15 @@ public class TileEntityFreezer extends AetherTileEntity
 			ItemStack itemstack = this.getStackInSlot(0);
 			AetherFreezable freezable = AetherAPI.getInstance().getFreezable(itemstack);
 
-			if (this.getStackInSlot(2).isEmpty() || freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata())
+			if (freezable != null)
 			{
-				this.currentFreezable = freezable;
-				this.freezeTime = this.currentFreezable.getTimeRequired();
-				this.addEnchantmentWeight(itemstack);
-				this.freezeTime = AetherHooks.onSetFreezableTime(this, this.currentFreezable, this.freezeTime);
+				if (this.getStackInSlot(2).isEmpty() || (freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata()))
+				{
+					this.currentFreezable = freezable;
+					this.ticksRequired = this.currentFreezable.getTimeRequired();
+					this.addEnchantmentWeight(itemstack);
+					this.ticksRequired = AetherHooks.onSetFreezableTime(this, this.currentFreezable, this.ticksRequired);
+				}
 			}
 		}
 	}
@@ -145,117 +148,30 @@ public class TileEntityFreezer extends AetherTileEntity
 		{
 			for (int levels : enchantments.values())
 			{
-				this.freezeTime += (levels * 1250);
+				this.ticksRequired += (levels * 1250);
 			}
 		}
-	}
-
-	@Override
-	public int getInventoryStackLimit()
-	{
-		return 64;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public int getEnchantmentProgressScaled(int i)
 	{
-		if (this.freezeTime == 0)
+		if (this.ticksRequired == 0)
 		{
 			return 0;
 		}
-		return (this.freezeProgress * i) / this.freezeTime;
+		return (this.progress * i) / this.ticksRequired;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public int getEnchantmentTimeRemaining(int i)
 	{
-		return (this.frozenTimeRemaining * i) / 500;
+		return (this.powerRemaining * i) / 500;
 	}
 
 	public boolean isBurning()
 	{
-		return this.frozenTimeRemaining > 0;
-	}
-
-	@Override
-	public int getSizeInventory()
-	{
-		return this.frozenItemStacks.size();
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int i)
-	{
-		return this.frozenItemStacks.get(i);
-	}
-
-	@Override
-	public ItemStack decrStackSize(int i, int j)
-	{
-		if (this.frozenItemStacks.get(i) != ItemStack.EMPTY)
-		{
-			if (this.frozenItemStacks.get(i).getCount() <= j)
-			{
-				ItemStack itemstack = this.frozenItemStacks.get(i);
-
-				this.frozenItemStacks.set(i, ItemStack.EMPTY);
-
-				return itemstack;
-			}
-			else
-			{
-				ItemStack itemstack = this.frozenItemStacks.get(i).splitStack(j);
-
-				if (this.frozenItemStacks.get(i).getCount() == 0)
-				{
-					this.frozenItemStacks.set(i, ItemStack.EMPTY);
-				}
-
-				return itemstack;
-			}
-		}
-
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public ItemStack removeStackFromSlot(int par1)
-	{
-		if (this.frozenItemStacks.get(par1) != ItemStack.EMPTY)
-		{
-			ItemStack itemstack = this.frozenItemStacks.get(par1);
-
-			this.frozenItemStacks.set(par1, ItemStack.EMPTY);
-
-			return itemstack;
-		}
-
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack)
-	{
-		this.frozenItemStacks.set(i, itemstack);
-
-		if (itemstack != ItemStack.EMPTY && itemstack.getCount() > this.getInventoryStackLimit())
-		{
-			itemstack.setCount(this.getInventoryStackLimit());
-		}
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
-		this.readFromNBT(pkt.getNbtCompound());
-	}
-
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
-		NBTTagCompound var1 = new NBTTagCompound();
-		this.writeToNBT(var1);
-		return new SPacketUpdateTileEntity(this.pos, 1, var1);
+		return this.powerRemaining > 0;
 	}
 
 	@Override
@@ -263,19 +179,15 @@ public class TileEntityFreezer extends AetherTileEntity
 	{
 		super.readFromNBT(nbttagcompound);
 
-		this.freezeProgress = nbttagcompound.getShort("FreezeTime");
-		this.freezeTime = nbttagcompound.getShort("FrozenTime");
-
-		ItemStackHelper.loadAllItems(nbttagcompound, this.frozenItemStacks);
+		this.progress = nbttagcompound.getInteger("FreezerProgressTime");
+		this.ticksRequired = nbttagcompound.getInteger("FreezerTimeRequired");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound)
 	{
-		nbttagcompound.setShort("FreezeTime", (short) this.freezeProgress);
-		nbttagcompound.setShort("FrozenTime", (short) this.freezeTime);
-
-		ItemStackHelper.saveAllItems(nbttagcompound, this.frozenItemStacks);
+		nbttagcompound.setInteger("FreezerProgressTime", this.progress);
+		nbttagcompound.setInteger("FreezerTimeRequired", this.ticksRequired);
 
 		return super.writeToNBT(nbttagcompound);
 	}
@@ -302,6 +214,48 @@ public class TileEntityFreezer extends AetherTileEntity
 	public int[] getSlotsForFace(EnumFacing side)
 	{
 		return side == EnumFacing.DOWN ? new int[] {2} : new int[] {0, 1};
+	}
+
+	@Override
+	public int getField(int id)
+	{
+		if (id == 0)
+		{
+			return this.progress;
+		}
+		else if (id == 1)
+		{
+			return this.powerRemaining;
+		}
+		else if (id == 2)
+		{
+			return this.ticksRequired;
+		}
+
+		return 0; 
+	}
+
+	@Override
+	public void setField(int id, int value) 
+	{ 
+		if (id == 0)
+		{
+			this.progress = value;
+		}
+		else if (id == 1)
+		{
+			this.powerRemaining = value;
+		}
+		else if (id == 2)
+		{
+			this.ticksRequired = value;
+		}
+	}
+
+	@Override
+	public int getFieldCount() 
+	{
+		return 3; 
 	}
 
 }

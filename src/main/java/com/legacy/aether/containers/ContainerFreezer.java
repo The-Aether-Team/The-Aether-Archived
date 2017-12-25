@@ -6,8 +6,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.containers.slots.SlotFreezer;
@@ -18,18 +16,16 @@ public class ContainerFreezer extends Container
 
 	private TileEntityFreezer freezer;
 
-	private int lastCookTime;
-
-	private int lastBurnTime;
-
-	private int lastItemBurnTime;
+	public int progress, ticksRequired, powerRemaining;
 
 	public ContainerFreezer(InventoryPlayer par1InventoryPlayer, TileEntityFreezer tileEntityFreezer)
 	{
 		this.freezer = tileEntityFreezer;
+
 		this.addSlotToContainer(new Slot(tileEntityFreezer, 0, 56, 17));
 		this.addSlotToContainer(new Slot(tileEntityFreezer, 1, 56, 53));
 		this.addSlotToContainer(new SlotFreezer(tileEntityFreezer, 2, 116, 35));
+
 		int i;
 
 		for (i = 0; i < 3; ++i)
@@ -46,63 +42,46 @@ public class ContainerFreezer extends Container
 		}
 	}
 
-	@Override
-	public void addListener(IContainerListener par1ICrafting)
-	{
-		super.addListener(par1ICrafting);
-		par1ICrafting.sendProgressBarUpdate(this, 0, this.freezer.frozenTimeRemaining);
-		par1ICrafting.sendProgressBarUpdate(this, 1, this.freezer.freezeProgress);
-		par1ICrafting.sendProgressBarUpdate(this, 2, this.freezer.freezeTime);
-	}
+    @Override
+    public void addListener(IContainerListener listener)
+    {
+        super.addListener(listener);
+
+        listener.sendAllWindowProperties(this, this.freezer);
+    }
+
+    @Override
+    public void detectAndSendChanges()
+    {
+        super.detectAndSendChanges();
+
+        for (int i = 0; i < this.listeners.size(); ++i)
+        {
+            IContainerListener icontainerlistener = (IContainerListener)this.listeners.get(i);
+
+            if (this.progress != this.freezer.getField(0))
+            {
+                icontainerlistener.sendProgressBarUpdate(this, 0, this.freezer.getField(0));
+            }
+            else if (this.powerRemaining != this.freezer.getField(1))
+            {
+                icontainerlistener.sendProgressBarUpdate(this, 1, this.freezer.getField(1));
+            }
+            else if (this.ticksRequired != this.freezer.getField(2))
+            {
+                icontainerlistener.sendProgressBarUpdate(this, 2, this.freezer.getField(2));
+            }
+        }
+
+        this.progress = this.freezer.getField(0);
+        this.powerRemaining = this.freezer.getField(1);
+        this.ticksRequired = this.freezer.getField(2);
+    }
 
 	@Override
-	public void detectAndSendChanges()
+	public void updateProgressBar(int id, int value)
 	{
-		super.detectAndSendChanges();
-
-		for (int i = 0; i < this.listeners.size(); ++i)
-		{
-			IContainerListener icrafting = (IContainerListener) this.listeners.get(i);
-
-			if (this.lastCookTime != this.freezer.frozenTimeRemaining)
-			{
-				icrafting.sendProgressBarUpdate(this, 0, this.freezer.frozenTimeRemaining);
-			}
-
-			if (this.lastBurnTime != this.freezer.freezeProgress)
-			{
-				icrafting.sendProgressBarUpdate(this, 1, this.freezer.freezeProgress);
-			}
-
-			if (this.lastItemBurnTime != this.freezer.freezeTime)
-			{
-				icrafting.sendProgressBarUpdate(this, 2, this.freezer.freezeTime);
-			}
-		}
-
-		this.lastCookTime = this.freezer.frozenTimeRemaining;
-		this.lastBurnTime = this.freezer.freezeProgress;
-		this.lastItemBurnTime = this.freezer.freezeTime;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void updateProgressBar(int par1, int par2)
-	{
-		if (par1 == 0)
-		{
-			this.freezer.frozenTimeRemaining = par2;
-		}
-
-		if (par1 == 1)
-		{
-			this.freezer.freezeProgress = par2;
-		}
-
-		if (par1 == 2)
-		{
-			this.freezer.freezeTime = par2;
-		}
+		this.freezer.setField(id, value);
 	}
 
 	@Override
