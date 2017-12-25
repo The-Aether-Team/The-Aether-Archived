@@ -1,6 +1,5 @@
 package com.legacy.aether.entities.hostile;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -83,7 +82,7 @@ public class EntityMimic extends EntityMob
 
     protected SoundEvent getDeathSound()
     {
-        return SoundEvents.BLOCK_WOOD_BREAK;
+        return SoundEvents.BLOCK_CHEST_CLOSE;
     }
 
     protected float getSoundVolume()
