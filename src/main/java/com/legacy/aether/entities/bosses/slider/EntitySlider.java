@@ -26,6 +26,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -142,13 +143,16 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
     @Override
 	public void onUpdate()
 	{
-    	
-    	IBlockState state = this.worldObj.getBlockState(this.getPosition().add(1F, 0F, 1F));
-    	
-    	if (this.isCollidedHorizontally && state.getBlock() instanceof BlockDungeonBase)
+    	//heck
+    	int i1 = MathHelper.floor_double(this.posX);
+        int j1 = MathHelper.floor_double(this.getEntityBoundingBox().minY);
+        int k1 = MathHelper.floor_double(this.posZ);
+    	BlockPos position = new BlockPos(i1, j1, k1);
+    	if (this.isCollidedHorizontally && !this.isMoving && !this.worldObj.isAirBlock(position.down()) && !this.crushedBlock)
         {
-    		this.motionY = 1F;    		
-        }	
+    			this.motionY = 1.2F;  
+        }
+    	
 		if(this.hurtAngle > 0.01F) 
 		{
 			this.hurtAngle *= 0.8F;
