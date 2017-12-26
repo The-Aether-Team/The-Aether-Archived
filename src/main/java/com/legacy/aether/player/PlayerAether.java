@@ -21,6 +21,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -449,20 +450,23 @@ public class PlayerAether
 			int previousDimension = this.thePlayer.dimension;
 			int transferDimension = previousDimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
 
-			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-			TeleporterAether teleporter = new TeleporterAether(shouldSpawnPortal, server.worldServerForDimension(transferDimension));
-
-			for (Entity passenger : this.thePlayer.getPassengers())
+			if (ForgeHooks.onTravelToDimension(this.thePlayer, transferDimension))
 			{
-				transferEntity(shouldSpawnPortal, passenger, server.worldServerForDimension(previousDimension), server.worldServerForDimension(transferDimension));
-				passenger.dismountRidingEntity();
-			}
+				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+				TeleporterAether teleporter = new TeleporterAether(shouldSpawnPortal, server.worldServerForDimension(transferDimension));
 
-			server.getPlayerList().transferPlayerToDimension((EntityPlayerMP) this.thePlayer, transferDimension, teleporter);
+				for (Entity passenger : this.thePlayer.getPassengers())
+				{
+					transferEntity(shouldSpawnPortal, passenger, server.worldServerForDimension(previousDimension), server.worldServerForDimension(transferDimension));
+					passenger.dismountRidingEntity();
+				}
 
-			if (this.thePlayer.getRidingEntity() != null)
-			{
-				transferEntity(shouldSpawnPortal, this.thePlayer.getRidingEntity(), server.worldServerForDimension(previousDimension), server.worldServerForDimension(transferDimension));
+				server.getPlayerList().transferPlayerToDimension((EntityPlayerMP) this.thePlayer, transferDimension, teleporter);
+
+				if (this.thePlayer.getRidingEntity() != null)
+				{
+					transferEntity(shouldSpawnPortal, this.thePlayer.getRidingEntity(), server.worldServerForDimension(previousDimension), server.worldServerForDimension(transferDimension));
+				}
 			}
 		}
 	}
