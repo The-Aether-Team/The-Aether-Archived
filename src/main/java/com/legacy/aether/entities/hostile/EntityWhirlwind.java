@@ -224,13 +224,16 @@ public class EntityWhirlwind extends EntityAetherAnimal
             	this.lifeLeft -= 50;
             }
 
-            int i2 = (MathHelper.floor(this.posX) - 1) + this.rand.nextInt(3);
-            int j2 = MathHelper.floor(this.posY) + this.rand.nextInt(5);
-            int k2 = (MathHelper.floor(this.posZ) - 1) + this.rand.nextInt(3);
-
-            if(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() instanceof BlockLeaves)
+            if (this.world.getGameRules().getBoolean("mobGriefing"))
             {
-            	this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
+                int i2 = (MathHelper.floor(this.posX) - 1) + this.rand.nextInt(3);
+                int j2 = MathHelper.floor(this.posY) + this.rand.nextInt(5);
+                int k2 = (MathHelper.floor(this.posZ) - 1) + this.rand.nextInt(3);
+
+                if(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() instanceof BlockLeaves)
+                {
+                	this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
+                }
             }
         }
     }
