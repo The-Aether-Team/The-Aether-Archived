@@ -245,7 +245,7 @@ entity.flying_cow.name=Flying Cow
 entity.phyg.name=Phyg
 entity.swet.name=Swet
 entity.moa.name=Moa
-entity.whirly.name=Whirlwind
+entity.whirlwind.name=Whirlwind
 
 # Containers
 container.aether_legacy.incubator=Incubator
