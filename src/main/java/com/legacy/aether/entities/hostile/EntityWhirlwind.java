@@ -5,12 +5,13 @@ import java.util.List;
 
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -31,10 +33,9 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.particles.AetherParticle;
 import com.legacy.aether.entities.particles.ParticleEvilWhirly;
 import com.legacy.aether.entities.particles.ParticlePassiveWhirly;
-import com.legacy.aether.entities.passive.EntityAetherAnimal;
 import com.legacy.aether.player.perks.AetherRankings;
 
-public class EntityWhirlwind extends EntityAetherAnimal 
+public class EntityWhirlwind extends EntityMob 
 {
 
 	public static final DataParameter<Boolean> IS_EVIL = EntityDataManager.<Boolean>createKey(EntityWhirlwind.class, DataSerializers.BOOLEAN);
@@ -66,6 +67,12 @@ public class EntityWhirlwind extends EntityAetherAnimal
         	this.lifeLeft /= 2;
         	this.setEvil(true);
         }
+    }
+    
+    @Override
+    public float getBlockPathWeight(BlockPos pos)
+    {
+    	return this.worldObj.getBlockState(pos.down()).getBlock() == BlocksAether.aether_grass ? 10.0F : this.worldObj.getLightBrightness(pos) - 0.5F;
     }
 
 	@Override
@@ -156,11 +163,13 @@ public class EntityWhirlwind extends EntityAetherAnimal
 
                     this.worldObj.spawnEntityInWorld(entitycreeper);
                     this.actionTimer = 0;
+                    this.worldObj.playSound(null, this.getPosition(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.HOSTILE, 0.5F, 1.0F);
                 }
                 else
                 {
                     this.dropItem(this.getRandomDrop(), 1);
                     this.actionTimer = 0;
+                    this.worldObj.playSound(null, this.getPosition(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.HOSTILE, 0.5F, 1.0F);
                 }
             }
         }
@@ -209,6 +218,7 @@ public class EntityWhirlwind extends EntityAetherAnimal
                     {
                     	this.lifeLeft /= 2;
                     	this.setEvil(true);
+                    	this.worldObj.playSound(null, this.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.HOSTILE, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F,1.0F);
                     }
                 }
             }
@@ -450,11 +460,5 @@ public class EntityWhirlwind extends EntityAetherAnimal
     {
         return isCollidedHorizontally;
     }
-
-	@Override
-	public EntityAgeable createChild(EntityAgeable ageable)
-	{
-		return null;
-	}
 
 }
