@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class ServerProxy 
+public class CommonProxy 
 {
 
 	public void preInitialization() { }

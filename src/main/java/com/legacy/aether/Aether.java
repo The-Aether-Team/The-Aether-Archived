@@ -34,12 +34,12 @@ public class Aether
 	public static Aether instance;
 
 	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.ServerProxy")
-	public static ServerProxy proxy;
+	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
 	{
-		ServerProxy.registerEvent(new AetherRegistryEvent());
+		CommonProxy.registerEvent(new AetherRegistryEvent());
 
 		AetherConfig.init(event.getModConfigurationDirectory());
 		AetherConfig.autoDeveloperMode(version);
@@ -61,11 +61,11 @@ public class Aether
 		AetherTileEntities.initialization();
 		AetherWorld.initialization();
 
-		ServerProxy.registerEvent(new AetherEventHandler());
+		CommonProxy.registerEvent(new AetherEventHandler());
 		
 		if(ForgeVersion.getBuildVersion() >= 2565)
 		{
-			ServerProxy.registerEvent(new AetherAdvancementHandler());
+			CommonProxy.registerEvent(new AetherAdvancementHandler());
 		}
 		
 		proxy.initialization();
