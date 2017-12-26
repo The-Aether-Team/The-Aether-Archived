@@ -137,10 +137,17 @@ public class EntitySlider extends EntityFlying
 	{
 		return this.getHealth() <= 80;
 	}
-
+	
     @Override
 	public void onUpdate()
-	{
+	{	
+    	IBlockState state = this.world.getBlockState(this.getPosition().add(1F, 0F, 1F));
+    	
+    	if (this.isCollidedHorizontally && state.getBlock() instanceof BlockDungeonBase)
+        {
+    		this.motionY = 1F;    		
+        }
+    	
 		if(this.hurtAngle > 0.01F) 
 		{
 			this.hurtAngle *= 0.8F;
