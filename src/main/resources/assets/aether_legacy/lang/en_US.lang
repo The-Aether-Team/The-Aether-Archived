@@ -136,6 +136,7 @@ tile.enchanted_aether_grass.name=Enchanted Aether Grass
 tile.cold_aercloud.name=Cold Aercloud
 tile.blue_aercloud.name=Blue Aercloud
 tile.golden_aercloud.name=Golden Aercloud
+tile.pink_aercloud.name=Pink Aercloud
 tile.berry_bush_stem.name=Berry Bush Stem
 tile.berry_bush.name=Berry Bush
 tile.purple_flower.name=Purple Flower
@@ -211,8 +212,8 @@ holystone_brick_slab.name=Holystone Brick Slab
 tile.holystone_brick_double_slab.name=Holystone Brick Double Slab
 aerogel_slab.name=Aerogel Slab
 tile.aerogel_double_slab.name=Aerogel Double Slab
-tile.pink_aercloud.name=Pink Aercloud
 tile.skyroot_fence_gate.name=Skyroot Fence Gate
+tile.sun_altar.name=Sun Altar
 
 # Entities
 entity.aechor_plant.name=Aechor Plant
@@ -246,7 +247,12 @@ entity.swet.name=Swet
 entity.moa.name=Moa
 entity.whirly.name=Whirlwind
 
-# advancement.aether_legacys
+# Containers
+container.aether_legacy.incubator=Incubator
+container.aether_legacy.altar=Altar
+container.aether_legacy.freezer=Freezer
+
+# Advancements
 advancement.aether_legacy.enter_aether=Hostile Paradise
 advancement.aether_legacy.blue_aercloud=To infinity and beyond!
 advancement.aether_legacy.gravitite_tools=Pink is the new blue
@@ -258,7 +264,7 @@ advancement.aether_legacy.silver_dungeon=Dethroned
 advancement.aether_legacy.gold_dungeon=Extinguished
 advancement.aether_legacy.loreception=Loreception
 
-# advancement.aether_legacy Descriptions
+# Advancement Descriptions
 advancement.aether_legacy.enter_aether.desc=Enter the Aether
 advancement.aether_legacy.blue_aercloud.desc=Bounce on a Blue Aercloud
 advancement.aether_legacy.gravitite_tools.desc=Craft a gravitite tool
@@ -268,7 +274,7 @@ advancement.aether_legacy.mount_phyg.desc=Fly on a Phyg
 advancement.aether_legacy.bronze_dungeon.desc=Defeat the bronze dungeon boss
 advancement.aether_legacy.silver_dungeon.desc=Defeat the silver dungeon boss
 advancement.aether_legacy.gold_dungeon.desc=Defeat the golden dungeon boss
-advancement.aether_legacy.loreception.desc=Read a book of lore
+advancement.aether_legacy.loreception.desc=Put a book of lore inside a book of lore.
 
 # Creative Tabs Names
 tab.aether_blocks=Aether Blocks
