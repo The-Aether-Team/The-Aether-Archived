@@ -48,12 +48,13 @@ public class AetherOverlay
             Tessellator tessellator = Tessellator.getInstance();
             VertexBuffer renderer = tessellator.getBuffer();
 
-    		float alpha = getPoisonAlpha((float)(playerAether.poisonInstance().poisonTime % 50) / 50F);
+    		float alpha = getPoisonAlpha((float)(playerAether.poisonInstance().poisonTime % 50) / 50);
 
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
 
             GlStateManager.pushMatrix();
+            GlStateManager.enableBlend();
             GlStateManager.disableDepth();
             GlStateManager.depthMask(false);
             GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -72,6 +73,7 @@ public class AetherOverlay
             GlStateManager.enableDepth();
             GlStateManager.enableAlpha();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.disableBlend();
             GlStateManager.popMatrix();
     	}
     }
@@ -86,11 +88,12 @@ public class AetherOverlay
             Tessellator tessellator = Tessellator.getInstance();
             VertexBuffer renderer = tessellator.getBuffer();
 
-    		float alpha = getCureAlpha(-((float)playerAether.poisonInstance().poisonTime + 100.0F) / 100.0F);
+    		float alpha = getCureAlpha(-((float)playerAether.poisonInstance().poisonTime) / 100);
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
 
             GlStateManager.pushMatrix();
+            GlStateManager.enableBlend();
             GlStateManager.disableDepth();
             GlStateManager.depthMask(false);
             GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -109,6 +112,7 @@ public class AetherOverlay
             GlStateManager.enableDepth();
             GlStateManager.enableAlpha();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.disableBlend();
             GlStateManager.popMatrix();
     	}
     }
@@ -321,7 +325,7 @@ public class AetherOverlay
 
     public static float getCureAlpha(float f)
     {
-        return f * f / 10.0F + 0.4F;
+        return ((f * f) / 10.0F) + 0.4F;
     }
 
 }
