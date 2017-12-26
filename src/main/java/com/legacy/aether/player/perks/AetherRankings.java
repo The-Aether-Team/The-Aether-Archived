@@ -51,6 +51,7 @@ public class AetherRankings
 		addContributor("c15c4d6d-9a80-4d6b-9eda-770859b5ed91"); // Everett1999
 		addContributor("4f0e8dd5-caf4-4d88-bfa4-1b0f1e13779f"); // Indianajaune
 		addContributor("6c249311-f939-4e66-9f31-49b753bfb14b"); // InsomniaKitten
+		addContributor("2b5187c9-dc5d-480e-ab6f-e884e92fce45"); // ItzDennisz
 	}
 
 	public static UUID getUUID(String string)
