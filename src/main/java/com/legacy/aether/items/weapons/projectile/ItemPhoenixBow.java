@@ -196,7 +196,7 @@ public class ItemPhoenixBow extends ItemBow
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
     {
     	ItemStack heldItem = playerIn.getHeldItem(hand);
-        boolean flag = this.findAmmo(playerIn) != null;
+        boolean flag = !this.findAmmo(playerIn).isEmpty();
 
         ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(heldItem, worldIn, playerIn, hand, flag);
         if (ret != null) return ret;
