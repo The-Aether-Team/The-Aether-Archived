@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.dictionary.AetherDictionary;
 import com.legacy.aether.entities.AetherEntities;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherNetworkingManager;
@@ -53,6 +54,7 @@ public class Aether
 		AetherEntities.initialization();
 		BlocksAether.initialization();
 		ItemsAether.initialization();
+		AetherDictionary.initialization();
 		AetherRegistries.initialization();
 		AchievementsAether.initialization();
 		AetherTileEntities.initialization();
