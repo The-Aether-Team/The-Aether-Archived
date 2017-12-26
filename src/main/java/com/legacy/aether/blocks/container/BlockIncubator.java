@@ -23,7 +23,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.networking.AetherGuiHandler;
-import com.legacy.aether.tile_entities.TileEntityEnchanter;
 import com.legacy.aether.tile_entities.TileEntityIncubator;
 
 public class BlockIncubator extends BlockContainer

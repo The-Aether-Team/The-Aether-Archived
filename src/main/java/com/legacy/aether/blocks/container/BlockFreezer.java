@@ -24,7 +24,6 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.tile_entities.TileEntityFreezer;
-import com.legacy.aether.tile_entities.TileEntityIncubator;
 
 public class BlockFreezer extends BlockContainer 
 {
@@ -75,7 +74,7 @@ public class BlockFreezer extends BlockContainer
 				world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, f, f1, f2, 0.0D, 0.0D, 0.0D);
         	}
 			
-			//if (random.nextDouble() < 0.D)
+			//if (random.nextDouble() < 0.1D)
             //{
                 world.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 3.0F, false);
             //}
