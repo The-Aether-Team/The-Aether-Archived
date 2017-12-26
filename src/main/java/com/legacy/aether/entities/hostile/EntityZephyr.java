@@ -124,7 +124,7 @@ public class EntityZephyr extends EntityFlying implements IMob
     @Override
     protected float getSoundVolume()
     {
-        return 1F;
+        return 3F;
     }
 
 }
