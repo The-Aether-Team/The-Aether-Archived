@@ -7,11 +7,11 @@ public class AetherTileEntities
 
 	public static void initialization()
 	{
-		GameRegistry.registerTileEntity(TileEntityEnchanter.class, "aether_legacy_enchanter");
-		GameRegistry.registerTileEntity(TileEntityFreezer.class, "aether_legacy_freezer");
-		GameRegistry.registerTileEntity(TileEntityIncubator.class, "aether_legacy_incubator");
-		GameRegistry.registerTileEntity(TileEntityTreasureChest.class, "aether_legacy_treasure_chest");
-		GameRegistry.registerTileEntity(TileEntityChestMimic.class, "aether_legacy_chest_mimic");
+		GameRegistry.registerTileEntity(TileEntityEnchanter.class, "enchanter");
+		GameRegistry.registerTileEntity(TileEntityFreezer.class, "freezer");
+		GameRegistry.registerTileEntity(TileEntityIncubator.class, "incubator");
+		GameRegistry.registerTileEntity(TileEntityTreasureChest.class, "treasure_chest");
+		GameRegistry.registerTileEntity(TileEntityChestMimic.class, "chest_mimic");
 	}
 
 }

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.containers.ContainerEnchanter;
 import com.legacy.aether.tile_entities.TileEntityEnchanter;
 
@@ -16,7 +17,7 @@ import com.legacy.aether.tile_entities.TileEntityEnchanter;
 public class GuiEnchanter extends GuiContainer
 {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/gui/altar.png");
+	private static final ResourceLocation TEXTURE = Aether.locate("textures/gui/altar.png");
 
 	private TileEntityEnchanter enchanter;
 
@@ -37,7 +38,7 @@ public class GuiEnchanter extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2)
 	{
-		String enchanterName = "Altar";
+		String enchanterName = this.enchanter.getDisplayName().getFormattedText();
 
 		this.fontRenderer.drawString(enchanterName, this.xSize / 2 - this.fontRenderer.getStringWidth(enchanterName) / 2, 6, 4210752);
 		this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
