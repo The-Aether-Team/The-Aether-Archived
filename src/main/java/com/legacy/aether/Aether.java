@@ -27,13 +27,13 @@ public class Aether
 
 	public static final String modid = "aether_legacy";
 
-	public static final String version = "v1.1";
+	public static final String version = "1.11.2-v1.1.1";
 
 	@Instance(Aether.modid)
 	public static Aether instance;
 
-	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.ServerProxy")
-	public static ServerProxy proxy;
+	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.CommonProxy")
+	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
@@ -63,7 +63,7 @@ public class Aether
 
 		proxy.initialization();
 
-		ServerProxy.registerEvent(new AetherEventHandler());
+		CommonProxy.registerEvent(new AetherEventHandler());
 	}
 
 	public static ResourceLocation locate(String location)
