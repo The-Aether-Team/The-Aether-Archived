@@ -2,7 +2,6 @@ package com.legacy.aether.blocks.container;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,7 +19,7 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.tile_entities.TileEntityFreezer;
 
-public class BlockFreezer extends BlockContainer 
+public class BlockFreezer extends BlockAetherContainer 
 {
 
 	public BlockFreezer() 
