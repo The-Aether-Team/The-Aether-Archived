@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.dictionary.AetherDictionary;
 import com.legacy.aether.entities.AetherEntities;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.player.AetherAdvancementHandler;
@@ -55,6 +56,7 @@ public class Aether
 	{
 		PlayerAetherManager.initialization();
 		AetherEntities.initialization();
+		AetherDictionary.initialization();
 		AetherRegistries.initialization();
 		AetherTileEntities.initialization();
 		AetherWorld.initialization();
