@@ -16,6 +16,7 @@ import com.legacy.aether.networking.packets.PacketInitiateValkyrieFight;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
 import com.legacy.aether.networking.packets.PacketPerkChanged;
 import com.legacy.aether.networking.packets.PacketSendPoison;
+import com.legacy.aether.networking.packets.PacketSetTime;
 
 public class AetherNetworkingManager
 {
@@ -43,6 +44,8 @@ public class AetherNetworkingManager
 
 		INSTANCE.registerMessage(PacketPerkChanged.class, PacketPerkChanged.class, discriminant++, Side.SERVER);
 		INSTANCE.registerMessage(PacketPerkChanged.class, PacketPerkChanged.class, discriminant++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketSetTime.class, PacketSetTime.class, discriminant++, Side.SERVER);
 	}
 
 	public static void sendToAll(IMessage message)

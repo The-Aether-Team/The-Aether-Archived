@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class ServerProxy 
+public class CommonProxy 
 {
 
 	public void preInitialization() { }
@@ -21,6 +21,8 @@ public class ServerProxy
 	public void spawnBlockBrokenFX(IBlockState state, BlockPos pos) { }
 
 	public void spawnSmoke(World world, BlockPos pos) {}
+
+	public void openSunAltar() { }
 
 	@SuppressWarnings("deprecation")
 	public static void registerEvent(Object event)

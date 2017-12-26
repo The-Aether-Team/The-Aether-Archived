@@ -105,6 +105,8 @@ public class BlocksAether
 
 	public static Block holiday_leaves, present;
 
+	public static Block sun_altar;
+
 	public static void initialization()
 	{
 		aether_grass = register("aether_grass", new BlockAetherGrass());
@@ -186,6 +188,7 @@ public class BlocksAether
 		mossy_holystone_slab = registerSlab("mossy_holystone_slab", new BlockAetherSlab("mossy_holystone_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), mossy_holystone_double_slab);
 		holystone_brick_slab = registerSlab("holystone_brick_slab", new BlockAetherSlab("holystone_brick_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), holystone_brick_double_slab);
 		aerogel_slab = registerSlab("aerogel_slab", new BlockAerogelSlab("aerogel_slab", false, Material.IRON).setHardness(0.5F).setResistance(999F), aerogel_double_slab);
+		sun_altar = register("sun_altar", new BlockSunAltar());
 	}
 
 	public static Block registerSlab(String name, Block slab1, Block slab2)
