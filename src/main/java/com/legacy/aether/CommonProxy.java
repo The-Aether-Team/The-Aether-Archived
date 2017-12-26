@@ -24,6 +24,8 @@ public class CommonProxy
 
 	public void spawnSmoke(World world, BlockPos pos) {}
 
+	public void openSunAltar() { }
+
 	@SuppressWarnings("deprecation")
 	public static void registerEvent(Object event)
 	{

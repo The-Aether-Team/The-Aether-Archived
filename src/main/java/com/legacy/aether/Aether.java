@@ -33,7 +33,7 @@ public class Aether
 	@Instance(Aether.modid)
 	public static Aether instance;
 
-	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.ServerProxy")
+	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.CommonProxy")
 	public static CommonProxy proxy;
 
 	@EventHandler

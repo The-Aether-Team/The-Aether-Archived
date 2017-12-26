@@ -15,6 +15,7 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import com.legacy.aether.CommonProxy;
 import com.legacy.aether.client.audio.AetherMusicHandler;
 import com.legacy.aether.client.gui.GuiAetherInGame;
+import com.legacy.aether.client.gui.GuiSunAltar;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.blocks.BlockRendering;
 import com.legacy.aether.client.renders.items.ItemRendering;
@@ -83,4 +84,9 @@ public class ClientProxy extends CommonProxy
 		FMLClientHandler.instance().getClient().effectRenderer.addBlockDestroyEffects(pos, state);
 	}
 
+	@Override
+	public void openSunAltar()
+	{
+		FMLClientHandler.instance().getClient().displayGuiScreen(new GuiSunAltar());
+	}
 }

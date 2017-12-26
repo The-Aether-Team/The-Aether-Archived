@@ -115,6 +115,8 @@ public class BlockRendering
 		register(BlocksAether.holystone_brick_slab, "holystone_brick_slab");
 		register(BlocksAether.aerogel_slab, "aerogel_slab");
 
+		register(BlocksAether.sun_altar, "sun_altar");
+
 		for (int meta = 0; meta < EnumCloudType.values().length; ++meta)
 		{
 			register(BlocksAether.aercloud, meta, EnumCloudType.getType(meta).getName());
