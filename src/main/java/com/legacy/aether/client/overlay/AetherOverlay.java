@@ -48,7 +48,7 @@ public class AetherOverlay
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder renderer = tessellator.getBuffer();
 
-    		float alpha = getPoisonAlpha((float)(playerAether.poisonInstance().poisonTime % 50) / 50F);
+    		float alpha = getPoisonAlpha((float)(playerAether.poisonInstance().poisonTime % 50) / 50);
 
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
@@ -58,16 +58,15 @@ public class AetherOverlay
             GlStateManager.disableDepth();
             GlStateManager.depthMask(false);
             GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-            GlStateManager.color(0.5F, 0.5F, 0.5F, alpha);
             GlStateManager.disableAlpha();
 
             mc.renderEngine.bindTexture(TEXTURE_POISON_VIGNETTE);
 
-    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).endVertex();
-            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).endVertex();
-            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
-            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
+    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
             tessellator.draw();
 
             GlStateManager.depthMask(true);
@@ -88,7 +87,7 @@ public class AetherOverlay
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder renderer = tessellator.getBuffer();
 
-    		float alpha = getCureAlpha(-((float)playerAether.poisonInstance().poisonTime + 100.0F) / 100.0F);
+    		float alpha = getCureAlpha(-((float)playerAether.poisonInstance().poisonTime) / 100.0F);
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
 
@@ -97,16 +96,15 @@ public class AetherOverlay
             GlStateManager.disableDepth();
             GlStateManager.depthMask(false);
             GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-            GlStateManager.color(0.5F, 0.5F, 0.5F, alpha);
             GlStateManager.disableAlpha();
 
             mc.renderEngine.bindTexture(TEXTURE_CURE_VIGNETTE);
 
-    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).endVertex();
-            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).endVertex();
-            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
-            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
+    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
             tessellator.draw();
 
             GlStateManager.depthMask(true);
@@ -320,12 +318,12 @@ public class AetherOverlay
 
     public static float getPoisonAlpha(float f)
     {
-        return f * f / 5.0F + 0.4F;
+        return (f * f) / 5.0F + 0.4F;
     }
 
     public static float getCureAlpha(float f)
     {
-        return f * f / 10.0F + 0.4F;
+        return (f * f) / 10.0F + 0.4F;
     }
 
 }
