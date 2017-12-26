@@ -3,6 +3,7 @@ package com.legacy.aether.entities.projectile.darts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -81,18 +82,20 @@ public class EntityDartPoison extends EntityDartBase
     {
     	super.arrowHit(living);
 
-    	this.victim = living;
-    	this.poison = new AetherPoisonMovement(this.victim);
-    	this.poison.afflictPoison();
-
-    	if (living instanceof EntityPlayer)
+    	if (living instanceof EntityPlayerMP)
     	{
-            EntityPlayer ent = (EntityPlayer)living;
+    		EntityPlayerMP ent = (EntityPlayerMP)living;
 
             if (!this.world.isRemote)
             {
             	AetherNetworkingManager.sendToAll(new PacketSendPoison(ent));
             }
+    	}
+    	else
+    	{
+        	this.victim = living;
+        	this.poison = new AetherPoisonMovement(this.victim);
+        	this.poison.afflictPoison();
     	}
 
     	this.isDead = false;
