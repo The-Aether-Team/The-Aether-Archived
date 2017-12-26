@@ -142,6 +142,13 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
     @Override
 	public void onUpdate()
 	{
+    	
+    	IBlockState state = this.worldObj.getBlockState(this.getPosition().add(1F, 0F, 1F));
+    	
+    	if (this.isCollidedHorizontally && state.getBlock() instanceof BlockDungeonBase)
+        {
+    		this.motionY = 1F;    		
+        }	
 		if(this.hurtAngle > 0.01F) 
 		{
 			this.hurtAngle *= 0.8F;
