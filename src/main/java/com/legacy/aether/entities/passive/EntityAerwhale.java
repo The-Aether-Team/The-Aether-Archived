@@ -284,6 +284,12 @@ public class EntityAerwhale extends EntityFlying implements IMob
     }
 
     @Override
+    protected float getSoundVolume()
+    {
+        return 3F;
+    }
+    
+    @Override
     public boolean canDespawn()
     {
         return true;
