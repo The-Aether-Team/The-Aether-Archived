@@ -390,7 +390,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	{
 		IBlockState state = this.worldObj.getBlockState(pos);
 
-		if(state.getBlock() == Blocks.AIR || state.getBlock() instanceof BlockDungeonBase) 
+		if(state.getBlock() == Blocks.AIR || state.getBlock() == BlocksAether.locked_dungeon_block) 
 		{
 			return;
 		}
