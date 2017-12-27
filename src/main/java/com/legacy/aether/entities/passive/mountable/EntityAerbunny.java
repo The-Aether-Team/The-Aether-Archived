@@ -109,6 +109,12 @@ public class EntityAerbunny extends EntityAetherAnimal
         }
     }
 
+	@Override
+    public boolean canRiderInteract()
+    {
+        return true;
+    }
+
     public int getPuffinessClient()
     {
         return this.puffiness;
@@ -246,7 +252,7 @@ public class EntityAerbunny extends EntityAetherAnimal
     {
         ItemStack itemstack = entityplayer.getHeldItem(hand);
 
-        if (itemstack != null && (itemstack.getItem() == Items.NAME_TAG))
+        if (itemstack.getItem() == Items.NAME_TAG)
         {
             return super.processInteract(entityplayer, hand);
         }
