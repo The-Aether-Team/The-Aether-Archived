@@ -21,6 +21,10 @@ public class EntityAerwhale extends EntityFlying implements IMob
 
     private double motionPitch;
 
+    public double aerwhaleRotationYaw;
+
+    public double aerwhaleRotationPitch;
+
     public EntityAerwhale(World world)
     {
         super(world);
@@ -64,7 +68,9 @@ public class EntityAerwhale extends EntityFlying implements IMob
     @Override
     public void onUpdate()
     {
+    	super.onUpdate();
         this.extinguish();
+
         int i = MathHelper.floor_double(this.posX);
         int j = MathHelper.floor_double(this.getEntityBoundingBox().minY);
         int k = MathHelper.floor_double(this.posZ);
@@ -119,15 +125,28 @@ public class EntityAerwhale extends EntityFlying implements IMob
             this.motionPitch += 5F;
         }
 
+        if (this.posY < -64.0D)
+        {
+            this.kill();
+        }
+
         this.motionYaw += 2F * this.getRNG().nextFloat() - 1F;
         this.motionPitch += 2F * this.getRNG().nextFloat() - 1F;	
 
         this.rotationPitch += 0.1D * this.motionPitch;
         this.rotationYaw += 0.1D * this.motionYaw;
 
+        this.aerwhaleRotationPitch += 0.1D * this.motionPitch;
+        this.aerwhaleRotationYaw += 0.1D * this.motionYaw;
+
         if(this.rotationPitch < -60F)
         {
         	this.rotationPitch = -60F;
+        }
+
+        if (this.aerwhaleRotationPitch < -60D)
+        {
+        	this.aerwhaleRotationPitch = -60D;
         }
 
         if(this.rotationPitch > 60F)
@@ -135,81 +154,88 @@ public class EntityAerwhale extends EntityFlying implements IMob
         	this.rotationPitch = 60F;
         }
 
+        if (this.aerwhaleRotationPitch > 60D)
+        {
+        	this.aerwhaleRotationPitch = 60D;
+        }
+
         this.rotationPitch *= 0.99D;
+        this.aerwhaleRotationPitch *= 0.99D;
 
-        this.motionX += 0.005D * Math.cos((this.rotationYaw / 180D) * 3.1415926535897931D ) * Math.cos((this.rotationPitch / 180D) * 3.1415926535897931D);
-        this.motionY += 0.005D * Math.sin((this.rotationPitch / 180D) * 3.1415926535897931D );
-        this.motionZ += 0.005D * Math.sin((this.rotationYaw / 180D) * 3.1415926535897931D ) * Math.cos((this.rotationPitch / 180D) * 3.1415926535897931D);
+        if (this.isServerWorld())
+        {
+            this.motionX += 0.01D * Math.cos((this.aerwhaleRotationYaw / 180D) * 3.1415926535897931D ) * Math.cos((this.aerwhaleRotationPitch / 180D) * 3.1415926535897931D);
 
-        this.motionX *= 0.98D;
-        this.motionY *= 0.98D;
-        this.motionZ *= 0.98D;
+            this.motionY += 0.005D * Math.sin((this.aerwhaleRotationPitch / 180D) * Math.PI);
+
+            this.motionZ += 0.01D * Math.sin((this.aerwhaleRotationYaw / 180D) * 3.1415926535897931D ) * Math.cos((this.aerwhaleRotationPitch / 180D) * 3.1415926535897931D);
+
+            this.motionX *= 0.98D;
+            this.motionY *= 0.98D;
+            this.motionZ *= 0.98D;
+        }
 
         if(this.motionX > 0D && !this.worldObj.isAirBlock(position.east())) 
         {
-        	this.motionX = -this.motionX;
+        	if (this.isServerWorld())
+        	{
+            	this.motionX = -this.motionX;
+        	}
+
         	this.motionYaw -= 10F;
         }
         else if(this.motionX < 0D && !this.worldObj.isAirBlock(position.west()))
         {
-        	this.motionX = -this.motionX;
+        	if (this.isServerWorld())
+        	{
+            	this.motionX = -this.motionX;
+        	}
+
         	this.motionYaw += 10F;
         }
 
         if(this.motionY > 0D && !this.worldObj.isAirBlock(position.up()))
         {
-            this.motionY = -this.motionY;
+        	if (this.isServerWorld())
+        	{
+                this.motionY = -this.motionY;
+        	}
+
             this.motionPitch -= 20F;
         }
         else if(this.motionY < 0D && !this.worldObj.isAirBlock(position.down())) 
         {
-        	this.motionY = -this.motionY;
+        	if (this.isServerWorld())
+        	{
+            	this.motionY = -this.motionY;
+        	}
+
         	this.motionPitch += 20F;
         }
 
         if(this.motionZ > 0D && !this.worldObj.isAirBlock(position.south())) 
         {
-        	this.motionZ = -this.motionZ;
+        	if (this.isServerWorld())
+        	{
+            	this.motionZ = -this.motionZ;
+        	}
+
         	this.motionYaw -= 10F;
         }
         else if(this.motionZ < 0D && !this.worldObj.isAirBlock(position.north()))
         {
-        	this.motionZ = -this.motionZ;
+        	if (this.isServerWorld())
+        	{
+            	this.motionZ = -this.motionZ;
+        	}
+
         	this.motionYaw += 10F;
         }
 
-        if (this.posY < -64.0D)
+        if (this.isServerWorld())
         {
-            this.kill();
+            this.moveEntity(this.motionX, this.motionY, this.motionZ);
         }
-
-        this.worldObj.theProfiler.startSection("ai");
-
-        if (this.isMovementBlocked())
-        {
-            this.isJumping = false;
-            this.moveStrafing = 0.0F;
-            this.moveForward = 0.0F;
-            this.randomYawVelocity = 0.0F;
-        }
-
-        this.worldObj.theProfiler.endSection();
-
-        this.worldObj.theProfiler.startSection("push");
-        this.collideWithNearbyEntities();
-        this.worldObj.theProfiler.endSection();
-
-        ++this.entityAge;
-        this.worldObj.theProfiler.startSection("checkDespawn");
-        this.despawnEntity();
-        this.worldObj.theProfiler.endSection();
-        this.worldObj.theProfiler.startSection("goalSelector");
-        this.tasks.onUpdateTasks();
-        this.worldObj.theProfiler.endSection();
-
-        super.onEntityUpdate();
-
-        this.moveEntity(this.motionX, this.motionY, this.motionZ);
     }
 
 	private int getCorrectCourse(double[] distances)
