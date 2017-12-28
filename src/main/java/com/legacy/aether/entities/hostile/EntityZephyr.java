@@ -107,7 +107,7 @@ public class EntityZephyr extends EntityFlying implements IMob
     @Override
     protected SoundEvent getDeathSound()
     {
-        return null;
+    	return SoundsAether.zephyr_call;
     }
 
 	@Override

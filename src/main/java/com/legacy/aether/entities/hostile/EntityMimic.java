@@ -75,7 +75,7 @@ public class EntityMimic extends EntityMob
 		}
     }
 
-    protected SoundEvent getHurtSound()
+    protected SoundEvent getHurtSound(DamageSource source)
     {
         return SoundEvents.BLOCK_WOOD_HIT;
     }
