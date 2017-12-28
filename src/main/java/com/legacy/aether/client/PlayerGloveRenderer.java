@@ -23,10 +23,10 @@ public class PlayerGloveRenderer
 
 	public static void renderItemFirstPerson(AbstractClientPlayer player, float partialTicks, float interpPitch, EnumHand hand, float swingProgress, ItemStack stack, float equipProgress)
 	{
+		isSlim = ((AbstractClientPlayer)player).getSkinType().equals("slim") ? true : false;
+
 		if (gloveModel == null && slimGloveModel == null)
 		{
-			isSlim = ((AbstractClientPlayer)player).getSkinType().equals("slim") ? true : false;
-
 			gloveModel = new ModelBiped(0.01F);
 			slimGloveModel = new ModelPlayer(0.01F, true);
 		}
