@@ -113,7 +113,7 @@ public class EntityWhirlwind extends EntityMob
 
 	public boolean isEvil()
 	{
-		return this.dataManager.get(IS_EVIL);
+		return this.dataManager.get(IS_EVIL).booleanValue();
 	}
 
     public void onLivingUpdate() 

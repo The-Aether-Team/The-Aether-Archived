@@ -665,7 +665,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
     public int getChatLine()
     {
-    	return this.dataManager.get(CHAT_LINE);
+    	return this.dataManager.get(CHAT_LINE).intValue();
     }
 
     public void setChatLine(int lineNumber)
@@ -676,7 +676,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
     public boolean isFreezing()
     {
-    	return this.dataManager.get(FROZEN);
+    	return this.dataManager.get(FROZEN).booleanValue();
     }
 
     public void setFreezing(boolean isFreezing)

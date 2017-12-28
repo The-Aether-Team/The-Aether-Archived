@@ -661,7 +661,7 @@ public class EntityValkyrieQueen extends EntityMob
 
 	public boolean isBossReady()
 	{
-		return this.dataManager.get(VALKYRIE_READY);
+		return this.dataManager.get(VALKYRIE_READY).booleanValue();
 	}
 
 }
