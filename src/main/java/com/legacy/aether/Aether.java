@@ -62,8 +62,8 @@ public class Aether
 		AetherWorld.initialization();
 
 		CommonProxy.registerEvent(new AetherEventHandler());
-		
-		if(ForgeVersion.getBuildVersion() >= 2565)
+
+		if(ForgeVersion.getBuildVersion() >= 2562)
 		{
 			CommonProxy.registerEvent(new AetherAdvancementHandler());
 		}
