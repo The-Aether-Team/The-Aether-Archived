@@ -16,7 +16,6 @@ import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.api.accessories.AetherAccessory;
 import com.legacy.aether.api.enchantments.AetherEnchantment;
@@ -29,20 +28,7 @@ import com.legacy.aether.items.ItemsAether;
 public class AetherRegistries 
 {
 
-	public static IForgeRegistry<IRecipe> craftingRegistry;
-
-	public static void initialization()
-	{
-		AetherAPI registry = AetherAPI.getInstance();
-
-		initializeAccessories(registry);
-		initializeEnchantments(registry);
-		initializeEnchantmentFuel(registry);
-		initializeFreezables(registry);
-		initializeFreezableFuel(registry);
-	}
-
-	public static void initializeAccessories(AetherAPI registry)
+	public static void initializeAccessories(IForgeRegistry<AetherAccessory> registry)
 	{
 		registry.register(new AetherAccessory(ItemsAether.leather_gloves, AccessoryType.GLOVE));
 		registry.register(new AetherAccessory(ItemsAether.iron_gloves, AccessoryType.GLOVE));
@@ -82,7 +68,7 @@ public class AetherRegistries
 		registry.register(new AetherAccessory(ItemsAether.repulsion_shield, AccessoryType.SHIELD));
 	}
 
-	public static void initializeEnchantments(AetherAPI registry)
+	public static void initializeEnchantments(IForgeRegistry<AetherEnchantment> registry)
 	{
 		registry.register(new AetherEnchantment(ItemsAether.skyroot_pickaxe, 225));
 		registry.register(new AetherEnchantment(ItemsAether.skyroot_axe, 225));
@@ -186,12 +172,12 @@ public class AetherRegistries
 		registry.register(new AetherEnchantment(Items.DIAMOND_BOOTS, 10000));
 	}
 
-	public static void initializeEnchantmentFuel(AetherAPI registry)
+	public static void initializeEnchantmentFuel(IForgeRegistry<AetherEnchantmentFuel> registry)
 	{
 		registry.register(new AetherEnchantmentFuel(ItemsAether.ambrosium_shard, 500));
 	}
 
-	public static void initializeFreezables(AetherAPI registry)
+	public static void initializeFreezables(IForgeRegistry<AetherFreezable> registry)
 	{
 		registry.register(new AetherFreezable(BlocksAether.aercloud, new ItemStack(BlocksAether.aercloud, 1, 1), 100));
 		registry.register(new AetherFreezable(BlocksAether.aether_leaves, BlocksAether.crystal_leaves, 150));
@@ -206,10 +192,12 @@ public class AetherRegistries
 		registry.register(new AetherFreezable(ItemsAether.golden_pendant, ItemsAether.ice_pendant, 2500));
 	}
 
-	public static void initializeFreezableFuel(AetherAPI registry)
+	public static void initializeFreezableFuel(IForgeRegistry<AetherFreezableFuel> registry)
 	{
 		registry.register(new AetherFreezableFuel(BlocksAether.icestone, 500));
 	}
+
+	public static IForgeRegistry<IRecipe> craftingRegistry;
 
 	public static void registerRecipes()
 	{

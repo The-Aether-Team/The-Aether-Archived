@@ -9,7 +9,15 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.api.accessories.AetherAccessory;
+import com.legacy.aether.api.enchantments.AetherEnchantment;
+import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
+import com.legacy.aether.api.freezables.AetherFreezable;
+import com.legacy.aether.api.freezables.AetherFreezableFuel;
+import com.legacy.aether.api.moa.AetherMoaType;
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.dictionary.AetherDictionary;
+import com.legacy.aether.entities.util.AetherMoaTypes;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 import com.legacy.aether.registry.sounds.SoundsAether;
@@ -63,7 +71,47 @@ public class AetherRegistryEvent
 	{
 		AetherRegistries.craftingRegistry = event.getRegistry();
 
+		AetherDictionary.initialization();
 		AetherRegistries.registerRecipes();
+	}
+
+	@SubscribeEvent
+	public void onRegisterMoaTypeEvent(RegistryEvent.Register<AetherMoaType> event)
+	{
+		AetherMoaTypes.moaRegistry = event.getRegistry();
+
+		AetherMoaTypes.initialization();
+	}
+
+	@SubscribeEvent
+	public void onRegisterAccessoryEvent(RegistryEvent.Register<AetherAccessory> event)
+	{
+		AetherRegistries.initializeAccessories(event.getRegistry());
+	}
+
+
+	@SubscribeEvent
+	public void onRegisterEnchantmentEvent(RegistryEvent.Register<AetherEnchantment> event)
+	{
+		AetherRegistries.initializeEnchantments(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void onRegisterEnchantmentFuelEvent(RegistryEvent.Register<AetherEnchantmentFuel> event)
+	{
+		AetherRegistries.initializeEnchantmentFuel(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void onRegisterFreezableEvent(RegistryEvent.Register<AetherFreezable> event)
+	{
+		AetherRegistries.initializeFreezables(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void onRegisterFreezableFuelEvent(RegistryEvent.Register<AetherFreezableFuel> event)
+	{
+		AetherRegistries.initializeFreezableFuel(event.getRegistry());
 	}
 
 }
