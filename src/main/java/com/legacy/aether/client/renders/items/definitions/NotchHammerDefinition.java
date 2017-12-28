@@ -9,12 +9,13 @@ import com.legacy.aether.Aether;
 public class NotchHammerDefinition implements ItemMeshDefinition
 {
 
-	public ModelResourceLocation notch_hammer, notch;
+	public ModelResourceLocation notch_hammer, notch, jeb_hammer;
 
 	public NotchHammerDefinition()
 	{
 		this.notch_hammer = new ModelResourceLocation(Aether.modAddress() + "notch_hammer", "inventory");
 		this.notch = new ModelResourceLocation(Aether.modAddress() + "hammer_projectile", "inventory");
+		this.jeb_hammer = new ModelResourceLocation(Aether.modAddress() + "jeb_hammer", "inventory");
 	}
 
 	@Override
@@ -24,8 +25,15 @@ public class NotchHammerDefinition implements ItemMeshDefinition
 		{
 			return this.notch;
 		}
-
-		return this.notch_hammer;
+		
+		if (stack.getDisplayName().toLowerCase().equals("hammer of jeb"))
+		{
+			return this.jeb_hammer;
+		}
+		else
+		{
+			return this.notch_hammer;
+		}
 	}
 
 }

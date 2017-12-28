@@ -276,7 +276,7 @@ public class ItemRendering
 		registerMeta(ItemsAether.dart_shooter, Aether.locate("golden_dart_shooter"), Aether.locate("poison_dart_shooter"), Aether.locate("enchanted_dart_shooter"));
 		registerMeta(ItemsAether.dart, Aether.locate("golden_dart"), Aether.locate("poison_dart"), Aether.locate("enchanted_dart"));
 		registerMeta(ItemsAether.phoenix_bow, Aether.locate("phoenix_bow"), Aether.locate("phoenix_bow_pulling_0"), Aether.locate("phoenix_bow_pulling_1"), Aether.locate("phoenix_bow_pulling_2"));
-		registerMeta(ItemsAether.notch_hammer, Aether.locate("notch_hammer"), Aether.locate("hammer_projectile"));
+		registerMeta(ItemsAether.notch_hammer, Aether.locate("notch_hammer"), Aether.locate("hammer_projectile"), Aether.locate("jeb_hammer"));
 	}
 
 	public static void register(Item item, int meta, String model)
