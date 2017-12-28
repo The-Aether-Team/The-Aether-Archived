@@ -30,6 +30,11 @@ public class AetherAdvancementHandler
 			if (stack.getItem() == ItemsAether.dungeon_key)
 			{
 				achievementType = (stack.getMetadata() == 0 ? 1 : stack.getMetadata() == 1 ? 2 : 0);
+				
+				if (achievementType == 0)
+				{
+					achievementType = -1;
+				}
 			}
 
 			if (!player.world.isRemote)
@@ -51,6 +56,8 @@ public class AetherAdvancementHandler
 					sendJingle = true;
 				}
 
+				sendJingle = (achievementType != -1);
+				
 				if (sendJingle)
 				{
 					AetherNetworkingManager.sendTo(new PacketAchievement(achievementType), (EntityPlayerMP) player);
