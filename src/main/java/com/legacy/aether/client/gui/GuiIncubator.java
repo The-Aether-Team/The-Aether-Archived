@@ -44,7 +44,7 @@ public class GuiIncubator extends GuiContainer
 
 		this.drawTexturedModalRect(j, k, 0, 0, this.xSize, this.ySize);
 
-		if (this.incubatorInventory.isBurning())
+		if (this.incubatorInventory.isIncubating())
 		{
 			int l = this.incubatorInventory.getPowerTimeRemainingScaled(12);
 

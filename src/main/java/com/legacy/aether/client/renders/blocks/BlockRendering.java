@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.container.BlockAetherContainer;
 import com.legacy.aether.blocks.decorative.BlockAetherFenceGate;
 import com.legacy.aether.blocks.natural.BlockAetherDirt;
 import com.legacy.aether.blocks.natural.BlockAetherGrass;
@@ -46,6 +47,9 @@ public class BlockRendering
         registerBlockWithStateMapper(BlocksAether.crystal_leaves, (new StateMap.Builder()).ignore(BlockCrystalLeaves.CHECK_DECAY).ignore(BlockCrystalLeaves.DECAYABLE).build());
         registerBlockWithStateMapper(BlocksAether.holiday_leaves, (new StateMap.Builder()).ignore(BlockHolidayLeaves.CHECK_DECAY).ignore(BlockHolidayLeaves.DECAYABLE).build());
         registerBlockWithStateMapper(BlocksAether.skyroot_fence_gate, (new StateMap.Builder()).ignore(BlockAetherFenceGate.POWERED).build());
+        registerBlockWithStateMapper(BlocksAether.enchanter, (new StateMap.Builder()).ignore(BlockAetherContainer.powered).build());
+        registerBlockWithStateMapper(BlocksAether.incubator, (new StateMap.Builder()).ignore(BlockAetherContainer.powered).build());
+        registerBlockWithStateMapper(BlocksAether.freezer, (new StateMap.Builder()).ignore(BlockAetherContainer.powered).build());
 
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
 		register(BlocksAether.holystone_brick, "holystone_brick");

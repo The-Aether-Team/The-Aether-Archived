@@ -51,9 +51,7 @@ public class BlockFreezer extends BlockAetherContainer
     @SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
     {
-		TileEntityFreezer tileentity = (TileEntityFreezer)world.getTileEntity(pos);
-
-		if(tileentity.isBurning())
+		if(state.getValue(powered).booleanValue())
 		{
 			float f = (float)pos.getX() + 0.5F;
 			float f1 = (float)pos.getY() + 1.0F + (random.nextFloat() * 6F) / 16F;
@@ -65,8 +63,11 @@ public class BlockFreezer extends BlockAetherContainer
         	{
 				world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, f, f1, f2, 0.0D, 0.0D, 0.0D);
         	}
-			
+
+			if (random.nextDouble() < 0.1D)
+            {
                 world.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 3.0F, false);
+            }
 		}
 	}
 

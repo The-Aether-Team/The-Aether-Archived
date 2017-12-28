@@ -14,6 +14,7 @@ import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.events.AetherHooks;
 import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.container.BlockAetherContainer;
 import com.legacy.aether.tile_entities.util.AetherTileEntity;
 
 public class TileEntityFreezer extends AetherTileEntity
@@ -45,6 +46,8 @@ public class TileEntityFreezer extends AetherTileEntity
 	@Override
 	public void update()
 	{
+		boolean flag = this.isFreezing();
+
 		if (this.powerRemaining > 0)
 		{
 			this.powerRemaining--;
@@ -130,6 +133,12 @@ public class TileEntityFreezer extends AetherTileEntity
 				}
 			}
 		}
+
+		if (flag != this.isFreezing())
+		{
+			this.markDirty();
+			BlockAetherContainer.setState(this.worldObj, this.pos, this.isFreezing());
+		}
 	}
 
 	public void addEnchantmentWeight(ItemStack stack)
@@ -161,7 +170,7 @@ public class TileEntityFreezer extends AetherTileEntity
 		return (this.powerRemaining * i) / 500;
 	}
 
-	public boolean isBurning()
+	public boolean isFreezing()
 	{
 		return this.powerRemaining > 0;
 	}
