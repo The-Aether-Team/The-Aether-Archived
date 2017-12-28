@@ -208,7 +208,7 @@ public class AetherRegistries
 
 	public static void initializeFreezableFuel(AetherAPI registry)
 	{
-		registry.register(new AetherFreezableFuel(ItemsAether.ambrosium_shard, 500));
+		registry.register(new AetherFreezableFuel(BlocksAether.icestone, 500));
 	}
 
 	public static void registerRecipes()
