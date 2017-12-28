@@ -27,8 +27,8 @@ public class AerwhaleRenderer extends Render<EntityAerwhale>
         GlStateManager.pushMatrix();
         this.renderManager.renderEngine.bindTexture(AERWHALE_TEXTURE);
         GlStateManager.translate(x, y + 2.0D, z);
-        GlStateManager.rotate(90.0F - aerwhale.rotationYaw, 0.0F, 1.0F, 0.0F);
-        GlStateManager.rotate(180.0F - aerwhale.rotationPitch, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(90F - (float) aerwhale.aerwhaleRotationYaw, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(180.0F - (float) aerwhale.aerwhaleRotationPitch, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
         this.model.render(aerwhale, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         GlStateManager.popMatrix();
