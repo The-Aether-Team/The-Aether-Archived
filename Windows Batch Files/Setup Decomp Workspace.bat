@@ -1,5 +1,5 @@
 @echo off
 title Setting up Decomp Workspace..
 cd ..
-gradlew build
+gradlew setupDecompWorkspace
 pause
