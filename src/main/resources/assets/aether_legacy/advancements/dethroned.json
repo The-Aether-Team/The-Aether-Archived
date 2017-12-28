@@ -10,7 +10,8 @@
 		"description": {
 			"translate": "advancement.aether_legacy.silver_dungeon.desc"
 		},
-		"frame": "challenge"
+		"frame": "challenge",
+		"show_toast": false
 	},
   	"parent": "aether_legacy:like_a_bossaru",
 	"criteria": {
