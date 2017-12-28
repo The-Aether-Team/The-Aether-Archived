@@ -197,7 +197,7 @@ public class EntitySentry extends EntityLiving implements IMob
 
 	public boolean isAwake()
 	{
-		return this.dataManager.get(SENTRY_AWAKE);
+		return this.dataManager.get(SENTRY_AWAKE).booleanValue();
 	}
 
     public float getEyeHeight()

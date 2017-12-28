@@ -717,7 +717,7 @@ public class EntitySlider extends EntityFlying
 
 	public boolean isAwake()
 	{
-		return this.dataManager.get(SLIDER_AWAKE);
+		return this.dataManager.get(SLIDER_AWAKE).booleanValue();
 	}
 
 }

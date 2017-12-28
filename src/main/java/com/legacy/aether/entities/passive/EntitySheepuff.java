@@ -315,7 +315,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 
     public boolean getSheared()
     {
-        return this.dataManager.get(SHEARED);
+        return this.dataManager.get(SHEARED).booleanValue();
     }
 
     public void setSheared(boolean flag)
@@ -325,7 +325,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 
 	public boolean getPuffed()
     {
-        return this.dataManager.get(PUFFY);
+        return this.dataManager.get(PUFFY).booleanValue();
     }
 
 	public void setPuffed(boolean flag)

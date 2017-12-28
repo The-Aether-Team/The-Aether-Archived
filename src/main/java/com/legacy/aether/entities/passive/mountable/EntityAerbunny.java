@@ -122,7 +122,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 
     public int getPuffiness()
     {
-        return this.dataManager.get(PUFF);
+        return this.dataManager.get(PUFF).intValue();
     }
 
     public void setPuffinessClient(int i)
