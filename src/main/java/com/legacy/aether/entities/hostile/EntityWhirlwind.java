@@ -103,7 +103,7 @@ public class EntityWhirlwind extends EntityMob
 
 	public Integer getColorData()
 	{
-		return this.dataManager.get(COLOR_DATA);
+		return this.dataManager.get(COLOR_DATA).intValue();
 	}
 
 	public void setEvil(boolean isEvil)
@@ -113,7 +113,7 @@ public class EntityWhirlwind extends EntityMob
 
 	public boolean isEvil()
 	{
-		return this.dataManager.get(IS_EVIL);
+		return this.dataManager.get(IS_EVIL).booleanValue();
 	}
 
     public void onLivingUpdate() 

@@ -663,7 +663,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
 	public boolean isBossReady()
 	{
-		return this.dataManager.get(VALKYRIE_READY);
+		return this.dataManager.get(VALKYRIE_READY).booleanValue();
 	}
 
 }

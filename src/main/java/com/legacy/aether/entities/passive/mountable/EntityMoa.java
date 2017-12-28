@@ -125,7 +125,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public boolean isSitting()
 	{
-		return this.dataManager.get(SITTING);
+		return this.dataManager.get(SITTING).booleanValue();
 	}
 
 	public void setSitting(boolean isSitting)
@@ -135,7 +135,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public boolean isHungry()
 	{
-		return this.dataManager.get(HUNGRY);
+		return this.dataManager.get(HUNGRY).booleanValue();
 	}
 
 	public void setHungry(boolean hungry)
@@ -145,7 +145,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public byte getAmountFed()
 	{
-		return this.dataManager.get(AMMOUNT_FEED);
+		return this.dataManager.get(AMMOUNT_FEED).byteValue();
 	}
 
 	public void setAmountFed(int amountFed)
@@ -160,7 +160,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public boolean isPlayerGrown()
 	{
-		return this.dataManager.get(PLAYER_GROWN);
+		return this.dataManager.get(PLAYER_GROWN).booleanValue();
 	}
 
 	public void setPlayerGrown(boolean playerGrown)
@@ -180,7 +180,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public int getRemainingJumps()
 	{
-		return this.dataManager.get(REMAINING_JUMPS);
+		return this.dataManager.get(REMAINING_JUMPS).intValue();
 	}
 
 	public void setRemainingJumps(int jumps)
@@ -190,7 +190,7 @@ public class EntityMoa extends EntitySaddleMount
 
 	public AetherMoaType getMoaType()
 	{
-		return AetherAPI.getInstance().getMoaType(this.dataManager.get(MOA_TYPE_ID));
+		return AetherAPI.getInstance().getMoaType(this.dataManager.get(MOA_TYPE_ID).intValue());
 	}
 
 	public void setMoaType(AetherMoaType moaType)
