@@ -25,6 +25,8 @@ public class AetherEnchantmentFuel extends net.minecraftforge.registries.IForgeR
 	{
 		this.timeGiven = timeGiven;
 		this.fuelStack = fuelStack;
+
+		this.setRegistryName(fuelStack.getItem().getRegistryName().toString() + "_meta_" + fuelStack.getMetadata());
 	}
 
 	public int getTimeGiven()

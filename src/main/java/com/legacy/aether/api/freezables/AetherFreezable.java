@@ -56,6 +56,8 @@ public class AetherFreezable extends net.minecraftforge.registries.IForgeRegistr
 		this.input = input;
 		this.output = output;
 		this.timeRequired = timeRequired;
+
+		this.setRegistryName(input.getItem().getRegistryName().toString() + "_meta_" + input.getMetadata());
 	}
 
 	public int getTimeRequired()
