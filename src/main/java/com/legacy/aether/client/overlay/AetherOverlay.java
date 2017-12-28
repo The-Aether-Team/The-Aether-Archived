@@ -56,22 +56,22 @@ public class AetherOverlay
             GlStateManager.disableDepth();
             GlStateManager.depthMask(false);
             GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-            GlStateManager.color(0.5F, 0.5F, 0.5F, alpha);
             GlStateManager.disableAlpha();
 
             mc.renderEngine.bindTexture(TEXTURE_POISON_VIGNETTE);
 
-    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).endVertex();
-            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).endVertex();
-            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
-            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
+    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
             tessellator.draw();
 
             GlStateManager.depthMask(true);
             GlStateManager.enableDepth();
             GlStateManager.enableAlpha();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
+            GlStateManager.disableBlend();
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.popMatrix();
     	}
     }
@@ -95,21 +95,21 @@ public class AetherOverlay
             GlStateManager.disableDepth();
             GlStateManager.depthMask(false);
             GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-            GlStateManager.color(0.5F, 0.5F, 0.5F, alpha);
             GlStateManager.disableAlpha();
 
             mc.renderEngine.bindTexture(TEXTURE_CURE_VIGNETTE);
 
-    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).endVertex();
-            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).endVertex();
-            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
-            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
+    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
             tessellator.draw();
 
             GlStateManager.depthMask(true);
             GlStateManager.enableDepth();
             GlStateManager.enableAlpha();
+            GlStateManager.disableBlend();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.popMatrix();
     	}
@@ -311,12 +311,12 @@ public class AetherOverlay
 
     public static float getPoisonAlpha(float f)
     {
-        return f * f / 5.0F + 0.4F;
+        return (f * f) / 5.0F + 0.4F;
     }
 
     public static float getCureAlpha(float f)
     {
-        return f * f / 10.0F + 0.4F;
+        return (f * f) / 10.0F + 0.4F;
     }
 
 }
