@@ -120,7 +120,7 @@ public class AetherRegistries
 		registry.register(new AetherEnchantment(Items.BOW, 4000));
 		registry.register(new AetherEnchantment(Items.FISHING_ROD, 600));
 
-		/*registry.register(new AetherEnchantment(Items.RECORD_11, ItemsAether.aether_tune, 2500));
+		registry.register(new AetherEnchantment(Items.RECORD_11, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_13, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_BLOCKS, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_CAT, ItemsAether.aether_tune, 2500));
@@ -130,7 +130,7 @@ public class AetherRegistries
 		registry.register(new AetherEnchantment(Items.RECORD_STAL, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_STRAD, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_WAIT, ItemsAether.aether_tune, 2500));
-		registry.register(new AetherEnchantment(Items.RECORD_WARD, ItemsAether.aether_tune, 2500));*/
+		registry.register(new AetherEnchantment(Items.RECORD_WARD, ItemsAether.aether_tune, 2500));
 
 		registry.register(new AetherEnchantment(Items.WOODEN_PICKAXE, 225));
 		registry.register(new AetherEnchantment(Items.WOODEN_AXE, 225));
@@ -214,6 +214,7 @@ public class AetherRegistries
 		register(new ItemStack(BlocksAether.skyroot_plank, 4), "X", 'X', BlocksAether.aether_log);
 		register(new ItemStack(ItemsAether.nature_staff), "Y", "X", 'Y', ItemsAether.zanite_gemstone, 'X', ItemsAether.skyroot_stick);
 		register(new ItemStack(ItemsAether.skyroot_stick, 4), "X", "X", 'X', BlocksAether.skyroot_plank);
+		register(new ItemStack(Blocks.TRAPDOOR, 2), "XXX", "XXX", 'X', BlocksAether.skyroot_plank);
 		register(new ItemStack(BlocksAether.holystone_brick, 4), "XX", "XX", 'X', BlocksAether.holystone);
 		register(new ItemStack(BlocksAether.zanite_block), "XXX", "XXX", "XXX", 'X', ItemsAether.zanite_gemstone);
 		register(new ItemStack(ItemsAether.zanite_gemstone, 9), "X", 'X', BlocksAether.zanite_block);
@@ -228,12 +229,15 @@ public class AetherRegistries
 		register(new ItemStack(Blocks.JUKEBOX), "XXX", "XYX", "XXX", 'X', BlocksAether.skyroot_plank, 'Y', BlocksAether.enchanted_gravitite);
 		register(new ItemStack(Items.OAK_DOOR, 3), "XX", "XX", "XX", 'X', BlocksAether.skyroot_plank);
 		register(new ItemStack(BlocksAether.ambrosium_torch, 2), "Z", "Y", 'Z', ItemsAether.ambrosium_shard, 'Y', ItemsAether.skyroot_stick);
+		register(new ItemStack(Items.SIGN, 3), "XXX", "XXX", " Y ", 'X', BlocksAether.skyroot_plank, 'Y', ItemsAether.skyroot_stick);
 		register(new ItemStack(Items.LEAD, 2), new Object[] {"YY ", "YX ", "  Y", 'Y', Items.STRING, 'X', ItemsAether.swetty_ball});
 		
 		register(new ItemStack(ItemsAether.cloud_parachute, 1), "XX", "XX", 'X', new ItemStack(BlocksAether.aercloud, 1));
 		register(new ItemStack(ItemsAether.golden_parachute, 1), "XX", "XX", 'X', new ItemStack(BlocksAether.aercloud, 1, 2));
 		register(new ItemStack(Items.SADDLE, 1), "XXX", "XZX", 'X', Items.LEATHER, 'Z', Items.STRING);
+		register(new ItemStack(Blocks.CHEST, 1), "XXX", "X X", "XXX", 'X', BlocksAether.skyroot_plank);
 		register(new ItemStack(ItemsAether.skyroot_bucket, 1, 0), "Z Z", " Z ", 'Z', BlocksAether.skyroot_plank);
+		register(new ItemStack(Blocks.CRAFTING_TABLE, 1), "XX", "XX", 'X', BlocksAether.skyroot_plank);
 
 		register(new ItemStack(ItemsAether.gravitite_helmet, 1), "XXX", "X X", 'X', BlocksAether.enchanted_gravitite);
 		register(new ItemStack(ItemsAether.gravitite_chestplate, 1), "X X", "XXX", "XXX", 'X', BlocksAether.enchanted_gravitite);
