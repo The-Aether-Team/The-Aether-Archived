@@ -86,7 +86,7 @@ public class AetherOverlay
             Tessellator tessellator = Tessellator.getInstance();
             VertexBuffer renderer = tessellator.getBuffer();
 
-    		float alpha = getCureAlpha(-((float)playerAether.poisonInstance().poisonTime + 100.0F) / 100.0F);
+    		float alpha = 0.5F;
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
 
