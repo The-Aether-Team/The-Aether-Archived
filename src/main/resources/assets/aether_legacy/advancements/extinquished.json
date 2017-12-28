@@ -15,12 +15,8 @@
   	"parent": "aether_legacy:dethroned",
 	"criteria": {
 		"enter_aether": {
-			"trigger": "minecraft:player_killed_entity",
+			"trigger": "aether_legacy:defeat_sun_spirit",
 			"conditions": {
-				
-				"entity": {
-					"type": "aether_legacy:sun_spirit"
-				}
 			}
 		}
 	}

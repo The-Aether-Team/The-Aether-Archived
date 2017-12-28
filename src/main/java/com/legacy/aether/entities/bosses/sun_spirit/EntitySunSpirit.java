@@ -11,6 +11,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
@@ -193,7 +195,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob
                 this.chatLine(player, "\u00a7bSuch bitter cold... is this the feeling... of pain?");
                 this.chatCount = 100;
 
-                //player.addStat(AchievementsAether.defeat_gold);
+                if (player instanceof EntityPlayerMP)
+                {
+                    AetherAdvancements.DEFEAT_SUN_SPIRIT_TRIGGER.trigger(((EntityPlayerMP)player));
+                }
 
                 this.setDoor(Blocks.AIR.getDefaultState());
                 this.unlockTreasure();	
