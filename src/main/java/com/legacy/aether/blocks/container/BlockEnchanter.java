@@ -50,9 +50,7 @@ public class BlockEnchanter extends BlockAetherContainer
     @SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
     {
-	    TileEntityEnchanter tileentity = (TileEntityEnchanter)world.getTileEntity(pos);
-
-		if(tileentity.isBurning())
+		if(state.getValue(powered).booleanValue())
 		{
 			float f = (float)pos.getX() + 0.5F;
 			float f1 = (float)pos.getY() + 1.0F + (random.nextFloat() * 6F) / 16F;

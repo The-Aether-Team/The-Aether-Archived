@@ -54,13 +54,13 @@ public class GuiFreezer extends GuiContainer
 		this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
 		int i1;
 
-		if (this.freezer.isBurning())
+		if (this.freezer.isFreezing())
 		{
-			i1 = this.freezer.getEnchantmentTimeRemaining(12);
+			i1 = this.freezer.getFreezingProgressScaled(12);
 			this.drawTexturedModalRect(k + 56, l + 36 + 12 - i1, 176, 12 - i1, 14, i1 + 2);
 		}
 
-		i1 = this.freezer.getEnchantmentProgressScaled(24);
+		i1 = this.freezer.getFreezingTimeRemaining(24);
 		this.drawTexturedModalRect(k + 79, l + 34, 176, 14, i1 + 1, 16);
 	}
 
