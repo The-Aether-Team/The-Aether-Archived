@@ -16,6 +16,7 @@ import com.legacy.aether.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.networking.packets.PacketSendPoison;
+import com.legacy.aether.player.PlayerAether;
 
 public class EntityDartPoison extends EntityDartBase
 {
@@ -88,6 +89,7 @@ public class EntityDartPoison extends EntityDartBase
 
             if (!this.world.isRemote)
             {
+            	PlayerAether.get(ent).afflictPoison();
             	AetherNetworkingManager.sendToAll(new PacketSendPoison(ent));
             }
     	}
