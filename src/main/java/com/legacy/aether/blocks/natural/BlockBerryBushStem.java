@@ -3,6 +3,7 @@ package com.legacy.aether.blocks.natural;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.blocks.BlocksAether;
 
-public class BlockBerryBushStem extends BlockAetherFlower
+public class BlockBerryBushStem extends BlockAetherFlower implements IGrowable
 {
 
 	public BlockBerryBushStem() 
@@ -64,5 +65,23 @@ public class BlockBerryBushStem extends BlockAetherFlower
     {
     	return true;
     }
+
+	@Override
+	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+	{
+		return (double)worldIn.rand.nextFloat() < 0.45D;
+	}
+
+	@Override
+	public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+	{
+		worldIn.setBlockState(pos, BlocksAether.berry_bush.getDefaultState());
+	}
 
 }
