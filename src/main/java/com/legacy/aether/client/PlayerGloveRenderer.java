@@ -25,7 +25,7 @@ public class PlayerGloveRenderer
 	{
 		if (gloveModel == null && slimGloveModel == null)
 		{
-			isSlim = ((AbstractClientPlayer)player).getSkinType() == "slim" ? true : false;
+			isSlim = ((AbstractClientPlayer)player).getSkinType().equals("slim") ? true : false;
 
 			gloveModel = new ModelBiped(0.01F);
 			slimGloveModel = new ModelPlayer(0.01F, true);
