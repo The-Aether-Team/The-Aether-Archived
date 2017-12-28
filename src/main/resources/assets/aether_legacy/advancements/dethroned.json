@@ -9,9 +9,10 @@
 		},
 		"description": {
 			"translate": "advancement.aether_legacy.silver_dungeon.desc"
-		}
+		},
+		"frame": "challenge"
 	},
-  	"parent": "aether_legacy:enter_aether",
+  	"parent": "aether_legacy:like_a_bossaru",
 	"criteria": {
 		"enter_aether": {
 			"trigger": "minecraft:player_killed_entity",

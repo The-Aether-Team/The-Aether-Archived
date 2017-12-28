@@ -8,7 +8,8 @@
 		},
 		"description": {
 			"translate": "advancement.aether_legacy.loreception.desc"
-		}
+		},
+		"hidden": true
 	},
   	"parent": "aether_legacy:enter_aether",
 	"criteria": {

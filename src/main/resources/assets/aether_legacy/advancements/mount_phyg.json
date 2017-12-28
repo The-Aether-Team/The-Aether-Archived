@@ -10,7 +10,7 @@
 			"translate": "advancement.aether_legacy.mount_phyg.desc"
 		}
 	},
-  	"parent": "aether_legacy:enter_aether",
+  	"parent": "aether_legacy:to_infinity_and_beyond",
 	"criteria": {
 		"enter_aether": {
 			"trigger": "aether_legacy:mount_entity",

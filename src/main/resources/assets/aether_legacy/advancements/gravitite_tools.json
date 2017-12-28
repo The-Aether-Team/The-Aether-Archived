@@ -8,9 +8,10 @@
 		},
 		"description": {
 			"translate": "advancement.aether_legacy.gravitite_tools.desc"
-		}
+		},
+		"frame": "goal"
 	},
-  	"parent": "aether_legacy:enter_aether",
+  	"parent": "aether_legacy:craft_altar",
 	"criteria": {
 		"enter_aether": {
 			"trigger": "aether_legacy:gravitite_toolset",

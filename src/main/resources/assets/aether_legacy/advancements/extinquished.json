@@ -9,13 +9,15 @@
 		},
 		"description": {
 			"translate": "advancement.aether_legacy.gold_dungeon.desc"
-		}
+		},
+		"frame": "challenge"
 	},
-  	"parent": "aether_legacy:enter_aether",
+  	"parent": "aether_legacy:dethroned",
 	"criteria": {
 		"enter_aether": {
 			"trigger": "minecraft:player_killed_entity",
 			"conditions": {
+				
 				"entity": {
 					"type": "aether_legacy:sun_spirit"
 				}

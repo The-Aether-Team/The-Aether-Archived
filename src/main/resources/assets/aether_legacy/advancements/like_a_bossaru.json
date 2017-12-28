@@ -9,7 +9,8 @@
 		},
 		"description": {
 			"translate": "advancement.aether_legacy.bronze_dungeon.desc"
-		}
+		},
+		"frame": "challenge"
 	},
   	"parent": "aether_legacy:enter_aether",
 	"criteria": {
