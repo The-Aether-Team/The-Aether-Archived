@@ -17,8 +17,6 @@ public class AetherDictionary
 	{
 		//tree and wood-related things
 		register("logWood", new ItemStack(BlocksAether.aether_log, 1, WILDCARD));
-		register("plankWood", BlocksAether.skyroot_plank);
-		register("stickWood", ItemsAether.skyroot_stick);
 		register("slabWood", BlocksAether.skyroot_slab);
 		register("stairWood", BlocksAether.skyroot_stairs);
 		register("treeSapling", BlocksAether.golden_oak_sapling);
