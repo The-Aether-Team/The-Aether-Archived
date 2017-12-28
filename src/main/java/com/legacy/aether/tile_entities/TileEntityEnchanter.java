@@ -15,6 +15,7 @@ import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.enchantments.AetherEnchantment;
 import com.legacy.aether.api.events.AetherHooks;
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.container.BlockAetherContainer;
 import com.legacy.aether.tile_entities.util.AetherTileEntity;
 
 public class TileEntityEnchanter extends AetherTileEntity
@@ -46,6 +47,8 @@ public class TileEntityEnchanter extends AetherTileEntity
 	@Override
 	public void update()
 	{
+		boolean flag = this.isEnchanting();
+
 		if (this.powerRemaining > 0)
 		{
 			this.powerRemaining--;
@@ -139,6 +142,12 @@ public class TileEntityEnchanter extends AetherTileEntity
 				}
 			}
 		}
+
+		if (flag != this.isEnchanting())
+		{
+			this.markDirty();
+			BlockAetherContainer.setState(this.world, this.pos, this.isEnchanting());
+		}
 	}
 
 	public void addEnchantmentWeight(ItemStack stack)
@@ -152,12 +161,6 @@ public class TileEntityEnchanter extends AetherTileEntity
 				this.ticksRequired += (levels * 1250);
 			}
 		}
-	}
-
-	@Override
-	public int getInventoryStackLimit()
-	{
-		return 64;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -176,7 +179,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 		return (this.powerRemaining * i) / 500;
 	}
 
-	public boolean isBurning()
+	public boolean isEnchanting()
 	{
 		return this.powerRemaining > 0;
 	}

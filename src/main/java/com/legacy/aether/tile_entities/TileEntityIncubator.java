@@ -9,6 +9,7 @@ import net.minecraft.util.NonNullList;
 
 import com.legacy.aether.api.events.AetherHooks;
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.container.BlockAetherContainer;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.items.ItemMoaEgg;
 import com.legacy.aether.items.ItemsAether;
@@ -74,7 +75,7 @@ public class TileEntityIncubator extends AetherTileEntity
 		return (this.powerRemaining * i) / 500;
 	}
 
-	public boolean isBurning()
+	public boolean isIncubating()
 	{
 		return this.getField(1) > 0;
 	}
@@ -82,6 +83,8 @@ public class TileEntityIncubator extends AetherTileEntity
 	@Override
 	public void update()
 	{
+		boolean flag = this.isIncubating();
+
 		if (this.powerRemaining > 0)
 		{
 			this.powerRemaining--;
@@ -146,6 +149,12 @@ public class TileEntityIncubator extends AetherTileEntity
 				this.powerRemaining = 0;
 				this.progress = 0;
 			}
+		}
+
+		if (flag != this.isIncubating())
+		{
+			this.markDirty();
+			BlockAetherContainer.setState(this.world, this.pos, this.isIncubating());
 		}
 	}
 
