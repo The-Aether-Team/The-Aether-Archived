@@ -41,7 +41,7 @@ public class ItemValkyrieLance extends ItemSword
 		EntityPlayer player = (EntityPlayer) entityLiving;
 
 		Vec3d playerVision = player.getLookVec();
-		AxisAlignedBB reachDistance = player.getEntityBoundingBox().expand(10.0F, 10.0F, 10.0F);
+		AxisAlignedBB reachDistance = player.getEntityBoundingBox().grow(10.0D);
 
 		List<Entity> locatedEntities = player.world.getEntitiesWithinAABB(Entity.class, reachDistance);
 
