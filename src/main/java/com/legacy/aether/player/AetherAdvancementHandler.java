@@ -20,17 +20,20 @@ public class AetherAdvancementHandler
 	{
 		Advancement advancement = event.getAdvancement();
 
-		if (advancement.getDisplay() != null && advancement.getDisplay().getIcon().getItem() != null)
+		if (advancement.getDisplay() != null && advancement.getDisplay().getIcon().getItem() != null && advancement.getId().getResourceDomain().equals("aether_legacy"))
 		{
 			ItemStack stack = advancement.getDisplay().getIcon();
 			EntityPlayer player = event.getEntityPlayer();
 
 			int achievementType = 0;
 
+			/*
+			 * Hostile Paradise
+			 */
 			if (stack.getItem() == ItemsAether.dungeon_key)
 			{
 				achievementType = (stack.getMetadata() == 0 ? 1 : stack.getMetadata() == 1 ? 2 : 0);
-				
+
 				if (achievementType == 0)
 				{
 					achievementType = -1;
