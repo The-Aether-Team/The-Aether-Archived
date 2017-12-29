@@ -84,6 +84,7 @@ public class EntityDartPoison extends EntityDartBase
     	super.arrowHit(living);
 
     	this.victim = living;
+    	this.poison = new AetherPoisonMovement(this.victim);
 
     	if (living instanceof EntityPlayerMP)
     	{
@@ -97,7 +98,6 @@ public class EntityDartPoison extends EntityDartBase
     	}
     	else
     	{
-        	this.poison = new AetherPoisonMovement(this.victim);
         	this.poison.afflictPoison();
     	}
 
