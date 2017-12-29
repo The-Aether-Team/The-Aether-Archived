@@ -62,7 +62,7 @@ public class AetherEnchantment extends net.minecraftforge.registries.IForgeRegis
 		this.output = output;
 		this.timeRequired = timeRequired;
 
-		this.setRegistryName(input.getItem().getRegistryName().toString() + "_meta_" + input.getMetadata());
+		this.setRegistryName(input.getItem().getRegistryName().toString() + "_meta_" + (input.isItemStackDamageable() ? 0 : input.getMetadata()));
 	}
 
 	public int getTimeRequired()

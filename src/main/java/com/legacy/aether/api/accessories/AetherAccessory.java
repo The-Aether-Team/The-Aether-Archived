@@ -26,7 +26,7 @@ public class AetherAccessory extends net.minecraftforge.registries.IForgeRegistr
 		this.accessoryType = type;
 		this.accessoryStack = stack;
 
-		this.setRegistryName(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+		this.setRegistryName(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 	}
 
 	public AccessoryType getAccessoryType()
