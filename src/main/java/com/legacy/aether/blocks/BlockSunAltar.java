@@ -35,9 +35,12 @@ public class BlockSunAltar extends Block
 		{
 			Aether.proxy.openSunAltar();
 		}
-		else if (player instanceof EntityPlayerSP && ((EntityPlayerSP)player).getPermissionLevel() > 0 && player.capabilities.isCreativeMode)
+		else if (world.isRemote)
 		{
-			Aether.proxy.openSunAltar();
+			if (player instanceof EntityPlayerSP && ((EntityPlayerSP)player).getPermissionLevel() > 0 && player.capabilities.isCreativeMode)
+			{
+				Aether.proxy.openSunAltar();
+			}
 		}
 
 		return true;
