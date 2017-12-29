@@ -43,7 +43,7 @@ public class AetherAPI
     public AetherAccessory register(AetherAccessory type)
     {
     	ItemStack stack = type.getAccessoryStack();
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
     	this.iAccessoryRegistry.register(type.setRegistryName(registryName));
 
@@ -53,7 +53,7 @@ public class AetherAPI
     public AetherEnchantment register(AetherEnchantment type)
     {
     	ItemStack stack = type.getInput();
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
     	this.iEnchantmentRegistry.register(type.setRegistryName(registryName));
 
@@ -63,7 +63,7 @@ public class AetherAPI
     public AetherEnchantmentFuel register(AetherEnchantmentFuel type)
     {
     	ItemStack stack = type.getFuelStack();
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
     	this.iEnchantmentFuelRegistry.register(type.setRegistryName(registryName));
 
@@ -73,7 +73,7 @@ public class AetherAPI
     public AetherFreezable register(AetherFreezable type)
     {
     	ItemStack stack = type.getInput();
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
     	this.iFreezableRegistry.register(type.setRegistryName(registryName));
 
@@ -83,7 +83,7 @@ public class AetherAPI
     public AetherFreezableFuel register(AetherFreezableFuel type)
     {
     	ItemStack stack = type.getFuelStack();
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
     	this.iFreezableFuelRegistry.register(type.setRegistryName(registryName));
 
@@ -106,70 +106,70 @@ public class AetherAPI
 
     public boolean isAccessory(ItemStack stack)
     {
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
     	return this.iAccessoryRegistry.containsKey(registryName);
     }
 
 	public AetherAccessory getAccessory(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iAccessoryRegistry.getObject(registryName);
 	}
 
 	public boolean hasEnchantment(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iEnchantmentRegistry.containsKey(registryName);
 	}
 
 	public AetherEnchantment getEnchantment(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iEnchantmentRegistry.getObject(registryName);
 	}
 
 	public boolean isEnchantmentFuel(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iEnchantmentFuelRegistry.containsKey(registryName);
 	}
 
 	public AetherEnchantmentFuel getEnchantmentFuel(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iEnchantmentFuelRegistry.getObject(registryName);
 	}
 
 	public boolean hasFreezable(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iFreezableRegistry.containsKey(registryName);
 	}
 
 	public AetherFreezable getFreezable(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iFreezableRegistry.getObject(registryName);
 	}
 
 	public boolean isFreezableFuel(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iFreezableFuelRegistry.containsKey(registryName);
 	}
 
 	public AetherFreezableFuel getFreezableFuel(ItemStack stack) 
 	{
-    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + stack.getMetadata());
+    	ResourceLocation registryName = new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata()));
 
 		return this.iFreezableFuelRegistry.getObject(registryName);
 	}
