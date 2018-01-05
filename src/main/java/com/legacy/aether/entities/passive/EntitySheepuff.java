@@ -174,12 +174,13 @@ public class EntitySheepuff extends EntityAetherAnimal
 	{
 		this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
-	
-    public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
-    {
-        ItemStack itemstack = player.inventory.getCurrentItem();
 
-        if(itemstack != null && itemstack.getItem() == Items.SHEARS && !this.getSheared())
+	@Override
+    public boolean processInteract(EntityPlayer player, EnumHand hand)
+    {
+        ItemStack itemstack = player.getHeldItem(hand);
+
+        if(itemstack.getItem() == Items.SHEARS && !this.getSheared())
         {
             if(!this.world.isRemote)
             {
@@ -206,7 +207,7 @@ public class EntitySheepuff extends EntityAetherAnimal
             itemstack.damageItem(1, player);
         }
 
-        if (itemstack != null && itemstack.getItem() == Items.DYE && !this.getSheared())
+        if (itemstack.getItem() == Items.DYE && !this.getSheared())
         {
         	EnumDyeColor color = EnumDyeColor.byDyeDamage(itemstack.getItemDamage());
         	int colorID = color.getMetadata();
