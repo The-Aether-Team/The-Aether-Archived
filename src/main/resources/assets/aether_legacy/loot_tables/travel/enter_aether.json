@@ -1,0 +1,26 @@
+{
+    "pools": [
+        {
+			"name": "book_handler",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "aether_legacy:lore_book",
+                    "weight": 1
+                }
+            ]
+        },
+        {
+			"name": "parachute_handler",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "aether_legacy:golden_parachute",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

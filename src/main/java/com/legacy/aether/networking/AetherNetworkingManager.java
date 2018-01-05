@@ -9,7 +9,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.networking.packets.PacketAccessory;
-import com.legacy.aether.networking.packets.PacketAchievement;
 import com.legacy.aether.networking.packets.PacketDialogueClicked;
 import com.legacy.aether.networking.packets.PacketDisplayDialogue;
 import com.legacy.aether.networking.packets.PacketInitiateValkyrieFight;
@@ -39,8 +38,6 @@ public class AetherNetworkingManager
 
 		INSTANCE.registerMessage(PacketDisplayDialogue.class, PacketDisplayDialogue.class, discriminant++, Side.CLIENT);
 		INSTANCE.registerMessage(PacketDialogueClicked.class, PacketDialogueClicked.class, discriminant++, Side.SERVER);
-
-		INSTANCE.registerMessage(PacketAchievement.class, PacketAchievement.class, discriminant++, Side.CLIENT);
 
 		INSTANCE.registerMessage(PacketPerkChanged.class, PacketPerkChanged.class, discriminant++, Side.SERVER);
 		INSTANCE.registerMessage(PacketPerkChanged.class, PacketPerkChanged.class, discriminant++, Side.CLIENT);

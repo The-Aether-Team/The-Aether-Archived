@@ -1,7 +1,6 @@
 package com.legacy.aether;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -13,7 +12,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.entities.AetherEntities;
 import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.player.AetherAdvancementHandler;
 import com.legacy.aether.player.capability.PlayerAetherManager;
 import com.legacy.aether.registry.AetherRegistryEvent;
 import com.legacy.aether.registry.sounds.SoundsAether;
@@ -59,11 +57,6 @@ public class Aether
 
 		CommonProxy.registerEvent(new AetherEventHandler());
 
-		if(ForgeVersion.getBuildVersion() >= 2562)
-		{
-			CommonProxy.registerEvent(new AetherAdvancementHandler());
-		}
-		
 		proxy.initialization();
 	}
 

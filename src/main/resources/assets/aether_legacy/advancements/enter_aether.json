@@ -11,6 +11,9 @@
 		},
 		"background": "aether_legacy:textures/blocks/carved_stone.png"
 	},
+	"rewards": {
+		"loot": [ "aether_legacy:travel/enter_aether" ]
+	},
 	"criteria": {
 		"enter_aether": {
 			"trigger": "minecraft:changed_dimension",
