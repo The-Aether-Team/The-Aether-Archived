@@ -153,9 +153,13 @@ public class BlockCrystalLeaves extends BlockLeaves implements IAetherMeta
 	public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) 
 	{
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+		IBlockState state = world.getBlockState(pos);
 
-		list.add(new ItemStack(this));
-
+		if (state.getValue(leaf_type) != null)
+		{
+			list.add(new ItemStack(this, 1, state.getValue(leaf_type).getMeta()));
+		}
+		
 		return list;
 	}
 
