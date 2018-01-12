@@ -69,6 +69,7 @@ public class EntityValkyrieQueen extends EntityMob
     public EntityValkyrieQueen(World world)
     {
         super(world);
+        this.setSize(0.6F, 1.95F);
 
         this.timeUntilTeleport = this.rand.nextInt(250);
 
@@ -127,7 +128,7 @@ public class EntityValkyrieQueen extends EntityMob
     	this.setAttackTarget(entity);
     	this.angerLevel = 200 + rand.nextInt(200);
         
-        for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
+    	/*for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
         {
             if (this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
             {
@@ -138,7 +139,7 @@ public class EntityValkyrieQueen extends EntityMob
             	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
                 return;
             }
-        }
+        }*/
     }
 
     public void setDungeon(int i, int j, int k) 
@@ -276,6 +277,19 @@ public class EntityValkyrieQueen extends EntityMob
                 else if ((this.timeUntilTeleport % 5) == 0 && !canEntityBeSeen(this.getAttackTarget()))
                 {
                 	this.timeUntilTeleport += 100;
+                }
+            }
+            
+            for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
+            {
+                if (this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
+                {
+                	this.dungeonEntranceZ = k;
+                	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                    return;
                 }
             }
         }
