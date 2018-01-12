@@ -188,6 +188,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         	else
         	{
 				playerAether.setCurrentBoss(this);
+
         	}
 
         	if (this.isDead())
@@ -494,6 +495,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             this.setAttackTarget(player);
             this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
             return true;
+            	
         }
         else
         {
@@ -543,6 +545,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     protected void dropFewItems(boolean var1, int var2)
     {
         this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 2), 0.5F);
+        this.entityDropItem(new ItemStack(BlocksAether.sun_altar), 0.5F);
     }
 
     @Override
