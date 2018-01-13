@@ -63,22 +63,22 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase
     {
         this.eatingGrassTimer = Math.max(0, this.eatingGrassTimer - 1);
 
-        if (this.eatingGrassTimer == 4)
-        {
+       //if (this.eatingGrassTimer == 0)
+      //  {
+        	
+        	//System.out.println("4");
             BlockPos blockpos = new BlockPos(this.sheepuff.posX, this.sheepuff.posY, this.sheepuff.posZ);
 
             BlockPos blockpos1 = blockpos.down();
 
             if (this.entityWorld.getBlockState(blockpos1).getBlock() == BlocksAether.aether_grass)
             {
-                if (this.entityWorld.getGameRules().getBoolean("mobGriefing"))
-                {
-                    this.entityWorld.playEvent(2001, blockpos1, Block.getIdFromBlock(BlocksAether.aether_grass));
-                    this.entityWorld.setBlockState(blockpos1, BlocksAether.aether_dirt.getDefaultState(), 2);
-                }
+            	this.entityWorld.playEvent(2001, blockpos1, Block.getIdFromBlock(BlocksAether.aether_grass));
+            	this.entityWorld.setBlockState(blockpos1, BlocksAether.aether_dirt.getDefaultState());
 
                 this.sheepuff.eatGrassBonus();
-            }
+           // }
+            
         }
     }
 
