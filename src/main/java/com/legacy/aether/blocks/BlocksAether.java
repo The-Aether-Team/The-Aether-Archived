@@ -28,6 +28,7 @@ import com.legacy.aether.blocks.decorative.BlockAetherWall;
 import com.legacy.aether.blocks.decorative.BlockAmbrosiumTorch;
 import com.legacy.aether.blocks.decorative.BlockPresent;
 import com.legacy.aether.blocks.decorative.BlockQuicksoilGlass;
+import com.legacy.aether.blocks.decorative.BlockSkyrootBookshelf;
 import com.legacy.aether.blocks.decorative.BlockSkyrootPlank;
 import com.legacy.aether.blocks.decorative.BlockZanite;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
@@ -110,6 +111,8 @@ public class BlocksAether
 	public static Block holiday_leaves, present;
 
 	public static Block sun_altar;
+	
+	public static Block skyroot_bookshelf;
 
 	public static IForgeRegistry<Block> blockRegistry;
 
@@ -202,6 +205,7 @@ public class BlocksAether
 		holystone_brick_slab = registerSlab("holystone_brick_slab", new BlockAetherSlab("holystone_brick_slab", false, Material.ROCK).setHardness(0.5F).setResistance(10.0F), holystone_brick_double_slab);
 		aerogel_slab = registerSlab("aerogel_slab", new BlockAerogelSlab("aerogel_slab", false, Material.IRON).setHardness(0.5F).setResistance(999F), aerogel_double_slab);
 		sun_altar = register("sun_altar", new BlockSunAltar());
+		skyroot_bookshelf = register("skyroot_bookshelf", new BlockSkyrootBookshelf());
 
 		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlocksAether.aether_log, new ItemStack(Items.COAL, 1, 1), 0.15F);
 	}
