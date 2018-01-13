@@ -224,6 +224,16 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         {
             --this.chatCount;
         }
+        
+        int i2 = (MathHelper.floor(this.posX) - 2) + this.rand.nextInt(4);
+        int j2 = MathHelper.floor(this.posY) + this.rand.nextInt(2);
+        int k2 = (MathHelper.floor(this.posZ) - 2) + this.rand.nextInt(4);
+
+        if(!(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.locked_dungeon_block && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.AIR)))
+        {
+        	//System.out.println("m");
+        	this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
+        }
     }
 
     @Override
