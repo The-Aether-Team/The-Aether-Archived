@@ -130,19 +130,6 @@ public class EntityValkyrieQueen extends EntityMob
     {
     	this.setAttackTarget(entity);
     	this.angerLevel = 200 + rand.nextInt(200);
-        
-    	/*for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
-        {
-            if (this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
-            {
-            	this.dungeonEntranceZ = k;
-            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-                return;
-            }
-        }*/
     }
 
     public void setDungeon(int i, int j, int k) 
@@ -387,7 +374,6 @@ public class EntityValkyrieQueen extends EntityMob
         
         if(this.onGround && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.locked_dungeon_block) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.treasure_chest) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.AIR) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.WOOL) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.ambrosium_torch) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.WATER) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.aether_log.getDefaultState().withProperty(BlockAetherLog.wood_type, EnumLogType.Oak).withProperty(BlockAetherLog.double_drop, Boolean.FALSE)) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == (BlocksAether.aether_leaves) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.FIRE) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.golden_oak_sapling)))
         {
-        	//System.out.println("m");
         	this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
         }
     }
