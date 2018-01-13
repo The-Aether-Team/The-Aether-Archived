@@ -3,6 +3,7 @@ package com.legacy.aether.blocks.decorative;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
@@ -15,6 +16,10 @@ public class BlockSkyrootBookshelf extends Block
     public BlockSkyrootBookshelf()
     {
         super(Material.WOOD);
+        
+        this.setHardness(2F);
+		this.setResistance(5F);
+		this.setSoundType(SoundType.WOOD);
     }
 
     /**

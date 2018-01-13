@@ -164,6 +164,7 @@ tile.decorated_holiday_leaves.name=Decorated Holiday Leaves
 tile.holiday_leaves.name=Holiday Leaves
 tile.skyroot_sapling.name=Skyroot Sapling
 tile.golden_oak_sapling.name=Golden Oak Sapling
+tile.crystal_sapling.name=Crystal Sapling
 tile.ambrosium_torch.name=Ambrosium Torch
 tile.skyroot_plank.name=Skyroot Plank
 tile.present.name=Present
@@ -214,6 +215,7 @@ aerogel_slab.name=Aerogel Slab
 tile.aerogel_double_slab.name=Aerogel Double Slab
 tile.skyroot_fence_gate.name=Skyroot Fence Gate
 tile.sun_altar.name=Sun Altar
+tile.skyroot_bookshelf.name=Skyroot Bookshelf
 
 # Entities
 entity.aechor_plant.name=Aechor Plant

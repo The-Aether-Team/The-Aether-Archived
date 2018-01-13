@@ -1,6 +1,5 @@
 package com.legacy.aether.entities.bosses.valkyrie_queen;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -37,9 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.natural.BlockAetherLeaves;
 import com.legacy.aether.blocks.natural.BlockAetherLog;
-import com.legacy.aether.blocks.util.EnumLeafType;
 import com.legacy.aether.blocks.util.EnumLogType;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
