@@ -2,20 +2,11 @@ package com.legacy.aether.registry;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import com.legacy.aether.Aether;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.api.accessories.AetherAccessory;
 import com.legacy.aether.api.enchantments.AetherEnchantment;
@@ -201,13 +192,13 @@ public class AetherRegistries
 
 	public static void registerRecipes()
 	{
-		initializeRecipes();
-		initializeShapelessRecipes();
+		//initializeRecipes();
+		//initializeShapelessRecipes();
 
 		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlocksAether.aether_log, new ItemStack(Items.COAL, 1, 1), 0.15F);
 	}
 
-	private static void initializeShapelessRecipes()
+	/*private static void initializeShapelessRecipes()
 	{
 		registerShapeless("blue_cape", new ItemStack(ItemsAether.blue_cape), Ingredient.fromItem(ItemsAether.white_cape), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, 4)));
 		registerShapeless("red_cape", new ItemStack(ItemsAether.red_cape), Ingredient.fromItem(ItemsAether.white_cape), Ingredient.fromStacks(new ItemStack(Items.DYE, 1, 1)));
@@ -219,7 +210,6 @@ public class AetherRegistries
 
 	private static void initializeRecipes()
 	{
-		//register("skyroot_planknew ItemStack(BlocksAether.skyroot_plank, 4), "X", 'X', BlocksAether.aether_log);
 		register("nature_staf", new ItemStack(ItemsAether.nature_staff), "Y", "X", 'Y', ItemsAether.zanite_gemstone, 'X', ItemsAether.skyroot_stick);
 		register("skyroot_stick", new ItemStack(ItemsAether.skyroot_stick, 4), "X", "X", 'X', BlocksAether.skyroot_plank);
 		register("trapdoor", new ItemStack(Blocks.TRAPDOOR, 2), "XXX", "XXX", 'X', BlocksAether.skyroot_plank);
@@ -336,6 +326,6 @@ public class AetherRegistries
         }
 
         craftingRegistry.register(new ShapelessRecipes(group == null ? "" : group.toString(), stack, lst).setRegistryName(Aether.locate(name)));
-	}
+	}*/
 
 }
