@@ -1,6 +1,7 @@
 package com.legacy.aether.tile_entities;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -90,7 +91,14 @@ public class TileEntityIncubator extends AetherTileEntity
 
 			if (!this.getStackInSlot(1).isEmpty())
 			{
-				this.progress++;
+				if (this.world.getBlockState(this.getPos().down()).getBlock() == Blocks.MAGMA)
+				{
+					this.progress += 2F;
+				}
+				else
+				{
+					this.progress++;
+				}
 			}
 		}
 
