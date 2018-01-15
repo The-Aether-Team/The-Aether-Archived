@@ -214,6 +214,7 @@ aerogel_slab.name=Aerogel Slab
 tile.aerogel_double_slab.name=Aerogel Double Slab
 tile.pink_aercloud.name=Pink Aercloud
 tile.skyroot_fence_gate.name=Skyroot Fence Gate
+tile.skyroot_bookshelf.name=Skyroot Bookshelf
 
 # Entities
 entity.aechor_plant.name=Aechor Plant

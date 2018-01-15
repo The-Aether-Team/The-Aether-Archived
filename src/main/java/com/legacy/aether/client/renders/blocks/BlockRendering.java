@@ -118,6 +118,8 @@ public class BlockRendering
 		register(BlocksAether.aerogel_slab, "aerogel_slab");
 
 		register(BlocksAether.sun_altar, "sun_altar");
+		
+		register(BlocksAether.skyroot_bookshelf, "skyroot_bookshelf");
 
 		for (int meta = 0; meta < EnumCloudType.values().length; ++meta)
 		{
