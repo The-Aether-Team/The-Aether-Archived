@@ -35,6 +35,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.natural.BlockAetherLog;
+import com.legacy.aether.blocks.util.EnumLogType;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
@@ -71,6 +73,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     public EntityValkyrieQueen(World world)
     {
         super(world);
+        this.setSize(0.6F, 1.95F);
 
         this.timeUntilTeleport = this.rand.nextInt(250);
 
@@ -128,19 +131,6 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     {
     	this.setAttackTarget(entity);
     	this.angerLevel = 200 + rand.nextInt(200);
-        
-        for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
-        {
-            if (this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
-            {
-            	this.dungeonEntranceZ = k;
-            	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-                return;
-            }
-        }
     }
 
     public void setDungeon(int i, int j, int k) 
@@ -280,6 +270,19 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
                 	this.timeUntilTeleport += 100;
                 }
             }
+            
+            for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
+            {
+                if (this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
+                {
+                	this.dungeonEntranceZ = k;
+                	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.worldObj.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                    return;
+                }
+            }
         }
 
         if (this.getAttackTarget() != null && this.getAttackTarget().isDead)
@@ -364,6 +367,29 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
                 this.setDead();
             }
         }
+        
+        int i2 = (MathHelper.floor_double(this.posX) - 1) + this.rand.nextInt(3);
+        int j2 = MathHelper.floor_double(this.posY) + this.rand.nextInt(2);
+        int k2 = (MathHelper.floor_double(this.posZ) - 1) + this.rand.nextInt(3);
+        
+        
+        if(this.onGround && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.locked_dungeon_block) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.treasure_chest) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.AIR) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.WOOL) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.ambrosium_torch) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.WATER) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.aether_log.getDefaultState().withProperty(BlockAetherLog.wood_type, EnumLogType.Oak).withProperty(BlockAetherLog.double_drop, Boolean.FALSE)) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == (BlocksAether.aether_leaves) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.FIRE) && !(this.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.golden_oak_sapling)))
+        {
+        	this.worldObj.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
+        }
+    }
+    
+    @Override
+    public void moveEntity(double x, double y, double z)
+    {
+		if (this.isBossReady())
+		{
+			super.moveEntity(x, y, z);
+		}
+		else
+		{
+			super.moveEntity(0, y, 0);
+		}
     }
 
     @Override
