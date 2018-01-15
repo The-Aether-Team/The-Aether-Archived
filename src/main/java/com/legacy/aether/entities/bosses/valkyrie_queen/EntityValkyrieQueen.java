@@ -4,6 +4,7 @@ import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
@@ -35,6 +36,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.natural.BlockAetherLog;
+import com.legacy.aether.blocks.util.EnumLogType;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
@@ -70,6 +73,7 @@ public class EntityValkyrieQueen extends EntityMob
     public EntityValkyrieQueen(World world)
     {
         super(world);
+        this.setSize(0.6F, 1.95F);
 
         this.timeUntilTeleport = this.rand.nextInt(250);
 
@@ -127,19 +131,6 @@ public class EntityValkyrieQueen extends EntityMob
     {
     	this.setAttackTarget(entity);
     	this.angerLevel = 200 + rand.nextInt(200);
-        
-        for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
-        {
-            if (this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
-            {
-            	this.dungeonEntranceZ = k;
-            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-            	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-                return;
-            }
-        }
     }
 
     public void setDungeon(int i, int j, int k) 
@@ -279,6 +270,19 @@ public class EntityValkyrieQueen extends EntityMob
                 	this.timeUntilTeleport += 100;
                 }
             }
+            
+            for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
+            {
+                if (this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
+                {
+                	this.dungeonEntranceZ = k;
+                	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                    return;
+                }
+            }
         }
 
         if (this.getAttackTarget() != null && this.getAttackTarget().isDead)
@@ -363,6 +367,29 @@ public class EntityValkyrieQueen extends EntityMob
                 this.setDead();
             }
         }
+        
+        int i2 = (MathHelper.floor(this.posX) - 1) + this.rand.nextInt(3);
+        int j2 = MathHelper.floor(this.posY) + this.rand.nextInt(2);
+        int k2 = (MathHelper.floor(this.posZ) - 1) + this.rand.nextInt(3);
+        
+        
+        if(this.onGround && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.locked_dungeon_block) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.treasure_chest) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.AIR) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.WOOL) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.ambrosium_torch) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.WATER) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.aether_log.getDefaultState().withProperty(BlockAetherLog.wood_type, EnumLogType.Oak).withProperty(BlockAetherLog.double_drop, Boolean.FALSE)) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == (BlocksAether.aether_leaves) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.FIRE) && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.golden_oak_sapling)))
+        {
+        	this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
+        }
+    }
+    
+    @Override
+    public void move(MoverType type, double x, double y, double z)
+    {
+		if (this.isBossReady())
+		{
+			super.move(type, x, y, z);
+		}
+		else
+		{
+			super.move(type, 0, y, 0);
+		}
     }
 
     @Override
