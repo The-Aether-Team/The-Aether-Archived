@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTrapDoor;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
@@ -91,6 +92,19 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	    this.dataManager.register(SLIDER_AWAKE, false);
 	    this.dataManager.register(SLIDER_NAME, String.valueOf(AetherNameGen.gen()));
 	}
+	
+	@Override
+    public void moveEntity(double x, double y, double z)
+    {
+		if (this.isAwake())
+		{
+			super.moveEntity(x, y, z);
+		}
+		else
+		{
+			super.moveEntity(0, y, 0);
+		}
+    }
 
     @Override
 	protected SoundEvent getAmbientSound()
@@ -152,6 +166,8 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         {
     			this.motionY = 1.2F;  
         }
+ 
+    	this.evapWater();
     	
 		if(this.hurtAngle > 0.01F) 
 		{
@@ -385,6 +401,30 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 			}
 		}
 	}
+    
+    public void evapWater()
+    {
+        int var1 = MathHelper.floor_double(this.getEntityBoundingBox().minX + (this.getEntityBoundingBox().maxX - this.getEntityBoundingBox().minX) / 2.0D);
+        int var2 = MathHelper.floor_double(this.getEntityBoundingBox().minZ + (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) / 2.0D);
+
+        byte radius = 2;
+
+        for (int var4 = var1 - radius; var4 <= var1 + radius; ++var4)
+        {
+            for (int var5 = var2 - radius; var5 <= var2 + radius; ++var5)
+            {
+                for (int var6 = 0 + rand.nextInt(2); var6 < 8; ++var6)
+                {
+                    double var7 = posY + var6;
+
+                    if (this.worldObj.getBlockState(new BlockPos(var4, var7, var5)).getMaterial() == Material.WATER)
+                    {
+                        this.worldObj.setBlockState(new BlockPos(var4, var7, var5), Blocks.AIR.getDefaultState());
+                    }
+                }
+            }
+        }
+    }
 
 	private void destroyBlock(BlockPos pos)
 	{
