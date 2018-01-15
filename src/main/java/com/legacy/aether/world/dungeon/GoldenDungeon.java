@@ -234,7 +234,7 @@ public class GoldenDungeon extends AetherDungeon
 
 	public static ItemStack getGoldLoot(Random random)
 	{
-		int item = random.nextInt(9);
+		int item = random.nextInt(10);
 		switch(item)
 		{
 			case 0 :
@@ -303,6 +303,9 @@ public class GoldenDungeon extends AetherDungeon
 
 				return new ItemStack(ItemsAether.gravitite_gloves);
 			}
+			
+			case 8 :
+				return new ItemStack(ItemsAether.chain_gloves);
 
 		}
 		return new ItemStack(ItemsAether.obsidian_chestplate);
