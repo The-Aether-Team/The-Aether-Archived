@@ -4,8 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
@@ -106,10 +108,10 @@ public class AbilityAccessories extends Ability
 
 		if (this.playerAether.wearingAccessory(ItemsAether.regeneration_stone))
 		{
-			if(this.player.getHealth() < this.player.getMaxHealth() && (player.ticksExisted % 20 * 12) == 0)
-			{
-				this.player.heal(1);
-			}
+			if(this.player.getHealth() < this.player.getMaxHealth() && this.player.getActivePotionEffect(MobEffects.REGENERATION) == null)
+            {
+				this.player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 80, 0, false, false));
+            }
 		}
 
 		if (this.playerAether.wearingAccessory(ItemsAether.phoenix_gloves) && this.player.isWet())
