@@ -57,7 +57,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 			{
 				if (this.world.getBlockState(this.getPos().down()).getBlock() == BlocksAether.enchanted_gravitite)
 				{
-					this.progress += 2;
+					this.progress += 2.5;
 				}
 				else
 				{
