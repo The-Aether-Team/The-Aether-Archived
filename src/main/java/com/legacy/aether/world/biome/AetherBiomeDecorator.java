@@ -113,11 +113,11 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			}
 		}
 
-    	this.generateClouds(EnumCloudType.Golden, 4, false, 50, this.nextInt(64) + 96);
-    	this.generateClouds(EnumCloudType.Blue, 8, false, 26, this.nextInt(64) + 32);
-    	this.generateClouds(EnumCloudType.Cold, 16, false, 14, this.nextInt(64) + 64);
+    	//this.generateClouds(EnumCloudType.Golden, 4, false, 50, this.nextInt(64) + 96);
+    	//this.generateClouds(EnumCloudType.Blue, 8, false, 26, this.nextInt(64) + 32);
+    	//this.generateClouds(EnumCloudType.Cold, 16, false, 14, this.nextInt(64) + 64);
 
-		MutableBlockPos mutedPos = new MutableBlockPos();
+		/*MutableBlockPos mutedPos = new MutableBlockPos();
 
 		if (this.shouldSpawn(10))
 		{
@@ -136,7 +136,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 					}
 				}
 			}
-		}
+		}*/
     }
 
 	public int nextInt(int max)
