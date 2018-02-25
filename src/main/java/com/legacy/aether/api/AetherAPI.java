@@ -19,7 +19,7 @@ import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.api.freezables.AetherFreezableFuel;
 import com.legacy.aether.api.moa.AetherMoaType;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = "aether_legacy")
 public class AetherAPI
 {
 
