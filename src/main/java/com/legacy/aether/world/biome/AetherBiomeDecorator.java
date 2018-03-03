@@ -5,10 +5,10 @@ import java.util.Random;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.legacy.aether.AetherConfig;
@@ -18,6 +18,7 @@ import com.legacy.aether.world.biome.decoration.AetherGenClouds;
 import com.legacy.aether.world.biome.decoration.AetherGenFloatingIsland;
 import com.legacy.aether.world.biome.decoration.AetherGenFoilage;
 import com.legacy.aether.world.biome.decoration.AetherGenHolidayTree;
+import com.legacy.aether.world.biome.decoration.AetherGenLakes;
 import com.legacy.aether.world.biome.decoration.AetherGenLiquids;
 import com.legacy.aether.world.biome.decoration.AetherGenMinable;
 import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
@@ -48,6 +49,8 @@ public class AetherBiomeDecorator extends BiomeDecorator
 	public AetherGenLiquids liquid_overhang = new AetherGenLiquids();
 
 	public AetherGenHolidayTree holiday_tree = new AetherGenHolidayTree();
+
+	public AetherGenLakes aether_lakes = new AetherGenLakes();
 
 	public AetherBiomeDecorator()
 	{
@@ -111,6 +114,11 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			{
 				this.holiday_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
 			}
+		}
+
+		if (this.shouldSpawn(10))
+		{
+            (new WorldGenLakes(Blocks.WATER)).generate(this.world, this.rand, this.chunkPos.add(this.rand.nextInt(16) + 8, this.rand.nextInt(256), this.rand.nextInt(16) + 8));
 		}
 
     	//this.generateClouds(EnumCloudType.Golden, 4, false, 50, this.nextInt(64) + 96);
