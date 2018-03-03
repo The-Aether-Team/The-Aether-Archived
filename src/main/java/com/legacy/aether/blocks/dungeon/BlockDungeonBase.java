@@ -30,6 +30,11 @@ public class BlockDungeonBase extends Block implements IAetherMeta
 	{
 		super(Material.ROCK);
 
+		if (isLocked)
+		{
+			this.setResistance(6000000.0F);
+		}
+
 		this.setSoundType(SoundType.STONE);
 		this.setHardness(isLocked ? -1F : 0.5F);
 		this.setCreativeTab(isLocked ? null : AetherCreativeTabs.blocks);
