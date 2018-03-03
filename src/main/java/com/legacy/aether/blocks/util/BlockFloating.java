@@ -50,9 +50,10 @@ public class BlockFloating extends Block
 	{
 		if (canContinue(world, pos.up()) && pos.getY() < world.getHeight())
 		{
+			EntityFloatingBlock floating = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
+
 			if (!world.isRemote)
 			{
-				EntityFloatingBlock floating = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
 				world.spawnEntity(floating);
 			}
 

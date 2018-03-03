@@ -7,20 +7,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityFallingBlock;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.util.BlockFloating;
-import com.legacy.aether.entities.DataSerializerRegistry;
 
 public class EntityFloatingBlock extends Entity
 {
 
-    public static final DataParameter<IBlockState> STATE = EntityDataManager.<IBlockState>createKey(EntityFloatingBlock.class, DataSerializerRegistry.BLOCK_STATE_SERIALIZER);
+	private IBlockState state;
 
 	private int timeFloated = 0;
 
@@ -45,7 +41,7 @@ public class EntityFloatingBlock extends Entity
 	@Override
 	protected void entityInit()
 	{
-		this.dataManager.register(STATE, Blocks.AIR.getDefaultState());
+
     }
 
 	@Override
@@ -102,12 +98,12 @@ public class EntityFloatingBlock extends Entity
 
 	public void setState(IBlockState state)
 	{
-		this.dataManager.set(STATE, state);
+		this.state = state;
 	}
 
 	public IBlockState getBlockState()
 	{
-		return this.dataManager.get(STATE);
+		return this.state;
 	}
 
 	@Override
@@ -117,27 +113,21 @@ public class EntityFloatingBlock extends Entity
     }
 
     @Override
-    public void setDead()
-    {
-        super.setDead();
-    }
-
-    @Override
     public boolean canBeCollidedWith()
     {
         return !this.isDead;
     }
 
 	@Override
-	protected void readEntityFromNBT(NBTTagCompound tagCompund)
+	protected void readEntityFromNBT(NBTTagCompound tagCompound)
 	{
-
+		this.state = Block.getStateById(tagCompound.getInteger("blockstateId"));
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound tagCompound) 
 	{
-
+		tagCompound.setInteger("blockstateId", Block.getStateId(this.state));
 	}
 
 }

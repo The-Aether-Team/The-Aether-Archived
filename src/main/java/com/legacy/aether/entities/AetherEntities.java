@@ -83,7 +83,7 @@ public class AetherEntities
 		register(EntityParachute.class, "parachute", 31);
 		register(EntityWhirlwind.class, "whirlwind", 32, 0x9fc3f7, 0xffffff);
 
-		DataSerializerRegistry.initialize();
+		//DataSerializerRegistry.initialize();
 	}
 
 	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID)
