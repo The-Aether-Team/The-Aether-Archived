@@ -39,20 +39,20 @@ public class BlockRendering
 	@SubscribeEvent
 	public void onModelRegisterEvent(ModelRegistryEvent event)
 	{
-        registerBlockWithStateMapper(BlocksAether.aether_grass, (new StateMap.Builder()).ignore(BlockAetherGrass.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.aether_dirt, (new StateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.holystone, (new StateMap.Builder()).ignore(BlockHolystone.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.mossy_holystone, (new StateMap.Builder()).ignore(BlockHolystone.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.quicksoil, (new StateMap.Builder()).ignore(BlockQuicksoil.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.ambrosium_ore, (new StateMap.Builder()).ignore(BlockAmbrosiumOre.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.aether_log, (new StateMap.Builder()).ignore(BlockAetherLog.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.aether_leaves, (new StateMap.Builder()).ignore(BlockAetherLeaves.CHECK_DECAY).ignore(BlockAetherLeaves.DECAYABLE).build());
-        registerBlockWithStateMapper(BlocksAether.crystal_leaves, (new StateMap.Builder()).ignore(BlockCrystalLeaves.CHECK_DECAY).ignore(BlockCrystalLeaves.DECAYABLE).build());
-        registerBlockWithStateMapper(BlocksAether.holiday_leaves, (new StateMap.Builder()).ignore(BlockHolidayLeaves.CHECK_DECAY).ignore(BlockHolidayLeaves.DECAYABLE).build());
-        registerBlockWithStateMapper(BlocksAether.skyroot_fence_gate, (new StateMap.Builder()).ignore(BlockAetherFenceGate.POWERED).build());
-        registerBlockWithStateMapper(BlocksAether.enchanter, (new StateMap.Builder()).ignore(BlockAetherContainer.powered).build());
-        registerBlockWithStateMapper(BlocksAether.incubator, (new StateMap.Builder()).ignore(BlockAetherContainer.powered).build());
-        registerBlockWithStateMapper(BlocksAether.freezer, (new StateMap.Builder()).ignore(BlockAetherContainer.powered).build());
+        registerBlockWithStateMapper(BlocksAether.aether_grass, (new AetherStateMap.Builder()).ignore(BlockAetherGrass.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.aether_dirt, (new AetherStateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.mossy_holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.quicksoil, (new AetherStateMap.Builder()).ignore(BlockQuicksoil.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.ambrosium_ore, (new AetherStateMap.Builder()).ignore(BlockAmbrosiumOre.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.aether_log, (new AetherStateMap.Builder()).ignore(BlockAetherLog.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.aether_leaves, (new AetherStateMap.Builder()).ignore(BlockAetherLeaves.CHECK_DECAY).ignore(BlockAetherLeaves.DECAYABLE).build());
+        registerBlockWithStateMapper(BlocksAether.crystal_leaves, (new AetherStateMap.Builder()).ignore(BlockCrystalLeaves.CHECK_DECAY).ignore(BlockCrystalLeaves.DECAYABLE).build());
+        registerBlockWithStateMapper(BlocksAether.holiday_leaves, (new AetherStateMap.Builder()).ignore(BlockHolidayLeaves.CHECK_DECAY).ignore(BlockHolidayLeaves.DECAYABLE).build());
+        registerBlockWithStateMapper(BlocksAether.skyroot_fence_gate, (new AetherStateMap.Builder()).ignore(BlockAetherFenceGate.POWERED).build());
+        registerBlockWithStateMapper(BlocksAether.enchanter, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
+        registerBlockWithStateMapper(BlocksAether.incubator, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
+        registerBlockWithStateMapper(BlocksAether.freezer, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
 
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
 		register(BlocksAether.holystone_brick, "holystone_brick");
@@ -176,9 +176,9 @@ public class BlockRendering
 		});
 	}
 
-	public static void registerBlockWithStateMapper(Block block, IStateMapper mapper)
+	public static void registerBlockWithStateMapper(Block block, final AetherStateMap map)
 	{
-		ModelLoader.setCustomStateMapper(block, mapper);
+		ModelLoader.setCustomStateMapper(block, map);
 
 		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(block), new ItemMeshDefinition() 
 		{
@@ -189,7 +189,7 @@ public class BlockRendering
 				Block block = Block.getBlockFromItem(stack.getItem());
 				IBlockState state = block.getStateFromMeta(stack.getMetadata());
 
-				return Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getBlockModelShapes().getBlockStateMapper().getVariants(block).get(state);
+				return map.getModelResourceLocation(state);
 			}
 		});
 	}
