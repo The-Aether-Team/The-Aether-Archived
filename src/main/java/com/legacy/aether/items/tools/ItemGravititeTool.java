@@ -41,9 +41,10 @@ public class ItemGravititeTool extends ItemAetherTool
         		return EnumActionResult.FAIL;
         	}
 
+        	EntityFloatingBlock entity = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
+
         	if (!world.isRemote)
         	{
-            	EntityFloatingBlock entity = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
         		world.spawnEntity(entity);
         		world.setBlockToAir(pos);
         	}
