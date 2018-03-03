@@ -83,7 +83,28 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 	public void updateRider()
 	{
-		if ((this instanceof EntitySwet && ((EntitySwet)this).isFriendly() && !this.getPassengers().isEmpty() || !this.getPassengers().isEmpty()) && !this.world.isRemote)
+		if (this.world.isRemote)
+		{
+			return;
+		}
+
+		boolean flag = false;
+
+		if (this instanceof EntitySwet)
+		{
+			EntitySwet swet = (EntitySwet) this;
+
+			if (swet.isFriendly() && this.isBeingRidden())
+			{
+				flag = true;
+			}
+		}
+		else if (this.isBeingRidden())
+		{
+			flag = true;
+		}
+
+		if (flag)
 		{
 			Entity passenger = this.getPassengers().get(0);
 
@@ -96,7 +117,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 					
 					return;
 				}
-				
+
 				this.setRiderSneaking(true);
 			}
 			else
