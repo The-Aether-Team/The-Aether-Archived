@@ -40,7 +40,6 @@ public class ItemElementalSword extends ItemSword
 		}
 		else if (this == ItemsAether.holy_sword && entityliving.isEntityUndead())
 		{
-			entityliving.attackEntityFrom(DamageSource.causeMobDamage(entityliving1), 10);
 			itemstack.damageItem(10, entityliving1);
 		}
 
