@@ -283,6 +283,12 @@ public class EntitySwet extends EntityMountable
 
 		if (this.getAttackTarget() != null && this.getPassengers().isEmpty() && this.getHealth() > 0)
 		{
+			if (!this.canEntityBeSeen(this.getAttackTarget()) || ((this.getAttackTarget() instanceof EntityPlayer) && ((EntityPlayer)this.getAttackTarget()).capabilities.isCreativeMode))
+			{
+				this.setAttackTarget(null);
+				return;
+			}
+
 			this.faceEntity(this.getAttackTarget(), 10F, 10F);
 			
 			if (this.onGround && this.slimeJumpDelay-- <= 0)
