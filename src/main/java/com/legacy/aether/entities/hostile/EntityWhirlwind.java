@@ -165,7 +165,7 @@ public class EntityWhirlwind extends EntityMob
                     this.actionTimer = 0;
                     this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.HOSTILE, 0.5F, 1.0F);
                 }
-                else
+                else if (this.rand.nextInt(4) == 0)
                 {
                     this.dropItem(this.getRandomDrop(), 1);
                     this.actionTimer = 0;
