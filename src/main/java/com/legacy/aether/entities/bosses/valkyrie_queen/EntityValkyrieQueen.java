@@ -36,8 +36,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.natural.BlockAetherLog;
-import com.legacy.aether.blocks.util.EnumLogType;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
@@ -68,6 +66,12 @@ public class EntityValkyrieQueen extends EntityMob
     public float sinage;
 
     public double lastMotionY;
+
+    private IBlockState dungeonStone = BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic);
+
+    private IBlockState lockedDungeonStone = BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic);
+
+    private IBlockState lockedLightDungeonStone = BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic);
 
     public EntityValkyrieQueen(World world)
     {
@@ -150,6 +154,7 @@ public class EntityValkyrieQueen extends EntityMob
     private void unlockDoor() 
     {
     	IBlockState state = Blocks.AIR.getDefaultState();
+
     	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ), state);
     	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1), state);
     	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1), state);
@@ -159,6 +164,7 @@ public class EntityValkyrieQueen extends EntityMob
     private void unlockTreasure() 
     {
 		IBlockState state = Blocks.TRAPDOOR.getDefaultState();
+
 		this.world.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
 		this.world.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
 		this.world.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
@@ -173,17 +179,17 @@ public class EntityValkyrieQueen extends EntityMob
                 	BlockPos pos = new BlockPos(x, y, z);
                     IBlockState block = this.world.getBlockState(pos);
                     
-                    if (block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic))
+                    if (block == this.lockedDungeonStone)
                     {
-                    	this.world.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                    	this.world.setBlockState(pos, this.dungeonStone, 2);
                     }
-                    if (block == BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic)) 
+                    if (block == this.dungeonStone) 
                     {
-                    	this.world.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                    	this.world.setBlockState(pos, this.dungeonStone, 2);
                     }
-                    if (block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic)) 
+                    if (block == this.lockedLightDungeonStone) 
                     {
-                    	this.world.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic), 2);
+                    	this.world.setBlockState(pos, this.dungeonStone, 2);
                     }
                 }
             }
@@ -282,14 +288,15 @@ public class EntityValkyrieQueen extends EntityMob
             {
                 for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
                 {
-                	//System.out.println(new BlockPos(this.dungeonX - 1, this.dungeonY, k));
-                    if (this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k)).getBlock() == Blocks.AIR)
+                	IBlockState state = this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k));
+
+                    if (state != this.lockedDungeonStone || state != this.lockedLightDungeonStone)
                     {
                     	this.dungeonEntranceZ = k;
-                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
-                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic), 2);
+                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), this.lockedDungeonStone, 2);
+                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), this.lockedDungeonStone, 2);
+                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), this.lockedDungeonStone, 2);
+                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), this.lockedDungeonStone, 2);
                         return;
                     }
                 }	
