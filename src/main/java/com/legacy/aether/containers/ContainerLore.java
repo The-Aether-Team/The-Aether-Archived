@@ -8,6 +8,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 import com.legacy.aether.containers.inventory.InventoryLore;
+import com.legacy.aether.registry.AetherLore;
 
 public class ContainerLore extends Container
 {
@@ -20,17 +21,17 @@ public class ContainerLore extends Container
 
         this.addSlotToContainer(new Slot(this.loreSlot, 0, 104, -4));
 
-        for (int j = 0; j < 9; ++j)
-        {
-            this.addSlotToContainer(new Slot(inventory, j, 48 + j * 18, 171));
-        }
-
         for (int j = 0; j < 3; ++j)
         {
             for (int k = 0; k < 9; ++k)
             {
                 this.addSlotToContainer(new Slot(inventory, k + j * 9 + 9, 48 + k * 18, 113 + j * 18));
             }
+        }
+
+        for (int j = 0; j < 9; ++j)
+        {
+            this.addSlotToContainer(new Slot(inventory, j, 48 + j * 18, 171));
         }
     }
 
@@ -44,26 +45,47 @@ public class ContainerLore extends Container
 		{
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
-			itemstack = slot.getStack();
 
-			if (slot.slotNumber != 0)
+			if (slotNumber == 0)
 			{
-				if (!this.mergeItemStack(itemstack1, 0, 1, false))
+				if (!this.mergeItemStack(itemstack1, 1, 37, true))
 				{
 					return ItemStack.EMPTY;
 				}
 
 				slot.onSlotChange(itemstack1, itemstack);
 			}
-            else
+            else if (slotNumber != 0)
             {
-                if (!this.mergeItemStack(itemstack1, 0, 37, false))
+            	if (!AetherLore.getLoreEntry(itemstack).equals("missingno"))
+            	{
+					if (!this.mergeItemStack(itemstack1, 0, 1, false))
+					{
+						return ItemStack.EMPTY;
+					}
+            	}
+            	else if (slotNumber >= 1 && slotNumber < 28)
+				{
+					if (!this.mergeItemStack(itemstack1, 28, 37, false))
+					{
+						return ItemStack.EMPTY;
+					}
+				}
+				else if (slotNumber >= 28 && slotNumber < 37 && !this.mergeItemStack(itemstack1, 1, 28, false))
+				{
+					return ItemStack.EMPTY;
+				}
+                /*if (!this.mergeItemStack(itemstack1, 0, 1, true))
                 {
                     return ItemStack.EMPTY;
-                }
+                }*/
 
-                slot.onSlotChange(itemstack1, itemstack);
+                //slot.onSlotChange(itemstack1, itemstack);
             }
+			else if (!this.mergeItemStack(itemstack1, 1, 37, false))
+			{
+				return ItemStack.EMPTY;
+			}
 
 			if (itemstack1.getCount() == 0)
 			{
