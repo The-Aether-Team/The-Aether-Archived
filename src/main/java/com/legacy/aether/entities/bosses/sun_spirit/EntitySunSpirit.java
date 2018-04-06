@@ -157,13 +157,16 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
     public void onUpdate()
     {
+    	this.noClip = true;
         super.onUpdate();
+        this.noClip = false;
 
         this.velocity = 0.5D - (double)this.getHealth() / 70.0D * 0.2D;
         this.width = this.height = 2.0F;
 
         if (this.getAttackTarget() instanceof EntityPlayer)
         {
+        	//System.out.println(this.direction);
         	EntityPlayer player = (EntityPlayer) this.getAttackTarget();
         	PlayerAether playerAether = PlayerAether.get(player);
 
@@ -224,16 +227,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         {
             --this.chatCount;
         }
-        
-        int i2 = (MathHelper.floor(this.posX) - 2) + this.rand.nextInt(4);
-        int j2 = MathHelper.floor(this.posY) + this.rand.nextInt(2);
-        int k2 = (MathHelper.floor(this.posZ) - 2) + this.rand.nextInt(4);
 
-        if(!(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == BlocksAether.locked_dungeon_block && !(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() == Blocks.AIR)))
-        {
-        	//System.out.println("m");
-        	this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
-        }
     }
 
     @Override
@@ -250,23 +244,23 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
             boolean changedCourse = false;
 
-            if (this.motionX >= 0.0D && this.posX > (double)this.originPointX + 8.6D)
+            if (this.motionX >= 0.0D && this.posX >= (double)this.originPointX + 11D)
             {
                 this.rotary = 360.0D - this.rotary;
                 changedCourse = true;
             }
-            else if (this.motionX <= 0.0D && this.posX < (double)this.originPointX - 8.6D)
+            else if (this.motionX <= 0.0D && this.posX <= (double)this.originPointX - 11D)
             {
                 this.rotary = 360.0D - this.rotary;
                 changedCourse = true;
             }
 
-            if (this.motionZ >= 0.0D && this.posZ > (double)this.originPointZ + 8.6D)
+            if (this.motionZ >= 0.0D && this.posZ >= (double)this.originPointZ + 11D)
             {
                 this.rotary = 180.0D - this.rotary;
                 changedCourse = true;
             }
-            else if (this.motionZ <= 0.0D && this.posZ < (double)this.originPointZ - 8.6D)
+            else if (this.motionZ <= 0.0D && this.posZ <= (double)this.originPointZ - 11D)
             {
                 this.rotary = 180.0D - this.rotary;
                 changedCourse = true;
@@ -503,7 +497,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         {
             this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
             this.setAttackTarget(player);
-            this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
+            this.setDoor(BlocksAether.enchanted_gravitite.getDefaultState());
+            //this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
             return true;
             	
         }
@@ -588,9 +583,9 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (z = this.originPointZ - 1; z < this.originPointZ + 2; ++z)
                 {
-                	BlockPos pos = new BlockPos(this.originPointX + (this.direction == 0 ? -11 : 11), y, z);
+                	BlockPos pos = new BlockPos(this.originPointX + (this.direction != 0 ? -13 : 13), y, z);
 
-                	if (this.world.getBlockState(pos).getBlock() != block.getBlock())
+                	//if (this.world.getBlockState(pos).getBlock() != block.getBlock())
                     this.world.setBlockState(pos, block, 2);
                 }
             }
@@ -601,9 +596,9 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (x = this.originPointX - 1; x < this.originPointX + 2; ++x)
                 {
-                	BlockPos pos = new BlockPos(x, y, this.originPointZ + (this.direction == 3 ? 11 : -11));
+                	BlockPos pos = new BlockPos(x, y, this.originPointZ + (this.direction != 3 ? 13 : -13));
 
-                	if (this.world.getBlockState(pos).getBlock() != block.getBlock())
+                	//if (this.world.getBlockState(pos).getBlock() != block.getBlock())
                     this.world.setBlockState(pos, block, 2);
                 }
             }
@@ -620,7 +615,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (z = this.originPointZ - 1; z < this.originPointZ + 2; ++z)
                 {
-                    this.world.setBlockState(new BlockPos(this.originPointX + (this.direction == 0 ? 11 : -11), y, z), Blocks.AIR.getDefaultState());
+                    this.world.setBlockState(new BlockPos(this.originPointX + (this.direction != 0 ? 13 : -13), y, z), Blocks.AIR.getDefaultState());
                 }
             }
         }
@@ -630,7 +625,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (x = this.originPointX - 1; x < this.originPointX + 2; ++x)
                 {
-                    this.world.setBlockState(new BlockPos(x, y, this.originPointZ + (this.direction == 3 ? -11 : 11)), Blocks.AIR.getDefaultState());
+                    this.world.setBlockState(new BlockPos(x, y, this.originPointZ + (this.direction != 3 ? -13 : 13)), Blocks.AIR.getDefaultState());
                 }
             }
         }
