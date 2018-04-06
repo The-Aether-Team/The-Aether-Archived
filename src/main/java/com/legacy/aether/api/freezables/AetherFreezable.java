@@ -1,10 +1,12 @@
 package com.legacy.aether.api.freezables;
 
+import com.legacy.aether.api.AetherRegistryEntry;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherFreezable extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherFreezable>
+public class AetherFreezable extends AetherRegistryEntry<AetherFreezable>
 {
 
 	public int timeRequired;

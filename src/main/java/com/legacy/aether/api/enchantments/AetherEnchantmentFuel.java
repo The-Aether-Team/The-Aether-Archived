@@ -1,10 +1,12 @@
 package com.legacy.aether.api.enchantments;
 
+import com.legacy.aether.api.AetherRegistryEntry;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherEnchantmentFuel extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherEnchantmentFuel>
+public class AetherEnchantmentFuel extends AetherRegistryEntry<AetherEnchantmentFuel>
 {
 
 	public int timeGiven;

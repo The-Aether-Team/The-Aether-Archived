@@ -1,10 +1,12 @@
 package com.legacy.aether.api.accessories;
 
+import com.legacy.aether.api.AetherRegistryEntry;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherAccessory extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherAccessory>
+public class AetherAccessory extends AetherRegistryEntry<AetherAccessory>
 {
 
 	private ItemStack accessoryStack;

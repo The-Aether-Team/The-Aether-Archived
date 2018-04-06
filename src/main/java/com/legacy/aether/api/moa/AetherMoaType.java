@@ -1,9 +1,11 @@
 package com.legacy.aether.api.moa;
 
+import com.legacy.aether.api.AetherRegistryEntry;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 
-public class AetherMoaType extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherMoaType>
+public class AetherMoaType extends AetherRegistryEntry<AetherMoaType>
 {
 
 	private MoaProperties properties;

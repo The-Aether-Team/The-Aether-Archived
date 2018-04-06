@@ -1,10 +1,12 @@
 package com.legacy.aether.api.enchantments;
 
+import com.legacy.aether.api.AetherRegistryEntry;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherEnchantment extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<AetherEnchantment>
+public class AetherEnchantment extends AetherRegistryEntry<AetherEnchantment>
 {
 
 	public int timeRequired;
