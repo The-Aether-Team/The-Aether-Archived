@@ -114,13 +114,20 @@ public class BlocksAether
 	
 	public static Block skyroot_bookshelf;
 
-	public static IForgeRegistry<Block> blockRegistry;
+	private static int availableId;
 
-	public static IForgeRegistry<Item> itemRegistry;
+	public static Block[] blockList = new Block[75];
 
-	public static boolean canInitialize()
+	public static Item[] itemList = new Item[75];
+
+	public static void registerBlocks(IForgeRegistry<Block> blockRegistry)
 	{
-		return blockRegistry != null && itemRegistry != null;
+		blockRegistry.registerAll(blockList);
+	}
+
+	public static void registerItems(IForgeRegistry<Item> blockRegistry)
+	{
+		blockRegistry.registerAll(itemList);
 	}
 
 	public static void initialization()
@@ -214,8 +221,10 @@ public class BlocksAether
 	{
 		slab1.setCreativeTab(AetherCreativeTabs.blocks);
 
-		blockRegistry.register(slab1.setRegistryName(Aether.locate(name)));
-		itemRegistry.register(new ItemAetherSlab(slab1, (BlockSlab) slab1, (BlockSlab) slab2).setRegistryName(Aether.locate(name)));
+		blockList[availableId] = slab1.setRegistryName(Aether.locate(name));
+		itemList[availableId] = new ItemAetherSlab(slab1, (BlockSlab) slab1, (BlockSlab) slab2).setRegistryName(Aether.locate(name));
+
+		++availableId;
 
 		return slab1;
 	}
@@ -225,16 +234,20 @@ public class BlocksAether
 		block.setUnlocalizedName(name);
 		block.setCreativeTab(AetherCreativeTabs.blocks);
 
-		blockRegistry.register(block.setRegistryName(Aether.locate(name)));
-		itemRegistry.register(new ItemBlock(block).setRegistryName(Aether.locate(name)));
+		blockList[availableId] = block.setRegistryName(Aether.locate(name));
+		itemList[availableId] = new ItemBlock(block).setRegistryName(Aether.locate(name));
+
+		++availableId;
 
 		return block;
 	}
 
 	public static Block registerMeta(String name, Block block)
 	{
-		blockRegistry.register(block.setRegistryName(Aether.locate(name)));
-		itemRegistry.register(new ItemSubtype(block).setRegistryName(Aether.locate(name)));
+		blockList[availableId] = block.setRegistryName(Aether.locate(name));
+		itemList[availableId] = new ItemSubtype(block).setRegistryName(Aether.locate(name));
+
+		++availableId;
 
 		return block;
 	}

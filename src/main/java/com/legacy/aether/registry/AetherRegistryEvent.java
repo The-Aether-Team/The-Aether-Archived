@@ -29,24 +29,15 @@ public class AetherRegistryEvent
 	@SubscribeEvent
 	public void onRegisterBlockEvent(RegistryEvent.Register<Block> event)
 	{
-		BlocksAether.blockRegistry = event.getRegistry();
-		
-		if (BlocksAether.canInitialize())
-		{
-			BlocksAether.initialization();
-		}
+		BlocksAether.registerBlocks(event.getRegistry());
 	}
 
 	@SubscribeEvent
 	public void onRegisterItemEvent(RegistryEvent.Register<Item> event)
 	{
-		BlocksAether.itemRegistry = event.getRegistry();
-		ItemsAether.itemRegistry = event.getRegistry();
+		BlocksAether.registerItems(event.getRegistry());
 
-		if (BlocksAether.canInitialize())
-		{
-			BlocksAether.initialization();
-		}
+		ItemsAether.itemRegistry = event.getRegistry();
 
 		ItemsAether.initialization();
 		AetherCreativeTabs.initialization();

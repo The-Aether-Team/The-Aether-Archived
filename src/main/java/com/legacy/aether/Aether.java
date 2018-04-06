@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.AetherEntities;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.player.capability.PlayerAetherManager;
@@ -35,14 +36,15 @@ public class Aether
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
 	{
-		CommonProxy.registerEvent(new AetherRegistryEvent());
-
 		AetherConfig.init(event.getModConfigurationDirectory());
 		AetherConfig.autoDeveloperMode(version);
 
+		BlocksAether.initialization();
 		SoundsAether.initialization();
 		AetherAdvancements.initialization();
 		AetherNetworkingManager.preInitialization();
+
+		CommonProxy.registerEvent(new AetherRegistryEvent());
 
 		proxy.preInitialization();
 	}
