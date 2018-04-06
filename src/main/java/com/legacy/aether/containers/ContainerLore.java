@@ -75,12 +75,6 @@ public class ContainerLore extends Container
 				{
 					return ItemStack.EMPTY;
 				}
-                /*if (!this.mergeItemStack(itemstack1, 0, 1, true))
-                {
-                    return ItemStack.EMPTY;
-                }*/
-
-                //slot.onSlotChange(itemstack1, itemstack);
             }
 			else if (!this.mergeItemStack(itemstack1, 1, 37, false))
 			{
