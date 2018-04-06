@@ -36,7 +36,7 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void PlayerConstructingEvent(AttachCapabilitiesEvent<Entity> event)
 	{
-		if ((event.getObject() instanceof EntityPlayer))
+		if (event.getObject() instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) event.getObject();
 			PlayerAetherProvider provider = new PlayerAetherProvider(new PlayerAether(player));
@@ -187,7 +187,7 @@ public class PlayerAetherEvents
 
 		if (playerAether != null)
 		{
-			event.setNewSpeed(playerAether.getCurrentPlayerStrVsBlock(event.getOriginalSpeed()));
+			event.setNewSpeed(playerAether.getCurrentPlayerStrVsBlock(event.getNewSpeed()));
 		}
 	}
 
