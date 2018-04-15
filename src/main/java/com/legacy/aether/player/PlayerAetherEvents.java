@@ -2,6 +2,7 @@ package com.legacy.aether.player;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.enchantment.AetherEnchantmentHelper;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.capability.PlayerAetherProvider;
 
@@ -10,6 +11,8 @@ import net.minecraft.command.CommandClearInventory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Enchantments;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -22,6 +25,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.event.entity.player.PlayerEvent.Visibility;
+import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
@@ -78,6 +82,22 @@ public class PlayerAetherEvents
 				newPlayer.loadNBTData(data);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerPickupXp(PlayerPickupXpEvent event)
+	{
+		ItemStack itemstack = AetherEnchantmentHelper.getEnchantedAccessory(Enchantments.MENDING, PlayerAether.get(event.getEntityPlayer()));
+
+        if (!itemstack.isEmpty() && itemstack.isItemDamaged())
+        {
+            int i = Math.min((event.getOrb().xpValue * 2), itemstack.getItemDamage());
+
+            event.getOrb().xpValue -= (i / 2);
+
+            itemstack.setItemDamage(itemstack.getItemDamage() - i);
+        }
+
 	}
 
 	@SubscribeEvent
