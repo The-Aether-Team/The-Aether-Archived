@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.slider.EntitySlider;
 import com.legacy.aether.items.ItemsAether;
@@ -59,7 +60,7 @@ public class BronzeDungeon extends AetherDungeon
 			world.spawnEntity(slider);
 		}
 
-		world.setBlockState(pos.add(7, -1, 7), BlocksAether.treasure_chest.getDefaultState());
+		world.setBlockState(pos.add(7, -1, 7), ((BlockTreasureChest)BlocksAether.treasure_chest).correctFacing(world, pos.add(7, -1, 7), BlocksAether.treasure_chest.getDefaultState()));
 
 		int x = pos.getX();
 		int y = pos.getY();

@@ -2,14 +2,15 @@ package com.legacy.aether.world.gen.components;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockHorizontal;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
 import com.legacy.aether.items.ItemsAether;
@@ -206,7 +207,7 @@ public class ComponentGoldenDungeon extends AetherStructure
 							{
 								if(i == wid + 4 && k == 0 && j == -2)
 								{
-									this.setBlockWithOffset(a, j, b, BlocksAether.treasure_chest.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.WEST));
+									this.setBlockWithOffset(a, j, b, ((BlockTreasureChest)BlocksAether.treasure_chest).correctFacing(this.worldObj, new BlockPos(this.getActualX(a, b), this.getActualY(j), this.getActualZ(a, b)), BlocksAether.treasure_chest.getDefaultState()));
 								} 
 								else if(k == 3 || k == -3) 
 								{

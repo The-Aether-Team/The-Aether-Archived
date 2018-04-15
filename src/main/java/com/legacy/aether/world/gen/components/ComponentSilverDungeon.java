@@ -11,10 +11,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
 import com.legacy.aether.blocks.util.EnumCloudType;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
@@ -428,7 +430,7 @@ public class ComponentSilverDungeon extends AetherStructure
 		x = 42 + this.random.nextInt(2);
 		z = 14 + this.random.nextInt(2);
 
-		this.setBlockWithOffset(x, -1, z, BlocksAether.treasure_chest.getDefaultState());
+		this.setBlockWithOffset(x, -1, z, ((BlockTreasureChest)BlocksAether.treasure_chest).correctFacing(this.worldObj, new BlockPos(this.getActualX(x, z), this.getActualY(-1), this.getActualZ(x, z)), BlocksAether.treasure_chest.getDefaultState()));
 
 		return true;
 	}
