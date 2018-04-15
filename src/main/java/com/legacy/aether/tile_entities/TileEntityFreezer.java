@@ -184,21 +184,23 @@ public class TileEntityFreezer extends AetherTileEntity
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound nbttagcompound)
+	public void readFromNBT(NBTTagCompound compound)
 	{
-		super.readFromNBT(nbttagcompound);
+		super.readFromNBT(compound);
 
-		this.progress = nbttagcompound.getInteger("FreezerProgressTime");
-		this.ticksRequired = nbttagcompound.getInteger("FreezerTimeRequired");
+		this.progress = compound.getInteger("progress");
+		this.powerRemaining = compound.getInteger("powerRemaining");
+		this.ticksRequired = compound.getInteger("ticksRequired");
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbttagcompound)
+	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
-		nbttagcompound.setInteger("FreezerProgressTime", this.progress);
-		nbttagcompound.setInteger("FreezerTimeRequired", this.ticksRequired);
+		compound.setInteger("progress", this.progress);
+		compound.setInteger("powerRemaining", this.powerRemaining);
+		compound.setInteger("ticksRequired", this.ticksRequired);
 
-		return super.writeToNBT(nbttagcompound);
+		return super.writeToNBT(compound);
 	}
 
 	@Override
