@@ -43,7 +43,13 @@ public class AetherMusicHandler
 	@SubscribeEvent
 	public void onMusicControl(PlaySoundEvent event)
 	{
-		ISound sound = event.getSound();
+		ISound sound = event.getResultSound();
+
+		if (sound == null)
+		{
+			return;
+		}
+
 		SoundCategory category = sound.getCategory();
 
 		if (category == SoundCategory.MUSIC)
