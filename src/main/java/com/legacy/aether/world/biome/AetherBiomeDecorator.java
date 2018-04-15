@@ -13,8 +13,6 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.util.EnumCloudType;
-import com.legacy.aether.world.biome.decoration.AetherGenClouds;
 import com.legacy.aether.world.biome.decoration.AetherGenFloatingIsland;
 import com.legacy.aether.world.biome.decoration.AetherGenFoilage;
 import com.legacy.aether.world.biome.decoration.AetherGenHolidayTree;
@@ -33,8 +31,6 @@ public class AetherBiomeDecorator extends BiomeDecorator
 	public Random rand;
 
 	public Biome aetherBiome;
-
-	public AetherGenClouds aerclouds = new AetherGenClouds();
 
 	public AetherGenFoilage foilage = new AetherGenFoilage();
 
@@ -120,31 +116,6 @@ public class AetherBiomeDecorator extends BiomeDecorator
 		{
             (new WorldGenLakes(Blocks.WATER)).generate(this.world, this.rand, this.chunkPos.add(this.rand.nextInt(16) + 8, this.rand.nextInt(256), this.rand.nextInt(16) + 8));
 		}
-
-    	//this.generateClouds(EnumCloudType.Golden, 4, false, 50, this.nextInt(64) + 96);
-    	//this.generateClouds(EnumCloudType.Blue, 8, false, 26, this.nextInt(64) + 32);
-    	//this.generateClouds(EnumCloudType.Cold, 16, false, 14, this.nextInt(64) + 64);
-
-		/*MutableBlockPos mutedPos = new MutableBlockPos();
-
-		if (this.shouldSpawn(10))
-		{
-			for (int x = this.chunkPos.getX(); x < this.chunkPos.getX() + 16; x++)
-			{
-				for (int z = this.chunkPos.getZ(); z < this.chunkPos.getZ() + 16; z++)
-				{
-					for (int n = 0; n < 48; n++)
-					{
-						mutedPos.setPos(x, n, z);
-						if (this.world.getBlockState(mutedPos).getBlock() == Blocks.AIR && this.world.getBlockState(mutedPos.setPos(x, n + 1, z)).getBlock() == BlocksAether.aether_grass && this.world.getBlockState(mutedPos.setPos(x, n + 2, z)).getBlock() == Blocks.AIR)
-						{
-							new AetherGenQuicksoil().generate(this.world, this.rand, mutedPos);
-							mutedPos.setPos(x, n + 128, z);
-						}
-					}
-				}
-			}
-		}*/
     }
 
 	public int nextInt(int max)
@@ -180,18 +151,6 @@ public class AetherBiomeDecorator extends BiomeDecorator
     	for (int chances = 0; chances < chance; chances++)
     	{
         	this.ores.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16), this.nextInt(y), this.nextInt(16)));
-    	}
-    }
-
-    public void generateClouds(EnumCloudType type, int size, boolean flat, int chance, int y)
-    {
-    	if (shouldSpawn(chance))
-    	{
-    		this.aerclouds.setCloudType(type);
-    		this.aerclouds.setCloudAmmount(size);
-    		this.aerclouds.setFlat(flat);
-
-        	this.aerclouds.generate(this.world, this.rand, this.chunkPos.add(8, y, 8));
     	}
     }
 

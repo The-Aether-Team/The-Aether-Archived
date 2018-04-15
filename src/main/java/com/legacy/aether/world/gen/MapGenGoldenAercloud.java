@@ -2,9 +2,7 @@ package com.legacy.aether.world.gen;
 
 import java.util.Random;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.StructureStart;
@@ -16,6 +14,7 @@ public class MapGenGoldenAercloud extends MapGenStructure
 
     public MapGenGoldenAercloud()
     {
+
     }
 
 	@Override
@@ -65,11 +64,6 @@ public class MapGenGoldenAercloud extends MapGenStructure
 		return this.rand.nextInt(50) == 0;
     }
 
-    public synchronized boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord)
-    {
-        return super.generateStructure(worldIn, randomIn, chunkCoord);
-    }
-
 	@Override
 	protected StructureStart getStructureStart(int chunkX, int chunkZ) 
 	{
@@ -78,53 +72,24 @@ public class MapGenGoldenAercloud extends MapGenStructure
 
     public static class Start extends StructureStart
     {
-    	private int xTendency, zTendency;
-
         public Start()
         {
+
         }
 
         public Start(World worldIn, Random random, int chunkX, int chunkZ)
         {
             super(chunkX, chunkZ);
+
             this.create(worldIn, random, chunkX, chunkZ);
         }
 
         private void create(World worldIn, Random random, int chunkX, int chunkZ)
         {
-            random.setSeed(worldIn.getSeed());
-            long i = random.nextLong();
-            long j = random.nextLong();
-            long k = (long)chunkX * i;
-            long l = (long)chunkZ * j;
-            random.setSeed(k ^ l ^ worldIn.getSeed());
+            this.components.add(new ComponentGoldenAercloud(random, (chunkX << 4) + 2, random.nextInt(64) + 96, (chunkZ << 4) + 2));
 
-            this.xTendency = random.nextInt(3) - 1;
-            this.zTendency = random.nextInt(3) - 1;
-
-            this.components.add(new ComponentGoldenAercloud((chunkX << 4) + 2, random.nextInt(64) + 96, (chunkZ << 4) + 2, this.xTendency, this.zTendency));
             this.updateBoundingBox();
         }
 
-
-        @Override
-        public void writeToNBT(NBTTagCompound tagCompound)
-        {
-            super.writeToNBT(tagCompound);
-
-            tagCompound.setInteger("xTendency", this.xTendency);
-            tagCompound.setInteger("zTendency", this.zTendency);
-        }
-
-        @Override
-        public void readFromNBT(NBTTagCompound tagCompound)
-        {
-            super.readFromNBT(tagCompound);
-
-            this.xTendency = tagCompound.getInteger("zTendency");
-            this.zTendency = tagCompound.getInteger("zTendency");
-        }
-
     }
-
 }

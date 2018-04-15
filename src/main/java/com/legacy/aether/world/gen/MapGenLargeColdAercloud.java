@@ -3,16 +3,17 @@ package com.legacy.aether.world.gen;
 import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.StructureStart;
 
-import com.legacy.aether.world.gen.components.ComponentBlueAercloud;
+import com.legacy.aether.world.gen.components.ComponentLargeColdAercloud;
 
-public class MapGenBlueAercloud extends MapGenStructure
+public class MapGenLargeColdAercloud extends MapGenStructure
 {
 
-    public MapGenBlueAercloud()
+    public MapGenLargeColdAercloud()
     {
 
     }
@@ -20,7 +21,7 @@ public class MapGenBlueAercloud extends MapGenStructure
 	@Override
 	public String getStructureName()
 	{
-		return "aether_legacy:blue_aercloud";
+		return "aether_legacy:cold_aercloud";
 	}
 
 	@Override
@@ -61,7 +62,12 @@ public class MapGenBlueAercloud extends MapGenStructure
 	@Override
     protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
     {
-		return this.rand.nextInt(26) == 0;
+		return this.rand.nextInt(50) == 0;
+    }
+
+    public synchronized boolean generateStructure(World worldIn, Random randomIn, ChunkPos chunkCoord)
+    {
+        return super.generateStructure(worldIn, randomIn, chunkCoord);
     }
 
 	@Override
@@ -86,7 +92,7 @@ public class MapGenBlueAercloud extends MapGenStructure
 
         private void create(World worldIn, Random random, int chunkX, int chunkZ)
         {
-            this.components.add(new ComponentBlueAercloud(random, (chunkX << 4) + 2, random.nextInt(64) + 32, (chunkZ << 4) + 2));
+            this.components.add(new ComponentLargeColdAercloud(random, (chunkX << 4) + 2, 0, (chunkZ << 4) + 2));
 
             this.updateBoundingBox();
         }

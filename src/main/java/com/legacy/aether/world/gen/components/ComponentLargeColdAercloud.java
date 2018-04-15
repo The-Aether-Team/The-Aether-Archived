@@ -13,26 +13,26 @@ import com.legacy.aether.blocks.natural.BlockAercloud;
 import com.legacy.aether.blocks.util.EnumCloudType;
 import com.legacy.aether.world.gen.AetherStructure;
 
-public class ComponentColdAercloud extends AetherStructure
+public class ComponentLargeColdAercloud extends AetherStructure
 {
 
 	private NBTTagCompound data = new NBTTagCompound();
 
 	private int xTendency, zTendency;
 
-    public ComponentColdAercloud()
+    public ComponentLargeColdAercloud()
     {
 
     }
 
-	public ComponentColdAercloud(Random random, int chunkX, int chunkY, int chunkZ)
+	public ComponentLargeColdAercloud(Random random, int chunkX, int chunkY, int chunkZ)
 	{
         this.setCoordBaseMode(EnumFacing.NORTH);
 
         this.xTendency = random.nextInt(3) - 1;
         this.zTendency = random.nextInt(3) - 1;
 
-        this.boundingBox = new StructureBoundingBox(chunkX, chunkY, chunkZ, chunkX + 100, chunkY + 10, chunkZ + 100);
+        this.boundingBox = new StructureBoundingBox(chunkX, 0, chunkZ, chunkX + 100, 255, chunkZ + 100);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ComponentColdAercloud extends AetherStructure
 		{
 			NBTTagCompound icd;
 
-	        for (int n = 0; n < 16; ++n)
+	        for (int n = 0; n < 64; ++n)
 	        {
 	        	icd = new NBTTagCompound();
 
@@ -54,16 +54,16 @@ public class ComponentColdAercloud extends AetherStructure
 
 	        	icd.setInteger("xOffset", xOffset);
 
-	            if (this.random.nextBoolean())
+	            if (this.random.nextInt(10) == 0)
 	            {
 		        	icd.setInteger("yOffset", yOffset);
 	            }
 
 	        	icd.setInteger("zOffset", zOffset);
 
-	        	int xMax = this.random.nextInt(4) + 3;
+	        	int xMax = this.random.nextInt(4) + 9;
 	        	int yMax = this.random.nextInt(1) + 2;
-	        	int zMax = this.random.nextInt(4) + 3;
+	        	int zMax = this.random.nextInt(4) + 9;
 
 	        	icd.setInteger("xMax", xMax);
 	        	icd.setInteger("yMax", yMax);
@@ -79,9 +79,8 @@ public class ComponentColdAercloud extends AetherStructure
 		int x = 0, y = 0, z = 0;
 		NBTTagCompound icd;
 
-		this.setStructureOffset(20, 2, 20);
-
-        for (int n = 0; n < 16; ++n)
+		this.setStructureOffset(50, 4, 100);
+        for (int n = 0; n < 64; ++n)
         {
         	icd = this.data.getCompoundTag("ICD_" + n);
 
@@ -107,7 +106,7 @@ public class ComponentColdAercloud extends AetherStructure
                     {
                         if (this.getBlockStateWithOffset(x1, y1, z1).getBlock() == Blocks.AIR)
                         {
-                        	if (Math.abs(x1 - x) + Math.abs(y1 - y) + Math.abs(z1 - z) < 4 + shapeOffset)
+                        	if (Math.abs(x1 - x) + Math.abs(y1 - y) + Math.abs(z1 - z) < 12 + shapeOffset)
                         	{
                         		this.setBlockWithOffset(x1, y1, z1, BlocksAether.aercloud.getDefaultState().withProperty(BlockAercloud.cloud_type, EnumCloudType.Cold));
                         	}
@@ -123,16 +122,12 @@ public class ComponentColdAercloud extends AetherStructure
 	@Override
 	protected void writeStructureToNBT(NBTTagCompound tagCompound) 
 	{
-        tagCompound.setInteger("xTendency", this.xTendency);
-        tagCompound.setInteger("zTendency", this.zTendency);
 		tagCompound.setTag("cloudData", this.data);
 	}
 
 	@Override
 	protected void readStructureFromNBT(NBTTagCompound tagCompound, TemplateManager p_143011_2_) 
 	{
-        this.xTendency = tagCompound.getInteger("zTendency");
-        this.zTendency = tagCompound.getInteger("zTendency");
 		this.data = tagCompound.getCompoundTag("cloudData");
 	}
 

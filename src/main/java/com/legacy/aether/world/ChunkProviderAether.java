@@ -17,18 +17,16 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.world.biome.decoration.AetherGenGoldenIsland;
 import com.legacy.aether.world.dungeon.BronzeDungeon;
 import com.legacy.aether.world.dungeon.util.AetherDungeon;
-import com.legacy.aether.world.gen.MapGenQuicksoil;
 import com.legacy.aether.world.gen.MapGenBlueAercloud;
-import com.legacy.aether.world.gen.MapGenBronzeDungeon;
 import com.legacy.aether.world.gen.MapGenColdAercloud;
 import com.legacy.aether.world.gen.MapGenGoldenAercloud;
 import com.legacy.aether.world.gen.MapGenGoldenDungeon;
+import com.legacy.aether.world.gen.MapGenLargeColdAercloud;
+import com.legacy.aether.world.gen.MapGenQuicksoil;
 import com.legacy.aether.world.gen.MapGenSilverDungeon;
 
 public class ChunkProviderAether implements  IChunkGenerator
@@ -44,10 +42,6 @@ public class ChunkProviderAether implements  IChunkGenerator
 
 	double pnr[], ar[], br[];
 
-	public static int gumCount;
-
-    protected WorldGenerator golden_island = new AetherGenGoldenIsland();
-
     protected AetherDungeon dungeon_bronze = new BronzeDungeon();
 
     private MapGenQuicksoil quicksoilGen = new MapGenQuicksoil();
@@ -56,7 +50,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 
     private MapGenGoldenDungeon goldenDungeonStructure = new MapGenGoldenDungeon();
 
-    private MapGenBronzeDungeon bronzeDungeonStructure = new MapGenBronzeDungeon();
+    private MapGenLargeColdAercloud largeColdAercloudStructure = new MapGenLargeColdAercloud();
 
     private MapGenColdAercloud coldAercloudStructure = new MapGenColdAercloud();
 
@@ -289,6 +283,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 	@Override
 	public Chunk generateChunk(int x, int z) 
 	{
+        this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
 		ChunkPrimer chunkPrimer = new ChunkPrimer();
 
         this.setBlocksInChunk(x, z, chunkPrimer);
@@ -299,9 +294,8 @@ public class ChunkProviderAether implements  IChunkGenerator
         this.coldAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.blueAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.goldenAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
-        //this.flatAercloudGen.generate(this.worldObj, x, z, chunkPrimer);
+        this.largeColdAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
 
-        this.bronzeDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.silverDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
 
@@ -331,8 +325,8 @@ public class ChunkProviderAether implements  IChunkGenerator
         this.coldAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         this.blueAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         this.goldenAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
+        this.largeColdAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
 
-        this.bronzeDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         this.silverDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
 	}
@@ -360,37 +354,25 @@ public class ChunkProviderAether implements  IChunkGenerator
 
 		Biome biome = this.worldObj.getBiome(pos.add(16, 0, 16));
 
-		//this.flatAercloudGen.generateStructure(this.worldObj, this.rand, chunkpos);
+        this.rand.setSeed(this.worldObj.getSeed());
+        long k = this.rand.nextLong() / 2L * 2L + 1L;
+        long l = this.rand.nextLong() / 2L * 2L + 1L;
+        this.rand.setSeed((long)x * k + (long)z * l ^ this.worldObj.getSeed());
+
+		this.largeColdAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
         this.coldAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
         this.blueAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
         this.goldenAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
-        this.bronzeDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
         this.silverDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
         this.goldenDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
 		biome.decorate(this.worldObj, this.rand, pos);
 
-    	if (gumCount < 800)
-    	{
-    		++gumCount;
-    	}
-    	else if (this.rand.nextInt(100) == 0)
-    	{
-    		boolean resetCounter = false;
-    		
-    		//resetCounter = this.golden_island.generate(this.worldObj, this.rand, pos.add(this.rand.nextInt(16) + 8, this.rand.nextInt(64) + 32, this.rand.nextInt(16) + 8));
-
-    		if (!resetCounter)
-    		{
-    			gumCount = 0;
-    		}
-    	}
-
 		if (this.rand.nextInt(11) == 0)
         {
-	       // this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(this.rand.nextInt(16), this.rand.nextInt(64) + 32, this.rand.nextInt(16)));
+	        this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(this.rand.nextInt(16), this.rand.nextInt(64) + 32, this.rand.nextInt(16)));
         }
 
 		WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, x + 8, z + 8, 16, 16, this.rand);
