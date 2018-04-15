@@ -10,6 +10,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
@@ -38,14 +39,14 @@ public class ItemLifeShard extends Item
 
 		if (!worldIn.isRemote)
 		{
-			if (playerAether.getExtraHealth() < 20.0F)
+			if (playerAether.getExtraHealth() < AetherConfig.getMaxLifeShards())
 			{
 				playerAether.increaseMaxHP();
 				heldItem.shrink(1);
 
 				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
 			}
-			else if (playerAether.getExtraHealth() >= 20.0F)
+			else if (playerAether.getExtraHealth() >= AetherConfig.getMaxLifeShards())
 			{
 				Aether.proxy.sendMessage(player, "You can only use a total of 10 life shards.");
 			}

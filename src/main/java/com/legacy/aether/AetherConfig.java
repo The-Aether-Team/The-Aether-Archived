@@ -8,6 +8,8 @@ import net.minecraftforge.common.config.Configuration;
 public class AetherConfig 
 {
 
+	private static int max_life_shards;
+
 	private static boolean christmas_content;
 
 	private static int aether_biome_id, aether_dimension_id;
@@ -44,6 +46,8 @@ public class AetherConfig
 
 		disable_trivia = config.get("Trivia", "Disable random trivia", false).getBoolean(false);
 
+		max_life_shards = config.get("Gameplay", "Max Life Shards", 10).getInt(10);
+
 		developer_mode = config.get("Developer Options", "Enable extra logging for certain features", false).getBoolean(false);
 
 		config.save();
@@ -57,6 +61,11 @@ public class AetherConfig
 	public static int getAetherBiomeID()
 	{
 		return AetherConfig.aether_biome_id;
+	}
+
+	public static float getMaxLifeShards()
+	{
+		return (AetherConfig.max_life_shards * 2.0F);
 	}
 
 	public static boolean triviaDisabled()
