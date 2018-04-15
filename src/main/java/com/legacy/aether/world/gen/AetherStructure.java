@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
@@ -249,6 +250,13 @@ public abstract class AetherStructure extends StructureComponent
         }
 
         return flag;
+    }
+
+    public TileEntity getTileEntityFromPosWithOffset(int x, int y, int z)
+    {
+        BlockPos blockpos = new BlockPos(this.getActualX(x, z), this.getActualY(y), this.getActualZ(x, z));
+
+        return !this.dungeonBoundingBox.isVecInside(blockpos) ? null : this.worldObj.getTileEntity(blockpos);
     }
 
     public IBlockState getBlockStateWithOffset(int x, int y, int z)

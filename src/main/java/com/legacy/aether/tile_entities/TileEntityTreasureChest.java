@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import com.legacy.aether.world.dungeon.BronzeDungeon;
 import com.legacy.aether.world.dungeon.GoldenDungeon;
+import com.legacy.aether.world.gen.components.ComponentSilverDungeon;
 
 public class TileEntityTreasureChest extends TileEntityChest
 {
@@ -59,7 +60,7 @@ public class TileEntityTreasureChest extends TileEntityChest
         {
             for (p = 0; p < 5 + random.nextInt(1); ++p)
             {
-               // this.setInventorySlotContents(random.nextInt(this.getSizeInventory()), SilverDungeon.getSilverLoot(random));
+                this.setInventorySlotContents(random.nextInt(this.getSizeInventory()), ComponentSilverDungeon.getSilverLoot(random));
             }
         }
 

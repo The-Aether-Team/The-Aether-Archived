@@ -1,10 +1,15 @@
 package com.legacy.aether.world.gen.components;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
@@ -13,6 +18,9 @@ import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumCloudType;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.legacy.aether.entities.util.AetherMoaTypes;
+import com.legacy.aether.items.ItemMoaEgg;
+import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.world.gen.AetherGenUtils;
 import com.legacy.aether.world.gen.AetherStructure;
 
@@ -302,12 +310,15 @@ public class ComponentSilverDungeon extends AetherStructure
 									{
 										this.setBlockWithOffset(u, 5 * q + 1, v, Blocks.CHEST.getDefaultState());
 
-										/*TileEntityChest chest = (TileEntityChest)world.getTileEntity(new BlockPos(u,5 * q + 1, v));
+										TileEntity tileEntity = this.getTileEntityFromPosWithOffset(u, 5 * q + 1, v);
 
-										for(u = 0; u < 3 + random.nextInt(3); u++)
+										if (tileEntity instanceof TileEntityChest)
 										{
-											chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), this.getNormalLoot(random));
-										}*/
+											for(u = 0; u < 3 + random.nextInt(3); u++)
+											{
+												((TileEntityChest)tileEntity).setInventorySlotContents(this.random.nextInt(((TileEntityChest)tileEntity).getSizeInventory()), this.getNormalLoot(this.random));
+											}
+										}
 									}
 
 									break;
@@ -532,5 +543,132 @@ public class ComponentSilverDungeon extends AetherStructure
 			}
 		}
     }
+
+	//Get loot for normal chests scattered around
+	private ItemStack getNormalLoot(Random random)
+	{
+		int item = random.nextInt(16);
+		switch(item)
+		{
+			case 0 :
+				return new ItemStack(ItemsAether.zanite_pickaxe);
+			case 1 :
+				return new ItemStack(ItemsAether.skyroot_bucket);
+			case 2 :
+				return new ItemStack(ItemsAether.dart_shooter);
+			case 3 :
+				return ItemMoaEgg.getStackFromType(AetherMoaTypes.white);
+			case 4 :
+				return new ItemStack(ItemsAether.ambrosium_shard, random.nextInt(10) + 1);
+			case 5 :
+				return new ItemStack(ItemsAether.dart, random.nextInt(5) + 1, 0);
+			case 6 :
+				return new ItemStack(ItemsAether.dart, random.nextInt(3) + 1, 1);
+			case 7 :
+				return new ItemStack(ItemsAether.dart, random.nextInt(3) + 1, 2);
+			case 8 :
+			{
+				if(random.nextInt(20) == 0)
+					return new ItemStack(ItemsAether.aether_tune);
+				break;
+			}
+			case 9 :
+				return new ItemStack(ItemsAether.skyroot_bucket, 1, 2);
+			case 10 :
+			{
+				if(random.nextInt(10) == 0)
+					return new ItemStack(ItemsAether.ascending_dawn);
+				break;
+			}
+			case 11 :
+			{
+				if(random.nextInt(2) == 0)
+					return new ItemStack(ItemsAether.zanite_boots);
+				if(random.nextInt(2) == 0)
+					return new ItemStack(ItemsAether.zanite_helmet);
+				if(random.nextInt(2) == 0)
+					return new ItemStack(ItemsAether.zanite_leggings);
+				if(random.nextInt(2) == 0)
+					return new ItemStack(ItemsAether.zanite_chestplate);
+				break;
+			}
+			case 12 : 
+			{
+				if(random.nextInt(4) == 0)
+					return new ItemStack(ItemsAether.iron_pendant);
+			}
+			case 13 : 
+			{
+				if(random.nextInt(10) == 0)
+					return new ItemStack(ItemsAether.golden_pendant);
+			}
+			case 14 : 
+			{
+				if(random.nextInt(15) == 0)
+					return new ItemStack(ItemsAether.zanite_ring);
+			}
+		}
+
+		return new ItemStack(BlocksAether.ambrosium_torch, random.nextInt(4) + 1);
+	}
+
+	public static ItemStack getSilverLoot(Random random)
+	{
+		int item = random.nextInt(13);
+
+		switch(item)
+		{
+			case 0 :
+				return new ItemStack(ItemsAether.gummy_swet, random.nextInt(15) + 1);
+			case 1 :
+				return new ItemStack(ItemsAether.lightning_sword);
+			case 2 :
+			{
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.valkyrie_axe);
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.valkyrie_shovel);
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.valkyrie_pickaxe);
+				break;
+			}
+			case 3 :
+				return new ItemStack(ItemsAether.holy_sword);
+			case 4 :
+				return new ItemStack(ItemsAether.valkyrie_helmet);			
+			case 5 :
+				return new ItemStack(ItemsAether.regeneration_stone);
+			case 6 :
+			{
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.neptune_helmet);
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.neptune_leggings);
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.neptune_chestplate);
+				break;
+			}
+			case 7 :
+			{
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.neptune_boots);
+				return new ItemStack(ItemsAether.neptune_gloves);
+			}
+			case 8 :
+				return new ItemStack(ItemsAether.invisibility_cape);
+			case 9 :
+			{
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.valkyrie_boots);
+				return new ItemStack(ItemsAether.valkyrie_gloves);
+			}
+			case 10 :
+				return new ItemStack(ItemsAether.valkyrie_leggings);
+			case 11 :
+				if(random.nextBoolean())
+					return new ItemStack(ItemsAether.valkyrie_chestplate);
+		}
+		return new ItemStack(ItemsAether.golden_feather);
+	}
 
 }

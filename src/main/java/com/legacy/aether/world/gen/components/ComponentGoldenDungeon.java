@@ -1,7 +1,10 @@
 package com.legacy.aether.world.gen.components;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
@@ -9,6 +12,7 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
+import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.world.gen.AetherStructure;
 
 public class ComponentGoldenDungeon extends AetherStructure
@@ -234,6 +238,87 @@ public class ComponentGoldenDungeon extends AetherStructure
 		this.spawnEntity(boss, 0, -1, 0);
 
 		return true;
+	}
+
+	public static ItemStack getGoldLoot(Random random)
+	{
+		int item = random.nextInt(10);
+
+		switch(item)
+		{
+			case 0 :
+				return new ItemStack(ItemsAether.iron_bubble);
+			case 1 :
+				return new ItemStack(ItemsAether.vampire_blade);
+			case 2 :
+				return new ItemStack(ItemsAether.pig_slayer);
+			case 3 :
+			{
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.phoenix_helmet);
+				}
+
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.phoenix_leggings);
+				}
+
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.phoenix_chestplate);
+				}
+
+				break;
+			}
+			case 4 :
+			{
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.phoenix_boots);
+				}
+
+				return new ItemStack(ItemsAether.phoenix_gloves);
+			}
+			case 5 :
+			{
+				return new ItemStack(ItemsAether.life_shard);
+			}
+			case 6 :
+			{
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.gravitite_helmet);
+				}
+
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.gravitite_leggings);
+				}
+
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.gravitite_chestplate);
+				}
+
+				break;
+			}
+			case 7 :
+			{
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.gravitite_boots);
+				}
+
+				return new ItemStack(ItemsAether.gravitite_gloves);
+			}
+			
+			case 8 :
+				return new ItemStack(ItemsAether.chain_gloves);
+
+		}
+
+		return new ItemStack(ItemsAether.obsidian_chestplate);
 	}
 
 }
