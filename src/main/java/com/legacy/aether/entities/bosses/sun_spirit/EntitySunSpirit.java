@@ -32,7 +32,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.AetherConfig;
 import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;

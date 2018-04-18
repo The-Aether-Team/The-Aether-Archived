@@ -13,7 +13,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.passive.EntityAetherAnimal;
-import com.legacy.aether.entities.passive.mountable.EntitySwet;
 import com.legacy.aether.player.PlayerAether;
 
 public abstract class EntityMountable extends EntityAetherAnimal
@@ -22,8 +21,6 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.<Boolean>createKey(EntityMountable.class, DataSerializers.BOOLEAN);
 
 	protected float jumpPower;
-
-	protected int field_110285_bP;
 
 	protected boolean mountJumping;
 
@@ -88,23 +85,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 			return;
 		}
 
-		boolean flag = false;
-
-		if (this instanceof EntitySwet)
-		{
-			EntitySwet swet = (EntitySwet) this;
-
-			if (swet.isFriendly() && this.isBeingRidden())
-			{
-				flag = true;
-			}
-		}
-		else if (this.isBeingRidden())
-		{
-			flag = true;
-		}
-
-		if (flag)
+		if (this.isBeingRidden())
 		{
 			Entity passenger = this.getPassengers().get(0);
 
@@ -167,7 +148,6 @@ public abstract class EntityMountable extends EntityAetherAnimal
 			if (forward <= 0.0F)
 			{
 				forward *= 0.25F;
-				this.field_110285_bP = 0;
 			}
 
 	        double d01 = player.posX - this.posX;
