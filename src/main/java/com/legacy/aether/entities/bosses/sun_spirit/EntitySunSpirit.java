@@ -209,7 +209,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
                 if (this.world.provider instanceof AetherWorldProvider)
                 {
-        			this.world.getWorldInfo().getDimensionData(this.world.provider.getDimension()).setBoolean("defeatedSunSpirit", true);
+        			((AetherWorldProvider)this.world.provider).aetherNBT.setBoolean("defeatedSunSpirit", true);
                 }
         	}
         }

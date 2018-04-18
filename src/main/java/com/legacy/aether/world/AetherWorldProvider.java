@@ -14,6 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class AetherWorldProvider extends WorldProvider
 {
 
+	public NBTTagCompound aetherNBT;
+
 	private float[] colorsSunriseSunset = new float[4];
 
 	public AetherWorldProvider()
@@ -27,15 +29,14 @@ public class AetherWorldProvider extends WorldProvider
 		this.hasSkyLight = true;
 		this.biomeProvider = new WorldChunkManagerAether();
 
-		if (!this.world.getWorldInfo().getDimensionData(this.getDimension()).hasKey("defeatedSunSpirit"))
-		{
-			NBTTagCompound compound = new NBTTagCompound();
-
-			compound.setBoolean("defeatedSunSpirit", false);
-
-			this.world.getWorldInfo().setDimensionData(this.getDimension(), compound);
-		}
+		this.aetherNBT = this.world.getWorldInfo().getDimensionData(this.getDimension());
 	}
+
+	@Override
+    public void onWorldSave()
+    {
+		this.world.getWorldInfo().setDimensionData(this.getDimension(), this.aetherNBT);
+    }
 
 	@Override
     public float calculateCelestialAngle(long worldTime, float partialTicks)
