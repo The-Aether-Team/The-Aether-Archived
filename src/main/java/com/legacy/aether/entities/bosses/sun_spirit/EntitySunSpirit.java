@@ -32,6 +32,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
@@ -167,7 +168,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob
 
         if (this.getAttackTarget() instanceof EntityPlayer)
         {
-        	//System.out.println(this.direction);
         	EntityPlayer player = (EntityPlayer) this.getAttackTarget();
         	PlayerAether playerAether = PlayerAether.get(player);
 
@@ -502,9 +502,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         if (this.chatWithMe(player))
         {
             this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
+
             this.setAttackTarget(player);
-            this.setDoor(BlocksAether.enchanted_gravitite.getDefaultState());
-            //this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
+            this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
+
             return true;
             	
         }
@@ -589,9 +590,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (z = this.originPointZ - 1; z < this.originPointZ + 2; ++z)
                 {
-                	BlockPos pos = new BlockPos(this.originPointX + (this.direction != 0 ? -13 : 13), y, z);
+                	BlockPos pos = new BlockPos(this.originPointX + (this.direction == 0 ? -13 : 13), y, z);
 
-                	//if (this.world.getBlockState(pos).getBlock() != block.getBlock())
                     this.world.setBlockState(pos, block, 2);
                 }
             }
@@ -604,7 +604,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob
                 {
                 	BlockPos pos = new BlockPos(x, y, this.originPointZ + (this.direction != 3 ? 13 : -13));
 
-                	//if (this.world.getBlockState(pos).getBlock() != block.getBlock())
                     this.world.setBlockState(pos, block, 2);
                 }
             }
