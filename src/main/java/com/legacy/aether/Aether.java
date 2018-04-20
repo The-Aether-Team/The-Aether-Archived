@@ -25,7 +25,7 @@ public class Aether
 
 	public static final String modid = "aether_legacy";
 
-	public static final String version = "1.12.2-v2.0";
+	public static final String version = "1.12.2-v3.0";
 
 	@Instance(Aether.modid)
 	public static Aether instance;
