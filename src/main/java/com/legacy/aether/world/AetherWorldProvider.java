@@ -1,6 +1,5 @@
 package com.legacy.aether.world;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
@@ -14,8 +13,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class AetherWorldProvider extends WorldProvider
 {
 
-	public NBTTagCompound aetherNBT;
-
 	private float[] colorsSunriseSunset = new float[4];
 
 	public AetherWorldProvider()
@@ -28,23 +25,7 @@ public class AetherWorldProvider extends WorldProvider
 	{
 		this.hasSkyLight = true;
 		this.biomeProvider = new WorldChunkManagerAether();
-
-		this.aetherNBT = this.world.getWorldInfo().getDimensionData(this.getDimension());
 	}
-
-	@Override
-    public void onWorldSave()
-    {
-		this.world.getWorldInfo().setDimensionData(this.getDimension(), this.aetherNBT);
-    }
-
-	@Override
-    public float calculateCelestialAngle(long worldTime, float partialTicks)
-    {
-    	boolean defeatedSunSpirit = this.world.getWorldInfo().getDimensionData(this.getDimension()).getBoolean("defeatedSunSpirit");
-
-    	return defeatedSunSpirit ? super.calculateCelestialAngle(worldTime, partialTicks) : 0.0F;
-    }
 
 	@Override
 	public float[] calcSunriseSunsetColors(float f, float f1)
