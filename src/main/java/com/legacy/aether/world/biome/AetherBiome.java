@@ -68,6 +68,7 @@ public class AetherBiome extends Biome
 		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
 		list.add(new SpawnListEntry(EntityAerwhale.class, 7, 3, 3));
 		list.add(new SpawnListEntry(EntityZephyr.class, 4, 1, 1));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 1, 3, 3));
 	}
 
 	@Override

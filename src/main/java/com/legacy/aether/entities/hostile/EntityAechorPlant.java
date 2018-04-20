@@ -185,6 +185,12 @@ public class EntityAechorPlant extends EntityAetherAnimal
     }
 
 	@Override
+	public boolean getCanSpawnHere()
+	{
+		return this.rand.nextInt(400) == 0 && super.getCanSpawnHere();
+	}
+
+	@Override
     protected boolean canDespawn()
     {
         return true;
