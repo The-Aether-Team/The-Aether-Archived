@@ -43,7 +43,6 @@ import com.legacy.aether.entities.util.AetherNameGen;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
-import com.legacy.aether.world.AetherWorldProvider;
 
 public class EntitySunSpirit extends EntityFlying implements IMob
 {
@@ -205,12 +204,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
                 }
 
                 this.setDoor(Blocks.AIR.getDefaultState());
-                this.unlockTreasure();	
-
-                if (this.world.provider instanceof AetherWorldProvider)
-                {
-        			((AetherWorldProvider)this.world.provider).aetherNBT.setBoolean("defeatedSunSpirit", true);
-                }
+                this.unlockTreasure();
         	}
         }
 
@@ -619,7 +613,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
             {
                 for (z = this.originPointZ - 1; z < this.originPointZ + 2; ++z)
                 {
-                    this.world.setBlockState(new BlockPos(this.originPointX + (this.direction != 0 ? 13 : -13), y, z), Blocks.AIR.getDefaultState());
+                    this.world.setBlockState(new BlockPos(this.originPointX + (this.direction == 0 ? 13 : -13), y, z), Blocks.AIR.getDefaultState());
                 }
             }
         }
