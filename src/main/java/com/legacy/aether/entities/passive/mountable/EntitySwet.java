@@ -471,7 +471,9 @@ public class EntitySwet extends EntityMountable
 				return;
 			}
 
-			this.setFriendly(aetherRider.wearingAccessory(ItemsAether.swet_cape) ? true : false);
+			boolean wearingAccessory = aetherRider.wearingAccessory(ItemsAether.swet_cape);
+
+			this.setFriendly(wearingAccessory);
 
 			if (this.isFriendly())
 			{
