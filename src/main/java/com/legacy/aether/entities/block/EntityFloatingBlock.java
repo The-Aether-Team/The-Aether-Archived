@@ -42,6 +42,7 @@ public class EntityFloatingBlock extends Entity
 	@Override
     public void setPosition(double x, double y, double z)
     {
+		super.setPosition(x, y, z);
 
 		if (this.world.isRemote && (this.state == null || this.state == Blocks.AIR.getDefaultState()))
 		{
