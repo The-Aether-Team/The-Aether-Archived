@@ -32,6 +32,8 @@ public class ItemGravititeTool extends ItemAetherTool
 	@SuppressWarnings("deprecation")
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
+    	EntityFloatingBlock entity = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
+
 		ItemStack heldItem = player.getHeldItem(hand);
 
     	if ((this.getDestroySpeed(heldItem, world.getBlockState(pos)) == this.efficiency || ForgeHooks.isToolEffective(world, pos, heldItem)) && world.isAirBlock(pos.up()))
@@ -40,8 +42,6 @@ public class ItemGravititeTool extends ItemAetherTool
         	{
         		return EnumActionResult.FAIL;
         	}
-
-        	EntityFloatingBlock entity = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
 
         	if (!world.isRemote)
         	{

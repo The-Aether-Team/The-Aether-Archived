@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -37,6 +38,16 @@ public class EntityFloatingBlock extends Entity
         this.setState(state);
 		this.setPosition(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
 	}
+
+	@Override
+    public void setPosition(double x, double y, double z)
+    {
+
+		if (this.world.isRemote && (this.state == null || this.state == Blocks.AIR.getDefaultState()))
+		{
+			this.state = this.world.getBlockState(this.getPosition());
+		}
+    }
 
 	@Override
 	protected void entityInit()
