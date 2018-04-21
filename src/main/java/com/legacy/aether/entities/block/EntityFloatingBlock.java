@@ -63,7 +63,6 @@ public class EntityFloatingBlock extends Entity
 	{
         if (this.getBlockState() == null)
         {
-            System.out.println("Block is null. Killing entity.");
             this.setDead();
             return;
         }
