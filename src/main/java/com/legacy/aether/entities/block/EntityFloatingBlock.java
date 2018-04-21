@@ -8,6 +8,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -61,6 +63,7 @@ public class EntityFloatingBlock extends Entity
 	{
         if (this.getBlockState() == null)
         {
+            System.out.println("Block is null. Killing entity.");
             this.setDead();
             return;
         }
@@ -97,12 +100,18 @@ public class EntityFloatingBlock extends Entity
 
             if (!block.canPlaceBlockAt(this.world, pos) || BlockFloating.canContinue(this.world, pos.up()) || !this.world.setBlockState(pos, this.getBlockState(), 2))
             {
-            	block.dropBlockAsItem(this.world, pos, this.getBlockState(), 0);
+                if (!this.world.isRemote)
+                {
+                    this.dropItem(Item.getItemFromBlock(block), 1);
+                }
             }
         }
         else if (this.timeFloated > 100)
         {
-        	block.dropBlockAsItem(this.world, pos, this.getBlockState(), 0);
+            if (!this.world.isRemote)
+            {
+                this.dropItem(Item.getItemFromBlock(block), 1);
+            }
 
             this.setDead();
         }
