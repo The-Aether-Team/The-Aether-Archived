@@ -5,19 +5,18 @@ PLEASE FILL OUT EVERYTHING! Make sure that you are running the latest version of
  -->
 
 **Aether Legacy Version(s) Affected**:
-1.13
+
 
 **Forge version**: 
-N/A
+
 
 **Extra Mods**: 
-N/A
+
 
 **Issue:**
-It isn't out yet.
+
 
 **How to reproduce:**
-Make 1.13 come out faster
+
 
 **Crash log:**
-N/A
