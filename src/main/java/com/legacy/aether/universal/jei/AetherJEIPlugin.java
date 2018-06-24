@@ -1,5 +1,9 @@
 package com.legacy.aether.universal.jei;
 
+import com.legacy.aether.client.gui.GuiEnchanter;
+import com.legacy.aether.client.gui.GuiFreezer;
+import com.legacy.aether.client.gui.GuiIncubator;
+import com.legacy.aether.client.gui.GuiSunAltar;
 import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -30,7 +34,7 @@ public class AetherJEIPlugin implements IModPlugin
 		registry.handleRecipes(AetherEnchantment.class, new IRecipeWrapperFactory<AetherEnchantment>() {
 
 			@Override
-			public IRecipeWrapper getRecipeWrapper(AetherEnchantment recipe) 
+			public IRecipeWrapper getRecipeWrapper(AetherEnchantment recipe)
 			{
 				return new EnchanterRecipeWrapper(recipe);
 			}
@@ -39,7 +43,7 @@ public class AetherJEIPlugin implements IModPlugin
 		registry.handleRecipes(AetherFreezable.class, new IRecipeWrapperFactory<AetherFreezable>() {
 
 			@Override
-			public IRecipeWrapper getRecipeWrapper(AetherFreezable recipe) 
+			public IRecipeWrapper getRecipeWrapper(AetherFreezable recipe)
 			{
 				return new FreezerRecipeWrapper(recipe);
 			}
@@ -50,16 +54,20 @@ public class AetherJEIPlugin implements IModPlugin
 
 		registry.addRecipes(AetherAPI.getInstance().getEnchantmentValues(), "aether_legacy.enchantment");
 		registry.addRecipes(AetherAPI.getInstance().getFreezableValues(), "aether_legacy.freezable");
-	}
+
+		registry.addRecipeClickArea(GuiFreezer.class, 80, 35, 22, 15, "aether_legacy.freezable");
+        registry.addRecipeClickArea(GuiEnchanter.class, 80, 35, 22, 15, "aether_legacy.enchantment");
+
+    }
 
 	@Override
-	public void registerCategories(IRecipeCategoryRegistration registry) 
+	public void registerCategories(IRecipeCategoryRegistration registry)
 	{
 		registry.addRecipeCategories(new EnchanterRecipeCategory(registry.getJeiHelpers().getGuiHelper()), new FreezerRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
 	}
 
 	@Override
-	public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) 
+	public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry)
 	{
 
 	}
@@ -71,7 +79,7 @@ public class AetherJEIPlugin implements IModPlugin
 	}
 
 	@Override
-	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) 
+	public void onRuntimeAvailable(IJeiRuntime jeiRuntime)
 	{
 
 	}
