@@ -1,6 +1,8 @@
 package com.legacy.aether;
 
+import com.legacy.aether.universal.crafttweaker.AetherCraftTweakerPlugin;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -43,6 +45,10 @@ public class Aether
 		SoundsAether.initialization();
 		AetherAdvancements.initialization();
 		AetherNetworkingManager.preInitialization();
+
+		if(Loader.isModLoaded("crafttweaker")) {
+			AetherCraftTweakerPlugin.preInitialization();
+		}
 
 		CommonProxy.registerEvent(new AetherRegistryEvent());
 
