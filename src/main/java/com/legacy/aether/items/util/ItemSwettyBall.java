@@ -1,4 +1,4 @@
-package com.legacy.aether.items;
+package com.legacy.aether.items.util;
 
 import com.legacy.aether.blocks.BlocksAether;
 

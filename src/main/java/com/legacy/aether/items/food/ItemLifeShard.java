@@ -1,5 +1,11 @@
 package com.legacy.aether.items.food;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -8,12 +14,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-
-import com.legacy.aether.Aether;
-import com.legacy.aether.AetherConfig;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
-import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemLifeShard extends Item
 {
@@ -37,21 +37,25 @@ public class ItemLifeShard extends Item
 		PlayerAether playerAether = PlayerAether.get(player);
 		ItemStack heldItem = player.getHeldItem(hand);
 
-		if (!worldIn.isRemote)
+		
+		if (worldIn.isRemote && playerAether.getExtraHealth() >= AetherConfig.getMaxLifeShards())
 		{
-			if (playerAether.getExtraHealth() < AetherConfig.getMaxLifeShards())
-			{
-				playerAether.increaseMaxHP();
-				heldItem.shrink(1);
-
-				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
-			}
-			else if (playerAether.getExtraHealth() >= AetherConfig.getMaxLifeShards())
-			{
-				Aether.proxy.sendMessage(player, "You can only use a total of 10 life shards.");
-			}
+            Aether.proxy.sendMessage(player, "You can only use a total of 10 life shards.");
+            
+            
 		}
+		
+		if (!worldIn.isRemote && playerAether.getExtraHealth() < AetherConfig.getMaxLifeShards())
+		{
+			playerAether.increaseMaxHP();
+			//++playerAether.lifeShardsUsed;
+			heldItem.shrink(1);
 
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
+		}
+				
+		System.out.println(playerAether.getExtraHealth());
+		//System.out.println(AetherConfig.getMaxLifeShards());
 		return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
 	}
 

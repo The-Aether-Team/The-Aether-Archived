@@ -2,18 +2,18 @@ package com.legacy.aether.world.dungeon;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.world.dungeon.util.AetherDungeon;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class GoldenDungeon extends AetherDungeon 
 {
@@ -252,11 +252,6 @@ public class GoldenDungeon extends AetherDungeon
 
 				if(random.nextBoolean())
 				{
-					return new ItemStack(ItemsAether.phoenix_leggings);
-				}
-
-				if(random.nextBoolean())
-				{
 					return new ItemStack(ItemsAether.phoenix_chestplate);
 				}
 
@@ -305,7 +300,14 @@ public class GoldenDungeon extends AetherDungeon
 			}
 			
 			case 8 :
+			{
+				if(random.nextBoolean())
+				{
+					return new ItemStack(ItemsAether.phoenix_leggings);
+				}
+				
 				return new ItemStack(ItemsAether.chain_gloves);
+			}
 
 		}
 		return new ItemStack(ItemsAether.obsidian_chestplate);

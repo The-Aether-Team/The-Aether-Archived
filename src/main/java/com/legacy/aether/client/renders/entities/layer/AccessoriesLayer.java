@@ -1,15 +1,6 @@
 package com.legacy.aether.client.renders.entities.layer;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.models.attachments.ModelAetherWings;
 import com.legacy.aether.client.models.attachments.ModelHalo;
@@ -18,6 +9,18 @@ import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.perks.AetherRankings;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 {
@@ -36,6 +39,8 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
 	public ModelPlayer modelPlayer;
 
+	public ModelPlayer modelGlow;
+	
 	private ModelAetherWings modelWings;
 
 	public AccessoriesLayer(boolean slimFit, ModelPlayer modelPlayer)
@@ -45,6 +50,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		this.modelWings = new ModelAetherWings(1.0F);
 		this.modelMisc = new ModelBiped(1.0F);
 		this.modelHalo = new ModelHalo();
+		this.modelGlow = new ModelPlayer(1.005F, false);
 	}
 
 	@Override
@@ -64,6 +70,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		this.modelWings.setModelAttributes(this.modelPlayer);
 
 		this.modelMisc.setLivingAnimations(player, prevLimbSwing, rotation, partialTicks);
+		//this.modelGlow.setLivingAnimations(player, prevLimbSwing, rotation, partialTicks);
 		this.modelWings.setLivingAnimations(player, prevLimbSwing, rotation, partialTicks);
 
         GlStateManager.scale(0.9375F, 0.9375F, 0.9375F);
@@ -77,9 +84,13 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
         GlStateManager.translate(0, player.isSneaking() ? 0.25D : 0, 0);
 
+		//this.modelGlow.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
+
 		this.modelMisc.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 		this.modelWings.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 		this.modelHalo.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
+
+		this.modelPlayer.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 
 		if (accessories.stacks.get(0).getItem() instanceof ItemAccessory)
 		{
@@ -201,20 +212,20 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			GlStateManager.color(1.0F, 1.0F, 1.0F);
 		}
 
-		if (accessories.stacks.get(2).getItem() instanceof ItemAccessory)
+		if (accessories.stacks.get(2).getItem() instanceof ItemAccessory) //TODO
 		{
 			ItemAccessory shield = (ItemAccessory) accessories.stacks.get(2).getItem();
 
 			this.manager.renderEngine.bindTexture(shield.texture);
-
-			GlStateManager.pushMatrix();
 			GlStateManager.enableBlend();
+			GlStateManager.pushMatrix();
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			GlStateManager.scale(1.1, 1.1, 1.1);
 			if (player.hurtTime > 0)
 			{
 				GlStateManager.color(1.0F, 0.5F, 0.5F);
 			}
-
+			GlStateManager.depthMask(true);
 			this.modelMisc.bipedHead.render(scale);
 			this.modelMisc.bipedBody.render(scale);
 			this.modelMisc.bipedLeftArm.render(scale);
@@ -229,8 +240,11 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
 		if (playerAether.isWearingValkyrieSet())
 		{
-			manager.renderEngine.bindTexture(TEXTURE_VALKYRIE);
-
+			
+			GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            manager.renderEngine.bindTexture(TEXTURE_VALKYRIE);
+            GlStateManager.disableBlend();
 			this.modelWings.setWingSinage(playerAether.wingSinage);
 			this.modelWings.wingLeft.render(scale);
 			this.modelWings.wingRight.render(scale);
@@ -245,7 +259,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			}
 		}
 
-		if (AetherRankings.isRankedPlayer(player.getUniqueID()) && PlayerAether.get(player).shouldRenderHalo)
+		if (AetherRankings.isRankedPlayer(player.getUniqueID()) && PlayerAether.get(player).shouldRenderHalo) //TODO
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -254,7 +268,19 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
 			GlStateManager.rotate(var4, 0.0F, 1.0F, 0.0F);
 			GlStateManager.rotate(var5, 1.0F, 0.0F, 0.0F);
-			GlStateManager.translate(0.0F, -0.7F, 0.0F);
+			GlStateManager.translate(0.0F, -0.67F, 0.0F);
+
+			GlStateManager.enableBlend();
+			GlStateManager.scale(1.1F, 1.1F, 1.1F);
+
+			 GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+			    GlStateManager.depthMask(true);
+			    int i = 61680;
+			    int j = i % 65536;
+			    int k = i / 65536;
+			    OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
+			    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+			    Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 
 			this.manager.renderEngine.bindTexture(TEXTURE_HALO);
 
@@ -264,11 +290,34 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			this.modelHalo.halo4.rotateAngleX = 6.25F;
 
 			this.modelHalo.renderHalo(this.modelPlayer.bipedHead, scale);
-
+			GlStateManager.disableBlend();
+			GL11.glDisable(GL11.GL_BLEND);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			GlStateManager.popMatrix();
 		}
+		
+		if (player.getUniqueID().toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837"))
+		{
+			this.manager.renderEngine.bindTexture(player.getLocationSkin());
+			GlStateManager.enableBlend();
+			GlStateManager.pushMatrix();
+			
+	        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+	        GlStateManager.enableNormalize();
+	        GlStateManager.enableBlend();
+	        GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+	        this.modelGlow.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
+	        this.modelGlow.setModelAttributes(this.modelPlayer);
+	        this.modelGlow.render(player, limbSwing, prevLimbSwing, partialTicks, interpolateRotation, prevRotationPitch, scale);
 
+	        GlStateManager.disableBlend();
+	        GlStateManager.disableNormalize();
+			GlStateManager.disableBlend();
+			GlStateManager.popMatrix();
+			//glow
+		}
+		
+		
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 		GlStateManager.disableBlend();

@@ -2,7 +2,14 @@ package com.legacy.aether.blocks.natural;
 
 import java.util.Random;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.items.util.DoubleDropHelper;
+import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockTallGrass;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -11,6 +18,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -20,12 +28,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 
-import com.legacy.aether.Aether;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.items.util.DoubleDropHelper;
-import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
-
-public class BlockAetherGrass extends Block
+public class BlockAetherGrass extends Block implements IGrowable
 {
 
 	public static final PropertyBool double_drop = PropertyBool.create(Aether.doubleDropNotifier());
@@ -141,5 +144,69 @@ public class BlockAetherGrass extends Block
     {
         return Item.getItemFromBlock(BlocksAether.aether_dirt);
     }
+	
+	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient)
+    {
+        return true;
+    }
+
+    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    {
+        return true;
+    }
+
+    public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state)
+    {
+        BlockPos blockpos = pos.up();
+
+        for (int i = 0; i < 128; ++i)
+        {
+            BlockPos blockpos1 = blockpos;
+            int j = 0;
+
+            while (true)
+            {
+                if (j >= i / 16)
+                {
+                    if (worldIn.isAirBlock(blockpos1))
+                    {
+                        if (rand.nextInt(8) == 0)
+                        {
+                        	if (rand.nextInt(2) == 0)
+                        	{
+                            	worldIn.setBlockState(blockpos1, BlocksAether.purple_flower.getDefaultState(), 0);
+
+                        	}
+                        	else
+                        	{
+                            	worldIn.setBlockState(blockpos1, BlocksAether.white_flower.getDefaultState(), 0);
+                        	}
+                        }
+                        else
+                        {
+                            IBlockState iblockstate1 = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
+
+                            if (Blocks.TALLGRASS.canBlockStay(worldIn, blockpos1, iblockstate1))
+                            {
+                                worldIn.setBlockState(blockpos1, iblockstate1, 3);
+                            }
+                        }
+                    }
+
+                    break;
+                }
+
+                blockpos1 = blockpos1.add(rand.nextInt(3) - 1, (rand.nextInt(3) - 1) * rand.nextInt(3) / 2, rand.nextInt(3) - 1);
+
+                if (worldIn.getBlockState(blockpos1.down()).getBlock() != BlocksAether.aether_grass || worldIn.getBlockState(blockpos1).isNormalCube())
+                {
+                    break;
+                }
+
+                ++j;
+            }
+        }
+    }
+
 
 }

@@ -1,11 +1,12 @@
 package com.legacy.aether.client.renders.entities.projectile;
 
+import com.legacy.aether.client.models.entities.CrystalModel;
+import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
+
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-
-import com.legacy.aether.client.models.entities.CrystalModel;
-import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
 
 public class IceyBallRenderer extends RenderLiving<EntityIceyBall>
 {
@@ -24,6 +25,8 @@ public class IceyBallRenderer extends RenderLiving<EntityIceyBall>
 		{
 			model.sinage[i] = hs.sinage[i];
 		}
+		
+		GlStateManager.translate(0, 0.3D, 0);
     }
 
 	@Override

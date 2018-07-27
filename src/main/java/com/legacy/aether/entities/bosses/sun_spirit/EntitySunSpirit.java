@@ -2,12 +2,27 @@ package com.legacy.aether.entities.bosses.sun_spirit;
 
 import java.util.List;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.util.EnumStoneType;
+import com.legacy.aether.entities.bosses.EntityFireMinion;
+import com.legacy.aether.entities.projectile.crystals.EntityFireBall;
+import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
+import com.legacy.aether.entities.util.AetherNameGen;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,19 +45,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
-
-import com.legacy.aether.Aether;
-import com.legacy.aether.advancements.AetherAdvancements;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.entities.bosses.EntityFireMinion;
-import com.legacy.aether.entities.projectile.crystals.EntityFireBall;
-import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
-import com.legacy.aether.entities.util.AetherNameGen;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntitySunSpirit extends EntityFlying implements IMob
 {
@@ -73,7 +75,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     public EntitySunSpirit(World var1, int posX, int posY, int posZ, int var6)
     {
         super(var1);
-        this.setSize(2.25F, 2.5F);
+        this.setSize(2.25F, 2.6F);
         this.setPosition((double)posX + 0.5D, (double)posY, (double)posZ + 0.5D);
         this.setOriginPosition(posX, posY, posZ);
         this.setBossName(AetherNameGen.gen());
@@ -81,7 +83,9 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         this.noClip = true;
         this.rotary = (double)this.rand.nextFloat() * 360.0D;;
         this.direction = var6;
-        this.rotationYaw = this.rotationYawHead = var6 == 3 ? 0 : var6 == 0 ? 90 : var6 == 2 ? 180 : 270;
+        //this.rotationYaw = this.rotationYawHead = var6 == 3 ? 0 : var6 == 0 ? 90 : var6 == 2 ? 180 : 270;
+        
+        this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F, 200.0F));
     }
 
     protected void applyEntityAttributes()
@@ -96,6 +100,19 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     public boolean isPotionApplicable(PotionEffect par1PotionEffect)
     {
         return false;
+    }
+    
+    @Override
+    public void move(MoverType type, double x, double y, double z)
+    {
+		if (this.getAttackTarget() != null)
+		{
+			super.move(type, x, 0, z);
+		}
+		else
+		{
+			super.move(type, 0, 0, 0);
+		}
     }
 
 	public boolean canDespawn()
@@ -412,7 +429,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob
         {
             if (side.isClient())
             {
-                Aether.proxy.sendMessage(player, s);
+            	Aether.proxy.sendMessage(player, s);
             }
         }
     }
@@ -494,8 +511,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     {
         if (this.chatWithMe(player))
         {
-            this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
-
+            //this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
+        	//this.getLookHelper().setLookPosition(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ, (float)this.getHorizontalFaceSpeed(), (float)this.getVerticalFaceSpeed());
             this.setAttackTarget(player);
             this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
 
@@ -693,5 +710,18 @@ public class EntitySunSpirit extends EntityFlying implements IMob
     {
     	this.dataManager.set(FROZEN, isFreezing);
     }
+    
+    @Override
+    public float getEyeHeight()
+    {
+        return 2.1F;
+    }
+    
+    @Override
+	public boolean canBeLeashedTo(final EntityPlayer player)
+	{
+		return false;
+	}
+
 
 }

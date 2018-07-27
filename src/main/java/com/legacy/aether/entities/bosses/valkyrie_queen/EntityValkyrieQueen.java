@@ -1,5 +1,17 @@
 package com.legacy.aether.entities.bosses.valkyrie_queen;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.util.EnumStoneType;
+import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
+import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
+import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
+import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
+import com.legacy.aether.entities.util.AetherNameGen;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.player.PlayerAether;
+
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -32,17 +44,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.legacy.aether.Aether;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
-import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
-import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
-import com.legacy.aether.entities.util.AetherNameGen;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
 
 public class EntityValkyrieQueen extends EntityMob 
 {
@@ -245,7 +246,7 @@ public class EntityValkyrieQueen extends EntityMob
     {
 		if (this.world.isRemote)
 		{
-			FMLClientHandler.instance().getClient().displayGuiScreen(new com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue(this));
+			FMLClientHandler.instance().getClient().displayGuiScreen(new GuiValkyrieDialogue(this));
 		}
     }
 
@@ -302,6 +303,8 @@ public class EntityValkyrieQueen extends EntityMob
                 }	
             }
         }
+        
+        
 
         if (this.getAttackTarget() != null && this.getAttackTarget().isDead)
         {
@@ -361,6 +364,8 @@ public class EntityValkyrieQueen extends EntityMob
         	this.sinage -= (3.141593F * 2F);
         }
 
+        this.dismountRidingEntity();
+        
         if (this.getHealth() <= 0 || this.isDead) 
         {
         	unlockDoor();
@@ -530,6 +535,13 @@ public class EntityValkyrieQueen extends EntityMob
         this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 1), 0.5F);
         this.dropItem(Items.GOLDEN_SWORD, 1);
     }
+    
+    @Override
+	public boolean canBeLeashedTo(final EntityPlayer player)
+	{
+		return false;
+	}
+
 
     @Override
     public EntityItem entityDropItem(ItemStack stack, float offsetY)
@@ -698,5 +710,11 @@ public class EntityValkyrieQueen extends EntityMob
 	{
 		return this.dataManager.get(VALKYRIE_READY).booleanValue();
 	}
+	
+	@Override
+    public float getEyeHeight()
+    {
+        return 1.75F;
+    }
 
 }

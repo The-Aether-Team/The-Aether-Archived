@@ -16,7 +16,7 @@ public class EntityFireMinion extends EntityMob
     public EntityFireMinion(World world)
     {
         super(world);
-
+        this.setSize(0.8F, 1.95F);
         this.isImmuneToFire = true;
     }
 
@@ -44,7 +44,7 @@ public class EntityFireMinion extends EntityMob
     {
         super.onUpdate();
 
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 1; i++)
         {
             double d = rand.nextFloat() - 0.5F;
             double d1 = rand.nextFloat();
@@ -62,6 +62,12 @@ public class EntityFireMinion extends EntityMob
             	this.world.spawnParticle(EnumParticleTypes.FLAME, d3, d4, d5, 0.0D, -0.075000002980232239D, 0.0D);
             }
         }
+    }
+    
+    @Override
+    public float getEyeHeight()
+    {
+        return 2.0F;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.legacy.aether.client.renders.entities.projectile;
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -24,6 +25,8 @@ public class ThunderBallRenderer extends RenderLiving<EntityThunderBall>
 		{
 			model.sinage[i] = hs.sinage[i];
 		}
+		
+		GlStateManager.translate(0, 0.3D, 0);
     }
 
 	@Override

@@ -1,13 +1,13 @@
 package com.legacy.aether.client.renders.entities;
 
+import com.legacy.aether.client.renders.entities.layer.SwetLayer;
+import com.legacy.aether.entities.passive.mountable.EntitySwet;
+
 import net.minecraft.client.model.ModelSlime;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-
-import com.legacy.aether.client.renders.entities.layer.SwetLayer;
-import com.legacy.aether.entities.passive.mountable.EntitySwet;
 
 public class SwetRenderer extends RenderLiving<EntitySwet> 
 {
@@ -28,7 +28,7 @@ public class SwetRenderer extends RenderLiving<EntitySwet>
         float f1 = 1.0F;
         float f3 = 1.5F;
 
-        if(!swet.onGround)
+        if(!swet.onGround && swet.world.isRemote)
         {
             if(swet.motionY > 0.85D)
             {

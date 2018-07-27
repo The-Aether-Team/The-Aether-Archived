@@ -2,15 +2,6 @@ package com.legacy.aether.world.biome;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeDecorator;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.feature.WorldGenerator;
-
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.world.biome.decoration.AetherGenFloatingIsland;
@@ -22,6 +13,17 @@ import com.legacy.aether.world.biome.decoration.AetherGenMinable;
 import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import com.legacy.aether.world.biome.decoration.AetherGenQuicksoil;
 import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
+
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.gen.feature.WorldGenDoublePlant;
+import net.minecraft.world.gen.feature.WorldGenLakes;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class AetherBiomeDecorator extends BiomeDecorator 
 {
@@ -47,6 +49,8 @@ public class AetherBiomeDecorator extends BiomeDecorator
 	public AetherGenHolidayTree holiday_tree = new AetherGenHolidayTree();
 
 	public AetherGenLakes aether_lakes = new AetherGenLakes();
+
+    protected static final WorldGenDoublePlant double_grass = new WorldGenDoublePlant();
 
 	public AetherBiomeDecorator()
 	{
@@ -111,6 +115,33 @@ public class AetherBiomeDecorator extends BiomeDecorator
 				this.holiday_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
 			}
 		}
+		
+		if (AetherConfig.tallgrassEnabled())
+		{
+			for (int i3 = 0; i3 < 10; ++i3)
+	        {
+	            int j7 = random.nextInt(16) + 8;
+	            int i11 = random.nextInt(16) + 8;
+	            int k14 = worldIn.getHeight(this.chunkPos.add(j7, 0, i11)).getY() * 2;
+
+	            if (k14 > 0)
+	            {
+	            	int l17 = random.nextInt(k14);
+	                biomeGenBaseIn.getRandomWorldGenForGrass(random).generate(worldIn, random, this.chunkPos.add(j7, l17, i11));
+	            }
+	        }
+	        
+	        double_grass.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
+
+	        if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, this.chunkPos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.GRASS))
+	        for (int i = 0; i < 7; ++i)
+	        {
+	            int j = rand.nextInt(16) + 8;
+	            int k = rand.nextInt(16) + 8;
+	            int l = rand.nextInt(worldIn.getHeight(this.chunkPos.add(j, 0, k)).getY() + 32);
+	            double_grass.generate(worldIn, rand, this.chunkPos.add(j, l, k));
+	        }
+		}
 
 		if (this.shouldSpawn(10))
 		{
@@ -130,7 +161,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
     public WorldGenerator getTree()
     {
-        return this.shouldSpawn(20) ? new AetherGenOakTree() : new AetherGenSkyrootTree(true);
+        return this.shouldSpawn(13) ? new AetherGenOakTree() : new AetherGenSkyrootTree(true);
     }
 
 	public void generateFoilage(IBlockState block)

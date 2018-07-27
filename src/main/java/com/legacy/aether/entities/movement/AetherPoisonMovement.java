@@ -44,7 +44,7 @@ public class AetherPoisonMovement
 
         if (timeUntilHit == 0) 
         {
-            this.entityLiving.attackEntityFrom(DamageSource.GENERIC, 1);
+            this.entityLiving.attackEntityFrom(new DamageSource("inebriation"), 1.0F);
         }
 
         this.poisonTime--;

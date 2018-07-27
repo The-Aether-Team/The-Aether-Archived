@@ -154,6 +154,8 @@ public class ItemRendering
 		register(ItemsAether.lore_book, "lore_book");
 
 		register(ItemsAether.moa_egg, "moa_egg");
+		
+		register(ItemsAether.developer_stick, "skyroot_stick");
 
 		registerDefinition(ItemsAether.phoenix_bow, new PhoenixBowDefinition());
 		registerDefinition(ItemsAether.notch_hammer, new NotchHammerDefinition());

@@ -1,5 +1,8 @@
 package com.legacy.aether.entities.bosses;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.items.ItemsAether;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,12 +22,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.legacy.aether.Aether;
-import com.legacy.aether.items.ItemsAether;
-
 public class EntityValkyrie extends EntityMob
 {
-
 	private int attackTime;
 
     public int angerLevel;
@@ -42,7 +41,7 @@ public class EntityValkyrie extends EntityMob
     public EntityValkyrie(World world)
     {
         super(world);
-        setSize(0.8F, 1.6F);
+        setSize(0.8F, 1.95F);
         this.teleTimer = rand.nextInt(250);
         this.timeLeft = 1200;
         this.safeX = posX;
@@ -477,6 +476,12 @@ public class EntityValkyrie extends EntityMob
     public boolean canDespawn() 
     {
         return false;
+    }
+    
+    @Override
+    public float getEyeHeight()
+    {
+        return 1.75F;
     }
 
     protected SoundEvent getHurtSound()

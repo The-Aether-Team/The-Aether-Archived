@@ -2,14 +2,6 @@ package com.legacy.aether.world.dungeon;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
@@ -18,6 +10,14 @@ import com.legacy.aether.entities.bosses.slider.EntitySlider;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.world.dungeon.util.AetherDungeon;
 import com.legacy.aether.world.dungeon.util.PositionData;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class BronzeDungeon extends AetherDungeon
 {
@@ -409,7 +409,7 @@ public class BronzeDungeon extends AetherDungeon
 	
 	public static ItemStack getBronzeLoot(Random random)
 	{
-		int item = random.nextInt(9);
+		int item = random.nextInt(10);
 		switch(item)
 		{
 			case 0 :
@@ -428,6 +428,8 @@ public class BronzeDungeon extends AetherDungeon
 				return new ItemStack(ItemsAether.agility_cape);
 			case 7 :
 				return new ItemStack(ItemsAether.sentry_boots);
+			case 8 :
+				return new ItemStack(ItemsAether.repulsion_shield);
 		}
 
 		return new ItemStack(ItemsAether.cloud_staff);

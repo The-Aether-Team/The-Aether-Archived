@@ -2,21 +2,17 @@ package com.legacy.aether.blocks;
 
 import java.util.Random;
 
+import com.legacy.aether.blocks.natural.BlockAetherFlower;
+
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-import com.legacy.aether.blocks.natural.BlockAetherFlower;
-
-public class BlockAetherSapling extends BlockAetherFlower
+public class BlockAetherSapling extends BlockAetherFlower implements IGrowable
 {
 
 	public WorldGenerator treeGenObject = null;
@@ -32,39 +28,19 @@ public class BlockAetherSapling extends BlockAetherFlower
 	@Override
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random random)
 	{
-		super.updateTick(world, pos, state, random);
+		
 
 		if (!world.isRemote)
 		{
+			super.updateTick(world, pos, state, random);
+			
+			if (!world.isAreaLoaded(pos, 1)) return;
 			if (world.getLight(pos.up()) >= 9 && random.nextInt(30) == 0)
 			{
 				this.growTree(world, pos, random);
 			}
 		}
 	}
-
-	@Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-		ItemStack heldItem = playerIn.getHeldItem(hand);
-
-		if (heldItem.getItem() == Items.DYE && heldItem.getMetadata() == 15)
-		{
-            if (!worldIn.isRemote)
-            {
-                worldIn.playEvent(2005, pos, 0);
-            }
-
-			if (worldIn.rand.nextFloat() < 0.45D)
-			{
-				this.growTree(worldIn, pos, worldIn.rand);
-			}
-
-			return true;
-		}
-
-        return false;
-    }
 
 	public void growTree(World world, BlockPos pos, Random rand)
 	{
@@ -74,6 +50,28 @@ public class BlockAetherSapling extends BlockAetherFlower
 		{
 			world.setBlockState(pos, this.getDefaultState());
 		}
+	}
+
+	@Override
+	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state)
+	{
+		return true;
+	}
+
+	@Override
+	public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) 
+	{
+		if (worldIn.rand.nextFloat() < 0.45D)
+        {
+            this.growTree(worldIn, pos, rand);
+        }
+		
 	}
 
 }

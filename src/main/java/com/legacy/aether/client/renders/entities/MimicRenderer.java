@@ -1,14 +1,14 @@
 package com.legacy.aether.client.renders.entities;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.util.ResourceLocation;
-
 import java.util.Calendar;
 
 import com.legacy.aether.client.models.entities.MimicModel;
 import com.legacy.aether.entities.hostile.EntityMimic;
+
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.ResourceLocation;
 
 public class MimicRenderer extends RenderLiving<EntityMimic>
 {
@@ -30,6 +30,15 @@ public class MimicRenderer extends RenderLiving<EntityMimic>
         GlStateManager.rotate(180F - pitch, 0.0F, 1.0F, 0.0F);
         GlStateManager.scale(-1F, -1F, 1.0F);
 		this.modelbase.setRotationAngles(0,0F, 0.0F, 0.0F, 0.0F, 0.0F, mimic);
+		
+		if (mimic.hurtResistantTime > 11)
+		{
+			GlStateManager.color(1.0F, 0.5F, 0.5F);
+		}
+		else
+		{
+			GlStateManager.color(1.0F, 1.0F, 1.0F);
+		}
 		
 		Calendar calendar = Calendar.getInstance();
 		if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 && calendar.get(5) <= 26)

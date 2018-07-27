@@ -370,7 +370,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 
 		biome.decorate(this.worldObj, this.rand, pos);
 
-		if (this.rand.nextInt(11) == 0)
+		if (this.rand.nextInt(10) == 0)
         {
 	        this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(this.rand.nextInt(16), this.rand.nextInt(64) + 32, this.rand.nextInt(16)));
         }

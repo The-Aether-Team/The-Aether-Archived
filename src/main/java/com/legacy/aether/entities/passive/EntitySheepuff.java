@@ -2,6 +2,10 @@ package com.legacy.aether.entities.passive;
 
 import java.util.Random;
 
+import com.legacy.aether.entities.ai.SheepuffAIEatAetherGrass;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -32,10 +36,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.legacy.aether.entities.ai.SheepuffAIEatAetherGrass;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntitySheepuff extends EntityAetherAnimal
 {
@@ -260,7 +260,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 			}
 		}
 
-		if(this.amountEaten == 5 && !this.getSheared() && !this.getPuffed())
+		if(this.amountEaten >= 2 && !this.getSheared() && !this.getPuffed())
 		{
 			this.setPuffed(true);
 			this.amountEaten = 0;

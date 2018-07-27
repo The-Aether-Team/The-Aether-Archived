@@ -3,10 +3,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeDecorator;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.hostile.EntityAechorPlant;
 import com.legacy.aether.entities.hostile.EntityCockatrice;
@@ -21,6 +17,11 @@ import com.legacy.aether.entities.passive.mountable.EntityPhyg;
 import com.legacy.aether.entities.passive.mountable.EntitySwet;
 import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
+
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public class AetherBiome extends Biome
 {
@@ -68,13 +69,25 @@ public class AetherBiome extends Biome
 		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
 		list.add(new SpawnListEntry(EntityAerwhale.class, 7, 3, 3));
 		list.add(new SpawnListEntry(EntityZephyr.class, 4, 1, 1));
-		list.add(new SpawnListEntry(EntityAechorPlant.class, 1, 3, 3));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 2, 3, 3));
 	}
 
 	@Override
     public int getSkyColorByTemp(float currentTemperature)
     {
     	return 0xC0C0FF; // Lavender Blue
+    }
+	
+	@Override
+    public int getGrassColorAtPos(BlockPos pos)
+    {
+        return 0xb1ffcb;
+    }
+	
+	@Override
+    public int getFoliageColorAtPos(BlockPos pos)
+    {
+        return 0xb1ffcb;
     }
 
 	@Override

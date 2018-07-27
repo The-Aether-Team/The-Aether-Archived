@@ -4,6 +4,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.containers.inventory.InventoryAccessories;
+import com.legacy.aether.entities.movement.AetherPoisonMovement;
+import com.legacy.aether.entities.passive.EntityMiniCloud;
+import com.legacy.aether.entities.passive.mountable.EntityParachute;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketAccessory;
+import com.legacy.aether.player.abilities.Ability;
+import com.legacy.aether.player.abilities.AbilityAccessories;
+import com.legacy.aether.player.abilities.AbilityArmor;
+import com.legacy.aether.player.abilities.AbilityFlight;
+import com.legacy.aether.player.abilities.AbilityRepulsion;
+import com.legacy.aether.player.capability.PlayerAetherManager;
+import com.legacy.aether.player.perks.AetherRankings;
+import com.legacy.aether.player.perks.util.DonatorMoaSkin;
+import com.legacy.aether.world.TeleporterAether;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -24,25 +43,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-
-import com.legacy.aether.AetherConfig;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.containers.inventory.InventoryAccessories;
-import com.legacy.aether.entities.movement.AetherPoisonMovement;
-import com.legacy.aether.entities.passive.EntityMiniCloud;
-import com.legacy.aether.entities.passive.mountable.EntityParachute;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketAccessory;
-import com.legacy.aether.player.abilities.Ability;
-import com.legacy.aether.player.abilities.AbilityAccessories;
-import com.legacy.aether.player.abilities.AbilityArmor;
-import com.legacy.aether.player.abilities.AbilityFlight;
-import com.legacy.aether.player.abilities.AbilityRepulsion;
-import com.legacy.aether.player.capability.PlayerAetherManager;
-import com.legacy.aether.player.perks.AetherRankings;
-import com.legacy.aether.player.perks.util.DonatorMoaSkin;
-import com.legacy.aether.world.TeleporterAether;
 
 public class PlayerAether
 {
@@ -69,7 +69,7 @@ public class PlayerAether
 
 	private boolean isJumping;
 
-	private float lifeShardsUsed;
+	public float lifeShardsUsed;
 
 	public float prevPortalAnimTime, portalAnimTime;
 
@@ -568,7 +568,7 @@ public class PlayerAether
 	 */
 	public float getExtraHealth()
 	{
-		return this.lifeShardsUsed;
+		return this.thePlayer.getMaxHealth() - AetherConfig.getMaxLifeShards();//this.lifeShardsUsed;
 	}
 
 	/*

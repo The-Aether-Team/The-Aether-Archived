@@ -1,5 +1,6 @@
 package com.legacy.aether.entities.hostile;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -13,8 +14,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 public class EntityMimic extends EntityMob
 {
@@ -77,7 +80,7 @@ public class EntityMimic extends EntityMob
 
     protected SoundEvent getHurtSound(DamageSource source)
     {
-        return SoundEvents.BLOCK_WOOD_HIT;
+        return SoundEvents.BLOCK_WOOD_BREAK;
     }
 
     protected SoundEvent getDeathSound()
@@ -87,7 +90,7 @@ public class EntityMimic extends EntityMob
 
     protected float getSoundVolume()
     {
-        return 0.6F;
+        return 1.0F;
     }
 
 	@Override
@@ -99,6 +102,8 @@ public class EntityMimic extends EntityMob
 	@Override
 	public boolean attackEntityFrom(DamageSource ds, float var2)
 	{
+		
+		
 		if (ds.getImmediateSource() instanceof EntityMimic)
 		{
 			return false;
@@ -106,6 +111,11 @@ public class EntityMimic extends EntityMob
 
 		if (ds.getImmediateSource() instanceof EntityLivingBase)
 		{
+			if (this.world instanceof WorldServer)
+	        {
+	            ((WorldServer)this.world).spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY + (double)this.height / 1.5D, this.posZ, 20, (double)(this.width / 4.0F), (double)(this.height / 4.0F), (double)(this.width / 4.0F), 0.05D, Block.getStateId(Blocks.PLANKS.getDefaultState()));
+	        }
+			
 			EntityLivingBase attacker = (EntityLivingBase) ds.getImmediateSource();
 			if (attacker instanceof EntityPlayer)
 			{

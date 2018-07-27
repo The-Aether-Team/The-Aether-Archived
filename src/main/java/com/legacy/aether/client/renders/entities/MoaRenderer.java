@@ -1,22 +1,25 @@
 package com.legacy.aether.client.renders.entities;
 
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.client.models.entities.MoaModel;
 import com.legacy.aether.client.renders.entities.layer.LayerMoaSaddle;
 import com.legacy.aether.client.renders.entities.layer.MoaDonatorLayer;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
+import com.legacy.aether.entities.util.AetherMoaTypes;
 import com.legacy.aether.player.PlayerAether;
+
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 public class MoaRenderer extends RenderLiving<EntityMoa>
 {
+    private static final ResourceLocation MOS = new ResourceLocation("aether_legacy", "textures/entities/moa/mos.png");
 
+    
 	public MoaRenderer(RenderManager renderManager)
 	{
 		super(renderManager, new MoaModel(0.0F), 1.0F);
@@ -66,7 +69,14 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 			}
 		}
 
-		return moa.getMoaType().getTexture(moa.isBeingRidden());
+		 if (entity.hasCustomName() && "Mos".equals(entity.getCustomNameTag()) && (entity.getMoaType() == AetherMoaTypes.orange))
+         {
+			 return MOS;
+         }
+		 else
+		 {
+			return moa.getMoaType().getTexture(moa.isBeingRidden());
+		 }
 	}
 
 }

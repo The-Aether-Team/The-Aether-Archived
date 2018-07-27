@@ -22,10 +22,10 @@ public class AetherLogger
     {
         if (messageDeveloper.toString() == null)
         {
-            if(AetherConfig.developerMode())
-            {
-                logDev.info(messageDeveloper.toString());
-            }
+            //if(AetherConfig.developerMode())
+            //{
+                //logDev.info(messageDeveloper.toString());
+            //}
         }
     }
 

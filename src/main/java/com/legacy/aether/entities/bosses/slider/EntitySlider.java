@@ -101,7 +101,7 @@ public class EntitySlider extends EntityFlying
 		}
 		else
 		{
-			super.move(type, 0, y, 0);
+			super.move(type, 0, 0, 0);
 		}
     }
 
@@ -760,6 +760,12 @@ public class EntitySlider extends EntityFlying
 	public boolean isAwake()
 	{
 		return this.dataManager.get(SLIDER_AWAKE).booleanValue();
+	}
+	
+	@Override
+	public boolean canBeLeashedTo(final EntityPlayer player)
+	{
+		return false;
 	}
 
 }

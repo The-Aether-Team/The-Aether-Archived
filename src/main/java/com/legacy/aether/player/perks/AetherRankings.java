@@ -39,7 +39,7 @@ public class AetherRankings
 		addCelebrityRank("0c063bfd-3521-413d-a766-50be1d71f00e"); // AntVenom
 
 		//Tester
-		addTesterRank("cf51ef47-04a8-439a-aa41-47d871b0b837"); // Kito
+		//addTesterRank("cf51ef47-04a8-439a-aa41-47d871b0b837"); // Kito
 		addTesterRank("93822537-d79f-4672-b9a8-04aae16131d2"); // KidoftheForest
 		addTesterRank("f2914dae-441a-4254-aa5c-2ec4d917b7a6"); // Jesterguy
 		addTesterRank("869aed85-9dc0-4187-92d7-6064c202a844"); // SunflowerAspen

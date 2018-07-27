@@ -1,13 +1,5 @@
 package com.legacy.aether.items;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.registries.IForgeRegistry;
-
 import com.legacy.aether.Aether;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.blocks.BlocksAether;
@@ -33,6 +25,8 @@ import com.legacy.aether.items.tools.ItemValkyrieTool;
 import com.legacy.aether.items.tools.ItemZaniteTool;
 import com.legacy.aether.items.util.EnumAetherToolType;
 import com.legacy.aether.items.util.ItemAether;
+import com.legacy.aether.items.util.ItemDeveloperStick;
+import com.legacy.aether.items.util.ItemSwettyBall;
 import com.legacy.aether.items.weapons.ItemCandyCaneSword;
 import com.legacy.aether.items.weapons.ItemElementalSword;
 import com.legacy.aether.items.weapons.ItemGravititeSword;
@@ -49,6 +43,14 @@ import com.legacy.aether.items.weapons.projectile.ItemDartShooter;
 import com.legacy.aether.items.weapons.projectile.ItemPhoenixBow;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 import com.legacy.aether.registry.sounds.SoundsAether;
+
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class ItemsAether 
 {
@@ -111,6 +113,8 @@ public class ItemsAether
 
 	public static Item lore_book;
 
+	public static Item developer_stick;
+	
 	public static IForgeRegistry<Item> itemRegistry;
 
 	public static void initialization()
@@ -256,6 +260,8 @@ public class ItemsAether
 
 		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512));
 		lore_book = register("lore_book", new ItemLoreBook());
+		
+		developer_stick = register("developer_stick", new ItemDeveloperStick());
 	}
 
 	public static Item register(String name, Item item)
