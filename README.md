@@ -14,4 +14,4 @@ The goal of this project is to help show how much the Aether has grown from then
 
 ## Disclaimer
 
-I am only one person so if you find any bugs I do apologize. Please list all bugs on the issue tracker and a patch will be done every other week.
+This repo's code will no longer be maintained, as the code is depricated with the release of Aether Legacy Universal right around the corner. However, the issue tracker is still up to date, and should continue to be used.
