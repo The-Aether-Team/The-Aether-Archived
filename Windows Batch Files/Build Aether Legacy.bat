@@ -1,5 +1,5 @@
 @echo off
 title Building Aether Legacy..
 cd ..
-gradlew build
+call gradlew.bat build
 pause

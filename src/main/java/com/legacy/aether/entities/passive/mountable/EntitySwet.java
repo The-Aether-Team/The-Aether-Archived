@@ -2,6 +2,11 @@ package com.legacy.aether.entities.passive.mountable;
 
 import java.util.List;
 
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.entities.util.EntityMountable;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.player.PlayerAether;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,11 +27,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.util.EntityMountable;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
 
 public class EntitySwet extends EntityMountable
 {
@@ -170,16 +170,8 @@ public class EntitySwet extends EntityMountable
 
 			if (passenger.isSneaking())
 			{
-				if (this.onGround)
-				{
-					this.setAttackCooldown(50);
-					passenger.setSneaking(false);
-					passenger.dismountRidingEntity();
-					
-					return;
-				}
-
-				this.setRiderSneaking(true);
+				this.setAttackCooldown(50);
+				passenger.dismountRidingEntity();
 			}
 			else
 			{
@@ -384,7 +376,7 @@ public class EntitySwet extends EntityMountable
 				this.hops = 0;
 			}
 
-			if (this.getAttackTarget() == null && !this.hasPrey())
+			if (this.getAttackTarget() == null && !this.hasPrey() && !this.isFriendly())
 			{
 				Entity entity = this.getPrey();
 				if (entity != null)
@@ -417,7 +409,10 @@ public class EntitySwet extends EntityMountable
 			{
 				this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 
-				++this.hops;
+				if (!this.isFriendly())
+				{
+					++this.hops;
+				}
 
 				this.flutter = 5;
 				this.onGround = false;
@@ -471,10 +466,14 @@ public class EntitySwet extends EntityMountable
 				return;
 			}
 
-			boolean wearingAccessory = aetherRider.wearingAccessory(ItemsAether.swet_cape);
+			//boolean wearingAccessory = aetherRider.wearingAccessory(ItemsAether.swet_cape);
 
-			this.setFriendly(wearingAccessory);
-
+			if (aetherRider.wearingAccessory(ItemsAether.swet_cape))
+			{
+				this.setFriendly(true);
+			}
+			
+			
 			if (this.isFriendly())
 			{
 				this.prevRotationYaw = this.rotationYaw = rider.rotationYaw;
@@ -671,15 +670,16 @@ public class EntitySwet extends EntityMountable
 	{
 		if (!this.world.isRemote)
 		{
-			if (!this.isFriendly())
+			if (this.isFriendly())
 			{
 				return true;
 			}
 
-			if (!this.hasPrey())
+			if (!this.hasPrey() && !this.isFriendly())
 			{
 				this.capturePrey(player);
 			}
+
 			else
 			{
 				if (this.isPrey(player))
