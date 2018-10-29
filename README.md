@@ -2,7 +2,23 @@
 
 # Aether Legacy [![Discord](https://img.shields.io/badge/Discord-join-7289DA.svg)](https://discord.gg/tja2Kxr)
 
-The original mod has been updated for the current Minecraft versions
+The original mod has been ported for multiple Minecraft versions.
+
+## Downloads
+
+1.13 - In development
+
+[1.12.2](https://minecraft.curseforge.com/projects/aether-legacy/files/2593131) (Latest: aether_legacy-1.12.2-v3.2.jar)
+
+[1.11.2](https://minecraft.curseforge.com/projects/aether-legacy/files/2520540) (Latest: aether_legacy-1.11.2-v1.2.jar)
+
+[1.10.2](https://minecraft.curseforge.com/projects/aether-legacy/files/2520539) (Latest: aether_legacy-1.10.2-v1.6.jar)
+
+1.9.4 - In development
+
+1.8.9 - In development
+
+1.7.10 - In development
 
 ## Summary 
 
