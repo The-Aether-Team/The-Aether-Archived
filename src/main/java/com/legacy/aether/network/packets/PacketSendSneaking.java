@@ -6,53 +6,44 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import com.legacy.aether.player.PlayerAether;
 
-public class PacketSendSneaking extends AetherPacket<PacketSendSneaking>
-{
+public class PacketSendSneaking extends AetherPacket<PacketSendSneaking> {
 
 	private int entityId;
 
 	private boolean isSneaking;
 
-	public PacketSendSneaking()
-	{
-		
+	public PacketSendSneaking() {
+
 	}
 
-	public PacketSendSneaking(int entityId, boolean isSneaking)
-	{
+	public PacketSendSneaking(int entityId, boolean isSneaking) {
 		this.entityId = entityId;
 		this.isSneaking = isSneaking;
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf)
-	{
+	public void fromBytes(ByteBuf buf) {
 		this.entityId = buf.readInt();
 		this.isSneaking = buf.readBoolean();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf)
-	{
+	public void toBytes(ByteBuf buf) {
 		buf.writeInt(this.entityId);
 		buf.writeBoolean(this.isSneaking);
 	}
 
 	@Override
-	public void handleClient(PacketSendSneaking message, EntityPlayer player) 
-	{
+	public void handleClient(PacketSendSneaking message, EntityPlayer player) {
 
 	}
 
 	@Override
-	public void handleServer(PacketSendSneaking message, EntityPlayer player) 
-	{
-		if (player != null)
-		{
+	public void handleServer(PacketSendSneaking message, EntityPlayer player) {
+		if (player != null) {
 			Entity entity = player.worldObj.getEntityByID(message.entityId);
 
-			if (entity instanceof EntityPlayer)
-			{
+			if (entity instanceof EntityPlayer) {
 				PlayerAether.get((EntityPlayer) entity).setMountSneaking(message.isSneaking);
 			}
 		}

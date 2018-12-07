@@ -15,8 +15,7 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
 import com.legacy.aether.tileentity.TileEntityTreasureChest;
 
-public class TreasureChestRenderer extends TileEntitySpecialRenderer
-{
+public class TreasureChestRenderer extends TileEntitySpecialRenderer {
 
 	private static final ResourceLocation TEXTURE_DOUBLE = Aether.locate("textures/tile_entities/treasure_chest_large.png");
 
@@ -27,45 +26,35 @@ public class TreasureChestRenderer extends TileEntitySpecialRenderer
 	private final ModelChest largeChestModel = new ModelLargeChest();
 
 	@Override
-	public void renderTileEntityAt(TileEntity par1TileEntityChest, double posX, double posY, double posZ, float partialTicks) 
-	{
+	public void renderTileEntityAt(TileEntity par1TileEntityChest, double posX, double posY, double posZ, float partialTicks) {
 		int var9;
 
-		if (par1TileEntityChest == null)
-		{
+		if (par1TileEntityChest == null) {
 			TileEntityRendererDispatcher.instance.renderTileEntityAt(new TileEntityTreasureChest(), 0.0, 0.0, 0.0, 0.0F);
-            return;
+			return;
 		}
 
-		if (!par1TileEntityChest.hasWorldObj())
-		{
+		if (!par1TileEntityChest.hasWorldObj()) {
 			var9 = 0;
-		}
-		else
-		{
+		} else {
 			Block var10 = par1TileEntityChest.getBlockType();
 			var9 = par1TileEntityChest.getBlockMetadata();
 
-			if (var10 != null && var10 instanceof BlockTreasureChest)
-			{
+			if (var10 != null && var10 instanceof BlockTreasureChest) {
 				((BlockTreasureChest) var10).func_149954_e(par1TileEntityChest.getWorldObj(), par1TileEntityChest.xCoord, par1TileEntityChest.yCoord, par1TileEntityChest.zCoord);
 				var9 = par1TileEntityChest.getBlockMetadata();
 			}
 
-			((TileEntityTreasureChest)par1TileEntityChest).checkForAdjacentChests();
+			((TileEntityTreasureChest) par1TileEntityChest).checkForAdjacentChests();
 		}
 
-		if (((TileEntityTreasureChest)par1TileEntityChest).adjacentChestZNeg == null && ((TileEntityTreasureChest)par1TileEntityChest).adjacentChestXNeg == null)
-		{
+		if (((TileEntityTreasureChest) par1TileEntityChest).adjacentChestZNeg == null && ((TileEntityTreasureChest) par1TileEntityChest).adjacentChestXNeg == null) {
 			ModelChest var14;
 
-			if (((TileEntityTreasureChest)par1TileEntityChest).adjacentChestXPos == null && ((TileEntityTreasureChest)par1TileEntityChest).adjacentChestZPos == null)
-			{
+			if (((TileEntityTreasureChest) par1TileEntityChest).adjacentChestXPos == null && ((TileEntityTreasureChest) par1TileEntityChest).adjacentChestZPos == null) {
 				var14 = this.chestModel;
 				this.bindTexture(TEXTURE_SINGLE);
-			}
-			else
-			{
+			} else {
 				var14 = this.largeChestModel;
 				this.bindTexture(TEXTURE_DOUBLE);
 			}
@@ -77,57 +66,47 @@ public class TreasureChestRenderer extends TileEntitySpecialRenderer
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 			short var11 = 0;
 
-			if (var9 == 2)
-			{
+			if (var9 == 2) {
 				var11 = 180;
 			}
 
-			if (var9 == 3)
-			{
+			if (var9 == 3) {
 				var11 = 0;
 			}
 
-			if (var9 == 4)
-			{
+			if (var9 == 4) {
 				var11 = 90;
 			}
 
-			if (var9 == 5)
-			{
+			if (var9 == 5) {
 				var11 = -90;
 			}
 
-			if (var9 == 2 && ((TileEntityTreasureChest)par1TileEntityChest).adjacentChestXPos != null)
-			{
+			if (var9 == 2 && ((TileEntityTreasureChest) par1TileEntityChest).adjacentChestXPos != null) {
 				GL11.glTranslatef(1.0F, 0.0F, 0.0F);
 			}
 
-			if (var9 == 5 && ((TileEntityTreasureChest)par1TileEntityChest).adjacentChestZPos != null)
-			{
+			if (var9 == 5 && ((TileEntityTreasureChest) par1TileEntityChest).adjacentChestZPos != null) {
 				GL11.glTranslatef(0.0F, 0.0F, -1.0F);
 			}
 
 			GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
 			GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-			float var12 = ((TileEntityTreasureChest)par1TileEntityChest).prevLidAngle + (((TileEntityTreasureChest)par1TileEntityChest).lidAngle - ((TileEntityTreasureChest)par1TileEntityChest).prevLidAngle) * partialTicks;
+			float var12 = ((TileEntityTreasureChest) par1TileEntityChest).prevLidAngle + (((TileEntityTreasureChest) par1TileEntityChest).lidAngle - ((TileEntityTreasureChest) par1TileEntityChest).prevLidAngle) * partialTicks;
 			float var13;
 
-			if (((TileEntityTreasureChest)par1TileEntityChest).adjacentChestZNeg != null)
-			{
-				var13 = ((TileEntityTreasureChest)par1TileEntityChest).adjacentChestZNeg.prevLidAngle + (((TileEntityTreasureChest)par1TileEntityChest).adjacentChestZNeg.lidAngle - ((TileEntityTreasureChest)par1TileEntityChest).adjacentChestZNeg.prevLidAngle) * partialTicks;
+			if (((TileEntityTreasureChest) par1TileEntityChest).adjacentChestZNeg != null) {
+				var13 = ((TileEntityTreasureChest) par1TileEntityChest).adjacentChestZNeg.prevLidAngle + (((TileEntityTreasureChest) par1TileEntityChest).adjacentChestZNeg.lidAngle - ((TileEntityTreasureChest) par1TileEntityChest).adjacentChestZNeg.prevLidAngle) * partialTicks;
 
-				if (var13 > var12)
-				{
+				if (var13 > var12) {
 					var12 = var13;
 				}
 			}
 
-			if (((TileEntityTreasureChest)par1TileEntityChest).adjacentChestXNeg != null)
-			{
-				var13 = ((TileEntityTreasureChest)par1TileEntityChest).adjacentChestXNeg.prevLidAngle + (((TileEntityTreasureChest)par1TileEntityChest).adjacentChestXNeg.lidAngle - ((TileEntityTreasureChest)par1TileEntityChest).adjacentChestXNeg.prevLidAngle) * partialTicks;
+			if (((TileEntityTreasureChest) par1TileEntityChest).adjacentChestXNeg != null) {
+				var13 = ((TileEntityTreasureChest) par1TileEntityChest).adjacentChestXNeg.prevLidAngle + (((TileEntityTreasureChest) par1TileEntityChest).adjacentChestXNeg.lidAngle - ((TileEntityTreasureChest) par1TileEntityChest).adjacentChestXNeg.prevLidAngle) * partialTicks;
 
-				if (var13 > var12)
-				{
+				if (var13 > var12) {
 					var12 = var13;
 				}
 			}

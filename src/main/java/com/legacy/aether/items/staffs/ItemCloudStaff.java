@@ -11,11 +11,9 @@ import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
-public class ItemCloudStaff extends Item
-{
+public class ItemCloudStaff extends Item {
 
-	public ItemCloudStaff()
-	{
+	public ItemCloudStaff() {
 		this.setFull3D();
 		this.setMaxDamage(60);
 		this.setMaxStackSize(1);
@@ -23,23 +21,19 @@ public class ItemCloudStaff extends Item
 	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
-    	return ItemsAether.aether_loot;
-    }
+	public EnumRarity getRarity(ItemStack stack) {
+		return ItemsAether.aether_loot;
+	}
 
 	@Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer entityplayer)
-    {
+	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer entityplayer) {
 		PlayerAether playerAether = PlayerAether.get(entityplayer);
 
-		if (world.isRemote)
-		{
+		if (world.isRemote) {
 			return super.onItemRightClick(stack, world, entityplayer);
 		}
 
-		if (playerAether.clouds.isEmpty())
-		{
+		if (playerAether.clouds.isEmpty()) {
 			EntityMiniCloud leftCloud = new EntityMiniCloud(world, entityplayer, 0);
 			EntityMiniCloud rightCloud = new EntityMiniCloud(world, entityplayer, 1);
 
@@ -52,7 +46,7 @@ public class ItemCloudStaff extends Item
 			stack.damageItem(1, entityplayer);
 		}
 
-    	return stack;
-    }
+		return stack;
+	}
 
 }

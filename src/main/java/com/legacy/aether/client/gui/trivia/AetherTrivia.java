@@ -12,61 +12,46 @@ import net.minecraft.client.Minecraft;
 import com.google.common.collect.Lists;
 import com.legacy.aether.Aether;
 
-public class AetherTrivia
-{
+public class AetherTrivia {
 
-    private static Random random = new Random();
+	private static Random random = new Random();
 
-    public AetherTrivia()
-    {
-    	
-    }
+	public AetherTrivia() {
 
-    public static String getNewTrivia() 
-    {
-    	 BufferedReader bufferedreader = null;
+	}
 
-        try
-        {
-            List<String> list = Lists.<String>newArrayList();
-            bufferedreader = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(Aether.locate("texts/trivia.txt")).getInputStream(), StandardCharsets.UTF_8));
-            String s;
+	public static String getNewTrivia() {
+		BufferedReader bufferedreader = null;
 
-            while ((s = bufferedreader.readLine()) != null)
-            {
-                s = s.trim();
+		try {
+			List<String> list = Lists.<String>newArrayList();
+			bufferedreader = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(Aether.locate("texts/trivia.txt")).getInputStream(), StandardCharsets.UTF_8));
+			String s;
 
-                if (!s.isEmpty())
-                {
-                    list.add(s);
-                }
-            }
+			while ((s = bufferedreader.readLine()) != null) {
+				s = s.trim();
 
-            if (!list.isEmpty())
-            {
-            	return "Pro Tip: " + (String)list.get(random.nextInt(list.size()));
-            }
-        }
-        catch (IOException var8)
-        {
-            ;
-        }
-        finally
-        {
-            if (bufferedreader != null)
-            {
-                try
-                {
-                    bufferedreader.close();
-                }
-                catch (IOException ioexception)
-                {
-                    ;
-                }
-            }
-        }
+				if (!s.isEmpty()) {
+					list.add(s);
+				}
+			}
 
-        return "missingno";
-    }
+			if (!list.isEmpty()) {
+				return "Pro Tip: " + (String) list.get(random.nextInt(list.size()));
+			}
+		} catch (IOException var8) {
+			;
+		} finally {
+			if (bufferedreader != null) {
+				try {
+					bufferedreader.close();
+				} catch (IOException ioexception) {
+					;
+				}
+			}
+		}
+
+		return "missingno";
+	}
 
 }

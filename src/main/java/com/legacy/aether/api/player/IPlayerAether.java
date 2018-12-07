@@ -9,8 +9,7 @@ import com.legacy.aether.api.player.util.IAccessoryInventory;
 import com.legacy.aether.api.player.util.IAetherAbility;
 import com.legacy.aether.api.player.util.IAetherBoss;
 
-public interface IPlayerAether extends IExtendedEntityProperties
-{
+public interface IPlayerAether extends IExtendedEntityProperties {
 
 	public void onUpdate();
 

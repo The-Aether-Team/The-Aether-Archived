@@ -10,27 +10,23 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.network.AetherGuiHandler;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
-public class ItemLoreBook extends Item 
-{
+public class ItemLoreBook extends Item {
 
-	public ItemLoreBook()
-	{
+	public ItemLoreBook() {
 		this.setMaxStackSize(1);
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
-    	return ItemsAether.aether_loot;
-    }
+	public EnumRarity getRarity(ItemStack stack) {
+		return ItemsAether.aether_loot;
+	}
 
 	@Override
-    public ItemStack onItemRightClick(ItemStack stackIn, World worldIn, EntityPlayer playerIn)
-    {
-    	playerIn.openGui(Aether.instance, AetherGuiHandler.lore, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
+	public ItemStack onItemRightClick(ItemStack stackIn, World worldIn, EntityPlayer playerIn) {
+		playerIn.openGui(Aether.instance, AetherGuiHandler.lore, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
 
-    	return playerIn.getHeldItem();
-    }
+		return playerIn.getHeldItem();
+	}
 
 }

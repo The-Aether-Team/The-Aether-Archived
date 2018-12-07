@@ -4,8 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class CommonProxy
-{
+public class CommonProxy {
 
 	public static int berryBushRenderID;
 
@@ -13,28 +12,23 @@ public class CommonProxy
 
 	public static int aetherFlowerRenderID;
 
-	public void init()
-	{
+	public void init() {
 
 	}
 
-	public void openSunAltar()
-	{
+	public void openSunAltar() {
 
 	}
 
-	public void sendMessage(EntityPlayer player, String text)
-	{
+	public void sendMessage(EntityPlayer player, String text) {
 
 	}
 
-	public EntityPlayer getPlayer()
-	{
+	public EntityPlayer getPlayer() {
 		return null;
 	}
 
-	public static void registerEvent(Object event)
-	{
+	public static void registerEvent(Object event) {
 		FMLCommonHandler.instance().bus().register(event);
 		MinecraftForge.EVENT_BUS.register(event);
 	}

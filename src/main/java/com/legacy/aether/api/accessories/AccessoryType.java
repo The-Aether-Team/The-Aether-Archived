@@ -2,8 +2,7 @@ package com.legacy.aether.api.accessories;
 
 import net.minecraft.util.ObjectIntIdentityMap;
 
-public enum AccessoryType
-{
+public enum AccessoryType {
 	RING("ring", 11, 3),
 	EXTRA_RING("ring", 11, 3),
 	PENDANT("pendant", 16, 7),
@@ -17,30 +16,25 @@ public enum AccessoryType
 
 	private String displayName;
 
-	AccessoryType(String displayName, int maxDamage, int damageReduced)
-	{
+	AccessoryType(String displayName, int maxDamage, int damageReduced) {
 		this.displayName = displayName;
 		this.maxDamage = maxDamage;
 		this.damagedReduced = damageReduced;
 	}
 
-	public int getMaxDamage()
-	{
+	public int getMaxDamage() {
 		return this.maxDamage;
 	}
 
-	public int getDamageReduced()
-	{
+	public int getDamageReduced() {
 		return this.damagedReduced;
 	}
 
-	public String getDisplayName()
-	{
+	public String getDisplayName() {
 		return this.displayName;
 	}
 
-	public static ObjectIntIdentityMap createCompleteList()
-	{
+	public static ObjectIntIdentityMap createCompleteList() {
 		ObjectIntIdentityMap identityMap = new ObjectIntIdentityMap();
 
 		identityMap.func_148746_a(PENDANT, 0);
@@ -53,7 +47,7 @@ public enum AccessoryType
 		identityMap.func_148746_a(EXTRA_MISC, 7);
 
 		return identityMap;
-		
+
 	}
 
 }

@@ -6,11 +6,9 @@ import net.minecraft.world.IBlockAccess;
 
 import com.legacy.aether.Aether;
 
-public class BlockZanite extends Block
-{
+public class BlockZanite extends Block {
 
-	public BlockZanite()
-	{
+	public BlockZanite() {
 		super(Material.iron);
 
 		this.setHardness(3F);
@@ -20,9 +18,8 @@ public class BlockZanite extends Block
 	}
 
 	@Override
-    public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ)
-    {
-    	return true;
-    }
+	public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ) {
+		return true;
+	}
 
 }

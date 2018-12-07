@@ -10,11 +10,9 @@ import com.legacy.aether.Aether;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockQuicksoilGlass extends BlockBreakable
-{
+public class BlockQuicksoilGlass extends BlockBreakable {
 
-	public BlockQuicksoilGlass()
-	{
+	public BlockQuicksoilGlass() {
 		super(Aether.find("quicksoil_glass"), Material.glass, false);
 
 		this.slipperiness = 1.1F;
@@ -26,28 +24,24 @@ public class BlockQuicksoilGlass extends BlockBreakable
 	}
 
 	@Override
-    public int quantityDropped(Random random)
-    {
-        return 0;
-    }
+	public int quantityDropped(Random random) {
+		return 0;
+	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderBlockPass()
-    {
-        return 1;
-    }
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return 1;
+	}
 
 	@Override
-    public boolean renderAsNormalBlock()
-    {
-        return true;
-    }
+	public boolean renderAsNormalBlock() {
+		return true;
+	}
 
 	@Override
-    protected boolean canSilkHarvest()
-    {
-        return true;
-    }
+	protected boolean canSilkHarvest() {
+		return true;
+	}
 
 }

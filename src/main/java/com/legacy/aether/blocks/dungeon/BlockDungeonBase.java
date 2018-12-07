@@ -10,24 +10,20 @@ import net.minecraft.world.World;
 
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
-public class BlockDungeonBase extends Block
-{
+public class BlockDungeonBase extends Block {
 
 	private Block pickBlock;
 
 	private boolean isLit;
 
-	public BlockDungeonBase(boolean isLit) 
-	{
+	public BlockDungeonBase(boolean isLit) {
 		this(null, isLit);
 	}
 
-	public BlockDungeonBase(Block pickBlock, boolean isLit) 
-	{
+	public BlockDungeonBase(Block pickBlock, boolean isLit) {
 		super(Material.rock);
 
-		if (pickBlock != null)
-		{
+		if (pickBlock != null) {
 			this.pickBlock = pickBlock;
 			this.setResistance(6000000.0F);
 		}
@@ -39,36 +35,30 @@ public class BlockDungeonBase extends Block
 	}
 
 	@Override
-    public int getLightValue(IBlockAccess world, int x, int y, int z)
-    {
-        Block block = world.getBlock(x, y, z);
-    
-        if (block != this)
-        {
-        	return block.getLightValue(world, x, y, z);
-        }
+	public int getLightValue(IBlockAccess world, int x, int y, int z) {
+		Block block = world.getBlock(x, y, z);
 
-        if (this.isLit)
-        {
-        	return (int)(15.0F * 0.75f);
-        }
+		if (block != this) {
+			return block.getLightValue(world, x, y, z);
+		}
 
-        return super.getLightValue(world, x, y, z);
-    }
+		if (this.isLit) {
+			return (int) (15.0F * 0.75f);
+		}
+
+		return super.getLightValue(world, x, y, z);
+	}
 
 	@Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player)
-    {
-		if (this.pickBlock != null)
-		{
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
+		if (this.pickBlock != null) {
 			return new ItemStack(this.pickBlock);
 		}
 
 		return super.getPickBlock(target, world, x, y, z, player);
-    }
+	}
 
-	public Block getUnlockedBlock()
-	{
+	public Block getUnlockedBlock() {
 		return this.pickBlock == null ? this : this.pickBlock;
 	}
 

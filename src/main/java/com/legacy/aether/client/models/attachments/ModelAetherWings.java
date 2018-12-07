@@ -4,8 +4,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelAetherWings extends ModelBiped
-{
+public class ModelAetherWings extends ModelBiped {
 
 	public ModelRenderer wingLeft;
 
@@ -15,18 +14,15 @@ public class ModelAetherWings extends ModelBiped
 
 	public boolean gonRound;
 
-	public ModelAetherWings()
-	{
+	public ModelAetherWings() {
 		this(0.0F);
 	}
 
-	public ModelAetherWings(float f)
-	{
+	public ModelAetherWings(float f) {
 		this(f, 0.0F);
 	}
 
-	public ModelAetherWings(float f, float f1)
-	{
+	public ModelAetherWings(float f, float f1) {
 		this.isSneak = false;
 
 		this.wingLeft = new ModelRenderer(this, 24, 31);
@@ -40,22 +36,19 @@ public class ModelAetherWings extends ModelBiped
 	}
 
 	@Override
-	public void render(Entity e, float f, float f1, float f2, float f3, float f4, float f5)
-	{
+	public void render(Entity e, float f, float f1, float f2, float f3, float f4, float f5) {
 		this.setRotationAngles(f, f1, f2, f3, f4, f5, e);
 
 		this.wingLeft.renderWithRotation(f5);
 		this.wingRight.renderWithRotation(f5);
 	}
 
-	public void setWingSinage(float sinage)
-	{
+	public void setWingSinage(float sinage) {
 		this.sinage = sinage;
 	}
 
 	@Override
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
-	{
+	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
 		this.gonRound = entity.onGround;
 
 		this.wingLeft.rotateAngleY = -0.4F;
@@ -63,19 +56,16 @@ public class ModelAetherWings extends ModelBiped
 		this.wingLeft.rotateAngleZ = -0.125F;
 		this.wingRight.rotateAngleZ = 0.125F;
 
-		if (entity.isSneaking())
-		{
+		if (entity.isSneaking()) {
 			this.wingLeft.rotateAngleX = 0.45F;
 			this.wingRight.rotateAngleX = 0.45F;
 			this.wingLeft.offsetY = -0.17F;
 			this.wingRight.offsetY = -0.17F;
 			this.wingLeft.offsetZ = 0.112F;
 			this.wingRight.offsetZ = 0.112F;
-		}
-		else
-		{
+		} else {
 			this.wingLeft.rotateAngleX = this.wingLeft.offsetZ = this.wingLeft.offsetY =
-			this.wingRight.rotateAngleX = this.wingRight.offsetZ = this.wingRight.offsetY = 0.0F;
+					this.wingRight.rotateAngleX = this.wingRight.offsetZ = this.wingRight.offsetY = 0.0F;
 		}
 
 		this.wingLeft.rotateAngleY += Math.sin(this.sinage) / 6F;

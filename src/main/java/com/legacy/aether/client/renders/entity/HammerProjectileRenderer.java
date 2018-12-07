@@ -11,21 +11,18 @@ import org.lwjgl.opengl.GL12;
 import com.legacy.aether.Aether;
 import com.legacy.aether.entities.projectile.EntityHammerProjectile;
 
-public class HammerProjectileRenderer extends Render
-{
+public class HammerProjectileRenderer extends Render {
 
-	public HammerProjectileRenderer() 
-	{
-		super();
+    public HammerProjectileRenderer() {
+        super();
 
-		this.shadowSize = 0.0F;
-	}
+        this.shadowSize = 0.0F;
+    }
 
-	public void doRenderNotchWave(EntityHammerProjectile notchwave, double par2, double par4, double par6, float par8, float par9)
-	{
-		GL11.glPushMatrix();
-		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-		GL11.glTranslated(par2, par4, par6);
+    public void doRenderNotchWave(EntityHammerProjectile notchwave, double par2, double par4, double par6, float par8, float par9) {
+        GL11.glPushMatrix();
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glTranslated(par2, par4, par6);
 
         this.bindTexture(this.getEntityTexture(notchwave));
 
@@ -47,18 +44,16 @@ public class HammerProjectileRenderer extends Render
 
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
-	}
+    }
 
-	@Override
-	public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9)
-	{
-		this.doRenderNotchWave((EntityHammerProjectile) par1Entity, par2, par4, par6, par8, par9);
-	}
+    @Override
+    public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
+        this.doRenderNotchWave((EntityHammerProjectile) par1Entity, par2, par4, par6, par8, par9);
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity)
-	{
-		return Aether.locate("textures/entities/projectile/notch_wave.png");
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        return Aether.locate("textures/entities/projectile/notch_wave.png");
+    }
 
 }

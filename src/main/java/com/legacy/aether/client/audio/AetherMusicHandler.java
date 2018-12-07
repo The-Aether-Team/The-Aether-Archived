@@ -16,25 +16,20 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class AetherMusicHandler 
-{
+public class AetherMusicHandler {
 
 	private Minecraft mc = Minecraft.getMinecraft();
 
 	private final AetherMusicTicker musicTicker = new AetherMusicTicker(this.mc);
 
 	@SubscribeEvent
-	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
-	{
+	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception {
 		TickEvent.Phase phase = event.phase;
 		TickEvent.Type type = event.type;
 
-		if (phase == TickEvent.Phase.END)
-		{
-			if (type.equals(TickEvent.Type.CLIENT))
-			{
-				if (!this.mc.isGamePaused())
-				{
+		if (phase == TickEvent.Phase.END) {
+			if (type.equals(TickEvent.Type.CLIENT)) {
+				if (!this.mc.isGamePaused()) {
 					this.musicTicker.update();
 				}
 			}
@@ -42,31 +37,24 @@ public class AetherMusicHandler
 	}
 
 	@SubscribeEvent
-	public void onMusicControl(PlaySoundEvent17 event)
-	{
+	public void onMusicControl(PlaySoundEvent17 event) {
 		ISound sound = event.result;
 
-		if (sound == null)
-		{
+		if (sound == null) {
 			return;
 		}
 
 		SoundCategory category = event.category;
 
-		if (category == SoundCategory.MUSIC)
-		{
-			if (this.mc.thePlayer != null && this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
-			{
-				if (!sound.getPositionedSoundLocation().toString().contains("aether_legacy") && (this.musicTicker.playingMusic() || !this.musicTicker.playingMusic()))
-				{
+		if (category == SoundCategory.MUSIC) {
+			if (this.mc.thePlayer != null && this.mc.thePlayer.dimension == AetherConfig.getAetherDimensionID()) {
+				if (!sound.getPositionedSoundLocation().toString().contains("aether_legacy") && (this.musicTicker.playingMusic() || !this.musicTicker.playingMusic())) {
 					event.result = null;
 
 					return;
 				}
 			}
-		}
-		else if (category == SoundCategory.RECORDS)
-		{
+		} else if (category == SoundCategory.RECORDS) {
 			this.musicTicker.stopMusic();
 			this.mc.getSoundHandler().stopSounds();
 
@@ -75,8 +63,7 @@ public class AetherMusicHandler
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static ISound getAchievementSound(int number)
-	{
+	public static ISound getAchievementSound(int number) {
 		ResourceLocation sound = number == 1 ? Aether.locate("achievement_bronze") : number == 2 ? Aether.locate("achievement_silver") : Aether.locate("achievement");
 
 		return PositionedSoundRecord.func_147673_a(sound);

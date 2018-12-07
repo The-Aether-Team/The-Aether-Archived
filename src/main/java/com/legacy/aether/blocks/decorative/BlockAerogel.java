@@ -8,11 +8,9 @@ import com.legacy.aether.Aether;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAerogel extends BlockBreakable
-{
+public class BlockAerogel extends BlockBreakable {
 
-	public BlockAerogel() 
-	{
+	public BlockAerogel() {
 		super(Aether.find("aerogel"), Material.rock, false);
 
 		this.setHardness(1.0F);
@@ -23,16 +21,14 @@ public class BlockAerogel extends BlockBreakable
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderBlockPass()
-    {
-        return 1;
-    }
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return 1;
+	}
 
 	@Override
-    public boolean renderAsNormalBlock()
-    {
-        return true;
-    }
+	public boolean renderAsNormalBlock() {
+		return true;
+	}
 
 }

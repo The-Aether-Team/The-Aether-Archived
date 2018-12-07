@@ -12,34 +12,28 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
-public class ItemHolystoneSword extends ItemSword
-{
+public class ItemHolystoneSword extends ItemSword {
 
-    public ItemHolystoneSword()
-    {
-        super(ToolMaterial.STONE);
-        this.setCreativeTab(AetherCreativeTabs.weapons);
-    }
+	public ItemHolystoneSword() {
+		super(ToolMaterial.STONE);
+		this.setCreativeTab(AetherCreativeTabs.weapons);
+	}
 
-    @Override
-    public boolean getIsRepairable(ItemStack repairingItem, ItemStack mateiral)
-    {
-        return mateiral.getItem() == Item.getItemFromBlock(BlocksAether.holystone);
-    }
+	@Override
+	public boolean getIsRepairable(ItemStack repairingItem, ItemStack mateiral) {
+		return mateiral.getItem() == Item.getItemFromBlock(BlocksAether.holystone);
+	}
 
-    @Override
-    public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase entityliving1)
-    {
-        if ((new Random()).nextInt(20) == 0 && entityliving1 != null && entityliving1 instanceof EntityPlayer && entityliving.hurtTime > 0 && entityliving.deathTime <= 0)
-        {
-            if (!entityliving.worldObj.isRemote)
-            {
-                entityliving.dropItem(ItemsAether.ambrosium_shard, 1);
-            }
-        }
+	@Override
+	public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase entityliving1) {
+		if ((new Random()).nextInt(20) == 0 && entityliving1 != null && entityliving1 instanceof EntityPlayer && entityliving.hurtTime > 0 && entityliving.deathTime <= 0) {
+			if (!entityliving.worldObj.isRemote) {
+				entityliving.dropItem(ItemsAether.ambrosium_shard, 1);
+			}
+		}
 
-        itemstack.damageItem(1, entityliving1);
-        return true;
-    }
+		itemstack.damageItem(1, entityliving1);
+		return true;
+	}
 
 }

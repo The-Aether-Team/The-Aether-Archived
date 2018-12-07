@@ -22,8 +22,7 @@ import com.legacy.aether.world.TeleporterAether;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
-public class EntityHook implements IExtendedEntityProperties
-{
+public class EntityHook implements IExtendedEntityProperties {
 
 	private EntityLivingBase entity;
 
@@ -32,127 +31,101 @@ public class EntityHook implements IExtendedEntityProperties
 	public int teleportDirection;
 
 	@Override
-	public void init(Entity entity, World world) 
-	{
+	public void init(Entity entity, World world) {
 		this.entity = (EntityLivingBase) entity;
 	}
 
 	@Override
-	public void saveNBTData(NBTTagCompound compound) 
-	{
+	public void saveNBTData(NBTTagCompound compound) {
 
 	}
 
 	@Override
-	public void loadNBTData(NBTTagCompound compound) 
-	{
+	public void loadNBTData(NBTTagCompound compound) {
 
 	}
 
-	public void onUpdate()
-	{
-        this.entity.worldObj.theProfiler.startSection("portal");
+	public void onUpdate() {
+		this.entity.worldObj.theProfiler.startSection("portal");
 
-		if (this.entity.dimension == AetherConfig.getAetherDimensionID())
-		{
-			if (this.entity.posY < -2 && this.entity.riddenByEntity == null && this.entity.ridingEntity == null)
-			{
+		if (this.entity.dimension == AetherConfig.getAetherDimensionID()) {
+			if (this.entity.posY < -2 && this.entity.riddenByEntity == null && this.entity.ridingEntity == null) {
 				this.teleportEntity(false);
 			}
 		}
 
-        if (this.inPortal)
-        {
-            if (this.entity.ridingEntity == null)
-            {
-                this.entity.timeUntilPortal = this.entity.getPortalCooldown();
+		if (this.inPortal) {
+			if (this.entity.ridingEntity == null) {
+				this.entity.timeUntilPortal = this.entity.getPortalCooldown();
 
-                if (!this.entity.worldObj.isRemote)
-                {
-                	this.teleportEntity(true);
-                }
-            }
+				if (!this.entity.worldObj.isRemote) {
+					this.teleportEntity(true);
+				}
+			}
 
-            this.inPortal = false;
-        }
+			this.inPortal = false;
+		}
 
-        if (this.entity.timeUntilPortal > 0)
-        {
-            --this.entity.timeUntilPortal;
-        }
+		if (this.entity.timeUntilPortal > 0) {
+			--this.entity.timeUntilPortal;
+		}
 
-        this.entity.worldObj.theProfiler.endSection();
+		this.entity.worldObj.theProfiler.endSection();
 
-		if (this.entity instanceof EntityLiving)
-		{
+		if (this.entity instanceof EntityLiving) {
 			EntityLiving livingEntity = (EntityLiving) this.entity;
 
-			if (livingEntity.getAttackTarget() instanceof EntityPlayer)
-			{
+			if (livingEntity.getAttackTarget() instanceof EntityPlayer) {
 				PlayerAether playerAether = PlayerAether.get((EntityPlayer) livingEntity.getAttackTarget());
 
-				if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape)))
-				{
+				if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape))) {
 					livingEntity.setAttackTarget(null);
 				}
 			}
 		}
 
-		if (this.entity instanceof EntityCreature)
-		{
+		if (this.entity instanceof EntityCreature) {
 			EntityCreature creature = (EntityCreature) this.entity;
 
-			if (creature.getEntityToAttack() instanceof EntityPlayer)
-			{
+			if (creature.getEntityToAttack() instanceof EntityPlayer) {
 				PlayerAether playerAether = PlayerAether.get((EntityPlayer) creature.getEntityToAttack());
 
-				if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape)))
-				{
+				if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape))) {
 					creature.setTarget(null);
 				}
 			}
 		}
 
-		if (this.entity.getAITarget() instanceof EntityPlayer)
-		{
+		if (this.entity.getAITarget() instanceof EntityPlayer) {
 			PlayerAether playerAether = PlayerAether.get((EntityPlayer) this.entity.getAITarget());
 
-			if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape)))
-			{
+			if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape))) {
 				this.entity.setRevengeTarget(null);
 			}
 		}
 	}
 
-	public void setInPortal()
-	{
-		if (this.entity instanceof IAetherBoss || this.entity instanceof IBossDisplayData)
-		{
+	public void setInPortal() {
+		if (this.entity instanceof IAetherBoss || this.entity instanceof IBossDisplayData) {
 			return;
 		}
 
-        if (this.entity.timeUntilPortal > 0)
-        {
-            this.entity.timeUntilPortal = this.entity.getPortalCooldown();
-        }
-        else
-        {
-            double d0 = this.entity.prevPosX - this.entity.posX;
-            double d1 = this.entity.prevPosZ - this.entity.posZ;
+		if (this.entity.timeUntilPortal > 0) {
+			this.entity.timeUntilPortal = this.entity.getPortalCooldown();
+		} else {
+			double d0 = this.entity.prevPosX - this.entity.posX;
+			double d1 = this.entity.prevPosZ - this.entity.posZ;
 
-            if (!this.entity.worldObj.isRemote && !this.inPortal)
-            {
-                this.teleportDirection = Direction.getMovementDirection(d0, d1);
-            }
+			if (!this.entity.worldObj.isRemote && !this.inPortal) {
+				this.teleportDirection = Direction.getMovementDirection(d0, d1);
+			}
 
-            this.inPortal = true;
-        }
+			this.inPortal = true;
+		}
 	}
 
-	private void teleportEntity(boolean shouldSpawnPortal)
-	{
-		try
-		{
+	private void teleportEntity(boolean shouldSpawnPortal) {
+		try {
 			int previousDimension = this.entity.dimension;
 			int transferDimension = previousDimension == AetherConfig.getAetherDimensionID() ? AetherConfig.getTravelDimensionID() : AetherConfig.getAetherDimensionID();
 			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -164,10 +137,8 @@ public class EntityHook implements IExtendedEntityProperties
 			this.entity.isDead = false;
 
 			server.getConfigurationManager().transferEntityToWorld(this.entity, previousWorldIn.provider.dimensionId, previousWorldIn, newWorldIn, new TeleporterAether(shouldSpawnPortal, newWorldIn));
-		}
-		catch(Exception e)
-		{
-			
+		} catch (Exception e) {
+
 		}
 	}
 

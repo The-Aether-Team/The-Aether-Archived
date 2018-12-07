@@ -2,11 +2,9 @@ package com.legacy.aether.tileentity;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class AetherTileEntities 
-{
+public class AetherTileEntities {
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		GameRegistry.registerTileEntity(TileEntityEnchanter.class, "enchanter");
 		GameRegistry.registerTileEntity(TileEntityFreezer.class, "freezer");
 		GameRegistry.registerTileEntity(TileEntityIncubator.class, "incubator");

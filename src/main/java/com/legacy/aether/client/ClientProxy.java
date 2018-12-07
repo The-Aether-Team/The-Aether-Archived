@@ -17,14 +17,12 @@ import com.legacy.aether.client.renders.RendersAether;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
-public class ClientProxy extends CommonProxy
-{
+public class ClientProxy extends CommonProxy {
 
 	public static final IIcon[] ACCESSORY_ICONS = new IIcon[8];
 
 	@Override
-	public void init()
-	{
+	public void init() {
 		berryBushRenderID = RenderingRegistry.getNextAvailableRenderId();
 		treasureChestRenderID = RenderingRegistry.getNextAvailableRenderId();
 		aetherFlowerRenderID = RenderingRegistry.getNextAvailableRenderId();
@@ -43,20 +41,17 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void sendMessage(EntityPlayer player, String text)
-	{
+	public void sendMessage(EntityPlayer player, String text) {
 		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(text));
 	}
 
 	@Override
-	public void openSunAltar()
-	{
+	public void openSunAltar() {
 		FMLClientHandler.instance().getClient().displayGuiScreen(new GuiSunAltar());
 	}
 
 	@Override
-	public EntityPlayer getPlayer()
-	{
+	public EntityPlayer getPlayer() {
 		return Minecraft.getMinecraft().thePlayer;
 	}
 

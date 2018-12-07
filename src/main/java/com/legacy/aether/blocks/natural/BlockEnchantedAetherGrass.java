@@ -11,13 +11,11 @@ import com.legacy.aether.blocks.BlocksAether;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockEnchantedAetherGrass extends Block
-{
-    @SideOnly(Side.CLIENT)
-    private IIcon blockIconTop;
+public class BlockEnchantedAetherGrass extends Block {
+	@SideOnly(Side.CLIENT)
+	private IIcon blockIconTop;
 
-	public BlockEnchantedAetherGrass()
-	{
+	public BlockEnchantedAetherGrass() {
 		super(Material.grass);
 
 		this.setHardness(0.2F);
@@ -25,35 +23,29 @@ public class BlockEnchantedAetherGrass extends Block
 		this.setHarvestLevel("shovel", 0);
 	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister registry)
-    {
-    	this.blockIcon = registry.registerIcon("aether_legacy:enchanted_aether_grass_side");
-    	this.blockIconTop = registry.registerIcon("aether_legacy:enchanted_aether_grass_top");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister registry) {
+		this.blockIcon = registry.registerIcon("aether_legacy:enchanted_aether_grass_side");
+		this.blockIconTop = registry.registerIcon("aether_legacy:enchanted_aether_grass_top");
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta)
-    {
-        return side == 1 ? this.blockIconTop : (side == 0 ? BlocksAether.aether_dirt.getBlockTextureFromSide(side) : this.blockIcon);
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int side, int meta) {
+		return side == 1 ? this.blockIconTop : (side == 0 ? BlocksAether.aether_dirt.getBlockTextureFromSide(side) : this.blockIcon);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side)
-    {
-        if (side == 1)
-        {
-            return this.blockIconTop;
-        }
-        else if (side == 0)
-        {
-            return BlocksAether.aether_dirt.getBlockTextureFromSide(side);
-        }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
+		if (side == 1) {
+			return this.blockIconTop;
+		} else if (side == 0) {
+			return BlocksAether.aether_dirt.getBlockTextureFromSide(side);
+		}
 
-        return this.blockIcon;
-    }
+		return this.blockIcon;
+	}
 
 }

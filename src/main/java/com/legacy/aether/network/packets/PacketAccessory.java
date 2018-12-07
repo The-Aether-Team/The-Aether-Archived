@@ -8,8 +8,7 @@ import com.legacy.aether.api.player.util.IAccessoryInventory;
 import com.legacy.aether.inventory.InventoryAccessories;
 import com.legacy.aether.player.PlayerAether;
 
-public class PacketAccessory extends AetherPacket<PacketAccessory>
-{
+public class PacketAccessory extends AetherPacket<PacketAccessory> {
 
 	private IAccessoryInventory accessories;
 
@@ -17,40 +16,33 @@ public class PacketAccessory extends AetherPacket<PacketAccessory>
 
 	private int entityID;
 
-	public PacketAccessory()
-	{
-		
+	public PacketAccessory() {
+
 	}
 
-	public PacketAccessory(IPlayerAether player)
-	{
+	public PacketAccessory(IPlayerAether player) {
 		this.accessories = player.getAccessoryInventory();
 		this.entityID = player.getEntity().getEntityId();
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) 
-	{
+	public void fromBytes(ByteBuf buf) {
 		this.entityID = buf.readInt();
 		this.readBuf = buf;
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) 
-	{
+	public void toBytes(ByteBuf buf) {
 		buf.writeInt(this.entityID);
 		this.accessories.writeData(buf);
 	}
 
 	@Override
-	public void handleClient(PacketAccessory message, EntityPlayer player) 
-	{
-		if (player != null && player.worldObj != null)
-		{
+	public void handleClient(PacketAccessory message, EntityPlayer player) {
+		if (player != null && player.worldObj != null) {
 			EntityPlayer parent = (EntityPlayer) player.worldObj.getEntityByID(message.entityID);
 
-			if (parent != null)
-			{
+			if (parent != null) {
 				InventoryAccessories newInventory = new InventoryAccessories(PlayerAether.get(parent));
 
 				newInventory.readData(message.readBuf);
@@ -61,8 +53,7 @@ public class PacketAccessory extends AetherPacket<PacketAccessory>
 	}
 
 	@Override
-	public void handleServer(PacketAccessory message, EntityPlayer player)
-	{
+	public void handleServer(PacketAccessory message, EntityPlayer player) {
 
 	}
 

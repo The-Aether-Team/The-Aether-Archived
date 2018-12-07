@@ -11,25 +11,20 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumAetherToolType;
 
-public class ItemHolystoneTool extends ItemAetherTool
-{
+public class ItemHolystoneTool extends ItemAetherTool {
 
-	public ItemHolystoneTool(EnumAetherToolType toolType)
-	{
+	public ItemHolystoneTool(EnumAetherToolType toolType) {
 		super(ToolMaterial.STONE, toolType);
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-	{
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
 		return repair.getItem() == Item.getItemFromBlock(BlocksAether.holystone);
 	}
 
 	@Override
-    public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entityLiving)
-	{
-		if (!world.isRemote && world.rand.nextInt(100) <= 5)
-		{
+	public boolean onBlockDestroyed(ItemStack stack, World world, Block block, int x, int y, int z, EntityLivingBase entityLiving) {
+		if (!world.isRemote && world.rand.nextInt(100) <= 5) {
 			EntityItem entityItem = new EntityItem(world, x, y, z, new ItemStack(ItemsAether.ambrosium_shard, 1));
 
 			world.spawnEntityInWorld(entityItem);

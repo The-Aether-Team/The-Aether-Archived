@@ -22,441 +22,362 @@ import com.legacy.aether.entities.util.EntitySaddleMount;
 import com.legacy.aether.items.ItemMoaEgg;
 import com.legacy.aether.items.ItemsAether;
 
-public class EntityMoa extends EntitySaddleMount
-{
+public class EntityMoa extends EntitySaddleMount {
 
-	public float wingRotation, destPos, prevDestPos, prevWingRotation;
+    public float wingRotation, destPos, prevDestPos, prevWingRotation;
 
-	protected int ticksOffGround, ticksUntilFlap, secsUntilFlying, secsUntilWalking, secsUntilHungry, secsUntilEgg;
+    protected int ticksOffGround, ticksUntilFlap, secsUntilFlying, secsUntilWalking, secsUntilHungry, secsUntilEgg;
 
-	public EntityMoa(World world)
-	{
-		super(world);
+    public EntityMoa(World world) {
+        super(world);
 
-		this.initAI();
+        this.initAI();
 
-		this.setSize(1.0F, 2.0F);
-		this.stepHeight = 1.0F;
+        this.setSize(1.0F, 2.0F);
+        this.stepHeight = 1.0F;
 
-		this.secsUntilEgg = this.getRandomEggTime();
-	}
-
-	public EntityMoa(World world, AetherMoaType type)
-	{
-		this(world);
-
-		this.setMoaType(type);
-	}
-
-	@Override
-    public void moveEntity(double x, double y, double z)
-    {
-		if (!this.isSitting())
-		{
-			super.moveEntity(x, y, z);
-		}
-		else
-		{
-			super.moveEntity(0, y, 0);
-		}
+        this.secsUntilEgg = this.getRandomEggTime();
     }
 
-	public int getRandomEggTime()
-	{
-		return 775 + this.rand.nextInt(50);
-	}
+    public EntityMoa(World world, AetherMoaType type) {
+        this(world);
 
-	public void initAI()
-	{
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(2, new EntityAIWander(this, 0.30F));
-		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-		this.tasks.addTask(5, new EntityAILookIdle(this));
-		this.tasks.addTask(6, new EntityAIMate(this, 0.25F));
-	}
+        this.setMoaType(type);
+    }
 
-	@Override
-	public void entityInit()
-	{
-		super.entityInit();
+    @Override
+    public void moveEntity(double x, double y, double z) {
+        if (!this.isSitting()) {
+            super.moveEntity(x, y, z);
+        } else {
+            super.moveEntity(0, y, 0);
+        }
+    }
 
-		AetherMoaType moaType = AetherAPI.instance().getRandomMoaType();
+    public int getRandomEggTime() {
+        return 775 + this.rand.nextInt(50);
+    }
 
-		this.dataWatcher.addObject(20, new Short((short) AetherAPI.instance().getMoaTypeId(moaType)));
-		this.dataWatcher.addObject(21, new Byte((byte) moaType.getMoaProperties().getMaxJumps()));
-		this.dataWatcher.addObject(22, new Byte((byte) 0));
-		this.dataWatcher.addObject(23, new Byte((byte) 0));
-		this.dataWatcher.addObject(24, new Byte((byte) 0));
-		this.dataWatcher.addObject(25, new Byte((byte) 0));
+    public void initAI() {
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIWander(this, 0.30F));
+        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(5, new EntityAILookIdle(this));
+        this.tasks.addTask(6, new EntityAIMate(this, 0.25F));
+    }
 
-	}
+    @Override
+    public void entityInit() {
+        super.entityInit();
 
-	@Override
-	public boolean isAIEnabled()
-	{
-		return true;
-	}
+        AetherMoaType moaType = AetherAPI.instance().getRandomMoaType();
 
-	@Override
-	protected void applyEntityAttributes()
-	{
-		super.applyEntityAttributes();
+        this.dataWatcher.addObject(20, new Short((short) AetherAPI.instance().getMoaTypeId(moaType)));
+        this.dataWatcher.addObject(21, new Byte((byte) moaType.getMoaProperties().getMaxJumps()));
+        this.dataWatcher.addObject(22, new Byte((byte) 0));
+        this.dataWatcher.addObject(23, new Byte((byte) 0));
+        this.dataWatcher.addObject(24, new Byte((byte) 0));
+        this.dataWatcher.addObject(25, new Byte((byte) 0));
 
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0D);
-	}
+    }
 
-	public boolean isSitting()
-	{
-		return this.dataWatcher.getWatchableObjectByte(25) == (byte)1;
-	}
+    @Override
+    public boolean isAIEnabled() {
+        return true;
+    }
 
-	public void setSitting(boolean isSitting)
-	{
-		this.dataWatcher.updateObject(25, (byte) (isSitting ? 1 : 0));
-	}
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
 
-	public boolean isHungry()
-	{
-		return this.dataWatcher.getWatchableObjectByte(24) == (byte)1;
-	}
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0D);
+    }
 
-	public void setHungry(boolean hungry)
-	{
-		this.dataWatcher.updateObject(24, (byte) (hungry ? 1 : 0));
-	}
+    public boolean isSitting() {
+        return this.dataWatcher.getWatchableObjectByte(25) == (byte) 1;
+    }
 
-	public byte getAmountFed()
-	{
-		return this.dataWatcher.getWatchableObjectByte(23);
-	}
+    public void setSitting(boolean isSitting) {
+        this.dataWatcher.updateObject(25, (byte) (isSitting ? 1 : 0));
+    }
 
-	public void setAmountFed(int amountFed)
-	{
-		this.dataWatcher.updateObject(23, (byte) amountFed);
-	}
+    public boolean isHungry() {
+        return this.dataWatcher.getWatchableObjectByte(24) == (byte) 1;
+    }
 
-	public void increaseAmountFed(int amountFed)
-	{
-		int amount = (int) this.getAmountFed();
+    public void setHungry(boolean hungry) {
+        this.dataWatcher.updateObject(24, (byte) (hungry ? 1 : 0));
+    }
 
-		this.setAmountFed(amount + amountFed);
-	}
+    public byte getAmountFed() {
+        return this.dataWatcher.getWatchableObjectByte(23);
+    }
 
-	public boolean isPlayerGrown()
-	{
-		return this.dataWatcher.getWatchableObjectByte(22) == (byte)1;
-	}
+    public void setAmountFed(int amountFed) {
+        this.dataWatcher.updateObject(23, (byte) amountFed);
+    }
 
-	public void setPlayerGrown(boolean playerGrown)
-	{
-		this.dataWatcher.updateObject(22, (byte) (playerGrown ? 1 : 0));
-	}
+    public void increaseAmountFed(int amountFed) {
+        int amount = (int) this.getAmountFed();
 
-	public int getMaxJumps()
-	{
-		return this.getMoaType().getMoaProperties().getMaxJumps();
-	}
+        this.setAmountFed(amount + amountFed);
+    }
 
-	public int getRemainingJumps()
-	{
-		return (int) this.dataWatcher.getWatchableObjectByte(21);
-	}
+    public boolean isPlayerGrown() {
+        return this.dataWatcher.getWatchableObjectByte(22) == (byte) 1;
+    }
 
-	public void setRemainingJumps(int jumps)
-	{
-		this.dataWatcher.updateObject(21, (byte) jumps);
-	}
+    public void setPlayerGrown(boolean playerGrown) {
+        this.dataWatcher.updateObject(22, (byte) (playerGrown ? 1 : 0));
+    }
 
-	public int getMoaTypeId()
-	{
-		return (int) this.dataWatcher.getWatchableObjectShort(20);
-	}
+    public int getMaxJumps() {
+        return this.getMoaType().getMoaProperties().getMaxJumps();
+    }
 
-	public AetherMoaType getMoaType()
-	{
-		int id = (int) this.dataWatcher.getWatchableObjectShort(20);
+    public int getRemainingJumps() {
+        return (int) this.dataWatcher.getWatchableObjectByte(21);
+    }
 
-		return AetherAPI.instance().getMoaType(id);
-	}
+    public void setRemainingJumps(int jumps) {
+        this.dataWatcher.updateObject(21, (byte) jumps);
+    }
 
-	public void setMoaType(AetherMoaType type)
-	{
-		this.dataWatcher.updateObject(20, new Short((short) AetherAPI.instance().getMoaTypeId(type)));
-		this.dataWatcher.updateObject(21, new Byte((byte) type.getMoaProperties().getMaxJumps()));
-	}
+    public int getMoaTypeId() {
+        return (int) this.dataWatcher.getWatchableObjectShort(20);
+    }
 
-	@Override
-	public void onUpdate()
-	{
-		super.onUpdate();
+    public AetherMoaType getMoaType() {
+        int id = (int) this.dataWatcher.getWatchableObjectShort(20);
 
-		if (this.isJumping)
-		{
-			this.motionY += 0.05F;
-		}
+        return AetherAPI.instance().getMoaType(id);
+    }
 
-		this.updateWingRotation();
-		this.fall();
-		
-		if (this.secsUntilHungry > 0)
-		{
-			if (this.ticksExisted % 20 == 0)
-			{
-				this.secsUntilHungry--;
-			}
-		}
-		else if (!this.isHungry())
-		{
-			this.setHungry(true);
-		}
+    public void setMoaType(AetherMoaType type) {
+        this.dataWatcher.updateObject(20, new Short((short) AetherAPI.instance().getMoaTypeId(type)));
+        this.dataWatcher.updateObject(21, new Byte((byte) type.getMoaProperties().getMaxJumps()));
+    }
 
-		if (!this.worldObj.isRemote && !this.isChild() && this.riddenByEntity == null)
-		{
-			if (this.secsUntilEgg > 0)
-			{
-				if (this.ticksExisted % 20 == 0)
-				{
-					this.secsUntilEgg--;
-				}
-			}
-			else
-			{
-	            this.playSound("mob.chicken.plop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-				this.entityDropItem(ItemMoaEgg.getStackFromType(this.getMoaType()), 0);
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
 
-				this.secsUntilEgg = this.getRandomEggTime();
-			}
-		}
+        if (this.isJumping) {
+            this.motionY += 0.05F;
+        }
 
-		this.fallDistance = 0.0F;
-	}
+        this.updateWingRotation();
+        this.fall();
 
-	public void resetHunger()
-	{
-		if (!this.worldObj.isRemote)
-		{
-			this.setHungry(false);
-		}
+        if (this.secsUntilHungry > 0) {
+            if (this.ticksExisted % 20 == 0) {
+                this.secsUntilHungry--;
+            }
+        } else if (!this.isHungry()) {
+            this.setHungry(true);
+        }
 
-		this.secsUntilHungry = 40 + this.rand.nextInt(40);
-	}
+        if (!this.worldObj.isRemote && !this.isChild() && this.riddenByEntity == null) {
+            if (this.secsUntilEgg > 0) {
+                if (this.ticksExisted % 20 == 0) {
+                    this.secsUntilEgg--;
+                }
+            } else {
+                this.playSound("mob.chicken.plop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+                this.entityDropItem(ItemMoaEgg.getStackFromType(this.getMoaType()), 0);
 
-	public void updateWingRotation()
-	{
-		if (!this.onGround)
-		{
-			if (this.ticksUntilFlap == 0)
-			{
-				this.worldObj.playSoundAtEntity(this, "mob.bat.takeoff", 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+                this.secsUntilEgg = this.getRandomEggTime();
+            }
+        }
 
-				this.ticksUntilFlap = 8;
-			}
-			else
-			{
-				this.ticksUntilFlap--;
-			}
-		}
+        this.fallDistance = 0.0F;
+    }
 
-		this.prevWingRotation = this.wingRotation;
-		this.prevDestPos = this.destPos;
+    public void resetHunger() {
+        if (!this.worldObj.isRemote) {
+            this.setHungry(false);
+        }
 
-		this.destPos += 0.2D;
-		this.destPos = minMax(0.01F, 1.0F, this.destPos);
+        this.secsUntilHungry = 40 + this.rand.nextInt(40);
+    }
 
-		if (this.isOnGround())
-		{
-			this.destPos = 0.0F;
-		}
+    public void updateWingRotation() {
+        if (!this.onGround) {
+            if (this.ticksUntilFlap == 0) {
+                this.worldObj.playSoundAtEntity(this, "mob.bat.takeoff", 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
-		this.wingRotation += 1.233F;
-	}
+                this.ticksUntilFlap = 8;
+            } else {
+                this.ticksUntilFlap--;
+            }
+        }
 
-	public static float minMax(float min, float max, float value)
-	{
-		return Math.min(max, Math.max(min, value));
-	}
+        this.prevWingRotation = this.wingRotation;
+        this.prevDestPos = this.destPos;
 
-	@Override
-	public void onMountedJump(float par1, float par2)
-	{
-		if (this.getRemainingJumps() > 0 && this.motionY < 0.0D)
-		{
-			if (!this.isOnGround())
-			{
-				this.motionY = 0.7D;
-				this.worldObj.playSoundAtEntity(this, "mob.bat.takeoff", 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+        this.destPos += 0.2D;
+        this.destPos = minMax(0.01F, 1.0F, this.destPos);
 
-				if (!this.worldObj.isRemote)
-				{
-					this.setRemainingJumps(this.getRemainingJumps() - 1);
-				}
+        if (this.isOnGround()) {
+            this.destPos = 0.0F;
+        }
 
-				this.spawnExplosionParticle();
-			}
-			else
-			{
-				this.motionY = 0.89D;
-			}
-		}
-	}
+        this.wingRotation += 1.233F;
+    }
 
-	@Override
-	public float getMountedMoveSpeed()
-	{
-		return this.getMoaType().getMoaProperties().getMoaSpeed();
-	}
+    public static float minMax(float min, float max, float value) {
+        return Math.min(max, Math.max(min, value));
+    }
 
-	public void setToAdult()
-	{
-		this.setGrowingAge(0);
-	}
+    @Override
+    public void onMountedJump(float par1, float par2) {
+        if (this.getRemainingJumps() > 0 && this.motionY < 0.0D) {
+            if (!this.isOnGround()) {
+                this.motionY = 0.7D;
+                this.worldObj.playSoundAtEntity(this, "mob.bat.takeoff", 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
-	@Override
-    public boolean interact(EntityPlayer player)
-	{
-		ItemStack stack = player.getCurrentEquippedItem();
+                if (!this.worldObj.isRemote) {
+                    this.setRemainingJumps(this.getRemainingJumps() - 1);
+                }
 
-		if (stack != null && this.isPlayerGrown() && !this.worldObj.isRemote)
-		{
-			Item currentItem = stack.getItem();
+                this.spawnExplosionParticle();
+            } else {
+                this.motionY = 0.89D;
+            }
+        }
+    }
 
-			if (this.isChild() && this.isHungry())
-			{
-				if (this.getAmountFed() < 3 && currentItem == ItemsAether.aechor_petal)
-				{
-					if (!player.capabilities.isCreativeMode)
-					{
-						--stack.stackSize;
-					}
+    @Override
+    public float getMountedMoveSpeed() {
+        return this.getMoaType().getMoaProperties().getMoaSpeed();
+    }
 
-					this.increaseAmountFed(1);
+    public void setToAdult() {
+        this.setGrowingAge(0);
+    }
 
-					if (this.getAmountFed() >= 3)
-					{
-						this.setToAdult();
-					}
-					else
-					{
-						this.resetHunger();
-					}
-				}
-			}
+    @Override
+    public boolean interact(EntityPlayer player) {
+        ItemStack stack = player.getCurrentEquippedItem();
 
-			if (currentItem == ItemsAether.nature_staff)
-			{
-				stack.damageItem(2, player);
+        if (stack != null && this.isPlayerGrown() && !this.worldObj.isRemote) {
+            Item currentItem = stack.getItem();
 
-				this.setSitting(this.isSitting() ? false : true);
+            if (this.isChild() && this.isHungry()) {
+                if (this.getAmountFed() < 3 && currentItem == ItemsAether.aechor_petal) {
+                    if (!player.capabilities.isCreativeMode) {
+                        --stack.stackSize;
+                    }
 
-				return true;
-			}
-		}
+                    this.increaseAmountFed(1);
 
-		return super.interact(player);
-	}
+                    if (this.getAmountFed() >= 3) {
+                        this.setToAdult();
+                    } else {
+                        this.resetHunger();
+                    }
+                }
+            }
 
-	@Override
-	public boolean canSaddle()
-	{
-		return !this.isChild() && this.isPlayerGrown();
-	}
+            if (currentItem == ItemsAether.nature_staff) {
+                stack.damageItem(2, player);
 
-	@Override
-	public void writeEntityToNBT(NBTTagCompound nbt)
-	{
-		super.writeEntityToNBT(nbt);
+                this.setSitting(this.isSitting() ? false : true);
 
-		nbt.setBoolean("playerGrown", this.isPlayerGrown());
-		nbt.setInteger("remainingJumps", this.getRemainingJumps());
-		nbt.setInteger("moaTypeId", this.getMoaTypeId());
-		nbt.setByte("amountFed", this.getAmountFed());
-		nbt.setBoolean("isHungry", this.isHungry());
-		nbt.setBoolean("isSitting", this.isSitting());
-	}
+                return true;
+            }
+        }
 
-	@Override
-	public void readEntityFromNBT(NBTTagCompound nbt)
-	{
-		super.readEntityFromNBT(nbt);
+        return super.interact(player);
+    }
 
-		this.setPlayerGrown(nbt.getBoolean("playerGrown"));
-		this.setRemainingJumps(nbt.getInteger("remainingJumps"));
-		this.setMoaType(AetherAPI.instance().getMoaType(nbt.getInteger("moaTypeId")));
-		this.setAmountFed(nbt.getByte("amountFed"));
-		this.setHungry(nbt.getBoolean("isHungry"));
-		this.setSitting(nbt.getBoolean("isSitting"));
-	}
+    @Override
+    public boolean canSaddle() {
+        return !this.isChild() && this.isPlayerGrown();
+    }
 
-	@Override
-	protected String getLivingSound()
-	{
-		return "aether_legacy:aemob.moa.say";
-	}
+    @Override
+    public void writeEntityToNBT(NBTTagCompound nbt) {
+        super.writeEntityToNBT(nbt);
 
-	@Override
-	protected String getHurtSound()
-	{
-		return "aether_legacy:aemob.moa.say";
-	}
+        nbt.setBoolean("playerGrown", this.isPlayerGrown());
+        nbt.setInteger("remainingJumps", this.getRemainingJumps());
+        nbt.setInteger("moaTypeId", this.getMoaTypeId());
+        nbt.setByte("amountFed", this.getAmountFed());
+        nbt.setBoolean("isHungry", this.isHungry());
+        nbt.setBoolean("isSitting", this.isSitting());
+    }
 
-	@Override
-	protected String getDeathSound()
-	{
-		return "aether_legacy:aemob.moa.say";
-	}
+    @Override
+    public void readEntityFromNBT(NBTTagCompound nbt) {
+        super.readEntityFromNBT(nbt);
 
-	@Override
-    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
-    {
+        this.setPlayerGrown(nbt.getBoolean("playerGrown"));
+        this.setRemainingJumps(nbt.getInteger("remainingJumps"));
+        this.setMoaType(AetherAPI.instance().getMoaType(nbt.getInteger("moaTypeId")));
+        this.setAmountFed(nbt.getByte("amountFed"));
+        this.setHungry(nbt.getBoolean("isHungry"));
+        this.setSitting(nbt.getBoolean("isSitting"));
+    }
+
+    @Override
+    protected String getLivingSound() {
+        return "aether_legacy:aemob.moa.say";
+    }
+
+    @Override
+    protected String getHurtSound() {
+        return "aether_legacy:aemob.moa.say";
+    }
+
+    @Override
+    protected String getDeathSound() {
+        return "aether_legacy:aemob.moa.say";
+    }
+
+    @Override
+    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_) {
         this.playSound("mob.pig.step", 0.15F, 1.0F);
     }
 
-	@Override
-	protected void dropFewItems(boolean recentlyHit, int lootLevel)
-	{
-		super.dropFewItems(recentlyHit, lootLevel);
+    @Override
+    protected void dropFewItems(boolean recentlyHit, int lootLevel) {
+        super.dropFewItems(recentlyHit, lootLevel);
 
-		this.dropItem(Items.feather, 3);
-	}
+        this.dropItem(Items.feather, 3);
+    }
 
-	public void fall()
-	{
-		int x = MathHelper.floor_double(this.posX);
-		int y = MathHelper.floor_double(this.posY);
-		int z = MathHelper.floor_double(this.posZ);
-		boolean blockBeneath = !this.worldObj.isAirBlock(x, y - 1, z);
+    public void fall() {
+        int x = MathHelper.floor_double(this.posX);
+        int y = MathHelper.floor_double(this.posY);
+        int z = MathHelper.floor_double(this.posZ);
+        boolean blockBeneath = !this.worldObj.isAirBlock(x, y - 1, z);
 
-		if (this.motionY < 0.0D && !this.isRiderSneaking())
-		{
-			this.motionY *= 0.6D;
-		}
+        if (this.motionY < 0.0D && !this.isRiderSneaking()) {
+            this.motionY *= 0.6D;
+        }
 
-		if (blockBeneath)
-		{
-			this.setRemainingJumps(this.getMaxJumps());
-		}
-	}
+        if (blockBeneath) {
+            this.setRemainingJumps(this.getMaxJumps());
+        }
+    }
 
-	@Override
-	public void jump()
-	{
-		if (!this.isSitting() && this.riddenByEntity == null)
-		{
-			super.jump();
-		}
-	}
+    @Override
+    public void jump() {
+        if (!this.isSitting() && this.riddenByEntity == null) {
+            super.jump();
+        }
+    }
 
-	@Override
-	public double getMountedYOffset()
-	{
-		return 1.25D;
-	}
+    @Override
+    public double getMountedYOffset() {
+        return 1.25D;
+    }
 
-	@Override
-	public EntityAgeable createChild(EntityAgeable matingAnimal)
-	{
-		return new EntityMoa(this.worldObj, this.getMoaType());
-	}
+    @Override
+    public EntityAgeable createChild(EntityAgeable matingAnimal) {
+        return new EntityMoa(this.worldObj, this.getMoaType());
+    }
 
 }

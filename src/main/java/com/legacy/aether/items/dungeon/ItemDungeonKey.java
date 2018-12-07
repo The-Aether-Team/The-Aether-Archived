@@ -17,20 +17,18 @@ import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemDungeonKey extends Item
-{
+public class ItemDungeonKey extends Item {
 
-    @SideOnly(Side.CLIENT)
-    private IIcon bronzeIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon bronzeIcon;
 
-    @SideOnly(Side.CLIENT)
-    private IIcon silverIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon silverIcon;
 
-    @SideOnly(Side.CLIENT)
-    private IIcon goldenIcon;
+	@SideOnly(Side.CLIENT)
+	private IIcon goldenIcon;
 
-	public ItemDungeonKey()
-	{
+	public ItemDungeonKey() {
 		super();
 
 		this.setMaxStackSize(1);
@@ -39,40 +37,34 @@ public class ItemDungeonKey extends Item
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister registry)
-    {
-        this.bronzeIcon = registry.registerIcon(Aether.find("misc/keys/bronze_key"));
-        this.silverIcon = registry.registerIcon(Aether.find("misc/keys/silver_key"));
-        this.goldenIcon = registry.registerIcon(Aether.find("misc/keys/golden_key"));
-    }
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister registry) {
+		this.bronzeIcon = registry.registerIcon(Aether.find("misc/keys/bronze_key"));
+		this.silverIcon = registry.registerIcon(Aether.find("misc/keys/silver_key"));
+		this.goldenIcon = registry.registerIcon(Aether.find("misc/keys/golden_key"));
+	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamage(int meta)
-    {
-        return meta == 1 ? this.silverIcon : meta == 2 ? this.goldenIcon : this.bronzeIcon;
-    }
+	@SideOnly(Side.CLIENT)
+	public IIcon getIconFromDamage(int meta) {
+		return meta == 1 ? this.silverIcon : meta == 2 ? this.goldenIcon : this.bronzeIcon;
+	}
 
 	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-    public void getSubItems(Item item, CreativeTabs tab, List subItems)
-    {
-    	for (int meta = 0; meta < EnumDungeonKeyType.values().length; ++meta)
-    	{
-    		subItems.add(new ItemStack(this, 1, meta));
-    	}
-    }
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public void getSubItems(Item item, CreativeTabs tab, List subItems) {
+		for (int meta = 0; meta < EnumDungeonKeyType.values().length; ++meta) {
+			subItems.add(new ItemStack(this, 1, meta));
+		}
+	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
-    	return ItemsAether.aether_loot;
-    }
+	public EnumRarity getRarity(ItemStack stack) {
+		return ItemsAether.aether_loot;
+	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack itemstack)
-	{
+	public String getUnlocalizedName(ItemStack itemstack) {
 		int meta = itemstack.getItemDamage();
 
 		return this.getUnlocalizedName() + "_" + EnumDungeonKeyType.getType(meta).toString();

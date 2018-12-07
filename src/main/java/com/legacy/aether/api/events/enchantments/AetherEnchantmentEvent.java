@@ -6,16 +6,13 @@ import com.legacy.aether.api.enchantments.AetherEnchantment;
 
 import cpw.mods.fml.common.eventhandler.Event;
 
-public class AetherEnchantmentEvent extends Event
-{
+public class AetherEnchantmentEvent extends Event {
 
-	public AetherEnchantmentEvent()
-	{
-		
+	public AetherEnchantmentEvent() {
+
 	}
 
-	public static class SetTimeEvent extends AetherEnchantmentEvent
-	{
+	public static class SetTimeEvent extends AetherEnchantmentEvent {
 		private TileEntity tileEntity;
 
 		private AetherEnchantment enchantment;
@@ -24,8 +21,7 @@ public class AetherEnchantmentEvent extends Event
 
 		private int newTime;
 
-		public SetTimeEvent(TileEntity tileEntity, AetherEnchantment enchantment, int original)
-		{
+		public SetTimeEvent(TileEntity tileEntity, AetherEnchantment enchantment, int original) {
 			this.tileEntity = tileEntity;
 			this.enchantment = enchantment;
 			this.original = original;
@@ -33,51 +29,42 @@ public class AetherEnchantmentEvent extends Event
 			this.setNewTime(original);
 		}
 
-		public TileEntity getTileEntity()
-		{
+		public TileEntity getTileEntity() {
 			return this.tileEntity;
 		}
 
-		public AetherEnchantment getEnchantment()
-		{
+		public AetherEnchantment getEnchantment() {
 			return this.enchantment;
 		}
 
-		public int getOriginal()
-		{
+		public int getOriginal() {
 			return this.original;
 		}
 
-		public int getNewTime()
-		{
+		public int getNewTime() {
 			return this.newTime;
 		}
 
-		public void setNewTime(int newTime)
-		{
+		public void setNewTime(int newTime) {
 			this.newTime = newTime;
 		}
 	}
 
-	public static class EnchantEvent extends AetherEnchantmentEvent
-	{
+	public static class EnchantEvent extends AetherEnchantmentEvent {
 		private TileEntity tileEntity;
 
 		private AetherEnchantment enchantent;
 
-		public EnchantEvent(TileEntity tileEntity, AetherEnchantment enchantment)
-		{
+		public EnchantEvent(TileEntity tileEntity, AetherEnchantment enchantment) {
 			this.tileEntity = tileEntity;
 			this.enchantent = enchantment;
 		}
 
-		public TileEntity getTileEntity()
-		{
+		public TileEntity getTileEntity() {
 			return this.tileEntity;
 		}
 
-		public AetherEnchantment getEnchantment()
-		{
+		public AetherEnchantment getEnchantment() {
 			return this.enchantent;
 		}
 	}

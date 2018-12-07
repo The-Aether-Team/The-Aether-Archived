@@ -9,38 +9,29 @@ import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
 
-public class ItemSwettyBall extends Item
-{
+public class ItemSwettyBall extends Item {
 
-	public ItemSwettyBall(CreativeTabs tab)
-	{
+	public ItemSwettyBall(CreativeTabs tab) {
 		this.setCreativeTab(tab);
 	}
-	
+
 	@Override
-    public boolean onItemUse(ItemStack stackIn, EntityPlayer playerIn, World worldIn, int x, int y, int z, int facing, float hitX, float hitY, float hitZ)
-    {
+	public boolean onItemUse(ItemStack stackIn, EntityPlayer playerIn, World worldIn, int x, int y, int z, int facing, float hitX, float hitY, float hitZ) {
 		ItemStack heldItem = playerIn.getHeldItem();
 
-    	if (worldIn.getBlock(x, y, z) == BlocksAether.aether_dirt)
-    	{
-    		worldIn.setBlock(x, y, z, BlocksAether.aether_grass);
-    	}
-    	else if (worldIn.getBlock(x, y, z) == Blocks.dirt)
-    	{
-    		worldIn.setBlock(x, y, z, Blocks.grass);
-    	}
-    	else
-    	{
-    		return false;
-    	}
+		if (worldIn.getBlock(x, y, z) == BlocksAether.aether_dirt) {
+			worldIn.setBlock(x, y, z, BlocksAether.aether_grass);
+		} else if (worldIn.getBlock(x, y, z) == Blocks.dirt) {
+			worldIn.setBlock(x, y, z, Blocks.grass);
+		} else {
+			return false;
+		}
 
-    	if (!playerIn.capabilities.isCreativeMode)
-    	{
-    		--heldItem.stackSize;
-    	}
+		if (!playerIn.capabilities.isCreativeMode) {
+			--heldItem.stackSize;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 }

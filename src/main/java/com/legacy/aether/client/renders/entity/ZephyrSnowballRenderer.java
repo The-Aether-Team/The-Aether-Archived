@@ -14,18 +14,15 @@ import org.lwjgl.opengl.GL12;
 
 import com.legacy.aether.entities.projectile.EntityZephyrSnowball;
 
-public class ZephyrSnowballRenderer extends Render
-{
+public class ZephyrSnowballRenderer extends Render {
 
-	public ZephyrSnowballRenderer() 
-	{
-		super();
-	}
+    public ZephyrSnowballRenderer() {
+        super();
+    }
 
-	public void doRenderFireball(EntityZephyrSnowball entity, double x, double y, double z, float entityYaw, float partialTicks)
-    {
+    public void doRenderFireball(EntityZephyrSnowball entity, double x, double y, double z, float entityYaw, float partialTicks) {
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)x, (float)y, (float)z);
+        GL11.glTranslatef((float) x, (float) y, (float) z);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glScalef(1.0F, 1.0F, 1.0F);
         this.bindEntityTexture(entity);
@@ -34,8 +31,7 @@ public class ZephyrSnowballRenderer extends Render
         GL11.glPopMatrix();
     }
 
-    private void renderItem(Tessellator p_77026_1_, IIcon p_77026_2_)
-    {
+    private void renderItem(Tessellator p_77026_1_, IIcon p_77026_2_) {
         float f = p_77026_2_.getMinU();
         float f1 = p_77026_2_.getMaxU();
         float f2 = p_77026_2_.getMinV();
@@ -47,23 +43,21 @@ public class ZephyrSnowballRenderer extends Render
         GL11.glRotatef(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
         p_77026_1_.startDrawingQuads();
         p_77026_1_.setNormal(0.0F, 1.0F, 0.0F);
-        p_77026_1_.addVertexWithUV((double)(0.0F - f5), (double)(0.0F - f6), 0.0D, (double)f, (double)f3);
-        p_77026_1_.addVertexWithUV((double)(f4 - f5), (double)(0.0F - f6), 0.0D, (double)f1, (double)f3);
-        p_77026_1_.addVertexWithUV((double)(f4 - f5), (double)(f4 - f6), 0.0D, (double)f1, (double)f2);
-        p_77026_1_.addVertexWithUV((double)(0.0F - f5), (double)(f4 - f6), 0.0D, (double)f, (double)f2);
+        p_77026_1_.addVertexWithUV((double) (0.0F - f5), (double) (0.0F - f6), 0.0D, (double) f, (double) f3);
+        p_77026_1_.addVertexWithUV((double) (f4 - f5), (double) (0.0F - f6), 0.0D, (double) f1, (double) f3);
+        p_77026_1_.addVertexWithUV((double) (f4 - f5), (double) (f4 - f6), 0.0D, (double) f1, (double) f2);
+        p_77026_1_.addVertexWithUV((double) (0.0F - f5), (double) (f4 - f6), 0.0D, (double) f, (double) f2);
         p_77026_1_.draw();
     }
 
-	@Override
-    public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks)
-    {
-		this.doRenderFireball((EntityZephyrSnowball) entity, x, y, z, entityYaw, partialTicks);
+    @Override
+    public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        this.doRenderFireball((EntityZephyrSnowball) entity, x, y, z, entityYaw, partialTicks);
     }
 
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity) 
-	{
+    @Override
+    protected ResourceLocation getEntityTexture(Entity entity) {
         return TextureMap.locationItemsTexture;
-	}
+    }
 
 }

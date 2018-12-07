@@ -1,22 +1,18 @@
 package com.legacy.aether.entities.hostile.swet;
 
-public enum EnumSwetType 
-{
+public enum EnumSwetType {
 
-	BLUE(), GOLDEN();
+    BLUE(), GOLDEN();
 
-	EnumSwetType()
-	{
+    EnumSwetType() {
 
-	}
+    }
 
-	public int getId()
-	{
-		return this.ordinal();
-	}
+    public int getId() {
+        return this.ordinal();
+    }
 
-	public static EnumSwetType get(int id)
-	{
-		return values()[id];
-	}
+    public static EnumSwetType get(int id) {
+        return values()[id];
+    }
 }

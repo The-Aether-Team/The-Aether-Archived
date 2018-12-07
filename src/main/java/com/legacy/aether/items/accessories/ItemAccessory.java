@@ -28,8 +28,7 @@ import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAccessory extends Item
-{
+public class ItemAccessory extends Item {
 
 	public static final String ROOT = Aether.modAddress() + "textures/slots/slot_";
 
@@ -43,136 +42,117 @@ public class ItemAccessory extends Item
 
 	private boolean isDungeonLoot = false;
 
-    public static final IBehaviorDispenseItem DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem()
-    {
-        protected ItemStack dispenseStack(IBlockSource source, ItemStack stack)
-        {
-            ItemStack itemstack = ItemAccessory.dispenseAccessory(source, stack);
-            return itemstack != null ? itemstack : super.dispenseStack(source, stack);
-        }
-    };
+	public static final IBehaviorDispenseItem DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem() {
+		protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+			ItemStack itemstack = ItemAccessory.dispenseAccessory(source, stack);
+			return itemstack != null ? itemstack : super.dispenseStack(source, stack);
+		}
+	};
 
-	public ItemAccessory(AccessoryType type)
-	{
+	public ItemAccessory(AccessoryType type) {
 		this.accessoryType = type;
 		this.extraType = type == AccessoryType.RING ? AccessoryType.EXTRA_RING : type == AccessoryType.MISC ? AccessoryType.EXTRA_MISC : null;
 		this.texture = Aether.locate("textures/armor/accessory_base.png");
 
 		this.setMaxStackSize(1);
 		this.setCreativeTab(AetherCreativeTabs.accessories);
-        BlockDispenser.dispenseBehaviorRegistry.putObject(this, DISPENSER_BEHAVIOR);
+		BlockDispenser.dispenseBehaviorRegistry.putObject(this, DISPENSER_BEHAVIOR);
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister registry)
-    {
-        super.registerIcons(registry);
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IIconRegister registry) {
+		super.registerIcons(registry);
 
 		ObjectIntIdentityMap orderedList = AccessoryType.createCompleteList();
 
-		for (int i = 0; i < ClientProxy.ACCESSORY_ICONS.length; ++i)
-		{
-			ClientProxy.ACCESSORY_ICONS[i] = registry.registerIcon(Aether.find("slots/" + ((AccessoryType)orderedList.func_148745_a(i)).getDisplayName()));
+		for (int i = 0; i < ClientProxy.ACCESSORY_ICONS.length; ++i) {
+			ClientProxy.ACCESSORY_ICONS[i] = registry.registerIcon(Aether.find("slots/" + ((AccessoryType) orderedList.func_148745_a(i)).getDisplayName()));
 		}
-    }
+	}
 
-    @SuppressWarnings("unchecked")
-	public static ItemStack dispenseAccessory(IBlockSource blockSource, ItemStack stack)
-    {
-        EnumFacing enumfacing = BlockDispenser.func_149937_b(blockSource.getBlockMetadata());
-        int i = blockSource.getXInt() + enumfacing.getFrontOffsetX();
-        int j = blockSource.getYInt() + enumfacing.getFrontOffsetY();
-        int k = blockSource.getZInt() + enumfacing.getFrontOffsetZ();
-        AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double)i, (double)j, (double)k, (double)(i + 1), (double)(j + 1), (double)(k + 1));
+	@SuppressWarnings("unchecked")
+	public static ItemStack dispenseAccessory(IBlockSource blockSource, ItemStack stack) {
+		EnumFacing enumfacing = BlockDispenser.func_149937_b(blockSource.getBlockMetadata());
+		int i = blockSource.getXInt() + enumfacing.getFrontOffsetX();
+		int j = blockSource.getYInt() + enumfacing.getFrontOffsetY();
+		int k = blockSource.getZInt() + enumfacing.getFrontOffsetZ();
+		AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox((double) i, (double) j, (double) k, (double) (i + 1), (double) (j + 1), (double) (k + 1));
 		List<EntityLivingBase> list = blockSource.getWorld().getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
 
-        if (list.isEmpty())
-        {
-            return null;
-        }
+		if (list.isEmpty()) {
+			return null;
+		}
 
-    	EntityPlayer player = (EntityPlayer)list.get(0);
+		EntityPlayer player = (EntityPlayer) list.get(0);
 
-    	ItemStack itemstack = stack.copy();
-    	itemstack.stackSize = 1;
+		ItemStack itemstack = stack.copy();
+		itemstack.stackSize = 1;
 
-    	PlayerAether playerAether = PlayerAether.get((EntityPlayer) player);
+		PlayerAether playerAether = PlayerAether.get((EntityPlayer) player);
 
-    	if (!playerAether.getAccessoryInventory().setAccessorySlot(itemstack))
-    	{
-    		return null;
-    	}
+		if (!playerAether.getAccessoryInventory().setAccessorySlot(itemstack)) {
+			return null;
+		}
 
-    	--stack.stackSize;
+		--stack.stackSize;
 
-    	return stack;
-    }
+		return stack;
+	}
 
-    @Override
-    public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer player)
-    {
-    	ItemStack heldItem = player.getHeldItem();
+	@Override
+	public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer player) {
+		ItemStack heldItem = player.getHeldItem();
 
-        if (heldItem != null)
-        {
-        	if (PlayerAether.get(player).getAccessoryInventory().setAccessorySlot(heldItem.copy()))
-        	{
-        		--heldItem.stackSize;
+		if (heldItem != null) {
+			if (PlayerAether.get(player).getAccessoryInventory().setAccessorySlot(heldItem.copy())) {
+				--heldItem.stackSize;
 
-                return heldItem;
-        	}
-        }
+				return heldItem;
+			}
+		}
 
-        return super.onItemRightClick(stack, worldIn, player);
-    }
+		return super.onItemRightClick(stack, worldIn, player);
+	}
 
-	public AccessoryType getExtraType()
-	{
+	public AccessoryType getExtraType() {
 		return this.extraType;
 	}
 
-	public AccessoryType getType()
-	{
+	public AccessoryType getType() {
 		return this.accessoryType;
 	}
 
-    public Item setColor(int color)
-    {
-    	this.colorHex = color;
-    	return this;
-    }
+	public Item setColor(int color) {
+		this.colorHex = color;
+		return this;
+	}
 
-    public int getColor()
-    {
-    	return this.colorHex;
-    }
+	public int getColor() {
+		return this.colorHex;
+	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
-    	return this.isDungeonLoot ? ItemsAether.aether_loot : super.getRarity(stack);
-    }
+	public EnumRarity getRarity(ItemStack stack) {
+		return this.isDungeonLoot ? ItemsAether.aether_loot : super.getRarity(stack);
+	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack stack, int meta)
-    {
-    	return this.colorHex;
-    }
+	@SideOnly(Side.CLIENT)
+	public int getColorFromItemStack(ItemStack stack, int meta) {
+		return this.colorHex;
+	}
 
-    public ItemAccessory setDungeonLoot()
-    {
-    	this.isDungeonLoot = true;
+	public ItemAccessory setDungeonLoot() {
+		this.isDungeonLoot = true;
 
-    	return this;
-    }
+		return this;
+	}
 
-    public ItemAccessory setTexture(String location)
-    {
-    	this.texture = Aether.locate("textures/armor/accessory_" + location + ".png");
+	public ItemAccessory setTexture(String location) {
+		this.texture = Aether.locate("textures/armor/accessory_" + location + ".png");
 
-    	return this;
-    }
+		return this;
+	}
 
 }

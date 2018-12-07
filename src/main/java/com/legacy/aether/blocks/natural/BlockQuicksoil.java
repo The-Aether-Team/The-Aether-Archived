@@ -7,11 +7,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public class BlockQuicksoil extends Block
-{
+public class BlockQuicksoil extends Block {
 
-	public BlockQuicksoil()
-	{
+	public BlockQuicksoil() {
 		super(Material.sand);
 
 		this.slipperiness = 1.1F;
@@ -23,15 +21,13 @@ public class BlockQuicksoil extends Block
 	}
 
 	@Override
-    public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta)
-	{
+	public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta) {
 		DoubleDropHelper.dropBlock(player, x, y, z, this, meta);
 	}
 
 	@Override
-    public int damageDropped(int meta)
-    {
-    	return 1;
-    }
+	public int damageDropped(int meta) {
+		return 1;
+	}
 
 }

@@ -7,11 +7,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
-public class BlockAetherDirt extends Block 
-{
+public class BlockAetherDirt extends Block {
 
-	public BlockAetherDirt()
-	{
+	public BlockAetherDirt() {
 		super(Material.ground);
 
 		this.setHardness(0.2F);
@@ -21,15 +19,13 @@ public class BlockAetherDirt extends Block
 	}
 
 	@Override
-    public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta)
-	{
+	public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta) {
 		DoubleDropHelper.dropBlock(player, x, y, z, this, meta);
 	}
 
 	@Override
-    public int damageDropped(int meta)
-    {
-    	return 1;
-    }
+	public int damageDropped(int meta) {
+		return 1;
+	}
 
 }

@@ -12,18 +12,15 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.client.models.entities.CockatriceModel;
 import com.legacy.aether.entities.hostile.EntityCockatrice;
 
-public class CockatriceRenderer extends RenderLiving
-{
+public class CockatriceRenderer extends RenderLiving {
 
     private static final ResourceLocation TEXTURE = Aether.locate("textures/entities/cockatrice/cockatrice.png");
 
-	public CockatriceRenderer() 
-	{
-		super(new CockatriceModel(), 1.0F);
-	}
+    public CockatriceRenderer() {
+        super(new CockatriceModel(), 1.0F);
+    }
 
-    protected float getWingRotation(EntityCockatrice cockatrice, float f)
-    {
+    protected float getWingRotation(EntityCockatrice cockatrice, float f) {
         float f1 = cockatrice.prevWingRotation + (cockatrice.wingRotation - cockatrice.prevWingRotation) * f;
         float f2 = cockatrice.prevDestPos + (cockatrice.destPos - cockatrice.prevDestPos) * f;
 
@@ -31,21 +28,18 @@ public class CockatriceRenderer extends RenderLiving
     }
 
     @Override
-    protected float handleRotationFloat(EntityLivingBase cockatrice, float f)
-    {
+    protected float handleRotationFloat(EntityLivingBase cockatrice, float f) {
         return this.getWingRotation((EntityCockatrice) cockatrice, f);
     }
 
     @Override
-    protected void preRenderCallback(EntityLivingBase cockatrice, float f)
-    {
+    protected void preRenderCallback(EntityLivingBase cockatrice, float f) {
         GL11.glScalef(1.8F, 1.8F, 1.8F);
     }
 
-	@Override
-	protected ResourceLocation getEntityTexture(Entity cockatrice)
-	{
-		return TEXTURE;
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(Entity cockatrice) {
+        return TEXTURE;
+    }
 
 }

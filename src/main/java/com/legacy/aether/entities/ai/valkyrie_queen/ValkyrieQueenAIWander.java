@@ -4,22 +4,19 @@ import net.minecraft.entity.ai.EntityAIWander;
 
 import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
 
-public class ValkyrieQueenAIWander extends EntityAIWander
-{
+public class ValkyrieQueenAIWander extends EntityAIWander {
 
-	private EntityValkyrieQueen theQueen;
+    private EntityValkyrieQueen theQueen;
 
-	public ValkyrieQueenAIWander(EntityValkyrieQueen creatureIn, double speedIn)
-	{
-		super(creatureIn, speedIn);
+    public ValkyrieQueenAIWander(EntityValkyrieQueen creatureIn, double speedIn) {
+        super(creatureIn, speedIn);
 
-		this.theQueen = creatureIn;
-	}
+        this.theQueen = creatureIn;
+    }
 
-	@Override
-    public boolean shouldExecute()
-    {
-    	return super.shouldExecute() && this.theQueen.isBossReady();
+    @Override
+    public boolean shouldExecute() {
+        return super.shouldExecute() && this.theQueen.isBossReady();
     }
 
 }

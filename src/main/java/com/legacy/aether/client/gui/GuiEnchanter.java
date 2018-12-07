@@ -15,22 +15,19 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiEnchanter extends GuiContainer
-{
+public class GuiEnchanter extends GuiContainer {
 
 	private static final ResourceLocation TEXTURE = Aether.locate("textures/gui/altar.png");
 
 	private TileEntityEnchanter enchanter;
 
-	public GuiEnchanter(InventoryPlayer inventory, TileEntityEnchanter tileEntity)
-	{
+	public GuiEnchanter(InventoryPlayer inventory, TileEntityEnchanter tileEntity) {
 		super(new ContainerEnchanter(inventory, tileEntity));
 		this.enchanter = tileEntity;
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int par1, int par2)
-	{
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		String enchanterName = this.enchanter.getInventoryName();
 
 		this.fontRendererObj.drawString(enchanterName, this.xSize / 2 - this.fontRendererObj.getStringWidth(enchanterName) / 2, 6, 4210752);
@@ -38,8 +35,7 @@ public class GuiEnchanter extends GuiContainer
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
-	{
+	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int k = (this.width - this.xSize) / 2;
@@ -47,8 +43,7 @@ public class GuiEnchanter extends GuiContainer
 		this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
 		int i1;
 
-		if (this.enchanter.isEnchanting())
-		{
+		if (this.enchanter.isEnchanting()) {
 			i1 = this.enchanter.getEnchantmentTimeRemaining(12);
 			this.drawTexturedModalRect(k + 56, l + 36 + 12 - i1, 176, 12 - i1, 14, i1 + 2);
 		}

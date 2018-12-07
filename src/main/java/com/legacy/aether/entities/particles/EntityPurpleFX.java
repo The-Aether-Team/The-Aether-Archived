@@ -3,11 +3,9 @@ package com.legacy.aether.entities.particles;
 import net.minecraft.client.particle.EntityPortalFX;
 import net.minecraft.world.World;
 
-public class EntityPurpleFX extends EntityPortalFX
-{
+public class EntityPurpleFX extends EntityPortalFX {
 
-	public EntityPurpleFX(World world, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed)
-	{
+	public EntityPurpleFX(World world, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed) {
 		super(world, xCoord, yCoord, zCoord, xSpeed, ySpeed, zSpeed);
 
 		this.particleRed = 0.69F;

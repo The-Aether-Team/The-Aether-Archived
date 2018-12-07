@@ -3,8 +3,7 @@ package com.legacy.aether.events;
 import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.eventhandler.Event;
 
-public class DialogueClickedEvent extends Event
-{
+public class DialogueClickedEvent extends Event {
 
 	private EntityPlayer player;
 
@@ -12,25 +11,21 @@ public class DialogueClickedEvent extends Event
 
 	private int dialogueId;
 
-	public DialogueClickedEvent(EntityPlayer player, String dialogueName, int dialogueId)
-	{
+	public DialogueClickedEvent(EntityPlayer player, String dialogueName, int dialogueId) {
 		this.player = player;
 		this.dialogueName = dialogueName;
 		this.dialogueId = dialogueId;
 	}
 
-	public EntityPlayer getPlayer()
-	{
+	public EntityPlayer getPlayer() {
 		return this.player;
 	}
 
-	public String getDialogueName()
-	{
+	public String getDialogueName() {
 		return this.dialogueName;
 	}
 
-	public int getDialogueId()
-	{
+	public int getDialogueId() {
 		return this.dialogueId;
 	}
 

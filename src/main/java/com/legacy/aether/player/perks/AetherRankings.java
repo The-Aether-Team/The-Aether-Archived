@@ -3,17 +3,15 @@ package com.legacy.aether.player.perks;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class AetherRankings 
-{
+public class AetherRankings {
 
 	public static HashMap<String, UUID> ranks = new HashMap<String, UUID>();
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		//Developer
 		addDeveloperRank("6a0e8505-1556-4ee9-bec0-6af32f05888d"); // 115kino
 		addDeveloperRank("1d680bb6-2a9a-4f25-bf2f-a1af74361d69"); // Bailey Schaefer (KingPhygieBoo)
-		
+
 		//Retired Developer
 		addRetiredRank("6e8be0ba-e4bb-46af-aea8-2c1f5eec5bc2"); // Brendan Freeman
 		addRetiredRank("5f112332-0993-4f52-a5ab-9a55dc3173cb"); // JorgeQ
@@ -24,7 +22,7 @@ public class AetherRankings
 		addGGRank("6fb2f965-6b57-46de-9ef3-0ef4c9b9bdc6"); // Hugo Payn
 		addGGRank("dc4cf9b2-f601-4eb4-9436-2924836b9f42"); // Jaryt Bustard
 		addGGRank("c0643897-c500-4f61-a62a-8051801562a9"); // Christian Peterson
-		
+
 		//Retired Gilded Games
 		addRetiredGGRank("4bfb28a3-005d-4fc9-9238-a55c6c17b575"); // Jon Lachney
 		addRetiredGGRank("2afd6a1d-1531-4985-a104-399c0c19351d"); // Brandon Potts
@@ -45,7 +43,7 @@ public class AetherRankings
 		addTesterRank("869aed85-9dc0-4187-92d7-6064c202a844"); // SunflowerAspen
 		addTesterRank("8ab9311e-6b8d-4633-80d5-e1798b1c6a96"); // Silver_David
 		addTesterRank("c4fa4377-5147-43bd-b571-e0e0db46e4f6"); // Anabree
-		
+
 		//Contributor
 		addContributor("6f8be24f-03f3-4288-9218-16c9ecc08c8f"); // Jonathing
 		addContributor("c15c4d6d-9a80-4d6b-9eda-770859b5ed91"); // Everett1999
@@ -54,77 +52,55 @@ public class AetherRankings
 		addContributor("2b5187c9-dc5d-480e-ab6f-e884e92fce45"); // ItzDennisz
 	}
 
-	public static UUID getUUID(String string)
-	{
+	public static UUID getUUID(String string) {
 		return UUID.fromString(string);
 	}
 
-	public static boolean isRankedPlayer(UUID uuid)
-	{
-		if (ranks.get("Celeberity-" + uuid.toString()) != null)
-		{
+	public static boolean isRankedPlayer(UUID uuid) {
+		if (ranks.get("Celeberity-" + uuid.toString()) != null) {
 			return true;
-		}
-		else if (ranks.get("Aether Legacy Developer-" + uuid.toString()) != null)
-		{
+		} else if (ranks.get("Aether Legacy Developer-" + uuid.toString()) != null) {
 			return true;
-		}
-		else if (ranks.get("Aether Legacy Tester-" + uuid.toString()) != null)
-		{
+		} else if (ranks.get("Aether Legacy Tester-" + uuid.toString()) != null) {
 			return true;
-		}
-		else if (ranks.get("Gilded Games-" + uuid.toString()) != null)
-		{
+		} else if (ranks.get("Gilded Games-" + uuid.toString()) != null) {
 			return true;
-		}
-		else if (ranks.get("Retired Developer-" + uuid.toString()) != null)
-		{
+		} else if (ranks.get("Retired Developer-" + uuid.toString()) != null) {
 			return true;
-		}
-		else if (ranks.get("Retired Gilded Games-" + uuid.toString()) != null)
-		{
+		} else if (ranks.get("Retired Gilded Games-" + uuid.toString()) != null) {
 			return true;
-		}
-		else if (ranks.get("Aether Legacy Contributor-" + uuid.toString()) != null)
-		{
+		} else if (ranks.get("Aether Legacy Contributor-" + uuid.toString()) != null) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public static void addCelebrityRank(String uuid)
-	{
+	public static void addCelebrityRank(String uuid) {
 		ranks.put("Celeberity-" + uuid, getUUID(uuid));
 	}
 
-	public static void addDeveloperRank(String uuid)
-	{
+	public static void addDeveloperRank(String uuid) {
 		ranks.put("Aether Legacy Developer-" + uuid, getUUID(uuid));
 	}
 
-	public static void addTesterRank(String uuid)
-	{
+	public static void addTesterRank(String uuid) {
 		ranks.put("Aether Legacy Tester-" + uuid, getUUID(uuid));
 	}
 
-	public static void addGGRank(String uuid)
-	{
+	public static void addGGRank(String uuid) {
 		ranks.put("Gilded Games-" + uuid, getUUID(uuid));
 	}
 
-	public static void addRetiredGGRank(String uuid)
-	{
+	public static void addRetiredGGRank(String uuid) {
 		ranks.put("Retired Gilded Games-" + uuid, getUUID(uuid));
 	}
 
-	public static void addRetiredRank(String uuid)
-	{
+	public static void addRetiredRank(String uuid) {
 		ranks.put("Retired Developer-" + uuid, getUUID(uuid));
 	}
-	
-	public static void addContributor(String uuid)
-	{
+
+	public static void addContributor(String uuid) {
 		ranks.put("Aether Legacy Contributor-" + uuid, getUUID(uuid));
 	}
 

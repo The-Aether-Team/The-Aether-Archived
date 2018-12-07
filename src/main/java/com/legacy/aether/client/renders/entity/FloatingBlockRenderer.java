@@ -14,22 +14,18 @@ import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.entities.block.EntityFloatingBlock;
 
-public class FloatingBlockRenderer extends Render
-{
+public class FloatingBlockRenderer extends Render {
 
     private final RenderBlocks renderBlocks = new RenderBlocks();
 
-    public FloatingBlockRenderer()
-    {
-    	super();
+    public FloatingBlockRenderer() {
+        super();
         this.shadowSize = 0.5F;
     }
 
-	public void renderFloatingBlock(EntityFloatingBlock entityFloatingBlock, double d, double d1, double d2, float f, float f1)
-    {
-        if (entityFloatingBlock.getBlock() == null || entityFloatingBlock.getBlock() == Blocks.air)
-        {
-        	return;
+    public void renderFloatingBlock(EntityFloatingBlock entityFloatingBlock, double d, double d1, double d2, float f, float f1) {
+        if (entityFloatingBlock.getBlock() == null || entityFloatingBlock.getBlock() == Blocks.air) {
+            return;
         }
 
         this.bindTexture(TextureMap.locationBlocksTexture);
@@ -39,10 +35,9 @@ public class FloatingBlockRenderer extends Render
         int j = MathHelper.floor_double(entityFloatingBlock.posY);
         int k = MathHelper.floor_double(entityFloatingBlock.posZ);
 
-        if (block != world.getBlock(i, j, k))
-        {
+        if (block != world.getBlock(i, j, k)) {
             GL11.glPushMatrix();
-            GL11.glTranslatef((float)d, (float)d1 + 0.48F, (float)d2);
+            GL11.glTranslatef((float) d, (float) d1 + 0.48F, (float) d2);
             this.bindEntityTexture(entityFloatingBlock);
             GL11.glDisable(GL11.GL_LIGHTING);
 
@@ -55,14 +50,12 @@ public class FloatingBlockRenderer extends Render
     }
 
     @Override
-    public void doRender(Entity entity, double d, double d1, double d2, float f, float f1)
-    {
-        this.renderFloatingBlock((EntityFloatingBlock)entity, d, d1, d2, f, f1);
+    public void doRender(Entity entity, double d, double d1, double d2, float f, float f1) {
+        this.renderFloatingBlock((EntityFloatingBlock) entity, d, d1, d2, f, f1);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity entity)
-    {
+    protected ResourceLocation getEntityTexture(Entity entity) {
         return TextureMap.locationBlocksTexture;
     }
 

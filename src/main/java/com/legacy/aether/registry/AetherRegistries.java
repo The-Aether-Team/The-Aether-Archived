@@ -18,11 +18,9 @@ import com.legacy.aether.registry.recipe.RecipeAccessoryDyes;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class AetherRegistries 
-{
+public class AetherRegistries {
 
-	public static void initializeAccessories()
-	{
+	public static void initializeAccessories() {
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.leather_gloves, AccessoryType.GLOVES));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.iron_gloves, AccessoryType.GLOVES));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.golden_gloves, AccessoryType.GLOVES));
@@ -58,8 +56,7 @@ public class AetherRegistries
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.repulsion_shield, AccessoryType.SHIELD));
 	}
 
-	public static void initializeEnchantments()
-	{
+	public static void initializeEnchantments() {
 		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.skyroot_pickaxe, 225));
 		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.skyroot_axe, 225));
 		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.skyroot_shovel, 225));
@@ -166,13 +163,11 @@ public class AetherRegistries
 		AetherAPI.instance().register(new AetherEnchantment(Items.diamond_boots, 10000));
 	}
 
-	public static void initializeEnchantmentFuel()
-	{
+	public static void initializeEnchantmentFuel() {
 		AetherAPI.instance().register(new AetherEnchantmentFuel(ItemsAether.ambrosium_shard, 500));
 	}
 
-	public static void initializeFreezables()
-	{
+	public static void initializeFreezables() {
 		AetherAPI.instance().register(new AetherFreezable(BlocksAether.aercloud, new ItemStack(BlocksAether.aercloud, 1, 1), 100));
 		AetherAPI.instance().register(new AetherFreezable(BlocksAether.skyroot_leaves, BlocksAether.crystal_leaves, 150));
 		AetherAPI.instance().register(new AetherFreezable(BlocksAether.golden_oak_leaves, BlocksAether.crystal_leaves, 150));
@@ -187,13 +182,11 @@ public class AetherRegistries
 		AetherAPI.instance().register(new AetherFreezable(ItemsAether.golden_pendant, ItemsAether.ice_pendant, 2500));
 	}
 
-	public static void initializeFreezableFuel()
-	{
+	public static void initializeFreezableFuel() {
 		AetherAPI.instance().register(new AetherFreezableFuel(BlocksAether.icestone, 500));
 	}
 
-	public static void register()
-	{
+	public static void register() {
 		initializeAccessories();
 		initializeEnchantments();
 		initializeEnchantmentFuel();
@@ -208,8 +201,7 @@ public class AetherRegistries
 		FurnaceRecipes.smelting().func_151394_a(new ItemStack(BlocksAether.golden_oak_log, 1, 1), new ItemStack(Items.coal, 1, 1), 0.15F);
 	}
 
-	private static void initializeShapelessRecipes()
-	{
+	private static void initializeShapelessRecipes() {
 		registerShapeless("poison_dart_shooter", new ItemStack(ItemsAether.dart_shooter, 1, 1), new ItemStack(ItemsAether.dart_shooter, 1, 0), new ItemStack(ItemsAether.skyroot_bucket, 1, 2));
 		registerShapeless("purple_dye", new ItemStack(Items.dye, 2, 5), BlocksAether.purple_flower);
 		registerShapeless("skyroot_planks", new ItemStack(BlocksAether.skyroot_planks, 4), new ItemStack(BlocksAether.skyroot_log, 1, 1));
@@ -217,8 +209,7 @@ public class AetherRegistries
 		registerShapeless("book_of_lore", new ItemStack(ItemsAether.lore_book), new ItemStack(Items.book), new ItemStack(ItemsAether.ambrosium_shard));
 	}
 
-	private static void initializeRecipes()
-	{
+	private static void initializeRecipes() {
 		register("nature_staf", new ItemStack(ItemsAether.nature_staff), "Y", "X", 'Y', ItemsAether.zanite_gemstone, 'X', ItemsAether.skyroot_stick);
 		register("skyroot_stick", new ItemStack(ItemsAether.skyroot_stick, 4), "X", "X", 'X', BlocksAether.skyroot_planks);
 		register("trapdoor", new ItemStack(Blocks.trapdoor, 2), "XXX", "XXX", 'X', BlocksAether.skyroot_planks);
@@ -237,7 +228,7 @@ public class AetherRegistries
 		register("oak_door", new ItemStack(Items.wooden_door, 3), "XX", "XX", "XX", 'X', BlocksAether.skyroot_planks);
 		register("sign", new ItemStack(Items.sign, 3), "XXX", "XXX", " Y ", 'X', BlocksAether.skyroot_planks, 'Y', ItemsAether.skyroot_stick);
 		register("ambrosium_torch", new ItemStack(BlocksAether.ambrosium_torch, 2), "Z", "Y", 'Z', ItemsAether.ambrosium_shard, 'Y', ItemsAether.skyroot_stick);
-        register("lead", new ItemStack(Items.lead, 2), "YY ", "YX ", "  Y", 'Y', Items.string, 'X', ItemsAether.swet_ball);
+		register("lead", new ItemStack(Items.lead, 2), "YY ", "YX ", "  Y", 'Y', Items.string, 'X', ItemsAether.swet_ball);
 
 		register("cloud_parachute", new ItemStack(ItemsAether.cloud_parachute, 1), "XX", "XX", 'X', new ItemStack(BlocksAether.aercloud, 1));
 		register("golden_parachute", new ItemStack(ItemsAether.golden_parachute, 1), "XX", "XX", 'X', new ItemStack(BlocksAether.aercloud, 1, 2));
@@ -311,14 +302,12 @@ public class AetherRegistries
 		register("skyroot_stairs", new ItemStack(BlocksAether.skyroot_stairs, 4), "Z  ", "ZZ ", "ZZZ", 'Z', new ItemStack(BlocksAether.skyroot_planks));
 	}
 
-	private static void register(String name, ItemStack stack, Object... recipe)
-	{
+	private static void register(String name, ItemStack stack, Object... recipe) {
 		GameRegistry.addRecipe(stack, recipe);
 	}
 
-	private static void registerShapeless(String name, ItemStack stack, Object... recipe)
-	{
-        GameRegistry.addShapelessRecipe(stack, recipe);
+	private static void registerShapeless(String name, ItemStack stack, Object... recipe) {
+		GameRegistry.addShapelessRecipe(stack, recipe);
 	}
 
 }

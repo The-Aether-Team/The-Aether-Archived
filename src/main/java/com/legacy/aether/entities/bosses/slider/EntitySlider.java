@@ -35,82 +35,73 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntitySlider extends EntityFlying implements IAetherBoss
-{
+public class EntitySlider extends EntityFlying implements IAetherBoss {
 
-	private int dungeonX, dungeonY, dungeonZ;
+    private int dungeonX, dungeonY, dungeonZ;
 
-	public float hurtAngle, hurtAngleX, hurtAngleZ;
+    public float hurtAngle, hurtAngleX, hurtAngleZ;
 
-	public int chatTime, moveTime;
+    public int chatTime, moveTime;
 
-	public boolean crushedBlock;
+    public boolean crushedBlock;
 
-	public float velocity;
+    public float velocity;
 
-	public EnumFacing direction;
+    public EnumFacing direction;
 
-	public EntitySlider(World world) 
-	{
-		super(world);
+    public EntitySlider(World world) {
+        super(world);
 
-		this.rotationYaw = this.rotationPitch = 0.0F;
+        this.rotationYaw = this.rotationPitch = 0.0F;
 
-		this.setSize(2.0F, 2.0F);
-		this.dataWatcher.updateObject(19, AetherNameGen.gen());
-	}
+        this.setSize(2.0F, 2.0F);
+        this.dataWatcher.updateObject(19, AetherNameGen.gen());
+    }
 
-	@Override
-	public void entityInit()
-	{
-		super.entityInit();
+    @Override
+    public void entityInit() {
+        super.entityInit();
 
-		this.dataWatcher.addObject(18, new Byte((byte) 0));
-		this.dataWatcher.addObject(19, AetherNameGen.gen());
-		this.dataWatcher.addObject(20, new Byte((byte) 0));
-	}
+        this.dataWatcher.addObject(18, new Byte((byte) 0));
+        this.dataWatcher.addObject(19, AetherNameGen.gen());
+        this.dataWatcher.addObject(20, new Byte((byte) 0));
+    }
 
-	@Override
-    protected void applyEntityAttributes()
-    {
-    	super.applyEntityAttributes();
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
 
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500.0D);
     }
 
     @Override
-	protected String getLivingSound()
-    {
+    protected String getLivingSound() {
         return "ambient.cave.cave";
     }
 
     @Override
-    protected String getHurtSound()
-    {
+    protected String getHurtSound() {
         return "step.stone";
     }
 
     @Override
-    protected String getDeathSound()
-    {
+    protected String getDeathSound() {
         return null;
     }
 
     @Override
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound) 
-	{
+    public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
         super.writeEntityToNBT(nbttagcompound);
 
-		nbttagcompound.setInteger("dungeonX", this.dungeonX);
-		nbttagcompound.setInteger("dungeonY", this.dungeonY);
-		nbttagcompound.setInteger("dungeonZ", this.dungeonZ);
+        nbttagcompound.setInteger("dungeonX", this.dungeonX);
+        nbttagcompound.setInteger("dungeonY", this.dungeonY);
+        nbttagcompound.setInteger("dungeonZ", this.dungeonZ);
 
         nbttagcompound.setBoolean("isAwake", this.isAwake());
-		nbttagcompound.setString("bossName", this.getName());
+        nbttagcompound.setString("bossName", this.getName());
     }
 
-    public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
+    public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
         super.readEntityFromNBT(nbttagcompound);
 
         this.dungeonX = nbttagcompound.getInteger("dungeonX");
@@ -121,671 +112,541 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         this.setBossName(nbttagcompound.getString("bossName"));
     }
 
-	public boolean criticalCondition() 
-	{
-		return this.getHealth() <= 80.0F;
-	}
-
-	@Override
-	public void onUpdate()
-	{
-		super.onUpdate();
-
-		if(this.hurtAngle > 0.01F)
-		{
-			this.hurtAngle *= 0.8F;
-		}
-
-		if(this.chatTime > 0)
-		{
-			this.chatTime --;
-		}
-
-		this.renderYawOffset = this.rotationPitch = this.rotationYaw = 0.0F;
-	}
-
-	@Override
-	public void onLivingUpdate()
-	{
-		super.onLivingUpdate();
-	}
+    public boolean criticalCondition() {
+        return this.getHealth() <= 80.0F;
+    }
 
     @Override
-	public void updateEntityActionState()
-	{
-		if (!this.isAwake())
-		{
-			this.setAttackTarget(null);
-			return;
-		}
+    public void onUpdate() {
+        super.onUpdate();
 
-		if(!this.worldObj.isRemote) 
-		{
-			if (this.getAttackTarget() == null || this.getAttackTarget().isDead || this.getAttackTarget().getHealth() <= 0.0F) 
-			{
-				this.reset();
+        if (this.hurtAngle > 0.01F) {
+            this.hurtAngle *= 0.8F;
+        }
 
-				return;
-			}
+        if (this.chatTime > 0) {
+            this.chatTime--;
+        }
 
-			if(this.isMoving()) 
-			{
-				if(this.isCollided) 
-				{
-					double x, y, z;
-					x = this.posX - 0.5D;
-					y = this.boundingBox.minY + 0.75D;
-					z = this.posZ - 0.5D;
+        this.renderYawOffset = this.rotationPitch = this.rotationYaw = 0.0F;
+    }
 
-					this.crushedBlock = false;
+    @Override
+    public void onLivingUpdate() {
+        super.onLivingUpdate();
+    }
 
-					if(y > 4D) 
-					{
-						if(this.direction == EnumFacing.UP)
-						{
-							for(int i = 0; i < 25; i++)
-							{
-								double a = (double)((i / 5) - 2) * 0.75D;
-								double b = (double)((i % 5) - 2) * 0.75D;
+    @Override
+    public void updateEntityActionState() {
+        if (!this.isAwake()) {
+            this.setAttackTarget(null);
+            return;
+        }
 
-								this.destroyBlock(x + a, y + 1.5D, z + b);
-							}
-						}
-						else if(this.direction == EnumFacing.DOWN)
-						{
-							for(int i = 0; i < 25; i++) 
-							{
-								double a = (double)((i / 5) - 2) * 0.75D;
-								double b = (double)((i % 5) - 2) * 0.75D;
+        if (!this.worldObj.isRemote) {
+            if (this.getAttackTarget() == null || this.getAttackTarget().isDead || this.getAttackTarget().getHealth() <= 0.0F) {
+                this.reset();
 
-								this.destroyBlock(x + a, y - 1.5D, z + b);
-							}
-						} 
-						else if(this.direction == EnumFacing.EAST)
-						{
-							for(int i = 0; i < 25; i++) 
-							{
-								double a = (double)((i / 5) - 2) * 0.75D;
-								double b = (double)((i % 5) - 2) * 0.75D;
+                return;
+            }
 
-								this.destroyBlock(x + 1.5D, y + a, z + b);
-							}
-						}
-						else if(this.direction == EnumFacing.WEST)
-						{
-							for(int i = 0; i < 25; i++) 
-							{
-								double a = (double)((i / 5) - 2) * 0.75D;
-								double b = (double)((i % 5) - 2) * 0.75D;
+            if (this.isMoving()) {
+                if (this.isCollided) {
+                    double x, y, z;
+                    x = this.posX - 0.5D;
+                    y = this.boundingBox.minY + 0.75D;
+                    z = this.posZ - 0.5D;
 
-								this.destroyBlock(x - 1.5D, y + a, z + b);
-							}
-						} 
-						else if(this.direction == EnumFacing.SOUTH) 
-						{
-							for(int i = 0; i < 25; i++) 
-							{
-								double a = (double)((i / 5) - 2) * 0.75D;
-								double b = (double)((i % 5) - 2) * 0.75D;
+                    this.crushedBlock = false;
 
-								this.destroyBlock(x + a, y + b, z + 1.5D);
-							}
-						}
-						else if(this.direction == EnumFacing.NORTH)
-						{
-							for(int i = 0; i < 25; i++) 
-							{
-								double a = (double)((i / 5) - 2) * 0.75D;
-								double b = (double)((i % 5) - 2) * 0.75D;
+                    if (y > 4D) {
+                        if (this.direction == EnumFacing.UP) {
+                            for (int i = 0; i < 25; i++) {
+                                double a = (double) ((i / 5) - 2) * 0.75D;
+                                double b = (double) ((i % 5) - 2) * 0.75D;
 
-								this.destroyBlock(x + a, y + b, z - 1.5D);
-							}
-						}
-					}
+                                this.destroyBlock(x + a, y + 1.5D, z + b);
+                            }
+                        } else if (this.direction == EnumFacing.DOWN) {
+                            for (int i = 0; i < 25; i++) {
+                                double a = (double) ((i / 5) - 2) * 0.75D;
+                                double b = (double) ((i % 5) - 2) * 0.75D;
 
-					if(this.crushedBlock)
-					{
-						this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.explode", 3.0F, (0.625F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
-						this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.collide", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
-					}
+                                this.destroyBlock(x + a, y - 1.5D, z + b);
+                            }
+                        } else if (this.direction == EnumFacing.EAST) {
+                            for (int i = 0; i < 25; i++) {
+                                double a = (double) ((i / 5) - 2) * 0.75D;
+                                double b = (double) ((i % 5) - 2) * 0.75D;
 
-					this.stop();
-				}
-				else 
-				{
-					if(this.velocity < 2.0F)
-					{
-						this.velocity += (this.criticalCondition() ? 0.07F : 0.035F);
-					}
+                                this.destroyBlock(x + 1.5D, y + a, z + b);
+                            }
+                        } else if (this.direction == EnumFacing.WEST) {
+                            for (int i = 0; i < 25; i++) {
+                                double a = (double) ((i / 5) - 2) * 0.75D;
+                                double b = (double) ((i % 5) - 2) * 0.75D;
 
-					this.motionX = this.motionY = this.motionZ = 0.0F;
+                                this.destroyBlock(x - 1.5D, y + a, z + b);
+                            }
+                        } else if (this.direction == EnumFacing.SOUTH) {
+                            for (int i = 0; i < 25; i++) {
+                                double a = (double) ((i / 5) - 2) * 0.75D;
+                                double b = (double) ((i % 5) - 2) * 0.75D;
 
-					if(this.direction == EnumFacing.UP)
-					{
-						this.motionY = this.velocity;
+                                this.destroyBlock(x + a, y + b, z + 1.5D);
+                            }
+                        } else if (this.direction == EnumFacing.NORTH) {
+                            for (int i = 0; i < 25; i++) {
+                                double a = (double) ((i / 5) - 2) * 0.75D;
+                                double b = (double) ((i % 5) - 2) * 0.75D;
 
-						if(this.boundingBox.minY > this.getAttackTarget().boundingBox.minY + 0.35D) 
-						{
-							this.stop();
-							this.moveTime = this.criticalCondition() ? 4 : 8;
-						}
-					}
-					else if(this.direction == EnumFacing.DOWN)
-					{
-						this.motionY = -this.velocity;
+                                this.destroyBlock(x + a, y + b, z - 1.5D);
+                            }
+                        }
+                    }
 
-						if(this.boundingBox.minY < this.getAttackTarget().boundingBox.minY - 0.25D) 
-						{
-							this.stop();
-							this.moveTime = this.criticalCondition() ? 4 : 8;
-						}
-					} 
-					else if(this.direction == EnumFacing.EAST)
-					{
-						this.motionX = this.velocity;
+                    if (this.crushedBlock) {
+                        this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.explode", 3.0F, (0.625F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+                        this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.collide", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                    }
 
-						if(this.posX > this.getAttackTarget().posX + 0.125D) 
-						{
-							this.stop();
-							this.moveTime = this.criticalCondition() ? 4 : 8;
-						}
-					}
-					else if(this.direction == EnumFacing.WEST) 
-					{
-						this.motionX = -this.velocity;
+                    this.stop();
+                } else {
+                    if (this.velocity < 2.0F) {
+                        this.velocity += (this.criticalCondition() ? 0.07F : 0.035F);
+                    }
 
-						if(this.posX < this.getAttackTarget().posX - 0.125D) 
-						{
-							this.stop();
-							this.moveTime = this.criticalCondition() ? 4 : 8;
-						}
-					}
-					else if(this.direction == EnumFacing.SOUTH) 
-					{
-						this.motionZ = this.velocity;
+                    this.motionX = this.motionY = this.motionZ = 0.0F;
 
-						if(this.posZ > this.getAttackTarget().posZ + 0.125D) 
-						{
-							this.stop();
-							this.moveTime = this.criticalCondition() ? 4 : 8;
-						}
-					} 
-					else if(this.direction == EnumFacing.NORTH)
-					{
-						this.motionZ = -this.velocity;
+                    if (this.direction == EnumFacing.UP) {
+                        this.motionY = this.velocity;
 
-						if(this.posZ < this.getAttackTarget().posZ - 0.125D)
-						{
-							this.stop();
-							this.moveTime = this.criticalCondition() ? 4 : 8;
-						}
-					}
-				}
-			}
-			else
-			{
-				if(this.moveTime > 0) 
-				{
-					this.moveTime--;
+                        if (this.boundingBox.minY > this.getAttackTarget().boundingBox.minY + 0.35D) {
+                            this.stop();
+                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                        }
+                    } else if (this.direction == EnumFacing.DOWN) {
+                        this.motionY = -this.velocity;
 
-					if(this.criticalCondition() && this.rand.nextInt(2) == 0)
-					{
-						this.moveTime--;
-					}
+                        if (this.boundingBox.minY < this.getAttackTarget().boundingBox.minY - 0.25D) {
+                            this.stop();
+                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                        }
+                    } else if (this.direction == EnumFacing.EAST) {
+                        this.motionX = this.velocity;
 
-					this.motionX = this.motionY = this.motionZ = 0.0F;
-				}
-				else 
-				{
-					if (this.getAttackTarget() == null) return;
+                        if (this.posX > this.getAttackTarget().posX + 0.125D) {
+                            this.stop();
+                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                        }
+                    } else if (this.direction == EnumFacing.WEST) {
+                        this.motionX = -this.velocity;
 
-					double a, b, c;
-					a = Math.abs(this.posX - this.getAttackTarget().posX);
-					b = Math.abs(this.boundingBox.minY - this.getAttackTarget().boundingBox.minY);
-					c = Math.abs(this.posZ - this.getAttackTarget().posZ);
+                        if (this.posX < this.getAttackTarget().posX - 0.125D) {
+                            this.stop();
+                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                        }
+                    } else if (this.direction == EnumFacing.SOUTH) {
+                        this.motionZ = this.velocity;
 
-					if(a > c) 
-					{
-						this.direction = EnumFacing.EAST;
+                        if (this.posZ > this.getAttackTarget().posZ + 0.125D) {
+                            this.stop();
+                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                        }
+                    } else if (this.direction == EnumFacing.NORTH) {
+                        this.motionZ = -this.velocity;
 
-						if(this.posX > this.getAttackTarget().posX)
-						{
-							this.direction = EnumFacing.WEST;
-						}
-					} 
-					else 
-					{
-						this.direction = EnumFacing.SOUTH;
+                        if (this.posZ < this.getAttackTarget().posZ - 0.125D) {
+                            this.stop();
+                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                        }
+                    }
+                }
+            } else {
+                if (this.moveTime > 0) {
+                    this.moveTime--;
 
-						if(this.posZ > this.getAttackTarget().posZ) 
-						{
-							this.direction = EnumFacing.NORTH;
-						}
-					}
+                    if (this.criticalCondition() && this.rand.nextInt(2) == 0) {
+                        this.moveTime--;
+                    }
 
-					if((b > a && b > c) || (b > 0.25F && this.rand.nextInt(5) == 0))
-					{
-						this.direction = EnumFacing.UP;
+                    this.motionX = this.motionY = this.motionZ = 0.0F;
+                } else {
+                    if (this.getAttackTarget() == null) return;
 
-						if(this.posY > this.getAttackTarget().posY)
-						{
-							this.direction = EnumFacing.DOWN;
-						}
-					}
+                    double a, b, c;
+                    a = Math.abs(this.posX - this.getAttackTarget().posX);
+                    b = Math.abs(this.boundingBox.minY - this.getAttackTarget().boundingBox.minY);
+                    c = Math.abs(this.posZ - this.getAttackTarget().posZ);
 
-					this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.move", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
-					this.setMoving(true);
-				}
-			}
-		}
-	}
+                    if (a > c) {
+                        this.direction = EnumFacing.EAST;
 
-	private void destroyBlock(double x, double y, double z)
-	{
-		Block block = this.worldObj.getBlock((int) x, (int) y, (int) z);
-		int metadata = this.worldObj.getBlockMetadata((int) x, (int) y, (int) z);
+                        if (this.posX > this.getAttackTarget().posX) {
+                            this.direction = EnumFacing.WEST;
+                        }
+                    } else {
+                        this.direction = EnumFacing.SOUTH;
 
-		if(block == Blocks.air || block instanceof BlockDungeonBase) 
-		{
-			return;
-		}
+                        if (this.posZ > this.getAttackTarget().posZ) {
+                            this.direction = EnumFacing.NORTH;
+                        }
+                    }
 
-        for (int j = 0; j < 4; ++j)
-        {
-            for (int k = 0; k < 4; ++k)
-            {
-                for (int l = 0; l < 4; ++l)
-                {
-                    double d0 = ((double)j + 0.5D) / 4.0D;
-                    double d1 = ((double)k + 0.5D) / 4.0D;
-                    double d2 = ((double)l + 0.5D) / 4.0D;
-                    this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + metadata, (double)x + d0, (double)y + d1, (double)z + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D);
+                    if ((b > a && b > c) || (b > 0.25F && this.rand.nextInt(5) == 0)) {
+                        this.direction = EnumFacing.UP;
+
+                        if (this.posY > this.getAttackTarget().posY) {
+                            this.direction = EnumFacing.DOWN;
+                        }
+                    }
+
+                    this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.move", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                    this.setMoving(true);
+                }
+            }
+        }
+    }
+
+    private void destroyBlock(double x, double y, double z) {
+        Block block = this.worldObj.getBlock((int) x, (int) y, (int) z);
+        int metadata = this.worldObj.getBlockMetadata((int) x, (int) y, (int) z);
+
+        if (block == Blocks.air || block instanceof BlockDungeonBase) {
+            return;
+        }
+
+        for (int j = 0; j < 4; ++j) {
+            for (int k = 0; k < 4; ++k) {
+                for (int l = 0; l < 4; ++l) {
+                    double d0 = ((double) j + 0.5D) / 4.0D;
+                    double d1 = ((double) k + 0.5D) / 4.0D;
+                    double d2 = ((double) l + 0.5D) / 4.0D;
+                    this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + metadata, (double) x + d0, (double) y + d1, (double) z + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D);
                 }
             }
         }
 
-		block.breakBlock(this.worldObj, (int) x, (int) y, (int) z, block, metadata);
-		block.dropBlockAsItem(this.worldObj, (int) x, (int) y, (int) z, metadata, 0);
+        block.breakBlock(this.worldObj, (int) x, (int) y, (int) z, block, metadata);
+        block.dropBlockAsItem(this.worldObj, (int) x, (int) y, (int) z, metadata, 0);
 
-		this.worldObj.setBlockToAir((int) x, (int) y, (int) z);
+        this.worldObj.setBlockToAir((int) x, (int) y, (int) z);
 
-		this.crushedBlock = true;
+        this.crushedBlock = true;
 
-		double a = x + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
-		double b = y + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
-		double c = z + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
+        double a = x + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
+        double b = y + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
+        double c = z + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
 
-		this.worldObj.spawnParticle("smoke", a, b, c, 0.0D, 0.0D, 0.0D);
-	}
-
-	private void openDoor()
-	{
-		for(int y = this.dungeonY + 1; y < this.dungeonY + 5; y++)
-		{
-			for(int z = this.dungeonZ + 6; z < this.dungeonZ + 10; z++)
-			{
-				this.worldObj.setBlock(this.dungeonX + 15, y, z, Blocks.air);
-			}
-		}
-	}
-
-	@Override
-	public void applyEntityCollision(Entity entity) 
-	{
-		if (this.isAwake() && this.isMoving())
-		{
-			boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 6);
-
-			if(flag && entity instanceof EntityLivingBase)
-			{
-				EntityLivingBase collidedEntity = (EntityLivingBase)entity;
-				collidedEntity.addVelocity(collidedEntity.motionY, 0.35D, collidedEntity.motionZ);
-				this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.collide", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
-
-				this.stop();
-			}
-		}
+        this.worldObj.spawnParticle("smoke", a, b, c, 0.0D, 0.0D, 0.0D);
     }
 
-	@Override
-	protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) 
-	{
-		this.dropItem(Item.getItemFromBlock(BlocksAether.carved_stone), 7 + rand.nextInt(3));
-
-		this.entityDropItem(new ItemStack(ItemsAether.dungeon_key), 0.5F);
+    private void openDoor() {
+        for (int y = this.dungeonY + 1; y < this.dungeonY + 5; y++) {
+            for (int z = this.dungeonZ + 6; z < this.dungeonZ + 10; z++) {
+                this.worldObj.setBlock(this.dungeonX + 15, y, z, Blocks.air);
+            }
+        }
     }
 
     @Override
-    public EntityItem entityDropItem(ItemStack stack, float offsetY)
-    {
-        if (stack.stackSize != 0 && stack.getItem() != null)
-        {
-        	EntityAetherItem entityitem = new EntityAetherItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
+    public void applyEntityCollision(Entity entity) {
+        if (this.isAwake() && this.isMoving()) {
+            boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 6);
+
+            if (flag && entity instanceof EntityLivingBase) {
+                EntityLivingBase collidedEntity = (EntityLivingBase) entity;
+                collidedEntity.addVelocity(collidedEntity.motionY, 0.35D, collidedEntity.motionZ);
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.collide", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+
+                this.stop();
+            }
+        }
+    }
+
+    @Override
+    protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+        this.dropItem(Item.getItemFromBlock(BlocksAether.carved_stone), 7 + rand.nextInt(3));
+
+        this.entityDropItem(new ItemStack(ItemsAether.dungeon_key), 0.5F);
+    }
+
+    @Override
+    public EntityItem entityDropItem(ItemStack stack, float offsetY) {
+        if (stack.stackSize != 0 && stack.getItem() != null) {
+            EntityAetherItem entityitem = new EntityAetherItem(this.worldObj, this.posX, this.posY + (double) offsetY, this.posZ, stack);
 
             if (captureDrops)
                 this.capturedDrops.add(entityitem);
             else
                 this.worldObj.spawnEntityInWorld(entityitem);
             return entityitem;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
-	public void stop() 
-	{
-		this.setMoving(false);
-		this.moveTime = 12;
-		this.direction = EnumFacing.UP;
-		this.motionX = this.motionY = this.motionZ = this.velocity = 0.0F;
-	}
+    public void stop() {
+        this.setMoving(false);
+        this.moveTime = 12;
+        this.direction = EnumFacing.UP;
+        this.motionX = this.motionY = this.motionZ = this.velocity = 0.0F;
+    }
 
-    private void sendMessage(EntityPlayer player, String s)
-    {
-		Side side = FMLCommonHandler.instance().getEffectiveSide();
+    private void sendMessage(EntityPlayer player, String s) {
+        Side side = FMLCommonHandler.instance().getEffectiveSide();
 
-        if (this.chatTime <= 0)
-        {
-        	if (side.isClient())
-        	{
+        if (this.chatTime <= 0) {
+            if (side.isClient()) {
                 Aether.proxy.sendMessage(player, s);
-        	}
+            }
 
             this.chatTime = 60;
         }
     }
 
-	@Override
-	public boolean attackEntityFrom(DamageSource ds, float var2)
-	{
-		if(ds.getEntity() == null || !(ds.getEntity() instanceof EntityPlayer) || ds.isProjectile() || ds.isMagicDamage() || ds.isExplosion() || ds.isFireDamage())
-		{
-			return false;
-		}
+    @Override
+    public boolean attackEntityFrom(DamageSource ds, float var2) {
+        if (ds.getEntity() == null || !(ds.getEntity() instanceof EntityPlayer) || ds.isProjectile() || ds.isMagicDamage() || ds.isExplosion() || ds.isFireDamage()) {
+            return false;
+        }
 
-		EntityPlayer player = (EntityPlayer)ds.getEntity();
-		ItemStack stack = player.inventory.getCurrentItem();
+        EntityPlayer player = (EntityPlayer) ds.getEntity();
+        ItemStack stack = player.inventory.getCurrentItem();
 
-		if (stack == null || stack.getItem() == null)
-		{
-			return false;
-		}
+        if (stack == null || stack.getItem() == null) {
+            return false;
+        }
 
-		boolean isTCPickaxe = stack.getItem().getClass().getName().equals("tconstruct.items.tools.Pickaxe");
+        boolean isTCPickaxe = stack.getItem().getClass().getName().equals("tconstruct.items.tools.Pickaxe");
 
-		if (!isTCPickaxe)
-		{
-			if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool))
-			{
-				this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?"); 
+        if (!isTCPickaxe) {
+            if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool)) {
+                this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?");
 
-				return false; 
-			}
+                return false;
+            }
 
-			if (stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType != EnumAetherToolType.PICKAXE)
-			{
-				this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?"); 
+            if (stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool) stack.getItem()).toolType != EnumAetherToolType.PICKAXE) {
+                this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?");
 
-				return false; 
-			}
-		}
+                return false;
+            }
+        }
 
-		boolean flag = super.attackEntityFrom(ds, Math.max(0, var2));
-	
-		if(flag)
-		{
-			for(int size = 0; size < (this.getHealth() <= 0 ? 2 : 4); size++) 
-			{
-				double a = this.posX + ((this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D);
-				double b = this.boundingBox.minY + 1.75D;
-				double c = this.posZ + ((this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D);
+        boolean flag = super.attackEntityFrom(ds, Math.max(0, var2));
 
-				if(this.getHealth() <= 0)
-				{
-					this.worldObj.spawnParticle("explode", a, b, c, 0.0D, 0.0D, 0.0D);
-				} 
+        if (flag) {
+            for (int size = 0; size < (this.getHealth() <= 0 ? 2 : 4); size++) {
+                double a = this.posX + ((this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D);
+                double b = this.boundingBox.minY + 1.75D;
+                double c = this.posZ + ((this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D);
 
-		        for (int j = 0; j < 4; ++j)
-		        {
-		            for (int k = 0; k < 4; ++k)
-		            {
-		                for (int l = 0; l < 4; ++l)
-		                {
-		                    double d0 = ((double)j + 0.5D) / 4.0D;
-		                    double d1 = ((double)k + 0.5D) / 4.0D;
-		                    double d2 = ((double)l + 0.5D) / 4.0D;
-		                    this.worldObj.spawnParticle("blockcrack_" + Blocks.stone + "_0", (double)a + d0, (double)b + d1, (double)c + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D);
-		                }
-		            }
-		        }
-			}
+                if (this.getHealth() <= 0) {
+                    this.worldObj.spawnParticle("explode", a, b, c, 0.0D, 0.0D, 0.0D);
+                }
 
-			if(this.getHealth() <= 0 || this.isDead)
-			{
-				openDoor();
-				unlockBlock(this.dungeonX, this.dungeonY, this.dungeonZ);
+                for (int j = 0; j < 4; ++j) {
+                    for (int k = 0; k < 4; ++k) {
+                        for (int l = 0; l < 4; ++l) {
+                            double d0 = ((double) j + 0.5D) / 4.0D;
+                            double d1 = ((double) k + 0.5D) / 4.0D;
+                            double d2 = ((double) l + 0.5D) / 4.0D;
+                            this.worldObj.spawnParticle("blockcrack_" + Blocks.stone + "_0", (double) a + d0, (double) b + d1, (double) c + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D);
+                        }
+                    }
+                }
+            }
 
-				this.worldObj.setBlock(this.dungeonX + 7, this.dungeonY + 1, this.dungeonZ + 7, Blocks.trapdoor, 3, 2);
-				this.worldObj.setBlock(this.dungeonX + 8, this.dungeonY + 1, this.dungeonZ + 7, Blocks.trapdoor, 2, 2);
-				this.worldObj.setBlock(this.dungeonX + 7, this.dungeonY + 1, this.dungeonZ + 8, Blocks.trapdoor, 3, 2);
-				this.worldObj.setBlock(this.dungeonX + 8, this.dungeonY + 1, this.dungeonZ + 8, Blocks.trapdoor, 2, 2);
+            if (this.getHealth() <= 0 || this.isDead) {
+                openDoor();
+                unlockBlock(this.dungeonX, this.dungeonY, this.dungeonZ);
 
-				PlayerAether.get(player).setFocusedBoss(null);
+                this.worldObj.setBlock(this.dungeonX + 7, this.dungeonY + 1, this.dungeonZ + 7, Blocks.trapdoor, 3, 2);
+                this.worldObj.setBlock(this.dungeonX + 8, this.dungeonY + 1, this.dungeonZ + 7, Blocks.trapdoor, 2, 2);
+                this.worldObj.setBlock(this.dungeonX + 7, this.dungeonY + 1, this.dungeonZ + 8, Blocks.trapdoor, 3, 2);
+                this.worldObj.setBlock(this.dungeonX + 8, this.dungeonY + 1, this.dungeonZ + 8, Blocks.trapdoor, 2, 2);
 
-	        	List<?> dungeonPlayers = this.getPlayersInDungeon(player);
+                PlayerAether.get(player).setFocusedBoss(null);
 
-            	for (int i = 0; i < dungeonPlayers.size(); ++i)
-            	{
-            		Entity entity = (Entity) dungeonPlayers.get(i);
+                List<?> dungeonPlayers = this.getPlayersInDungeon(player);
 
-            		if (entity instanceof EntityPlayer)
-            		{
-            			((EntityPlayer) entity).triggerAchievement(AchievementsAether.defeat_bronze);
-            		}
-            	}
+                for (int i = 0; i < dungeonPlayers.size(); ++i) {
+                    Entity entity = (Entity) dungeonPlayers.get(i);
 
-				player.triggerAchievement(AchievementsAether.defeat_bronze);
+                    if (entity instanceof EntityPlayer) {
+                        ((EntityPlayer) entity).triggerAchievement(AchievementsAether.defeat_bronze);
+                    }
+                }
 
-				this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.death", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
-				this.setDead();
-			}
+                player.triggerAchievement(AchievementsAether.defeat_bronze);
 
-			if(!this.isAwake())
-			{
-				this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss_slider.awaken", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
-				this.setAttackTarget(player);
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.death", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                this.setDead();
+            }
 
-				int x = this.dungeonX + 15;
+            if (!this.isAwake()) {
+                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss_slider.awaken", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                this.setAttackTarget(player);
 
-				for(int y = this.dungeonY + 1; y < this.dungeonY + 8; y++)
-				{
-					for(int z = this.dungeonZ + 5; z < this.dungeonZ + 11; z++)
-					{
-						this.worldObj.setBlock(x, y, z, BlocksAether.locked_carved_stone);
-					}
-				}
+                int x = this.dungeonX + 15;
 
-				this.setAwake(true);
-			} 
+                for (int y = this.dungeonY + 1; y < this.dungeonY + 8; y++) {
+                    for (int z = this.dungeonZ + 5; z < this.dungeonZ + 11; z++) {
+                        this.worldObj.setBlock(x, y, z, BlocksAether.locked_carved_stone);
+                    }
+                }
 
-			if(this.isMoving()) 
-			{
-				this.velocity *= 0.75F;
-			}
-		}
+                this.setAwake(true);
+            }
 
-		double a, c;
+            if (this.isMoving()) {
+                this.velocity *= 0.75F;
+            }
+        }
 
-		a = Math.abs(this.posX - player.posX);
-		c = Math.abs(this.posZ - player.posZ);
+        double a, c;
 
-		if(a > c)
-		{
-			this.hurtAngleZ = 1;
-			this.hurtAngleX = 0;
+        a = Math.abs(this.posX - player.posX);
+        c = Math.abs(this.posZ - player.posZ);
 
-			if(this.posX > player.posX)
-			{
-				this.hurtAngleZ = -1;
-			}
-		}
-		else
-		{
-			this.hurtAngleX = 1;
-			this.hurtAngleZ = 0;
+        if (a > c) {
+            this.hurtAngleZ = 1;
+            this.hurtAngleX = 0;
 
-			if(this.posZ > player.posZ) 
-			{
-				this.hurtAngleX = -1;
-			}
-		}
+            if (this.posX > player.posX) {
+                this.hurtAngleZ = -1;
+            }
+        } else {
+            this.hurtAngleX = 1;
+            this.hurtAngleZ = 0;
 
-		this.hurtAngle = 0.7F - (this.getHealth() / 875F);
+            if (this.posZ > player.posZ) {
+                this.hurtAngleX = -1;
+            }
+        }
 
-		PlayerAether.get(player).setFocusedBoss(this);
+        this.hurtAngle = 0.7F - (this.getHealth() / 875F);
 
-		return flag;
-	}
+        PlayerAether.get(player).setFocusedBoss(this);
 
-	private void unlockBlock(int x, int y, int z)
-	{	
-		Block block = this.worldObj.getBlock(x, y, z);
+        return flag;
+    }
 
-		if(block == BlocksAether.locked_carved_stone || block == BlocksAether.locked_sentry_stone)
-		{
-			this.worldObj.setBlock(x, y, z, ((BlockDungeonBase)block).getUnlockedBlock());
-			this.unlockBlock(x + 1, y, z);
-			this.unlockBlock(x - 1, y, z);
-			this.unlockBlock(x, y + 1, z);
-			this.unlockBlock(x, y - 1, z);
-			this.unlockBlock(x, y, z + 1);
-			this.unlockBlock(x, y, z - 1);
-		}
-	}	
+    private void unlockBlock(int x, int y, int z) {
+        Block block = this.worldObj.getBlock(x, y, z);
 
-	@Override
-    protected void collideWithNearbyEntities()
-    {
+        if (block == BlocksAether.locked_carved_stone || block == BlocksAether.locked_sentry_stone) {
+            this.worldObj.setBlock(x, y, z, ((BlockDungeonBase) block).getUnlockedBlock());
+            this.unlockBlock(x + 1, y, z);
+            this.unlockBlock(x - 1, y, z);
+            this.unlockBlock(x, y + 1, z);
+            this.unlockBlock(x, y - 1, z);
+            this.unlockBlock(x, y, z + 1);
+            this.unlockBlock(x, y, z - 1);
+        }
+    }
+
+    @Override
+    protected void collideWithNearbyEntities() {
         List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
-        if (list != null && !list.isEmpty())
-        {
-            for (int i = 0; i < list.size(); ++i)
-            {
-                Entity entity = (Entity)list.get(i);
+        if (list != null && !list.isEmpty()) {
+            for (int i = 0; i < list.size(); ++i) {
+                Entity entity = (Entity) list.get(i);
 
                 this.applyEntityCollision(entity);
             }
         }
     }
 
-	@Override
-	public boolean canDespawn()
-	{
-		return false;
-	}
+    @Override
+    public boolean canDespawn() {
+        return false;
+    }
 
-	@Override
-	public boolean canBePushed()
-	{
-		return false;
-	}
+    @Override
+    public boolean canBePushed() {
+        return false;
+    }
 
-	@Override
-	public boolean canBeCollidedWith()
-	{
-		return !this.isDead;
-	}
+    @Override
+    public boolean canBeCollidedWith() {
+        return !this.isDead;
+    }
 
-	@Override
-	public void addVelocity(double d, double d1, double d2)
-	{
-	}
+    @Override
+    public void addVelocity(double d, double d1, double d2) {
+    }
 
-	@Override
+    @Override
     @SideOnly(Side.CLIENT)
-    public void setVelocity(double x, double y, double z)
-    {
+    public void setVelocity(double x, double y, double z) {
     }
 
-	@Override
-	public void knockBack(Entity par1Entity, float par2, double par3, double par5)
-	{
+    @Override
+    public void knockBack(Entity par1Entity, float par2, double par3, double par5) {
 
-	}
-
-	public void reset()
-	{
-		this.moveTime = 0;
-
-		this.stop();
-		this.openDoor();
-		this.setAwake(false);
-		this.setAttackTarget(null);
-		this.setHealth(this.getMaxHealth());
-		this.setPositionAndUpdate(this.dungeonX + 8, this.dungeonY + 2, this.dungeonZ + 8);
-	}
-
-    public List<?> getPlayersInDungeon(EntityPlayer player)
-    {
-    	return this.worldObj.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(this.dungeonX, this.dungeonY, this.dungeonZ, this.dungeonX, this.dungeonY, this.dungeonZ).expand(10, 10, 10));
     }
 
-	public void setDungeon(double posX, double posY, double posZ)
-	{
-		this.dungeonX = (int) posX;
-		this.dungeonY = (int) posY;
-		this.dungeonZ = (int) posZ;
-	}
+    public void reset() {
+        this.moveTime = 0;
 
-	public void setAwake(boolean isAwake)
-	{
-    	this.dataWatcher.updateObject(18, new Byte(isAwake ? (byte) 1 : (byte) 0));
-	}
-
-	public boolean isAwake()
-	{
-    	return this.dataWatcher.getWatchableObjectByte(18) == (byte) 1;
-	}
-
-	public void setMoving(boolean moving)
-	{
-    	this.dataWatcher.updateObject(20, new Byte(moving ? (byte) 1 : (byte) 0));
-	}
-
-	public boolean isMoving()
-	{
-    	return this.dataWatcher.getWatchableObjectByte(20) == (byte) 1;
-	}
-
-    public String getName()
-    {
-    	return this.dataWatcher.getWatchableObjectString(19);
+        this.stop();
+        this.openDoor();
+        this.setAwake(false);
+        this.setAttackTarget(null);
+        this.setHealth(this.getMaxHealth());
+        this.setPositionAndUpdate(this.dungeonX + 8, this.dungeonY + 2, this.dungeonZ + 8);
     }
 
-	public void setBossName(String name)
-	{
-    	this.dataWatcher.updateObject(19, name);
-	}
+    public List<?> getPlayersInDungeon(EntityPlayer player) {
+        return this.worldObj.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(this.dungeonX, this.dungeonY, this.dungeonZ, this.dungeonX, this.dungeonY, this.dungeonZ).expand(10, 10, 10));
+    }
 
-	@Override
-	public String getBossName()
-	{
-		return this.dataWatcher.getWatchableObjectString(19) + ", the Slider";
-	}
+    public void setDungeon(double posX, double posY, double posZ) {
+        this.dungeonX = (int) posX;
+        this.dungeonY = (int) posY;
+        this.dungeonZ = (int) posZ;
+    }
 
-	@Override
-	public float getBossHealth() 
-	{
-		return this.getHealth();
-	}
+    public void setAwake(boolean isAwake) {
+        this.dataWatcher.updateObject(18, new Byte(isAwake ? (byte) 1 : (byte) 0));
+    }
 
-	@Override
-	public float getMaxBossHealth() 
-	{
-		return this.getMaxHealth();
-	}
+    public boolean isAwake() {
+        return this.dataWatcher.getWatchableObjectByte(18) == (byte) 1;
+    }
+
+    public void setMoving(boolean moving) {
+        this.dataWatcher.updateObject(20, new Byte(moving ? (byte) 1 : (byte) 0));
+    }
+
+    public boolean isMoving() {
+        return this.dataWatcher.getWatchableObjectByte(20) == (byte) 1;
+    }
+
+    public String getName() {
+        return this.dataWatcher.getWatchableObjectString(19);
+    }
+
+    public void setBossName(String name) {
+        this.dataWatcher.updateObject(19, name);
+    }
+
+    @Override
+    public String getBossName() {
+        return this.dataWatcher.getWatchableObjectString(19) + ", the Slider";
+    }
+
+    @Override
+    public float getBossHealth() {
+        return this.getHealth();
+    }
+
+    @Override
+    public float getMaxBossHealth() {
+        return this.getMaxHealth();
+    }
 
 }

@@ -19,12 +19,10 @@ import com.legacy.aether.items.ItemsAether;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockBerryBush extends BlockAetherFlower
-{
+public class BlockBerryBush extends BlockAetherFlower {
 
-	public BlockBerryBush()
-	{
-		this.setHardness(0.2F);	
+	public BlockBerryBush() {
+		this.setHardness(0.2F);
 		this.setHarvestLevel("axe", 0);
 		this.setStepSound(soundTypeGrass);
 		this.setBlockTextureName(Aether.find("berry_bush"));
@@ -32,29 +30,23 @@ public class BlockBerryBush extends BlockAetherFlower
 	}
 
 	@Override
-    public Item getItemDropped(int meta, Random rand, int fortune)
-	{
+	public Item getItemDropped(int meta, Random rand, int fortune) {
 		return Item.getItemFromBlock(BlocksAether.berry_bush_stem);
 	}
 
 	@Override
-	public boolean isOpaqueCube()
-	{
+	public boolean isOpaqueCube() {
 		return false;
 	}
 
 	@Override
-    public void harvestBlock(World world, EntityPlayer entityplayer, int x, int y, int z, int meta)
-	{
+	public void harvestBlock(World world, EntityPlayer entityplayer, int x, int y, int z, int meta) {
 		int min, max;
 
-		if (world.getBlock(x, y, z) == BlocksAether.enchanted_aether_grass)
-		{
+		if (world.getBlock(x, y, z) == BlocksAether.enchanted_aether_grass) {
 			min = 1;
 			max = 4;
-		}
-		else
-		{
+		} else {
 			min = 1;
 			max = 3;
 		}
@@ -65,53 +57,44 @@ public class BlockBerryBush extends BlockAetherFlower
 
 		world.setBlock(x, y, z, BlocksAether.berry_bush_stem);
 
-		if (randomNum != 0)
-		{
+		if (randomNum != 0) {
 			this.dropBlockAsItem(world, x, y, z, new ItemStack(ItemsAether.blueberry, randomNum, 0));
 		}
 	}
 
 	@Override
-    protected void checkAndDropBlock(World world, int x, int y, int z)
-    {
-    	if(!this.canBlockStay(world, x, y, z))
-    	{
-    		int min, max;
+	protected void checkAndDropBlock(World world, int x, int y, int z) {
+		if (!this.canBlockStay(world, x, y, z)) {
+			int min, max;
 
-    		if (world.getBlock(x, y, z) == BlocksAether.enchanted_aether_grass)
-    		{
-    			min = 1;
-    			max = 4;
-    		}
-    		else
-    		{
-    			min = 1;
-    			max = 3;
-    		}
+			if (world.getBlock(x, y, z) == BlocksAether.enchanted_aether_grass) {
+				min = 1;
+				max = 4;
+			} else {
+				min = 1;
+				max = 3;
+			}
 
-    		int randomNum = world.rand.nextInt(max - min + 1) + min;
-    		this.dropBlockAsItem(world, x, y, z, new ItemStack(ItemsAether.blueberry, randomNum, 0));
-    		world.setBlock(x, y, z, BlocksAether.berry_bush_stem);
-    	}
-    }
+			int randomNum = world.rand.nextInt(max - min + 1) + min;
+			this.dropBlockAsItem(world, x, y, z, new ItemStack(ItemsAether.blueberry, randomNum, 0));
+			world.setBlock(x, y, z, BlocksAether.berry_bush_stem);
+		}
+	}
 
 	@Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_)
-    {
-        return AxisAlignedBB.getBoundingBox((double)p_149668_2_ + this.minX, (double)p_149668_3_ + this.minY, (double)p_149668_4_ + this.minZ, (double)p_149668_2_ + this.maxX, (double)p_149668_3_ + this.maxY, (double)p_149668_4_ + this.maxZ);
-    }
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_, int p_149668_4_) {
+		return AxisAlignedBB.getBoundingBox((double) p_149668_2_ + this.minX, (double) p_149668_3_ + this.minY, (double) p_149668_4_ + this.minZ, (double) p_149668_2_ + this.maxX, (double) p_149668_3_ + this.maxY, (double) p_149668_4_ + this.maxZ);
+	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side)
-    {
-    	return true;
-    }
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockAccess worldIn, int x, int y, int z, int side) {
+		return true;
+	}
 
 	@Override
-    public int getRenderType()
-    {
-        return CommonProxy.berryBushRenderID;
-    }
+	public int getRenderType() {
+		return CommonProxy.berryBushRenderID;
+	}
 
 }

@@ -8,32 +8,28 @@ import com.legacy.aether.client.gui.dialogue.GuiDialogue;
 import com.legacy.aether.network.AetherNetwork;
 import com.legacy.aether.network.packets.PacketDialogueClicked;
 
-public class GuiServerDialogue extends GuiDialogue
-{
+public class GuiServerDialogue extends GuiDialogue {
 
-	private String dialogueName;
+    private String dialogueName;
 
-	public GuiServerDialogue(String dialogueName, String dialogue, ArrayList<String> dialogueText)
-	{
-		super(dialogue);
+    public GuiServerDialogue(String dialogueName, String dialogue, ArrayList<String> dialogueText) {
+        super(dialogue);
 
-		this.dialogueName = dialogueName;
+        this.dialogueName = dialogueName;
 
-		ArrayList<DialogueOption> dialogueOptions = Lists.newArrayList();
+        ArrayList<DialogueOption> dialogueOptions = Lists.newArrayList();
 
-		for (String dialogueForOption : dialogueText)
-		{
-			dialogueOptions.add(new DialogueOption(dialogueForOption));
-		}
+        for (String dialogueForOption : dialogueText) {
+            dialogueOptions.add(new DialogueOption(dialogueForOption));
+        }
 
-        this.addDialogueOptions(dialogueOptions.toArray(new DialogueOption[] {}));
-	}
+        this.addDialogueOptions(dialogueOptions.toArray(new DialogueOption[]{}));
+    }
 
-	@Override
-	public void dialogueClicked(DialogueOption dialogue)
-	{
-		AetherNetwork.sendToServer(new PacketDialogueClicked(this.dialogueName, dialogue.getDialogueId()));
-		this.dialogueTreeCompleted();
-	}
+    @Override
+    public void dialogueClicked(DialogueOption dialogue) {
+        AetherNetwork.sendToServer(new PacketDialogueClicked(this.dialogueName, dialogue.getDialogueId()));
+        this.dialogueTreeCompleted();
+    }
 
 }

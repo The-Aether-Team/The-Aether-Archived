@@ -12,23 +12,20 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.inventory.ContainerIncubator;
 import com.legacy.aether.tileentity.TileEntityIncubator;
 
-public class GuiIncubator extends GuiContainer
-{
+public class GuiIncubator extends GuiContainer {
 
 	private TileEntityIncubator incubatorInventory;
 
 	private static final ResourceLocation TEXTURE_INCUBATOR = Aether.locate("textures/gui/incubator.png");
 
-	public GuiIncubator(EntityPlayer player, InventoryPlayer inventoryplayer, TileEntityIncubator tileentityIncubator)
-	{
+	public GuiIncubator(EntityPlayer player, InventoryPlayer inventoryplayer, TileEntityIncubator tileentityIncubator) {
 		super(new ContainerIncubator(player, inventoryplayer, tileentityIncubator));
 
 		this.incubatorInventory = (TileEntityIncubator) tileentityIncubator;
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int par1, int par2)
-	{
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		String incubatorName = this.incubatorInventory.getInventoryName();
 
 		this.fontRendererObj.drawString(incubatorName, this.xSize / 2 - this.fontRendererObj.getStringWidth(incubatorName) / 2, 6, 4210752);
@@ -36,8 +33,7 @@ public class GuiIncubator extends GuiContainer
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float f, int ia, int ib)
-	{
+	protected void drawGuiContainerBackgroundLayer(float f, int ia, int ib) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		this.mc.renderEngine.bindTexture(TEXTURE_INCUBATOR);
@@ -47,8 +43,7 @@ public class GuiIncubator extends GuiContainer
 
 		this.drawTexturedModalRect(j, k, 0, 0, this.xSize, this.ySize);
 
-		if (this.incubatorInventory.isIncubating())
-		{
+		if (this.incubatorInventory.isIncubating()) {
 			int l = this.incubatorInventory.getPowerTimeRemainingScaled(12);
 
 			this.drawTexturedModalRect(j + 74, (k + 47) - l, 176, 12 - l, 14, l + 2);

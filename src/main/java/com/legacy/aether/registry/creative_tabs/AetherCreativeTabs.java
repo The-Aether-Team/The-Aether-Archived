@@ -10,20 +10,18 @@ import com.legacy.aether.items.ItemsAether;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class AetherCreativeTabs 
-{
+public class AetherCreativeTabs {
 
 	public static AetherTab blocks = new AetherTab("aether_blocks"),
-	tools = new AetherTab("aether_tools"), 
-	weapons = new AetherTab("aether_weapons"), 
-	armor = new AetherTab("aether_armor"), 
-	food = new AetherTab("aether_food"), 
-	accessories = new AetherTab("aether_accessories"), 
-	material = new AetherTab("aether_material"),
-	misc = new AetherTab("aether_misc");
+			tools = new AetherTab("aether_tools"),
+			weapons = new AetherTab("aether_weapons"),
+			armor = new AetherTab("aether_armor"),
+			food = new AetherTab("aether_food"),
+			accessories = new AetherTab("aether_accessories"),
+			material = new AetherTab("aether_material"),
+			misc = new AetherTab("aether_misc");
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		blocks.setIcon(new ItemStack(BlocksAether.aether_grass));
 		tools.setIcon(new ItemStack(ItemsAether.gravitite_pickaxe));
 		weapons.setIcon(new ItemStack(ItemsAether.gravitite_sword));
@@ -33,46 +31,39 @@ public class AetherCreativeTabs
 		material.setIcon(new ItemStack(ItemsAether.ambrosium_shard));
 		misc.setIcon(new ItemStack(ItemsAether.dungeon_key));
 	}
-	
-	public static class AetherTab extends CreativeTabs
-	{
+
+	public static class AetherTab extends CreativeTabs {
 
 		private ItemStack stack;
 
-		public AetherTab(String unlocalizedName)
-		{
+		public AetherTab(String unlocalizedName) {
 			super(unlocalizedName);
 		}
 
-		public AetherTab(String unlocalizedName, ItemStack stack)
-		{
+		public AetherTab(String unlocalizedName, ItemStack stack) {
 			super(unlocalizedName);
 			this.stack = stack;
 		}
 
-		public void setIcon(ItemStack stack)
-		{
+		public void setIcon(ItemStack stack) {
 			this.stack = stack;
 		}
 
-	    @SideOnly(Side.CLIENT)
-	    public String getTranslatedTabLabel()
-	    {
-	        return "tab." + this.getTabLabel();
-	    }
+		@SideOnly(Side.CLIENT)
+		public String getTranslatedTabLabel() {
+			return "tab." + this.getTabLabel();
+		}
 
 		@Override
-		public ItemStack getIconItemStack()
-		{
+		public ItemStack getIconItemStack() {
 			return stack;
 		}
 
 		@Override
-		public Item getTabIconItem()
-		{
+		public Item getTabIconItem() {
 			return stack.getItem();
 		}
-		
+
 	}
 
 }

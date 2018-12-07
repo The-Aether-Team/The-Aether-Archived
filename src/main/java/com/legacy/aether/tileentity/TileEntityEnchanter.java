@@ -19,8 +19,7 @@ import com.legacy.aether.util.FilledList;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class TileEntityEnchanter extends AetherTileEntity
-{
+public class TileEntityEnchanter extends AetherTileEntity {
 
 	public int progress, ticksRequired, powerRemaining;
 
@@ -28,72 +27,54 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 	private AetherEnchantment currentEnchantment;
 
-	public TileEntityEnchanter() 
-	{
+	public TileEntityEnchanter() {
 		super("Altar");
 	}
 
 	@Override
-	public List<ItemStack> getTileInventory() 
-	{
+	public List<ItemStack> getTileInventory() {
 		return this.enchantedItemStacks;
 	}
 
 	@Override
-	public void onSlotChanged(int index) 
-	{
+	public void onSlotChanged(int index) {
 
 	}
 
 	@Override
-	public void updateEntity()
-	{
+	public void updateEntity() {
 		boolean flag = this.isEnchanting();
 
-		if (this.powerRemaining > 0)
-		{
+		if (this.powerRemaining > 0) {
 			this.powerRemaining--;
 
-			if (this.currentEnchantment != null)
-			{
-				if (this.worldObj.getBlock(this.xCoord, this.yCoord - 1, this.zCoord) == BlocksAether.enchanted_gravitite)
-				{
+			if (this.currentEnchantment != null) {
+				if (this.worldObj.getBlock(this.xCoord, this.yCoord - 1, this.zCoord) == BlocksAether.enchanted_gravitite) {
 					this.progress += 2.5F;
-				}
-				else
-				{
+				} else {
 					this.progress++;
 				}
 			}
 		}
 
-		if (this.currentEnchantment != null)
-		{
-			if (this.progress >= this.ticksRequired)
-			{
-				if (!this.worldObj.isRemote)
-				{
+		if (this.currentEnchantment != null) {
+			if (this.progress >= this.ticksRequired) {
+				if (!this.worldObj.isRemote) {
 					ItemStack result = this.currentEnchantment.getOutput().copy();
 
 					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
 
-					if (this.getStackInSlot(2) != null)
-					{
+					if (this.getStackInSlot(2) != null) {
 						result.stackSize += (this.getStackInSlot(2).stackSize + 1);
 
 						this.setInventorySlotContents(2, result);
-					}
-					else
-					{
+					} else {
 						this.setInventorySlotContents(2, result);
 					}
 
-					if (this.getStackInSlot(0).getItem().hasContainerItem(this.getStackInSlot(0)))
-					{
+					if (this.getStackInSlot(0).getItem().hasContainerItem(this.getStackInSlot(0))) {
 						this.setInventorySlotContents(0, this.getStackInSlot(0).getItem().getContainerItem(this.getStackInSlot(0)));
-					}
-					else
-					{
+					} else {
 						this.decrStackSize(0, 1);
 					}
 				}
@@ -102,39 +83,29 @@ public class TileEntityEnchanter extends AetherTileEntity
 				AetherHooks.onItemEnchant(this, this.currentEnchantment);
 			}
 
-			if (this.getStackInSlot(0) == null || (this.getStackInSlot(0) != null && AetherAPI.instance().getEnchantment(this.getStackInSlot(0)) != this.currentEnchantment))
-			{
+			if (this.getStackInSlot(0) == null || (this.getStackInSlot(0) != null && AetherAPI.instance().getEnchantment(this.getStackInSlot(0)) != this.currentEnchantment)) {
 				this.currentEnchantment = null;
 				this.progress = 0;
 			}
 
-			if (this.powerRemaining <= 0)
-			{
-				if (this.getStackInSlot(1) != null && AetherAPI.instance().isEnchantmentFuel(this.getStackInSlot(1)))
-				{
+			if (this.powerRemaining <= 0) {
+				if (this.getStackInSlot(1) != null && AetherAPI.instance().isEnchantmentFuel(this.getStackInSlot(1))) {
 					this.powerRemaining += AetherAPI.instance().getEnchantmentFuel(this.getStackInSlot(1)).getTimeGiven();
 
-					if (!this.worldObj.isRemote)
-					{
+					if (!this.worldObj.isRemote) {
 						this.decrStackSize(1, 1);
 					}
-				}
-				else
-				{
+				} else {
 					this.currentEnchantment = null;
 					this.progress = 0;
 				}
 			}
-		}
-		else if (this.getStackInSlot(0) != null)
-		{
+		} else if (this.getStackInSlot(0) != null) {
 			ItemStack itemstack = this.getStackInSlot(0);
 			AetherEnchantment enchantment = AetherAPI.instance().getEnchantment(itemstack);
 
-			if (enchantment != null)
-			{
-				if (this.getStackInSlot(2) == null || (enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getItemDamage() == this.getStackInSlot(2).getItemDamage()))
-				{
+			if (enchantment != null) {
+				if (this.getStackInSlot(2) == null || (enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getItemDamage() == this.getStackInSlot(2).getItemDamage())) {
 					this.currentEnchantment = enchantment;
 					this.ticksRequired = this.currentEnchantment.getTimeRequired();
 					this.addEnchantmentWeight(itemstack);
@@ -143,32 +114,26 @@ public class TileEntityEnchanter extends AetherTileEntity
 			}
 		}
 
-		if (flag != this.isEnchanting())
-		{
+		if (flag != this.isEnchanting()) {
 			this.markDirty();
 			BlockAetherContainer.setState(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.isEnchanting());
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public void addEnchantmentWeight(ItemStack stack)
-	{
+	public void addEnchantmentWeight(ItemStack stack) {
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 
-		if (!enchantments.isEmpty())
-		{
-			for (int levels : enchantments.values())
-			{
+		if (!enchantments.isEmpty()) {
+			for (int levels : enchantments.values()) {
 				this.ticksRequired += (levels * 1250);
 			}
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	public int getEnchantmentProgressScaled(int i)
-	{
-		if (this.ticksRequired == 0)
-		{
+	public int getEnchantmentProgressScaled(int i) {
+		if (this.ticksRequired == 0) {
 			return 0;
 		}
 
@@ -176,19 +141,16 @@ public class TileEntityEnchanter extends AetherTileEntity
 	}
 
 	@SideOnly(Side.CLIENT)
-	public int getEnchantmentTimeRemaining(int i)
-	{
+	public int getEnchantmentTimeRemaining(int i) {
 		return (this.powerRemaining * i) / 500;
 	}
 
-	public boolean isEnchanting()
-	{
+	public boolean isEnchanting() {
 		return this.powerRemaining > 0;
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
+	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
 		this.progress = compound.getInteger("progress");
@@ -197,8 +159,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound compound)
-	{
+	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 
 		compound.setInteger("progress", this.progress);
@@ -207,18 +168,12 @@ public class TileEntityEnchanter extends AetherTileEntity
 	}
 
 	@Override
-	public boolean isValidSlotItem(int slot, ItemStack stackInSlot)
-	{
-		if (slot == 2)
-		{
+	public boolean isValidSlotItem(int slot, ItemStack stackInSlot) {
+		if (slot == 2) {
 			return false;
-		}
-		else if (slot == 1 && AetherAPI.instance().isEnchantmentFuel(stackInSlot))
-		{
+		} else if (slot == 1 && AetherAPI.instance().isEnchantmentFuel(stackInSlot)) {
 			return true;
-		}
-		else if (slot == 0 && AetherAPI.instance().hasEnchantment(stackInSlot))
-		{
+		} else if (slot == 0 && AetherAPI.instance().hasEnchantment(stackInSlot)) {
 			return true;
 		}
 
@@ -226,9 +181,8 @@ public class TileEntityEnchanter extends AetherTileEntity
 	}
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int side)
-	{
-		return side == 0 ? new int[] {2} : new int[] {0, 1};
+	public int[] getAccessibleSlotsFromSide(int side) {
+		return side == 0 ? new int[]{2} : new int[]{0, 1};
 	}
 
 }

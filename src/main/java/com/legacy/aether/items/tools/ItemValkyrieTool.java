@@ -13,32 +13,26 @@ import net.minecraft.util.Vec3;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumAetherToolType;
 
-public class ItemValkyrieTool extends ItemAetherTool 
-{
+public class ItemValkyrieTool extends ItemAetherTool {
 
-	public ItemValkyrieTool(EnumAetherToolType toolType) 
-	{
+	public ItemValkyrieTool(EnumAetherToolType toolType) {
 		super(ToolMaterial.EMERALD, toolType);
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-	{
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
 		return false;
 	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
-    	return ItemsAether.aether_loot;
-    }
+	public EnumRarity getRarity(ItemStack stack) {
+		return ItemsAether.aether_loot;
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
-	{
-		if (!(entityLiving instanceof EntityPlayer))
-		{
+	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
+		if (!(entityLiving instanceof EntityPlayer)) {
 			return false;
 		}
 
@@ -52,45 +46,38 @@ public class ItemValkyrieTool extends ItemAetherTool
 		Entity found = null;
 		double foundLen = 0.0D;
 
-		for (Object o : locatedEntities)
-		{
-			if (o == player)
-			{
+		for (Object o : locatedEntities) {
+			if (o == player) {
 				continue;
 			}
 
 			Entity ent = (Entity) o;
 
-			if (!ent.canBeCollidedWith())
-			{
+			if (!ent.canBeCollidedWith()) {
 				continue;
 			}
 
 			Vec3 vec = Vec3.createVectorHelper(ent.posX - player.posX, ent.boundingBox.minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
 			double len = vec.lengthVector();
 
-			if (len > 10.0F)
-			{
+			if (len > 10.0F) {
 				continue;
 			}
 
 			vec = vec.normalize();
 			double dot = playerVision.dotProduct(vec);
 
-			if (dot < 1.0 - 0.125 / len || !player.canEntityBeSeen(ent))
-			{
+			if (dot < 1.0 - 0.125 / len || !player.canEntityBeSeen(ent)) {
 				continue;
 			}
 
-			if (foundLen == 0.0 || len < foundLen)
-			{
+			if (foundLen == 0.0 || len < foundLen) {
 				found = ent;
 				foundLen = len;
 			}
 		}
 
-		if (found != null && player.ridingEntity != found)
-		{
+		if (found != null && player.ridingEntity != found) {
 			stack.damageItem(1, player);
 
 			player.attackTargetEntityWithCurrentItem(found);

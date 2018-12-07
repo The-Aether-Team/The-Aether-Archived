@@ -11,8 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 
 import com.legacy.aether.api.accessories.AccessoryType;
 
-public interface IAccessoryInventory extends IInventory
-{
+public interface IAccessoryInventory extends IInventory {
 
 	public void dropAccessories();
 

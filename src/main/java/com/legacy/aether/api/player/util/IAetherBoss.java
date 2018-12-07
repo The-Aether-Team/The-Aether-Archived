@@ -1,7 +1,6 @@
 package com.legacy.aether.api.player.util;
 
-public interface IAetherBoss
-{
+public interface IAetherBoss {
 
 	public String getBossName();
 

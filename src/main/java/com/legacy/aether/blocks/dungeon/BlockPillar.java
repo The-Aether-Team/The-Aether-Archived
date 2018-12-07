@@ -9,18 +9,16 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
-public class BlockPillar extends BlockRotatedPillar
-{
+public class BlockPillar extends BlockRotatedPillar {
 
 	private String topTexture;
 
 	private String sideTexture;
 
-    @SideOnly(Side.CLIENT)
-    protected IIcon sideIcon;
+	@SideOnly(Side.CLIENT)
+	protected IIcon sideIcon;
 
-	public BlockPillar(String topIcon, String sideTexture) 
-	{
+	public BlockPillar(String topIcon, String sideTexture) {
 		super(Material.rock);
 
 		this.topTexture = topIcon;
@@ -32,18 +30,16 @@ public class BlockPillar extends BlockRotatedPillar
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-	protected IIcon getSideIcon(int meta) 
-	{
+	@SideOnly(Side.CLIENT)
+	protected IIcon getSideIcon(int meta) {
 		return this.sideIcon;
 	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister registry)
-    {
-    	this.field_150164_N = registry.registerIcon(Aether.find(this.topTexture));
-    	this.sideIcon = registry.registerIcon(Aether.find(this.sideTexture));
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister registry) {
+		this.field_150164_N = registry.registerIcon(Aether.find(this.topTexture));
+		this.sideIcon = registry.registerIcon(Aether.find(this.sideTexture));
+	}
 
 }

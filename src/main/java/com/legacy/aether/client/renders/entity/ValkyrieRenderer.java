@@ -9,28 +9,24 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.client.models.entities.ValkyrieModel;
 import com.legacy.aether.entities.bosses.EntityValkyrie;
 
-public class ValkyrieRenderer extends RenderLiving
-{
+public class ValkyrieRenderer extends RenderLiving {
 
-	private static final ResourceLocation TEXTURE = Aether.locate("textures/entities/valkyrie/valkyrie.png");
+    private static final ResourceLocation TEXTURE = Aether.locate("textures/entities/valkyrie/valkyrie.png");
 
-	public ValkyrieRenderer()
-	{
-		super(new ValkyrieModel(), 0.3F);
-	}
-
-	@Override
-    protected void preRenderCallback(EntityLivingBase valkyrie, float partialTickTime)
-    {
-        ((ValkyrieModel)this.mainModel).sinage = ((EntityValkyrie)valkyrie).sinage;
-        ((ValkyrieModel)this.mainModel).gonRound = valkyrie.onGround;
-        ((ValkyrieModel)this.mainModel).halow = true;
+    public ValkyrieRenderer() {
+        super(new ValkyrieModel(), 0.3F);
     }
 
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity) 
-	{
-		return TEXTURE;
-	}
+    @Override
+    protected void preRenderCallback(EntityLivingBase valkyrie, float partialTickTime) {
+        ((ValkyrieModel) this.mainModel).sinage = ((EntityValkyrie) valkyrie).sinage;
+        ((ValkyrieModel) this.mainModel).gonRound = valkyrie.onGround;
+        ((ValkyrieModel) this.mainModel).halow = true;
+    }
+
+    @Override
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        return TEXTURE;
+    }
 
 }

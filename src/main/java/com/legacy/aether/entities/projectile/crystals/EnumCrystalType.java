@@ -1,58 +1,49 @@
 package com.legacy.aether.entities.projectile.crystals;
 
-public enum EnumCrystalType 
-{
+public enum EnumCrystalType {
 
-	FIRE("random.fizz", "largesmoke", "random.explode", "flame"), ICE("dig.glass", "", "dig.glass", "snowshovel"), THUNDER(), CLOUD("dig.glass", "", "dig.glass", "snowshovel");
+    FIRE("random.fizz", "largesmoke", "random.explode", "flame"), ICE("dig.glass", "", "dig.glass", "snowshovel"), THUNDER(), CLOUD("dig.glass", "", "dig.glass", "snowshovel");
 
-	private String deathSound = "";
+    private String deathSound = "";
 
-	private String deathParticle = "";
+    private String deathParticle = "";
 
-	private String explosionSound = "";
+    private String explosionSound = "";
 
-	private String explosionParticle = "";
+    private String explosionParticle = "";
 
-	private EnumCrystalType()
-	{
-		
-	}
+    private EnumCrystalType() {
 
-	EnumCrystalType(String deathSound, String deathParticle, String explosionSound, String explosionParticle)
-	{
-		this.deathSound = deathSound;
-		this.deathParticle = deathParticle;
-		this.explosionSound = explosionSound;
-		this.explosionParticle = explosionParticle;
-	}
+    }
 
-	public String getDeathSound()
-	{
-		return this.deathSound;
-	}
+    EnumCrystalType(String deathSound, String deathParticle, String explosionSound, String explosionParticle) {
+        this.deathSound = deathSound;
+        this.deathParticle = deathParticle;
+        this.explosionSound = explosionSound;
+        this.explosionParticle = explosionParticle;
+    }
 
-	public String getDeathParticle()
-	{
-		return this.deathParticle;
-	}
+    public String getDeathSound() {
+        return this.deathSound;
+    }
 
-	public String getExplosionSound()
-	{
-		return this.explosionSound;
-	}
+    public String getDeathParticle() {
+        return this.deathParticle;
+    }
 
-	public String getExplosionParticle()
-	{
-		return this.explosionParticle;
-	}
+    public String getExplosionSound() {
+        return this.explosionSound;
+    }
 
-	public int getId()
-	{
-		return this.ordinal();
-	}
+    public String getExplosionParticle() {
+        return this.explosionParticle;
+    }
 
-	public static EnumCrystalType get(int id)
-	{
-		return values()[id];
-	}
+    public int getId() {
+        return this.ordinal();
+    }
+
+    public static EnumCrystalType get(int id) {
+        return values()[id];
+    }
 }

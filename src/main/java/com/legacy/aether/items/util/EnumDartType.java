@@ -1,7 +1,6 @@
 package com.legacy.aether.items.util;
 
-public enum EnumDartType
-{
+public enum EnumDartType {
 
 	Golden(0, "golden"), Poison(1, "poison"), Enchanted(2, "enchanted");
 
@@ -9,25 +8,21 @@ public enum EnumDartType
 
 	public String name;
 
-	EnumDartType(int meta, String name)
-	{
+	EnumDartType(int meta, String name) {
 		this.meta = meta;
 		this.name = name;
 	}
 
-	public static EnumDartType getType(int meta)
-	{
-		return meta == 1 ? Poison :  meta == 2 ? Enchanted : Golden;
+	public static EnumDartType getType(int meta) {
+		return meta == 1 ? Poison : meta == 2 ? Enchanted : Golden;
 	}
 
-	public int getMeta()
-	{
+	public int getMeta() {
 		return this.meta;
 	}
 
-    public String toString()
-    {
-        return this.name;
-    }
+	public String toString() {
+		return this.name;
+	}
 
 }

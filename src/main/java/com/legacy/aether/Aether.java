@@ -22,8 +22,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = Aether.MOD_ID, version = "v1.0.0")
-public class Aether 
-{
+public class Aether {
 
 	public static final String MOD_ID = "aether_legacy";
 
@@ -33,44 +32,39 @@ public class Aether
 	@SidedProxy(clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.CommonProxy")
 	public static CommonProxy proxy;
 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-    	AetherRankings.initialization();
-    	AetherNetwork.preInitialization();
-    	AetherConfig.init(event.getModConfigurationDirectory());
-    }
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event) {
+		AetherRankings.initialization();
+		AetherNetwork.preInitialization();
+		AetherConfig.init(event.getModConfigurationDirectory());
+	}
 
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-    	BlocksAether.initialization();
-    	ItemsAether.initialization();
-    	AetherRegistries.register();
-    	EntitiesAether.initialization();
-    	AetherCreativeTabs.initialization();
-    	AetherTileEntities.initialization();
-    	AetherWorld.initialization();
-    	AchievementsAether.initialization();
+	@EventHandler
+	public void init(FMLInitializationEvent event) {
+		BlocksAether.initialization();
+		ItemsAether.initialization();
+		AetherRegistries.register();
+		EntitiesAether.initialization();
+		AetherCreativeTabs.initialization();
+		AetherTileEntities.initialization();
+		AetherWorld.initialization();
+		AchievementsAether.initialization();
 
-    	proxy.init();
+		proxy.init();
 
-    	CommonProxy.registerEvent(new PlayerAetherEvents());
-    	CommonProxy.registerEvent(new AetherEventHandler());
-    }
+		CommonProxy.registerEvent(new PlayerAetherEvents());
+		CommonProxy.registerEvent(new AetherEventHandler());
+	}
 
-	public static ResourceLocation locate(String location)
-	{
+	public static ResourceLocation locate(String location) {
 		return new ResourceLocation(MOD_ID, location);
 	}
 
-	public static String find(String location)
-	{
+	public static String find(String location) {
 		return modAddress() + location;
 	}
 
-	public static String modAddress()
-	{
+	public static String modAddress() {
 		return MOD_ID + ":";
 	}
 }

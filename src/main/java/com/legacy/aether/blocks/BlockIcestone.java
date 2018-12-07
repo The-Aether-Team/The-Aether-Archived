@@ -5,11 +5,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public class BlockIcestone extends Block 
-{
+public class BlockIcestone extends Block {
 
-	public BlockIcestone() 
-	{
+	public BlockIcestone() {
 		super(Material.ice);
 
 		this.setHardness(3F);
@@ -20,22 +18,15 @@ public class BlockIcestone extends Block
 	}
 
 	@Override
-    public void onBlockAdded(World worldIn, int xIn, int yIn, int zIn)
-	{
-		for (int x = xIn - 3; x <= (xIn + 3); ++x)
-		{
-			for (int y = yIn - 3; y <= (yIn + 3); ++y)
-			{
-				for (int z = zIn - 3; z <= (zIn + 3); ++z)
-				{
+	public void onBlockAdded(World worldIn, int xIn, int yIn, int zIn) {
+		for (int x = xIn - 3; x <= (xIn + 3); ++x) {
+			for (int y = yIn - 3; y <= (yIn + 3); ++y) {
+				for (int z = zIn - 3; z <= (zIn + 3); ++z) {
 					Block block = worldIn.getBlock(x, y, z);
 
-					if (block == Blocks.water || block == Blocks.flowing_water)
-					{
+					if (block == Blocks.water || block == Blocks.flowing_water) {
 						worldIn.setBlock(x, y, z, Blocks.ice);
-					}
-					else if (block == Blocks.lava || block == Blocks.flowing_lava)
-					{
+					} else if (block == Blocks.lava || block == Blocks.flowing_lava) {
 						worldIn.setBlock(x, y, z, Blocks.obsidian);
 					}
 				}

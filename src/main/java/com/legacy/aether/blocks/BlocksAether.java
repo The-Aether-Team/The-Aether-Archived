@@ -48,8 +48,7 @@ import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class BlocksAether
-{
+public class BlocksAether {
 
 	public static Block aether_grass, enchanted_aether_grass, aether_dirt;
 
@@ -106,11 +105,10 @@ public class BlocksAether
 	public static Block holiday_leaves, decorated_holiday_leaves, present;
 
 	public static Block sun_altar;
-	
+
 	public static Block skyroot_bookshelf;
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		aether_grass = registerMeta("aether_grass", new BlockAetherGrass());
 		enchanted_aether_grass = register("enchanted_aether_grass", new BlockEnchantedAetherGrass());
 		aether_dirt = registerMeta("aether_dirt", new BlockAetherDirt());
@@ -200,13 +198,11 @@ public class BlocksAether
 		skyroot_bookshelf = register("skyroot_bookshelf", new BlockSkyrootBookshelf());
 	}
 
-	public static boolean isGood(Block block)
-	{
-        return block == Blocks.air || block == aercloud;
+	public static boolean isGood(Block block) {
+		return block == Blocks.air || block == aercloud;
 	}
 
-	public static Block registerSlab(String name, Block slab1, Block slab2)
-	{
+	public static Block registerSlab(String name, Block slab1, Block slab2) {
 		slab1.setBlockName(name);
 		slab1.setCreativeTab(AetherCreativeTabs.blocks);
 
@@ -215,8 +211,7 @@ public class BlocksAether
 		return slab1;
 	}
 
-	public static Block register(String name, Block block)
-	{
+	public static Block register(String name, Block block) {
 		block.setBlockName(name);
 		block.setCreativeTab(AetherCreativeTabs.blocks);
 
@@ -225,8 +220,7 @@ public class BlocksAether
 		return block;
 	}
 
-	public static Block registerMeta(String name, Block block)
-	{
+	public static Block registerMeta(String name, Block block) {
 		block.setBlockName(name);
 		block.setCreativeTab(AetherCreativeTabs.blocks);
 

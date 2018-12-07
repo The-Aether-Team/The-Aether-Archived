@@ -5,8 +5,7 @@ import java.io.IOException;
 
 import net.minecraftforge.common.config.Configuration;
 
-public class AetherConfig 
-{
+public class AetherConfig {
 
 	private static int max_life_shards;
 
@@ -22,16 +21,12 @@ public class AetherConfig
 
 	private static int travel_dimension;
 
-	public static void init(File location)
-	{
+	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
 
-		try
-		{
+		try {
 			newFile.createNewFile();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 
 		}
 
@@ -58,53 +53,43 @@ public class AetherConfig
 		config.save();
 	}
 
-	public static int getAetherDimensionID()
-	{
+	public static int getAetherDimensionID() {
 		return AetherConfig.aether_dimension_id;
 	}
 
-	public static int getAetherBiomeID()
-	{
+	public static int getAetherBiomeID() {
 		return AetherConfig.aether_biome_id;
 	}
 
-	public static int getMaxLifeShards()
-	{
+	public static int getMaxLifeShards() {
 		return AetherConfig.max_life_shards;
 	}
 
-	public static int getTravelDimensionID()
-	{
+	public static int getTravelDimensionID() {
 		return AetherConfig.travel_dimension;
 	}
 
-	public static boolean shouldFloatWithBlock()
-	{
+	public static boolean shouldFloatWithBlock() {
 		return AetherConfig.floating_block_collision;
 	}
 
-	public static boolean triviaDisabled()
-	{
+	public static boolean triviaDisabled() {
 		return AetherConfig.disable_trivia;
 	}
-	
-	public static boolean oldMobsEnabled()
-	{
+
+	public static boolean oldMobsEnabled() {
 		return AetherConfig.old_mobs;
 	}
 
-	public static boolean shouldLoadHolidayContent()
-	{
+	public static boolean shouldLoadHolidayContent() {
 		return AetherConfig.christmas_content;
 	}
-	
-	public static boolean tallgrassEnabled()
-	{
+
+	public static boolean tallgrassEnabled() {
 		return AetherConfig.tallgrass;
 	}
-	
-	public static boolean activateOnlyWithSkyroot()
-	{
+
+	public static boolean activateOnlyWithSkyroot() {
 		return AetherConfig.skyrootBucketOnly;
 	}
 

@@ -9,18 +9,13 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 
-public abstract class AetherPacket<Packet extends IMessage> implements IMessage, IMessageHandler<Packet, Packet>
-{
+public abstract class AetherPacket<Packet extends IMessage> implements IMessage, IMessageHandler<Packet, Packet> {
 
 	@Override
-	public Packet onMessage(Packet message, MessageContext context)
-	{
-		if (context.side == Side.CLIENT)
-		{
+	public Packet onMessage(Packet message, MessageContext context) {
+		if (context.side == Side.CLIENT) {
 			this.handleClient(message, Aether.proxy.getPlayer());
-		}
-		else if (context.side == Side.SERVER)
-		{
+		} else if (context.side == Side.SERVER) {
 			this.handleServer(message, context.getServerHandler().playerEntity);
 		}
 

@@ -8,13 +8,11 @@ import net.minecraft.world.World;
 import com.legacy.aether.CommonProxy;
 import com.legacy.aether.blocks.BlocksAether;
 
-public class BlockAetherFlower extends BlockBush
-{
+public class BlockAetherFlower extends BlockBush {
 
-    public AxisAlignedBB FLOWER_AABB = AxisAlignedBB.getBoundingBox(0.30000001192092896D, 0.0D, 0.30000001192092896D, 0.699999988079071D, 0.6000000238418579D, 0.699999988079071D);
+	public AxisAlignedBB FLOWER_AABB = AxisAlignedBB.getBoundingBox(0.30000001192092896D, 0.0D, 0.30000001192092896D, 0.699999988079071D, 0.6000000238418579D, 0.699999988079071D);
 
-	public BlockAetherFlower() 
-	{
+	public BlockAetherFlower() {
 		this.setHardness(0.0F);
 		this.setTickRandomly(true);
 		this.setStepSound(soundTypeGrass);
@@ -22,23 +20,20 @@ public class BlockAetherFlower extends BlockBush
 	}
 
 	@Override
-    public boolean canPlaceBlockAt(World world, int x, int y, int z)
-	{
-        Block soil = world.getBlock(x, y - 1, z);
+	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
+		Block soil = world.getBlock(x, y - 1, z);
 		return soil == BlocksAether.aether_grass || soil == BlocksAether.aether_dirt || soil == BlocksAether.enchanted_aether_grass;
 	}
 
 	@Override
-	public boolean canBlockStay(World world, int x, int y, int z)
-	{
+	public boolean canBlockStay(World world, int x, int y, int z) {
 		Block soil = world.getBlock(x, y - 1, z);
 		return (soil != null && this.canPlaceBlockAt(world, x, y, z));
 	}
 
 	@Override
-    public int getRenderType()
-    {
-        return CommonProxy.aetherFlowerRenderID;
-    }
+	public int getRenderType() {
+		return CommonProxy.aetherFlowerRenderID;
+	}
 
 }

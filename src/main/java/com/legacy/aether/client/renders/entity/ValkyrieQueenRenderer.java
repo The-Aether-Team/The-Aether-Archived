@@ -9,27 +9,23 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.client.models.entities.ValkyrieModel;
 import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
 
-public class ValkyrieQueenRenderer extends RenderLiving
-{
+public class ValkyrieQueenRenderer extends RenderLiving {
 
-	private static final ResourceLocation TEXTURE = Aether.locate("textures/bosses/valkyrie_queen/valkyrie_queen.png");
+    private static final ResourceLocation TEXTURE = Aether.locate("textures/bosses/valkyrie_queen/valkyrie_queen.png");
 
-	public ValkyrieQueenRenderer()
-	{
-		super(new ValkyrieModel(), 0.3F);
-	}
-
-    protected void preRenderCallback(EntityLivingBase valkyrie, float partialTickTime)
-    {
-        ((ValkyrieModel)this.mainModel).sinage = ((EntityValkyrieQueen)valkyrie).sinage;
-        ((ValkyrieModel)this.mainModel).gonRound = valkyrie.onGround;
-        ((ValkyrieModel)this.mainModel).halow = true;
+    public ValkyrieQueenRenderer() {
+        super(new ValkyrieModel(), 0.3F);
     }
 
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity) 
-	{
-		return TEXTURE;
-	}
+    protected void preRenderCallback(EntityLivingBase valkyrie, float partialTickTime) {
+        ((ValkyrieModel) this.mainModel).sinage = ((EntityValkyrieQueen) valkyrie).sinage;
+        ((ValkyrieModel) this.mainModel).gonRound = valkyrie.onGround;
+        ((ValkyrieModel) this.mainModel).halow = true;
+    }
+
+    @Override
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        return TEXTURE;
+    }
 
 }

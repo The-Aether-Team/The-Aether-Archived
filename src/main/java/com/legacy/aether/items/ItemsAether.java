@@ -52,8 +52,7 @@ import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class ItemsAether 
-{
+public class ItemsAether {
 
 	public static EnumRarity aether_loot = EnumHelper.addRarity("aether_legacy_loot", EnumChatFormatting.GREEN, "Aether Loot");
 
@@ -117,8 +116,7 @@ public class ItemsAether
 
 	public static Item aether_spawn_egg;
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		zanite_gemstone = register("zanite_gemstone", new ItemAether(AetherCreativeTabs.material).setTextureName(Aether.find("misc/zanite_gemstone")));
 		ambrosium_shard = register("ambrosium_shard", new ItemAmbrosiumShard().setTextureName(Aether.find("misc/ambrosium_shard")));
 		golden_amber = register("golden_amber", new ItemAether(AetherCreativeTabs.material).setTextureName(Aether.find("misc/golden_amber")));
@@ -204,7 +202,7 @@ public class ItemsAether
 
 		flaming_sword = register("flaming_sword", new ItemElementalSword().setTextureName(Aether.find("weapons/flaming_sword")));
 		lightning_sword = register("lightning_sword", new ItemElementalSword().setTextureName(Aether.find("weapons/lightning_sword")));
-		holy_sword = register("holy_sword",new ItemElementalSword().setTextureName(Aether.find("weapons/holy_sword")));
+		holy_sword = register("holy_sword", new ItemElementalSword().setTextureName(Aether.find("weapons/holy_sword")));
 
 		vampire_blade = register("vampire_blade", new ItemVampireBlade().setTextureName(Aether.find("weapons/vampire_blade")));
 		pig_slayer = register("pig_slayer", new ItemPigSlayer().setTextureName(Aether.find("weapons/pig_slayer")));
@@ -258,14 +256,13 @@ public class ItemsAether
 
 		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512).setTextureName(Aether.find("accessories/repulsion_shield")));
 		lore_book = register("lore_book", new ItemLoreBook().setTextureName(Aether.find("misc/lore_book")));
-		
+
 		developer_stick = register("developer_stick", new ItemDeveloperStick().setTextureName(Aether.find("skyroot_stick")));
 
 		aether_spawn_egg = register("aether_spawn_egg", new ItemAetherSpawnEgg().setTextureName("spawn_egg"));
 	}
 
-	public static Item register(String name, Item item)
-	{
+	public static Item register(String name, Item item) {
 		item.setUnlocalizedName(name);
 		GameRegistry.registerItem(item, name, Aether.MOD_ID);
 

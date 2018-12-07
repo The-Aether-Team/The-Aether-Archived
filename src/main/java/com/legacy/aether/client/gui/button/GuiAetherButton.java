@@ -13,10 +13,9 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiAetherButton extends GuiButton
-{
+public class GuiAetherButton extends GuiButton {
 
-    protected static final ResourceLocation buttonTextures = Aether.locate("textures/gui/buttons.png");
+	protected static final ResourceLocation buttonTextures = Aether.locate("textures/gui/buttons.png");
 
 	public int scrollMax = 100;
 
@@ -30,47 +29,34 @@ public class GuiAetherButton extends GuiButton
 
 	public boolean retracting = false;
 
-	public GuiAetherButton(int i, int j, int k, String s)
-	{
+	public GuiAetherButton(int i, int j, int k, String s) {
 		super(i, j, k, s);
 	}
 
 	@Override
-	public int getHoverState(boolean flag)
-	{
+	public int getHoverState(boolean flag) {
 		byte byte0 = 1;
 
-		if (!this.enabled)
-		{
+		if (!this.enabled) {
 			byte0 = 0;
-		}
-		else if (flag)
-		{
-			if (byte0 < 2)
-			{
+		} else if (flag) {
+			if (byte0 < 2) {
 				byte0++;
 			}
-			if (this.scrollCrop < this.scrollCropMax)
-			{
+			if (this.scrollCrop < this.scrollCropMax) {
 				this.scrollCrop += 4;
 			}
-			if (this.scrollHeight < this.scrollMin)
-			{
+			if (this.scrollHeight < this.scrollMin) {
 				this.scrollHeight += 4;
 			}
-		}
-		else
-		{
-			if (this.scrollCrop > this.scrollCropMax)
-			{
+		} else {
+			if (this.scrollCrop > this.scrollCropMax) {
 				this.scrollCrop -= 4;
 			}
-			if (this.scrollHeight > this.scrollMax)
-			{
+			if (this.scrollHeight > this.scrollMax) {
 				this.scrollHeight -= 4;
 			}
-			if (this.scrollHeight == this.scrollMax)
-			{
+			if (this.scrollHeight == this.scrollMax) {
 				this.retracting = false;
 			}
 		}
@@ -79,10 +65,8 @@ public class GuiAetherButton extends GuiButton
 	}
 
 	@Override
-    public void drawButton(Minecraft minecraft, int i, int j)
-	{
-		if (!this.visible)
-		{
+	public void drawButton(Minecraft minecraft, int i, int j) {
+		if (!this.visible) {
 			return;
 		}
 
@@ -100,33 +84,25 @@ public class GuiAetherButton extends GuiButton
 
 		GL11.glDisable(GL11.GL_BLEND);
 
-		if (!this.enabled)
-		{
+		if (!this.enabled) {
 			this.drawString(fontrenderer, this.displayString, this.xPosition + this.width / 10 + this.scrollHeight - 80, this.yPosition + (this.height - 8) / 2, -6250336);
-		}
-		else if (flag)
-		{
+		} else if (flag) {
 			this.drawString(fontrenderer, this.displayString, this.xPosition + this.width / 10 + this.scrollHeight - 80, this.yPosition + (this.height - 8) / 2, 0x77cccc);
-		}
-		else
-		{
+		} else {
 			this.drawString(fontrenderer, this.displayString, this.xPosition + this.width / 10 + this.scrollHeight - 80, this.yPosition + (this.height - 8) / 2, 14737632);
 		}
 	}
 
 	@Override
-	protected void mouseDragged(Minecraft var1, int var2, int var3)
-	{
+	protected void mouseDragged(Minecraft var1, int var2, int var3) {
 	}
 
 	@Override
-	public void mouseReleased(int var1, int var2)
-	{
+	public void mouseReleased(int var1, int var2) {
 	}
 
 	@Override
-	public boolean mousePressed(Minecraft var1, int var2, int var3)
-	{
+	public boolean mousePressed(Minecraft var1, int var2, int var3) {
 		return this.enabled && this.visible && var2 >= this.xPosition && var3 >= this.yPosition && var2 < this.xPosition + this.width && var3 < this.yPosition + this.height;
 	}
 

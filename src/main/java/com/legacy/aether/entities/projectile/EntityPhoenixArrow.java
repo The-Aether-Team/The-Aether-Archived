@@ -6,60 +6,48 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.IThrowableEntity;
 
-public class EntityPhoenixArrow extends EntityArrow implements IThrowableEntity
-{
+public class EntityPhoenixArrow extends EntityArrow implements IThrowableEntity {
 
-    private int timeInGround;
+	private int timeInGround;
 
-    private boolean hitGround;
+	private boolean hitGround;
 
-	public EntityPhoenixArrow(World worldIn) 
-	{
+	public EntityPhoenixArrow(World worldIn) {
 		super(worldIn);
 	}
 
-	public EntityPhoenixArrow(World worldIn, EntityLivingBase shooter, float distance)
-	{
+	public EntityPhoenixArrow(World worldIn, EntityLivingBase shooter, float distance) {
 		super(worldIn, shooter, distance);
 	}
 
 	@Override
-    public void onUpdate()
-    {
-        if (this.arrowShake == 7)
-        {
-        	this.hitGround = true;
-        }
+	public void onUpdate() {
+		if (this.arrowShake == 7) {
+			this.hitGround = true;
+		}
 
-        if (this.hitGround)
-        {
-        	++this.timeInGround;
+		if (this.hitGround) {
+			++this.timeInGround;
 
-            if (this.timeInGround % 5 == 0)
-            {
-            	this.worldObj.spawnParticle("flame", this.posX + (this.rand.nextGaussian() / 5D), this.posY + (this.rand.nextGaussian() / 5D), this.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
-            }
-        }
-        else
-        {
-            for (int j = 0; j < 2; ++j)
-            {
-                this.worldObj.spawnParticle("flame", this.posX + (this.rand.nextGaussian() / 5D), this.posY + (this.rand.nextGaussian() / 5D), this.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
-            }
-        }
+			if (this.timeInGround % 5 == 0) {
+				this.worldObj.spawnParticle("flame", this.posX + (this.rand.nextGaussian() / 5D), this.posY + (this.rand.nextGaussian() / 5D), this.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
+			}
+		} else {
+			for (int j = 0; j < 2; ++j) {
+				this.worldObj.spawnParticle("flame", this.posX + (this.rand.nextGaussian() / 5D), this.posY + (this.rand.nextGaussian() / 5D), this.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
+			}
+		}
 
-        super.onUpdate();
-    }
+		super.onUpdate();
+	}
 
 	@Override
-	public void setThrower(Entity entity) 
-	{
+	public void setThrower(Entity entity) {
 		this.shootingEntity = entity;
 	}
 
 	@Override
-	public Entity getThrower()
-	{
+	public Entity getThrower() {
 		return this.shootingEntity;
 	}
 

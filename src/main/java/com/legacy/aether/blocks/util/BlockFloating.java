@@ -11,13 +11,11 @@ import net.minecraft.world.World;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.block.EntityFloatingBlock;
 
-public class BlockFloating extends Block
-{
+public class BlockFloating extends Block {
 
 	private boolean leveled;
 
-	public BlockFloating(Material material, boolean leveled)
-	{
+	public BlockFloating(Material material, boolean leveled) {
 		super(material);
 
 		this.leveled = leveled;
@@ -27,40 +25,32 @@ public class BlockFloating extends Block
 	}
 
 	@Override
-    public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ)
-    {
-    	return this == BlocksAether.enchanted_gravitite;
-    }
+	public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ) {
+		return this == BlocksAether.enchanted_gravitite;
+	}
 
 	@Override
-	public void onBlockAdded(World world, int x, int y, int z)
-	{
+	public void onBlockAdded(World world, int x, int y, int z) {
 		world.scheduleBlockUpdate(x, y, z, this, 3);
 	}
 
 	@Override
-    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighborBlock)
-    {
+	public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighborBlock) {
 		worldIn.scheduleBlockUpdate(x, y, z, this, 3);
-    }
+	}
 
 	@Override
-    public void updateTick(World world, int x, int y, int z, Random rand)
-	{
-		if (!this.leveled || this.leveled && world.isBlockIndirectlyGettingPowered(x, y, z))
-		{
+	public void updateTick(World world, int x, int y, int z, Random rand) {
+		if (!this.leveled || this.leveled && world.isBlockIndirectlyGettingPowered(x, y, z)) {
 			this.floatBlock(world, x, y, z);
 		}
 	}
 
-	private void floatBlock(World world, int x, int y, int z)
-	{
-		if (canContinue(world, x, y + 1, z) && y < world.getHeight())
-		{
+	private void floatBlock(World world, int x, int y, int z) {
+		if (canContinue(world, x, y + 1, z) && y < world.getHeight()) {
 			EntityFloatingBlock floating = new EntityFloatingBlock(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
 
-			if (!world.isRemote)
-			{
+			if (!world.isRemote) {
 				world.spawnEntityInWorld(floating);
 			}
 
@@ -68,22 +58,19 @@ public class BlockFloating extends Block
 		}
 	}
 
-	public static boolean canContinue(World world, int x, int y, int z)
-	{
+	public static boolean canContinue(World world, int x, int y, int z) {
 		Block block = world.getBlock(x, y, z);
 		Material material = block.getMaterial();
 
-		if (block == Blocks.air || block == Blocks.fire)
-		{
+		if (block == Blocks.air || block == Blocks.fire) {
 			return true;
 		}
 
-		if (material == Material.water || material == Material.lava)
-		{
+		if (material == Material.water || material == Material.lava) {
 			return true;
 		}
 
-		return false;		
+		return false;
 	}
 
 }

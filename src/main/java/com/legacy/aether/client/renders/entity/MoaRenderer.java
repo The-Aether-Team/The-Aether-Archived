@@ -16,8 +16,7 @@ import com.legacy.aether.entities.util.AetherMoaTypes;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.perks.util.DonatorMoaSkin;
 
-public class MoaRenderer extends RenderLiving
-{
+public class MoaRenderer extends RenderLiving {
 
 	private static final ResourceLocation TEXTURE_OUTSIDE = Aether.locate("textures/entities/moa/canvas/moa_outside.png");
 
@@ -33,102 +32,87 @@ public class MoaRenderer extends RenderLiving
 
 	private static final ResourceLocation TEXTURE_UNCHANGED = Aether.locate("textures/entities/moa/canvas/moa_unchanged.png");
 
-    private static final ResourceLocation SADDLE = Aether.locate("textures/entities/moa/moa_saddle.png");
+	private static final ResourceLocation SADDLE = Aether.locate("textures/entities/moa/moa_saddle.png");
 
-    private static final ResourceLocation BLACK_SADDLE = Aether.locate("textures/entities/moa/black_moa_saddle.png");
+	private static final ResourceLocation BLACK_SADDLE = Aether.locate("textures/entities/moa/black_moa_saddle.png");
 
-	public MoaRenderer()
-	{
+	public MoaRenderer() {
 		super(new MoaModel(0.0F), 1.0F);
 
 		this.setRenderPassModel(new MoaModel(0.5F));
 	}
 
 	@Override
-    protected void renderModel(EntityLivingBase entity, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float p_77036_7_)
-    {
+	protected void renderModel(EntityLivingBase entity, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float p_77036_7_) {
 		EntityMoa moa = (EntityMoa) entity;
 
-        if (!entity.isInvisible())
-        {
-        	if (!(moa.riddenByEntity instanceof EntityPlayer))
-        	{
-        		this.bindTexture(this.getEntityTexture(entity));
-                this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
-        	}
-        	else
-        	{
-        		PlayerAether playerAether = PlayerAether.get((EntityPlayer) moa.riddenByEntity);
+		if (!entity.isInvisible()) {
+			if (!(moa.riddenByEntity instanceof EntityPlayer)) {
+				this.bindTexture(this.getEntityTexture(entity));
+				this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+			} else {
+				PlayerAether playerAether = PlayerAether.get((EntityPlayer) moa.riddenByEntity);
 
-        		if (playerAether.donatorMoaSkin != null && !playerAether.donatorMoaSkin.shouldUseDefualt())
-        		{
-        			DonatorMoaSkin skin = playerAether.donatorMoaSkin;
+				if (playerAether.donatorMoaSkin != null && !playerAether.donatorMoaSkin.shouldUseDefualt()) {
+					DonatorMoaSkin skin = playerAether.donatorMoaSkin;
 
-                    GL11.glColor3f(1.0F, 1.0F, 1.0F);
+					GL11.glColor3f(1.0F, 1.0F, 1.0F);
 
-        			this.bindTexture(TEXTURE_UNCHANGED);
-                    this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+					this.bindTexture(TEXTURE_UNCHANGED);
+					this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
-                    this.bindTexture(TEXTURE_WING_MARKINGS);
-                    GL11.glColor3f(r(skin.getWingMarkingColor()), g(skin.getWingMarkingColor()), b(skin.getWingMarkingColor()));
-                    this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+					this.bindTexture(TEXTURE_WING_MARKINGS);
+					GL11.glColor3f(r(skin.getWingMarkingColor()), g(skin.getWingMarkingColor()), b(skin.getWingMarkingColor()));
+					this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
-                    this.bindTexture(TEXTURE_WING);
-                    GL11.glColor3f(r(skin.getWingColor()), g(skin.getWingColor()), b(skin.getWingColor()));
-                    this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+					this.bindTexture(TEXTURE_WING);
+					GL11.glColor3f(r(skin.getWingColor()), g(skin.getWingColor()), b(skin.getWingColor()));
+					this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
-                    this.bindTexture(TEXTURE_MARKINGS);
-                    GL11.glColor3f(r(skin.getMarkingColor()), g(skin.getMarkingColor()), b(skin.getMarkingColor()));
-                    this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+					this.bindTexture(TEXTURE_MARKINGS);
+					GL11.glColor3f(r(skin.getMarkingColor()), g(skin.getMarkingColor()), b(skin.getMarkingColor()));
+					this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
-                    this.bindTexture(TEXTURE_BODY);
-                    GL11.glColor3f(r(skin.getBodyColor()), g(skin.getBodyColor()), b(skin.getBodyColor()));
-                    this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+					this.bindTexture(TEXTURE_BODY);
+					GL11.glColor3f(r(skin.getBodyColor()), g(skin.getBodyColor()), b(skin.getBodyColor()));
+					this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
-                    this.bindTexture(TEXTURE_EYE);
-                    GL11.glColor3f(r(skin.getEyeColor()), g(skin.getEyeColor()), b(skin.getEyeColor()));
-                    this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+					this.bindTexture(TEXTURE_EYE);
+					GL11.glColor3f(r(skin.getEyeColor()), g(skin.getEyeColor()), b(skin.getEyeColor()));
+					this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
-                    this.bindTexture(TEXTURE_OUTSIDE);
-                    GL11.glColor3f(r(skin.getOutsideColor()), g(skin.getOutsideColor()), b(skin.getOutsideColor()));
-                    this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+					this.bindTexture(TEXTURE_OUTSIDE);
+					GL11.glColor3f(r(skin.getOutsideColor()), g(skin.getOutsideColor()), b(skin.getOutsideColor()));
+					this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
 
-                    GL11.glColor3f(1.0F, 1.0F, 1.0F);
-        		}
-        		else
-        		{
-            		this.bindTexture(this.getEntityTexture(entity));
-                    this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
-        		}
-        	}
-        }
-        else
-        {
-        	this.mainModel.setRotationAngles(p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_, entity);
-        }
-    }
+					GL11.glColor3f(1.0F, 1.0F, 1.0F);
+				} else {
+					this.bindTexture(this.getEntityTexture(entity));
+					this.mainModel.render(moa, p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_);
+				}
+			}
+		} else {
+			this.mainModel.setRotationAngles(p_77036_2_, p_77036_3_, p_77036_4_, p_77036_5_, p_77036_6_, p_77036_7_, entity);
+		}
+	}
 
-    protected int renderLayer(EntityMoa entity, int pass, float particleTicks)
-    {
-        if (pass == 0 && entity.isSaddled())
-        {
-        	GL11.glTranslatef(0.0F, 0.02F, 0.0F);
-            this.bindTexture(entity.getMoaType() == AetherMoaTypes.black ? BLACK_SADDLE : SADDLE);
+	protected int renderLayer(EntityMoa entity, int pass, float particleTicks) {
+		if (pass == 0 && entity.isSaddled()) {
+			GL11.glTranslatef(0.0F, 0.02F, 0.0F);
+			this.bindTexture(entity.getMoaType() == AetherMoaTypes.black ? BLACK_SADDLE : SADDLE);
 
-            return 1;
-        }
+			return 1;
+		}
 
-        return -1;
-    }
+		return -1;
+	}
 
-    @Override
-    protected int shouldRenderPass(EntityLivingBase entity, int pass, float particleTicks)
-    {
-        return this.renderLayer((EntityMoa)entity, pass, particleTicks);
-    }
+	@Override
+	protected int shouldRenderPass(EntityLivingBase entity, int pass, float particleTicks) {
+		return this.renderLayer((EntityMoa) entity, pass, particleTicks);
+	}
 
-	protected float getWingRotation(EntityMoa moa, float f)
-	{
+	protected float getWingRotation(EntityMoa moa, float f) {
 		float f1 = moa.prevWingRotation + (moa.wingRotation - moa.prevWingRotation) * f;
 		float f2 = moa.prevDestPos + (moa.destPos - moa.prevDestPos) * f;
 
@@ -136,21 +120,18 @@ public class MoaRenderer extends RenderLiving
 	}
 
 	@Override
-	protected float handleRotationFloat(EntityLivingBase entityliving, float f)
-	{
+	protected float handleRotationFloat(EntityLivingBase entityliving, float f) {
 		return this.getWingRotation((EntityMoa) entityliving, f);
 	}
-    
-	protected void scaleMoa(EntityMoa entityMoa)
-	{
-		float moaScale = entityMoa.isChild() ?  1.0f : 1.8f;
+
+	protected void scaleMoa(EntityMoa entityMoa) {
+		float moaScale = entityMoa.isChild() ? 1.0f : 1.8f;
 
 		GL11.glScalef(moaScale, moaScale, moaScale);
 	}
 
 	@Override
-	protected void preRenderCallback(EntityLivingBase entityliving, float f)
-	{
+	protected void preRenderCallback(EntityLivingBase entityliving, float f) {
 		/*
 		 * Dear person who finds this,
 		 * have fun :)
@@ -160,16 +141,13 @@ public class MoaRenderer extends RenderLiving
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(Entity entity)
-	{
-		EntityMoa moa = (EntityMoa)entity;
-		
-		if (moa.riddenByEntity instanceof EntityPlayer)
-		{
+	protected ResourceLocation getEntityTexture(Entity entity) {
+		EntityMoa moa = (EntityMoa) entity;
+
+		if (moa.riddenByEntity instanceof EntityPlayer) {
 			PlayerAether player = PlayerAether.get((EntityPlayer) moa.riddenByEntity);
 
-			if (player != null && !player.donatorMoaSkin.shouldUseDefualt())
-			{
+			if (player != null && !player.donatorMoaSkin.shouldUseDefualt()) {
 				return null;
 			}
 		}
@@ -177,18 +155,15 @@ public class MoaRenderer extends RenderLiving
 		return moa.getMoaType().getTexture(moa.isSaddled(), moa.riddenByEntity != null);
 	}
 
-	private static float r(int r)
-	{
+	private static float r(int r) {
 		return ((r >> 16) & 0xff) / 255F;
 	}
 
-	private static float g(int g)
-	{
+	private static float g(int g) {
 		return ((g >> 8) & 0xff) / 255F;
 	}
 
-	private static float b(int b)
-	{
+	private static float b(int b) {
 		return (b & 0xff) / 255F;
 	}
 

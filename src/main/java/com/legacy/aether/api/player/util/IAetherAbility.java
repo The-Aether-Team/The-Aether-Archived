@@ -1,7 +1,6 @@
 package com.legacy.aether.api.player.util;
 
-public interface IAetherAbility 
-{
+public interface IAetherAbility {
 
 	public void onUpdate();
 

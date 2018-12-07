@@ -10,11 +10,9 @@ import net.minecraft.util.DamageSource;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
-public class ItemElementalSword extends ItemSword
-{
+public class ItemElementalSword extends ItemSword {
 
-	public ItemElementalSword()
-	{
+	public ItemElementalSword() {
 		super(ToolMaterial.EMERALD);
 
 		this.setMaxDamage(502);
@@ -22,37 +20,29 @@ public class ItemElementalSword extends ItemSword
 	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
-    	return ItemsAether.aether_loot;
-    }
+	public EnumRarity getRarity(ItemStack stack) {
+		return ItemsAether.aether_loot;
+	}
 
 	@Override
-    public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase entityliving1)
-    {
-		if (this == ItemsAether.flaming_sword)
-		{
+	public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase entityliving1) {
+		if (this == ItemsAether.flaming_sword) {
 			entityliving.setFire(30);
-		}
-		else if (this == ItemsAether.lightning_sword)
-		{
+		} else if (this == ItemsAether.lightning_sword) {
 			EntityLightningBolt lightning = new EntityLightningBolt(entityliving1.worldObj, entityliving.posX, entityliving.posY, entityliving.posZ);
 
 			entityliving1.worldObj.spawnEntityInWorld(lightning);
-		}
-		else if (this == ItemsAether.holy_sword && entityliving.isEntityUndead())
-		{
+		} else if (this == ItemsAether.holy_sword && entityliving.isEntityUndead()) {
 			entityliving.attackEntityFrom(DamageSource.drown, 15.0F);
 			itemstack.damageItem(10, entityliving1);
 		}
 
 		return super.hitEntity(itemstack, entityliving, entityliving1);
-    }
+	}
 
 	@Override
-    public boolean getIsRepairable(ItemStack stack, ItemStack repairStack)
-    {
-    	return false;
-    }
+	public boolean getIsRepairable(ItemStack stack, ItemStack repairStack) {
+		return false;
+	}
 
 }

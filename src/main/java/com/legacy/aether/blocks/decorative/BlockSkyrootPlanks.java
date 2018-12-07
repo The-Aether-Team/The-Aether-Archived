@@ -5,11 +5,9 @@ import net.minecraft.block.material.Material;
 
 import com.legacy.aether.Aether;
 
-public class BlockSkyrootPlanks extends Block
-{
+public class BlockSkyrootPlanks extends Block {
 
-	public BlockSkyrootPlanks() 
-	{
+	public BlockSkyrootPlanks() {
 		super(Material.wood);
 
 		this.setHardness(2F);

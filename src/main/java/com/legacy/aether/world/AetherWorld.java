@@ -15,13 +15,11 @@ import com.legacy.aether.world.gen.components.ComponentGoldenIslandStub;
 import com.legacy.aether.world.gen.components.ComponentLargeColdAercloud;
 import com.legacy.aether.world.gen.components.ComponentSilverDungeon;
 
-public class AetherWorld
-{
+public class AetherWorld {
 
 	public static BiomeGenBase aether_biome = new AetherBiome();
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		MapGenStructureIO.registerStructure(MapGenSilverDungeon.Start.class, "aether_legacy:silver_dungeon_start");
 		MapGenStructureIO.registerStructure(MapGenGoldenDungeon.Start.class, "aether_legacy:golden_dungeon_start");
 

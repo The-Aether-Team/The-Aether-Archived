@@ -15,30 +15,25 @@ import com.legacy.aether.client.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class SlotAccessory extends Slot
-{
+public class SlotAccessory extends Slot {
 
 	private EntityPlayer instance;
 
 	private AccessoryType accessoryType;
 
-	public SlotAccessory(IInventory inventory, int slotID, AccessoryType accessoryType, int x, int y, EntityPlayer instance)
-	{
+	public SlotAccessory(IInventory inventory, int slotID, AccessoryType accessoryType, int x, int y, EntityPlayer instance) {
 		super(inventory, slotID, x, y);
-		
+
 		this.instance = instance;
 		this.accessoryType = accessoryType;
 	}
 
 	@Override
-	public boolean isItemValid(ItemStack stack)
-	{
-		if (AetherAPI.instance().isAccessory(stack))
-		{
+	public boolean isItemValid(ItemStack stack) {
+		if (AetherAPI.instance().isAccessory(stack)) {
 			AetherAccessory accessory = AetherAPI.instance().getAccessory(stack);
 
-			if (accessory.getAccessoryType() == this.getAccessoryType() || accessory.getExtraType() == this.getAccessoryType())
-			{
+			if (accessory.getAccessoryType() == this.getAccessoryType() || accessory.getExtraType() == this.getAccessoryType()) {
 				return AetherHooks.isValidAccessory(this.instance, accessory);
 			}
 		}
@@ -47,14 +42,12 @@ public class SlotAccessory extends Slot
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getBackgroundIconIndex()
-    {
-        return ClientProxy.ACCESSORY_ICONS[this.getSlotIndex()];
-    }
+	@SideOnly(Side.CLIENT)
+	public IIcon getBackgroundIconIndex() {
+		return ClientProxy.ACCESSORY_ICONS[this.getSlotIndex()];
+	}
 
-	public AccessoryType getAccessoryType()
-	{
+	public AccessoryType getAccessoryType() {
 		return this.accessoryType;
 	}
 

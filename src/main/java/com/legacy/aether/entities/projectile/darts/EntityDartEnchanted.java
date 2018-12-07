@@ -6,30 +6,25 @@ import net.minecraft.world.World;
 
 import com.legacy.aether.items.ItemsAether;
 
-public class EntityDartEnchanted extends EntityDartBase
-{
+public class EntityDartEnchanted extends EntityDartBase {
 
-    public EntityDartEnchanted(World worldIn)
-    {
+    public EntityDartEnchanted(World worldIn) {
         super(worldIn);
     }
 
-    public EntityDartEnchanted(World world, EntityLivingBase entity, float velocity)
-    {
+    public EntityDartEnchanted(World world, EntityLivingBase entity, float velocity) {
         super(world, entity, velocity);
     }
 
-	@Override
-    public void entityInit()
-    {
+    @Override
+    public void entityInit() {
         super.entityInit();
         this.setDamage(6);
     }
 
-	@Override
-	protected ItemStack getStack() 
-	{
-		return new ItemStack(ItemsAether.dart, 1, 2);
-	}
+    @Override
+    protected ItemStack getStack() {
+        return new ItemStack(ItemsAether.dart, 1, 2);
+    }
 
 }

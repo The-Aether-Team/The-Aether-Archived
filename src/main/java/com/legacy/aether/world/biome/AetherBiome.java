@@ -1,4 +1,4 @@
- package com.legacy.aether.world.biome;
+package com.legacy.aether.world.biome;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,12 +23,10 @@ import com.legacy.aether.entities.passive.mountable.EntitySwet;
 import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
 
-public class AetherBiome extends BiomeGenBase
-{
+public class AetherBiome extends BiomeGenBase {
 
 	@SuppressWarnings("unchecked")
-	public AetherBiome()
-	{
+	public AetherBiome() {
 		super(AetherConfig.getAetherBiomeID());
 
 		this.spawnableCaveCreatureList.clear();
@@ -58,8 +56,7 @@ public class AetherBiome extends BiomeGenBase
 		this.setColor(0);
 	}
 
-	private void addCreatureEntry(ArrayList<SpawnListEntry> list)
-	{
+	private void addCreatureEntry(ArrayList<SpawnListEntry> list) {
 		list.add(new SpawnListEntry(EntitySwet.class, 10, 4, 4));
 		list.add(new SpawnListEntry(EntityAechorPlant.class, 8, 3, 3));
 		list.add(new SpawnListEntry(EntitySheepuff.class, 10, 4, 4));
@@ -69,8 +66,7 @@ public class AetherBiome extends BiomeGenBase
 		list.add(new SpawnListEntry(EntityAerbunny.class, 11, 3, 3));
 	}
 
-	private void addMobEntry(ArrayList<SpawnListEntry> list)
-	{
+	private void addMobEntry(ArrayList<SpawnListEntry> list) {
 		list.add(new SpawnListEntry(EntityWhirlwind.class, 8, 2, 2));
 		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
 		list.add(new SpawnListEntry(EntityAerwhale.class, 7, 3, 3));
@@ -79,46 +75,39 @@ public class AetherBiome extends BiomeGenBase
 	}
 
 	@Override
-    public void addDefaultFlowers()
-    {
-        this.flowers.add(new FlowerEntry(BlocksAether.white_flower, 0, 20));
-        this.flowers.add(new FlowerEntry(BlocksAether.purple_flower, 0, 10));
-    }
+	public void addDefaultFlowers() {
+		this.flowers.add(new FlowerEntry(BlocksAether.white_flower, 0, 20));
+		this.flowers.add(new FlowerEntry(BlocksAether.purple_flower, 0, 10));
+	}
 
 	@Override
-    public int getWaterColorMultiplier()
-    {
-    	return 16777215;
-    }
+	public int getWaterColorMultiplier() {
+		return 16777215;
+	}
 
 	@Override
-    public int getSkyColorByTemp(float currentTemperature)
-    {
-    	return 0xC0C0FF; // Lavender Blue
-    }
-	
-	@Override
-    public int getBiomeGrassColor(int x, int y, int z)
-    {
-        return 0xb1ffcb;
-    }
-	
-	@Override
-    public int getBiomeFoliageColor(int x, int y, int z)
-    {
-        return 0xb1ffcb;
-    }
+	public int getSkyColorByTemp(float currentTemperature) {
+		return 0xC0C0FF; // Lavender Blue
+	}
 
 	@Override
-    public BiomeDecorator createBiomeDecorator()
-    {
-    	return new AetherBiomeDecorator();
-    }
+	public int getBiomeGrassColor(int x, int y, int z) {
+		return 0xb1ffcb;
+	}
 
 	@Override
-    public WorldGenAbstractTree func_150567_a(Random rand)
-    {
-        return (WorldGenAbstractTree)(rand.nextInt(20) == 0 ? new AetherGenOakTree() : new AetherGenSkyrootTree(false));
-    }
+	public int getBiomeFoliageColor(int x, int y, int z) {
+		return 0xb1ffcb;
+	}
+
+	@Override
+	public BiomeDecorator createBiomeDecorator() {
+		return new AetherBiomeDecorator();
+	}
+
+	@Override
+	public WorldGenAbstractTree func_150567_a(Random rand) {
+		return (WorldGenAbstractTree) (rand.nextInt(20) == 0 ? new AetherGenOakTree() : new AetherGenSkyrootTree(false));
+	}
 
 }

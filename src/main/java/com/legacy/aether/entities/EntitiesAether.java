@@ -48,21 +48,19 @@ import com.legacy.aether.items.ItemAetherSpawnEgg;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 
-public class EntitiesAether 
-{
+public class EntitiesAether {
 
-    public static Map<Class<?>, String> classToStringMapping = new HashMap<Class<?>, String>();
+	public static Map<Class<?>, String> classToStringMapping = new HashMap<Class<?>, String>();
 
-    public static Map<Integer, Class<?>> IDtoClassMapping = new HashMap<Integer, Class<?>>();
+	public static Map<Integer, Class<?>> IDtoClassMapping = new HashMap<Integer, Class<?>>();
 
 	private static Map<Class<?>, Integer> classToIDMapping = new HashMap<Class<?>, Integer>();
 
-    private static Map<String, Integer> stringToIDMapping = new HashMap<String, Integer>();
+	private static Map<String, Integer> stringToIDMapping = new HashMap<String, Integer>();
 
-    private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger();
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		register(EntityMoa.class, "moa", 0, 0x9fc3f7, 0x343e44);
 		register(EntityPhyg.class, "phyg", 1, 0x9fc3f7, 0xdb635f);
 		register(EntityFlyingCow.class, "flying_cow", 2, 0x9fc3f7, 0x3e3122);
@@ -104,75 +102,60 @@ public class EntitiesAether
 		AetherMoaTypes.initialization();
 	}
 
-	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
-	{
+	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
 		EntityRegistry.registerModEntity(entityClass, entityName, entityID, Aether.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 	}
 
-	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID, int primaryEggColor, int secondaryEggColor)
-	{
+	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID, int primaryEggColor, int secondaryEggColor) {
 		addMapping(entityClass, entityName, entityID, primaryEggColor, secondaryEggColor);
 		EntityRegistry.registerModEntity(entityClass, entityName, entityID, Aether.instance, 80, 3, true);
 	}
 
-    private static void addMapping(Class<?> entityClass, String entityName, int entityID, int primaryEggColor, int secondaryEggColor)
-    {
-        if (IDtoClassMapping.containsKey(Integer.valueOf(entityID)))
-        {
-            throw new IllegalArgumentException("ID is already registered: " + entityID);
-        }
-        else
-        {
-            classToStringMapping.put(entityClass, entityName);
-            IDtoClassMapping.put(Integer.valueOf(entityID), entityClass);
-            classToIDMapping.put(entityClass, Integer.valueOf(entityID));
-            stringToIDMapping.put(entityName, Integer.valueOf(entityID));
-            ItemAetherSpawnEgg.entityEggs.put(Integer.valueOf(entityID), new EntityList.EntityEggInfo(entityID, primaryEggColor, secondaryEggColor));
-        }
-    }
+	private static void addMapping(Class<?> entityClass, String entityName, int entityID, int primaryEggColor, int secondaryEggColor) {
+		if (IDtoClassMapping.containsKey(Integer.valueOf(entityID))) {
+			throw new IllegalArgumentException("ID is already registered: " + entityID);
+		} else {
+			classToStringMapping.put(entityClass, entityName);
+			IDtoClassMapping.put(Integer.valueOf(entityID), entityClass);
+			classToIDMapping.put(entityClass, Integer.valueOf(entityID));
+			stringToIDMapping.put(entityName, Integer.valueOf(entityID));
+			ItemAetherSpawnEgg.entityEggs.put(Integer.valueOf(entityID), new EntityList.EntityEggInfo(entityID, primaryEggColor, secondaryEggColor));
+		}
+	}
 
-    public static Entity createEntityByID(int id, World p_75616_1_)
-    {
-        Entity entity = null;
+	public static Entity createEntityByID(int id, World p_75616_1_) {
+		Entity entity = null;
 
-        try
-        {
-            Class<?> oclass = getClassFromID(id);
+		try {
+			Class<?> oclass = getClassFromID(id);
 
-            if (oclass != null)
-            {
-                entity = (Entity)oclass.getConstructor(new Class[] {World.class}).newInstance(new Object[] {p_75616_1_});
-            }
-        }
-        catch (Exception exception)
-        {
-            exception.printStackTrace();
-        }
+			if (oclass != null) {
+				entity = (Entity) oclass.getConstructor(new Class[]{World.class}).newInstance(new Object[]{p_75616_1_});
+			}
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
 
-        if (entity == null)
-        {
-            logger.warn("Skipping Aether Entity with id " + id);
-        }
+		if (entity == null) {
+			logger.warn("Skipping Aether Entity with id " + id);
+		}
 
-        return entity;
-    }
+		return entity;
+	}
 
-    public static int getEntityID(Entity p_75619_0_)
-    {
-        Class<?> oclass = p_75619_0_.getClass();
-        return classToIDMapping.containsKey(oclass) ? ((Integer)classToIDMapping.get(oclass)).intValue() : -1;
-    }
+	public static int getEntityID(Entity p_75619_0_) {
+		Class<?> oclass = p_75619_0_.getClass();
+		return classToIDMapping.containsKey(oclass) ? ((Integer) classToIDMapping.get(oclass)).intValue() : -1;
+	}
 
-    public static Class<?> getClassFromID(int p_90035_0_)
-    {
-        return (Class<?>)IDtoClassMapping.get(Integer.valueOf(p_90035_0_));
-    }
+	public static Class<?> getClassFromID(int p_90035_0_) {
+		return (Class<?>) IDtoClassMapping.get(Integer.valueOf(p_90035_0_));
+	}
 
-    public static String getStringFromID(int p_75617_0_)
-    {
-        Class<?> oclass = getClassFromID(p_75617_0_);
+	public static String getStringFromID(int p_75617_0_) {
+		Class<?> oclass = getClassFromID(p_75617_0_);
 
-        return oclass != null ? (String)classToStringMapping.get(oclass) : null;
-    }
+		return oclass != null ? (String) classToStringMapping.get(oclass) : null;
+	}
 
 }

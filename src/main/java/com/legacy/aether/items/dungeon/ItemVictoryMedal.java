@@ -7,11 +7,9 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class ItemVictoryMedal extends Item
-{
+public class ItemVictoryMedal extends Item {
 
-	public ItemVictoryMedal()
-	{
+	public ItemVictoryMedal() {
 		super();
 
 		this.setMaxStackSize(10);
@@ -19,9 +17,8 @@ public class ItemVictoryMedal extends Item
 	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
-    	return ItemsAether.aether_loot;
-    }
+	public EnumRarity getRarity(ItemStack stack) {
+		return ItemsAether.aether_loot;
+	}
 
 }

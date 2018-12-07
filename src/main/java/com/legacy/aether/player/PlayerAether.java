@@ -39,8 +39,7 @@ import com.legacy.aether.world.TeleporterAether;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 
-public class PlayerAether implements IPlayerAether
-{
+public class PlayerAether implements IPlayerAether {
 
 	private EntityPlayer player;
 
@@ -78,71 +77,55 @@ public class PlayerAether implements IPlayerAether
 
 	public float wingSinage;
 
-	public PlayerAether()
-	{
+	public PlayerAether() {
 		this.abilities.addAll(Arrays.<IAetherAbility>asList(new AbilityAccessories(this), new AbilityArmor(this), new AbilityFlight(this), new AbilityRepulsion(this)));
 	}
 
-	public static PlayerAether get(EntityPlayer player)
-	{
+	public static PlayerAether get(EntityPlayer player) {
 		return (PlayerAether) player.getExtendedProperties("aether_legacy:player_aether");
 	}
 
 	@Override
-	public void init(Entity entity, World world) 
-	{
+	public void init(Entity entity, World world) {
 		this.player = (EntityPlayer) entity;
 		this.poisonMovement = new AetherPoisonMovement(this.player);
 	}
 
 	@Override
-	public void onUpdate() 
-	{
-		for (int i = 0; i < this.getAbilities().size(); ++i)
-		{
+	public void onUpdate() {
+		for (int i = 0; i < this.getAbilities().size(); ++i) {
 			IAetherAbility ability = this.getAbilities().get(i);
 
-			if (ability.shouldExecute())
-			{
+			if (ability.shouldExecute()) {
 				ability.onUpdate();
 			}
 		}
 
-		for (int i = 0; i < this.clouds.size(); ++i)
-		{
+		for (int i = 0; i < this.clouds.size(); ++i) {
 			Entity entity = this.clouds.get(i);
 
-			if (entity.isDead)
-			{
+			if (entity.isDead) {
 				this.clouds.remove(i);
 			}
 		}
 
-		if (this.cooldown > 0)
-		{
+		if (this.cooldown > 0) {
 			this.cooldown -= 2;
 		}
 
-		if (this.isInsideBlock(BlocksAether.aercloud))
-		{
+		if (this.isInsideBlock(BlocksAether.aercloud)) {
 			this.getEntity().fallDistance = 0.0F;
 		}
 
-		if (!this.getEntity().onGround)
-		{
+		if (!this.getEntity().onGround) {
 			this.wingSinage += 0.75F;
-		}
-		else
-		{
+		} else {
 			this.wingSinage += 0.15F;
 		}
 
-		if (this.wingSinage > 3.141593F * 2F)
-		{
+		if (this.wingSinage > 3.141593F * 2F) {
 			this.wingSinage -= 3.141593F * 2F;
-		}
-		else
-		{
+		} else {
 			this.wingSinage += 0.1F;
 		}
 
@@ -152,136 +135,110 @@ public class PlayerAether implements IPlayerAether
 
 		this.setJumping(hasJumped);
 
-        this.getEntity().worldObj.theProfiler.startSection("portal");
+		this.getEntity().worldObj.theProfiler.startSection("portal");
 
-        int i = this.getEntity().getMaxInPortalTime();
+		int i = this.getEntity().getMaxInPortalTime();
 
-		if (this.getEntity().dimension == AetherConfig.getAetherDimensionID())
-		{
-			if (this.getEntity().posY < -2)
-			{
+		if (this.getEntity().dimension == AetherConfig.getAetherDimensionID()) {
+			if (this.getEntity().posY < -2) {
 				this.teleportPlayer(false);
 			}
 		}
 
-        if (this.inPortal)
-        {
-            if (this.getEntity().ridingEntity == null && this.portalCounter++ >= i)
-            {
-                this.portalCounter = i;
-                this.getEntity().timeUntilPortal = this.getEntity().getPortalCooldown();
+		if (this.inPortal) {
+			if (this.getEntity().ridingEntity == null && this.portalCounter++ >= i) {
+				this.portalCounter = i;
+				this.getEntity().timeUntilPortal = this.getEntity().getPortalCooldown();
 
-                if (!this.getEntity().worldObj.isRemote)
-                {
-                	this.teleportPlayer(true);
-                	this.getEntity().triggerAchievement(AchievementsAether.enter_aether);
-                }
-            }
+				if (!this.getEntity().worldObj.isRemote) {
+					this.teleportPlayer(true);
+					this.getEntity().triggerAchievement(AchievementsAether.enter_aether);
+				}
+			}
 
-            this.inPortal = false;
-        }
-        else
-        {
-            if (this.portalCounter > 0)
-            {
-                this.portalCounter -= 4;
-            }
+			this.inPortal = false;
+		} else {
+			if (this.portalCounter > 0) {
+				this.portalCounter -= 4;
+			}
 
-            if (this.portalCounter < 0)
-            {
-                this.portalCounter = 0;
-            }
-        }
+			if (this.portalCounter < 0) {
+				this.portalCounter = 0;
+			}
+		}
 
-        if (this.getEntity().timeUntilPortal > 0)
-        {
-            --this.getEntity().timeUntilPortal;
-        }
+		if (this.getEntity().timeUntilPortal > 0) {
+			--this.getEntity().timeUntilPortal;
+		}
 
-        this.getEntity().worldObj.theProfiler.endSection();
+		this.getEntity().worldObj.theProfiler.endSection();
 
-        if (!this.getEntity().worldObj.isRemote)
-        {
-        	ItemStack stack = this.getEntity().getCurrentEquippedItem();
+		if (!this.getEntity().worldObj.isRemote) {
+			ItemStack stack = this.getEntity().getCurrentEquippedItem();
 
-        	double distance = this.getEntity().capabilities.isCreativeMode ? 5.0D : 4.5D;
+			double distance = this.getEntity().capabilities.isCreativeMode ? 5.0D : 4.5D;
 
-        	if (stack != null && stack.getItem() instanceof ItemValkyrieTool)
-        	{
-        		distance = 10.0D;
-        	}
+			if (stack != null && stack.getItem() instanceof ItemValkyrieTool) {
+				distance = 10.0D;
+			}
 
-        	((EntityPlayerMP)this.getEntity()).theItemInWorldManager.setBlockReachDistance(distance);
-        }
+			((EntityPlayerMP) this.getEntity()).theItemInWorldManager.setBlockReachDistance(distance);
+		}
 	}
 
 	@Override
-	public void setInPortal()
-	{
-        if (this.getEntity().timeUntilPortal > 0)
-        {
-            this.getEntity().timeUntilPortal = this.getEntity().getPortalCooldown();
-        }
-        else
-        {
-            double d0 = this.getEntity().prevPosX - this.getEntity().posX;
-            double d1 = this.getEntity().prevPosZ - this.getEntity().posZ;
+	public void setInPortal() {
+		if (this.getEntity().timeUntilPortal > 0) {
+			this.getEntity().timeUntilPortal = this.getEntity().getPortalCooldown();
+		} else {
+			double d0 = this.getEntity().prevPosX - this.getEntity().posX;
+			double d1 = this.getEntity().prevPosZ - this.getEntity().posZ;
 
-            if (!this.getEntity().worldObj.isRemote && !this.inPortal)
-            {
-                this.teleportDirection = Direction.getMovementDirection(d0, d1);
-            }
+			if (!this.getEntity().worldObj.isRemote && !this.inPortal) {
+				this.teleportDirection = Direction.getMovementDirection(d0, d1);
+			}
 
-            this.inPortal = true;
-        }
+			this.inPortal = true;
+		}
 	}
 
-    public boolean isInsideBlock(Block block)
-    {
-    	AxisAlignedBB boundingBox = this.getEntity().boundingBox;
-        int i = MathHelper.floor_double(boundingBox.minX);
-        int j = MathHelper.floor_double(boundingBox.maxX + 1.0D);
-        int k = MathHelper.floor_double(boundingBox.minY);
-        int l = MathHelper.floor_double(boundingBox.maxY + 1.0D);
-        int i1 = MathHelper.floor_double(boundingBox.minZ);
-        int j1 = MathHelper.floor_double(boundingBox.maxZ + 1.0D);
+	public boolean isInsideBlock(Block block) {
+		AxisAlignedBB boundingBox = this.getEntity().boundingBox;
+		int i = MathHelper.floor_double(boundingBox.minX);
+		int j = MathHelper.floor_double(boundingBox.maxX + 1.0D);
+		int k = MathHelper.floor_double(boundingBox.minY);
+		int l = MathHelper.floor_double(boundingBox.maxY + 1.0D);
+		int i1 = MathHelper.floor_double(boundingBox.minZ);
+		int j1 = MathHelper.floor_double(boundingBox.maxZ + 1.0D);
 
-        for (int k1 = i; k1 < j; ++k1)
-        {
-            for (int l1 = k; l1 < l; ++l1)
-            {
-                for (int i2 = i1; i2 < j1; ++i2)
-                {
-                    if (this.getEntity().worldObj.getBlock(k1, l1, i2) == block)
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
+		for (int k1 = i; k1 < j; ++k1) {
+			for (int l1 = k; l1 < l; ++l1) {
+				for (int i2 = i1; i2 < j1; ++i2) {
+					if (this.getEntity().worldObj.getBlock(k1, l1, i2) == block) {
+						return true;
+					}
+				}
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
 	/*
 	 * The teleporter which sends the player to the Aether/Overworld
 	 */
-	private void teleportPlayer(boolean shouldSpawnPortal) 
-	{
-		if (this.getEntity() instanceof EntityPlayerMP)
-		{
+	private void teleportPlayer(boolean shouldSpawnPortal) {
+		if (this.getEntity() instanceof EntityPlayerMP) {
 			int previousDimension = this.getEntity().dimension;
 			int transferDimension = previousDimension == AetherConfig.getAetherDimensionID() ? AetherConfig.getTravelDimensionID() : AetherConfig.getAetherDimensionID();
 			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 			TeleporterAether teleporter = new TeleporterAether(shouldSpawnPortal, server.worldServerForDimension(transferDimension));
 
-			if (this.getEntity().ridingEntity != null)
-			{
+			if (this.getEntity().ridingEntity != null) {
 				this.getEntity().ridingEntity.mountEntity(null);
 			}
 
-			if (this.getEntity().riddenByEntity != null)
-			{
+			if (this.getEntity().riddenByEntity != null) {
 				this.getEntity().riddenByEntity.mountEntity(null);
 			}
 
@@ -290,8 +247,7 @@ public class PlayerAether implements IPlayerAether
 	}
 
 	@Override
-	public void saveNBTData(NBTTagCompound compound)
-	{
+	public void saveNBTData(NBTTagCompound compound) {
 		NBTTagCompound aetherTag = new NBTTagCompound();
 
 		aetherTag.setInteger("shardCount", this.shardCount);
@@ -301,8 +257,7 @@ public class PlayerAether implements IPlayerAether
 	}
 
 	@Override
-	public void loadNBTData(NBTTagCompound compound) 
-	{
+	public void loadNBTData(NBTTagCompound compound) {
 		NBTTagCompound aetherTag = compound.getCompoundTag("aetherI");
 
 		this.updateShardCount(aetherTag.getInteger("shardCount"));
@@ -310,75 +265,63 @@ public class PlayerAether implements IPlayerAether
 	}
 
 	@Override
-	public void setFocusedBoss(IAetherBoss boss)
-	{
+	public void setFocusedBoss(IAetherBoss boss) {
 		this.focusedBoss = boss;
 	}
 
 	@Override
-	public IAetherBoss getFocusedBoss()
-	{
+	public IAetherBoss getFocusedBoss() {
 		return this.focusedBoss;
 	}
 
 	@Override
-	public void setAccessoryInventory(IAccessoryInventory inventory)
-	{
+	public void setAccessoryInventory(IAccessoryInventory inventory) {
 		this.accessories = inventory;
 	}
 
 	@Override
-	public IAccessoryInventory getAccessoryInventory() 
-	{
+	public IAccessoryInventory getAccessoryInventory() {
 		return this.accessories;
 	}
 
 	@Override
-	public ArrayList<IAetherAbility> getAbilities()
-	{
+	public ArrayList<IAetherAbility> getAbilities() {
 		return this.abilities;
 	}
 
 	@Override
-	public EntityPlayer getEntity()
-	{
+	public EntityPlayer getEntity() {
 		return this.player;
 	}
 
 	@Override
-	public void inflictPoison(int ticks)
-	{
+	public void inflictPoison(int ticks) {
 		this.poisonMovement.inflictPoison(ticks);
 	}
 
 	@Override
-	public boolean isPoisoned()
-	{
+	public boolean isPoisoned() {
 		return this.poisonMovement.ticks > 0;
 	}
 
 	@Override
-	public void inflictCure(int ticks)
-	{
+	public void inflictCure(int ticks) {
 		this.poisonMovement.inflictCure(ticks);
 	}
 
 	@Override
-	public boolean isCured()
-	{
+	public boolean isCured() {
 		return this.poisonMovement.ticks < 0;
 	}
 
 	@Override
-	public void updateShardCount(int amount)
-	{
+	public void updateShardCount(int amount) {
 		UUID uuid = UUID.fromString("df6eabe7-6947-4a56-9099-002f90370706");
 		AttributeModifier healthModifier = new AttributeModifier(uuid, "Aether Health Modifier", amount * 2.0D, 0);
 
 		this.shardCount = amount;
 
-		if (this.getEntity().getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(uuid) != null)
-		{
+		if (this.getEntity().getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(uuid) != null) {
 			this.getEntity().getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(healthModifier);
 		}
 
@@ -386,51 +329,42 @@ public class PlayerAether implements IPlayerAether
 	}
 
 	@Override
-	public int getShardsUsed()
-	{
+	public int getShardsUsed() {
 		return this.shardCount;
 	}
 
 	@Override
-	public int getMaxShardCount()
-	{
+	public int getMaxShardCount() {
 		return AetherConfig.getMaxLifeShards();
 	}
 
 	@Override
-	public void setJumping(boolean isJumping)
-	{
+	public void setJumping(boolean isJumping) {
 		this.isJumping = isJumping;
 	}
 
 	@Override
-	public boolean isJumping()
-	{
+	public boolean isJumping() {
 		return this.isJumping;
 	}
 
 	@Override
-	public void setMountSneaking(boolean isSneaking)
-	{
+	public void setMountSneaking(boolean isSneaking) {
 		this.isMountSneaking = isSneaking;
 	}
 
 	@Override
-	public boolean isMountSneaking()
-	{
+	public boolean isMountSneaking() {
 		return this.isMountSneaking;
 	}
 
 	@Override
-	public boolean isDonator() 
-	{
+	public boolean isDonator() {
 		return true;
 	}
 
-	public boolean setHammerCooldown(int cooldown, String hammerName)
-	{
-		if (this.cooldown <= 0)
-		{
+	public boolean setHammerCooldown(int cooldown, String hammerName) {
+		if (this.cooldown <= 0) {
 			this.cooldown = cooldown;
 			this.cooldownMax = cooldown;
 			this.hammerName = hammerName;
@@ -442,20 +376,17 @@ public class PlayerAether implements IPlayerAether
 	}
 
 	@Override
-	public String getHammerName()
-	{
+	public String getHammerName() {
 		return this.hammerName;
 	}
 
 	@Override
-	public int getHammerCooldown() 
-	{
+	public int getHammerCooldown() {
 		return this.cooldown;
 	}
 
 	@Override
-	public int getHammerMaxCooldown()
-	{
+	public int getHammerMaxCooldown() {
 		return this.cooldownMax;
 	}
 

@@ -70,11 +70,9 @@ import com.legacy.aether.tileentity.TileEntityTreasureChest;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
-public class RendersAether
-{
+public class RendersAether {
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		/* Misc */
 		register(EntityHammerProjectile.class, new HammerProjectileRenderer());
 		register(EntityFloatingBlock.class, new FloatingBlockRenderer());
@@ -122,8 +120,7 @@ public class RendersAether
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTreasureChest.class, new TreasureChestRenderer());
 	}
 
-	public static void register(Class<? extends Entity> entityClass, Render render)
-	{
+	public static void register(Class<? extends Entity> entityClass, Render render) {
 		RenderingRegistry.registerEntityRenderingHandler(entityClass, render);
 	}
 }

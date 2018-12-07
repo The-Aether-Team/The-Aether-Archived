@@ -9,11 +9,9 @@ import com.legacy.aether.blocks.BlocksAether;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAetherFenceGate extends BlockFenceGate
-{
+public class BlockAetherFenceGate extends BlockFenceGate {
 
-	public BlockAetherFenceGate() 
-	{
+	public BlockAetherFenceGate() {
 		super();
 
 		this.setHardness(2.0F);
@@ -23,10 +21,9 @@ public class BlockAetherFenceGate extends BlockFenceGate
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
-    {
-    	return BlocksAether.skyroot_planks.getBlockTextureFromSide(p_149691_1_);
-    }
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
+		return BlocksAether.skyroot_planks.getBlockTextureFromSide(p_149691_1_);
+	}
 
 }

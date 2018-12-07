@@ -9,15 +9,13 @@ import net.minecraftforge.common.AchievementPage;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.ItemsAether;
 
-public class AchievementsAether 
-{
+public class AchievementsAether {
 
 	public static Achievement enter_aether, defeat_bronze, defeat_silver, defeat_gold, enchanter, incubator, grav_tools, blue_cloud, flying_pig, loreception;
 
 	public static AchievementPage ACpage;
 
-	public static void initialization()
-	{
+	public static void initialization() {
 		enter_aether = new AetherAchievement("achievement.enter_aether", "enter_aether", 0, 1, Blocks.glowstone, (Achievement) null).registerStat();
 		defeat_bronze = new AetherAchievement("achievement.bronze_dungeon", "bronze_dungeon", -2, 3, new ItemStack(ItemsAether.dungeon_key, 1, 0), enter_aether).registerStat();
 		defeat_silver = new AetherAchievement("achievement.silver_dungeon", "silver_dungeon", 0, 4, new ItemStack(ItemsAether.dungeon_key, 1, 1), enter_aether).registerStat();

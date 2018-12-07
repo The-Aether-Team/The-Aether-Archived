@@ -20,237 +20,197 @@ import net.minecraft.world.World;
 
 import com.legacy.aether.entities.util.EntitySaddleMount;
 
-public class EntityFlyingCow extends EntitySaddleMount
-{
+public class EntityFlyingCow extends EntitySaddleMount {
 
-	public float wingFold;
+    public float wingFold;
 
-	public float wingAngle;
+    public float wingAngle;
 
-	private float aimingForFold;
+    private float aimingForFold;
 
-	public int maxJumps;
+    public int maxJumps;
 
-	public int jumpsRemaining;
+    public int jumpsRemaining;
 
-	private int ticks;
+    private int ticks;
 
-	public EntityFlyingCow(World world)
-	{
-		super(world);
+    public EntityFlyingCow(World world) {
+        super(world);
 
-		this.ticks = 0;
-		this.maxJumps = 1;
-		this.jumpsRemaining = 0;
-		this.stepHeight = 1.0F;
-		this.ignoreFrustumCheck = true;
-		this.canJumpMidAir = true;
+        this.ticks = 0;
+        this.maxJumps = 1;
+        this.jumpsRemaining = 0;
+        this.stepHeight = 1.0F;
+        this.ignoreFrustumCheck = true;
+        this.canJumpMidAir = true;
 
-		this.setSize(0.9F, 1.3F);
+        this.setSize(0.9F, 1.3F);
         this.getNavigator().setAvoidsWater(true);
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
-		this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-		this.tasks.addTask(4, new EntityAIFollowParent(this, 1.25D));
-		this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-		this.tasks.addTask(7, new EntityAILookIdle(this));
-	}
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
+        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
+        this.tasks.addTask(4, new EntityAIFollowParent(this, 1.25D));
+        this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
+    }
 
-	@Override
-	protected void applyEntityAttributes()
-	{
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.20000000298023224D);
-	}
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.20000000298023224D);
+    }
 
-	@Override
-	public void onUpdate()
-	{
-		super.onUpdate();
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
 
-		if (this.isOnGround())
-		{
-			this.wingAngle *= 0.8F;
-			this.aimingForFold = 0.1F;
-			this.jumpsRemaining = this.maxJumps;
-		}
-		else
-		{
-			this.aimingForFold = 1.0F;
-		}
+        if (this.isOnGround()) {
+            this.wingAngle *= 0.8F;
+            this.aimingForFold = 0.1F;
+            this.jumpsRemaining = this.maxJumps;
+        } else {
+            this.aimingForFold = 1.0F;
+        }
 
-		this.ticks++;
+        this.ticks++;
 
-		this.wingAngle = this.wingFold * (float) Math.sin(this.ticks / 31.83098862F);
-		this.wingFold += (this.aimingForFold - this.wingFold) / 5F;
-		this.fallDistance = 0;
-		this.fall();
-	}
+        this.wingAngle = this.wingFold * (float) Math.sin(this.ticks / 31.83098862F);
+        this.wingFold += (this.aimingForFold - this.wingFold) / 5F;
+        this.fallDistance = 0;
+        this.fall();
+    }
 
-	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
-	{
-		super.writeEntityToNBT(compound);
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
 
-		compound.setInteger("maxJumps", (short) this.maxJumps);
-		compound.setInteger("jumpsRemaining", (short) this.jumpsRemaining);
-	}
+        compound.setInteger("maxJumps", (short) this.maxJumps);
+        compound.setInteger("jumpsRemaining", (short) this.jumpsRemaining);
+    }
 
-	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
-	{
-		super.readEntityFromNBT(compound);
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
 
-		this.maxJumps = compound.getInteger("maxJumps");
-		this.jumpsRemaining = compound.getInteger("jumpsRemaining");
-	}
+        this.maxJumps = compound.getInteger("maxJumps");
+        this.jumpsRemaining = compound.getInteger("jumpsRemaining");
+    }
 
-	@Override
-	public double getMountedYOffset()
-	{
-		return 1.15D;
-	}
+    @Override
+    public double getMountedYOffset() {
+        return 1.15D;
+    }
 
-	@Override
-	public float getMountedMoveSpeed()
-	{
-		return 0.3F;
-	}
+    @Override
+    public float getMountedMoveSpeed() {
+        return 0.3F;
+    }
 
-	@Override
-	protected void jump()
-	{
-		if (this.riddenByEntity == null)
-		{
-			super.jump();
-		}
-	}
+    @Override
+    protected void jump() {
+        if (this.riddenByEntity == null) {
+            super.jump();
+        }
+    }
 
-	private void fall()
-	{
-		if (!this.onGround)
-		{
-			if (this.motionY < 0.0D && !this.isRiderSneaking())
-			{
-				this.motionY *= 0.6D;
-			}
+    private void fall() {
+        if (!this.onGround) {
+            if (this.motionY < 0.0D && !this.isRiderSneaking()) {
+                this.motionY *= 0.6D;
+            }
 
-			if (this.onGround && !this.worldObj.isRemote)
-			{
-				this.jumpsRemaining = this.maxJumps;
-			}
-		}
-	}
+            if (this.onGround && !this.worldObj.isRemote) {
+                this.jumpsRemaining = this.maxJumps;
+            }
+        }
+    }
 
-	@Override
-    public boolean interact(EntityPlayer player)
-	{
-		ItemStack stack = player.getCurrentEquippedItem();
+    @Override
+    public boolean interact(EntityPlayer player) {
+        ItemStack stack = player.getCurrentEquippedItem();
 
-		if (stack != null)
-		{
-			ItemStack currentStack = stack;
+        if (stack != null) {
+            ItemStack currentStack = stack;
 
-			if (currentStack.getItem() == Items.bucket)
-			{
-				Item milk = Items.milk_bucket;
+            if (currentStack.getItem() == Items.bucket) {
+                Item milk = Items.milk_bucket;
 
-				if (stack != null && stack.stackSize == 1)
-				{
-					player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(milk));
-				}
-				else if (!player.inventory.addItemStackToInventory(new ItemStack(milk)))
-				{
-					if (!this.worldObj.isRemote)
-					{
-						this.worldObj.spawnEntityInWorld(new EntityItem(worldObj, player.posX, player.posY, player.posZ, new ItemStack(milk)));
+                if (stack != null && stack.stackSize == 1) {
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(milk));
+                } else if (!player.inventory.addItemStackToInventory(new ItemStack(milk))) {
+                    if (!this.worldObj.isRemote) {
+                        this.worldObj.spawnEntityInWorld(new EntityItem(worldObj, player.posX, player.posY, player.posZ, new ItemStack(milk)));
 
-						if (!player.capabilities.isCreativeMode)
-						{
-							--stack.stackSize;
-						}
-					}
-				}
-				else if (!player.capabilities.isCreativeMode)
-				{
-					--stack.stackSize;
-				}
-			}
-		}
+                        if (!player.capabilities.isCreativeMode) {
+                            --stack.stackSize;
+                        }
+                    }
+                } else if (!player.capabilities.isCreativeMode) {
+                    --stack.stackSize;
+                }
+            }
+        }
 
-		return super.interact(player);
-	}
+        return super.interact(player);
+    }
 
-	@Override
-    protected String getLivingSound()
-    {
+    @Override
+    protected String getLivingSound() {
         return "mob.cow.say";
     }
 
-	@Override
-    protected String getHurtSound()
-    {
+    @Override
+    protected String getHurtSound() {
         return "mob.cow.hurt";
     }
 
-	@Override
-    protected String getDeathSound()
-    {
+    @Override
+    protected String getDeathSound() {
         return "mob.cow.hurt";
     }
 
-	@Override
-	protected float getSoundVolume()
-	{
-		return 0.4F;
-	}
+    @Override
+    protected float getSoundVolume() {
+        return 0.4F;
+    }
 
-	@Override
-    protected void func_145780_a(int x, int y, int z, Block block)
-    {
+    @Override
+    protected void func_145780_a(int x, int y, int z, Block block) {
         this.playSound("mob.cow.step", 0.15F, 1.0F);
     }
 
-	@Override
-	public EntityAgeable createChild(EntityAgeable entityageable)
-	{
-		return new EntityFlyingCow(this.worldObj);
-	}
+    @Override
+    public EntityAgeable createChild(EntityAgeable entityageable) {
+        return new EntityFlyingCow(this.worldObj);
+    }
 
-	@Override
-	protected void dropFewItems(boolean recentlyHit, int lootLevel)
-	{
-		int j = this.rand.nextInt(3) + this.rand.nextInt(1 + lootLevel);
-		int k;
+    @Override
+    protected void dropFewItems(boolean recentlyHit, int lootLevel) {
+        int j = this.rand.nextInt(3) + this.rand.nextInt(1 + lootLevel);
+        int k;
 
-		for (k = 0; k < j; ++k)
-		{
-			this.dropItem(Items.leather, 1);
-		}
+        for (k = 0; k < j; ++k) {
+            this.dropItem(Items.leather, 1);
+        }
 
-		j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
+        j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
 
-		for (k = 0; k < j; ++k)
-		{
-			if (this.isBurning())
-			{
-				this.dropItem(Items.cooked_beef, 1);
-			}
-			else
-			{
-				this.dropItem(Items.beef, 1);
-			}
-		}
+        for (k = 0; k < j; ++k) {
+            if (this.isBurning()) {
+                this.dropItem(Items.cooked_beef, 1);
+            } else {
+                this.dropItem(Items.beef, 1);
+            }
+        }
 
-		super.dropFewItems(recentlyHit, lootLevel);
-	}
+        super.dropFewItems(recentlyHit, lootLevel);
+    }
 
-	@Override
-	protected double getMountJumpStrength()
-	{
-		return 5.0D;
-	}
+    @Override
+    protected double getMountJumpStrength() {
+        return 5.0D;
+    }
 
 }

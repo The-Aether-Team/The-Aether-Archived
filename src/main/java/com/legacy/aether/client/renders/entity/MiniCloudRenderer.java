@@ -7,18 +7,15 @@ import net.minecraft.util.ResourceLocation;
 import com.legacy.aether.Aether;
 import com.legacy.aether.client.models.entities.MiniCloudModel;
 
-public class MiniCloudRenderer extends RenderLiving
-{
+public class MiniCloudRenderer extends RenderLiving {
 
-	public MiniCloudRenderer() 
-	{
-		super(new MiniCloudModel(), 0.5F);
-	}
+    public MiniCloudRenderer() {
+        super(new MiniCloudModel(), 0.5F);
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity) 
-	{
-		return Aether.locate("textures/entities/mini_cloud/mini_cloud.png");
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        return Aether.locate("textures/entities/mini_cloud/mini_cloud.png");
+    }
 
 }

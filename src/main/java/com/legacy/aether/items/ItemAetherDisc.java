@@ -6,8 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import com.legacy.aether.Aether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
-public class ItemAetherDisc extends ItemRecord
-{
+public class ItemAetherDisc extends ItemRecord {
 
 	public String artistName;
 
@@ -15,8 +14,7 @@ public class ItemAetherDisc extends ItemRecord
 
 	public ResourceLocation songLocation;
 
-	public ItemAetherDisc(String s, String artist, String song)
-	{
+	public ItemAetherDisc(String s, String artist, String song) {
 		super(s);
 
 		this.artistName = artist;
@@ -27,15 +25,13 @@ public class ItemAetherDisc extends ItemRecord
 	}
 
 	@Override
-	public String getRecordNameLocal()
-	{
+	public String getRecordNameLocal() {
 		return this.artistName + " - " + this.songName;
 	}
 
 	@Override
-    public ResourceLocation getRecordResource(String name)
-    {
-    	return this.songLocation;
-    }
+	public ResourceLocation getRecordResource(String name) {
+		return this.songLocation;
+	}
 
 }
