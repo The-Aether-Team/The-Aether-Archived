@@ -122,6 +122,12 @@ public class AetherWorldProvider extends WorldProvider {
 	}
 
 	@Override
+    @SideOnly(Side.CLIENT)
+    public boolean getWorldHasVoidParticles() {
+    	return false;
+    }
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public net.minecraftforge.client.IRenderHandler getWeatherRenderer() {
 		return new IRenderHandler() {
