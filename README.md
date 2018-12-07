@@ -5,9 +5,9 @@
 [![Discord](https://img.shields.io/discord/223938153260515328.svg)](https://discord.gg/qZcfwet)
 [![GitHub release](https://img.shields.io/github/release-pre/modding-legacy/aether-legacy.svg)](https://github.com/Modding-Legacy/Aether-Legacy/releases)
 [![GitHub](https://img.shields.io/github/license/modding-legacy/aether-legacy.svg)](https://github.com/Modding-Legacy/Aether-Legacy/blob/master/LICENSE)
-[![CurseForge Total Downloads](http://cf.way2muchnoise.eu/full_255308_downloads.svg)](https://minecraft.curseforge.com/projects/aether-legacy/)
+[![CurseForge Total Downloads](https://cf.way2muchnoise.eu/full_255308_downloads.svg)](https://minecraft.curseforge.com/projects/aether-legacy/)
 
-[![Availability](http://cf.way2muchnoise.eu/versions/255308.svg)](https://minecraft.curseforge.com/projects/aether-legacy/files)
+[![Availability](https://cf.way2muchnoise.eu/versions/255308.svg)](https://minecraft.curseforge.com/projects/aether-legacy/files)
 
 
 * [**Website**](https://moddinglegacy.com)
@@ -34,7 +34,7 @@ If you are interested in translating, come chat with us on Discord and we'll let
 - [x] Spanish (es_MX) - Translations by [@Aer-ink](https://github.com/Aer-ink)
 - [ ] French (fr_FR)
 - [ ] German (de_DE)
-- [ ] Chinese (zh_CH) - Translations by [@ETStareak](https://github.com/ETStareak)
+- [x] Chinese (zh_CH) - Translations by [@ETStareak](https://github.com/ETStareak)
 
 - [x] English Upside Down - (ud_UD) Translations by [@The-Fireplace](https://github.com/The-Fireplace)
 
