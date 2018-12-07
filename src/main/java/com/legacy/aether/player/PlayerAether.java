@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Direction;
@@ -76,6 +77,10 @@ public class PlayerAether implements IPlayerAether {
 	private int cooldownMax;
 
 	public float wingSinage;
+
+    public float timeInPortal;
+
+    public float prevTimeInPortal;
 
 	public PlayerAether() {
 		this.abilities.addAll(Arrays.<IAetherAbility>asList(new AbilityAccessories(this), new AbilityArmor(this), new AbilityFlight(this), new AbilityRepulsion(this)));
@@ -183,6 +188,42 @@ public class PlayerAether implements IPlayerAether {
 			}
 
 			((EntityPlayerMP) this.getEntity()).theItemInWorldManager.setBlockReachDistance(distance);
+		}
+		else {
+            this.prevTimeInPortal = this.timeInPortal;
+
+            if (this.inPortal)
+            {
+                this.timeInPortal += 0.0125F;
+
+                if (this.timeInPortal >= 1.0F)
+                {
+                    this.timeInPortal = 1.0F;
+                }
+
+                this.inPortal = false;
+            }
+            else if (this.getEntity().isPotionActive(Potion.confusion) && this.getEntity().getActivePotionEffect(Potion.confusion).getDuration() > 60)
+            {
+                this.timeInPortal += 0.006666667F;
+
+                if (this.timeInPortal > 1.0F)
+                {
+                    this.timeInPortal = 1.0F;
+                }
+            }
+            else
+            {
+                if (this.timeInPortal > 0.0F)
+                {
+                    this.timeInPortal -= 0.05F;
+                }
+
+                if (this.timeInPortal < 0.0F)
+                {
+                    this.timeInPortal = 0.0F;
+                }
+            }
 		}
 	}
 
