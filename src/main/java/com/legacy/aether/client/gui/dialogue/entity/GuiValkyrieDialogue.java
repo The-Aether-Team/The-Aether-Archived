@@ -7,8 +7,8 @@ import com.legacy.aether.client.gui.dialogue.DialogueOption;
 import com.legacy.aether.client.gui.dialogue.GuiDialogue;
 import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketInitiateValkyrieFight;
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketInitiateValkyrieFight;
 
 public class GuiValkyrieDialogue extends GuiDialogue
 {
@@ -21,7 +21,7 @@ public class GuiValkyrieDialogue extends GuiDialogue
 
 	public GuiValkyrieDialogue(EntityValkyrieQueen valkyrieQueen) 
 	{
-		super("[\247e" + valkyrieQueen.getBossName() + ", the Valkyrie Queen\247r]", new DialogueOption[] {new DialogueOption("What can you tell me about this place?"), new DialogueOption("I wish to fight you!"), new DialogueOption("Nevermind")});
+		super("[\247e" + valkyrieQueen.getName() + ", the Valkyrie Queen\247r]", new DialogueOption[] {new DialogueOption("What can you tell me about this place?"), new DialogueOption("I wish to fight you!"), new DialogueOption("Nevermind")});
 
 		this.title = this.getDialogue();
 		this.valkyrieQueen = valkyrieQueen;
@@ -53,7 +53,7 @@ public class GuiValkyrieDialogue extends GuiDialogue
 		{
 			if (dialogue.getDialogueId() == 0)
 			{
-	        	if (this.mc.theWorld.getDifficulty() == EnumDifficulty.PEACEFUL)
+	        	if (this.mc.theWorld.difficultySetting == EnumDifficulty.PEACEFUL)
 	        	{
 	        		this.addDialogueMessage(this.title +  ": Sorry, I don't fight with weaklings.");
 					this.dialogueTreeCompleted();
@@ -63,7 +63,7 @@ public class GuiValkyrieDialogue extends GuiDialogue
 
 				if (this.medalSlotId != -1)
 				{
-					AetherNetworkingManager.sendToServer(new PacketInitiateValkyrieFight(this.medalSlotId, this.valkyrieQueen.getEntityId()));
+					AetherNetwork.sendToServer(new PacketInitiateValkyrieFight(this.medalSlotId, this.valkyrieQueen.getEntityId()));
 
 					this.valkyrieQueen.setBossReady(true);
 					this.addDialogueMessage(this.title + ": Now then, let's begin!");

@@ -1,79 +1,76 @@
 package com.legacy.aether;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.AetherEntities;
+import com.legacy.aether.entities.EntitiesAether;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.player.capability.PlayerAetherManager;
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.player.PlayerAetherEvents;
+import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.registry.AetherRegistries;
 import com.legacy.aether.registry.achievements.AchievementsAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
-import com.legacy.aether.registry.sounds.SoundsAether;
-import com.legacy.aether.tile_entities.AetherTileEntities;
+import com.legacy.aether.tileentity.AetherTileEntities;
 import com.legacy.aether.world.AetherWorld;
 
-@Mod(name = "Aether Legacy", modid = Aether.modid, version = "1.10.2-v1.6", acceptedMinecraftVersions = "1.10.2")
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+
+@Mod(modid = Aether.MOD_ID, version = "v1.0.0")
 public class Aether 
 {
 
-	public static final String modid = "aether_legacy";
+	public static final String MOD_ID = "aether_legacy";
 
-	@Instance(Aether.modid)
+	@Instance(Aether.MOD_ID)
 	public static Aether instance;
 
-	@SidedProxy(modId = Aether.modid, clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.CommonProxy")
+	@SidedProxy(clientSide = "com.legacy.aether.client.ClientProxy", serverSide = "com.legacy.aether.CommonProxy")
 	public static CommonProxy proxy;
 
-	@EventHandler
-	public void preInitialization(FMLPreInitializationEvent event)
-	{
-		AetherConfig.init(event.getModConfigurationDirectory());
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event)
+    {
+    	AetherRankings.initialization();
+    	AetherNetwork.preInitialization();
+    	AetherConfig.init(event.getModConfigurationDirectory());
+    }
 
-		AetherNetworkingManager.preInitialization();
+    @EventHandler
+    public void init(FMLInitializationEvent event)
+    {
+    	BlocksAether.initialization();
+    	ItemsAether.initialization();
+    	AetherRegistries.register();
+    	EntitiesAether.initialization();
+    	AetherCreativeTabs.initialization();
+    	AetherTileEntities.initialization();
+    	AetherWorld.initialization();
+    	AchievementsAether.initialization();
 
-		proxy.preInitialization();
-	}
+    	proxy.init();
 
-	@EventHandler
-	public void initialization(FMLInitializationEvent event)
-	{
-		PlayerAetherManager.initialization();
-		SoundsAether.initialization();
-		AetherEntities.initialization();
-		BlocksAether.initialization();
-		ItemsAether.initialization();
-		AetherRegistries.initialization();
-		AchievementsAether.initialization();
-		AetherTileEntities.initialization();
-		AetherCreativeTabs.initialization();
-		AetherWorld.initialization();
-
-		proxy.initialization();
-
-		CommonProxy.registerEvent(new AetherEventHandler());
-	}
+    	CommonProxy.registerEvent(new PlayerAetherEvents());
+    	CommonProxy.registerEvent(new AetherEventHandler());
+    }
 
 	public static ResourceLocation locate(String location)
 	{
-		return new ResourceLocation(modid, location);
+		return new ResourceLocation(MOD_ID, location);
+	}
+
+	public static String find(String location)
+	{
+		return modAddress() + location;
 	}
 
 	public static String modAddress()
 	{
-		return modid + ":";
+		return MOD_ID + ":";
 	}
-
-	public static String doubleDropNotifier()
-	{
-		return "double_drops";
-	}
-
 }

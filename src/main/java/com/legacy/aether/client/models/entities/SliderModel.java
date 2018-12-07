@@ -2,8 +2,9 @@ package com.legacy.aether.client.models.entities;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+
+import org.lwjgl.opengl.GL11;
 
 public class SliderModel extends ModelBase 
 {
@@ -34,18 +35,18 @@ public class SliderModel extends ModelBase
     {
         this.head.rotateAngleY = this.head.rotateAngleY = 0.0F;
 
-		GlStateManager.pushMatrix();
+        GL11.glPushMatrix();
 
-		GlStateManager.scale(2.0F, 2.0F, 2.0F);
+        GL11.glScalef(2.0F, 2.0F, 2.0F);
 
 		if(this.hurtAngle > 0.01F) 
 		{
-			GlStateManager.rotate(this.hurtAngle * -30F, this.hurtAngleX, 0F, this.hurtAngleZ);
+			GL11.glRotatef(this.hurtAngle * -30F, this.hurtAngleX, 0F, this.hurtAngleZ);
 		}
 
         this.head.render(scale);
 
-        GlStateManager.popMatrix();
+        GL11.glPopMatrix();
     }
 
 }

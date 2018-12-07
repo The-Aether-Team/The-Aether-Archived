@@ -3,10 +3,11 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.hostile.EntityAechorPlant;
 import com.legacy.aether.entities.hostile.EntityCockatrice;
@@ -22,12 +23,14 @@ import com.legacy.aether.entities.passive.mountable.EntitySwet;
 import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
 
-public class AetherBiome extends Biome
+public class AetherBiome extends BiomeGenBase
 {
 
+	@SuppressWarnings("unchecked")
 	public AetherBiome()
 	{
-		super(new AetherBiomeProperties());
+		super(AetherConfig.getAetherBiomeID());
+
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -45,8 +48,14 @@ public class AetherBiome extends Biome
 
 		this.spawnableMonsterList.addAll(list);
 
-		this.topBlock = BlocksAether.aether_grass.getDefaultState();
-		this.fillerBlock = BlocksAether.holystone.getDefaultState();
+		list.clear();
+
+		this.topBlock = BlocksAether.aether_grass;
+		this.fillerBlock = BlocksAether.holystone;
+
+		this.setBiomeName("Aether Highlands");
+		this.setDisableRain();
+		this.setColor(0);
 	}
 
 	private void addCreatureEntry(ArrayList<SpawnListEntry> list)
@@ -63,29 +72,51 @@ public class AetherBiome extends Biome
 	private void addMobEntry(ArrayList<SpawnListEntry> list)
 	{
 		list.add(new SpawnListEntry(EntityWhirlwind.class, 8, 2, 2));
-		list.add(new SpawnListEntry(EntityCockatrice.class, 3, 4, 4));
-		list.add(new SpawnListEntry(EntityAerwhale.class, 8, 3, 3));
-		list.add(new SpawnListEntry(EntityZephyr.class, 5, 1, 1));
+		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
+		list.add(new SpawnListEntry(EntityAerwhale.class, 7, 3, 3));
+		list.add(new SpawnListEntry(EntityZephyr.class, 4, 1, 1));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 2, 3, 3));
 	}
+
+	@Override
+    public void addDefaultFlowers()
+    {
+        this.flowers.add(new FlowerEntry(BlocksAether.white_flower, 0, 20));
+        this.flowers.add(new FlowerEntry(BlocksAether.purple_flower, 0, 10));
+    }
+
+	@Override
+    public int getWaterColorMultiplier()
+    {
+    	return 16777215;
+    }
 
 	@Override
     public int getSkyColorByTemp(float currentTemperature)
     {
     	return 0xC0C0FF; // Lavender Blue
     }
-
+	
 	@Override
-    public boolean canRain()
+    public int getBiomeGrassColor(int x, int y, int z)
     {
-    	return false;
+        return 0xb1ffcb;
+    }
+	
+	@Override
+    public int getBiomeFoliageColor(int x, int y, int z)
+    {
+        return 0xb1ffcb;
     }
 
+	@Override
     public BiomeDecorator createBiomeDecorator()
     {
     	return new AetherBiomeDecorator();
     }
 
-    public WorldGenAbstractTree genBigTreeChance(Random rand)
+	@Override
+    public WorldGenAbstractTree func_150567_a(Random rand)
     {
         return (WorldGenAbstractTree)(rand.nextInt(20) == 0 ? new AetherGenOakTree() : new AetherGenSkyrootTree(false));
     }

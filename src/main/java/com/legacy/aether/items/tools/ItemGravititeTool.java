@@ -1,12 +1,9 @@
 package com.legacy.aether.items.tools;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
@@ -19,37 +16,39 @@ public class ItemGravititeTool extends ItemAetherTool
 
 	public ItemGravititeTool(EnumAetherToolType toolType) 
 	{
-		super(ToolMaterial.DIAMOND, toolType);
+		super(ToolMaterial.EMERALD, toolType);
 	}
 
 	@Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-    {
-    	return repair.getItem() == Item.getItemFromBlock(BlocksAether.enchanted_gravitite);
-    }
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return repair.getItem() == Item.getItemFromBlock(BlocksAether.enchanted_gravitite);
+	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack heldItem, EntityPlayer player, World world, int x, int y, int z, int facing, float hitX, float hitY, float hitZ)
     {
-    	if ((this.getStrVsBlock(stack, world.getBlockState(pos)) == this.efficiencyOnProperMaterial || ForgeHooks.isToolEffective(world, pos, stack)) && world.isAirBlock(pos.up()))
+		Block block = world.getBlock(x, y, z);
+		int meta = world.getBlockMetadata(x, y, z);
+    	EntityFloatingBlock entity = new EntityFloatingBlock(world, x, y, z, block, meta);
+
+    	if ((this.getDigSpeed(heldItem, block, meta) == this.efficiencyOnProperMaterial || ForgeHooks.isToolEffective(heldItem, block, meta)) && world.isAirBlock(x, y + 1, z))
     	{
-        	if (world.getTileEntity(pos) != null || world.getBlockState(pos).getBlock().getBlockHardness(world.getBlockState(pos), world, pos) == -1.0F)
+        	if (world.getTileEntity(x, y, z) != null || world.getBlock(x, y, z).getBlockHardness(world, x, y, z) == -1.0F)
         	{
-        		return EnumActionResult.FAIL;
+        		return false;
         	}
 
         	if (!world.isRemote)
         	{
-            	EntityFloatingBlock entity = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
         		world.spawnEntityInWorld(entity);
-        		world.setBlockToAir(pos);
+        		world.setBlockToAir(x, y, z);
         	}
 
-        	stack.damageItem(4, player);
+        	heldItem.damageItem(4, player);
     	}
 
-        return EnumActionResult.SUCCESS;
+        return true;
     }
 
 }

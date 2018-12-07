@@ -2,13 +2,12 @@ package com.legacy.aether.entities.passive;
 
 import java.util.Random;
 
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.ItemsAether;
+
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 public abstract class EntityAetherAnimal extends EntityAnimal
 {
@@ -18,18 +17,18 @@ public abstract class EntityAetherAnimal extends EntityAnimal
 	public EntityAetherAnimal(World worldIn) 
 	{
 		super(worldIn);
-		this.spawnableBlock = BlocksAether.aether_grass;
 	}
 
 	@Override
-    public float getBlockPathWeight(BlockPos pos)
+    public float getBlockPathWeight(int x, int y, int z)
     {
-    	return this.worldObj.getBlockState(pos.down()).getBlock() == this.spawnableBlock ? 10.0F : this.worldObj.getLightBrightness(pos) - 0.5F;
+    	return this.worldObj.getBlock(x, y - 1, z) == BlocksAether.aether_grass ? 10.0F : this.worldObj.getLightBrightness(x, y, z) - 0.5F;
     }
 
-	public boolean isBreedingItem(ItemStack stack)
+	@Override
+    public boolean isBreedingItem(ItemStack stack)
     {
-        return stack.getItem() == ItemsAether.blue_berry;
+		return stack.getItem() == ItemsAether.blueberry;
     }
 
 }

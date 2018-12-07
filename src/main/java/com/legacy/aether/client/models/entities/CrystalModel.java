@@ -27,16 +27,16 @@ public class CrystalModel extends ModelBase
 
     public CrystalModel(float f, float f1)
     {
-		sinage = new float[3];
-		head = new ModelRenderer[3];
+		this.sinage = new float[3];
+		this.head = new ModelRenderer[3];
+		this.head[0] = new ModelRenderer(this, 0, 0);
+		this.head[1] = new ModelRenderer(this, 32, 0);
+		this.head[2] = new ModelRenderer(this, 0, 16);
 
-        head[0] = new ModelRenderer(this, 0, 0);
-		head[1] = new ModelRenderer(this, 32, 0);
-		head[2] = new ModelRenderer(this, 0, 16);
-		
-		for(int i = 0; i < 3; i ++) {
-			head[i].addBox(-4F, -4F, -4F, 8, 8, 8, f);
-			head[i].setRotationPoint(0.0F, 0.0F + f1, 0.0F);
+		for(int i = 0; i < 3; i ++)
+		{
+			this.head[i].addBox(-4F, -4F, -4F, 8, 8, 8, f);
+			this.head[i].setRotationPoint(0.0F, 0.0F + f1, 0.0F);
 		}
     }
 
@@ -53,18 +53,18 @@ public class CrystalModel extends ModelBase
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		GL11.glPushMatrix();
-		GL11.glRotatef(sinage[0] * sponge, 1F, 0F, 0F);
-		head[0].render(scale);
+		GL11.glRotatef(this.sinage[0] * sponge, 1F, 0F, 0F);
+		this.head[0].render(scale);
 		GL11.glPopMatrix();
 
 		GL11.glPushMatrix();
-		GL11.glRotatef(sinage[1] * sponge, 0F, 1F, 0F);
-		head[1].render(scale);
+		GL11.glRotatef(this.sinage[1] * sponge, 0F, 1F, 0F);
+		this.head[1].render(scale);
 		GL11.glPopMatrix();
 
 		GL11.glPushMatrix();
-		GL11.glRotatef(sinage[2] * sponge, 0F, 0F, 1F);
-		head[2].render(scale);
+		GL11.glRotatef(this.sinage[2] * sponge, 0F, 0F, 1F);
+		this.head[2].render(scale);
 		GL11.glPopMatrix();
 
 		GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
@@ -75,8 +75,8 @@ public class CrystalModel extends ModelBase
     {
         for(int i = 0; i < 3; i ++) 
         {
-			head[i].rotateAngleY = netHeadYaw / 57.29578F;
-			head[i].rotateAngleX = headPitch / 57.29578F;
+        	this.head[i].rotateAngleY = netHeadYaw / 57.29578F;
+        	this.head[i].rotateAngleX = headPitch / 57.29578F;
 		}
     }
 

@@ -27,8 +27,6 @@ public class ModelAetherWings extends ModelBiped
 
 	public ModelAetherWings(float f, float f1)
 	{
-        this.leftArmPose = ModelBiped.ArmPose.EMPTY;
-        this.rightArmPose = ModelBiped.ArmPose.EMPTY;
 		this.isSneak = false;
 
 		this.wingLeft = new ModelRenderer(this, 24, 31);

@@ -1,137 +1,131 @@
 package com.legacy.aether.player.abilities;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
+import com.legacy.aether.api.accessories.AccessoryType;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.util.IAetherAbility;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
 
-public class AbilityAccessories extends Ability
+public class AbilityAccessories implements IAetherAbility
 {
 
-	private boolean invisibilityUpdate, stepUpdate;
+	private final IPlayerAether player;
 
-	public AbilityAccessories(PlayerAether player) 
+	private boolean invisibilityUpdate;
+
+	private boolean stepUpdate;
+
+	public AbilityAccessories(IPlayerAether player) 
 	{
-		super(player);
+		this.player = player;
+	}
+
+	@Override
+	public boolean shouldExecute()
+	{
+		return true;
 	}
 
 	@Override
 	public void onUpdate() 
 	{
-		if (this.player.ticksExisted % 400 == 0)
+		if (this.player.getEntity().ticksExisted % 400 == 0)
 		{
-			this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.zanite_ring));
-			this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.zanite_pendant));
+			this.player.getAccessoryInventory().damageWornStack(1, new ItemStack(ItemsAether.zanite_ring));
+			this.player.getAccessoryInventory().damageWornStack(1, new ItemStack(ItemsAether.zanite_pendant));
 		}
 
-		if (!this.player.worldObj.isRemote && this.playerAether.wearingAccessory(ItemsAether.ice_ring) || this.playerAether.wearingAccessory(ItemsAether.ice_pendant))
+		if (!this.player.getEntity().worldObj.isRemote && (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.ice_ring)) || this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.ice_pendant))))
 		{
-			int i = MathHelper.floor_double(this.player.posX);
-			int j = MathHelper.floor_double(this.player.getEntityBoundingBox().minY);
-			int k = MathHelper.floor_double(this.player.posZ);
+			int i = MathHelper.floor_double(this.player.getEntity().posX);
+			int j = MathHelper.floor_double(this.player.getEntity().boundingBox.minY);
+			int k = MathHelper.floor_double(this.player.getEntity().posZ);
 
-			for (int l = i - 1; l <= i + 1; l++)
+			for (int x = i - 1; x <= i + 1; x++)
 			{
-				for (int i1 = j - 1; i1 <= j + 1; i1++)
+				for (int y = j - 1; y <= j + 1; y++)
 				{
-					for (int j1 = k - 1; j1 <= k + 1; j1++)
+					for (int z = k - 1; z <= k + 1; z++)
 					{
-						IBlockState state = this.player.worldObj.getBlockState(new BlockPos.MutableBlockPos().setPos(l, i1, j1));
-						Block block = state.getBlock();
-						BlockPos pos = new BlockPos(l, i1, j1);
+						Block block = this.player.getEntity().worldObj.getBlock(x, y, z);
+						Block setBlock = (block == Blocks.water || block == Blocks.flowing_water) ? Blocks.ice : (block == Blocks.lava || block == Blocks.flowing_lava) ? Blocks.obsidian : null;
 
-						if (block == Blocks.WATER || block == Blocks.FLOWING_WATER)
+						if (setBlock != null)
 						{
-							if (((Integer)state.getValue(BlockLiquid.LEVEL)).intValue() == 0)
-							{ this.player.worldObj.setBlockState(pos, Blocks.ICE.getDefaultState()); }
-							else { this.player.worldObj.setBlockState(pos, Blocks.AIR.getDefaultState()); }
+							this.player.getEntity().worldObj.setBlock(x, y, z, setBlock);
+							this.player.getAccessoryInventory().damageWornStack(1, new ItemStack(ItemsAether.ice_ring));
+							this.player.getAccessoryInventory().damageWornStack(1, new ItemStack(ItemsAether.ice_pendant));
 						}
-						else if (block == Blocks.LAVA || block == Blocks.FLOWING_LAVA)
-						{
-							if (((Integer)state.getValue(BlockLiquid.LEVEL)).intValue() == 0)
-							{ this.player.worldObj.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState()); }
-							else { this.player.worldObj.setBlockState(pos, Blocks.AIR.getDefaultState()); }
-						}
-						else
-						{
-							continue;
-						}
-
-						this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.ice_ring));
-						this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.ice_pendant));
 					}
 				}
 			}
 		}
 
-		if (this.playerAether.wearingAccessory(ItemsAether.iron_bubble))
+		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.iron_bubble)))
 		{
-			this.player.setAir(0);
+			this.player.getEntity().setAir(0);
 		}
 
-		if (this.playerAether.wearingAccessory(ItemsAether.agility_cape))
+		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.agility_cape)))
 		{
+			this.player.getEntity().stepHeight = 1.0F;
 			this.stepUpdate = true;
-			this.player.stepHeight = 1.0F;
 		}
 		else
 		{
 			if (this.stepUpdate)
 			{
-				this.player.stepHeight = 0.5F;
+				this.player.getEntity().stepHeight = 0.5F;
 				this.stepUpdate = false;
 			}
 		}
 
-		if (this.playerAether.wearingAccessory(ItemsAether.invisibility_cape))
+		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape)))
 		{
+			this.player.getEntity().setInvisible(true);
 			this.invisibilityUpdate = true;
-			this.player.setInvisible(true);
 		}
-		else if (!this.playerAether.wearingAccessory(ItemsAether.invisibility_cape) && !this.player.isPotionActive(Potion.getPotionById(14)))
+		else if (!this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape)) && !this.player.getEntity().isPotionActive(Potion.invisibility))
 		{
 			if (this.invisibilityUpdate)
 			{
-				this.player.setInvisible(false);
+				this.player.getEntity().setInvisible(false);
 				this.invisibilityUpdate = false;
 			}
 		}
 
-		if (this.playerAether.wearingAccessory(ItemsAether.regeneration_stone))
+		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.regeneration_stone)))
 		{
-			if(this.player.getHealth() < this.player.getMaxHealth() && this.player.getActivePotionEffect(MobEffects.REGENERATION) == null)
+			if(this.player.getEntity().getHealth() < this.player.getEntity().getMaxHealth() && this.player.getEntity().getActivePotionEffect(Potion.regeneration) == null)
             {
-				this.player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 80, 0, false, false));
+				this.player.getEntity().addPotionEffect(new PotionEffect(Potion.regeneration.id, 80, 0));
             }
 		}
 
-		if (this.playerAether.wearingAccessory(ItemsAether.phoenix_gloves) && this.player.isWet())
+		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.phoenix_gloves)) && this.player.getEntity().isWet())
 		{
-			this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.phoenix_gloves));
+			this.player.getAccessoryInventory().damageWornStack(1, new ItemStack(ItemsAether.phoenix_gloves));
 
-			if (this.playerAether.accessories.getStackFromItem(ItemsAether.phoenix_gloves) == null)
+			if (this.player.getAccessoryInventory().getStackInSlot(AccessoryType.GLOVES) == null)
 			{
-				this.playerAether.accessories.setInventorySlotContents(6, new ItemStack(ItemsAether.obsidian_gloves));
+				this.player.getAccessoryInventory().setAccessorySlot(AccessoryType.GLOVES, new ItemStack(ItemsAether.obsidian_gloves));
 			}
 		}
 
-		if (this.playerAether.wearingAccessory(ItemsAether.golden_feather) && !this.player.isElytraFlying())
+		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.golden_feather)))
 		{
-			if (!this.player.onGround && this.player.motionY < 0.0D && !this.player.isInWater() && !this.player.isSneaking())
+			if (!this.player.getEntity().onGround && this.player.getEntity().motionY < 0.0D && !this.player.getEntity().isInWater() && !this.player.getEntity().isSneaking())
 			{
-				this.player.motionY *= 0.59999999999999998D;
+				this.player.getEntity().motionY *= 0.59999999999999998D;
 			}
 
-			this.player.fallDistance = -1F;
+			this.player.getEntity().fallDistance = -1F;
 		}
 	}
 

@@ -3,25 +3,26 @@ package com.legacy.aether.blocks.decorative;
 import java.util.Random;
 
 import net.minecraft.block.BlockBreakable;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.legacy.aether.Aether;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockQuicksoilGlass extends BlockBreakable
 {
 
 	public BlockQuicksoilGlass()
 	{
-		super(Material.GLASS, false);
+		super(Aether.find("quicksoil_glass"), Material.glass, false);
 
 		this.slipperiness = 1.1F;
 
-		this.setLightLevel(0.7375F);
 		this.setHardness(0.2F);
 		this.setLightOpacity(0);
-		this.setSoundType(SoundType.GLASS);
+		this.setLightLevel(0.7375F);
+		this.setStepSound(soundTypeGlass);
 	}
 
 	@Override
@@ -32,9 +33,15 @@ public class BlockQuicksoilGlass extends BlockBreakable
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
+    public int getRenderBlockPass()
     {
-        return BlockRenderLayer.TRANSLUCENT;
+        return 1;
+    }
+
+	@Override
+    public boolean renderAsNormalBlock()
+    {
+        return true;
     }
 
 	@Override

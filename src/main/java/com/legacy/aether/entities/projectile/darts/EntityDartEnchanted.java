@@ -14,11 +14,12 @@ public class EntityDartEnchanted extends EntityDartBase
         super(worldIn);
     }
 
-    public EntityDartEnchanted(World world, EntityLivingBase entity)
+    public EntityDartEnchanted(World world, EntityLivingBase entity, float velocity)
     {
-        super(world, entity);
+        super(world, entity, velocity);
     }
 
+	@Override
     public void entityInit()
     {
         super.entityInit();
@@ -26,7 +27,7 @@ public class EntityDartEnchanted extends EntityDartBase
     }
 
 	@Override
-	protected ItemStack getArrowStack() 
+	protected ItemStack getStack() 
 	{
 		return new ItemStack(ItemsAether.dart, 1, 2);
 	}

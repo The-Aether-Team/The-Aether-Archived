@@ -1,8 +1,9 @@
 package com.legacy.aether.client.models.entities;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class AechorPlantModel extends ModelBase 
@@ -106,9 +107,11 @@ public class AechorPlantModel extends ModelBase
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.0F, 1.2F, 0.0F);
-		GlStateManager.scale(this.size, this.size, this.size);
+    	this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
+
+    	GL11.glPushMatrix();
+    	GL11.glTranslatef(0.0F, 1.2F, 0.0F);
+    	GL11.glScalef(this.size, this.size, this.size);
 
 		for(int i = 0; i < 10; i++) 
 		{
@@ -130,7 +133,7 @@ public class AechorPlantModel extends ModelBase
 			this.thorn[i].render(scale);
 		}
 
-		GlStateManager.popMatrix();
+		GL11.glPopMatrix();
 	}
 
     @Override

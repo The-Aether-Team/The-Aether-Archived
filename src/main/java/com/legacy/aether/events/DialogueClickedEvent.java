@@ -1,7 +1,7 @@
 package com.legacy.aether.events;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import cpw.mods.fml.common.eventhandler.Event;
 
 public class DialogueClickedEvent extends Event
 {

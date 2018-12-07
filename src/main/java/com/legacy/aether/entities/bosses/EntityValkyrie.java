@@ -3,26 +3,23 @@ package com.legacy.aether.entities.bosses;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.entities.hostile.EntityAetherMob;
 import com.legacy.aether.items.ItemsAether;
 
-public class EntityValkyrie extends EntityMob
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+
+public class EntityValkyrie extends EntityAetherMob
 {
 
 	private int attackTime;
@@ -43,29 +40,24 @@ public class EntityValkyrie extends EntityMob
     {
         super(world);
         setSize(0.8F, 1.6F);
-        this.teleTimer = rand.nextInt(250);
+        this.teleTimer = this.rand.nextInt(250);
         this.timeLeft = 1200;
-        this.safeX = posX;
-        this.safeY = posY;
-        this.safeZ = posZ;
+        this.safeX = this.posX;
+        this.safeY = this.posY;
+        this.safeZ = this.posZ;
+        this.tasks.addTask(2, new EntityAIWander(this, 0.5D));
+        this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 0.65D, true));
     }
 
     @Override
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(8.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);   
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(8.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5);
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50.0D);   
 	}
-
-	@Override
-    protected void initEntityAI()
-    {
-        this.tasks.addTask(2, new EntityAIWander(this, 0.5D));
-        this.tasks.addTask(4, new EntityAIAttackMelee(this, 0.65D, true));
-    }
 
     public void swingArm()
     {
@@ -97,51 +89,43 @@ public class EntityValkyrie extends EntityMob
     }
 
     @Override
-    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, ItemStack itemstack)
+    public boolean interact(EntityPlayer entityplayer)
     {
-		ItemStack stack = entityplayer.getHeldItem(hand);
+		this.faceEntity(entityplayer, 180F, 180F);
 
-		if (this.getAttackTarget() == null)
-		{			
-			this.faceEntity(entityplayer, 180F, 180F);
-			
-			if(stack.getItem() == ItemsAether.victory_medal && itemstack.stackSize >= 0) 
+		ItemStack stack = entityplayer.getCurrentEquippedItem();
+
+		if(stack != null && stack.getItem() == ItemsAether.victory_medal && stack.stackSize >= 0) 
+		{
+			if(stack.stackSize >= 10)
 			{
-				if(stack.stackSize >= 10)
-				{
-					this.chatItUp(entityplayer, "Umm... that's a nice pile of medallions you have there...");
-				}
-				else if(stack.stackSize >= 5)
-				{
-					this.chatItUp(entityplayer, "That's pretty impressive, but you won't defeat me.");
-				}
-				else 
-				{
-					this.chatItUp(entityplayer, "You think you're a tough guy, eh? Well, bring it on!");
-				}
+				this.chatItUp(entityplayer, "Umm... that's a nice pile of medallions you have there...");
 			}
-		
-			else
+			else if(stack.stackSize >= 5)
 			{
-				int line = rand.nextInt(3);
-			
-				if(line == 2) 
-				{
-				this.chatItUp(entityplayer, "What's that? You want to fight? Aww, what a cute little human.");
-				}
-				else if(line == 1)
-				{
-				this.chatItUp(entityplayer, "You're not thinking of fighting a big, strong Valkyrie are you?");
-				}
-				else 
-				{
-					this.chatItUp(entityplayer, "I don't think you should bother me, you could get really hurt.");
-				}
+				this.chatItUp(entityplayer, "That's pretty impressive, but you won't defeat me.");
+			}
+			else 
+			{
+				this.chatItUp(entityplayer, "You think you're a tough guy, eh? Well, bring it on!");
 			}
 		}
 		else
 		{
-			return false;
+			int line = rand.nextInt(3);
+
+			if(line == 2) 
+			{
+				this.chatItUp(entityplayer, "What's that? You want to fight? Aww, what a cute little human.");
+			}
+			else if(line == 1)
+			{
+				this.chatItUp(entityplayer, "You're not thinking of fighting a big, strong Valkyrie are you?");
+			}
+			else 
+			{
+				this.chatItUp(entityplayer, "I don't think you should bother me, you could get really hurt.");
+			}
 		}
 
 		return true;
@@ -279,7 +263,7 @@ public class EntityValkyrie extends EntityMob
             }
         }
 
-        if (this.worldObj.getDifficulty() == EnumDifficulty.PEACEFUL && (this.getAttackTarget() != null || this.angerLevel > 0))
+        if (this.worldObj.difficultySetting == EnumDifficulty.PEACEFUL && (this.getAttackTarget() != null || this.angerLevel > 0))
         {
         	this.angerLevel = 0;
             this.setAttackTarget(null);
@@ -333,7 +317,7 @@ public class EntityValkyrie extends EntityMob
             	}
     			else if (pokey == 1) 
     			{
-    				chatItUp(player, "Maybe some day, " + player.getName() + "... maybe some day.");
+    				chatItUp(player, "Maybe some day, " + player.getCommandSenderName() + "... maybe some day.");
     			}
     			else
     			{
@@ -347,31 +331,40 @@ public class EntityValkyrie extends EntityMob
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+    protected Entity findPlayerToAttack()
     {
-        super.writeEntityToNBT(nbttagcompound);
-        nbttagcompound.setShort("Anger", (short) angerLevel);
-        nbttagcompound.setShort("TeleTimer", (short) teleTimer);
-        nbttagcompound.setShort("TimeLeft", (short) timeLeft);
-        nbttagcompound.setTag("SafePos", newDoubleNBTList(new double[] { safeX, safeY, safeZ }));
+    	return null;
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound nbttagcompound) 
+    public void writeEntityToNBT(NBTTagCompound compound)
     {
-        super.readEntityFromNBT(nbttagcompound);
-        angerLevel = nbttagcompound.getShort("Anger");
-        teleTimer = nbttagcompound.getShort("TeleTimer");
-        timeLeft = nbttagcompound.getShort("TimeLeft");
-        NBTTagList nbttaglist = nbttagcompound.getTagList("SafePos", 10);
-        safeX = nbttaglist.getDoubleAt(0);
-        safeY = nbttaglist.getDoubleAt(1);
-        safeZ = nbttaglist.getDoubleAt(2);
+        super.writeEntityToNBT(compound);
+
+        compound.setInteger("angerLevel", this.angerLevel);
+        compound.setInteger("teleTimer", this.teleTimer);
+        compound.setInteger("timeLeft", this.timeLeft);
+        compound.setDouble("safePosX", this.safeX);
+        compound.setDouble("safePosY", this.safeY);
+        compound.setDouble("safePosZ", this.safeZ);
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) 
+    {
+        super.readEntityFromNBT(compound);
+
+        this.angerLevel = compound.getInteger("angerLevel");
+        this.teleTimer = compound.getInteger("teleTimer");
+        this.timeLeft = compound.getInteger("timeLeft");
+        this.safeX = compound.getInteger("safePosX");
+        this.safeY = compound.getInteger("safePosY");
+        this.safeZ = compound.getInteger("safePosZ");
     }
 
     public boolean attackEntityFrom(DamageSource ds, float i) 
     {
-        if (ds.getEntity() instanceof EntityPlayer && worldObj.getDifficulty() != EnumDifficulty.PEACEFUL)
+        if (ds.getEntity() instanceof EntityPlayer && worldObj.difficultySetting != EnumDifficulty.PEACEFUL)
         {
             EntityPlayer player = (EntityPlayer)ds.getEntity();
 
@@ -427,7 +420,7 @@ public class EntityValkyrie extends EntityMob
     {
     	boolean flag = false;
 
-        if (this.attackTime <= 0 && entity.getEntityBoundingBox().maxY > getEntityBoundingBox().minY && entity.getEntityBoundingBox().minY < getEntityBoundingBox().maxY) 
+        if (this.attackTime <= 0 && entity.boundingBox.maxY > this.boundingBox.minY && entity.boundingBox.minY < this.boundingBox.maxY) 
         {
         	this.attackTime = 20;
             swingArm();
@@ -445,7 +438,7 @@ public class EntityValkyrie extends EntityMob
                     } 
                     else if (pokey == 1) 
                	 	{
-                        chatItUp((EntityPlayer) this.getAttackTarget(),"Maybe some day, " + player.getName() + "... maybe some day.");
+                        chatItUp((EntityPlayer) this.getAttackTarget(),"Maybe some day, " + player.getCommandSenderName() + "... maybe some day.");
                     }
                	 	else 
                	 	{
@@ -468,7 +461,7 @@ public class EntityValkyrie extends EntityMob
     }
 
     @Override
-    public void fall(float distance, float damageMultiplier)
+    public void fall(float distance)
     {
     }
 
@@ -478,14 +471,16 @@ public class EntityValkyrie extends EntityMob
         return true;
     }
 
-    protected SoundEvent getHurtSound()
+	@Override
+    protected String getHurtSound()
     {
-    	return SoundEvents.ENTITY_GENERIC_HURT;
+        return "game.player.hurt";
     }
-    
-    protected SoundEvent getDeathSound()
-    {
-       return SoundEvents.ENTITY_GENERIC_HURT;
+
+	@Override
+	protected String getDeathSound()
+	{
+        return "game.player.hurt.fall.big";
     }
 
 }

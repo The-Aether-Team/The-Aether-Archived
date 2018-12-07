@@ -2,9 +2,8 @@ package com.legacy.aether.world.biome.decoration;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.block.Block;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -13,7 +12,7 @@ import com.legacy.aether.blocks.BlocksAether;
 public class AetherGenMinable extends WorldGenerator
 {
 
-    private IBlockState oreBlock;
+    private Block oreBlock;
 
     private int numberOfBlocks;
 
@@ -27,20 +26,20 @@ public class AetherGenMinable extends WorldGenerator
     	this.numberOfBlocks = size;
     }
 
-    public void setBlock(IBlockState state)
+    public void setBlock(Block state)
     {
     	this.oreBlock = state;
     }
 
-    public boolean generate(World world, Random random, BlockPos pos)
+    public boolean generate(World world, Random random, int x, int y, int z)
     {
         float f = random.nextFloat() * (float)Math.PI;
-        double d = (double)((float)(pos.getX() + 8) + MathHelper.sin(f) * (float)this.numberOfBlocks / 8.0F);
-        double d1 = (double)((float)(pos.getX() + 8) - MathHelper.sin(f) * (float)this.numberOfBlocks / 8.0F);
-        double d2 = (double)((float)(pos.getZ() + 8) + MathHelper.cos(f) * (float)this.numberOfBlocks / 8.0F);
-        double d3 = (double)((float)(pos.getZ() + 8) - MathHelper.cos(f) * (float)this.numberOfBlocks / 8.0F);
-        double d4 = (double)(pos.getY() + random.nextInt(3) + 2);
-        double d5 = (double)(pos.getY() + random.nextInt(3) + 2);
+        double d = (double)((float)(x + 8) + MathHelper.sin(f) * (float)this.numberOfBlocks / 8.0F);
+        double d1 = (double)((float)(x + 8) - MathHelper.sin(f) * (float)this.numberOfBlocks / 8.0F);
+        double d2 = (double)((float)(z + 8) + MathHelper.cos(f) * (float)this.numberOfBlocks / 8.0F);
+        double d3 = (double)((float)(z + 8) - MathHelper.cos(f) * (float)this.numberOfBlocks / 8.0F);
+        double d4 = (double)(y + random.nextInt(3) + 2);
+        double d5 = (double)(y + random.nextInt(3) + 2);
 
         for (int l = 0; l <= this.numberOfBlocks; ++l)
         {
@@ -72,11 +71,10 @@ public class AetherGenMinable extends WorldGenerator
                             for (int i3 = k1; i3 <= j2; ++i3)
                             {
                                 double d14 = ((double)i3 + 0.5D - d8) / (d10 / 2.0D);
-                                BlockPos newPos = new BlockPos(k2, l2, i3);
 
-                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && world.getBlockState(newPos).getBlock() == BlocksAether.holystone)
+                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && world.getBlock(k2, l2, i3) == BlocksAether.holystone)
                                 {
-                                	this.setBlockAndNotifyAdequately(world, newPos, this.oreBlock);
+                                	this.setBlockAndNotifyAdequately(world, k2, l2, i3, this.oreBlock, 0);
                                 }
                             }
                         }

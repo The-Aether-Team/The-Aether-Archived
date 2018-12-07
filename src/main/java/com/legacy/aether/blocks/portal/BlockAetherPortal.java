@@ -4,25 +4,21 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockWorldState;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.block.state.pattern.BlockPattern;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.cache.LoadingCache;
+import com.legacy.aether.Aether;
 import com.legacy.aether.entities.particles.ParticleAetherPortal;
+import com.legacy.aether.entities.util.EntityHook;
 import com.legacy.aether.player.PlayerAether;
+
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockAetherPortal extends BlockPortal
 {
@@ -36,20 +32,28 @@ public class BlockAetherPortal extends BlockPortal
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister registry)
+    {
+    	this.blockIcon = registry.registerIcon(Aether.find("aether_portal"));
+    }
+
+	@Override
+	public void onEntityCollidedWithBlock(World world, int p_149670_2_, int p_149670_3_, int p_149670_4_, Entity entity)
 	{
 		if (entity instanceof EntityPlayer)
 		{
 			PlayerAether.get((EntityPlayer)entity).setInPortal();
 		}
-
-		return;
+		else if ((entity instanceof EntityLivingBase) && entity.ridingEntity == null && entity.riddenByEntity == null)
+		{
+			((EntityHook)entity.getExtendedProperties("aether_legacy:entity_hook")).setInPortal();
+		}
 	}
 
-	@Override
-	public boolean trySpawnPortal(World worldIn, BlockPos pos)
+	public boolean trySpawnPortal(World worldIn, int x, int y, int z)
 	{
-		AetherPortalSize aetherportal$size = new AetherPortalSize(worldIn, pos, EnumFacing.Axis.X);
+		AetherPortalSize aetherportal$size = new AetherPortalSize(worldIn, x, y, z, 1);
 
         if (aetherportal$size.isValid() && aetherportal$size.portalBlockCount == 0)
         {
@@ -59,7 +63,7 @@ public class BlockAetherPortal extends BlockPortal
         }
         else
         {
-        	AetherPortalSize aetherportal$size1 = new AetherPortalSize(worldIn, pos, EnumFacing.Axis.Z);
+        	AetherPortalSize aetherportal$size1 = new AetherPortalSize(worldIn, x, y, z, 2);
 
             if (aetherportal$size1.isValid() && aetherportal$size1.portalBlockCount == 0)
             {
@@ -75,122 +79,69 @@ public class BlockAetherPortal extends BlockPortal
 	}
 
 	@Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block blockIn)
     {
-        EnumFacing.Axis enumfacing$axis = (EnumFacing.Axis)state.getValue(AXIS);
+        int l = func_149999_b(worldIn.getBlockMetadata(x, y, z));
 
-        if (enumfacing$axis == EnumFacing.Axis.X)
+        if (l == 1)
         {
-        	AetherPortalSize blockportal$size = new AetherPortalSize(world, pos, EnumFacing.Axis.X);
+        	AetherPortalSize blockportal$size = new AetherPortalSize(worldIn, x, y, z, 1);
 
             if (!blockportal$size.isValid() || blockportal$size.portalBlockCount < blockportal$size.width * blockportal$size.height)
             {
-            	world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            	worldIn.setBlock(x, y, z, Blocks.air);
             }
         }
-        else if (enumfacing$axis == EnumFacing.Axis.Z)
+        else if (l == 2)
         {
-            AetherPortalSize blockportal$size1 = new AetherPortalSize(world, pos, EnumFacing.Axis.Z);
+            AetherPortalSize blockportal$size1 = new AetherPortalSize(worldIn, x, y, z, 2);
 
             if (!blockportal$size1.isValid() || blockportal$size1.portalBlockCount < blockportal$size1.width * blockportal$size1.height)
             {
-            	world.setBlockState(pos, Blocks.AIR.getDefaultState());
+            	worldIn.setBlock(x, y, z, Blocks.air);
             }
         }
     }
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand)
 	{
         if (rand.nextInt(100) == 0)
         {
-        	world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+        	world.playSound((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "portal.portal", 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
         }
 
         for (int i = 0; i < 4; ++i)
         {
-            double d0 = (double)((float)pos.getX() + rand.nextFloat());
-            double d1 = (double)((float)pos.getY() + rand.nextFloat());
-            double d2 = (double)((float)pos.getZ() + rand.nextFloat());
+            double d0 = (double)((float)x + rand.nextFloat());
+            double d1 = (double)((float)y + rand.nextFloat());
+            double d2 = (double)((float)z + rand.nextFloat());
             double d3 = ((double)rand.nextFloat() - 0.5D) * 0.5D;
             double d4 = ((double)rand.nextFloat() - 0.5D) * 0.5D;
             double d5 = ((double)rand.nextFloat() - 0.5D) * 0.5D;
             int j = rand.nextInt(2) * 2 - 1;
 
-            if (world.getBlockState(pos.west()).getBlock() != this && world.getBlockState(pos.east()).getBlock() != this)
+            if (world.getBlock(x - 1, y, z) != this && world.getBlock(x + 1, y, z) != this)
             {
-                d0 = (double)pos.getX() + 0.5D + 0.25D * (double)j;
+                d0 = (double)x + 0.5D + 0.25D * (double)j;
                 d3 = (double)(rand.nextFloat() * 2.0F * (float)j);
             }
             else
             {
-                d2 = (double)pos.getZ() + 0.5D + 0.25D * (double)j;
+                d2 = (double)z + 0.5D + 0.25D * (double)j;
                 d5 = (double)(rand.nextFloat() * 2.0F * (float)j);
             }
 
-            FMLClientHandler.instance().getClient().effectRenderer.addEffect(new ParticleAetherPortal(world, d0, d1, d2, d3, d4, d5));
+            ParticleAetherPortal particle = new ParticleAetherPortal(world, d0, d1, d2, d3, d4, d5);
+            FMLClientHandler.instance().getClient().effectRenderer.addEffect(particle);
         }
 	}
 
 	@Override
-    public BlockPattern.PatternHelper createPatternHelper(World worldIn, BlockPos p_181089_2_)
+    public void updateTick(World world, int x, int y, int z, Random rand)
     {
-        EnumFacing.Axis enumfacing$axis = EnumFacing.Axis.Z;
-        AetherPortalSize blockportal$size = new AetherPortalSize(worldIn, p_181089_2_, EnumFacing.Axis.X);
-        LoadingCache<BlockPos, BlockWorldState> loadingcache = BlockPattern.createLoadingCache(worldIn, true);
 
-        if (!blockportal$size.isValid())
-        {
-            enumfacing$axis = EnumFacing.Axis.X;
-            blockportal$size = new AetherPortalSize(worldIn, p_181089_2_, EnumFacing.Axis.Z);
-        }
-
-        if (!blockportal$size.isValid())
-        {
-            return new BlockPattern.PatternHelper(p_181089_2_, EnumFacing.NORTH, EnumFacing.UP, loadingcache, 1, 1, 1);
-        }
-        else
-        {
-            int[] aint = new int[EnumFacing.AxisDirection.values().length];
-            EnumFacing enumfacing = blockportal$size.rightDir.rotateYCCW();
-            BlockPos blockpos = blockportal$size.bottomLeft.up(blockportal$size.getHeight() - 1);
-
-            for (EnumFacing.AxisDirection enumfacing$axisdirection : EnumFacing.AxisDirection.values())
-            {
-                BlockPattern.PatternHelper blockpattern$patternhelper = new BlockPattern.PatternHelper(enumfacing.getAxisDirection() == enumfacing$axisdirection ? blockpos : blockpos.offset(blockportal$size.rightDir, blockportal$size.getWidth() - 1), EnumFacing.getFacingFromAxis(enumfacing$axisdirection, enumfacing$axis), EnumFacing.UP, loadingcache, blockportal$size.getWidth(), blockportal$size.getHeight(), 1);
-
-                for (int i = 0; i < blockportal$size.getWidth(); ++i)
-                {
-                    for (int j = 0; j < blockportal$size.getHeight(); ++j)
-                    {
-                        BlockWorldState blockworldstate = blockpattern$patternhelper.translateOffset(i, j, 1);
-
-                        if (blockworldstate.getBlockState() != null && blockworldstate.getBlockState().getMaterial() != Material.AIR)
-                        {
-                            ++aint[enumfacing$axisdirection.ordinal()];
-                        }
-                    }
-                }
-            }
-
-            EnumFacing.AxisDirection enumfacing$axisdirection1 = EnumFacing.AxisDirection.POSITIVE;
-
-            for (EnumFacing.AxisDirection enumfacing$axisdirection2 : EnumFacing.AxisDirection.values())
-            {
-                if (aint[enumfacing$axisdirection2.ordinal()] < aint[enumfacing$axisdirection1.ordinal()])
-                {
-                    enumfacing$axisdirection1 = enumfacing$axisdirection2;
-                }
-            }
-
-            return new BlockPattern.PatternHelper(enumfacing.getAxisDirection() == enumfacing$axisdirection1 ? blockpos : blockpos.offset(blockportal$size.rightDir, blockportal$size.getWidth() - 1), EnumFacing.getFacingFromAxis(enumfacing$axisdirection1, enumfacing$axis), EnumFacing.UP, loadingcache, blockportal$size.getWidth(), blockportal$size.getHeight(), 1);
-        }
-    }
-
-	@Override
-	public void updateTick(World par1World, BlockPos pos, IBlockState state, Random par5Random)
-	{
 	}
 
 }

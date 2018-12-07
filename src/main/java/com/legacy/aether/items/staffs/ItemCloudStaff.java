@@ -4,9 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.passive.EntityMiniCloud;
@@ -19,8 +16,10 @@ public class ItemCloudStaff extends Item
 
 	public ItemCloudStaff()
 	{
-		this.setCreativeTab(AetherCreativeTabs.misc);
+		this.setFull3D();
+		this.setMaxDamage(60);
 		this.setMaxStackSize(1);
+		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
 	@Override
@@ -30,29 +29,30 @@ public class ItemCloudStaff extends Item
     }
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer entityplayer, EnumHand hand)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer entityplayer)
     {
 		PlayerAether playerAether = PlayerAether.get(entityplayer);
 
-		if (playerAether.leftCloud == null && playerAether.rightCloud == null)
+		if (world.isRemote)
 		{
-			playerAether.leftCloud = new EntityMiniCloud(world, entityplayer, 0);
-			playerAether.rightCloud = new EntityMiniCloud(world, entityplayer, 1);
+			return super.onItemRightClick(stack, world, entityplayer);
 		}
 
-		if (!playerAether.leftCloud.hasSpawned)
+		if (playerAether.clouds.isEmpty())
 		{
-			world.spawnEntityInWorld(playerAether.leftCloud);
-			playerAether.leftCloud.hasSpawned = true;
+			EntityMiniCloud leftCloud = new EntityMiniCloud(world, entityplayer, 0);
+			EntityMiniCloud rightCloud = new EntityMiniCloud(world, entityplayer, 1);
+
+			playerAether.clouds.add(leftCloud);
+			playerAether.clouds.add(rightCloud);
+
+			world.spawnEntityInWorld(leftCloud);
+			world.spawnEntityInWorld(rightCloud);
+
+			stack.damageItem(1, entityplayer);
 		}
 
-		if (!playerAether.rightCloud.hasSpawned)
-		{
-			world.spawnEntityInWorld(playerAether.rightCloud);
-			playerAether.leftCloud.hasSpawned = true;
-		}
-
-    	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+    	return stack;
     }
 
 }

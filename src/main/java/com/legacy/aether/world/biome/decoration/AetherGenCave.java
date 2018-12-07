@@ -3,8 +3,7 @@ package com.legacy.aether.world.biome.decoration;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -25,15 +24,15 @@ public class AetherGenCave extends WorldGenerator
         this.size = size;
     }
 
-    public boolean generate(World world, Random random, BlockPos pos)
+    public boolean generate(World world, Random random, int x, int y, int z)
     {
         float f = random.nextFloat() * 3.141593F;
-        double d = (float)(pos.getX() + 8) + (MathHelper.sin(f) * (float)this.size) / 8F;
-        double d1 = (float)(pos.getX() + 8) - (MathHelper.sin(f) * (float)this.size) / 8F;
-        double d2 = (float)(pos.getZ() + 8) + (MathHelper.cos(f) * (float)this.size) / 8F;
-        double d3 = (float)(pos.getZ() + 8) - (MathHelper.cos(f) * (float)this.size) / 8F;
-        double d4 = pos.getY() + random.nextInt(3) + 2;
-        double d5 = pos.getY() + random.nextInt(3) + 2;
+        double d = (float)(x + 8) + (MathHelper.sin(f) * (float)this.size) / 8F;
+        double d1 = (float)(x + 8) - (MathHelper.sin(f) * (float)this.size) / 8F;
+        double d2 = (float)(z + 8) + (MathHelper.cos(f) * (float)this.size) / 8F;
+        double d3 = (float)(z + 8) - (MathHelper.cos(f) * (float)this.size) / 8F;
+        double d4 = y + random.nextInt(3) + 2;
+        double d5 = y + random.nextInt(3) + 2;
 
         for(int l = 0; l <= this.size; l++)
         {
@@ -63,12 +62,11 @@ public class AetherGenCave extends WorldGenerator
                             for(int i3 = k1; i3 <= j2; i3++)
                             {
                                 double d14 = (((double)i3 + 0.5D) - d8) / (d10 / 2D);
-                                BlockPos newPos = new BlockPos(k2, l2, i3);
-                                Block block = world.getBlockState(newPos).getBlock();
+                                Block block = world.getBlock(k2, l2, i3);
 
                                 if(d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && (block == BlocksAether.mossy_holystone || block == BlocksAether.holystone || block == BlocksAether.aether_grass || block == BlocksAether.aether_dirt))
                                 {
-                                	this.setBlockAndNotifyAdequately(world, newPos, this.hollowBlock.getDefaultState());
+                                	this.setBlockAndNotifyAdequately(world, k2, l2, i3, this.hollowBlock, 0);
                                 }
                             }
 

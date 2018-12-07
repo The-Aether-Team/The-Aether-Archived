@@ -3,9 +3,6 @@ package com.legacy.aether.entities.bosses.slider;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTrapDoor;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,45 +10,33 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.api.player.util.IAetherBoss;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.entities.bosses.IAetherBoss;
 import com.legacy.aether.entities.util.AetherNameGen;
+import com.legacy.aether.entities.util.EntityAetherItem;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.tools.ItemAetherTool;
 import com.legacy.aether.items.util.EnumAetherToolType;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.achievements.AchievementsAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntitySlider extends EntityFlying implements IAetherBoss
 {
-
-	public static final DataParameter<String> SLIDER_NAME = EntityDataManager.<String>createKey(EntitySlider.class, DataSerializers.STRING);
-
-	public static final DataParameter<Boolean> SLIDER_AWAKE = EntityDataManager.<Boolean>createKey(EntitySlider.class, DataSerializers.BOOLEAN);
 
 	private int dungeonX, dungeonY, dungeonZ;
 
@@ -59,7 +44,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 	public int chatTime, moveTime;
 
-	public boolean isMoving, crushedBlock;
+	public boolean crushedBlock;
 
 	public float velocity;
 
@@ -68,58 +53,45 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	public EntitySlider(World world) 
 	{
 		super(world);
-		this.setSize(2.0F, 2.0F);
+
 		this.rotationYaw = this.rotationPitch = 0.0F;
+
+		this.setSize(2.0F, 2.0F);
+		this.dataWatcher.updateObject(19, AetherNameGen.gen());
+	}
+
+	@Override
+	public void entityInit()
+	{
+		super.entityInit();
+
+		this.dataWatcher.addObject(18, new Byte((byte) 0));
+		this.dataWatcher.addObject(19, AetherNameGen.gen());
+		this.dataWatcher.addObject(20, new Byte((byte) 0));
 	}
 
 	@Override
     protected void applyEntityAttributes()
     {
     	super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500.0D);
-        this.setHealth(500.0F);
-    }
 
-	@Override
-	protected void entityInit()
-	{
-		super.entityInit();
-
-		this.posX = Math.floor(this.posX + 0.5D);
-		this.posY = Math.floor(this.posY + 0.5D);
-		this.posZ = Math.floor(this.posZ + 0.5D);
-
-	    this.dataManager.register(SLIDER_AWAKE, false);
-	    this.dataManager.register(SLIDER_NAME, String.valueOf(AetherNameGen.gen()));
-	}
-	
-	@Override
-    public void moveEntity(double x, double y, double z)
-    {
-		if (this.isAwake())
-		{
-			super.moveEntity(x, y, z);
-		}
-		else
-		{
-			super.moveEntity(0, y, 0);
-		}
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(500.0D);
     }
 
     @Override
-	protected SoundEvent getAmbientSound()
+	protected String getLivingSound()
     {
-        return SoundEvents.AMBIENT_CAVE;
+        return "ambient.cave.cave";
     }
 
     @Override
-    protected SoundEvent getHurtSound()
+    protected String getHurtSound()
     {
-        return SoundEvents.BLOCK_STONE_STEP;
+        return "step.stone";
     }
 
     @Override
-    protected SoundEvent getDeathSound()
+    protected String getDeathSound()
     {
         return null;
     }
@@ -134,7 +106,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 		nbttagcompound.setInteger("dungeonZ", this.dungeonZ);
 
         nbttagcompound.setBoolean("isAwake", this.isAwake());
-		nbttagcompound.setString("bossName", this.getBossName());
+		nbttagcompound.setString("bossName", this.getName());
     }
 
     public void readEntityFromNBT(NBTTagCompound nbttagcompound)
@@ -151,38 +123,36 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 	public boolean criticalCondition() 
 	{
-		return this.getHealth() <= 80;
+		return this.getHealth() <= 80.0F;
 	}
 
-    @Override
+	@Override
 	public void onUpdate()
 	{
-    	//heck
-    	int i1 = MathHelper.floor_double(this.posX);
-        int j1 = MathHelper.floor_double(this.getEntityBoundingBox().minY);
-        int k1 = MathHelper.floor_double(this.posZ);
-    	BlockPos position = new BlockPos(i1, j1, k1);
-    	if (this.isCollidedHorizontally && !this.isMoving && !this.worldObj.isAirBlock(position.down()) && !this.crushedBlock)
-        {
-    			this.motionY = 1.2F;  
-        }
- 
-    	this.evapWater();
-    	
-		if(this.hurtAngle > 0.01F) 
+		super.onUpdate();
+
+		if(this.hurtAngle > 0.01F)
 		{
 			this.hurtAngle *= 0.8F;
 		}
 
-		if(this.chatTime > 0) 
+		if(this.chatTime > 0)
 		{
 			this.chatTime --;
 		}
 
-		super.onUpdate();
-
 		this.renderYawOffset = this.rotationPitch = this.rotationYaw = 0.0F;
+	}
 
+	@Override
+	public void onLivingUpdate()
+	{
+		super.onLivingUpdate();
+	}
+
+    @Override
+	public void updateEntityActionState()
+	{
 		if (!this.isAwake())
 		{
 			this.setAttackTarget(null);
@@ -198,18 +168,18 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 				return;
 			}
 
-			if(this.isMoving) 
+			if(this.isMoving()) 
 			{
 				if(this.isCollided) 
 				{
 					double x, y, z;
-					x = posX - 0.5D;
-					y = this.getEntityBoundingBox().minY + 0.75D;
-					z = posZ - 0.5D;
+					x = this.posX - 0.5D;
+					y = this.boundingBox.minY + 0.75D;
+					z = this.posZ - 0.5D;
 
 					this.crushedBlock = false;
 
-					if(y < 124D && y > 4D) 
+					if(y > 4D) 
 					{
 						if(this.direction == EnumFacing.UP)
 						{
@@ -217,7 +187,8 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 							{
 								double a = (double)((i / 5) - 2) * 0.75D;
 								double b = (double)((i % 5) - 2) * 0.75D;
-								destroyBlock(new BlockPos.MutableBlockPos().setPos(x + a, y + 1.5D, z + b));
+
+								this.destroyBlock(x + a, y + 1.5D, z + b);
 							}
 						}
 						else if(this.direction == EnumFacing.DOWN)
@@ -226,23 +197,28 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 							{
 								double a = (double)((i / 5) - 2) * 0.75D;
 								double b = (double)((i % 5) - 2) * 0.75D;
-								destroyBlock(new BlockPos.MutableBlockPos().setPos(x + a, y - 1.5D, z + b));
+
+								this.destroyBlock(x + a, y - 1.5D, z + b);
 							}
 						} 
 						else if(this.direction == EnumFacing.EAST)
 						{
-							for(int i = 0; i < 25; i++) {
+							for(int i = 0; i < 25; i++) 
+							{
 								double a = (double)((i / 5) - 2) * 0.75D;
 								double b = (double)((i % 5) - 2) * 0.75D;
-								destroyBlock(new BlockPos.MutableBlockPos().setPos(x + 1.5D, y + a, z + b));
+
+								this.destroyBlock(x + 1.5D, y + a, z + b);
 							}
 						}
 						else if(this.direction == EnumFacing.WEST)
 						{
-							for(int i = 0; i < 25; i++) {
+							for(int i = 0; i < 25; i++) 
+							{
 								double a = (double)((i / 5) - 2) * 0.75D;
 								double b = (double)((i % 5) - 2) * 0.75D;
-								destroyBlock(new BlockPos.MutableBlockPos().setPos(x - 1.5D, y + a, z + b));
+
+								this.destroyBlock(x - 1.5D, y + a, z + b);
 							}
 						} 
 						else if(this.direction == EnumFacing.SOUTH) 
@@ -251,7 +227,8 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 							{
 								double a = (double)((i / 5) - 2) * 0.75D;
 								double b = (double)((i % 5) - 2) * 0.75D;
-								destroyBlock(new BlockPos.MutableBlockPos().setPos(x + a, y + b, z + 1.5D));
+
+								this.destroyBlock(x + a, y + b, z + 1.5D);
 							}
 						}
 						else if(this.direction == EnumFacing.NORTH)
@@ -260,19 +237,20 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 							{
 								double a = (double)((i / 5) - 2) * 0.75D;
 								double b = (double)((i % 5) - 2) * 0.75D;
-								destroyBlock(new BlockPos.MutableBlockPos().setPos(x + a, y + b, z - 1.5D));
+
+								this.destroyBlock(x + a, y + b, z - 1.5D);
 							}
 						}
 					}
 
 					if(this.crushedBlock)
 					{
-						this.worldObj.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 3F, (0.625F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
-						this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_collide, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+						this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.explode", 3.0F, (0.625F + (this.worldObj.rand.nextFloat() - this.worldObj.rand.nextFloat()) * 0.2F) * 0.7F);
+						this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.collide", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					}
 
 					this.stop();
-				} 
+				}
 				else 
 				{
 					if(this.velocity < 2.0F)
@@ -286,7 +264,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 					{
 						this.motionY = this.velocity;
 
-						if(this.getEntityBoundingBox().minY > this.getAttackTarget().getEntityBoundingBox().minY + 0.35D) 
+						if(this.boundingBox.minY > this.getAttackTarget().boundingBox.minY + 0.35D) 
 						{
 							this.stop();
 							this.moveTime = this.criticalCondition() ? 4 : 8;
@@ -296,7 +274,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 					{
 						this.motionY = -this.velocity;
 
-						if(this.getEntityBoundingBox().minY < this.getAttackTarget().getEntityBoundingBox().minY - 0.25D) 
+						if(this.boundingBox.minY < this.getAttackTarget().boundingBox.minY - 0.25D) 
 						{
 							this.stop();
 							this.moveTime = this.criticalCondition() ? 4 : 8;
@@ -363,7 +341,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 					double a, b, c;
 					a = Math.abs(this.posX - this.getAttackTarget().posX);
-					b = Math.abs(this.getEntityBoundingBox().minY - this.getAttackTarget().getEntityBoundingBox().minY);
+					b = Math.abs(this.boundingBox.minY - this.getAttackTarget().boundingBox.minY);
 					c = Math.abs(this.posZ - this.getAttackTarget().posZ);
 
 					if(a > c) 
@@ -395,67 +373,58 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 						}
 					}
 
-					this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_move, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
-					this.isMoving = true;
+					this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.move", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+					this.setMoving(true);
 				}
 			}
 		}
 	}
-    
-    public void evapWater()
-    {
-        int var1 = MathHelper.floor_double(this.getEntityBoundingBox().minX + (this.getEntityBoundingBox().maxX - this.getEntityBoundingBox().minX) / 2.0D);
-        int var2 = MathHelper.floor_double(this.getEntityBoundingBox().minZ + (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) / 2.0D);
 
-        byte radius = 2;
-
-        for (int var4 = var1 - radius; var4 <= var1 + radius; ++var4)
-        {
-            for (int var5 = var2 - radius; var5 <= var2 + radius; ++var5)
-            {
-                for (int var6 = 0 + rand.nextInt(2); var6 < 8; ++var6)
-                {
-                    double var7 = posY + var6;
-
-                    if (this.worldObj.getBlockState(new BlockPos(var4, var7, var5)).getMaterial() == Material.WATER)
-                    {
-                        this.worldObj.setBlockState(new BlockPos(var4, var7, var5), Blocks.AIR.getDefaultState());
-                    }
-                }
-            }
-        }
-    }
-
-	private void destroyBlock(BlockPos pos)
+	private void destroyBlock(double x, double y, double z)
 	{
-		IBlockState state = this.worldObj.getBlockState(pos);
+		Block block = this.worldObj.getBlock((int) x, (int) y, (int) z);
+		int metadata = this.worldObj.getBlockMetadata((int) x, (int) y, (int) z);
 
-		if(state.getBlock() == Blocks.AIR || state.getBlock() == BlocksAether.locked_dungeon_block) 
+		if(block == Blocks.air || block instanceof BlockDungeonBase) 
 		{
 			return;
 		}
 
-		Aether.proxy.spawnBlockBrokenFX(state, pos);
+        for (int j = 0; j < 4; ++j)
+        {
+            for (int k = 0; k < 4; ++k)
+            {
+                for (int l = 0; l < 4; ++l)
+                {
+                    double d0 = ((double)j + 0.5D) / 4.0D;
+                    double d1 = ((double)k + 0.5D) / 4.0D;
+                    double d2 = ((double)l + 0.5D) / 4.0D;
+                    this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + metadata, (double)x + d0, (double)y + d1, (double)z + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D);
+                }
+            }
+        }
 
-		state.getBlock().breakBlock(this.worldObj, pos, state);
-		state.getBlock().dropBlockAsItem(this.worldObj, pos, state, 0);
+		block.breakBlock(this.worldObj, (int) x, (int) y, (int) z, block, metadata);
+		block.dropBlockAsItem(this.worldObj, (int) x, (int) y, (int) z, metadata, 0);
 
-		this.worldObj.setBlockToAir(pos);
+		this.worldObj.setBlockToAir((int) x, (int) y, (int) z);
 
 		this.crushedBlock = true;
 
-		Aether.proxy.spawnSmoke(this.worldObj, pos);
+		double a = x + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
+		double b = y + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
+		double c = z + 0.5D + ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.375D);
+
+		this.worldObj.spawnParticle("smoke", a, b, c, 0.0D, 0.0D, 0.0D);
 	}
 
 	private void openDoor()
 	{
-		int x = this.dungeonX + 15;
-
 		for(int y = this.dungeonY + 1; y < this.dungeonY + 5; y++)
 		{
 			for(int z = this.dungeonZ + 6; z < this.dungeonZ + 10; z++)
 			{
-				this.worldObj.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+				this.worldObj.setBlock(this.dungeonX + 15, y, z, Blocks.air);
 			}
 		}
 	}
@@ -463,7 +432,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	@Override
 	public void applyEntityCollision(Entity entity) 
 	{
-		if (this.isAwake() && this.isMoving)
+		if (this.isAwake() && this.isMoving())
 		{
 			boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 6);
 
@@ -471,7 +440,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 			{
 				EntityLivingBase collidedEntity = (EntityLivingBase)entity;
 				collidedEntity.addVelocity(collidedEntity.motionY, 0.35D, collidedEntity.motionZ);
-				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_collide, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.collide", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
 				this.stop();
 			}
@@ -481,7 +450,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	@Override
 	protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) 
 	{
-		this.dropItem(Item.getItemFromBlock(BlocksAether.dungeon_block), 7 + rand.nextInt(3));
+		this.dropItem(Item.getItemFromBlock(BlocksAether.carved_stone), 7 + rand.nextInt(3));
 
 		this.entityDropItem(new ItemStack(ItemsAether.dungeon_key), 0.5F);
     }
@@ -491,9 +460,8 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
     {
         if (stack.stackSize != 0 && stack.getItem() != null)
         {
-            EntityItem entityitem = new EntityItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
-            entityitem.setEntityInvulnerable(true);
-            entityitem.setDefaultPickupDelay();
+        	EntityAetherItem entityitem = new EntityAetherItem(this.worldObj, this.posX, this.posY + (double)offsetY, this.posZ, stack);
+
             if (captureDrops)
                 this.capturedDrops.add(entityitem);
             else
@@ -508,7 +476,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 	public void stop() 
 	{
-		this.isMoving = false;
+		this.setMoving(false);
 		this.moveTime = 12;
 		this.direction = EnumFacing.UP;
 		this.motionX = this.motionY = this.motionZ = this.velocity = 0.0F;
@@ -532,7 +500,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	@Override
 	public boolean attackEntityFrom(DamageSource ds, float var2)
 	{
-		if(ds.getEntity() == null || !(ds.getEntity() instanceof EntityPlayer))
+		if(ds.getEntity() == null || !(ds.getEntity() instanceof EntityPlayer) || ds.isProjectile() || ds.isMagicDamage() || ds.isExplosion() || ds.isFireDamage())
 		{
 			return false;
 		}
@@ -545,57 +513,88 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 			return false;
 		}
 
-		if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool))
+		boolean isTCPickaxe = stack.getItem().getClass().getName().equals("tconstruct.items.tools.Pickaxe");
+
+		if (!isTCPickaxe)
 		{
-			this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?"); 
+			if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool))
+			{
+				this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?"); 
 
-			return false; 
-		}
+				return false; 
+			}
 
-		if (stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType != EnumAetherToolType.PICKAXE)
-		{
-			this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?"); 
+			if (stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType != EnumAetherToolType.PICKAXE)
+			{
+				this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?"); 
 
-			return false; 
+				return false; 
+			}
 		}
 
 		boolean flag = super.attackEntityFrom(ds, Math.max(0, var2));
 	
 		if(flag)
 		{
-			for(int j = 0; j < (this.getHealth() <= 0 ? 2 : 4); j++) 
+			for(int size = 0; size < (this.getHealth() <= 0 ? 2 : 4); size++) 
 			{
-				double a = posX + ((rand.nextFloat() - rand.nextFloat()) * 1.5D);
-				double b = this.getEntityBoundingBox().minY + 1.75D;
-				double c = posZ + ((rand.nextFloat() - rand.nextFloat()) * 1.5D);
+				double a = this.posX + ((this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D);
+				double b = this.boundingBox.minY + 1.75D;
+				double c = this.posZ + ((this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D);
 
 				if(this.getHealth() <= 0)
 				{
-					this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, a, b, c, 0.0D, 0.0D, 0.0D);
+					this.worldObj.spawnParticle("explode", a, b, c, 0.0D, 0.0D, 0.0D);
 				} 
 
-				Aether.proxy.spawnBlockBrokenFX(Blocks.STONE.getDefaultState(), new BlockPos(a, b, c));
+		        for (int j = 0; j < 4; ++j)
+		        {
+		            for (int k = 0; k < 4; ++k)
+		            {
+		                for (int l = 0; l < 4; ++l)
+		                {
+		                    double d0 = ((double)j + 0.5D) / 4.0D;
+		                    double d1 = ((double)k + 0.5D) / 4.0D;
+		                    double d2 = ((double)l + 0.5D) / 4.0D;
+		                    this.worldObj.spawnParticle("blockcrack_" + Blocks.stone + "_0", (double)a + d0, (double)b + d1, (double)c + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D);
+		                }
+		            }
+		        }
 			}
 
 			if(this.getHealth() <= 0 || this.isDead)
 			{
 				openDoor();
-				unlockBlock(new BlockPos(dungeonX, dungeonY, dungeonZ));
+				unlockBlock(this.dungeonX, this.dungeonY, this.dungeonZ);
 
-				IBlockState state = Blocks.TRAPDOOR.getDefaultState();
-				this.worldObj.setBlockState(new BlockPos(dungeonX + 7, dungeonY + 1, dungeonZ + 7), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
-				this.worldObj.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 7), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
-				this.worldObj.setBlockState(new BlockPos(dungeonX + 7, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
-				this.worldObj.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
-				PlayerAether.get(player).setCurrentBoss(null);
-				player.addStat(AchievementsAether.defeat_bronze);
-				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_death, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
-				this.isDead = true;
+				this.worldObj.setBlock(this.dungeonX + 7, this.dungeonY + 1, this.dungeonZ + 7, Blocks.trapdoor, 3, 2);
+				this.worldObj.setBlock(this.dungeonX + 8, this.dungeonY + 1, this.dungeonZ + 7, Blocks.trapdoor, 2, 2);
+				this.worldObj.setBlock(this.dungeonX + 7, this.dungeonY + 1, this.dungeonZ + 8, Blocks.trapdoor, 3, 2);
+				this.worldObj.setBlock(this.dungeonX + 8, this.dungeonY + 1, this.dungeonZ + 8, Blocks.trapdoor, 2, 2);
+
+				PlayerAether.get(player).setFocusedBoss(null);
+
+	        	List<?> dungeonPlayers = this.getPlayersInDungeon(player);
+
+            	for (int i = 0; i < dungeonPlayers.size(); ++i)
+            	{
+            		Entity entity = (Entity) dungeonPlayers.get(i);
+
+            		if (entity instanceof EntityPlayer)
+            		{
+            			((EntityPlayer) entity).triggerAchievement(AchievementsAether.defeat_bronze);
+            		}
+            	}
+
+				player.triggerAchievement(AchievementsAether.defeat_bronze);
+
+				this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss.slider.death", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				this.setDead();
 			}
 
 			if(!this.isAwake())
 			{
-				this.worldObj.playSound(null, posX, posY, posZ, SoundsAether.slider_awaken, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss_slider.awaken", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.setAttackTarget(player);
 
 				int x = this.dungeonX + 15;
@@ -604,14 +603,14 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 				{
 					for(int z = this.dungeonZ + 5; z < this.dungeonZ + 11; z++)
 					{
-						this.worldObj.setBlockState(new BlockPos(x, y, z), BlocksAether.locked_dungeon_block.getDefaultState());
+						this.worldObj.setBlock(x, y, z, BlocksAether.locked_carved_stone);
 					}
 				}
 
 				this.setAwake(true);
 			} 
 
-			if(this.isMoving) 
+			if(this.isMoving()) 
 			{
 				this.velocity *= 0.75F;
 			}
@@ -645,32 +644,31 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 		this.hurtAngle = 0.7F - (this.getHealth() / 875F);
 
-		PlayerAether.get(player).setCurrentBoss(this);
+		PlayerAether.get(player).setFocusedBoss(this);
 
 		return flag;
 	}
 
-	private void unlockBlock(BlockPos pos)
+	private void unlockBlock(int x, int y, int z)
 	{	
-		IBlockState blockState = this.worldObj.getBlockState(pos);
-		Block block = blockState.getBlock();
+		Block block = this.worldObj.getBlock(x, y, z);
 
-		if(block == BlocksAether.locked_dungeon_block)
+		if(block == BlocksAether.locked_carved_stone || block == BlocksAether.locked_sentry_stone)
 		{
-			this.worldObj.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(block.getMetaFromState(blockState))), 2);
-			this.unlockBlock(pos.east());
-			this.unlockBlock(pos.west());
-			this.unlockBlock(pos.up());
-			this.unlockBlock(pos.down());
-			this.unlockBlock(pos.south());
-			this.unlockBlock(pos.north());
+			this.worldObj.setBlock(x, y, z, ((BlockDungeonBase)block).getUnlockedBlock());
+			this.unlockBlock(x + 1, y, z);
+			this.unlockBlock(x - 1, y, z);
+			this.unlockBlock(x, y + 1, z);
+			this.unlockBlock(x, y - 1, z);
+			this.unlockBlock(x, y, z + 1);
+			this.unlockBlock(x, y, z - 1);
 		}
 	}	
 
 	@Override
     protected void collideWithNearbyEntities()
     {
-        List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+        List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
 
         if (list != null && !list.isEmpty())
         {
@@ -730,6 +728,11 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 		this.setPositionAndUpdate(this.dungeonX + 8, this.dungeonY + 2, this.dungeonZ + 8);
 	}
 
+    public List<?> getPlayersInDungeon(EntityPlayer player)
+    {
+    	return this.worldObj.getEntitiesWithinAABBExcludingEntity(player, AxisAlignedBB.getBoundingBox(this.dungeonX, this.dungeonY, this.dungeonZ, this.dungeonX, this.dungeonY, this.dungeonZ).expand(10, 10, 10));
+    }
+
 	public void setDungeon(double posX, double posY, double posZ)
 	{
 		this.dungeonX = (int) posX;
@@ -737,30 +740,52 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 		this.dungeonZ = (int) posZ;
 	}
 
-	public void setBossName(String name)
-	{
-		this.dataManager.set(SLIDER_NAME, name);
-	}
-
-	public String getBossName()
-	{
-		return this.dataManager.get(SLIDER_NAME);
-	}
-
-    @Override
-	public String getBossTitle()
-	{
-		return this.getBossName() + ", the Slider";
-	}
-
 	public void setAwake(boolean isAwake)
 	{
-		this.dataManager.set(SLIDER_AWAKE, isAwake);
+    	this.dataWatcher.updateObject(18, new Byte(isAwake ? (byte) 1 : (byte) 0));
 	}
 
 	public boolean isAwake()
 	{
-		return this.dataManager.get(SLIDER_AWAKE).booleanValue();
+    	return this.dataWatcher.getWatchableObjectByte(18) == (byte) 1;
+	}
+
+	public void setMoving(boolean moving)
+	{
+    	this.dataWatcher.updateObject(20, new Byte(moving ? (byte) 1 : (byte) 0));
+	}
+
+	public boolean isMoving()
+	{
+    	return this.dataWatcher.getWatchableObjectByte(20) == (byte) 1;
+	}
+
+    public String getName()
+    {
+    	return this.dataWatcher.getWatchableObjectString(19);
+    }
+
+	public void setBossName(String name)
+	{
+    	this.dataWatcher.updateObject(19, name);
+	}
+
+	@Override
+	public String getBossName()
+	{
+		return this.dataWatcher.getWatchableObjectString(19) + ", the Slider";
+	}
+
+	@Override
+	public float getBossHealth() 
+	{
+		return this.getHealth();
+	}
+
+	@Override
+	public float getMaxBossHealth() 
+	{
+		return this.getMaxHealth();
 	}
 
 }

@@ -3,9 +3,7 @@ package com.legacy.aether.world.dungeon.util;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -16,7 +14,7 @@ public abstract class AetherDungeon extends WorldGenerator
 
     public int chance;
 
-    public IBlockState airState = Blocks.AIR.getDefaultState(), blockState, extraBlockState;
+    public Block airState = Blocks.air, blockState, extraBlockState;
 
     public boolean replaceAir, replaceSolid;
 
@@ -25,14 +23,14 @@ public abstract class AetherDungeon extends WorldGenerator
     	super();
     }
 
-    public void setBlocks(IBlockState blockState)
+    public void setBlocks(Block blockState)
     {
         this.blockState = blockState;
         this.extraBlockState = null;
         this.chance = 0;
     }
 
-    public void setBlocks(IBlockState blockState, IBlockState extraBlockState, int chances)
+    public void setBlocks(Block blockState, Block extraBlockState, int chances)
     {
         this.blockState = blockState;
         this.extraBlockState = extraBlockState;
@@ -48,25 +46,24 @@ public abstract class AetherDungeon extends WorldGenerator
     {
     	for (int lineX = pos.getX(); lineX < pos.getX() + radius; lineX++)
         {
-    		BlockPos newPos = new BlockPos(lineX, pos.getY(), pos.getZ());
-        	Block block = world.getBlockState(newPos).getBlock();
+        	Block block = world.getBlock(lineX, pos.getY(), pos.getZ());
 
-            if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
+            if ((this.replaceAir || block != Blocks.air) && (this.replaceSolid || block == Blocks.air))
             {
             	if (this.chance == 0)
             	{
-            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+            		this.setBlockAndNotifyAdequately(world, lineX, pos.getY(), pos.getZ(), this.blockState, 0);
 
             		return;
             	}
 
                 if (rand.nextInt(this.chance) == 0)
                 {
-            		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
+            		this.setBlockAndNotifyAdequately(world, lineX, pos.getY(), pos.getZ(), this.extraBlockState, 0);
                 }
                 else
                 {
-            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+            		this.setBlockAndNotifyAdequately(world, lineX, pos.getY(), pos.getZ(), this.blockState, 0);
                 }
             }
         }
@@ -76,25 +73,24 @@ public abstract class AetherDungeon extends WorldGenerator
     {
         for (int lineY = pos.getY(); lineY < pos.getY() + radius; lineY++)
         {
-    		BlockPos newPos = new BlockPos(pos.getX(), lineY, pos.getZ());
-        	Block block = world.getBlockState(newPos).getBlock();
+        	Block block = world.getBlock(pos.getX(), lineY, pos.getZ());
 
-            if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
+            if ((this.replaceAir || block != Blocks.air) && (this.replaceSolid || block == Blocks.air))
             {
             	if (this.chance == 0)
             	{
-            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+            		this.setBlockAndNotifyAdequately(world, pos.getX(), lineY, pos.getZ(), this.blockState, 0);
 
             		return;
             	}
 
                 if (rand.nextInt(this.chance) == 0)
                 {
-            		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
+            		this.setBlockAndNotifyAdequately(world, pos.getX(), lineY, pos.getZ(), this.extraBlockState, 0);
                 }
                 else
                 {
-            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+            		this.setBlockAndNotifyAdequately(world, pos.getX(), lineY, pos.getZ(), this.blockState, 0);
                 }
             }
         }
@@ -104,25 +100,24 @@ public abstract class AetherDungeon extends WorldGenerator
     {
     	for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius; lineZ++)
         {
-    		BlockPos newPos = new BlockPos(pos.getX(), pos.getY(), lineZ);
-        	Block block = world.getBlockState(newPos).getBlock();
+        	Block block = world.getBlock(pos.getX(), pos.getY(), lineZ);
 
-            if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
+            if ((this.replaceAir || block != Blocks.air) && (this.replaceSolid || block == Blocks.air))
             {
             	if (this.chance == 0)
             	{
-            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+            		this.setBlockAndNotifyAdequately(world, pos.getX(), pos.getY(), lineZ, this.blockState, 0);
 
             		return;
             	}
 
                 if (rand.nextInt(this.chance) == 0)
                 {
-            		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
+            		this.setBlockAndNotifyAdequately(world, pos.getX(), pos.getY(), lineZ, this.extraBlockState, 0);
                 }
                 else
                 {
-            		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+            		this.setBlockAndNotifyAdequately(world, pos.getX(), pos.getY(), lineZ, this.blockState, 0);
                 }
             }
         }
@@ -134,25 +129,24 @@ public abstract class AetherDungeon extends WorldGenerator
         {
             for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
             {
-        		BlockPos newPos = new BlockPos(pos.getX(), lineY, lineZ);
-            	Block block = world.getBlockState(newPos).getBlock();
+            	Block block = world.getBlock(pos.getX(), lineY, lineZ);
 
-                if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
+                if ((this.replaceAir || block != Blocks.air) && (this.replaceSolid || block == Blocks.air))
                 {
                 	if (this.chance == 0)
                 	{
-                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+                		this.setBlockAndNotifyAdequately(world, pos.getX(), lineY, lineZ, this.blockState, 0);
 
                 		return;
                 	}
 
                     if (rand.nextInt(this.chance) == 0)
                     {
-                		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
+                		this.setBlockAndNotifyAdequately(world, pos.getX(), lineY, lineZ, this.extraBlockState, 0);
                     }
                     else
                     {
-                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+                		this.setBlockAndNotifyAdequately(world, pos.getX(), lineY, lineZ, this.blockState, 0);
                     }
                 }
             }
@@ -165,25 +159,24 @@ public abstract class AetherDungeon extends WorldGenerator
         {
             for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
             {
-        		BlockPos newPos = new BlockPos(lineX, pos.getY(), lineZ);
-            	Block block = world.getBlockState(newPos).getBlock();
+            	Block block = world.getBlock(lineX, pos.getY(), lineZ);
 
-                if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
+                if ((this.replaceAir || block != Blocks.air) && (this.replaceSolid || block == Blocks.air))
                 {
                 	if (this.chance == 0)
                 	{
-                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+                		this.setBlockAndNotifyAdequately(world, lineX, pos.getY(), lineZ, this.blockState, 0);
 
                 		return;
                 	}
 
                     if (rand.nextInt(this.chance) == 0)
                     {
-                		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
+                		this.setBlockAndNotifyAdequately(world, lineX, pos.getY(), lineZ, this.extraBlockState, 0);
                     }
                     else
                     {
-                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+                		this.setBlockAndNotifyAdequately(world, lineX, pos.getY(), lineZ, this.blockState, 0);
                     }
                 }
             }
@@ -196,25 +189,24 @@ public abstract class AetherDungeon extends WorldGenerator
         {
             for (int lineY = pos.getY(); lineY < pos.getY() + radius.getY(); lineY++)
             {
-        		BlockPos newPos = new BlockPos(lineX, lineY, pos.getZ());
-            	Block block = world.getBlockState(newPos).getBlock();
+            	Block block = world.getBlock(lineX, lineY, pos.getZ());
 
-                if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
+                if ((this.replaceAir || block != Blocks.air) && (this.replaceSolid || block == Blocks.air))
                 {
                 	if (this.chance == 0)
                 	{
-                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+                		this.setBlockAndNotifyAdequately(world, lineX, lineY, pos.getZ(), this.blockState, 0);
 
                 		return;
                 	}
 
                     if (rand.nextInt(this.chance) == 0)
                     {
-                		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
+                		this.setBlockAndNotifyAdequately(world, lineX, lineY, pos.getZ(), this.extraBlockState, 0);
                     }
                     else
                     {
-                		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+                		this.setBlockAndNotifyAdequately(world, lineX, lineY, pos.getZ(), this.blockState, 0);
                     }
                 }
             }
@@ -223,8 +215,8 @@ public abstract class AetherDungeon extends WorldGenerator
 
     public void addHollowBox(World world, Random rand, PositionData pos, PositionData radius)
     {
-    	IBlockState temp1 = this.blockState;
-    	IBlockState temp2 = this.extraBlockState;
+    	Block temp1 = this.blockState;
+    	Block temp2 = this.extraBlockState;
 
         this.setBlocks(this.airState, this.airState, this.chance);
         this.addSolidBox(world, rand, pos, radius);
@@ -239,8 +231,8 @@ public abstract class AetherDungeon extends WorldGenerator
 
     public void addSquareTube(World world, Random rand, PositionData pos, PositionData radius, int angel)
     {
-    	IBlockState temp1 = this.blockState;
-    	IBlockState temp2 = this.extraBlockState;
+    	Block temp1 = this.blockState;
+    	Block temp2 = this.extraBlockState;
 
         this.setBlocks(this.airState, this.airState, this.chance);
         this.addSolidBox(world, rand, pos, radius);
@@ -273,25 +265,24 @@ public abstract class AetherDungeon extends WorldGenerator
             {
                 for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
                 {
-            		BlockPos newPos = new BlockPos(lineX, lineY, lineZ);
-                	Block block = world.getBlockState(newPos).getBlock();
+                	Block block = world.getBlock(lineX, lineY, lineZ);
 
-                    if ((this.replaceAir || block != Blocks.AIR) && (this.replaceSolid || block == Blocks.AIR))
+                    if ((this.replaceAir || block != Blocks.air) && (this.replaceSolid || block == Blocks.air))
                     {
                     	if (this.chance == 0)
                     	{
-                    		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+                    		this.setBlockAndNotifyAdequately(world, lineX, lineY, lineZ, this.blockState, 0);
 
                     		return;
                     	}
 
                         if (rand.nextInt(this.chance) == 0)
                         {
-                    		this.setBlockAndNotifyAdequately(world, newPos, this.extraBlockState);
+                    		this.setBlockAndNotifyAdequately(world, lineX, lineY, lineZ, this.extraBlockState, 0);
                         }
                         else
                         {
-                    		this.setBlockAndNotifyAdequately(world, newPos, this.blockState);
+                    		this.setBlockAndNotifyAdequately(world, lineX, lineY, lineZ, this.blockState, 0);
                         }
                     }
                 }
@@ -309,7 +300,7 @@ public abstract class AetherDungeon extends WorldGenerator
             {
                 for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
                 {
-                    if (world.getBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, lineZ)).getBlock() == Blocks.AIR)
+                    if (world.getBlock(lineX, lineY, lineZ) == Blocks.air)
                     {
                     	flag = false;
                     }
@@ -330,7 +321,7 @@ public abstract class AetherDungeon extends WorldGenerator
             {
                 for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
                 {
-                    if (world.getBlockState(new BlockPos.MutableBlockPos().setPos(lineX, lineY, lineZ)).getBlock() != Blocks.AIR)
+                    if (world.getBlock(lineX, lineY, lineZ) != Blocks.air)
                     {
                     	flag = false;
                     }
@@ -341,15 +332,15 @@ public abstract class AetherDungeon extends WorldGenerator
         return flag;
     }
 
-	protected void setBlock(World world, Random random, BlockPos pos, IBlockState state, IBlockState extraState, int chance)
+	protected void setBlock(World world, Random random, int x, int y, int z, Block state, Block extraState, int chance)
 	{
 		if(random.nextInt(chance) == 0)
 		{
-			this.setBlockAndNotifyAdequately(world, pos, extraState);
+			this.setBlockAndNotifyAdequately(world, x, y, z, extraState, 0);
 		}
 		else 
 		{
-			this.setBlockAndNotifyAdequately(world, pos, state);
+			this.setBlockAndNotifyAdequately(world, x, y, z, state, 0);
 		}
 	}
 

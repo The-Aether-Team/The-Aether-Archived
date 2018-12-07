@@ -1,9 +1,9 @@
 package com.legacy.aether.entities.particles;
 
-import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.world.World;
 
-public class AetherParticle extends Particle
+public class AetherParticle extends EntityFX
 {
 
 	public AetherParticle(World worldIn, double posXIn, double posYIn, double posZIn) 

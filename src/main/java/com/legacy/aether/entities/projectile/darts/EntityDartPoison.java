@@ -3,18 +3,21 @@ package com.legacy.aether.entities.projectile.darts;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
+import com.legacy.aether.api.player.util.IAetherBoss;
+import com.legacy.aether.entities.hostile.EntityAechorPlant;
+import com.legacy.aether.entities.hostile.EntityCockatrice;
 import com.legacy.aether.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketSendPoison;
 import com.legacy.aether.player.PlayerAether;
 
 public class EntityDartPoison extends EntityDartBase
@@ -29,9 +32,9 @@ public class EntityDartPoison extends EntityDartBase
         super(worldIn);
     }
 
-    public EntityDartPoison(World world, EntityLivingBase entity) 
+    public EntityDartPoison(World world, EntityLivingBase entity, float velocity) 
     {
-		super(world, entity);
+		super(world, entity, velocity);
 	}
 
     public void entityInit()
@@ -46,18 +49,18 @@ public class EntityDartPoison extends EntityDartBase
 
         if (this.victim != null)
         {
-        	if (this.victim.isDead || this.poison.poisonTime == 0)
+        	if (this.victim.isDead || this.poison.ticks == 0)
         	{
         		this.setDead();
 
         		return;
         	}
 
-        	if (this.shootingEntity != null)
+        	if (this.getThrower() != null)
         	{
-                if (this.shootingEntity.worldObj instanceof WorldServer)
+                if (this.getThrower().worldObj instanceof WorldServer)
                 {
-                	((WorldServer)this.shootingEntity.worldObj).spawnParticle(EnumParticleTypes.ITEM_CRACK, this.victim.posX, this.victim.getEntityBoundingBox().minY + this.victim.height * 0.8D, this.victim.posZ, 2, 0.0D, 0.0D, 0.0D, 0.0625D, new int[] {Item.getIdFromItem(Items.DYE), 1});
+                	((WorldServer)this.getThrower().worldObj).func_147487_a("iconcrack_" + Item.getIdFromItem(Items.dye) + "_" + 1, this.victim.posX, this.victim.boundingBox.minY + this.victim.height * 0.8D, this.victim.posZ, 2, 0.0D, 0.0D, 0.0D, 0.0D);
                 }
         	}
 
@@ -69,49 +72,46 @@ public class EntityDartPoison extends EntityDartBase
     }
 
     @Override
-    public void onCollideWithPlayer(EntityPlayer entityIn)
+    public void onCollideWithPlayer(EntityPlayer entity)
     {
     	if (this.victim == null)
     	{
-    		super.onCollideWithPlayer(entityIn);
+    		super.onCollideWithPlayer(entity);
     	}
     }
 
     @Override
-    protected void onHit(RayTraceResult raytraceResultIn)
+    public void onDartHit(MovingObjectPosition movingobjectposition)
     {
-    	if (raytraceResultIn.typeOfHit == Type.ENTITY && raytraceResultIn.entityHit != this.shootingEntity && raytraceResultIn.entityHit instanceof EntityLivingBase)
-    	{
-    		EntityLivingBase entityHit = (EntityLivingBase) raytraceResultIn.entityHit;
+    	super.onDartHit(movingobjectposition);
 
-    		if (entityHit instanceof EntityPlayer)
-    		{
-    			PlayerAether.get((EntityPlayer) entityHit).afflictPoison();
-    		}
-    		else
-    		{
-            	this.victim = (EntityLivingBase) raytraceResultIn.entityHit;
+    	if (movingobjectposition.entityHit instanceof EntityLivingBase)
+    	{
+    		Entity entity = movingobjectposition.entityHit;
+
+        	if (entity instanceof EntityPlayer)
+        	{
+                EntityPlayer ent = (EntityPlayer)entity;
+
+                if (!this.worldObj.isRemote)
+                {
+                	PlayerAether.get(ent).inflictPoison(500);
+                	AetherNetwork.sendTo(new PacketSendPoison(), (EntityPlayerMP) ent);
+                }
+        	}
+        	else if (!(entity instanceof IAetherBoss) && !(entity instanceof EntityCockatrice) && !(entity instanceof EntityAechorPlant))
+        	{
+            	this.victim = (EntityLivingBase) entity;
             	this.poison = new AetherPoisonMovement(this.victim);
-            	this.poison.afflictPoison();
-    		}
+            	this.poison.inflictPoison(500);
+        	}
 
         	this.isDead = false;
     	}
     }
 
-    @Override
-    protected Entity findEntityOnPath(Vec3d start, Vec3d end)
-    {
-    	if (this.victim != null)
-    	{
-    		return null;
-    	}
-
-    	return super.findEntityOnPath(start, end);
-    }
-
 	@Override
-	protected ItemStack getArrowStack() 
+	protected ItemStack getStack() 
 	{
 		return new ItemStack(ItemsAether.dart, 1, 1);
 	}

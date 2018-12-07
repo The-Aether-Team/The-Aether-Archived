@@ -1,11 +1,11 @@
 package com.legacy.aether.client.models.entities;
 
-import com.legacy.aether.entities.passive.mountable.EntityMoa;
-
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
+
+import com.legacy.aether.entities.passive.mountable.EntityMoa;
 
 public class MoaModel extends ModelBase
 {
@@ -72,9 +72,10 @@ public class MoaModel extends ModelBase
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
+    	this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
     	EntityMoa moa = (EntityMoa) entityIn;
     	
-    	if (!moa.isSitting())
+    	if (!moa.isSitting() || (!moa.onGround && moa.isSitting()))
     	{
     		this.legs.render(scale);
     		this.legs2.render(scale);

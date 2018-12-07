@@ -4,7 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherFreezableFuel extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherFreezableFuel>
+import com.legacy.aether.api.RegistryEntry;
+
+public class AetherFreezableFuel extends RegistryEntry
 {
 
 	public int timeGiven;
@@ -25,6 +27,8 @@ public class AetherFreezableFuel extends net.minecraftforge.fml.common.registry.
 	{
 		this.timeGiven = timeGiven;
 		this.fuelStack = fuelStack;
+
+		this.setRegistryName(fuelStack.getItem().getUnlocalizedName().toString() + "_meta_" + (fuelStack.isItemStackDamageable() ? 0 : fuelStack.getItemDamage()));
 	}
 
 	public int getTimeGiven()

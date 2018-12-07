@@ -12,12 +12,14 @@ public class ItemWhiteApple extends ItemAetherFood
 	public ItemWhiteApple()
 	{
 		super(0);
+
 		this.setAlwaysEdible();
 	}
 
+	@Override
     protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player)
     {
-    	PlayerAether.get(player).attainCure(300);
+    	PlayerAether.get(player).inflictCure(300);
     }
 
 }

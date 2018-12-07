@@ -19,9 +19,9 @@ public class GuiDescButton extends GuiButton
     {
     	super.drawButton(mc, mouseX, mouseY);
 
-        FontRenderer fontrenderer = mc.fontRendererObj;
+        FontRenderer fontrenderer = mc.fontRenderer;
 
-    	if (this.visible && this.hovered)
+    	if (this.visible && this.field_146123_n)
     	{
     		if (this.displayString == "Q")
     		{

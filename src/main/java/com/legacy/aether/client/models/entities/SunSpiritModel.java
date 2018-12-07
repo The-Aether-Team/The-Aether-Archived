@@ -1,10 +1,11 @@
 package com.legacy.aether.client.models.entities;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
 
@@ -31,8 +32,6 @@ public class SunSpiritModel extends ModelBiped
 
     public SunSpiritModel(float modelSize, float rotationPointY)
     {
-        this.leftArmPose = ModelBiped.ArmPose.EMPTY;
-        this.rightArmPose = ModelBiped.ArmPose.EMPTY;
         this.isSneak = false;
 		
         this.bipedHead = new ModelRenderer(this, 0, 0);
@@ -91,18 +90,18 @@ public class SunSpiritModel extends ModelBiped
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
     	this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		if (entityIn instanceof EntitySunSpirit)
 		{
-			GlStateManager.scale(2.25F, 2.25F, 2.25F);
+			GL11.glScalef(2.25F, 2.25F, 2.25F);
 		}
 		else
 		{
-			GlStateManager.scale(1.0F, 1.0F, 1.0F);
+			GL11.glScalef(1.0F, 1.0F, 1.0F);
 		}
 
-		GlStateManager.translate(0F, -0.25F, 0F);	
+		GL11.glTranslatef(0F, -0.25F, 0F);
 
 		this.bipedHead.render(scale);
         this.bipedHeadwear.render(scale);

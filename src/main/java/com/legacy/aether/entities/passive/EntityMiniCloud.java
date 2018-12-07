@@ -1,46 +1,51 @@
 package com.legacy.aether.entities.passive;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
-import com.legacy.aether.registry.sounds.SoundsAether;
+import com.legacy.aether.entities.projectile.crystals.EntityCrystal;
+import com.legacy.aether.entities.projectile.crystals.EnumCrystalType;
 
-public class EntityMiniCloud extends EntityFlying
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+
+public class EntityMiniCloud extends EntityFlying implements IEntityAdditionalSpawnData
 {
 
     public EntityPlayer owner;
 
     public int shotTimer, lifeSpan;
 
-    public boolean hasOwner, direction, hasSpawned = false;
+    public boolean direction;
 
     public double targetX, targetY, targetZ;
 
     public EntityMiniCloud(World worldObj)
     {
         super(worldObj);
+
+        this.noClip = true;
+        this.lifeSpan = 3600;
         this.entityCollisionReduction = 1.75F;
+
+        this.setSize(0.5F, 0.45F);
     }
 
     public EntityMiniCloud(World worldObj, EntityPlayer owner, int direction)
     {
         this(worldObj);
-        this.setSize(0.5F, 0.45F);
+
         this.owner = owner;
         this.direction = direction == 0;
-        this.lifeSpan = 3600;
-        this.getTargetPos();
-        this.hasOwner = true;
-        this.noClip = true;
-        this.setPosition(this.targetX, this.targetY, this.targetZ);
-        this.rotationPitch = this.owner.rotationPitch;
         this.rotationYaw = this.owner.rotationYaw;
+        this.rotationPitch = this.owner.rotationPitch;
+
+        this.getTargetPos();
+        this.setPosition(this.targetX, this.targetY, this.targetZ);
     }
 
     public boolean isInRangeToRenderDist(double var1)
@@ -53,7 +58,7 @@ public class EntityMiniCloud extends EntityFlying
         if (this.getDistanceToEntity(this.owner) > 2.0F)
         {
             this.targetX = this.owner.posX;
-            this.targetY = this.owner.posY - 0.10000000149011612D;
+            this.targetY = this.owner.posY + 1.10000000149011612D;
             this.targetZ = this.owner.posZ;
         }
         else
@@ -71,7 +76,7 @@ public class EntityMiniCloud extends EntityFlying
 
             var1 /= -(180D / Math.PI);
             this.targetX = this.owner.posX + Math.sin(var1) * 1.05D;
-            this.targetY = this.owner.posY - 0.10000000149011612D;
+            this.targetY = this.owner.posY + 1.10000000149011612D;
             this.targetZ = this.owner.posZ + Math.cos(var1) * 1.05D;
         }
     }
@@ -99,19 +104,18 @@ public class EntityMiniCloud extends EntityFlying
     public void writeEntityToNBT(NBTTagCompound var1)
     {
         super.writeEntityToNBT(var1);
+
         var1.setShort("LifeSpan", (short)this.lifeSpan);
         var1.setShort("ShotTimer", (short)this.shotTimer);
-        this.hasOwner = this.owner != null;
-        var1.setBoolean("GotPlayer", this.hasOwner);
         var1.setBoolean("direction", this.direction);
     }
 
     public void readEntityFromNBT(NBTTagCompound var1)
     {
         super.readEntityFromNBT(var1);
+
         this.lifeSpan = var1.getShort("LifeSpan");
         this.shotTimer = var1.getShort("ShotTimer");
-        this.hasOwner = var1.getBoolean("GotPlayer");
         this.direction = var1.getBoolean("direction");
     }
 
@@ -129,18 +133,11 @@ public class EntityMiniCloud extends EntityFlying
         }
         else
         {
-        	if (!this.hasOwner || this.owner == null)
+        	if (this.owner == null && !this.worldObj.isRemote)
         	{
         		this.setDead();
         		return;
         	}
-
-            if (this.hasOwner && this.owner == null)
-            {
-            	this.hasOwner = false;
-                this.setDead();
-                return;
-            }
 
             if (this.shotTimer > 0)
             {
@@ -149,6 +146,11 @@ public class EntityMiniCloud extends EntityFlying
 
             if (!this.owner.isDead)
             {
+            	if (this.worldObj.isRemote)
+            	{
+            		return;
+            	}
+
                 this.getTargetPos();
 
                 if (this.atShoulder())
@@ -157,7 +159,7 @@ public class EntityMiniCloud extends EntityFlying
                     this.motionY *= 0.65D;
                     this.motionZ *= 0.65D;
 
-        			this.rotationYaw = this.owner.rotationYaw + (this.direction ? 1F : -1F);;
+        			this.rotationYaw = this.owner.rotationYaw + (this.direction ? 1.0F : -1F);
         			this.rotationPitch = this.owner.rotationPitch;
         			this.rotationYawHead = this.owner.rotationYawHead;
 
@@ -167,24 +169,24 @@ public class EntityMiniCloud extends EntityFlying
                         double var1 = this.posX + Math.sin((double)var7 / -(180D / Math.PI)) * 1.6D;
                         double var3 = this.posY - -1.0D;
                         double var5 = this.posZ + Math.cos((double)var7 / -(180D / Math.PI)) * 1.6D;
-                        EntityIceyBall iceCrystal = new EntityIceyBall(this.worldObj, var1, var3, var5, true);
-                        Vec3d var9 = this.getLookVec();
+                        EntityCrystal crystal = new EntityCrystal(this.worldObj, var1, var3, var5, EnumCrystalType.CLOUD);
+                        Vec3 var9 = this.getLookVec();
 
                         if (var9 != null)
                         {
-                        	iceCrystal.smotionX = var9.xCoord * 1.5D;
-                        	iceCrystal.smotionY = var9.yCoord * 1.5D;
-                        	iceCrystal.smotionZ = var9.zCoord * 1.5D;
+                        	crystal.smotionX = var9.xCoord * 1.5D;
+                        	crystal.smotionY = var9.yCoord * 1.5D;
+                        	crystal.smotionZ = var9.zCoord * 1.5D;
                         }
 
-                        iceCrystal.smacked = true;
+                        crystal.wasHit = true;
 
                         if (!this.worldObj.isRemote)
                         {
-                            this.worldObj.spawnEntityInWorld(iceCrystal);
+                            this.worldObj.spawnEntityInWorld(crystal);
                         }
 
-                        this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundsAether.zephyr_shoot, SoundCategory.NEUTRAL, 0.75F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+        				this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aemob.zephyr.shoot", 0.75F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 
                         this.shotTimer = 40;
                     }
@@ -202,6 +204,7 @@ public class EntityMiniCloud extends EntityFlying
         }
     }
 
+    @Override
     public boolean attackEntityFrom(DamageSource var1, float var2)
     {
     	if (var1.getEntity() == this.owner || var1.getDamageType() == "inWall")
@@ -211,5 +214,19 @@ public class EntityMiniCloud extends EntityFlying
 
         return super.attackEntityFrom(var1, var2);
     }
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer)
+	{
+		buffer.writeBoolean(this.direction);
+		buffer.writeInt(this.owner.getEntityId());
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf buffer) 
+	{
+		this.direction = buffer.readBoolean();
+		this.owner = (EntityPlayer) this.worldObj.getEntityByID(buffer.readInt());
+	}
 
 }

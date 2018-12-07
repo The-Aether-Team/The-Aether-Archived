@@ -2,23 +2,14 @@ package com.legacy.aether.blocks;
 
 import java.util.Random;
 
-import javax.annotation.Nullable;
-
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.IGrowable;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.legacy.aether.blocks.natural.BlockAetherFlower;
 
-public class BlockAetherSapling extends BlockAetherFlower
+public class BlockAetherSapling extends BlockAetherFlower implements IGrowable
 {
 
 	public WorldGenerator treeGenObject = null;
@@ -26,54 +17,56 @@ public class BlockAetherSapling extends BlockAetherFlower
 	public BlockAetherSapling(WorldGenerator treeGen)
 	{
 		super();
+
 		float f = 0.4F;
-		this.FLOWER_AABB = new AxisAlignedBB(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
 		this.treeGenObject = treeGen;
+		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 2.0F, 0.5F + f);
 	}
 
 	@Override
-	public void updateTick(World world, BlockPos pos, IBlockState state, Random random)
+	public void updateTick(World world, int x, int y, int z, Random random)
 	{
-		super.updateTick(world, pos, state, random);
-
 		if (!world.isRemote)
 		{
-			if (world.getLight(pos.up()) >= 9 && random.nextInt(30) == 0)
+			super.updateTick(world, x, y, z, random);
+
+			if (world.getBlockLightValue(x, y + 1, z) >= 9 && random.nextInt(30) == 0)
 			{
-				this.growTree(world, pos, random);
+				this.growTree(world, x, y, z, random);
 			}
 		}
 	}
 
-	@Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-		if (heldItem != null && heldItem.getItem() == Items.DYE && heldItem.getMetadata() == 15)
-		{
-            if (!worldIn.isRemote)
-            {
-                worldIn.playEvent(2005, pos, 0);
-            }
-
-			if (worldIn.rand.nextFloat() < 0.45D)
-			{
-				this.growTree(worldIn, pos, worldIn.rand);
-			}
-
-			return true;
-		}
-
-        return false;
-    }
-
-	public void growTree(World world, BlockPos pos, Random rand)
+	public void growTree(World world, int x, int y, int z, Random rand)
 	{
-		world.setBlockState(pos, Blocks.AIR.getDefaultState());
+		world.setBlock(x, y, z, Blocks.air);
 
-		if (!this.treeGenObject.generate(world, world.rand, pos))
+		if (!this.treeGenObject.generate(world, world.rand, x, y, z))
 		{
-			world.setBlockState(pos, this.getDefaultState());
+			world.setBlock(x, y, z, this);
 		}
+	}
+
+	@Override
+	public boolean func_149851_a(World worldIn, int x, int y, int z, boolean isClient)
+	{
+		return true;
+	}
+
+	@Override
+	public boolean func_149852_a(World worldIn, Random rand, int x, int y, int z)
+	{
+		return true;
+	}
+
+	@Override
+	public void func_149853_b(World worldIn, Random rand, int x, int y, int z) 
+	{
+		if (worldIn.rand.nextFloat() < 0.45D)
+        {
+            this.growTree(worldIn, x, y, z, rand);
+        }
+		
 	}
 
 }

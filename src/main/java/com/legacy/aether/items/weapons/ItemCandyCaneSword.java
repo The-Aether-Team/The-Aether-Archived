@@ -25,6 +25,7 @@ public class ItemCandyCaneSword extends ItemSword
         return material.getItem() == ItemsAether.candy_cane;
     }
 
+    @Override
     public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase entityliving1)
     {
         if (entityliving.deathTime > 0)

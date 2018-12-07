@@ -1,15 +1,16 @@
 package com.legacy.aether.client.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.containers.ContainerIncubator;
-import com.legacy.aether.tile_entities.TileEntityIncubator;
+import com.legacy.aether.inventory.ContainerIncubator;
+import com.legacy.aether.tileentity.TileEntityIncubator;
 
 public class GuiIncubator extends GuiContainer
 {
@@ -28,14 +29,16 @@ public class GuiIncubator extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2)
 	{
-		this.fontRendererObj.drawString(this.incubatorInventory.getDisplayName().getFormattedText(), 60, 6, 0x404040);
+		String incubatorName = this.incubatorInventory.getInventoryName();
+
+		this.fontRendererObj.drawString(incubatorName, this.xSize / 2 - this.fontRendererObj.getStringWidth(incubatorName) / 2, 6, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 0x404040);
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int ia, int ib)
 	{
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		this.mc.renderEngine.bindTexture(TEXTURE_INCUBATOR);
 

@@ -1,9 +1,9 @@
 package com.legacy.aether.items.food;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
@@ -20,11 +20,11 @@ public class ItemHealingStone extends ItemAetherFood
 	@Override
     public EnumRarity getRarity(ItemStack stack)
     {
-    	return EnumRarity.RARE;
+    	return EnumRarity.rare;
     }
 
 	@Override
-    public boolean hasEffect(ItemStack stack)
+    public boolean hasEffect(ItemStack stack, int pass)
     {
     	return true;
     }
@@ -32,7 +32,7 @@ public class ItemHealingStone extends ItemAetherFood
 	@Override
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player)
     {
-        player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 610, 0));
+        player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 610, 0));
     }
 
 }

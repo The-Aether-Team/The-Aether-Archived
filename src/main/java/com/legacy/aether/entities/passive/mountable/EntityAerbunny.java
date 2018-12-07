@@ -1,38 +1,27 @@
 package com.legacy.aether.entities.passive.mountable;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
 
 import com.legacy.aether.entities.ai.aerbunny.AerbunnyAIHop;
 import com.legacy.aether.entities.passive.EntityAetherAnimal;
-import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
-public class EntityAerbunny extends EntityAetherAnimal
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+
+public class EntityAerbunny extends EntityAetherAnimal implements IEntityAdditionalSpawnData
 {
 
-	public static final DataParameter<Integer> PUFF = EntityDataManager.<Integer>createKey(EntityAerbunny.class, DataSerializers.VARINT);
+	private int puff;
 
 	public int puffiness;
 
@@ -47,17 +36,9 @@ public class EntityAerbunny extends EntityAetherAnimal
         this.ignoreFrustumCheck = true;
 
         this.setSize(0.4F, 0.4F);
-    }
-
-	@Override
-    protected void initEntityAI()
-    {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, new EntityAIWander(this, 2D, 6));
-        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
+        this.tasks.addTask(1, new EntityAIWander(this, 2D));
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 10.0F));
-        this.tasks.addTask(5, new EntityAILookIdle(this));
         this.tasks.addTask(6, new AerbunnyAIHop(this));
     }
 
@@ -65,8 +46,8 @@ public class EntityAerbunny extends EntityAetherAnimal
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(5.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(5.0D);
         this.setHealth(5.0F);
 	}
 
@@ -94,20 +75,13 @@ public class EntityAerbunny extends EntityAetherAnimal
 	@Override
     public void spawnExplosionParticle()
     {
-        if (this.worldObj.isRemote)
+        for (int i = 0; i < 5; ++i)
         {
-            for (int i = 0; i < 5; ++i)
-            {
-                double d0 = this.rand.nextGaussian() * 0.02D;
-                double d1 = this.rand.nextGaussian() * 0.02D;
-                double d2 = this.rand.nextGaussian() * 0.02D;
-                double d3 = 10.0D;
-                this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d0 * d3, this.posY + (double)(this.rand.nextFloat() * this.height) - d1 * d3, this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d2 * d3, d0, d1, d2, new int[0]);
-            }
-        }
-        else
-        {
-            this.worldObj.setEntityState(this, (byte)20);
+            double d0 = this.rand.nextGaussian() * 0.02D;
+            double d1 = this.rand.nextGaussian() * 0.02D;
+            double d2 = this.rand.nextGaussian() * 0.02D;
+            double d3 = 10.0D;
+            this.worldObj.spawnParticle("explode", this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d0 * d3, this.posY + (double)(this.rand.nextFloat() * this.height) - d1 * d3, this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width - d2 * d3, d0, d1, d2);
         }
     }
 
@@ -118,7 +92,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 
     public int getPuffiness()
     {
-        return this.dataManager.get(PUFF).intValue();
+        return this.puff;
     }
 
     public void setPuffinessClient(int i)
@@ -128,14 +102,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 
     public void setPuffiness(int i)
     {
-        this.dataManager.set(PUFF, i);
-    }
-
-	@Override
-    protected void entityInit()
-    {
-        super.entityInit();
-        this.dataManager.register(PUFF, new Integer(0));
+    	this.puff = i;
     }
 
     public void onUpdate()
@@ -168,12 +135,18 @@ public class EntityAerbunny extends EntityAetherAnimal
             --this.jumpTicks;
         }
 
-        if (this.isJumping && !this.isInWater() && !this.isInLava() && !this.onGround && this.jumpTicks == 0 && this.jumps > 0)
+        if (this.onGround)
         {
-        	if(this.moveForward != 0.0F)
-            {
-                this.jump();
-            }
+        	this.jump();
+        }
+
+        if (this.isJumping && !this.isInWater() && !this.handleLavaMovement() && !this.onGround && this.jumpTicks == 0 && this.jumps > 0)
+        {
+        	if (this.moveForward != 0.0F)
+        	{
+                //this.jump();
+        	}
+
             this.jumpTicks = 10;
         }
 
@@ -182,19 +155,19 @@ public class EntityAerbunny extends EntityAetherAnimal
             this.motionY = -0.1D;
         }
 
-        if (this.getRidingEntity() != null && this.getRidingEntity() instanceof EntityPlayer)
+        if (this.ridingEntity != null && this.ridingEntity instanceof EntityPlayer)
         {
-        	EntityPlayer player = (EntityPlayer) this.getRidingEntity();
+        	EntityPlayer player = (EntityPlayer) this.ridingEntity;
 
             if (this.worldObj.isRemote)
             {
                 for(int k = 0; k < 3; k++) 
                 {
-                	double d2 = (float)posX + rand.nextFloat() * 0.25F;
-                    double d5 = (float)posY + height + 0.125F;
-                    double d8 = (float)posZ + rand.nextFloat() * 0.25F;
-                    float f1 = rand.nextFloat() * 360F;
-                    this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, -Math.sin(0.01745329F * f1) * 0.75D, d5 - 0.25D, Math.cos(0.01745329F * f1) * 0.75D, d2, 0.125D, d8, new int[0]);
+                	double d2 = (float)this.posX + this.rand.nextFloat() * 0.25F;
+                    double d5 = (float)this.posY + this.height + 0.125F;
+                    double d8 = (float)this.posZ + this.rand.nextFloat() * 0.25F;
+                    float f1 = this.rand.nextFloat() * 360F;
+                    this.worldObj.spawnParticle("smoke", -Math.sin(0.01745329F * f1) * 0.75D, d5 - 0.25D, Math.cos(0.01745329F * f1) * 0.75D, d2, 0.125D, d8);
                 }
             }
 
@@ -204,7 +177,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 
             player.fallDistance = 0.0F;
 
-            if(!player.onGround && !player.isElytraFlying())
+            if(!player.onGround)
             {
             	if (!player.capabilities.isFlying)
             	{
@@ -215,7 +188,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 
             	if (player.motionY < -0.22499999403953552D)
             	{
-            		if (PlayerAether.get((EntityPlayer) this.getRidingEntity()).isJumping())
+            		if (PlayerAether.get((EntityPlayer) this.ridingEntity).isJumping())
             		{
             			this.setPuffinessClient(11);
             	        this.spawnExplosionParticle();
@@ -229,7 +202,7 @@ public class EntityAerbunny extends EntityAetherAnimal
     }
 
     @Override
-	public void fall(float distance, float damageMultiplier) {}
+	public void fall(float distance) {}
 
     @Override
     public boolean isEntityInsideOpaqueBlock()
@@ -242,32 +215,27 @@ public class EntityAerbunny extends EntityAetherAnimal
     {
         return false;
     }
-    
-    public boolean isBreedingItem(ItemStack stack)
-    {
-        return stack.getItem() == ItemsAether.blue_berry;
-    }
-    
-    @Override
-    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, @Nullable ItemStack stack)
-    {
-        ItemStack itemstack = entityplayer.getHeldItem(hand);
 
-        if (stack != null && (itemstack.getItem() == Items.NAME_TAG || itemstack.getItem() == ItemsAether.blue_berry))
+    @Override
+    public boolean interact(EntityPlayer entityplayer)
+    {
+        ItemStack itemstack = entityplayer.inventory.getCurrentItem();
+
+        if (itemstack != null && (itemstack.getItem() == Items.name_tag))
         {
-            return super.processInteract(entityplayer, hand, stack);
+            return super.interact(entityplayer);
         }
         else
         {
-        	this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundsAether.aerbunny_lift, SoundCategory.NEUTRAL, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+        	this.worldObj.playSound(this.posX, this.posY, this.posZ, "aether_legacy:aemob.aerbunny.lift", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 
             if (this.isRiding())
             {
-                this.dismountRidingEntity();
+            	this.mountEntity(null);
             }
             else
             {
-                this.startRiding(entityplayer);
+            	this.mountEntity(entityplayer);
             }
 
             return true;
@@ -275,15 +243,15 @@ public class EntityAerbunny extends EntityAetherAnimal
     }
 
     @Override
-    protected void dropFewItems(boolean var1, int var2)
+    protected void dropFewItems(boolean recentlyHit, int var2)
     {
-        this.dropItem(Items.STRING, 1);
+        this.dropItem(Items.string, 1);
     }
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float damage)
     {
-        return source.getEntity() == this.getRidingEntity() ? false : super.attackEntityFrom(source, damage);
+        return source.getEntity() == this.ridingEntity ? false : super.attackEntityFrom(source, damage);
     }
 
     @Override
@@ -293,15 +261,15 @@ public class EntityAerbunny extends EntityAetherAnimal
     }
 
     @Override
-    protected SoundEvent getHurtSound()
+    protected String getHurtSound()
     {
-        return SoundsAether.aerbunny_hurt;
+        return "aether_legacy:aemob.aerbunny.hurt";
     }
 
     @Override
-    protected SoundEvent getDeathSound()
+    protected String getDeathSound()
     {
-        return SoundsAether.aerbunny_death;
+        return "aether_legacy:aemob.aerbunny.death";
     }
 
     @Override
@@ -309,5 +277,17 @@ public class EntityAerbunny extends EntityAetherAnimal
     {
         return new EntityAerbunny(this.worldObj);
     }
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer)
+	{
+		buffer.writeInt(this.getPuffiness());
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf buffer) 
+	{
+		this.setPuffiness(buffer.readInt());
+	}
 
 }

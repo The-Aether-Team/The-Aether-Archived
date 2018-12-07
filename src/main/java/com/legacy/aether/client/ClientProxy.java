@@ -1,86 +1,63 @@
 package com.legacy.aether.client;
 
-import java.util.Random;
-
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IIcon;
 
 import com.legacy.aether.CommonProxy;
 import com.legacy.aether.client.audio.AetherMusicHandler;
+import com.legacy.aether.client.gui.AetherLoadingScreen;
 import com.legacy.aether.client.gui.GuiAetherInGame;
 import com.legacy.aether.client.gui.GuiSunAltar;
-import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
-import com.legacy.aether.client.renders.blocks.BlockRendering;
-import com.legacy.aether.client.renders.items.ItemRendering;
+import com.legacy.aether.client.renders.AetherEntityRenderer;
+import com.legacy.aether.client.renders.RendersAether;
+
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy
 {
 
-	@Override
-	public void preInitialization()
-	{
-		AetherEntityRenderingRegistry.initialize();
-	}
+	public static final IIcon[] ACCESSORY_ICONS = new IIcon[8];
 
 	@Override
-	public void initialization()
+	public void init()
 	{
-		Minecraft.getMinecraft().entityRenderer = new AetherEntityRenderer(Minecraft.getMinecraft(), Minecraft.getMinecraft().getResourceManager());
+		berryBushRenderID = RenderingRegistry.getNextAvailableRenderId();
+		treasureChestRenderID = RenderingRegistry.getNextAvailableRenderId();
+		aetherFlowerRenderID = RenderingRegistry.getNextAvailableRenderId();
 
-		AetherEntityRenderingRegistry.initializePlayerLayers();
+		Minecraft.getMinecraft().loadingScreen = new AetherLoadingScreen(Minecraft.getMinecraft());
 
-		BlockRendering.initialize();
-		ItemRendering.initialize();
+		EntityRenderer previousRenderer = Minecraft.getMinecraft().entityRenderer;
 
-		MinecraftForge.EVENT_BUS.register(new GuiAetherInGame(Minecraft.getMinecraft()));
-		MinecraftForge.EVENT_BUS.register(new AetherClientEvents());
+		Minecraft.getMinecraft().entityRenderer = new AetherEntityRenderer(Minecraft.getMinecraft(), previousRenderer, Minecraft.getMinecraft().getResourceManager());
+
+		RendersAether.initialization();
 
 		registerEvent(new AetherMusicHandler());
+		registerEvent(new AetherClientEvents());
+		registerEvent(new GuiAetherInGame(Minecraft.getMinecraft()));
 	}
 
 	@Override
-	public void sendMessage(EntityPlayer player, String message)
+	public void sendMessage(EntityPlayer player, String text)
 	{
-		if (this.getThePlayer() == player)
-		{
-			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString(message));
-		}
+		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(text));
 	}
 
 	@Override
-	public EntityPlayer getThePlayer()
-	{
-		return Minecraft.getMinecraft().thePlayer;
-	}
-
-	@Override
-	public void spawnSmoke(World world, BlockPos pos)
-	{
-		Random rand = new Random();
-		double a, b, c;
-		a = pos.getX() + 0.5D + ((rand.nextFloat() - rand.nextFloat()) * 0.375D);
-		b = pos.getY() + 0.5D + ((rand.nextFloat() - rand.nextFloat()) * 0.375D);
-		c = pos.getZ() + 0.5D + ((rand.nextFloat() - rand.nextFloat()) * 0.375D);
-		world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, a, b, c, 0.0D, 0.0D, 0.0D);
-	}
-
-	@Override
-	public void spawnBlockBrokenFX(IBlockState state, BlockPos pos)
-	{
-		FMLClientHandler.instance().getClient().effectRenderer.addBlockDestroyEffects(pos, state);
-	}
-
-	@Override
-	public void openSunAltar() 
+	public void openSunAltar()
 	{
 		FMLClientHandler.instance().getClient().displayGuiScreen(new GuiSunAltar());
+	}
+
+	@Override
+	public EntityPlayer getPlayer()
+	{
+		return Minecraft.getMinecraft().thePlayer;
 	}
 
 }

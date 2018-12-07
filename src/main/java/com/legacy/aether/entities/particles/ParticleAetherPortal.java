@@ -1,9 +1,9 @@
 package com.legacy.aether.entities.particles;
 
-import net.minecraft.client.particle.ParticlePortal;
+import net.minecraft.client.particle.EntityPortalFX;
 import net.minecraft.world.World;
 
-public class ParticleAetherPortal extends ParticlePortal
+public class ParticleAetherPortal extends EntityPortalFX
 {
 
     public ParticleAetherPortal(World world, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed)

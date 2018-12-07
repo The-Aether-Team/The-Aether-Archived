@@ -2,7 +2,7 @@ package com.legacy.aether.entities.hostile;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -10,11 +10,14 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+
+import com.legacy.aether.items.tools.ItemAetherTool;
+import com.legacy.aether.items.util.EnumAetherToolType;
 
 public class EntityMimic extends EntityMob
 {
@@ -33,19 +36,19 @@ public class EntityMimic extends EntityMob
     protected void applyEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0D, false));
+        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, 1.0D, false));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
     }
    
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(8.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.28000000417232513D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);   
+        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(8.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.68000000417232513D);
+        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(40.0D);   
     }
 
     public void onUpdate()
@@ -75,14 +78,16 @@ public class EntityMimic extends EntityMob
 		}
     }
 
-    protected SoundEvent getHurtSound()
+    @Override
+    protected String getHurtSound()
     {
-        return SoundEvents.BLOCK_WOOD_HIT;
+        return "mob.slime.small";
     }
 
-    protected SoundEvent getDeathSound()
+    @Override
+    protected String getDeathSound()
     {
-        return SoundEvents.BLOCK_CHEST_CLOSE;
+        return "mob.slime.small";
     }
 
     protected float getSoundVolume()
@@ -93,7 +98,7 @@ public class EntityMimic extends EntityMob
 	@Override
 	protected void dropFewItems(boolean var1, int var2) 
 	{
-		dropItem(Item.getItemFromBlock(Blocks.CHEST), 1);
+		dropItem(Item.getItemFromBlock(Blocks.chest), 1);
 	}
 
 	@Override
@@ -108,6 +113,30 @@ public class EntityMimic extends EntityMob
 		{
 			this.setAttackTarget((EntityLivingBase) ds.getEntity());
 		}
+
+		if (ds.getEntity() instanceof EntityPlayer)
+		{
+			EntityPlayer player = (EntityPlayer)ds.getEntity();
+			ItemStack stack = player.inventory.getCurrentItem();
+
+			if (stack == null || stack.getItem() == null)
+			{
+				return super.attackEntityFrom(ds, var2);
+			}
+
+			if (!(stack.getItem() instanceof ItemAxe) && !(stack.getItem() instanceof ItemAetherTool))
+			{
+				return super.attackEntityFrom(ds, var2); 
+			}
+
+			if (stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType != EnumAetherToolType.AXE)
+			{
+				return super.attackEntityFrom(ds, var2); 
+			}
+
+			return super.attackEntityFrom(ds, var2 * 1.5F);
+		}
+
 		return super.attackEntityFrom(ds, var2);
 	}
 

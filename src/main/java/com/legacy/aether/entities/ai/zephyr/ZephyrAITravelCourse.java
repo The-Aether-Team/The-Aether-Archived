@@ -1,8 +1,8 @@
 package com.legacy.aether.entities.ai.zephyr;
 
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 
 import com.legacy.aether.entities.hostile.EntityZephyr;
 
@@ -69,13 +69,13 @@ public class ZephyrAITravelCourse extends EntityAIBase
         double y = (this.waypointY - this.zephyr.posY) / distance;
         double z = (this.waypointZ - this.zephyr.posZ) / distance;
 
-        AxisAlignedBB axisalignedbb = this.zephyr.getEntityBoundingBox();
+        AxisAlignedBB axisalignedbb = this.zephyr.boundingBox.copy();
 
         for(int i = 1; (double)i < distance; i++)
         {
             axisalignedbb.offset(x, y, z);
 
-            if(this.zephyr.worldObj.getCollisionBoxes(this.zephyr, axisalignedbb).size() > 0)
+            if(this.zephyr.worldObj.getCollidingBoundingBoxes(this.zephyr, axisalignedbb).size() > 0)
             {
                 return false;
             }

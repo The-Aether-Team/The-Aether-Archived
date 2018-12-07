@@ -1,33 +1,42 @@
 package com.legacy.aether;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 
-public class CommonProxy 
+public class CommonProxy
 {
 
-	public void preInitialization() { }
+	public static int berryBushRenderID;
 
-	public void initialization() { }
+	public static int treasureChestRenderID;
 
-	public EntityPlayer getThePlayer() { return null; }
+	public static int aetherFlowerRenderID;
 
-	public void sendMessage(EntityPlayer player, String message) { }
+	public void init()
+	{
 
-	public void spawnBlockBrokenFX(IBlockState state, BlockPos pos) { }
+	}
 
-	public void spawnSmoke(World world, BlockPos pos) {}
+	public void openSunAltar()
+	{
 
-	public void openSunAltar() {}
+	}
 
-	@SuppressWarnings("deprecation")
+	public void sendMessage(EntityPlayer player, String text)
+	{
+
+	}
+
+	public EntityPlayer getPlayer()
+	{
+		return null;
+	}
+
 	public static void registerEvent(Object event)
 	{
 		FMLCommonHandler.instance().bus().register(event);
 		MinecraftForge.EVENT_BUS.register(event);
 	}
+
 }

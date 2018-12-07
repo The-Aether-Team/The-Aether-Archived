@@ -4,37 +4,37 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
+import org.lwjgl.opengl.GL11;
+
+import com.legacy.aether.Aether;
+import com.legacy.aether.api.player.util.IAetherBoss;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.bosses.IAetherBoss;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class AetherOverlay
 {
 
-	private static final ResourceLocation TEXTURE_JUMPS = new ResourceLocation("aether_legacy", "textures/gui/jumps.png");
+	private static final ResourceLocation TEXTURE_JUMPS = Aether.locate("textures/gui/jumps.png");
 
-	private static final ResourceLocation TEXTURE_COOLDOWN_BAR = new ResourceLocation("aether_legacy", "textures/gui/cooldown_bar.png");
+	private static final ResourceLocation TEXTURE_COOLDOWN_BAR = Aether.locate("textures/gui/cooldown_bar.png");
 
-   	private static final ResourceLocation TEXTURE_POISON_VIGNETTE = new ResourceLocation("aether_legacy", "textures/blur/poison_vignette.png");
+   	private static final ResourceLocation TEXTURE_POISON_VIGNETTE = Aether.locate("textures/blur/poison_vignette.png");
 
-    private static final ResourceLocation TEXTURE_CURE_VIGNETTE = new ResourceLocation("aether_legacy", "textures/blur/cure_vignette.png");
+    private static final ResourceLocation TEXTURE_CURE_VIGNETTE = Aether.locate("textures/blur/cure_vignette.png");
  
     public static void renderPoison(Minecraft mc)
     {
@@ -42,37 +42,36 @@ public class AetherOverlay
 
     	if(playerAether.isPoisoned())
     	{
-            ScaledResolution scaledresolution = new ScaledResolution(mc);
-            Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer renderer = tessellator.getBuffer();
+            ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+            Tessellator tessellator = Tessellator.instance;
 
-    		float alpha = getPoisonAlpha((float)(playerAether.poisonInstance().poisonTime % 50) / 50F);
-
+    		float alpha = getPoisonAlpha((float)(playerAether.poisonMovement.ticks % 50) / 50);
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
 
-            GlStateManager.pushMatrix();
-            GlStateManager.enableBlend();
-            GlStateManager.disableDepth();
-            GlStateManager.depthMask(false);
-            GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-            GlStateManager.disableAlpha();
+            GL11.glPushMatrix();
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            GL11.glDepthMask(false);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glDisable(GL11.GL_ALPHA_TEST);
+            GL11.glColor4f(0.5F, 0.5F, 0.5F, alpha);
+
 
             mc.renderEngine.bindTexture(TEXTURE_POISON_VIGNETTE);
 
-    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
-            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
-            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
-            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            tessellator.startDrawingQuads();
+            tessellator.addVertexWithUV(0.0D, (double)height, -90.0D, 0.0D, 1.0D);
+            tessellator.addVertexWithUV((double)width, (double)height, -90.0D, 1.0D, 1.0D);
+            tessellator.addVertexWithUV((double)width, 0.0D, -90.0D, 1.0D, 0.0D);
+            tessellator.addVertexWithUV(0.0D, 0.0D, -90.0D, 0.0D, 0.0D);
             tessellator.draw();
 
-            GlStateManager.depthMask(true);
-            GlStateManager.enableDepth();
-            GlStateManager.enableAlpha();
-            GlStateManager.disableBlend();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.popMatrix();
+            GL11.glDepthMask(true);
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+            GL11.glEnable(GL11.GL_ALPHA_TEST);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glPopMatrix();
     	}
     }
 
@@ -82,59 +81,58 @@ public class AetherOverlay
 
     	if(playerAether.isCured())
     	{
-            ScaledResolution scaledresolution = new ScaledResolution(mc);
-            Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer renderer = tessellator.getBuffer();
+            ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+            Tessellator tessellator = Tessellator.instance;
 
     		float alpha = 0.5F;
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
 
-            GlStateManager.pushMatrix();
-            GlStateManager.enableBlend();
-            GlStateManager.disableDepth();
-            GlStateManager.depthMask(false);
-            GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-            GlStateManager.disableAlpha();
+            GL11.glPushMatrix();
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            GL11.glDepthMask(false);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glDisable(GL11.GL_ALPHA_TEST);
+            GL11.glColor4f(0.5F, 0.5F, 0.5F, alpha);
 
             mc.renderEngine.bindTexture(TEXTURE_CURE_VIGNETTE);
 
-    		renderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-            renderer.pos(0.0D, (double)height, -90.0D).tex(0.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
-            renderer.pos((double)width, (double)height, -90.0D).tex(1.0D, 1.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
-            renderer.pos((double)width, 0.0D, -90.0D).tex(1.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
-            renderer.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).color(0.5F, 0.5F, 0.5F, alpha).endVertex();
+            tessellator.startDrawingQuads();
+            tessellator.addVertexWithUV(0.0D, (double)height, -90.0D, 0.0D, 1.0D);
+            tessellator.addVertexWithUV((double)width, (double)height, -90.0D, 1.0D, 1.0D);
+            tessellator.addVertexWithUV((double)width, 0.0D, -90.0D, 1.0D, 0.0D);
+            tessellator.addVertexWithUV(0.0D, 0.0D, -90.0D, 0.0D, 0.0D);
             tessellator.draw();
 
-            GlStateManager.depthMask(true);
-            GlStateManager.enableDepth();
-            GlStateManager.enableAlpha();
-            GlStateManager.disableBlend();
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.popMatrix();
+            GL11.glDepthMask(true);
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
+            GL11.glEnable(GL11.GL_ALPHA_TEST);
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glPopMatrix();
     	}
     }
 
 	public static void renderIronBubble(Minecraft mc)
 	{
-		ScaledResolution scaledresolution = new ScaledResolution(mc);
+		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 
 		int width = scaledresolution.getScaledWidth();
 		int height = scaledresolution.getScaledHeight();
 
-        GlStateManager.pushMatrix();
-        GlStateManager.enableBlend();
-        GlStateManager.disableDepth();
-        GlStateManager.depthMask(false);
-        GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.disableAlpha();
+        GL11.glPushMatrix();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glDepthMask(false);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
 
-		mc.renderEngine.bindTexture(Gui.ICONS);
+		mc.renderEngine.bindTexture(Gui.icons);
 
-		int bubbleAmount = PlayerAether.get(mc.thePlayer).getAccessoryCount(ItemsAether.iron_bubble);
+		int bubbleAmount = PlayerAether.get(mc.thePlayer).getAccessoryInventory().getAccessoryCount(new ItemStack(ItemsAether.iron_bubble));
 
-		if (mc.playerController.shouldDrawHUD() && mc.thePlayer.isInWater() && mc.thePlayer.isInsideOfMaterial(Material.WATER))
+		if (mc.playerController.shouldDrawHUD() && mc.thePlayer.isInWater() && mc.thePlayer.isInsideOfMaterial(Material.water))
 		{
 			for (int i = 0; i < bubbleAmount; ++i)
 			{
@@ -142,34 +140,34 @@ public class AetherOverlay
 			}
 		}
 
-        GlStateManager.depthMask(true);
-        GlStateManager.enableDepth();
-        GlStateManager.enableAlpha();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.popMatrix();
+        GL11.glDepthMask(true);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glPopMatrix();
 	}
 
 	public static void renderCooldown(Minecraft mc)
 	{
 		PlayerAether playerInfo = PlayerAether.get(mc.thePlayer);
 
-		if (playerInfo.getCooldown() != 0)
+		if (playerInfo.getHammerCooldown() != 0)
 		{
-			ScaledResolution scaledresolution = new ScaledResolution(mc);
+			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 
-			int cooldownRemaining = (int) ((float) (playerInfo.getCooldown()) / (float) (playerInfo.getCooldownMax()) * 128F);
+			int cooldownRemaining = (int) ((float) (playerInfo.getHammerCooldown()) / (float) (playerInfo.getHammerMaxCooldown()) * 128F);
 			int width = scaledresolution.getScaledWidth();
 
-			mc.fontRendererObj.drawStringWithShadow(playerInfo.getCooldownName() + " Cooldown", (width / 2) - (mc.fontRendererObj.getStringWidth(playerInfo.getCooldownName() + " Cooldown") / 2), 32, 0xffffffff);
+			mc.fontRenderer.drawStringWithShadow(playerInfo.getHammerName() + " Cooldown", (width / 2) - (mc.fontRenderer.getStringWidth(playerInfo.getHammerName() + " Cooldown") / 2), 32, 0xffffffff);
 
-	        GlStateManager.pushMatrix();
+	        GL11.glPushMatrix();
 
-	        GlStateManager.enableBlend();
-	        GlStateManager.disableDepth();
-	        GlStateManager.depthMask(false);
-	        GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
-	        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-	        GlStateManager.disableAlpha();
+	        GL11.glEnable(GL11.GL_BLEND);
+	        GL11.glDisable(GL11.GL_DEPTH_TEST);
+	        GL11.glDepthMask(false);
+	        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	        GL11.glDisable(GL11.GL_ALPHA_TEST);
 
 			mc.renderEngine.bindTexture(TEXTURE_COOLDOWN_BAR);
 
@@ -177,12 +175,12 @@ public class AetherOverlay
 
 			drawTexturedModalRect(width / 2 - 64, 42, 0, 0, cooldownRemaining, 8);
 
-	        GlStateManager.depthMask(true);
-	        GlStateManager.enableDepth();
-	        GlStateManager.enableAlpha();
-	        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+	        GL11.glDepthMask(true);
+	        GL11.glEnable(GL11.GL_DEPTH_TEST);
+	        GL11.glEnable(GL11.GL_ALPHA_TEST);
+	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-	        GlStateManager.popMatrix();
+	        GL11.glPopMatrix();
 		}
 	}
 
@@ -190,22 +188,22 @@ public class AetherOverlay
 	{
 		EntityPlayer player = mc.thePlayer;
 
-		if (player == null || player.getRidingEntity() == null || !(player.getRidingEntity() instanceof EntityMoa))
+		if (player == null || player.ridingEntity == null || !(player.ridingEntity instanceof EntityMoa))
 		{
 			return;
 		}
 
-		ScaledResolution scaledresolution = new ScaledResolution(mc);
+		ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 
-		EntityMoa moa = (EntityMoa) (player.getRidingEntity());
+		EntityMoa moa = (EntityMoa) (player.ridingEntity);
 
 		int width = scaledresolution.getScaledWidth();
 
-		GlStateManager.pushMatrix();
+		GL11.glPushMatrix();
 
 		mc.renderEngine.bindTexture(TEXTURE_JUMPS);
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		for (int jump = 0; jump < moa.getMaxJumps(); jump++)
 		{
@@ -222,9 +220,9 @@ public class AetherOverlay
 			}
 		}
 
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		GlStateManager.popMatrix();
+		GL11.glPopMatrix();
 	}
 
 	public static void renderAetherPortal(float timeInPortal, ScaledResolution scaledRes)
@@ -236,60 +234,65 @@ public class AetherOverlay
             timeInPortal = timeInPortal * 0.8F + 0.2F;
         }
 
-        GlStateManager.disableAlpha();
-        GlStateManager.disableDepth();
-        GlStateManager.depthMask(false);
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, timeInPortal);
-        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        TextureAtlasSprite textureatlassprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(BlocksAether.aether_portal.getDefaultState());
-        float f = textureatlassprite.getMinU();
-        float f1 = textureatlassprite.getMinV();
-        float f2 = textureatlassprite.getMaxU();
-        float f3 = textureatlassprite.getMaxV();
-        Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
-        vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        vertexbuffer.pos(0.0D, (double)scaledRes.getScaledHeight(), -90.0D).tex((double)f, (double)f3).endVertex();
-        vertexbuffer.pos((double)scaledRes.getScaledWidth(), (double)scaledRes.getScaledHeight(), -90.0D).tex((double)f2, (double)f3).endVertex();
-        vertexbuffer.pos((double)scaledRes.getScaledWidth(), 0.0D, -90.0D).tex((double)f2, (double)f1).endVertex();
-        vertexbuffer.pos(0.0D, 0.0D, -90.0D).tex((double)f, (double)f1).endVertex();
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glDepthMask(false);
+        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, timeInPortal);
+        IIcon iicon = BlocksAether.aether_portal.getBlockTextureFromSide(1);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+        float f = iicon.getMinU();
+        float f1 = iicon.getMinV();
+        float f2 = iicon.getMaxU();
+        float f3 = iicon.getMaxV();
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV(0.0D, (double)scaledRes.getScaledHeight(), -90.0D, (double)f, (double)f3);
+        tessellator.addVertexWithUV((double)scaledRes.getScaledWidth(), (double)scaledRes.getScaledHeight(), -90.0D, (double)f2, (double)f3);
+        tessellator.addVertexWithUV((double)scaledRes.getScaledWidth(), 0.0D, -90.0D, (double)f2, (double)f1);
+        tessellator.addVertexWithUV(0.0D, 0.0D, -90.0D, (double)f, (double)f1);
         tessellator.draw();
-        GlStateManager.depthMask(true);
-        GlStateManager.enableDepth();
-        GlStateManager.enableAlpha();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glDepthMask(true);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
 	public static void renderBossHP(Minecraft mc) 
 	{
 		PlayerAether player = PlayerAether.get(mc.thePlayer);
 
-		EntityLiving boss = (EntityLiving) player.getCurrentBoss();
+		IAetherBoss boss = (IAetherBoss) player.getFocusedBoss();
 
-		if (player.getCurrentBoss() instanceof IAetherBoss) 
+		if (player.getFocusedBoss() != null) 
 		{
-			String bossTitle = ((IAetherBoss)player.getCurrentBoss()).getBossTitle();
-			ScaledResolution scaledresolution = new ScaledResolution(mc);
+			if (player.getFocusedBoss().getBossHealth() <= 0.0F)
+			{
+				player.setFocusedBoss(null);
+				return;
+			}
+			//System.out.println(player.getFocusedBoss().getBossHealth());
+			String bossTitle = boss.getBossName();
+			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 
-	        int healthRemaining = (int) (boss.getHealth() / boss.getMaxHealth() * 256F);
+	        int healthRemaining = (int) (boss.getBossHealth() / boss.getMaxBossHealth() * 256F);
 			int width = scaledresolution.getScaledWidth();
 
-			GlStateManager.pushMatrix();
+			GL11.glPushMatrix();
 
-	        mc.fontRendererObj.drawStringWithShadow(bossTitle, width / 2 - (mc.fontRendererObj.getStringWidth(bossTitle) / 2), 2, 0xffffffff);
+	        mc.fontRenderer.drawStringWithShadow(bossTitle, width / 2 - (mc.fontRenderer.getStringWidth(bossTitle) / 2), 2, 0xffffffff);
 
-	        mc.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/gui/boss_bar.png"));
+	        mc.renderEngine.bindTexture(Aether.locate("textures/gui/boss_bar.png"));
 
-	        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 	        drawTexturedModalRect(width / 2 - 128, 12, 0, 16, 256, 32);
 
 	        drawTexturedModalRect(width/ 2 - 128, 12, 0, 0, healthRemaining, 16);
 
-	        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-	        GlStateManager.popMatrix();
+	        GL11.glPopMatrix();
 		}
 	}
 
@@ -299,14 +302,13 @@ public class AetherOverlay
 
 		float var7 = 0.00390625F;
 		float var8 = 0.00390625F;
-		Tessellator var9 = Tessellator.getInstance();
-        VertexBuffer renderer = var9.getBuffer();
-		renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-		renderer.pos((double) (x + 0), (double) (y + height), (double) zLevel).tex((double) ((float) (u + 0) * var7), (double) ((float) (v + height) * var8)).endVertex();
-		renderer.pos((double) (x + width), (double) (y + height), (double) zLevel).tex((double) ((float) (u + width) * var7), (double) ((float) (v + height) * var8)).endVertex();
-		renderer.pos((double) (x + width), (double) (y + 0), (double) zLevel).tex((double) ((float) (u + width) * var7), (double) ((float) (v + 0) * var8)).endVertex();
-		renderer.pos((double) (x + 0), (double) (y + 0), (double) zLevel).tex((double) ((float) (u + 0) * var7), (double) ((float) (v + 0) * var8)).endVertex();
-		var9.draw();
+		Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        tessellator.addVertexWithUV((double) (x + 0), (double) (y + height), (double) zLevel, (double) ((float) (u + 0) * var7), (double) ((float) (v + height) * var8));
+        tessellator.addVertexWithUV((double) (x + width), (double) (y + height), (double) zLevel, (double) ((float) (u + width) * var7), (double) ((float) (v + height) * var8));
+        tessellator.addVertexWithUV((double) (x + width), (double) (y + 0), (double) zLevel, (double) ((float) (u + width) * var7), (double) ((float) (v + 0) * var8));
+        tessellator.addVertexWithUV((double) (x + 0), (double) (y + 0), (double) zLevel, (double) ((float) (u + 0) * var7), (double) ((float) (v + 0) * var8));
+        tessellator.draw();
 	}
 
     public static float getPoisonAlpha(float f)

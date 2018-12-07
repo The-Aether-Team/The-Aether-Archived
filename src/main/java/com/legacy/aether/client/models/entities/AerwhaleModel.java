@@ -107,6 +107,7 @@ public class AerwhaleModel extends ModelBase
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
+    	super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
         this.FrontBody.render(scale);
         this.RightFin.render(scale);
         this.BottomPartHead.render(scale);

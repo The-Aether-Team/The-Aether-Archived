@@ -1,28 +1,18 @@
 package com.legacy.aether.items.armor;
 
-import java.util.UUID;
-
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.ISpecialArmor;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 public class ItemZaniteArmor extends ItemAetherArmor implements ISpecialArmor
 {
 
-	private final UUID ARMOR_RESISTANCE = UUID.fromString("d111114d-f592-4876-a2eb-26bbc974b0fd");
-
     private final int[][] damageReductionAmountArray = new int[][] { new int[]{1, 2, 3, 1}, new int[]{1, 4, 5, 2}, new int[]{2, 5, 6, 2}, new int[]{3, 6, 8, 3}, new int[] {4, 8, 10, 4} };
 
-	public ItemZaniteArmor(EntityEquipmentSlot armorType, ArmorMaterial material, String name, Item repair, int hex)
+	public ItemZaniteArmor(int armorType, ArmorMaterial material, String name, Item repair, int hex)
 	{
 		super(armorType, material, name, repair, hex);
 	}
@@ -43,30 +33,11 @@ public class ItemZaniteArmor extends ItemAetherArmor implements ISpecialArmor
 	public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) 
 	{
 		stack.damageItem(damage, entity);
-	}
-
-	@Override
-    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot)
-    {
-    	return HashMultimap.<String, AttributeModifier>create();
-    }
-
-	@Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
-    {
-    	HashMultimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
-
-    	if (slot == this.armorType)
-    	{
-    		multimap.put(SharedMonsterAttributes.ARMOR.getAttributeUnlocalizedName(), new AttributeModifier(ARMOR_RESISTANCE, "Armor modifier", (double)this.calculateIncrease(stack), 0));
-    	}
-
-		return multimap;
-    }
+ 	}
 
     private float calculateIncrease(ItemStack tool)
     {
-    	if (this.armorType == EntityEquipmentSlot.HEAD)
+    	if (this.armorType == 0)
     	{
     		if (isBetween(tool, 0, 32))
     		{ return this.getDamageReductionAmount(4); }
@@ -79,7 +50,7 @@ public class ItemZaniteArmor extends ItemAetherArmor implements ISpecialArmor
     		else if (isBetween(tool, 132, 165))
     		{ return this.getDamageReductionAmount(0); }
     	}
-    	else if (this.armorType == EntityEquipmentSlot.CHEST)
+    	else if (this.armorType == 1)
     	{
     		if (isBetween(tool, 0, 47))
     		{ return this.getDamageReductionAmount(4); }
@@ -92,7 +63,7 @@ public class ItemZaniteArmor extends ItemAetherArmor implements ISpecialArmor
     		else if (isBetween(tool, 192, 240))
     		{ return this.getDamageReductionAmount(0); }
     	}
-    	else if (this.armorType == EntityEquipmentSlot.LEGS)
+    	else if (this.armorType == 2)
     	{
     		if (isBetween(tool, 0, 44))
     		{ return this.getDamageReductionAmount(4); }
@@ -105,7 +76,7 @@ public class ItemZaniteArmor extends ItemAetherArmor implements ISpecialArmor
     		else if (isBetween(tool, 180, 225))
     		{ return this.getDamageReductionAmount(0); }
     	}
-    	else if (this.armorType == EntityEquipmentSlot.FEET)
+    	else if (this.armorType == 3)
     	{
     		if (isBetween(tool, 0, 38))
     		{ return this.getDamageReductionAmount(4); }
@@ -132,7 +103,7 @@ public class ItemZaniteArmor extends ItemAetherArmor implements ISpecialArmor
 
     public int getDamageReductionAmount(int level)
     {
-        return this.damageReductionAmountArray[level][this.armorType.getIndex()];
+        return this.damageReductionAmountArray[level][this.armorType];
     }
 
 }

@@ -9,9 +9,10 @@ public class ItemNatureStaff extends Item
 
 	public ItemNatureStaff()
 	{
-		this.setCreativeTab(AetherCreativeTabs.misc);
-		this.setMaxStackSize(1);
+		this.setFull3D();
 		this.setMaxDamage(100);
+		this.setMaxStackSize(1);
+		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
 }

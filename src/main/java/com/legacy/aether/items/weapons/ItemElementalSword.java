@@ -15,7 +15,8 @@ public class ItemElementalSword extends ItemSword
 
 	public ItemElementalSword()
 	{
-		super(ToolMaterial.DIAMOND);
+		super(ToolMaterial.EMERALD);
+
 		this.setMaxDamage(502);
 		this.setCreativeTab(AetherCreativeTabs.weapons);
 	}
@@ -35,12 +36,13 @@ public class ItemElementalSword extends ItemSword
 		}
 		else if (this == ItemsAether.lightning_sword)
 		{
-			EntityLightningBolt lightning = new EntityLightningBolt(entityliving1.worldObj, entityliving.posX, entityliving.posY, entityliving.posZ, false);
+			EntityLightningBolt lightning = new EntityLightningBolt(entityliving1.worldObj, entityliving.posX, entityliving.posY, entityliving.posZ);
+
 			entityliving1.worldObj.spawnEntityInWorld(lightning);
 		}
 		else if (this == ItemsAether.holy_sword && entityliving.isEntityUndead())
 		{
-			entityliving.attackEntityFrom(DamageSource.causeMobDamage(entityliving1), 10);
+			entityliving.attackEntityFrom(DamageSource.drown, 15.0F);
 			itemstack.damageItem(10, entityliving1);
 		}
 
@@ -48,7 +50,7 @@ public class ItemElementalSword extends ItemSword
     }
 
 	@Override
-    public boolean getIsRepairable(ItemStack p_82789_1_, ItemStack p_82789_2_)
+    public boolean getIsRepairable(ItemStack stack, ItemStack repairStack)
     {
     	return false;
     }

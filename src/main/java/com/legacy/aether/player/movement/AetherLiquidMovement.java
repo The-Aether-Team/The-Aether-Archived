@@ -1,38 +1,44 @@
 package com.legacy.aether.player.movement;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 
-import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.api.player.IPlayerAether;
 
 public class AetherLiquidMovement
 {
 
-	private PlayerAether playerAether;
+	private IPlayerAether player;
 
-	public AetherLiquidMovement(PlayerAether player)
+	public AetherLiquidMovement(IPlayerAether player)
 	{
-		this.playerAether = player;
+		this.player = player;
 	}
 
 	public void onUpdate()
 	{
-		EntityPlayer player = this.playerAether.thePlayer;
+		Entity entity = this.player.getEntity();
 
-		float movementLR = negativeDifference(player, player.moveStrafing);
-		float movementFB = negativeDifference(player, player.moveForward);
-
-		if (player.isInWater())
+		if (entity instanceof EntityLivingBase)
 		{
-			player.moveRelative(movementLR, movementFB, 0.03F);
-		}
+			EntityLivingBase entityLiving = (EntityLivingBase) entity;
 
-		if (player.isInLava())
-		{
-			player.moveRelative(movementLR, movementFB, 0.06F);
+			float movementLR = this.negativeDifference(entityLiving, entityLiving.moveStrafing);
+			float movementFB = this.negativeDifference(entityLiving, entityLiving.moveForward);
+
+			if (entityLiving.isInWater())
+			{
+				entityLiving.moveFlying(movementLR, movementFB, 0.03F);
+			}
+
+			if (entityLiving.handleLavaMovement())
+			{
+				entityLiving.moveFlying(movementLR, movementFB, 0.06F);
+			}
 		}
 	}
 
-	public float negativeDifference(EntityPlayer player, float number)
+	public float negativeDifference(EntityLivingBase entity, float number)
 	{
 		if (number < 0.0F)
 		{

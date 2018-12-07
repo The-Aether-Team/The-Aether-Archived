@@ -1,15 +1,15 @@
 package com.legacy.aether.world.util;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.ChunkCoordinates;
 
-public class AetherPortalPosition extends BlockPos
+public class AetherPortalPosition extends ChunkCoordinates
 {
 
 	public long lastUpdateTime;
 
-	public AetherPortalPosition(BlockPos pos, long lastUpdateTime)
+	public AetherPortalPosition(int x, int y, int z, long lastUpdateTime)
 	{
-		super(pos.getX(), pos.getY(), pos.getZ());
+		super(x, y, z);
 
 		this.lastUpdateTime = lastUpdateTime;
 	}

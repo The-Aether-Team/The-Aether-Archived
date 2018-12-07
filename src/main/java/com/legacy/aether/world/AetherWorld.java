@@ -1,28 +1,43 @@
 package com.legacy.aether.world;
 
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.DimensionManager;
 
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.world.biome.AetherBiome;
+import com.legacy.aether.world.gen.MapGenGoldenDungeon;
+import com.legacy.aether.world.gen.MapGenLargeColdAercloud;
+import com.legacy.aether.world.gen.MapGenSilverDungeon;
+import com.legacy.aether.world.gen.components.ComponentGoldenDungeon;
+import com.legacy.aether.world.gen.components.ComponentGoldenIsland;
+import com.legacy.aether.world.gen.components.ComponentGoldenIslandStub;
+import com.legacy.aether.world.gen.components.ComponentLargeColdAercloud;
+import com.legacy.aether.world.gen.components.ComponentSilverDungeon;
 
 public class AetherWorld
 {
 
-	public static Biome aether_biome;
-
-	public static DimensionType aether_dimension_type;
+	public static BiomeGenBase aether_biome = new AetherBiome();
 
 	public static void initialization()
 	{
-		aether_biome = new AetherBiome();
+		MapGenStructureIO.registerStructure(MapGenSilverDungeon.Start.class, "aether_legacy:silver_dungeon_start");
+		MapGenStructureIO.registerStructure(MapGenGoldenDungeon.Start.class, "aether_legacy:golden_dungeon_start");
 
-		Biome.registerBiome(AetherConfig.getAetherBiomeID(), "aether_legacy:aether_highlands", aether_biome);
+		MapGenStructureIO.registerStructure(MapGenLargeColdAercloud.Start.class, "aether_legacy:large_cold_aercloud_start");
 
-		aether_dimension_type = DimensionType.register("AetherI", "_aetherI", AetherConfig.getAetherDimensionID(), AetherWorldProvider.class, false);
+		MapGenStructureIO.func_143031_a(ComponentLargeColdAercloud.class, "aether_legacy:large_cold_aercloud_component");
 
-		DimensionManager.registerDimension(AetherConfig.getAetherDimensionID(), aether_dimension_type);
+		MapGenStructureIO.func_143031_a(ComponentSilverDungeon.class, "aether_legacy:silver_dungeon_component");
+
+		MapGenStructureIO.func_143031_a(ComponentGoldenDungeon.class, "aether_legacy:golden_dungeon_component");
+		MapGenStructureIO.func_143031_a(ComponentGoldenIsland.class, "aether_legacy:golden_island_component");
+		MapGenStructureIO.func_143031_a(ComponentGoldenIslandStub.class, "aether_legacy:golden_island_stub_component");
+
+		DimensionManager.registerProviderType(AetherConfig.getAetherDimensionID(), AetherWorldProvider.class, false);
+		DimensionManager.registerDimension(AetherConfig.getAetherDimensionID(), AetherConfig.getAetherDimensionID());
+		//aether_dimension_type = DimensionType.register("AetherI", "_aetherI", AetherConfig.getAetherDimensionID(), AetherWorldProvider.class, false);
 	}
 
 }

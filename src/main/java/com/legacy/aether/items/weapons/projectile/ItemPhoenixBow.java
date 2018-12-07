@@ -1,42 +1,90 @@
 package com.legacy.aether.items.weapons.projectile;
 
-import javax.annotation.Nullable;
-
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemBow;
-import net.minecraft.item.ItemSpectralArrow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.entities.projectile.EntityPhoenixArrow;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemPhoenixBow extends ItemBow
 {
+
+    @SideOnly(Side.CLIENT)
+    private IIcon[] iconArray;
 
     public ItemPhoenixBow()
     {
     	super();
+
         this.maxStackSize = 1;
         this.setMaxDamage(384);
+        this.setFull3D();
+        this.setTextureName(Aether.find("weapons/bow"));
         this.setCreativeTab(AetherCreativeTabs.weapons);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getItemIconForUseDuration(int p_94599_1_)
+    {
+        return this.iconArray[p_94599_1_];
+    }
+
+    @Override
+    public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
+    {
+        if (usingItem != null && stack.getItem() == ItemsAether.phoenix_bow)
+        {
+            int j = stack.getMaxItemUseDuration() - useRemaining;
+
+            if (j >= 18)
+            {
+                return this.getItemIconForUseDuration(2);
+            }
+
+            if (j > 13)
+            {
+                return this.getItemIconForUseDuration(1);
+            }
+
+            if (j > 0)
+            {
+                return this.getItemIconForUseDuration(0);
+            }
+        }
+
+        return getIcon(stack, renderPass);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister p_94581_1_)
+    {
+        this.itemIcon = p_94581_1_.registerIcon(Aether.find("weapons/phoenix_bow"));
+        this.iconArray = new IIcon[bowPullIconNameArray.length];
+
+        for (int i = 0; i < this.iconArray.length; ++i)
+        {
+            this.iconArray[i] = p_94581_1_.registerIcon(this.getIconString() + "_" + bowPullIconNameArray[i]);
+        }
     }
 
 	@Override
@@ -47,79 +95,75 @@ public class ItemPhoenixBow extends ItemBow
 
     private ItemStack findAmmo(EntityPlayer player)
     {
-        if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
+        for (int i = 0; i < player.inventory.getSizeInventory(); ++i)
         {
-            return player.getHeldItem(EnumHand.OFF_HAND);
-        }
-        else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND)))
-        {
-            return player.getHeldItem(EnumHand.MAIN_HAND);
-        }
-        else
-        {
-            for (int i = 0; i < player.inventory.getSizeInventory(); ++i)
+            ItemStack itemstack = player.inventory.getStackInSlot(i);
+
+            if (this.isArrow(itemstack))
             {
-                ItemStack itemstack = player.inventory.getStackInSlot(i);
-
-                if (this.isArrow(itemstack))
-                {
-                    return itemstack;
-                }
+                return itemstack;
             }
-
-            return null;
         }
+
+        return null;
     }
 
-    protected boolean isArrow(@Nullable ItemStack stack)
+    protected boolean isArrow(ItemStack stack)
     {
-        return stack != null && stack.getItem() instanceof ItemArrow;
+        return stack != null && stack.getItem() == Items.arrow;
     }
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer entityLiving, int timeLeft)
     {
         if (entityLiving instanceof EntityPlayer)
         {
             EntityPlayer entityplayer = (EntityPlayer)entityLiving;
-            boolean flag = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+            boolean flag = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
             ItemStack itemstack = this.findAmmo(entityplayer);
 
             int i = this.getMaxItemUseDuration(stack) - timeLeft;
-            i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, (EntityPlayer)entityLiving, i, itemstack != null || flag);
+            ArrowLooseEvent event = new ArrowLooseEvent(entityplayer, stack, i);
+            MinecraftForge.EVENT_BUS.post(event);
+
+            if (event.isCanceled())
+            {
+                return;
+            }
+
+            i = event.charge;
             if (i < 0) return;
 
             if (itemstack != null || flag)
             {
                 if (itemstack == null)
                 {
-                    itemstack = new ItemStack(Items.ARROW);
+                    itemstack = new ItemStack(Items.arrow);
                 }
 
                 float f = getArrowVelocity(i);
 
                 if ((double)f >= 0.1D)
                 {
-                    boolean flag1 = entityplayer.capabilities.isCreativeMode || (itemstack.getItem() instanceof ItemArrow ? ((ItemArrow)itemstack.getItem()).isInfinite(itemstack, stack, entityplayer) : false);
+                    boolean flag1 = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
 
                     if (!worldIn.isRemote)
                     {
-                        EntityArrow entityarrow = this.createArrow(worldIn, itemstack.getItem() instanceof ItemSpectralArrow, itemstack, entityplayer);
-                        entityarrow.setAim(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+                        EntityPhoenixArrow entityarrow = this.createArrow(worldIn, f * 2.0F, itemstack, entityplayer);
 
                         if (f == 1.0F)
                         {
                             entityarrow.setIsCritical(true);
                         }
 
-                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
+                        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
 
                         if (j > 0)
                         {
                             entityarrow.setDamage(entityarrow.getDamage() + (double)j * 0.5D + 0.5D);
                         }
 
-                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
+                        int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
 
                         if (k > 0)
                         {
@@ -130,35 +174,31 @@ public class ItemPhoenixBow extends ItemBow
 
                         if (flag1)
                         {
-                            entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+                            entityarrow.canBePickedUp = 2;
                         }
 
                         worldIn.spawnEntityInWorld(entityarrow);
                     }
 
-                    worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+                    worldIn.playSoundAtEntity(entityLiving, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
                     if (!flag1)
                     {
-                        --itemstack.stackSize;
+                    	--itemstack.stackSize;
 
                         if (itemstack.stackSize == 0)
                         {
-                            entityplayer.inventory.deleteStack(itemstack);
+                            entityplayer.inventory.consumeInventoryItem(itemstack.getItem());
                         }
                     }
-
-                    entityplayer.addStat(StatList.getObjectUseStats(this));
                 }
             }
         }
     }
 
-    public EntityArrow createArrow(World worldIn, boolean isSpectral, ItemStack stack, EntityLivingBase shooter)
+    public EntityPhoenixArrow createArrow(World worldIn, float distance, ItemStack stack, EntityLivingBase shooter)
     {
-        EntityPhoenixArrow entityPhoenixArrow = new EntityPhoenixArrow(worldIn, shooter, isSpectral);
-
-        entityPhoenixArrow.setPotionEffect(stack);
+        EntityPhoenixArrow entityPhoenixArrow = new EntityPhoenixArrow(worldIn, shooter, distance);
 
         return entityPhoenixArrow;
     }
@@ -185,32 +225,27 @@ public class ItemPhoenixBow extends ItemBow
     @Override
     public EnumAction getItemUseAction(ItemStack stack)
     {
-        return EnumAction.BOW;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public boolean hasCustomProperties()
-    {
-    	return true;
+        return EnumAction.bow;
     }
  
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
+    public ItemStack onItemRightClick(ItemStack heldItem, World worldIn, EntityPlayer playerIn)
     {
         boolean flag = this.findAmmo(playerIn) != null;
 
-        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemStackIn, worldIn, playerIn, hand, flag);
-        if (ret != null) return ret;
+        ArrowNockEvent event = new ArrowNockEvent(playerIn, heldItem);
+        MinecraftForge.EVENT_BUS.post(event);
+        if (event.isCanceled())
+        {
+            return event.result;
+        }
 
-        if (!playerIn.capabilities.isCreativeMode && !flag)
+        if (playerIn.capabilities.isCreativeMode || flag)
         {
-            return !flag ? new ActionResult<ItemStack>(EnumActionResult.FAIL, itemStackIn) : new ActionResult<ItemStack>(EnumActionResult.PASS, itemStackIn);
+        	playerIn.setItemInUse(heldItem, this.getMaxItemUseDuration(heldItem));
         }
-        else
-        {
-            playerIn.setActiveHand(hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
-        }
+
+        return heldItem;
     }
 
     @Override

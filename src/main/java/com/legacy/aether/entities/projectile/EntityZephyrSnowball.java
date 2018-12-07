@@ -1,82 +1,68 @@
 package com.legacy.aether.entities.projectile;
 
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.player.PlayerAether;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.S12PacketEntityVelocity;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityZephyrSnowball extends EntityThrowable
+public class EntityZephyrSnowball extends EntityProjectileBase
 {
 
-	private int ticksInAir;
-
-    public EntityZephyrSnowball(World worldIn)
-    {
-    	super(worldIn);
-
-        this.setSize(1.0F, 1.0F);
-    }
-
-	public EntityZephyrSnowball(World worldIn, double x, double y, double z)
+	public EntityZephyrSnowball(World world)
 	{
-		super(worldIn, x, y, z);
+		super(world);
 	}
 
-    public EntityZephyrSnowball(World worldIn, EntityLivingBase throwerIn)
-    {
-    	super(worldIn, throwerIn);
-    }
+	public EntityZephyrSnowball(World world, EntityLivingBase thrower, double x, double y, double z)
+	{
+		super(world, thrower);
 
-    @Override
-    protected void entityInit()
-    {
-    	this.setNoGravity(true);
-    }
-
-    @Override
-    public void onUpdate()
-    {
-    	super.onUpdate();
-
-    	if (!this.onGround)
-    	{
-    		++this.ticksInAir;
-    	}
-
-    	if (this.ticksInAir > 600)
-    	{
-    		this.setDead();
-    	}
-    }
+		this.setPosition(x, y, z);
+	}
 
 	@Override
-	protected void onImpact(RayTraceResult result)
+	public void onUpdate()
 	{
-		if (result.typeOfHit == Type.ENTITY)
+		super.onUpdate();
+
+		this.worldObj.spawnParticle("smoke", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+	}
+
+	@Override
+	protected void onImpact(MovingObjectPosition object) 
+	{
+		if (object.entityHit instanceof EntityLivingBase)
 		{
-			Entity entity = result.entityHit;
-
-			if (entity instanceof EntityPlayer)
+			if (object.entityHit instanceof EntityPlayer && PlayerAether.get((EntityPlayer) object.entityHit).getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.sentry_boots)))
 			{
-				EntityPlayer player = ((EntityPlayer)entity);
+				this.setDead();
 
-				if (player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].getItem() == ItemsAether.sentry_boots)
-				{
-					return;
-				}
+				return;
 			}
 
-			result.entityHit.motionX += this.motionX * 1.5F;
-			result.entityHit.motionY += 0.5D;
-			result.entityHit.motionZ += this.motionZ * 1.5F;
-		}
+			object.entityHit.motionX += this.motionX * 1.5F;
+			object.entityHit.motionY += 0.5D;
+			object.entityHit.motionZ += this.motionZ * 1.5F;
 
-        this.setDead();
+			if (object.entityHit instanceof EntityPlayerMP)
+			{
+				((EntityPlayerMP)object.entityHit).playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(object.entityHit));
+			}
+
+			this.setDead();
+		}
 	}
+
+	@Override
+    protected float getGravityVelocity()
+    {
+        return 0.0F;
+    }
 
 }

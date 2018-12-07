@@ -1,119 +1,75 @@
 package com.legacy.aether.blocks.dungeon;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.blocks.util.IAetherMeta;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
-public class BlockDungeonBase extends Block implements IAetherMeta
+public class BlockDungeonBase extends Block
 {
 
-	public static final PropertyEnum<EnumStoneType> dungeon_stone = PropertyEnum.create("aether_legacy_dungeon_stone", EnumStoneType.class);
+	private Block pickBlock;
 
-	public BlockDungeonBase(boolean isLocked) 
+	private boolean isLit;
+
+	public BlockDungeonBase(boolean isLit) 
 	{
-		super(Material.ROCK);
+		this(null, isLit);
+	}
 
-		this.setSoundType(SoundType.STONE);
-		this.setHardness(isLocked ? -1F : 0.5F);
-		this.setCreativeTab(isLocked ? null : AetherCreativeTabs.blocks);
-		this.setDefaultState(this.getDefaultState().withProperty(dungeon_stone, EnumStoneType.Carved));
+	public BlockDungeonBase(Block pickBlock, boolean isLit) 
+	{
+		super(Material.rock);
+
+		if (pickBlock != null)
+		{
+			this.pickBlock = pickBlock;
+			this.setResistance(6000000.0F);
+		}
+
+		this.isLit = isLit;
+		this.setStepSound(soundTypeStone);
+		this.setHardness(this.pickBlock != null ? -1F : 0.5F);
+		this.setCreativeTab(this.pickBlock != null ? null : AetherCreativeTabs.blocks);
 	}
 
 	@Override
-    public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos)
+    public int getLightValue(IBlockAccess world, int x, int y, int z)
     {
-    	int meta = this.getMetaFromState(state);
-
-        if (state.getBlock() != this)
+        Block block = world.getBlock(x, y, z);
+    
+        if (block != this)
         {
-            return state.getLightValue(world, pos);
+        	return block.getLightValue(world, x, y, z);
         }
 
-        if (meta == 1 || meta == 3 || meta == 5)
+        if (this.isLit)
         {
         	return (int)(15.0F * 0.75f);
         }
 
-        return 0;
+        return super.getLightValue(world, x, y, z);
     }
 
 	@Override
-    public ItemStack getPickBlock(IBlockState stateIn, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player)
     {
-		IBlockState state = world.getBlockState(pos);
-		Block block = state.getBlock();
-		Block newBlock = BlocksAether.dungeon_block.getDefaultState().withProperty(dungeon_stone, ((EnumStoneType)state.getValue(dungeon_stone))).getBlock();
-
-		if (block == BlocksAether.locked_dungeon_block || block == BlocksAether.dungeon_trap)
+		if (this.pickBlock != null)
 		{
-			return new ItemStack(newBlock, 1, damageDropped(state));
+			return new ItemStack(this.pickBlock);
 		}
 
-    	return new ItemStack(newBlock, 1, damageDropped(state));
+		return super.getPickBlock(target, world, x, y, z, player);
     }
 
-	@Override
-	public String getMetaName(ItemStack stack)
+	public Block getUnlockedBlock()
 	{
-		return ((EnumStoneType)this.getStateFromMeta(stack.getItemDamage()).getValue(dungeon_stone)).getName();
+		return this.pickBlock == null ? this : this.pickBlock;
 	}
-
-	@Override
-    public int damageDropped(IBlockState state)
-    {
-        return ((EnumStoneType)state.getValue(dungeon_stone)).getMeta();
-    }
-
-	@Override
-	@SideOnly(Side.CLIENT)
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list)
-    {
-        for (int j = 0; j < EnumStoneType.values().length; ++j)
-        {
-        	EnumStoneType enumdyecolor = EnumStoneType.values()[j];
-
-            list.add(new ItemStack(itemIn, 1, enumdyecolor.getMeta()));
-        }
-    }
-
-	@Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return this.getDefaultState().withProperty(dungeon_stone, EnumStoneType.getType(meta));
-    }
-
-	@Override
-    public int getMetaFromState(IBlockState state)
-    {
-        return ((EnumStoneType)state.getValue(dungeon_stone)).getMeta();
-    }
-
-	@Override
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {dungeon_stone});
-    }
 
 }

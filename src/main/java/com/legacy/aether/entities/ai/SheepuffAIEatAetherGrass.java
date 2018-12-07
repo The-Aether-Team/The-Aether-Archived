@@ -2,7 +2,6 @@ package com.legacy.aether.entities.ai;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
@@ -32,8 +31,7 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase
         }
         else
         {
-            BlockPos blockpos = new BlockPos(this.sheepuff.posX, this.sheepuff.posY, this.sheepuff.posZ);
-            return this.entityWorld.getBlockState(blockpos.down()).getBlock() == BlocksAether.aether_grass;
+            return this.entityWorld.getBlock((int) this.sheepuff.posX, (int) this.sheepuff.posY - 1, (int) this.sheepuff.posZ) == BlocksAether.aether_grass;
         }
     }
 
@@ -65,16 +63,13 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase
 
         if (this.eatingGrassTimer == 4)
         {
-            BlockPos blockpos = new BlockPos(this.sheepuff.posX, this.sheepuff.posY, this.sheepuff.posZ);
 
-            BlockPos blockpos1 = blockpos.down();
-
-            if (this.entityWorld.getBlockState(blockpos1).getBlock() == BlocksAether.aether_grass)
+            if (this.entityWorld.getBlock((int) this.sheepuff.posX, (int) this.sheepuff.posY - 1, (int) this.sheepuff.posZ) == BlocksAether.aether_grass)
             {
-                if (this.entityWorld.getGameRules().getBoolean("mobGriefing"))
+                if (this.entityWorld.getGameRules().getGameRuleBooleanValue("mobGriefing"))
                 {
-                    this.entityWorld.playEvent(2001, blockpos1, Block.getIdFromBlock(BlocksAether.aether_grass));
-                    this.entityWorld.setBlockState(blockpos1, BlocksAether.aether_dirt.getDefaultState(), 2);
+                    this.entityWorld.playAuxSFX(2001, (int) this.sheepuff.posX, (int) this.sheepuff.posY - 1, (int) this.sheepuff.posZ, Block.getIdFromBlock(BlocksAether.aether_grass));
+                    this.entityWorld.setBlock((int) this.sheepuff.posX, (int) this.sheepuff.posY - 1, (int) this.sheepuff.posZ, BlocksAether.aether_dirt);
                 }
 
                 this.sheepuff.eatGrassBonus();

@@ -248,7 +248,7 @@ entity.flying_cow.name=Winged Milk-Maeker
 entity.phyg.name=Flying Oinkey
 entity.swet.name=Sugar Ball
 entity.moa.name=big bird
-entity.whirlwind.name=weeee
+entity.whirly.name=weeee
 
 # Achievements
 achievement.enter_aether=It's about time!

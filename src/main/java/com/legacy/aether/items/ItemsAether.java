@@ -1,16 +1,16 @@
 package com.legacy.aether.items;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
+import com.legacy.aether.items.accessories.ItemAccessoryDyed;
 import com.legacy.aether.items.armor.ItemAetherArmor;
 import com.legacy.aether.items.armor.ItemZaniteArmor;
 import com.legacy.aether.items.dungeon.ItemDungeonKey;
@@ -32,6 +32,8 @@ import com.legacy.aether.items.tools.ItemValkyrieTool;
 import com.legacy.aether.items.tools.ItemZaniteTool;
 import com.legacy.aether.items.util.EnumAetherToolType;
 import com.legacy.aether.items.util.ItemAether;
+import com.legacy.aether.items.util.ItemDeveloperStick;
+import com.legacy.aether.items.util.ItemSwettyBall;
 import com.legacy.aether.items.weapons.ItemCandyCaneSword;
 import com.legacy.aether.items.weapons.ItemElementalSword;
 import com.legacy.aether.items.weapons.ItemGravititeSword;
@@ -47,14 +49,15 @@ import com.legacy.aether.items.weapons.projectile.ItemDart;
 import com.legacy.aether.items.weapons.projectile.ItemDartShooter;
 import com.legacy.aether.items.weapons.projectile.ItemPhoenixBow;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
-import com.legacy.aether.registry.sounds.SoundsAether;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemsAether 
 {
 
-	public static EnumRarity aether_loot = EnumHelper.addRarity("aether_legacy_loot", TextFormatting.GREEN, "Aether Loot");
+	public static EnumRarity aether_loot = EnumHelper.addRarity("aether_legacy_loot", EnumChatFormatting.GREEN, "Aether Loot");
 
-	public static Item zanite_gemstone, ambrosium_shard, golden_amber, aechor_petal, swetty_ball;
+	public static Item zanite_gemstone, ambrosium_shard, golden_amber, aechor_petal, swet_ball;
 
 	public static Item skyroot_pickaxe, skyroot_axe, skyroot_shovel, skyroot_sword;
 
@@ -78,7 +81,7 @@ public class ItemsAether
 
 	public static Item valkyrie_helmet, valkyrie_chestplate, valkyrie_leggings, valkyrie_boots;
 
-	public static Item blue_berry, gummy_swet, healing_stone, white_apple, ginger_bread_man, candy_cane, enchanted_blueberry;
+	public static Item blueberry, gummy_swet, healing_stone, white_apple, gingerbread_man, candy_cane, enchanted_blueberry;
 
 	public static Item skyroot_stick, victory_medal;
 
@@ -98,91 +101,95 @@ public class ItemsAether
 
 	public static Item iron_ring, golden_ring, zanite_ring, ice_ring, iron_pendant, golden_pendant, zanite_pendant, ice_pendant;
 
-	public static Item red_cape, blue_cape, yellow_cape, white_cape, swet_cape, invisibility_cape, agility_cape;
+	public static Item white_cape, swet_cape, invisibility_cape, agility_cape;
 
 	public static Item golden_feather, regeneration_stone, iron_bubble, life_shard;
 
 	public static Item sentry_boots, lightning_knife;
 
-	public static Item aether_tune, ascending_dawn, welcoming_skies;
+	public static Item aether_tune, ascending_dawn, welcoming_skies, legacy;
 
 	public static Item repulsion_shield;
 
 	public static Item lore_book;
 
+	public static Item developer_stick;
+
+	public static Item aether_spawn_egg;
+
 	public static void initialization()
 	{
-		zanite_gemstone = register("zanite_gemstone", new ItemAether(AetherCreativeTabs.material));
-		ambrosium_shard = register("ambrosium_shard", new ItemAmbrosiumShard());
-		golden_amber = register("golden_amber", new ItemAether(AetherCreativeTabs.material));
-		aechor_petal = register("aechor_petal", new ItemAether(AetherCreativeTabs.material));
-		swetty_ball = register("swetty_ball", new ItemSwettyBall(AetherCreativeTabs.material));
+		zanite_gemstone = register("zanite_gemstone", new ItemAether(AetherCreativeTabs.material).setTextureName(Aether.find("misc/zanite_gemstone")));
+		ambrosium_shard = register("ambrosium_shard", new ItemAmbrosiumShard().setTextureName(Aether.find("misc/ambrosium_shard")));
+		golden_amber = register("golden_amber", new ItemAether(AetherCreativeTabs.material).setTextureName(Aether.find("misc/golden_amber")));
+		aechor_petal = register("aechor_petal", new ItemAether(AetherCreativeTabs.material).setTextureName(Aether.find("misc/aechor_petal")));
+		swet_ball = register("swet_ball", new ItemSwettyBall(AetherCreativeTabs.material).setTextureName(Aether.find("misc/swet_ball")));
 
-		skyroot_pickaxe = register("skyroot_pickaxe", new ItemSkyrootTool(EnumAetherToolType.PICKAXE));
-		skyroot_axe = register("skyroot_axe", new ItemSkyrootTool(EnumAetherToolType.AXE));
-		skyroot_shovel = register("skyroot_shovel", new ItemSkyrootTool(EnumAetherToolType.SHOVEL));
+		skyroot_pickaxe = register("skyroot_pickaxe", new ItemSkyrootTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/skyroot_pickaxe")));
+		skyroot_axe = register("skyroot_axe", new ItemSkyrootTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/skyroot_axe")));
+		skyroot_shovel = register("skyroot_shovel", new ItemSkyrootTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/skyroot_shovel")));
 
-		holystone_pickaxe = register("holystone_pickaxe", new ItemHolystoneTool(EnumAetherToolType.PICKAXE));
-		holystone_axe = register("holystone_axe", new ItemHolystoneTool(EnumAetherToolType.AXE));
-		holystone_shovel = register("holystone_shovel", new ItemHolystoneTool(EnumAetherToolType.SHOVEL));
+		holystone_pickaxe = register("holystone_pickaxe", new ItemHolystoneTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/holystone_pickaxe")));
+		holystone_axe = register("holystone_axe", new ItemHolystoneTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/holystone_axe")));
+		holystone_shovel = register("holystone_shovel", new ItemHolystoneTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/holystone_shovel")));
 
-		zanite_pickaxe = register("zanite_pickaxe", new ItemZaniteTool(EnumAetherToolType.PICKAXE));
-		zanite_axe = register("zanite_axe", new ItemZaniteTool(EnumAetherToolType.AXE));
-		zanite_shovel = register("zanite_shovel", new ItemZaniteTool(EnumAetherToolType.SHOVEL));
+		zanite_pickaxe = register("zanite_pickaxe", new ItemZaniteTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/zanite_pickaxe")));
+		zanite_axe = register("zanite_axe", new ItemZaniteTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/zanite_axe")));
+		zanite_shovel = register("zanite_shovel", new ItemZaniteTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/zanite_shovel")));
 
-		gravitite_pickaxe = register("gravitite_pickaxe", new ItemGravititeTool(EnumAetherToolType.PICKAXE));
-		gravitite_axe = register("gravitite_axe", new ItemGravititeTool(EnumAetherToolType.AXE));
-		gravitite_shovel = register("gravitite_shovel", new ItemGravititeTool(EnumAetherToolType.SHOVEL));
+		gravitite_pickaxe = register("gravitite_pickaxe", new ItemGravititeTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/gravitite_pickaxe")));
+		gravitite_axe = register("gravitite_axe", new ItemGravititeTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/gravitite_axe")));
+		gravitite_shovel = register("gravitite_shovel", new ItemGravititeTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/gravitite_shovel")));
 
-		valkyrie_pickaxe = register("valkyrie_pickaxe", new ItemValkyrieTool(EnumAetherToolType.PICKAXE));
-		valkyrie_axe = register("valkyrie_axe", new ItemValkyrieTool(EnumAetherToolType.AXE));
-		valkyrie_shovel = register("valkyrie_shovel", new ItemValkyrieTool(EnumAetherToolType.SHOVEL));
+		valkyrie_pickaxe = register("valkyrie_pickaxe", new ItemValkyrieTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/valkyrie_pickaxe")));
+		valkyrie_axe = register("valkyrie_axe", new ItemValkyrieTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/valkyrie_axe")));
+		valkyrie_shovel = register("valkyrie_shovel", new ItemValkyrieTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/valkyrie_shovel")));
 
-		zanite_helmet = register("zanite_helmet", new ItemZaniteArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
-		zanite_chestplate = register("zanite_chestplate", new ItemZaniteArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
-		zanite_leggings = register("zanite_leggings", new ItemZaniteArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
-		zanite_boots = register("zanite_boots", new ItemZaniteArmor(EntityEquipmentSlot.FEET, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
+		zanite_helmet = register("zanite_helmet", new ItemZaniteArmor(0, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8).setTextureName(Aether.find("armor/zanite_helmet")));
+		zanite_chestplate = register("zanite_chestplate", new ItemZaniteArmor(1, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8).setTextureName(Aether.find("armor/zanite_chestplate")));
+		zanite_leggings = register("zanite_leggings", new ItemZaniteArmor(2, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8).setTextureName(Aether.find("armor/zanite_leggings")));
+		zanite_boots = register("zanite_boots", new ItemZaniteArmor(3, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8).setTextureName(Aether.find("armor/zanite_boots")));
 
-		gravitite_helmet = register("gravitite_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
-		gravitite_chestplate = register("gravitite_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
-		gravitite_leggings = register("gravitite_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
-		gravitite_boots = register("gravitite_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
+		gravitite_helmet = register("gravitite_helmet", new ItemAetherArmor(0, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db).setTextureName(Aether.find("armor/gravitite_helmet")));
+		gravitite_chestplate = register("gravitite_chestplate", new ItemAetherArmor(1, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db).setTextureName(Aether.find("armor/gravitite_chestplate")));
+		gravitite_leggings = register("gravitite_leggings", new ItemAetherArmor(2, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db).setTextureName(Aether.find("armor/gravitite_leggings")));
+		gravitite_boots = register("gravitite_boots", new ItemAetherArmor(3, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db).setTextureName(Aether.find("armor/gravitite_boots")));
 
-		neptune_helmet = register("neptune_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
-		neptune_chestplate = register("neptune_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
-		neptune_leggings = register("neptune_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
-		neptune_boots = register("neptune_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
+		neptune_helmet = register("neptune_helmet", new ItemAetherArmor(0, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF).setTextureName(Aether.find("armor/neptune_helmet")));
+		neptune_chestplate = register("neptune_chestplate", new ItemAetherArmor(1, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF).setTextureName(Aether.find("armor/neptune_chestplate")));
+		neptune_leggings = register("neptune_leggings", new ItemAetherArmor(2, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF).setTextureName(Aether.find("armor/neptune_leggings")));
+		neptune_boots = register("neptune_boots", new ItemAetherArmor(3, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF).setTextureName(Aether.find("armor/neptune_boots")));
 
-		phoenix_helmet = register("phoenix_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "phoenix", null));
-		phoenix_chestplate = register("phoenix_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "phoenix", null));
-		phoenix_leggings = register("phoenix_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "phoenix", null));
-		phoenix_boots = register("phoenix_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "phoenix", null));
+		phoenix_helmet = register("phoenix_helmet", new ItemAetherArmor(0, ArmorMaterial.DIAMOND, "phoenix", null).setTextureName(Aether.find("armor/phoenix_helmet")));
+		phoenix_chestplate = register("phoenix_chestplate", new ItemAetherArmor(1, ArmorMaterial.DIAMOND, "phoenix", null).setTextureName(Aether.find("armor/phoenix_chestplate")));
+		phoenix_leggings = register("phoenix_leggings", new ItemAetherArmor(2, ArmorMaterial.DIAMOND, "phoenix", null).setTextureName(Aether.find("armor/phoenix_leggings")));
+		phoenix_boots = register("phoenix_boots", new ItemAetherArmor(3, ArmorMaterial.DIAMOND, "phoenix", null).setTextureName(Aether.find("armor/phoenix_boots")));
 
-		obsidian_helmet = register("obsidian_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447));
-		obsidian_chestplate = register("obsidian_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447));
-		obsidian_leggings = register("obsidian_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447));
-		obsidian_boots = register("obsidian_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447));
+		obsidian_helmet = register("obsidian_helmet", new ItemAetherArmor(0, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447).setTextureName(Aether.find("armor/obsidian_helmet")));
+		obsidian_chestplate = register("obsidian_chestplate", new ItemAetherArmor(1, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447).setTextureName(Aether.find("armor/obsidian_chestplate")));
+		obsidian_leggings = register("obsidian_leggings", new ItemAetherArmor(2, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447).setTextureName(Aether.find("armor/obsidian_leggings")));
+		obsidian_boots = register("obsidian_boots", new ItemAetherArmor(3, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447).setTextureName(Aether.find("armor/obsidian_boots")));
 
-		valkyrie_helmet = register("valkyrie_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "valkyrie", null));
-		valkyrie_chestplate = register("valkyrie_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "valkyrie", null));
-		valkyrie_leggings = register("valkyrie_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "valkyrie", null));
-		valkyrie_boots = register("valkyrie_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "valkyrie", null));
+		valkyrie_helmet = register("valkyrie_helmet", new ItemAetherArmor(0, ArmorMaterial.DIAMOND, "valkyrie", null).setTextureName(Aether.find("armor/valkyrie_helmet")));
+		valkyrie_chestplate = register("valkyrie_chestplate", new ItemAetherArmor(1, ArmorMaterial.DIAMOND, "valkyrie", null).setTextureName(Aether.find("armor/valkyrie_chestplate")));
+		valkyrie_leggings = register("valkyrie_leggings", new ItemAetherArmor(2, ArmorMaterial.DIAMOND, "valkyrie", null).setTextureName(Aether.find("armor/valkyrie_leggings")));
+		valkyrie_boots = register("valkyrie_boots", new ItemAetherArmor(3, ArmorMaterial.DIAMOND, "valkyrie", null).setTextureName(Aether.find("armor/valkyrie_boots")));
 
-		blue_berry = register("blue_berry", new ItemAetherFood(2));
-		enchanted_blueberry = register("enchanted_blueberry", new ItemAetherFood(8));
-		white_apple = register("white_apple", new ItemWhiteApple());
+		blueberry = register("blueberry", new ItemAetherFood(2).setTextureName(Aether.find("food/blueberry")));
+		enchanted_blueberry = register("enchanted_blueberry", new ItemAetherFood(8).setTextureName(Aether.find("food/enchanted_blueberry")));
+		white_apple = register("white_apple", new ItemWhiteApple().setTextureName(Aether.find("food/white_apple")));
 		gummy_swet = register("gummy_swet", new ItemGummySwet());
-		healing_stone = register("healing_stone", new ItemHealingStone());
-		candy_cane = register("candy_cane", new ItemAetherFood(2));
-		ginger_bread_man = register("ginger_bread_man", new ItemAetherFood(2));
+		healing_stone = register("healing_stone", new ItemHealingStone().setTextureName(Aether.find("food/healing_stone")));
+		candy_cane = register("candy_cane", new ItemAetherFood(2).setTextureName(Aether.find("food/candycane")));
+		gingerbread_man = register("gingerbread_man", new ItemAetherFood(2).setTextureName(Aether.find("food/gingerbread_man")));
 
-		skyroot_stick = register("skyroot_stick", new Item().setCreativeTab(AetherCreativeTabs.material));
-		victory_medal = register("victory_medal", new ItemVictoryMedal());
+		skyroot_stick = register("skyroot_stick", new Item().setCreativeTab(AetherCreativeTabs.material).setTextureName(Aether.find("skyroot_stick")));
+		victory_medal = register("victory_medal", new ItemVictoryMedal().setTextureName(Aether.find("victory_medal")));
 
 		dungeon_key = register("dungeon_key", new ItemDungeonKey());
 		skyroot_bucket = register("skyroot_bucket", new ItemSkyrootBucket());
-		cloud_parachute = register("cold_parachute", new ItemAetherParachute());
-		golden_parachute = register("golden_parachute", new ItemAetherParachute());
+		cloud_parachute = register("cold_parachute", new ItemAetherParachute().setTextureName(Aether.find("misc/parachutes/cold_parachute")));
+		golden_parachute = register("golden_parachute", new ItemAetherParachute().setTextureName(Aether.find("misc/parachutes/golden_parachute")));
 
 		moa_egg = register("moa_egg", new ItemMoaEgg());
 
@@ -190,75 +197,77 @@ public class ItemsAether
 		phoenix_bow = register("phoenix_bow", new ItemPhoenixBow());
 		dart = register("dart", new ItemDart());
 
-		skyroot_sword = register("skyroot_sword", new ItemSkyrootSword());
-		holystone_sword = register("holystone_sword", new ItemHolystoneSword());
-		zanite_sword = register("zanite_sword", new ItemZaniteSword());
-		gravitite_sword = register("gravitite_sword", new ItemGravititeSword());
+		skyroot_sword = register("skyroot_sword", new ItemSkyrootSword().setTextureName(Aether.find("weapons/skyroot_sword")));
+		holystone_sword = register("holystone_sword", new ItemHolystoneSword().setTextureName(Aether.find("weapons/holystone_sword")));
+		zanite_sword = register("zanite_sword", new ItemZaniteSword().setTextureName(Aether.find("weapons/zanite_sword")));
+		gravitite_sword = register("gravitite_sword", new ItemGravititeSword().setTextureName(Aether.find("weapons/gravitite_sword")));
 
-		flaming_sword = register("flaming_sword", new ItemElementalSword());
-		lightning_sword = register("lightning_sword", new ItemElementalSword());
-		holy_sword = register("holy_sword",new ItemElementalSword());
+		flaming_sword = register("flaming_sword", new ItemElementalSword().setTextureName(Aether.find("weapons/flaming_sword")));
+		lightning_sword = register("lightning_sword", new ItemElementalSword().setTextureName(Aether.find("weapons/lightning_sword")));
+		holy_sword = register("holy_sword",new ItemElementalSword().setTextureName(Aether.find("weapons/holy_sword")));
 
-		vampire_blade = register("vampire_blade", new ItemVampireBlade());
-		pig_slayer = register("pig_slayer", new ItemPigSlayer());
-		candy_cane_sword = register("candy_cane_sword", new ItemCandyCaneSword());
-		notch_hammer = register("notch_hammer", new ItemNotchHammer());
+		vampire_blade = register("vampire_blade", new ItemVampireBlade().setTextureName(Aether.find("weapons/vampire_blade")));
+		pig_slayer = register("pig_slayer", new ItemPigSlayer().setTextureName(Aether.find("weapons/pig_slayer")));
+		candy_cane_sword = register("candy_cane_sword", new ItemCandyCaneSword().setTextureName(Aether.find("weapons/candycane_sword")));
+		notch_hammer = register("notch_hammer", new ItemNotchHammer().setTextureName(Aether.find("weapons/notch_hammer")));
 
-		leather_gloves = register("leather_gloves", new ItemAccessory().setColor(0xc65c35));
-		iron_gloves = register("iron_gloves", new ItemAccessory());
-		golden_gloves = register("golden_gloves", new ItemAccessory().setColor(0xFBF424));
-		chain_gloves = register("chain_gloves", new ItemAccessory().setTexture("chain"));
-		diamond_gloves = register("diamond_gloves", new ItemAccessory().setColor(0x33ebcb));
+		leather_gloves = register("leather_gloves", new ItemAccessoryDyed(AccessoryType.GLOVES).setColor(0xc65c35).setTextureName(Aether.find("accessories/solid_gloves")));
+		iron_gloves = register("iron_gloves", new ItemAccessory(AccessoryType.GLOVES).setTextureName(Aether.find("accessories/solid_gloves")));
+		golden_gloves = register("golden_gloves", new ItemAccessory(AccessoryType.GLOVES).setColor(0xFBF424).setTextureName(Aether.find("accessories/solid_gloves")));
+		chain_gloves = register("chain_gloves", new ItemAccessory(AccessoryType.GLOVES).setTexture("chain").setTextureName(Aether.find("accessories/chain_gloves")));
+		diamond_gloves = register("diamond_gloves", new ItemAccessory(AccessoryType.GLOVES).setColor(0x33ebcb).setTextureName(Aether.find("accessories/solid_gloves")));
 
-		zanite_gloves = register("zanite_gloves", new ItemAccessory().setColor(0x711ae8));
-		gravitite_gloves = register("gravitite_gloves", new ItemAccessory().setColor(0xe752db));
-		neptune_gloves = register("neptune_gloves", new ItemAccessory().setDungeonLoot().setColor(0x2654FF));
-		phoenix_gloves = register("phoenix_gloves", new ItemAccessory().setTexture("phoenix").setDungeonLoot().setColor(0xff7700).setMaxDamage(152));
-		obsidian_gloves = register("obsidian_gloves", new ItemAccessory().setDungeonLoot().setColor(0x1b1447));
-		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory().setDungeonLoot().setTexture("valkyrie"));
+		zanite_gloves = register("zanite_gloves", new ItemAccessory(AccessoryType.GLOVES).setColor(0x711ae8).setTextureName(Aether.find("accessories/solid_gloves")));
+		gravitite_gloves = register("gravitite_gloves", new ItemAccessory(AccessoryType.GLOVES).setColor(0xe752db).setTextureName(Aether.find("accessories/solid_gloves")));
+		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVES).setDungeonLoot().setColor(0x2654FF).setTextureName(Aether.find("accessories/chain_gloves")));
+		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVES).setTexture("phoenix").setDungeonLoot().setColor(0xff7700).setMaxDamage(152).setTextureName(Aether.find("accessories/chain_gloves")));
+		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVES).setDungeonLoot().setColor(0x1b1447).setTextureName(Aether.find("accessories/solid_gloves")));
+		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVES).setDungeonLoot().setTexture("valkyrie").setTextureName(Aether.find("accessories/valkyrie_gloves")));
 
-		iron_ring = register("iron_ring", new ItemAccessory());
-		golden_ring = register("golden_ring", new ItemAccessory().setColor(0xeaee57));
-		zanite_ring = register("zanite_ring", new ItemAccessory().setColor(0x711ae8).setMaxDamage(49));
-		ice_ring = register("ice_ring", new ItemAccessory().setColor(0x95e6e7).setMaxDamage(125));
+		iron_ring = register("iron_ring", new ItemAccessory(AccessoryType.RING).setTextureName(Aether.find("accessories/ring_base")));
+		golden_ring = register("golden_ring", new ItemAccessory(AccessoryType.RING).setColor(0xeaee57).setTextureName(Aether.find("accessories/ring_base")));
+		zanite_ring = register("zanite_ring", new ItemAccessory(AccessoryType.RING).setColor(0x711ae8).setMaxDamage(49).setTextureName(Aether.find("accessories/ring_base")));
+		ice_ring = register("ice_ring", new ItemAccessory(AccessoryType.RING).setColor(0x95e6e7).setMaxDamage(125).setTextureName(Aether.find("accessories/ring_base")));
 
-		iron_pendant = register("iron_pendant", new ItemAccessory());
-		golden_pendant = register("golden_pendant", new ItemAccessory().setColor(0xeaee57));
-		zanite_pendant = register("zanite_pendant", new ItemAccessory().setColor(0x711ae8).setMaxDamage(98));
-		ice_pendant = register("ice_pendant", new ItemAccessory().setColor(0x95e6e7).setMaxDamage(250));
+		iron_pendant = register("iron_pendant", new ItemAccessory(AccessoryType.PENDANT).setTextureName(Aether.find("accessories/pendant_base")));
+		golden_pendant = register("golden_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0xeaee57).setTextureName(Aether.find("accessories/pendant_base")));
+		zanite_pendant = register("zanite_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x711ae8).setMaxDamage(98).setTextureName(Aether.find("accessories/pendant_base")));
+		ice_pendant = register("ice_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x95e6e7).setMaxDamage(250).setTextureName(Aether.find("accessories/pendant_base")));
 
-		red_cape = register("red_cape", new ItemAccessory().setColor(0xe81111));
-		blue_cape = register("blue_cape", new ItemAccessory().setColor(0x137fb7));
-		yellow_cape = register("yellow_cape", new ItemAccessory().setColor(0xcdcb0e));
-		white_cape = register("white_cape", new ItemAccessory());
-		swet_cape = register("swet_cape", new ItemAccessory().setTexture("swet_cape").setDungeonLoot());
-		invisibility_cape = register("invisibility_cape", new ItemAccessory().setDungeonLoot());
-		agility_cape = register("agility_cape", new ItemAccessory().setTexture("agility_cape").setDungeonLoot());
+		white_cape = register("white_cape", new ItemAccessoryDyed(AccessoryType.CAPE).setTextureName(Aether.find("accessories/cape_color_base")));
+		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape").setDungeonLoot().setTextureName(Aether.find("accessories/swet_cape")));
+		invisibility_cape = register("invisibility_cape", new ItemAccessory(AccessoryType.CAPE).setDungeonLoot().setTextureName(Aether.find("accessories/invisibility_cape")));
+		agility_cape = register("agility_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("agility_cape").setDungeonLoot().setTextureName(Aether.find("accessories/agility_cape")));
 
-		golden_feather = register("golden_feather", new ItemAccessory().setDungeonLoot());
-		regeneration_stone = register("regeneration_stone", new ItemAccessory().setDungeonLoot());
-		iron_bubble = register("iron_bubble", new ItemAccessory().setDungeonLoot());
+		golden_feather = register("golden_feather", new ItemAccessory(AccessoryType.MISC).setDungeonLoot().setTextureName(Aether.find("accessories/golden_feather")));
+		regeneration_stone = register("regeneration_stone", new ItemAccessory(AccessoryType.MISC).setDungeonLoot().setTextureName(Aether.find("accessories/regeneration_stone")));
+		iron_bubble = register("iron_bubble", new ItemAccessory(AccessoryType.MISC).setDungeonLoot().setTextureName(Aether.find("accessories/iron_bubble")));
 
-		life_shard = register("life_shard", new ItemLifeShard());
-		cloud_staff = register("cloud_staff", new ItemCloudStaff());
-		nature_staff = register("nature_staff", new ItemNatureStaff());
-		lightning_knife = register("lightning_knife", new ItemLightningKnife());
+		life_shard = register("life_shard", new ItemLifeShard().setTextureName(Aether.find("misc/life_shard")));
+		cloud_staff = register("cloud_staff", new ItemCloudStaff().setTextureName(Aether.find("staff/cloud_staff")));
+		nature_staff = register("nature_staff", new ItemNatureStaff().setTextureName(Aether.find("staff/nature_staff")));
+		lightning_knife = register("lightning_knife", new ItemLightningKnife().setTextureName(Aether.find("weapons/lightning_knife")));
 
-		valkyrie_lance = register("valkyrie_lance", new ItemValkyrieLance());
-		sentry_boots = register("sentry_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "sentry", null));
+		valkyrie_lance = register("valkyrie_lance", new ItemValkyrieLance().setTextureName(Aether.find("weapons/valkyrie_lance")));
+		sentry_boots = register("sentry_boots", new ItemAetherArmor(3, ArmorMaterial.DIAMOND, "sentry", null).setTextureName(Aether.find("armor/sentry_boots")));
 
-		aether_tune = register("aether_tune", new ItemAetherDisc("aether_tune", SoundsAether.aether_tune, "Noisestorm", "Aether Tune"));
-		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", SoundsAether.ascending_dawn, "HEmile", "Ascending Dawn"));
-		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Void", "Welcoming Skies")).setCreativeTab(null);
+		aether_tune = register("aether_tune", new ItemAetherDisc("aether_tune", "Noisestorm", "Aether Tune").setTextureName(Aether.find("music/aether_tune")));
+		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", "HEmile", "Ascending Dawn").setTextureName(Aether.find("music/ascending_dawn")));
+		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", "Void", "Welcoming Skies").setTextureName(Aether.find("music/welcoming_skies"))).setCreativeTab(null);
+		legacy = register("legacy", new ItemAetherDisc("legacy", "Lachney", "Legacy").setTextureName(Aether.find("music/legacy"))).setCreativeTab(null);
 
-		repulsion_shield = register("repulsion_shield", new ItemAccessory().setTexture("repulsion").setDungeonLoot().setMaxDamage(512));
-		lore_book = register("lore_book", new ItemLoreBook());
+		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512).setTextureName(Aether.find("accessories/repulsion_shield")));
+		lore_book = register("lore_book", new ItemLoreBook().setTextureName(Aether.find("misc/lore_book")));
+		
+		developer_stick = register("developer_stick", new ItemDeveloperStick().setTextureName(Aether.find("skyroot_stick")));
+
+		aether_spawn_egg = register("aether_spawn_egg", new ItemAetherSpawnEgg().setTextureName("spawn_egg"));
 	}
 
 	public static Item register(String name, Item item)
 	{
 		item.setUnlocalizedName(name);
-		GameRegistry.register(item.setRegistryName(Aether.locate(name)));
+		GameRegistry.registerItem(item, name, Aether.MOD_ID);
 
 		return item;
 	}

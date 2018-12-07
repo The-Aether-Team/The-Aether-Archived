@@ -6,8 +6,8 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketSetTime;
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketSetTime;
 
 public class GuiSunAltarSlider extends GuiButton
 {
@@ -29,7 +29,7 @@ public class GuiSunAltarSlider extends GuiButton
      * Returns 0 if the button is disabled, 1 if the mouse is NOT hovering over this button and 2 if it IS hovering over
      * this button.
      */
-    protected int getHoverState(boolean par1)
+    public int getHoverState(boolean par1)
     {
         return 0;
     }
@@ -68,11 +68,11 @@ public class GuiSunAltarSlider extends GuiButton
     }
 
     @Override
-	public void drawButton(Minecraft par1Minecraft, int par2, int par3)
+	public void drawButton(Minecraft par1Minecraft, int mouseX, int mouseY)
     {
     	this.sliderValue = (this.world.getWorldInfo().getWorldTime() % 24000) / 24000.0F;
 
-		super.drawButton(par1Minecraft, par2, par3);
+		super.drawButton(par1Minecraft, mouseX, mouseY);
 	}
 
     @Override
@@ -106,7 +106,7 @@ public class GuiSunAltarSlider extends GuiButton
     {
         this.dragging = false;
 
-        AetherNetworkingManager.sendToServer(new PacketSetTime(this.sliderValue, Minecraft.getMinecraft().thePlayer.dimension));
+        AetherNetwork.sendToServer(new PacketSetTime(this.sliderValue, Minecraft.getMinecraft().thePlayer.dimension));
     }
 
 }

@@ -2,68 +2,98 @@ package com.legacy.aether.items;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.moa.AetherMoaType;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 public class ItemMoaEgg extends Item
 {
+
+    @SideOnly(Side.CLIENT)
+    private IIcon spotIcon;
 
 	public ItemMoaEgg()
 	{
 		this.setMaxStackSize(1);
 		this.setCreativeTab(AetherCreativeTabs.misc);
+		this.setTextureName(Aether.find("misc/egg/moa_egg"));
 	}
+
+	@Override
+    @SideOnly(Side.CLIENT)
+    public boolean requiresMultipleRenderPasses()
+    {
+        return true;
+    }
+
+	@Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamageForRenderPass(int p_77618_1_, int p_77618_2_)
+    {
+        return p_77618_2_ > 0 ? this.spotIcon : super.getIconFromDamageForRenderPass(p_77618_1_, p_77618_2_);
+    }
+
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister registry)
+    {
+        super.registerIcons(registry);
+
+        this.spotIcon = registry.registerIcon(Aether.find("misc/egg/moa_egg_spot"));
+    }
 
 	@Override
     public CreativeTabs[] getCreativeTabs()
     {
-    	return CreativeTabs.CREATIVE_TAB_ARRAY;
+    	return CreativeTabs.creativeTabArray;
     }
 
 	@Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int facing, float hitX, float hitY, float hitZ)
     {
-		if (playerIn.capabilities.isCreativeMode)
+		if (player.capabilities.isCreativeMode)
 		{
-			EntityMoa moa = new EntityMoa(worldIn, AetherAPI.getInstance().getMoaType(stack.getTagCompound().getInteger("typeId")));
+			EntityMoa moa = new EntityMoa(world, AetherAPI.instance().getMoaType(stack.getTagCompound().getInteger("typeId")));
 
-			moa.moveToBlockPosAndAngles(pos.up(), 1.0F, 1.0F);
+			moa.setPositionAndRotation(x, y + 1, z, 1.0F, 1.0F);
 			moa.setPlayerGrown(true);
 
-			if (!worldIn.isRemote)
+			if (!world.isRemote)
 			{
-				worldIn.spawnEntityInWorld(moa);
+				world.spawnEntityInWorld(moa);
 			}
 			
-			return EnumActionResult.SUCCESS;
+			return true;
 		}
 
-        return super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+        return super.onItemUse(stack, player, world, x, y, z, facing, hitX, hitY, hitZ);
     }
 
 	@Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+    public void getSubItems(Item item, CreativeTabs tab, List subItems)
 	{
-		for (int moaTypeSize = 0; moaTypeSize < AetherAPI.getInstance().getMoaTypeSize(); ++moaTypeSize)
+		for (int moaTypeSize = 0; moaTypeSize < AetherAPI.instance().getMoaTypeSize(); ++moaTypeSize)
 		{
 			ItemStack stack = new ItemStack(this);
 			NBTTagCompound compound = new NBTTagCompound();
-			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(moaTypeSize);
+			AetherMoaType moaType = AetherAPI.instance().getMoaType(moaTypeSize);
 
-			if (moaType.getCreativeTab() == tab)
+			if (moaType.getCreativeTab() == tab || tab == null || tab == CreativeTabs.tabAllSearch)
 			{
 				compound.setInteger("typeId", moaTypeSize);
 				stack.setTagCompound(compound);
@@ -79,18 +109,19 @@ public class ItemMoaEgg extends Item
 		return true;
 	}
 
-	public int getColorFromItemStack(ItemStack stack)
+	@Override
+	public int getColorFromItemStack(ItemStack stack, int renderPass)
 	{
 		NBTTagCompound tag = stack.getTagCompound();
 
 		if (tag != null)
 		{
-			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
+			AetherMoaType moaType = AetherAPI.instance().getMoaType(tag.getInteger("typeId"));
 
 			return moaType.getMoaEggColor();
 		}
 
-		return AetherAPI.getInstance().getMoaType(0).getMoaEggColor();
+		return AetherAPI.instance().getMoaType(0).getMoaEggColor();
 	}
 
 	public AetherMoaType getMoaTypeFromItemStack(ItemStack stack)
@@ -99,12 +130,12 @@ public class ItemMoaEgg extends Item
 
 		if (tag != null)
 		{
-			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
+			AetherMoaType moaType = AetherAPI.instance().getMoaType(tag.getInteger("typeId"));
 
 			return moaType;
 		}
 
-		return AetherAPI.getInstance().getMoaType(0);
+		return AetherAPI.instance().getMoaType(0);
 	}
 
 	@Override
@@ -114,7 +145,7 @@ public class ItemMoaEgg extends Item
 
 		if (tag != null && stack.getTagCompound().hasKey("typeId"))
 		{
-			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
+			AetherMoaType moaType = AetherAPI.instance().getMoaType(tag.getInteger("typeId"));
 
 			return "item." + moaType.getRegistryName().getResourcePath().replace(" ", "_").toLowerCase() + "_moa_egg.name";
 		}
@@ -134,7 +165,7 @@ public class ItemMoaEgg extends Item
 
 		NBTTagCompound tag = new NBTTagCompound();
 
-		tag.setInteger("typeId", AetherAPI.getInstance().getMoaTypeId(type));
+		tag.setInteger("typeId", AetherAPI.instance().getMoaTypeId(type));
 
 		stack.setTagCompound(tag);
 

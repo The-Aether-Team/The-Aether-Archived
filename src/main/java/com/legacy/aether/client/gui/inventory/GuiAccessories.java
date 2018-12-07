@@ -1,7 +1,5 @@
 package com.legacy.aether.client.gui.inventory;
 
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -11,35 +9,37 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.client.gui.button.GuiButtonPerks;
-import com.legacy.aether.containers.ContainerAccessories;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketOpenContainer;
+import com.legacy.aether.inventory.ContainerAccessories;
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketOpenContainer;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.perks.AetherRankings;
 
 public class GuiAccessories extends GuiContainer
 {
 
-	private static final ResourceLocation ACCESSORIES = new ResourceLocation("aether_legacy", "textures/gui/inventory/accessories.png");
+	private static final ResourceLocation ACCESSORIES = Aether.locate("textures/gui/inventory/accessories.png");
 
-	PlayerAether playerAether;
+	private PlayerAether playerAether;
 
 	public GuiAccessories(PlayerAether player)
 	{
-		super(new ContainerAccessories(player.accessories, player.thePlayer));
+		super(new ContainerAccessories(player.getAccessoryInventory(), player.getEntity()));
 
 		this.playerAether = player;
 		this.allowUserInput = true;
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void initGui()
 	{
 		super.initGui();
 
-		if (AetherRankings.isRankedPlayer(this.playerAether.thePlayer.getUniqueID()) || this.playerAether.isDonator())
+		if (AetherRankings.isRankedPlayer(this.playerAether.getEntity().getUniqueID()) || this.playerAether.isDonator())
 		{
 			this.buttonList.add(new GuiButtonPerks(this.width / 2 - 108, this.height / 2 - 83));
 		}
@@ -54,7 +54,7 @@ public class GuiAccessories extends GuiContainer
 
 		for (int size = 0; size < this.buttonList.size(); ++size)
 		{
-			GuiButton button = this.buttonList.get(size);
+			GuiButton button = (GuiButton) this.buttonList.get(size);
 			int id = button.id;
 
 			if (id == 13211)
@@ -71,7 +71,7 @@ public class GuiAccessories extends GuiContainer
 	}
 
 	@Override
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(GuiButton button)
     {
     	if (button.id == 24)
     	{
@@ -80,8 +80,8 @@ public class GuiAccessories extends GuiContainer
 
 		if (button.id == 18067)
 		{
-			this.mc.displayGuiScreen(new GuiInventory(mc.thePlayer));
-			AetherNetworkingManager.sendToServer(new PacketOpenContainer(-1));
+			this.mc.displayGuiScreen(new GuiInventory(this.mc.thePlayer));
+			AetherNetwork.sendToServer(new PacketOpenContainer(-1));
 		}
     }
 
@@ -93,14 +93,14 @@ public class GuiAccessories extends GuiContainer
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-	{
+	{;
 		GL11.glColor3d(1.0D, 1.0D, 1.0D);
 
 		this.mc.renderEngine.bindTexture(ACCESSORIES);
 
 		this.drawTexturedModalRect(this.width / 2 - 88, this.height / 2 - 166 / 2, 0, 0, 176, 166);
 
-		GuiInventory.drawEntityOnScreen(this.guiLeft + 35, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
+		GuiInventory.func_147046_a(this.guiLeft + 35, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
 	}
 
 }

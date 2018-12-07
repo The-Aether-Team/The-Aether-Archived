@@ -4,15 +4,15 @@ import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.ai.EntityAIUpdateState;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityAerwhale extends EntityFlying implements IMob
 {
@@ -34,11 +34,6 @@ public class EntityAerwhale extends EntityFlying implements IMob
         this.ignoreFrustumCheck = true;
         this.rotationYaw = 360F * this.getRNG().nextFloat();
         this.rotationPitch = 90F * this.getRNG().nextFloat() - 45F;
-    }
-
-    @Override
-    protected void initEntityAI()
-    {
     	this.tasks.addTask(0, new EntityAIUpdateState(this));
         this.tasks.addTask(6, new EntityAILookIdle(this));
     }
@@ -47,16 +42,24 @@ public class EntityAerwhale extends EntityFlying implements IMob
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D); 
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0D); 
+    }
+
+    @Override
+    protected boolean isAIEnabled()
+    {
+    	return true;
     }
 
     @Override
     public boolean getCanSpawnHere()
     {
-        BlockPos pos = new BlockPos(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.getEntityBoundingBox().minY), MathHelper.floor_double(this.posZ));
+        int i = MathHelper.floor_double(this.posX);
+        int j = MathHelper.floor_double(this.boundingBox.minY);
+        int k = MathHelper.floor_double(this.posZ);
 
-        return this.rand.nextInt(65) == 0 && this.worldObj.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0 && !this.worldObj.containsAnyLiquid(this.getEntityBoundingBox()) && this.worldObj.getLight(pos) > 8 && super.getCanSpawnHere();
+        return this.worldObj.getBlock(i, j - 1, k) == BlocksAether.aether_grass && this.rand.nextInt(65) == 0 && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).size() == 0 && !this.worldObj.isAnyLiquid(this.boundingBox) && this.worldObj.getBlockLightValue(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.boundingBox.minY), MathHelper.floor_double(this.posZ)) > 8 && super.getCanSpawnHere();
     }
 
     @Override
@@ -69,12 +72,22 @@ public class EntityAerwhale extends EntityFlying implements IMob
     public void onUpdate()
     {
     	super.onUpdate();
-        this.extinguish();
 
-        int i = MathHelper.floor_double(this.posX);
-        int j = MathHelper.floor_double(this.getEntityBoundingBox().minY);
-        int k = MathHelper.floor_double(this.posZ);
-        BlockPos position = new BlockPos(i, j, k);
+        this.extinguish();
+        this.updateEntityActionState();
+    }
+
+    @Override
+    public void updateEntityActionState()
+    {
+        if (this.riddenByEntity != null)	
+        {
+        	return;
+        }
+
+        int x = MathHelper.floor_double(this.posX);
+        int y = MathHelper.floor_double(this.boundingBox.minY);
+        int z = MathHelper.floor_double(this.posZ);
 
         double[] distances = new double[5];
 
@@ -127,7 +140,7 @@ public class EntityAerwhale extends EntityFlying implements IMob
 
         if (this.posY < -64.0D)
         {
-            this.kill();
+            this.setDead();
         }
 
         this.motionYaw += 2F * this.getRNG().nextFloat() - 1F;
@@ -162,11 +175,11 @@ public class EntityAerwhale extends EntityFlying implements IMob
         this.rotationPitch *= 0.99D;
         this.aerwhaleRotationPitch *= 0.99D;
 
-        if (this.isServerWorld())
+        if (!this.worldObj.isRemote)
         {
             this.motionX += 0.01D * Math.cos((this.aerwhaleRotationYaw / 180D) * 3.1415926535897931D ) * Math.cos((this.aerwhaleRotationPitch / 180D) * 3.1415926535897931D);
 
-            this.motionY += 0.005D * Math.sin((this.aerwhaleRotationPitch / 180D) * Math.PI);
+            this.motionY += 0.01D * Math.sin((this.aerwhaleRotationPitch / 180D) * Math.PI);
 
             this.motionZ += 0.01D * Math.sin((this.aerwhaleRotationYaw / 180D) * 3.1415926535897931D ) * Math.cos((this.aerwhaleRotationPitch / 180D) * 3.1415926535897931D);
 
@@ -175,18 +188,18 @@ public class EntityAerwhale extends EntityFlying implements IMob
             this.motionZ *= 0.98D;
         }
 
-        if(this.motionX > 0D && !this.worldObj.isAirBlock(position.east())) 
+        if(this.motionX > 0D && this.worldObj.getBlock(x + 1, y, z) != Blocks.air) 
         {
-        	if (this.isServerWorld())
+        	if (!this.worldObj.isRemote)
         	{
             	this.motionX = -this.motionX;
         	}
 
         	this.motionYaw -= 10F;
         }
-        else if(this.motionX < 0D && !this.worldObj.isAirBlock(position.west()))
+        else if(this.motionX < 0D && this.worldObj.getBlock(x - 1, y, z) != Blocks.air)
         {
-        	if (this.isServerWorld())
+        	if (!this.worldObj.isRemote)
         	{
             	this.motionX = -this.motionX;
         	}
@@ -194,18 +207,18 @@ public class EntityAerwhale extends EntityFlying implements IMob
         	this.motionYaw += 10F;
         }
 
-        if(this.motionY > 0D && !this.worldObj.isAirBlock(position.up()))
+        if(this.motionY > 0D && this.worldObj.getBlock(x, y + 1, z) != Blocks.air)
         {
-        	if (this.isServerWorld())
+        	if (!this.worldObj.isRemote)
         	{
                 this.motionY = -this.motionY;
         	}
 
             this.motionPitch -= 20F;
         }
-        else if(this.motionY < 0D && !this.worldObj.isAirBlock(position.down())) 
+        else if(this.motionY < 0D && this.worldObj.getBlock(x, y - 1, z) != Blocks.air) 
         {
-        	if (this.isServerWorld())
+        	if (!this.worldObj.isRemote)
         	{
             	this.motionY = -this.motionY;
         	}
@@ -213,18 +226,18 @@ public class EntityAerwhale extends EntityFlying implements IMob
         	this.motionPitch += 20F;
         }
 
-        if(this.motionZ > 0D && !this.worldObj.isAirBlock(position.south())) 
+        if(this.motionZ > 0D && this.worldObj.getBlock(x, y, z + 1) != Blocks.air) 
         {
-        	if (this.isServerWorld())
+        	if (!this.worldObj.isRemote)
         	{
             	this.motionZ = -this.motionZ;
         	}
 
         	this.motionYaw -= 10F;
         }
-        else if(this.motionZ < 0D && !this.worldObj.isAirBlock(position.north()))
+        else if(this.motionZ < 0D && this.worldObj.getBlock(x, y, z - 1) != Blocks.air)
         {
-        	if (this.isServerWorld())
+        	if (!this.worldObj.isRemote)
         	{
             	this.motionZ = -this.motionZ;
         	}
@@ -232,7 +245,7 @@ public class EntityAerwhale extends EntityFlying implements IMob
         	this.motionYaw += 10F;
         }
 
-        if (this.isServerWorld())
+        if (!this.worldObj.isRemote)
         {
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
         }
@@ -260,8 +273,8 @@ public class EntityAerwhale extends EntityFlying implements IMob
         float yaw = this.rotationYaw + rotationYawOffset;
         float pitch = this.rotationYaw + rotationYawOffset;
 
-        float f3 = MathHelper.cos(-yaw * 0.01745329F - (float)Math.PI);
-        float f4 = MathHelper.sin(-yaw * 0.01745329F - (float)Math.PI);
+        float f3 = MathHelper.cos(-yaw * 0.01745329F - 3.141593F);
+        float f4 = MathHelper.sin(-yaw * 0.01745329F - 3.141593F);
         float f5 = MathHelper.cos(-pitch * 0.01745329F);
         float f6 = MathHelper.sin(-pitch * 0.01745329F);
 
@@ -269,21 +282,22 @@ public class EntityAerwhale extends EntityFlying implements IMob
         float f8 = f6;
         float f9 = f3 * f5;
 
-        Vec3d vec3d = new Vec3d(this.posX, this.getEntityBoundingBox().minY, this.posZ);
-        Vec3d vec3d1 = vec3d.addVector((double)f7 * standard, (double)f8 * standard, (double)f9 * standard);
+        Vec3 vec3d = Vec3.createVectorHelper(this.posX, this.boundingBox.minY, this.posZ);
+        Vec3 vec3d1 = vec3d.addVector((double)f7 * standard, (double)f8 * standard, (double)f9 * standard);
 
-        RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec3d, vec3d1, true);
+        MovingObjectPosition movingobjectposition = this.worldObj.rayTraceBlocks(vec3d, vec3d1, true);
 
         if(movingobjectposition == null)
         {
             return standard;
         }
 
-        if(movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
+        if(movingobjectposition.typeOfHit == MovingObjectType.BLOCK)
         {
-            double i = movingobjectposition.getBlockPos().getX() - this.posX;
-            double j = movingobjectposition.getBlockPos().getY() - this.getEntityBoundingBox().minY;
-            double k = movingobjectposition.getBlockPos().getZ() - this.posZ;
+            double i = movingobjectposition.blockX - this.posX;
+            double j = movingobjectposition.blockY - this.boundingBox.minY;
+            double k = movingobjectposition.blockZ - this.posZ;
+
             return Math.sqrt(i * i + j * j + k * k);
         }
 
@@ -291,27 +305,21 @@ public class EntityAerwhale extends EntityFlying implements IMob
     }
 
     @Override
-    public SoundEvent getAmbientSound()
+    public String getLivingSound()
     {
-        return SoundsAether.aerwhale_call;
+        return "aether_legacy:aemob.aerwhale.call";
     }
 
     @Override
-    protected SoundEvent getHurtSound()
+    protected String getHurtSound()
     {
-        return SoundsAether.aerwhale_death;
+        return "aether_legacy:aemob.aerwhale.death";
     }
 
     @Override
-    protected SoundEvent getDeathSound()
+    protected String getDeathSound()
     {
-        return SoundsAether.aerwhale_death;
-    }
-    
-    @Override
-    protected float getSoundVolume()
-    {
-        return 3F;
+        return "aether_legacy:aemob.aerwhale.death";
     }
 
     @Override

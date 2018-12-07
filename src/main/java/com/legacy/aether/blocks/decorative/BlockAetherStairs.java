@@ -1,14 +1,15 @@
 package com.legacy.aether.blocks.decorative;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
-import net.minecraft.block.state.IBlockState;
 
 public class BlockAetherStairs extends BlockStairs 
 {
 
-	public BlockAetherStairs(IBlockState modelState)
+	public BlockAetherStairs(Block block)
 	{
-		super(modelState);
+		super(block, 0);
+
 		this.setLightOpacity(0);
 	}
 

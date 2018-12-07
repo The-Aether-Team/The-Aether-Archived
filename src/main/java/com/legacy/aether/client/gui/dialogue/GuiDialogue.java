@@ -2,10 +2,11 @@ package com.legacy.aether.client.gui.dialogue;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.ChatComponentText;
 
 public class GuiDialogue extends GuiScreen
 {
@@ -65,7 +66,7 @@ public class GuiDialogue extends GuiScreen
 
 	public void addDialogueMessage(String dialogueMessage)
 	{
-		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString(dialogueMessage));
+		Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(dialogueMessage));
 	}
 
 	public void dialogueTreeCompleted()
@@ -80,13 +81,14 @@ public class GuiDialogue extends GuiScreen
     }
 
 	@Override
+	@SuppressWarnings("unchecked")
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
     	super.drawScreen(mouseX, mouseY, partialTicks);
 
         int optionWidth = 0;
 
-        for (String theDialogue : this.fontRendererObj.listFormattedStringToWidth(this.dialogue, 300))
+        for (String theDialogue : ((List<String>) this.fontRendererObj.listFormattedStringToWidth(this.dialogue, 300)))
         {
             int stringWidth = this.fontRendererObj.getStringWidth(theDialogue);
 
@@ -102,7 +104,7 @@ public class GuiDialogue extends GuiScreen
     }
 
 	@Override
-    public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
 		if (mouseButton == 0)
 		{
@@ -111,7 +113,15 @@ public class GuiDialogue extends GuiScreen
 	    		if (dialogue.isMouseOver(mouseX, mouseY))
 	    		{
 	    			dialogue.playPressSound(this.mc.getSoundHandler());
-	    			this.dialogueClicked(dialogue);
+
+	    			try 
+	    			{
+						this.dialogueClicked(dialogue);
+					}
+	    			catch (IOException e) 
+	    			{
+						e.printStackTrace();
+					}
 	    		}
 	    	}
 		}

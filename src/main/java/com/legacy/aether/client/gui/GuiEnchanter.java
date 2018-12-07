@@ -4,14 +4,15 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.containers.ContainerEnchanter;
-import com.legacy.aether.tile_entities.TileEntityEnchanter;
+import com.legacy.aether.inventory.ContainerEnchanter;
+import com.legacy.aether.tileentity.TileEntityEnchanter;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiEnchanter extends GuiContainer
@@ -30,7 +31,7 @@ public class GuiEnchanter extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2)
 	{
-		String enchanterName = this.enchanter.getDisplayName().getFormattedText();
+		String enchanterName = this.enchanter.getInventoryName();
 
 		this.fontRendererObj.drawString(enchanterName, this.xSize / 2 - this.fontRendererObj.getStringWidth(enchanterName) / 2, 6, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);

@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
 
 public class AetherAchievement extends Achievement
 {
@@ -26,10 +26,10 @@ public class AetherAchievement extends Achievement
 	}
 
 	@Override
-	public ITextComponent getStatName()
+	public IChatComponent func_150951_e()
 	{
-		ITextComponent ichatcomponent = super.getStatName();
-		ichatcomponent.getStyle().setColor(TextFormatting.AQUA);
+		IChatComponent ichatcomponent = super.func_150951_e();
+		ichatcomponent.getChatStyle().setColor(EnumChatFormatting.AQUA);
 		return ichatcomponent;
 	}
 

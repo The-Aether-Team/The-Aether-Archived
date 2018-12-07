@@ -5,17 +5,19 @@ import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.client.audio.SoundCategory;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.AetherConfig;
-import com.legacy.aether.registry.sounds.SoundsAether;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class AetherMusicTicker implements ITickable
+public class AetherMusicTicker implements IUpdatePlayerListBox
 {
 
     private final Random rand = new Random();
@@ -34,6 +36,17 @@ public class AetherMusicTicker implements ITickable
 
         if (this.mc.thePlayer != null)
         {
+        	if (this.mc.gameSettings.getSoundLevel(SoundCategory.MUSIC) == 0.0F)
+        	{
+        		if (this.currentMusic != null)
+        		{
+        			this.stopMusic();
+        			this.currentMusic = null;
+        		}
+
+        		return;
+        	}
+
            	if (this.mc.thePlayer.dimension != AetherConfig.getAetherDimensionID())
            	{
            		this.stopMusic();
@@ -73,7 +86,7 @@ public class AetherMusicTicker implements ITickable
 
     public void playMusic(TrackType requestedMusicType)
     {
-        this.currentMusic = PositionedSoundRecord.getMusicRecord(requestedMusicType.getMusicLocation());
+        this.currentMusic = PositionedSoundRecord.func_147673_a(requestedMusicType.getMusicLocation());
         this.mc.getSoundHandler().playSound(this.currentMusic);
         this.timeUntilNextMusic = Integer.MAX_VALUE;
     }
@@ -91,23 +104,23 @@ public class AetherMusicTicker implements ITickable
     @SideOnly(Side.CLIENT)
     public static enum TrackType
     {
-    	TRACK_ONE(SoundsAether.aether1, 1200, 1500),
-    	TRACK_TWO(SoundsAether.aether2, 1200, 1500),
-    	TRACK_THREE(SoundsAether.aether3, 1200, 1500),
-    	TRACK_FOUR(SoundsAether.aether4, 1200, 1500);
+    	TRACK_ONE(Aether.locate("music.aether1"), 1200, 1500),
+    	TRACK_TWO(Aether.locate("music.aether2"), 1200, 1500),
+    	TRACK_THREE(Aether.locate("music.aether3"), 1200, 1500),
+    	TRACK_FOUR(Aether.locate("music.aether4"), 1200, 1500);
 
-        private final SoundEvent musicLocation;
+        private final ResourceLocation musicLocation;
         private final int minDelay;
         private final int maxDelay;
 
-        private TrackType(SoundEvent musicLocationIn, int minDelayIn, int maxDelayIn)
+        private TrackType(ResourceLocation musicLocationIn, int minDelayIn, int maxDelayIn)
         {
             this.musicLocation = musicLocationIn;
             this.minDelay = minDelayIn;
             this.maxDelay = maxDelayIn;
         }
 
-        public SoundEvent getMusicLocation()
+        public ResourceLocation getMusicLocation()
         {
             return this.musicLocation;
         }

@@ -1,7 +1,8 @@
 package com.legacy.aether.client.gui;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -20,6 +21,7 @@ public class GuiSunAltar extends GuiScreen
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui()
 	{
@@ -27,7 +29,7 @@ public class GuiSunAltar extends GuiScreen
 
 		this.world = this.mc.theWorld;
 
-		this.addButton(new GuiSunAltarSlider(this.world, this.width / 2 - 75, this.height/2, "Select Time"));
+		this.buttonList.add(new GuiSunAltarSlider(this.world, this.width / 2 - 75, this.height/2, "Select Time"));
 	}
 
 	@Override
@@ -35,7 +37,7 @@ public class GuiSunAltar extends GuiScreen
 	{
 		this.drawDefaultBackground();
         this.mc.renderEngine.bindTexture(TEXTURE);
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
         int xSize = 175;
         int ySize = 78;

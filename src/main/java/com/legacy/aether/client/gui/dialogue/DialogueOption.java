@@ -4,8 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 
 public class DialogueOption extends Gui
 {
@@ -24,13 +24,13 @@ public class DialogueOption extends Gui
 	{
 		this.dialogueText = "[" + dialogueText + "]";
 		this.height = 12;
-		this.width = this.mc.fontRendererObj.getStringWidth(this.dialogueText) + 2;
+		this.width = this.mc.fontRenderer.getStringWidth(this.dialogueText) + 2;
 	}
 
 	public void renderDialogue(int mouseX, int mouseY)
 	{
         this.drawGradientRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, 0x66000000, 0x66000000);
-        this.drawString(this.mc.fontRendererObj, this.isMouseOver(mouseX, mouseY) ? TextFormatting.YELLOW.toString() + this.getDialogueText() : this.getDialogueText(), this.xPosition + 2, this.yPosition + 2, 0xffffff);
+        this.drawString(this.mc.fontRenderer, this.isMouseOver(mouseX, mouseY) ? EnumChatFormatting.YELLOW.toString() + this.getDialogueText() : this.getDialogueText(), this.xPosition + 2, this.yPosition + 2, 0xffffff);
 	}
 
 	public boolean isMouseOver(int mouseX, int mouseY)
@@ -40,13 +40,13 @@ public class DialogueOption extends Gui
 
     public void playPressSound(SoundHandler soundHandlerIn)
     {
-        soundHandlerIn.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+    	soundHandlerIn.playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
     }
 
 	public void setDialogueText(String dialogueText)
 	{
 		this.dialogueText = "[" + dialogueText + "]";
-		this.width = this.mc.fontRendererObj.getStringWidth(this.dialogueText) + 2;
+		this.width = this.mc.fontRenderer.getStringWidth(this.dialogueText) + 2;
 	}
 
 	public void setXPosition(int xPosition)

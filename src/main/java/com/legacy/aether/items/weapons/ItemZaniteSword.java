@@ -1,9 +1,8 @@
 package com.legacy.aether.items.weapons;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
@@ -24,25 +23,20 @@ public class ItemZaniteSword extends ItemSword
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot slot)
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers()
     {
     	return null;
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack)
+    public Multimap<String, AttributeModifier> getAttributeModifiers(ItemStack stack)
     {
         Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
 
-        if (slot == EntityEquipmentSlot.MAINHAND)
-        {
-        	if (stack.getItem() instanceof ItemZaniteSword)
-        	{
-                multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.calculateIncrease(stack), 0));
-        	}
-
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4000000953674316D, 0));
-        }
+    	if (stack.getItem() instanceof ItemZaniteSword)
+    	{
+            multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", (double)this.calculateIncrease(stack), 0));
+    	}
 
         return multimap;
     }
@@ -85,9 +79,9 @@ public class ItemZaniteSword extends ItemSword
     }
 
     @Override
-    public float getStrVsBlock(ItemStack itemstack, IBlockState block)
+    public float getDigSpeed(ItemStack itemstack, Block block, int meta)
     {
-        return super.getStrVsBlock(itemstack, block) * (2.0F * (float)itemstack.getItemDamage() / (float)itemstack.getMaxDamage() + 0.5F);
+        return super.getDigSpeed(itemstack, block, meta) * (2.0F * (float)itemstack.getItemDamage() / (float)itemstack.getMaxDamage() + 0.5F);
     }
 
 }

@@ -1,14 +1,13 @@
 package com.legacy.aether.world;
 
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.DimensionType;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.IRenderHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class AetherWorldProvider extends WorldProvider
 {
@@ -18,6 +17,12 @@ public class AetherWorldProvider extends WorldProvider
 	public AetherWorldProvider()
 	{
 		super();
+	}
+
+	@Override
+    protected void registerWorldChunkManager()
+    {
+		this.worldChunkMgr = new WorldChunkManagerAether();
 	}
 
 	@Override
@@ -57,7 +62,7 @@ public class AetherWorldProvider extends WorldProvider
 	}
 
 	@Override
-	public IChunkGenerator createChunkGenerator()
+	public IChunkProvider createChunkGenerator()
 	{
 		return new ChunkProviderAether(this.worldObj, this.worldObj.getSeed());
 	}
@@ -73,13 +78,7 @@ public class AetherWorldProvider extends WorldProvider
     }
 
 	@Override
-	public String getDepartMessage()
-	{
-		return "Descending from the Aether";
-	}
-
-	@Override
-	public Vec3d getFogColor(float f, float f1)
+	public Vec3 getFogColor(float f, float f1)
 	{
 		int i = 0x8080a0;
 
@@ -99,7 +98,7 @@ public class AetherWorldProvider extends WorldProvider
 		f4 *= f2 * 0.94F + 0.06F;
 		f5 *= f2 * 0.91F + 0.09F;
 
-		return new Vec3d(f3, f4, f5);
+		return Vec3.createVectorHelper(f3, f4, f5);
 	}
 
 	@Override
@@ -115,12 +114,6 @@ public class AetherWorldProvider extends WorldProvider
 	}
 
 	@Override
-	public String getWelcomeMessage()
-	{
-		return "Ascending to the Aether";
-	}
-
-	@Override
 	public boolean doesXZShowFog(int x, int z)
 	{
 		return false;
@@ -130,12 +123,6 @@ public class AetherWorldProvider extends WorldProvider
 	public boolean isSkyColored()
 	{
 		return false;
-	}
-
-	@Override
-	protected void createBiomeProvider()
-	{
-		this.biomeProvider = new WorldChunkManagerAether();
 	}
 
 	@Override
@@ -151,9 +138,9 @@ public class AetherWorldProvider extends WorldProvider
     }
 
 	@Override
-	public DimensionType getDimensionType() 
+	public String getDimensionName() 
 	{
-		return AetherWorld.aether_dimension_type;
+		return "the_aether";
 	}
 
 	@Override

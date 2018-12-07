@@ -1,54 +1,67 @@
 package com.legacy.aether.blocks.dungeon;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.util.EnumStoneType;
+import com.legacy.aether.entities.bosses.EntityFireMinion;
 import com.legacy.aether.entities.bosses.EntityValkyrie;
 import com.legacy.aether.entities.hostile.EntitySentry;
 
-public class BlockDungeonTrap extends BlockDungeonBase
+public class BlockDungeonTrap extends Block
 {
 
-	public BlockDungeonTrap()
+	private Block pickBlock;
+
+	public BlockDungeonTrap(Block pickBlock)
 	{
-		super(true);
+		super(Material.rock);
+
+		this.pickBlock = pickBlock;
+		this.setBlockUnbreakable();
 	}
 
 	@Override
-    public void onEntityWalk(World world, BlockPos pos, Entity entityIn)
+    public void onEntityWalking(World world, int x, int y, int z, Entity entityIn)
     {
-		IBlockState state = world.getBlockState(pos);
-    	EnumStoneType type = (EnumStoneType) state.getValue(dungeon_stone);
-
     	if (entityIn instanceof EntityPlayer)
     	{
-    		Block block = world.getBlockState(pos).getBlock();
- 
-        	world.setBlockState(pos, BlocksAether.dungeon_block.getDefaultState().withProperty(dungeon_stone, EnumStoneType.getType(block.getMetaFromState(state))));
+    		world.setBlock(x, y, z, this.pickBlock);
 
-        	if (type == EnumStoneType.Carved || type == EnumStoneType.Sentry)
+        	if (this == BlocksAether.carved_trap)
         	{
-        		EntitySentry sentry = new EntitySentry(world, pos.getX() + 2D, pos.getY() + 1D, pos.getZ() + 2D);
+        		EntitySentry sentry = new EntitySentry(world, x + 2D, y + 1D, z + 2D);
+
         		if (!world.isRemote)
-        		world.spawnEntityInWorld(sentry);
+        		{
+            		world.spawnEntityInWorld(sentry);
+        		}
         	}
-        	else if (type == EnumStoneType.Angelic || type == EnumStoneType.Light_angelic)
+        	else if (this == BlocksAether.angelic_trap)
         	{
         		EntityValkyrie valkyrie = new EntityValkyrie(world);
-        		valkyrie.setPosition(pos.getX() + 0.5D, pos.getY() + 1D, pos.getZ() + 0.5D);
+        		valkyrie.setPosition(x + 0.5D, y + 1D, z + 0.5D);
+
         		if (!world.isRemote)
-        		world.spawnEntityInWorld(valkyrie);
+        		{
+            		world.spawnEntityInWorld(valkyrie);
+        		}
+        	}
+        	else if (this == BlocksAether.hellfire_trap)
+        	{
+        		EntityFireMinion minion = new EntityFireMinion(world);
+        		minion.setPosition(x + 0.5D, y + 1D, z + 0.5D);
+
+        		if (!world.isRemote)
+        		{
+            		world.spawnEntityInWorld(minion);
+        		}
         	}
 
-        	world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundCategory.PLAYERS, 1.0F, 1.5F);
+        	world.playSoundEffect(x, y, z, "random.door_close", 2.0F, world.rand.nextFloat() - world.rand.nextFloat() * 0.2F + 1.2F);
     	}
     }
 

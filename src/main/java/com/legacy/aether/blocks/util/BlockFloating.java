@@ -4,11 +4,11 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.block.EntityFloatingBlock;
 
 public class BlockFloating extends Block
@@ -23,54 +23,62 @@ public class BlockFloating extends Block
 		this.leveled = leveled;
 
 		this.setTickRandomly(true);
+		this.setHarvestLevel("pickaxe", 2);
 	}
 
 	@Override
-	public void onBlockAdded(World world,  BlockPos pos, IBlockState state)
-	{
-		world.scheduleUpdate(pos, this, 3);
-	}
-
-	@Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn)
+    public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ)
     {
-		world.scheduleUpdate(pos, this, 3);
+    	return this == BlocksAether.enchanted_gravitite;
     }
 
 	@Override
-    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
+	public void onBlockAdded(World world, int x, int y, int z)
 	{
-		if (!this.leveled || this.leveled && world.isBlockIndirectlyGettingPowered(pos) != 0)
+		world.scheduleBlockUpdate(x, y, z, this, 3);
+	}
+
+	@Override
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighborBlock)
+    {
+		worldIn.scheduleBlockUpdate(x, y, z, this, 3);
+    }
+
+	@Override
+    public void updateTick(World world, int x, int y, int z, Random rand)
+	{
+		if (!this.leveled || this.leveled && world.isBlockIndirectlyGettingPowered(x, y, z))
 		{
-			this.floatBlock(world, pos);
+			this.floatBlock(world, x, y, z);
 		}
 	}
 
-	private void floatBlock(World world, BlockPos pos)
+	private void floatBlock(World world, int x, int y, int z)
 	{
-		if (canContinue(world, pos.up()) && pos.getY() < world.getHeight())
+		if (canContinue(world, x, y + 1, z) && y < world.getHeight())
 		{
+			EntityFloatingBlock floating = new EntityFloatingBlock(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+
 			if (!world.isRemote)
 			{
-				EntityFloatingBlock floating = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
 				world.spawnEntityInWorld(floating);
 			}
 
-			world.setBlockToAir(pos);
+			world.setBlockToAir(x, y, z);
 		}
 	}
 
-	public static boolean canContinue(World world, BlockPos pos)
+	public static boolean canContinue(World world, int x, int y, int z)
 	{
-		Block block = world.getBlockState(pos).getBlock();
-		Material material = world.getBlockState(pos).getMaterial();
+		Block block = world.getBlock(x, y, z);
+		Material material = block.getMaterial();
 
-		if (block == Blocks.AIR || block == Blocks.FIRE)
+		if (block == Blocks.air || block == Blocks.fire)
 		{
 			return true;
 		}
 
-		if (material == Material.WATER || material == Material.LAVA)
+		if (material == Material.water || material == Material.lava)
 		{
 			return true;
 		}

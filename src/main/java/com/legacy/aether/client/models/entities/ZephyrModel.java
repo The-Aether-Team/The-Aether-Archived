@@ -113,6 +113,8 @@ public class ZephyrModel extends ModelBase
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
+    	this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
+
     	this.LeftFace.render(scale);
 	  	this.BodyRightSide2.render(scale);
 	  	this.Mouth.render(scale);
@@ -143,12 +145,12 @@ public class ZephyrModel extends ModelBase
     	this.BodyLeftSide1.rotationPointY = 8 - motion * 0.5F;
     	this.BodyLeftSide2.rotationPointY = 9 + motion * 0.5F;
     
-    	this.RightFace.rotationPointY= 8 - motion;
+    	this.RightFace.rotationPointY = 8 - motion;
     	this.RightFace.rotationPointX = -motion * 0.5F;
 
     	this.BodyRightSide1.rotationPointY = 8 - motion * 0.5F;
     	this.BodyRightSide2.rotationPointY = 9 + motion * 0.5F;
-    
+
     	this.Tail1.rotationPointX = (float)(Math.sin(limbSwing * 20 / 57.2957795) * limbSwingAmount * 0.75F);
     
     	this.Tail1.rotateAngleY = (float)(Math.sin(limbSwing * 0.5F / 57.2957795) * limbSwingAmount * 0.75F);

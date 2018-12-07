@@ -1,10 +1,12 @@
 package com.legacy.aether.api.enchantments;
 
+import com.legacy.aether.api.RegistryEntry;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherEnchantmentFuel extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherEnchantmentFuel>
+public class AetherEnchantmentFuel extends RegistryEntry
 {
 
 	public int timeGiven;
@@ -25,6 +27,8 @@ public class AetherEnchantmentFuel extends net.minecraftforge.fml.common.registr
 	{
 		this.timeGiven = timeGiven;
 		this.fuelStack = fuelStack;
+
+		this.setRegistryName(fuelStack.getItem().getUnlocalizedName().toString() + "_meta_" + (fuelStack.isItemStackDamageable() ? 0 : fuelStack.getItemDamage()));
 	}
 
 	public int getTimeGiven()

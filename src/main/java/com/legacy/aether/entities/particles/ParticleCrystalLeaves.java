@@ -1,9 +1,9 @@
 package com.legacy.aether.entities.particles;
 
-import net.minecraft.client.particle.ParticlePortal;
+import net.minecraft.client.particle.EntityPortalFX;
 import net.minecraft.world.World;
 
-public class ParticleCrystalLeaves extends ParticlePortal
+public class ParticleCrystalLeaves extends EntityPortalFX
 {
 
 	public ParticleCrystalLeaves(World world, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed)

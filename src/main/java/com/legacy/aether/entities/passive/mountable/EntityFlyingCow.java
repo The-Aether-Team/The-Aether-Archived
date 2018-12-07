@@ -8,27 +8,17 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
 import com.legacy.aether.entities.util.EntitySaddleMount;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityFlyingCow extends EntitySaddleMount
 {
@@ -57,33 +47,22 @@ public class EntityFlyingCow extends EntitySaddleMount
 		this.canJumpMidAir = true;
 
 		this.setSize(0.9F, 1.3F);
-	}
-
-	@Override
-    protected void initEntityAI()
-    {
+        this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
 		this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-		this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
 		this.tasks.addTask(4, new EntityAIFollowParent(this, 1.25D));
 		this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 		this.tasks.addTask(7, new EntityAILookIdle(this));
-    }
+	}
 
 	@Override
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20000000298023224D);
-		
-		if (this.getSaddled())
-		{
-			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
-			this.setHealth(20);
-		}
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.20000000298023224D);
 	}
 
 	@Override
@@ -91,7 +70,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 	{
 		super.onUpdate();
 
-		if (this.onGround)
+		if (this.isOnGround())
 		{
 			this.wingAngle *= 0.8F;
 			this.aimingForFold = 0.1F;
@@ -111,21 +90,21 @@ public class EntityFlyingCow extends EntitySaddleMount
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+	public void writeEntityToNBT(NBTTagCompound compound)
 	{
-		super.writeEntityToNBT(nbttagcompound);
+		super.writeEntityToNBT(compound);
 
-		nbttagcompound.setShort("Jumps", (short) this.maxJumps);
-		nbttagcompound.setShort("Remaining", (short) this.jumpsRemaining);
+		compound.setInteger("maxJumps", (short) this.maxJumps);
+		compound.setInteger("jumpsRemaining", (short) this.jumpsRemaining);
 	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+	public void readEntityFromNBT(NBTTagCompound compound)
 	{
-		super.readEntityFromNBT(nbttagcompound);
+		super.readEntityFromNBT(compound);
 
-		this.maxJumps = nbttagcompound.getShort("Jumps");
-		this.jumpsRemaining = nbttagcompound.getShort("Remaining");
+		this.maxJumps = compound.getInteger("maxJumps");
+		this.jumpsRemaining = compound.getInteger("jumpsRemaining");
 	}
 
 	@Override
@@ -143,12 +122,12 @@ public class EntityFlyingCow extends EntitySaddleMount
 	@Override
 	protected void jump()
 	{
-		if (this.getPassengers().isEmpty())
+		if (this.riddenByEntity == null)
 		{
 			super.jump();
 		}
 	}
-	
+
 	private void fall()
 	{
 		if (!this.onGround)
@@ -166,15 +145,17 @@ public class EntityFlyingCow extends EntitySaddleMount
 	}
 
 	@Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack)
+    public boolean interact(EntityPlayer player)
 	{
+		ItemStack stack = player.getCurrentEquippedItem();
+
 		if (stack != null)
 		{
 			ItemStack currentStack = stack;
 
-			if (currentStack.getItem() == Items.BUCKET)
+			if (currentStack.getItem() == Items.bucket)
 			{
-				Item milk = Items.MILK_BUCKET;
+				Item milk = Items.milk_bucket;
 
 				if (stack != null && stack.stackSize == 1)
 				{
@@ -199,26 +180,26 @@ public class EntityFlyingCow extends EntitySaddleMount
 			}
 		}
 
-		return super.processInteract(player, hand, stack);
+		return super.interact(player);
 	}
 
 	@Override
-	protected SoundEvent getAmbientSound()
-	{
-		return SoundsAether.flyingcow_say;
-	}
+    protected String getLivingSound()
+    {
+        return "mob.cow.say";
+    }
 
 	@Override
-	protected SoundEvent getHurtSound()
-	{
-		return SoundsAether.flyingcow_hurt;
-	}
+    protected String getHurtSound()
+    {
+        return "mob.cow.hurt";
+    }
 
 	@Override
-	protected SoundEvent getDeathSound()
-	{
-		return SoundsAether.flyingcow_death;
-	}
+    protected String getDeathSound()
+    {
+        return "mob.cow.hurt";
+    }
 
 	@Override
 	protected float getSoundVolume()
@@ -227,10 +208,10 @@ public class EntityFlyingCow extends EntitySaddleMount
 	}
 
 	@Override
-	protected void playStepSound(BlockPos pos, Block par4)
-	{
-		this.worldObj.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_COW_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
-	}
+    protected void func_145780_a(int x, int y, int z, Block block)
+    {
+        this.playSound("mob.cow.step", 0.15F, 1.0F);
+    }
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable)
@@ -238,34 +219,32 @@ public class EntityFlyingCow extends EntitySaddleMount
 		return new EntityFlyingCow(this.worldObj);
 	}
 
-	protected void dropFewItems(boolean par1, int par2)
+	@Override
+	protected void dropFewItems(boolean recentlyHit, int lootLevel)
 	{
-		int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
+		int j = this.rand.nextInt(3) + this.rand.nextInt(1 + lootLevel);
 		int k;
 
 		for (k = 0; k < j; ++k)
 		{
-			this.dropItem(Items.LEATHER, 1);
+			this.dropItem(Items.leather, 1);
 		}
 
-		j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
+		j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
 
 		for (k = 0; k < j; ++k)
 		{
 			if (this.isBurning())
 			{
-				this.dropItem(Items.COOKED_BEEF, 1);
+				this.dropItem(Items.cooked_beef, 1);
 			}
 			else
 			{
-				this.dropItem(Items.BEEF, 1);
+				this.dropItem(Items.beef, 1);
 			}
 		}
 
-		if (this.getSaddled())
-		{
-			this.dropItem(Items.SADDLE, 1);
-		}
+		super.dropFewItems(recentlyHit, lootLevel);
 	}
 
 	@Override

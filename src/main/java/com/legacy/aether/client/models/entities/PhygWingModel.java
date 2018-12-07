@@ -1,8 +1,9 @@
 package com.legacy.aether.client.models.entities;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 import com.legacy.aether.entities.passive.mountable.EntityPhyg;
@@ -39,8 +40,8 @@ public class PhygWingModel extends ModelBase
         if (pig.isChild())
         {
             wingBend = -((float)Math.acos((double)pig.wingFold));
-            GlStateManager.scale(1.0F / 2.0F, 1.0F / 2.0F, 1.0F / 2.0F);
-            GlStateManager.translate(0.0F, 24.0F * scale, 0.0F);
+            GL11.glScalef(1.0F / 2.0F, 1.0F / 2.0F, 1.0F / 2.0F);
+            GL11.glTranslatef(0.0F, 24.0F * scale, 0.0F);
             x = -((float)Math.acos((double)pig.wingFold));
             y = 32.0F * pig.wingFold / 4.0F;
             z = -32.0F * (float)Math.sqrt((double)(1.0F - pig.wingFold * pig.wingFold)) / 4.0F;

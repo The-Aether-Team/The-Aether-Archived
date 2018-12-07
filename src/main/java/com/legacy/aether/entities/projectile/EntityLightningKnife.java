@@ -2,40 +2,34 @@ package com.legacy.aether.entities.projectile;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityLightningKnife extends EntityThrowable
+public class EntityLightningKnife extends EntityProjectileBase
 {
 
-    public EntityLightningKnife(World worldIn)
+    public EntityLightningKnife(World world)
     {
-    	super(worldIn);
-    }
-
-	public EntityLightningKnife(World worldIn, double x, double y, double z)
-	{
-		super(worldIn, x, y, z);
+		super(world);
 	}
 
-    public EntityLightningKnife(World worldIn, EntityLivingBase throwerIn)
+    public EntityLightningKnife(World world, EntityLivingBase thrower)
     {
-    	super(worldIn, throwerIn);
-    }
+		super(world, thrower);
+	}
 
 	@Override
-	protected void onImpact(RayTraceResult result)
+	protected void onImpact(MovingObjectPosition object)
 	{
-		if (result.typeOfHit != Type.MISS)
-		{
-            EntityLightningBolt lightning = new EntityLightningBolt(this.worldObj, result.hitVec.xCoord, result.hitVec.yCoord, result.hitVec.zCoord, false);
-
-            this.worldObj.spawnEntityInWorld(lightning);
-		}
-
-        this.setDead();
+		this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, this.posX, this.posY, this.posZ));
+		this.setDead();
 	}
+
+	@Override
+    public void onCollideWithPlayer(EntityPlayer entityplayer)
+    {
+
+    }
 
 }

@@ -1,8 +1,9 @@
 package com.legacy.aether.player.abilities;
 
-import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.util.IAetherAbility;
 
-public class AbilityFlight extends Ability
+public class AbilityFlight implements IAetherAbility
 {
 
 	private int flightCount;
@@ -13,21 +14,23 @@ public class AbilityFlight extends Ability
 
 	private double maxFlightMod = 15.0D;
 
-	public AbilityFlight(PlayerAether player)
+	private final IPlayerAether player;
+
+	public AbilityFlight(IPlayerAether player)
 	{
-		super(player);
+		this.player = player;
 	}
 
 	@Override
-	public boolean isEnabled()
+	public boolean shouldExecute()
 	{
-		return super.isEnabled() && this.playerAether.isWearingValkyrieSet();
+		return this.player.getAccessoryInventory().isWearingValkyrieSet();
 	}
 
 	@Override
 	public void onUpdate()
 	{
-		if (this.playerAether.isJumping())
+		if (this.player.isJumping())
 		{
 			if (this.flightMod >= this.maxFlightMod)
 			{
@@ -39,7 +42,7 @@ public class AbilityFlight extends Ability
 				if (this.flightCount < this.maxFlightCount)
 				{
 					this.flightMod += 0.25D;
-					this.player.motionY = 0.025D * this.flightMod;
+					this.player.getEntity().motionY = 0.025D * this.flightMod;
 					this.flightCount++;
 				}
 			}
@@ -54,9 +57,9 @@ public class AbilityFlight extends Ability
 			this.flightMod = 1.0D;
 		}
 
-		this.player.fallDistance = -1F;
+		this.player.getEntity().fallDistance = -1F;
 
-		if (this.player.onGround)
+		if (this.player.getEntity().onGround)
 		{
 			this.flightCount = 0;
 			this.flightMod = 1.0D;

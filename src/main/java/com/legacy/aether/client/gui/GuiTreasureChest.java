@@ -1,28 +1,29 @@
 package com.legacy.aether.client.gui;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.tile_entities.TileEntityTreasureChest;
+import org.lwjgl.opengl.GL11;
+
+import com.legacy.aether.tileentity.TileEntityTreasureChest;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiTreasureChest extends GuiContainer
 {
     private static final ResourceLocation CHEST_GUI_TEXTURE = new ResourceLocation("textures/gui/container/generic_54.png");
 
-    private final String chestType;
-
     private final int inventoryRows;
+
+    private String chestType;
 
     public GuiTreasureChest(InventoryPlayer playerInventory, TileEntityTreasureChest chestInventory)
     {
-        super(new ContainerChest(playerInventory, chestInventory, Minecraft.getMinecraft().thePlayer));
+        super(new ContainerChest(playerInventory, chestInventory));
 
         this.allowUserInput = false;
 
@@ -61,7 +62,7 @@ public class GuiTreasureChest extends GuiContainer
      */
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
         int i = (this.width - this.xSize) / 2;
         int j = (this.height - this.ySize) / 2;

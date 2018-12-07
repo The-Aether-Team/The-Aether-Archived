@@ -3,7 +3,7 @@ package com.legacy.aether.client.models.entities;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
 
@@ -40,8 +40,6 @@ public class ValkyrieModel extends ModelBiped
 
     public ValkyrieModel(float f, float f1) 
     {
-        this.leftArmPose = ModelBiped.ArmPose.EMPTY;
-        this.rightArmPose = ModelBiped.ArmPose.EMPTY;
         this.isSneak = false;
 		
         this.bipedHead = new ModelRenderer(this, 0, 0);
@@ -234,6 +232,8 @@ public class ValkyrieModel extends ModelBiped
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
+    	this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
+
     	this.bipedHead.render(scale);
     	this.bipedBody.render(scale);
         this.bipedRightArm.render(scale);
@@ -316,22 +316,22 @@ public class ValkyrieModel extends ModelBiped
         this.bipedRightArm.rotateAngleY = 0.0F;
         this.bipedLeftArm.rotateAngleY = 0.0F;
 
-        if(this.swingProgress > -9990F) 
+        if(this.onGround > -9990F) 
         {
-            float f6 = swingProgress;
+            float f6 = onGround;
             this.bipedBody2.rotateAngleY = this.bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt_float(f6) * 3.141593F * 2.0F) * 0.2F;
             this.bipedRightArm.rotateAngleY += this.bipedBody.rotateAngleY;
             this.bipedLeftArm.rotateAngleY += this.bipedBody.rotateAngleY;
             this.bipedLeftArm.rotateAngleX += this.bipedBody.rotateAngleY;
-            f6 = 1.0F - this.swingProgress;
+            f6 = 1.0F - this.onGround;
             f6 *= f6;
             f6 *= f6;
             f6 = 1.0F - f6;
             float f7 = MathHelper.sin(f6 * 3.141593F);
-            float f8 = MathHelper.sin(this.swingProgress * 3.141593F) * -(this.bipedHead.rotateAngleX - 0.7F) * 0.75F;
+            float f8 = MathHelper.sin(this.onGround * 3.141593F) * -(this.bipedHead.rotateAngleX - 0.7F) * 0.75F;
             this.bipedRightArm.rotateAngleX -= (double)f7 * 1.2D + (double)f8;
             this.bipedRightArm.rotateAngleY += this.bipedBody.rotateAngleY * 2.0F;
-            this.bipedRightArm.rotateAngleZ = MathHelper.sin(this.swingProgress * 3.141593F) * -0.4F;
+            this.bipedRightArm.rotateAngleZ = MathHelper.sin(this.onGround * 3.141593F) * -0.4F;
         }
 
         this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;

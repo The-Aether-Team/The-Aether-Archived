@@ -4,9 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 import com.legacy.aether.Aether;
@@ -31,27 +28,28 @@ public class ItemLifeShard extends Item
     }
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World worldIn, EntityPlayer player, EnumHand hand)
+    public ItemStack onItemRightClick(ItemStack stack, World worldIn, EntityPlayer player)
 	{
 		PlayerAether playerAether = PlayerAether.get(player);
+		ItemStack heldItem = player.getHeldItem();
 
-		if (!worldIn.isRemote)
+		if (worldIn.isRemote)
 		{
-			if (playerAether.getExtraHealth() < 20.0F)
-			{
-				playerAether.increaseMaxHP();
-
-				itemstack.stackSize--;
-				
-				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
-			}
-			else if (playerAether.getExtraHealth() >= 20.0F)
-			{
-				Aether.proxy.sendMessage(player, "You can only use a total of 10 life shards.");
-			}
+			return heldItem;
 		}
 
-		return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
+		if (playerAether.getShardsUsed() < playerAether.getMaxShardCount())
+		{
+			playerAether.updateShardCount(playerAether.getShardsUsed() + 1);
+
+			--heldItem.stackSize;
+
+			return heldItem;
+		}
+
+		Aether.proxy.sendMessage(player, "You can only use a total of " + playerAether.getMaxShardCount() + " life shards.");
+
+		return heldItem;
 	}
 
 }

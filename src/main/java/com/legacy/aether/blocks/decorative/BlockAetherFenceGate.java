@@ -1,26 +1,32 @@
 package com.legacy.aether.blocks.decorative;
 
 import net.minecraft.block.BlockFenceGate;
-import net.minecraft.block.BlockPlanks.EnumType;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.IIcon;
+
+import com.legacy.aether.Aether;
+import com.legacy.aether.blocks.BlocksAether;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockAetherFenceGate extends BlockFenceGate
 {
 
 	public BlockAetherFenceGate() 
 	{
-		super(EnumType.OAK);
+		super();
+
 		this.setHardness(2.0F);
 		this.setResistance(5.0F);
-		this.setSoundType(SoundType.WOOD);
+		this.setStepSound(soundTypeWood);
+		this.setBlockTextureName(Aether.find("skyroot_planks"));
 	}
 
 	@Override
-    public MapColor getMapColor(IBlockState state)
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
     {
-    	return MapColor.WOOD;
+    	return BlocksAether.skyroot_planks.getBlockTextureFromSide(p_149691_1_);
     }
 
 }

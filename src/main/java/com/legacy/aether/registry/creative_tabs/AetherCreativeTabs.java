@@ -3,11 +3,12 @@ package com.legacy.aether.registry.creative_tabs;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.ItemsAether;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class AetherCreativeTabs 
 {
@@ -27,7 +28,7 @@ public class AetherCreativeTabs
 		tools.setIcon(new ItemStack(ItemsAether.gravitite_pickaxe));
 		weapons.setIcon(new ItemStack(ItemsAether.gravitite_sword));
 		armor.setIcon(new ItemStack(ItemsAether.gravitite_helmet));
-		food.setIcon(new ItemStack(ItemsAether.blue_berry));
+		food.setIcon(new ItemStack(ItemsAether.blueberry));
 		accessories.setIcon(new ItemStack(ItemsAether.gravitite_gloves));
 		material.setIcon(new ItemStack(ItemsAether.ambrosium_shard));
 		misc.setIcon(new ItemStack(ItemsAether.dungeon_key));

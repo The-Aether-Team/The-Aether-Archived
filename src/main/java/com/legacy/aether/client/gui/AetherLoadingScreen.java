@@ -4,14 +4,15 @@ import net.minecraft.client.LoadingScreenRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 
+import org.lwjgl.opengl.GL11;
+
 import com.legacy.aether.client.gui.trivia.AetherTrivia;
+
+import cpw.mods.fml.client.FMLClientHandler;
 
 public class AetherLoadingScreen extends LoadingScreenRenderer
 {
@@ -47,7 +48,7 @@ public class AetherLoadingScreen extends LoadingScreenRenderer
     }
 
     @Override
-    public void displayLoadingString(String message)
+    public void displayProgressMessage(String message)
     {
         this.systemTime = 0L;
         this.message = message;
@@ -58,100 +59,94 @@ public class AetherLoadingScreen extends LoadingScreenRenderer
     @Override
     public void setLoadingProgress(int progress)
     {
-        long i = Minecraft.getSystemTime();
+        long j = Minecraft.getSystemTime();
 
-        if (i - this.systemTime >= 100L)
+        if (j - this.systemTime >= 100L)
         {
-            this.systemTime = i;
-            ScaledResolution scaledresolution = new ScaledResolution(this.mc);
-            int j = scaledresolution.getScaleFactor();
-            int k = scaledresolution.getScaledWidth();
-            int l = scaledresolution.getScaledHeight();
+            this.systemTime = j;
+            ScaledResolution scaledresolution = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+            int k = scaledresolution.getScaleFactor();
+            int l = scaledresolution.getScaledWidth();
+            int i1 = scaledresolution.getScaledHeight();
 
-            this.mc.fontRendererObj.drawStringWithShadow(this.currentDisplayedTrivia, (k - this.mc.fontRendererObj.getStringWidth(this.currentDisplayedTrivia)) / 2, l - 16, 0xffff99);
             if (OpenGlHelper.isFramebufferEnabled())
             {
                 this.framebuffer.framebufferClear();
             }
             else
             {
-                GlStateManager.clear(256);
+                GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
             }
 
             this.framebuffer.bindFramebuffer(false);
-            GlStateManager.matrixMode(5889);
-            GlStateManager.loadIdentity();
-            GlStateManager.ortho(0.0D, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
-            GlStateManager.matrixMode(5888);
-            GlStateManager.loadIdentity();
-            GlStateManager.translate(0.0F, 0.0F, -200.0F);
+            GL11.glMatrixMode(GL11.GL_PROJECTION);
+            GL11.glLoadIdentity();
+            GL11.glOrtho(0.0D, scaledresolution.getScaledWidth_double(), scaledresolution.getScaledHeight_double(), 0.0D, 100.0D, 300.0D);
+            GL11.glMatrixMode(GL11.GL_MODELVIEW);
+            GL11.glLoadIdentity();
+            GL11.glTranslatef(0.0F, 0.0F, -200.0F);
 
             if (!OpenGlHelper.isFramebufferEnabled())
             {
-                GlStateManager.clear(16640);
+                GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
             }
 
-            try
+            if (!FMLClientHandler.instance().handleLoadingScreen(scaledresolution))
             {
-                if (!net.minecraftforge.fml.client.FMLClientHandler.instance().handleLoadingScreen(scaledresolution)) //FML Don't render while FML's pre-screen is rendering
+                Tessellator tessellator = Tessellator.instance;
+                this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
+                float f = 32.0F;
+                tessellator.startDrawingQuads();
+                tessellator.setColorOpaque_I(4210752);
+                tessellator.addVertexWithUV(0.0D, (double)i1, 0.0D, 0.0D, (double)((float)i1 / f));
+                tessellator.addVertexWithUV((double)l, (double)i1, 0.0D, (double)((float)l / f), (double)((float)i1 / f));
+                tessellator.addVertexWithUV((double)l, 0.0D, 0.0D, (double)((float)l / f), 0.0D);
+                tessellator.addVertexWithUV(0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+                tessellator.draw();
+
+                if (progress >= 0)
                 {
-                    Tessellator tessellator = Tessellator.getInstance();
-                    VertexBuffer worldrenderer = tessellator.getBuffer();
-                    this.mc.getTextureManager().bindTexture(Gui.OPTIONS_BACKGROUND);
-                    float f = 32.0F;
-                    worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-                    worldrenderer.pos(0.0D, (double)l, 0.0D).tex(0.0D, (double)((float)l / f)).color(64, 64, 64, 255).endVertex();
-                    worldrenderer.pos((double)k, (double)l, 0.0D).tex((double)((float)k / f), (double)((float)l / f)).color(64, 64, 64, 255).endVertex();
-                    worldrenderer.pos((double)k, 0.0D, 0.0D).tex((double)((float)k / f), 0.0D).color(64, 64, 64, 255).endVertex();
-                    worldrenderer.pos(0.0D, 0.0D, 0.0D).tex(0.0D, 0.0D).color(64, 64, 64, 255).endVertex();
+                    byte b0 = 100;
+                    byte b1 = 2;
+                    int j1 = l / 2 - b0 / 2;
+                    int k1 = i1 / 2 + 16;
+                    GL11.glDisable(GL11.GL_TEXTURE_2D);
+                    tessellator.startDrawingQuads();
+                    tessellator.setColorOpaque_I(8421504);
+                    tessellator.addVertex((double)j1, (double)k1, 0.0D);
+                    tessellator.addVertex((double)j1, (double)(k1 + b1), 0.0D);
+                    tessellator.addVertex((double)(j1 + b0), (double)(k1 + b1), 0.0D);
+                    tessellator.addVertex((double)(j1 + b0), (double)k1, 0.0D);
+                    tessellator.setColorOpaque_I(8454016);
+                    tessellator.addVertex((double)j1, (double)k1, 0.0D);
+                    tessellator.addVertex((double)j1, (double)(k1 + b1), 0.0D);
+                    tessellator.addVertex((double)(j1 + progress), (double)(k1 + b1), 0.0D);
+                    tessellator.addVertex((double)(j1 + progress), (double)k1, 0.0D);
                     tessellator.draw();
-
-                    if (progress >= 0)
-                    {
-                        int i1 = 100;
-                        int j1 = 2;
-                        int k1 = k / 2 - i1 / 2;
-                        int l1 = l / 2 + 16;
-                        GlStateManager.disableTexture2D();
-                        worldrenderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-                        worldrenderer.pos((double)k1, (double)l1, 0.0D).color(128, 128, 128, 255).endVertex();
-                        worldrenderer.pos((double)k1, (double)(l1 + j1), 0.0D).color(128, 128, 128, 255).endVertex();
-                        worldrenderer.pos((double)(k1 + i1), (double)(l1 + j1), 0.0D).color(128, 128, 128, 255).endVertex();
-                        worldrenderer.pos((double)(k1 + i1), (double)l1, 0.0D).color(128, 128, 128, 255).endVertex();
-                        worldrenderer.pos((double)k1, (double)l1, 0.0D).color(128, 255, 128, 255).endVertex();
-                        worldrenderer.pos((double)k1, (double)(l1 + j1), 0.0D).color(128, 255, 128, 255).endVertex();
-                        worldrenderer.pos((double)(k1 + progress), (double)(l1 + j1), 0.0D).color(128, 255, 128, 255).endVertex();
-                        worldrenderer.pos((double)(k1 + progress), (double)l1, 0.0D).color(128, 255, 128, 255).endVertex();
-                        tessellator.draw();
-                        GlStateManager.enableTexture2D();
-                    }
-
-                    GlStateManager.enableBlend();
-                    GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                    this.mc.fontRendererObj.drawStringWithShadow(this.currentlyDisplayedText, (float)((k - this.mc.fontRendererObj.getStringWidth(this.currentlyDisplayedText)) / 2), (float)(l / 2 - 4 - 16), 16777215);
-                    this.mc.fontRendererObj.drawStringWithShadow(this.message, (float)((k - this.mc.fontRendererObj.getStringWidth(this.message)) / 2), (float)(l / 2 - 4 + 8), 16777215);
-                    this.mc.fontRendererObj.drawStringWithShadow(this.currentDisplayedTrivia, (k - this.mc.fontRendererObj.getStringWidth(this.currentDisplayedTrivia)) / 2, l - 16, 0xffff99);
+                    GL11.glEnable(GL11.GL_TEXTURE_2D);
                 }
-            }
-            catch (java.io.IOException e)
-            {
-                com.google.common.base.Throwables.propagate(e);
+
+                GL11.glEnable(GL11.GL_BLEND);
+                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+                this.mc.fontRenderer.drawStringWithShadow(this.currentlyDisplayedText, (l - this.mc.fontRenderer.getStringWidth(this.currentlyDisplayedText)) / 2, i1 / 2 - 4 - 16, 16777215);
+                this.mc.fontRenderer.drawStringWithShadow(this.message, (l - this.mc.fontRenderer.getStringWidth(this.message)) / 2, i1 / 2 - 4 + 8, 16777215);
+                this.mc.fontRenderer.drawStringWithShadow(this.currentDisplayedTrivia, (k - this.mc.fontRenderer.getStringWidth(this.currentDisplayedTrivia)) / 2, l - 16, 0xffff99);
             }
 
             this.framebuffer.unbindFramebuffer();
 
             if (OpenGlHelper.isFramebufferEnabled())
             {
-                this.framebuffer.framebufferRender(k * j, l * j);
+                this.framebuffer.framebufferRender(l * k, i1 * k);
             }
 
-            this.mc.updateDisplay();
+            this.mc.func_147120_f();
 
             try
             {
                 Thread.yield();
             }
-            catch (Exception var15)
+            catch (Exception exception)
             {
                 ;
             }

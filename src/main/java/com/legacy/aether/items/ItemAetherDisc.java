@@ -2,8 +2,8 @@ package com.legacy.aether.items;
 
 import net.minecraft.item.ItemRecord;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemAetherDisc extends ItemRecord
@@ -13,11 +13,16 @@ public class ItemAetherDisc extends ItemRecord
 
 	public String songName;
 
-	protected ItemAetherDisc(String s, SoundEvent event, String artist, String song)
+	public ResourceLocation songLocation;
+
+	public ItemAetherDisc(String s, String artist, String song)
 	{
-		super(s, event);
+		super(s);
+
 		this.artistName = artist;
 		this.songName = song;
+		this.songLocation = Aether.locate("records." + s);
+
 		this.setCreativeTab(AetherCreativeTabs.misc);
 	}
 
@@ -28,9 +33,9 @@ public class ItemAetherDisc extends ItemRecord
 	}
 
 	@Override
-	public ResourceLocation getRecordResource(String name)
-	{
-		return new ResourceLocation("aether_legacy", name);
-	}
+    public ResourceLocation getRecordResource(String name)
+    {
+    	return this.songLocation;
+    }
 
 }

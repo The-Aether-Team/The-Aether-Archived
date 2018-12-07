@@ -4,14 +4,15 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.containers.ContainerFreezer;
-import com.legacy.aether.tile_entities.TileEntityFreezer;
+import com.legacy.aether.inventory.ContainerFreezer;
+import com.legacy.aether.tileentity.TileEntityFreezer;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiFreezer extends GuiContainer
@@ -30,7 +31,7 @@ public class GuiFreezer extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2)
 	{
-		String freezerName = this.freezer.getDisplayName().getFormattedText();
+		String freezerName = this.freezer.getInventoryName();
 
 		this.fontRendererObj.drawString(freezerName, this.xSize / 2 - this.fontRendererObj.getStringWidth(freezerName) / 2, 6, 4210752);
 		this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
@@ -48,11 +49,11 @@ public class GuiFreezer extends GuiContainer
 
 		if (this.freezer.isFreezing())
 		{
-			i1 = this.freezer.getEnchantmentTimeRemaining(12);
+			i1 = this.freezer.getFreezingTimeRemaining(12);
 			this.drawTexturedModalRect(k + 56, l + 36 + 12 - i1, 176, 12 - i1, 14, i1 + 2);
 		}
 
-		i1 = this.freezer.getEnchantmentProgressScaled(24);
+		i1 = this.freezer.getFreezingProgressScaled(24);
 		this.drawTexturedModalRect(k + 79, l + 34, 176, 14, i1 + 1, 16);
 	}
 

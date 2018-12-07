@@ -14,10 +14,16 @@ public class ItemVampireBlade extends ItemSword
 
     public ItemVampireBlade()
     {
-    	super(ToolMaterial.DIAMOND);
+    	super(ToolMaterial.EMERALD);
 
         this.setCreativeTab(AetherCreativeTabs.weapons);
     }
+
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return false;
+	}
 
 	@Override
     public EnumRarity getRarity(ItemStack stack)

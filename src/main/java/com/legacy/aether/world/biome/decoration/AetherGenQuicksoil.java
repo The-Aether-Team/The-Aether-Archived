@@ -3,7 +3,6 @@ package com.legacy.aether.world.biome.decoration;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -17,17 +16,15 @@ public class AetherGenQuicksoil extends WorldGenerator
     	super();
     }
 
-    public boolean generate(World world, Random random, BlockPos pos)
+    public boolean generate(World world, Random random, int x, int y, int z)
     {
-		for(int x = pos.getX() - 3; x < pos.getX() + 4; x++)
+		for(int x1 = x - 3; x1 < x + 4; x1++)
 		{
-			for(int z = pos.getZ() - 3; z < pos.getZ() + 4; z++)
+			for(int z1 = z - 3; z1 < z + 4; z1++)
 			{
-				BlockPos newPos = new BlockPos(x, pos.getY(), z);
-
-				if(world.getBlockState(newPos).getBlock() == Blocks.AIR && ((x - pos.getX()) * (x - pos.getX()) + (z - pos.getZ()) * (z - pos.getZ())) < 12)
+				if(world.getBlock(x1, y, z1) == Blocks.air && ((x1 - x) * (x1 - x) + (z1 - z) * (z1 - z)) < 12)
 				{
-					this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.quicksoil.getDefaultState());
+					this.setBlockAndNotifyAdequately(world, x1, y, z1, BlocksAether.quicksoil, 0);
 				}
 			}
 		}

@@ -2,89 +2,69 @@ package com.legacy.aether.world.biome.decoration;
 
 import java.util.Random;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
+import com.legacy.aether.blocks.BlocksAether;
+
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.natural.BlockAercloud;
-import com.legacy.aether.blocks.util.EnumCloudType;
 
 public class AetherGenClouds extends WorldGenerator
 {
 
-	private EnumCloudType type;
+	private int cloudAmount;
 
-    private int numberOfBlocks;
+	private int cloudMeta;
 
-    private boolean flat;
+	public AetherGenClouds()
+	{
+		
+	}
 
-    public AetherGenClouds()
-    {
-    	super();
-    }
+	public void setCloudAmount(int amount)
+	{
+		this.cloudAmount = amount;
+	}
 
-    public void setCloudType(EnumCloudType type)
-    {
-    	this.type = type;
-    }
+	public void setCloudMeta(int meta)
+	{
+		this.cloudMeta = meta;
+	}
 
-    public void setCloudAmmount(int cloudAmmount)
-    {
-    	this.numberOfBlocks = cloudAmmount;
-    }
+	@Override
+	public boolean generate(World worldIn, Random randIn, int xIn, int yIn, int zIn) 
+	{
+		yIn += randIn.nextInt(64);
 
-    public void setFlat(boolean isFlat)
-    {
-    	this.flat = isFlat;
-    }
+		for (int amount = 0; amount < this.cloudAmount; ++amount)
+		{
+			boolean offsetY = randIn.nextBoolean();
 
-    public boolean generate(World world, Random random, BlockPos pos)
-    {
-        int x = pos.getX();
-        int y = pos.getY();
-        int z = pos.getZ();
-        int xTendency = random.nextInt(3) - 1;
-        int zTendency = random.nextInt(3) - 1;
+			int xOffset = randIn.nextInt(2);
+			int yOffset = (offsetY ? randIn.nextInt(3) - 1 : 0);
+			int zOffset = randIn.nextInt(2);
 
-        if (this.type == null)
-        {
-            return false;
-        }
+			xIn += xOffset;
+			yIn += yOffset;
+			zIn += zOffset;
 
-        for (int n = 0; n < this.numberOfBlocks; ++n)
-        {
-            x += random.nextInt(3) - 1 + xTendency;
+			for (int x = xIn; x < xIn + randIn.nextInt(2) + 3; ++x)
+			{
+				for (int y = yIn; y < yIn + randIn.nextInt(1) + 2; ++y)
+				{
+					for (int z = zIn; z < zIn + randIn.nextInt(2) + 3; ++z)
+					{
+						if (worldIn.isAirBlock(x, y, z))
+						{
+							if (Math.abs(x - xIn) + Math.abs(y - yIn) + Math.abs(z - zIn) < 4 + randIn.nextInt(2))
+							{
+								this.setBlockAndNotifyAdequately(worldIn, x, y, z, BlocksAether.aercloud, this.cloudMeta);
+							}
+						}
+					}
+				}
+			}
+		}
 
-            if (random.nextBoolean() && !this.flat || this.flat && random.nextInt(10) == 0)
-            {
-                y += random.nextInt(3) - 1;
-            }
-
-            z += random.nextInt(3) - 1 + zTendency;
-
-            for (int x1 = x; x1 < x + random.nextInt(4) + 3 * (this.flat ? 3 : 1); ++x1)
-            {
-                for (int y1 = y; y1 < y + random.nextInt(1) + 2; ++y1)
-                {
-                    for (int z1 = z; z1 < z + random.nextInt(4) + 3 * (this.flat ? 3 : 1); ++z1)
-                    {
-                    	BlockPos newPos = new BlockPos(x1, y1, z1);
-
-                        if (world.getBlockState(newPos).getBlock() == Blocks.AIR)
-                        {
-                        	if (Math.abs(x1 - x) + Math.abs(y1 - y) + Math.abs(z1 - z) < 4 * (this.flat ? 3 : 1) + random.nextInt(2))
-                        	{
-                        		this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aercloud.getDefaultState().withProperty(BlockAercloud.cloud_type, this.type));
-                        	}
-                        }
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
+		return true;
+	}
 
 }

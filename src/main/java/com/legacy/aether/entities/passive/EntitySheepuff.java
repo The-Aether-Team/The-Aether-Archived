@@ -6,44 +6,26 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.entities.ai.SheepuffAIEatAetherGrass;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntitySheepuff extends EntityAetherAnimal
 {
-
-	public static final DataParameter<Byte> FLEECE_COLOR = EntityDataManager.<Byte>createKey(EntitySheepuff.class, DataSerializers.BYTE);
-
-	public static final DataParameter<Boolean> SHEARED = EntityDataManager.<Boolean>createKey(EntitySheepuff.class, DataSerializers.BOOLEAN);
-
-	public static final DataParameter<Boolean> PUFFY = EntityDataManager.<Boolean>createKey(EntitySheepuff.class, DataSerializers.BOOLEAN);
 
 	private SheepuffAIEatAetherGrass entityAIEatGrass;
 
@@ -52,18 +34,12 @@ public class EntitySheepuff extends EntityAetherAnimal
     public EntitySheepuff(World world)
     {
         super(world);
+
+		this.amountEaten = 0;
         this.setSize(0.9F, 1.3F);
 		this.setFleeceColor(getRandomFleeceColor(rand));
-		this.amountEaten = 0;
-    }
-
-    @Override
-    protected void initEntityAI()
-    {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
-        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
         this.tasks.addTask(5, this.entityAIEatGrass = new SheepuffAIEatAetherGrass(this));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
@@ -74,8 +50,8 @@ public class EntitySheepuff extends EntityAetherAnimal
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23000000417232513D); 
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(8.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D); 
     }
 
     @Override
@@ -83,9 +59,9 @@ public class EntitySheepuff extends EntityAetherAnimal
     {
         super.entityInit();
 
-        this.dataManager.register(FLEECE_COLOR, new Byte((byte)0));
-        this.dataManager.register(SHEARED, false);
-        this.dataManager.register(PUFFY, false);
+        this.dataWatcher.addObject(16, new Byte((byte)0));
+        this.dataWatcher.addObject(17, new Byte((byte)0));
+        this.dataWatcher.addObject(18, new Byte((byte)0));
     }
 
 	@Override
@@ -93,21 +69,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 	{
         if(!this.getSheared())
         {
-            entityDropItem(new ItemStack(Blocks.WOOL, 1 + rand.nextInt(2), getFleeceColor()), 0.0F);
-        }
-        
-        int i = this.rand.nextInt(2) + 1 + this.rand.nextInt(1 + ammount);
-
-        for (int j = 0; j < i; ++j)
-        {
-            if (this.isBurning())
-            {
-                this.dropItem(Items.COOKED_MUTTON, 1);
-            }
-            else
-            {
-                this.dropItem(Items.MUTTON, 1);
-            }
+        	this.entityDropItem(new ItemStack(Blocks.wool, 1 + this.rand.nextInt(2), this.getFleeceColor()), 0.0F);
         }
     }
 
@@ -130,7 +92,7 @@ public class EntitySheepuff extends EntityAetherAnimal
     }
 
     @SideOnly(Side.CLIENT)
-    public void handleStatusUpdate(byte id)
+    public void handleHealthUpdate(byte id)
     {
         if (id == 10)
         {
@@ -138,7 +100,7 @@ public class EntitySheepuff extends EntityAetherAnimal
         }
         else
         {
-            super.handleStatusUpdate(id);
+            super.handleHealthUpdate(id);
         }
     }
 
@@ -169,16 +131,17 @@ public class EntitySheepuff extends EntityAetherAnimal
     }
 
 	@Override
-	protected void playStepSound(BlockPos pos, Block par4)
-	{
-		this.worldObj.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SHEEP_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
-	}
-	
-	public boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack)
+    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    {
+        this.playSound("mob.sheep.step", 0.15F, 1.0F);
+    }
+
+	@Override
+    public boolean interact(EntityPlayer player)
     {
         ItemStack itemstack = player.inventory.getCurrentItem();
 
-        if(itemstack != null && itemstack.getItem() == Items.SHEARS && !this.getSheared())
+        if(itemstack != null && itemstack.getItem() == Items.shears && !this.getSheared())
         {
             if(!this.worldObj.isRemote)
             {
@@ -195,7 +158,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 
 				for(int j = 0; j < i; j++)
 				{
-					EntityItem entityitem = this.entityDropItem(new ItemStack(Blocks.WOOL, 1, this.getFleeceColor()), 1.0F);
+					EntityItem entityitem = this.entityDropItem(new ItemStack(Blocks.wool, 1, this.getFleeceColor()), 1.0F);
 					entityitem.motionY += this.rand.nextFloat() * 0.05F;
 					entityitem.motionX += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
 					entityitem.motionZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
@@ -205,27 +168,24 @@ public class EntitySheepuff extends EntityAetherAnimal
             itemstack.damageItem(1, player);
         }
 
-        if (itemstack != null && itemstack.getItem() == Items.DYE && !this.getSheared())
+        if (itemstack != null && itemstack.getItem() == Items.dye && !this.getSheared())
         {
-        	EnumDyeColor color = EnumDyeColor.byDyeDamage(itemstack.getItemDamage());
-        	int colorID = color.getMetadata();
-
-            if (this.getFleeceColor() != colorID)
+            if (this.getFleeceColor() != itemstack.getItemDamage())
             {
                 if (this.getPuffed() && itemstack.stackSize >= 2)
                 {
-                    this.setFleeceColor(colorID);
+                    this.setFleeceColor(15 - itemstack.getItemDamage());
                     itemstack.stackSize -= 2;
                 }
                 else if (!this.getPuffed())
                 {
-                    this.setFleeceColor(colorID);
+                    this.setFleeceColor(15 - itemstack.getItemDamage());
                     --itemstack.stackSize;
                 }
             }
         }
-        
-        return super.processInteract(player, hand, stack);
+
+        return super.interact(player);
     }
 
     protected void jump()
@@ -265,7 +225,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 		if(this.amountEaten == 10 && this.getSheared() && !this.getPuffed())
 		{
 			this.setSheared(false);
-			this.setFleeceColor(0);
+			this.setFleeceColor(15);
 			this.amountEaten = 0;
 		}
 	}
@@ -287,50 +247,53 @@ public class EntitySheepuff extends EntityAetherAnimal
         this.setFleeceColor(nbttagcompound.getByte("Color"));
     }
 
-    protected SoundEvent getAmbientSound()
+    @Override
+    protected String getLivingSound()
     {
-        return SoundsAether.sheepuff_say;
+        return "mob.sheep.say";
     }
 
-    protected SoundEvent getHurtSound()
+    @Override
+    protected String getHurtSound()
     {
-        return SoundsAether.sheepuff_hurt;
+        return "mob.sheep.say";
     }
 
-    protected SoundEvent getDeathSound()
+    @Override
+    protected String getDeathSound()
     {
-        return SoundsAether.sheepuff_death;
+        return "mob.sheep.say";
     }
 
 	public int getFleeceColor()
     {
-        return this.dataManager.get(FLEECE_COLOR) & 15;
+        return this.dataWatcher.getWatchableObjectByte(16) & 15;
     }
 
     public void setFleeceColor(int i)
     {
-        byte byte0 = this.dataManager.get(FLEECE_COLOR);
-        this.dataManager.set(FLEECE_COLOR, Byte.valueOf((byte)(byte0 & 240 | i & 15)));
+        byte byte0 = this.dataWatcher.getWatchableObjectByte(16);
+        this.dataWatcher.updateObject(16, Byte.valueOf((byte)(byte0 & 240 | i & 15)));
     }
 
     public boolean getSheared()
     {
-        return this.dataManager.get(SHEARED);
+        return this.dataWatcher.getWatchableObjectByte(17) == (byte)1;
     }
 
     public void setSheared(boolean flag)
     {
-        this.dataManager.set(SHEARED, flag);
+        this.dataWatcher.updateObject(17, Byte.valueOf((byte)(flag ? 1 : 0)));
     }
 
 	public boolean getPuffed()
     {
-        return this.dataManager.get(PUFFY);
+        return this.dataWatcher.getWatchableObjectByte(18) == (byte)1;
     }
 
 	public void setPuffed(boolean flag)
     {
-        this.dataManager.set(PUFFY, flag);
+        this.dataWatcher.updateObject(18, Byte.valueOf((byte)(flag ? 1 : 0)));
     }
 
 	public static int getRandomFleeceColor(Random random)
@@ -348,7 +311,7 @@ public class EntitySheepuff extends EntityAetherAnimal
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable)
 	{
-		return new EntitySheepuff(worldObj);
+		return new EntitySheepuff(this.worldObj);
 	}
 
 }

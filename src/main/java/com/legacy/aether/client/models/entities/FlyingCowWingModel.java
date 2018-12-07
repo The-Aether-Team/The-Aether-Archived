@@ -2,8 +2,9 @@ package com.legacy.aether.client.models.entities;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+
+import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.entities.passive.mountable.EntityFlyingCow;
 
@@ -28,10 +29,10 @@ public class FlyingCowWingModel extends ModelBase
     @Override
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        GlStateManager.pushMatrix();
+    	GL11.glPushMatrix();
 
         EntityFlyingCow flyingcow = ((EntityFlyingCow)entityIn);
-        GlStateManager.translate(0.0F, -10.0F * scale, 0.0F);
+        GL11.glTranslatef(0.0F, -10.0F * scale, 0.0F);
 
         float wingBend = -((float)Math.acos((double)flyingcow.wingFold));
 
@@ -61,7 +62,7 @@ public class FlyingCowWingModel extends ModelBase
         this.rightWingOuter.render(scale);
         this.rightWingInner.render(scale);
 
-        GlStateManager.popMatrix();
+        GL11.glPopMatrix();
     }
 
     @Override

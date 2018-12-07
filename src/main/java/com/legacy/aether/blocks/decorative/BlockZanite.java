@@ -1,23 +1,26 @@
 package com.legacy.aether.blocks.decorative;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+
+import com.legacy.aether.Aether;
 
 public class BlockZanite extends Block
 {
 
 	public BlockZanite()
 	{
-		super(Material.IRON);
+		super(Material.iron);
+
 		this.setHardness(3F);
-		this.setSoundType(SoundType.METAL);
+		this.setStepSound(soundTypeMetal);
+		this.setHarvestLevel("pickaxe", 1);
+		this.setBlockTextureName(Aether.find("zanite_block"));
 	}
 
 	@Override
-    public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon)
+    public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ)
     {
     	return true;
     }

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.google.common.collect.Lists;
 import com.legacy.aether.client.gui.dialogue.DialogueOption;
 import com.legacy.aether.client.gui.dialogue.GuiDialogue;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketDialogueClicked;
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketDialogueClicked;
 
 public class GuiServerDialogue extends GuiDialogue
 {
@@ -32,7 +32,7 @@ public class GuiServerDialogue extends GuiDialogue
 	@Override
 	public void dialogueClicked(DialogueOption dialogue)
 	{
-		AetherNetworkingManager.sendToServer(new PacketDialogueClicked(this.dialogueName, dialogue.getDialogueId()));
+		AetherNetwork.sendToServer(new PacketDialogueClicked(this.dialogueName, dialogue.getDialogueId()));
 		this.dialogueTreeCompleted();
 	}
 

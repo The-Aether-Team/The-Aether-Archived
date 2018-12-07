@@ -8,22 +8,15 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.util.EntitySaddleMount;
-import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.achievements.AchievementsAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityPhyg extends EntitySaddleMount
 {
@@ -52,34 +45,22 @@ public class EntityPhyg extends EntitySaddleMount
 		this.canJumpMidAir = true;
 
 		this.setSize(0.9F, 1.3F);
-	}
-
-	@Override
-    protected void initEntityAI()
-    {
+        this.getNavigator().setAvoidsWater(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
-		this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blue_berry, false));
+		this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
 		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 		this.tasks.addTask(5, new EntityAILookIdle(this));
 		this.tasks.addTask(5, new EntityAIFollowParent(this, 1.1D));
 		this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-    }
+	}
 
 	@Override
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-		this.setHealth(10);
-		
-		if (this.getSaddled())
-		{
-			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
-			this.setHealth(20);
-		}
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
 	}
 
 	@Override
@@ -87,7 +68,7 @@ public class EntityPhyg extends EntitySaddleMount
 	{
 		super.onUpdate();
 
-		if (this.onGround)
+		if (this.isOnGround())
 		{
 			this.wingAngle *= 0.8F;
 			this.aimingForFold = 0.1F;
@@ -98,9 +79,9 @@ public class EntityPhyg extends EntitySaddleMount
 			this.aimingForFold = 1.0F;
 		}
 
-		if (!this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayer)
+		if (this.riddenByEntity instanceof EntityPlayer)
 		{
-			((EntityPlayer)this.getPassengers().get(0)).addStat(AchievementsAether.flying_pig);
+			((EntityPlayer)this.riddenByEntity).triggerAchievement(AchievementsAether.flying_pig);
 		}
 
 		this.ticks++;
@@ -111,23 +92,23 @@ public class EntityPhyg extends EntitySaddleMount
 		this.fall();
 	}
 
-	@Override
-	protected SoundEvent getDeathSound()
-	{
-		return SoundsAether.phyg_death;
-	}
+    @Override
+    protected String getLivingSound()
+    {
+        return "mob.pig.say";
+    }
 
-	@Override
-	protected SoundEvent getHurtSound()
-	{
-		return SoundsAether.phyg_hurt;
-	}
+    @Override
+    protected String getHurtSound()
+    {
+        return "mob.pig.say";
+    }
 
-	@Override
-	protected SoundEvent getAmbientSound()
-	{
-		return SoundsAether.phyg_say;
-	}
+    @Override
+    protected String getDeathSound()
+    {
+        return "mob.pig.death";
+    }
 
 	@Override
 	public double getMountedYOffset()
@@ -144,33 +125,30 @@ public class EntityPhyg extends EntitySaddleMount
 	@Override
 	protected void jump()
 	{
-		if (this.getPassengers().isEmpty())
+		if (this.riddenByEntity == null)
 		{
 			super.jump();
 		}
 	}
 
 	@Override
-	protected void dropFewItems(boolean par1, int par2)
+	protected void dropFewItems(boolean recentlyHit, int lootLevel)
 	{
-		int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
+		int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
 
 		for (int k = 0; k < j; ++k)
 		{
 			if (this.isBurning())
 			{
-				this.dropItem(Items.COOKED_PORKCHOP, 1);
+				this.dropItem(Items.cooked_porkchop, 1);
 			}
 			else
 			{
-				this.dropItem(Items.PORKCHOP, 1);
+				this.dropItem(Items.porkchop, 1);
 			}
 		}
 
-		if (this.getSaddled())
-		{
-			this.dropItem(Items.SADDLE, 1);
-		}
+		super.dropFewItems(recentlyHit, lootLevel);
 	}
 
 	private void fall()
@@ -180,9 +158,9 @@ public class EntityPhyg extends EntitySaddleMount
 			this.motionY *= 0.6D;
 		}
 
-		if (!this.onGround && !this.isJumping)
+		if (!this.isOnGround() && !this.isJumping)
 		{
-			if (this.onGround && !this.worldObj.isRemote)
+			if (this.isOnGround() && !this.worldObj.isRemote)
 			{
 				this.jumpsRemaining = this.maxJumps;
 			}
@@ -196,10 +174,10 @@ public class EntityPhyg extends EntitySaddleMount
 	}
 
 	@Override
-	protected void playStepSound(BlockPos pos, Block par4)
-	{
-		this.worldObj.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PIG_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
-	}
+    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    {
+        this.playSound("mob.pig.step", 0.15F, 1.0F);
+    }
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound nbttagcompound)

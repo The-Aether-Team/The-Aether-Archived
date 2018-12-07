@@ -3,22 +3,15 @@ package com.legacy.aether.entities.util;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.passive.EntityAetherAnimal;
-import com.legacy.aether.entities.passive.mountable.EntitySwet;
 import com.legacy.aether.player.PlayerAether;
 
 public abstract class EntityMountable extends EntityAetherAnimal
 {
-
-	public static final DataParameter<Boolean> RIDER_SNEAKING = EntityDataManager.<Boolean>createKey(EntityMountable.class, DataSerializers.BOOLEAN);
 
 	protected float jumpPower;
 
@@ -36,11 +29,12 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	}
 
 	@Override
-	protected void entityInit()
+	public void entityInit()
 	{
 		super.entityInit();
 
-		this.dataManager.register(RIDER_SNEAKING, false);
+		this.dataWatcher.addObject(17, new Byte((byte) 0)); //onGroundClient
+		this.dataWatcher.addObject(18, new Byte((byte) 0));
 	}
 
 	@Override
@@ -55,53 +49,68 @@ public abstract class EntityMountable extends EntityAetherAnimal
         return false;
     }
 
+	public boolean isOnGround()
+	{
+		return this.dataWatcher.getWatchableObjectByte(17) == (byte)1;
+	}
+
+	private void setOnGround(boolean onGround)
+	{
+		this.dataWatcher.updateObject(17, (byte) (onGround ? 1 : 0));
+	}
+
 	public boolean isRiderSneaking()
 	{
-		return this.dataManager.get(RIDER_SNEAKING);
+		return this.dataWatcher.getWatchableObjectByte(18) == (byte)1;
 	}
 
 	public void setRiderSneaking(boolean riderSneaking)
 	{
-		this.dataManager.set(RIDER_SNEAKING, riderSneaking);
+		this.dataWatcher.updateObject(18, (byte) (riderSneaking ? 1 : 0));
 	}
 
 	@Override
 	public void onUpdate()
 	{
-		this.updateRider();
 		super.onUpdate();
+
+		if (!this.worldObj.isRemote)
+		{
+			if (this.onGround != this.isOnGround())
+			{
+				this.setOnGround(this.onGround);
+			}
+
+			this.updateRider();
+		}
 	}
 
 	public void updateRider()
 	{
-		if ((this instanceof EntitySwet && ((EntitySwet)this).isFriendly() && !this.getPassengers().isEmpty() || !this.getPassengers().isEmpty()) && !this.worldObj.isRemote)
+		if (this.canDismount() && this.riddenByEntity instanceof EntityPlayer)
 		{
-			Entity passenger = this.getPassengers().get(0);
+			PlayerAether playerAether = PlayerAether.get((EntityPlayer) this.riddenByEntity);
 
-			if (passenger.isSneaking())
+			if (playerAether.isMountSneaking())
 			{
 				if (this.onGround)
 				{
-					passenger.setSneaking(false);
-					passenger.dismountRidingEntity();
-					
-					return;
+					this.riddenByEntity.mountEntity(null);
+					playerAether.setMountSneaking(false);
 				}
-				
+
 				this.setRiderSneaking(true);
 			}
 			else
 			{
 				this.setRiderSneaking(false);
 			}
-
-			passenger.setSneaking(false);
 		}
 	}
 
     private float updateRotation(float angle, float targetAngle, float maxIncrease)
     {
-        float f = MathHelper.wrapDegrees(targetAngle - angle);
+        float f = MathHelper.wrapAngleTo180_float(targetAngle - angle);
 
         if (f > maxIncrease)
         {
@@ -119,7 +128,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	@Override
 	public void moveEntityWithHeading(float par1, float par2)
 	{
-		Entity entity = this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
+		Entity entity = this.riddenByEntity;
 
 		if (entity instanceof EntityPlayer)
 		{
@@ -142,7 +151,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	        double d01 = player.posX - this.posX;
 	        double d2 = player.posZ - this.posZ;
 
-	        float f = (float)(MathHelper.atan2(d2, d01) * (180D / Math.PI)) - 90.0F;
+	        float f = (float)(Math.atan2(d2, d01) * (180D / Math.PI)) - 90.0F;
 
 			if (player.moveStrafing != 0.0F && player.worldObj.isRemote)
 			{
@@ -158,9 +167,9 @@ public abstract class EntityMountable extends EntityAetherAnimal
 			{
 				this.motionY = this.getMountJumpStrength() * (double) this.jumpPower;
 
-				if (this.isPotionActive(MobEffects.JUMP_BOOST))
+				if (this.isPotionActive(Potion.jump))
 				{
-					this.motionY += (double) ((float) (this.getActivePotionEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1F);
+					this.motionY += (double) ((float) (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
 				}
 
 				this.setMountJumping(true);
@@ -215,19 +224,19 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	@Override
     public float getAIMoveSpeed()
     {
-        return this.getMountedMoveSpeed();
+        return this.riddenByEntity != null ? this.getMountedMoveSpeed() : super.getAIMoveSpeed();
+    }
+
+	@Override
+    protected void func_145780_a(int x, int y, int z, Block block)
+    {
+
     }
 
 	public float getMountedMoveSpeed()
 	{
 		return 0.15F;
 	}
-
-	@Override
-    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
-    {
-    	
-    }
 
 	protected double getMountJumpStrength()
 	{
@@ -247,6 +256,11 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	public void onMountedJump(float par1, float par2)
 	{
 		this.jumpPower = 0.4F;
+	}
+
+	public boolean canDismount()
+	{
+		return true;
 	}
 
 }

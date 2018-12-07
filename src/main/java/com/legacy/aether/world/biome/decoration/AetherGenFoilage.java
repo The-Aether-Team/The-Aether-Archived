@@ -2,45 +2,43 @@ package com.legacy.aether.world.biome.decoration;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
+import com.legacy.aether.blocks.natural.BlockAetherFlower;
+
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-
-import com.legacy.aether.blocks.natural.BlockAetherFlower;
 
 public class AetherGenFoilage extends WorldGenerator
 {
 
-    private IBlockState plantState;
+    private Block plantState;
 
     public AetherGenFoilage()
     {
     	super();
     }
 
-    public void setPlantBlock(IBlockState state)
+    public void setPlantBlock(Block state)
     {
     	this.plantState = state;
     }
 
 	@Override
-	public boolean generate(World world, Random random, BlockPos pos)
+	public boolean generate(World world, Random random, int x, int y, int z)
 	{
         for(int l = 0; l < 64; l++)
         {
-            int i1 = (pos.getX() + random.nextInt(8)) - random.nextInt(8);
-            int j1 = (pos.getY() + random.nextInt(4)) - random.nextInt(4);
-            int k1 = (pos.getZ() + random.nextInt(8)) - random.nextInt(8);
+            int i1 = (x + random.nextInt(8)) - random.nextInt(8);
+            int j1 = (y + random.nextInt(4)) - random.nextInt(4);
+            int k1 = (z + random.nextInt(8)) - random.nextInt(8);
 
-            BlockPos newPos = new BlockPos(i1, j1, k1);
-
-            if(world.isAirBlock(newPos) && ((BlockAetherFlower)this.plantState.getBlock()).canBlockStay(world, newPos, this.plantState))
+            if(world.isAirBlock(i1, j1, k1) && ((BlockAetherFlower)this.plantState).canBlockStay(world, i1, j1, k1))
             {
-            	this.setBlockAndNotifyAdequately(world, newPos, this.plantState);
+            	this.setBlockAndNotifyAdequately(world, i1, j1, k1, this.plantState, 0);
             }
         }
 
 		return true;
 	}
+
 }

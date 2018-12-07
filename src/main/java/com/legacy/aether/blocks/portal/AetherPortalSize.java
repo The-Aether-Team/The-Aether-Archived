@@ -1,10 +1,11 @@
 package com.legacy.aether.blocks.portal;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPortal;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
@@ -12,42 +13,34 @@ import com.legacy.aether.blocks.BlocksAether;
 public class AetherPortalSize 
 {
 
-	private final World world;
-    private final EnumFacing.Axis axis;
-    public final EnumFacing rightDir;
-    public final EnumFacing leftDir;
-    public int portalBlockCount;
-    public BlockPos bottomLeft;
+    private final World world;
+    private final int axis;
+    public final int rightDir;
+    public final int leftDir;
+    public int portalBlockCount = 0;
+    public ChunkCoordinates bottomLeft;
     public int height;
     public int width;
 
-    public AetherPortalSize(World worldIn, BlockPos position, EnumFacing.Axis axis)
+    public AetherPortalSize(World worldIn, int x, int y, int z, int axis)
     {
         this.world = worldIn;
         this.axis = axis;
 
-        if (axis == EnumFacing.Axis.X)
-        {
-            this.leftDir = EnumFacing.EAST;
-            this.rightDir = EnumFacing.WEST;
-        }
-        else
-        {
-            this.leftDir = EnumFacing.NORTH;
-            this.rightDir = EnumFacing.SOUTH;
-        }
+        this.leftDir = BlockPortal.field_150001_a[axis][0];
+        this.rightDir = BlockPortal.field_150001_a[axis][1];
 
-        for (BlockPos blockpos = position; position.getY() > blockpos.getY() - 21 && position.getY() > 0 && this.isEmptyBlock(worldIn.getBlockState(position.down()).getBlock()); position = position.down())
+        for (int i1 = y; y > i1 - 21 && y > 0 && this.isEmptyBlock(worldIn.getBlock(x, y - 1, z)); --y)
         {
             ;
         }
 
-        int i = this.getDistanceUntilEdge(position, this.leftDir) - 1;
+        int i = this.getDistanceUntilEdge(x, y, z, this.leftDir) - 1;
 
         if (i >= 0)
         {
-            this.bottomLeft = position.offset(this.leftDir, i);
-            this.width = this.getDistanceUntilEdge(this.bottomLeft, this.rightDir);
+            this.bottomLeft = new ChunkCoordinates(x + i * Direction.offsetX[this.leftDir], y, z + i * Direction.offsetZ[this.leftDir]);
+            this.width = this.getDistanceUntilEdge(this.bottomLeft.posX, this.bottomLeft.posY, this.bottomLeft.posZ, this.rightDir);
 
             if (this.width < 2 || this.width > 21)
             {
@@ -62,22 +55,32 @@ public class AetherPortalSize
         }
     }
 
-    protected int getDistanceUntilEdge(BlockPos position, EnumFacing axis)
+    protected int getDistanceUntilEdge(int x, int y, int z, int leftDir)
     {
-        int i;
+        int j1 = Direction.offsetX[leftDir];
+        int k1 = Direction.offsetZ[leftDir];
+        int i1;
+        Block block;
 
-        for (i = 0; i < 22; ++i)
+        for (i1 = 0; i1 < 22; ++i1)
         {
-            BlockPos blockpos = position.offset(axis, i);
+            block = this.world.getBlock(x + j1 * i1, y, z + k1 * i1);
 
-            if (!this.isEmptyBlock(this.world.getBlockState(blockpos).getBlock()) || this.world.getBlockState(blockpos.down()).getBlock() != Blocks.GLOWSTONE)
+            if (!this.isEmptyBlock(block))
+            {
+                break;
+            }
+
+            Block block1 = this.world.getBlock(x + j1 * i1, y - 1, z + k1 * i1);
+
+            if (block1 != Blocks.glowstone)
             {
                 break;
             }
         }
 
-        Block block = this.world.getBlockState(position.offset(axis, i)).getBlock();
-        return block == Blocks.GLOWSTONE ? i : 0;
+        block = this.world.getBlock(x + j1 * i1, y, z + k1 * i1);
+        return block == Blocks.glowstone ? i1 : 0;
     }
 
     public int getHeight()
@@ -98,8 +101,9 @@ public class AetherPortalSize
         {
             for (int i = 0; i < this.width; ++i)
             {
-                BlockPos blockpos = this.bottomLeft.offset(this.rightDir, i).up(this.height);
-                Block block = this.world.getBlockState(blockpos).getBlock();
+                int k = this.bottomLeft.posX + i * Direction.offsetX[BlockPortal.field_150001_a[this.axis][1]];
+                int l = this.bottomLeft.posZ + i * Direction.offsetZ[BlockPortal.field_150001_a[this.axis][1]];
+                Block block = this.world.getBlock(k, this.bottomLeft.posY + this.height, l);
 
                 if (!this.isEmptyBlock(block))
                 {
@@ -113,18 +117,18 @@ public class AetherPortalSize
 
                 if (i == 0)
                 {
-                    block = this.world.getBlockState(blockpos.offset(this.leftDir)).getBlock();
+                    block = this.world.getBlock(k + Direction.offsetX[BlockPortal.field_150001_a[this.axis][0]], this.bottomLeft.posY + this.height, l + Direction.offsetZ[BlockPortal.field_150001_a[this.axis][0]]);
 
-                    if (block != Blocks.GLOWSTONE)
+                    if (block != Blocks.glowstone)
                     {
                         break label24;
                     }
                 }
                 else if (i == this.width - 1)
                 {
-                    block = this.world.getBlockState(blockpos.offset(this.rightDir)).getBlock();
+                    block = this.world.getBlock(k + Direction.offsetX[BlockPortal.field_150001_a[this.axis][1]], this.bottomLeft.posY + this.height, l + Direction.offsetZ[BlockPortal.field_150001_a[this.axis][1]]);
 
-                    if (block != Blocks.GLOWSTONE)
+                    if (block != Blocks.glowstone)
                     {
                         break label24;
                     }
@@ -134,7 +138,11 @@ public class AetherPortalSize
 
         for (int j = 0; j < this.width; ++j)
         {
-            if (this.world.getBlockState(this.bottomLeft.offset(this.rightDir, j).up(this.height)).getBlock() != Blocks.GLOWSTONE)
+            int i = this.bottomLeft.posX + j * Direction.offsetX[BlockPortal.field_150001_a[this.axis][1]];
+            int k = this.bottomLeft.posY + this.height;
+            int l = this.bottomLeft.posZ + j * Direction.offsetZ[BlockPortal.field_150001_a[this.axis][1]];
+
+            if (this.world.getBlock(i, k, l) != Blocks.glowstone)
             {
                 this.height = 0;
                 break;
@@ -156,7 +164,7 @@ public class AetherPortalSize
 
     protected boolean isEmptyBlock(Block blockIn)
     {
-        return blockIn.getDefaultState().getMaterial() == Material.AIR || blockIn == Blocks.FIRE || blockIn == BlocksAether.aether_portal;
+        return blockIn.getMaterial() == Material.air || blockIn == Blocks.fire || blockIn == BlocksAether.aether_portal;
     }
 
     public boolean isValid()
@@ -168,11 +176,13 @@ public class AetherPortalSize
     {
         for (int i = 0; i < this.width; ++i)
         {
-            BlockPos blockpos = this.bottomLeft.offset(this.rightDir, i);
+            int j = this.bottomLeft.posX + Direction.offsetX[this.rightDir] * i;
+            int k = this.bottomLeft.posZ + Direction.offsetZ[this.rightDir] * i;
 
-            for (int j = 0; j < this.height; ++j)
+            for (int l = 0; l < this.height; ++l)
             {
-                this.world.setBlockState(blockpos.up(j), BlocksAether.aether_portal.getDefaultState().withProperty(BlockAetherPortal.AXIS, this.axis), 2);
+                int i1 = this.bottomLeft.posY + l;
+                this.world.setBlock(j, i1, k, BlocksAether.aether_portal, this.axis, 2);
             }
         }
     }

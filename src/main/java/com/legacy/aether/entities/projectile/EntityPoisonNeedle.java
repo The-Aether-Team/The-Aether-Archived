@@ -13,9 +13,9 @@ public class EntityPoisonNeedle extends EntityDartPoison
         super(world);
     }
 
-    public EntityPoisonNeedle(World world, EntityLiving ent)
+    public EntityPoisonNeedle(World world, EntityLiving ent, float velocity)
     {
-        super(world, ent);
+        super(world, ent, velocity);
     }
 
     public void entityInit()
@@ -25,9 +25,9 @@ public class EntityPoisonNeedle extends EntityDartPoison
     }
 
     @Override
-    public boolean hasNoGravity()
+    protected float getGravityVelocity()
     {
-        return false;
+        return 0.03F;
     }
 
 }

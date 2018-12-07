@@ -1,10 +1,12 @@
 package com.legacy.aether.api.freezables;
 
+import com.legacy.aether.api.RegistryEntry;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class AetherFreezable extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherFreezable>
+public class AetherFreezable extends RegistryEntry
 {
 
 	public int timeRequired;
@@ -56,6 +58,8 @@ public class AetherFreezable extends net.minecraftforge.fml.common.registry.IFor
 		this.input = input;
 		this.output = output;
 		this.timeRequired = timeRequired;
+
+		this.setRegistryName(input.getItem().getUnlocalizedName().toString() + "_meta_" + (input.isItemStackDamageable() ? 0 : input.getItemDamage()));
 	}
 
 	public int getTimeRequired()

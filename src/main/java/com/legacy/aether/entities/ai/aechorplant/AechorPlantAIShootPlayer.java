@@ -1,7 +1,6 @@
 package com.legacy.aether.entities.ai.aechorplant;
 
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.world.EnumDifficulty;
 
 import com.legacy.aether.entities.hostile.EntityAechorPlant;
@@ -23,22 +22,22 @@ public class AechorPlantAIShootPlayer extends EntityAIBase
 	@Override
 	public boolean shouldExecute() 
 	{
-		return !this.shooter.isDead && this.shooter.getAttackTarget() != null;
+		return !this.shooter.isDead && this.shooter.getEntityToAttack() != null;
 	}
 
 	@Override
 	public void updateTask()
 	{
-		double distanceToPlayer = this.shooter.getAttackTarget().getDistanceToEntity(this.shooter);
-		double lookDistance = 5.5D + ((double)this.shooter.size / 2D);
+		double distanceToPlayer = this.shooter.getEntityToAttack().getDistanceToEntity(this.shooter);
+		double lookDistance = 5.5D + ((double)this.shooter.getSize() / 2D);
 
-		if(this.shooter.getAttackTarget().isDead || distanceToPlayer > lookDistance) 
+		if(this.shooter.getEntityToAttack().isDead || distanceToPlayer > lookDistance) 
 		{
-			this.shooter.setAttackTarget(null);
+			this.shooter.setTarget(null);
 			this.reloadTime = 0;
 		}
 
-		if(this.reloadTime == 20 &&this.shooter.canEntityBeSeen(this.shooter.getAttackTarget())) 
+		if(this.reloadTime == 20 &&this.shooter.canEntityBeSeen(this.shooter.getEntityToAttack())) 
 		{
 			this.shootAtPlayer();
 			this.reloadTime = -10;
@@ -52,26 +51,25 @@ public class AechorPlantAIShootPlayer extends EntityAIBase
 
 	public void shootAtPlayer()
 	{
-		if(this.shooter.worldObj.getDifficulty().equals(EnumDifficulty.PEACEFUL)) 
+		if(this.shooter.worldObj.difficultySetting.equals(EnumDifficulty.PEACEFUL)) 
 		{
 			return;
 		}
 
-		double x = this.shooter.getAttackTarget().posX - this.shooter.posX;
-		double z = this.shooter.getAttackTarget().posZ - this.shooter.posZ;
-		double y = 0.1D + (Math.sqrt((x * x) + (z * z) + 0.1D) * 0.5D) + ((this.shooter.posY - this.shooter.getAttackTarget().posY) * 0.25D);
+		double x = this.shooter.getEntityToAttack().posX - this.shooter.posX;
+		double z = this.shooter.getEntityToAttack().posZ - this.shooter.posZ;
+		double y = 0.1D + (Math.sqrt((x * x) + (z * z) + 0.1D) * 0.5D) + ((this.shooter.posY - this.shooter.getEntityToAttack().posY) * 0.25D);
 
 		double distance = 1.5D / Math.sqrt((x * x) + (z * z) + 0.1D);
 
 		x = x * distance;
 		z = z * distance;
 
-		EntityPoisonNeedle poisonNeedle = new EntityPoisonNeedle(this.shooter.worldObj, this.shooter);
+		EntityPoisonNeedle poisonNeedle = new EntityPoisonNeedle(this.shooter.worldObj, this.shooter, 0.5F);
 
-		poisonNeedle.setAim(this.shooter, this.shooter.rotationPitch, this.shooter.rotationYaw, 0.0F, 0.5F, 1.0F);
 		poisonNeedle.posY = this.shooter.posY + 1D;
 
-        this.shooter.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.shooter.getRNG().nextFloat() * 0.2F + 0.9F));
+        this.shooter.playSound("random.bow", 1.0F, 1.2F / (this.shooter.getRNG().nextFloat() * 0.2F + 0.9F));
 		this.shooter.worldObj.spawnEntityInWorld(poisonNeedle);
 
 		poisonNeedle.setThrowableHeading(x, y, z, 0.285F + ((float)y * 0.05F), 1.0F);

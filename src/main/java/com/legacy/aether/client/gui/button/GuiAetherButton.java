@@ -4,16 +4,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
+
+import com.legacy.aether.Aether;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiAetherButton extends GuiButton
 {
 
-    protected static final ResourceLocation buttonTextures = new ResourceLocation("aether_legacy", "textures/gui/buttons.png");
+    protected static final ResourceLocation buttonTextures = Aether.locate("textures/gui/buttons.png");
 
 	public int scrollMax = 100;
 
@@ -76,7 +79,7 @@ public class GuiAetherButton extends GuiButton
 	}
 
 	@Override
-	public void drawButton(Minecraft minecraft, int i, int j)
+    public void drawButton(Minecraft minecraft, int i, int j)
 	{
 		if (!this.visible)
 		{
@@ -86,7 +89,7 @@ public class GuiAetherButton extends GuiButton
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		FontRenderer fontrenderer = minecraft.fontRendererObj;
+		FontRenderer fontrenderer = minecraft.fontRenderer;
 		minecraft.renderEngine.bindTexture(buttonTextures);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		boolean flag = i >= this.xPosition && j >= this.yPosition && i < this.xPosition + this.width && j < this.yPosition + this.height;

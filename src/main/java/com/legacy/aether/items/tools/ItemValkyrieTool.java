@@ -7,8 +7,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Vec3;
 
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumAetherToolType;
@@ -18,7 +18,13 @@ public class ItemValkyrieTool extends ItemAetherTool
 
 	public ItemValkyrieTool(EnumAetherToolType toolType) 
 	{
-		super(ToolMaterial.DIAMOND, toolType);
+		super(ToolMaterial.EMERALD, toolType);
+	}
+
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return false;
 	}
 
 	@Override
@@ -28,6 +34,7 @@ public class ItemValkyrieTool extends ItemAetherTool
     }
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
 	{
 		if (!(entityLiving instanceof EntityPlayer))
@@ -37,8 +44,8 @@ public class ItemValkyrieTool extends ItemAetherTool
 
 		EntityPlayer player = (EntityPlayer) entityLiving;
 
-		Vec3d playerVision = player.getLookVec();
-		AxisAlignedBB reachDistance = player.getEntityBoundingBox().expand(10.0F, 10.0F, 10.0F);
+		Vec3 playerVision = player.getLookVec();
+		AxisAlignedBB reachDistance = player.boundingBox.expand(10.0D, 10.0D, 10.0D);
 
 		List<Entity> locatedEntities = player.worldObj.getEntitiesWithinAABB(Entity.class, reachDistance);
 
@@ -59,7 +66,7 @@ public class ItemValkyrieTool extends ItemAetherTool
 				continue;
 			}
 
-			Vec3d vec = new Vec3d(ent.posX - player.posX, ent.getEntityBoundingBox().minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
+			Vec3 vec = Vec3.createVectorHelper(ent.posX - player.posX, ent.boundingBox.minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
 			double len = vec.lengthVector();
 
 			if (len > 10.0F)
@@ -82,7 +89,7 @@ public class ItemValkyrieTool extends ItemAetherTool
 			}
 		}
 
-		if (found != null && player.getRidingEntity() != found)
+		if (found != null && player.ridingEntity != found)
 		{
 			stack.damageItem(1, player);
 

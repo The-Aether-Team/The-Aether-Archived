@@ -2,7 +2,6 @@ package com.legacy.aether.entities.ai;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.util.math.BlockPos;
 
 public class EntityAIUpdateState extends EntityAIBase
 {
@@ -13,7 +12,11 @@ public class EntityAIUpdateState extends EntityAIBase
 
     private long checkTime = 0L;
 
-    private BlockPos checkPos = BlockPos.ORIGIN;
+    private double checkX;
+
+    private double checkY;
+
+    private double checkZ;
 
 	public EntityAIUpdateState(EntityLivingBase entity)
 	{
@@ -34,9 +37,9 @@ public class EntityAIUpdateState extends EntityAIBase
 
         if (curtime > this.checkTime + 3000L)
         {
-            double diffx = this.entity.posX - this.checkPos.getX();
-            double diffy = this.entity.posY - this.checkPos.getY();
-            double diffz = this.entity.posZ - this.checkPos.getZ();
+            double diffx = this.entity.posX - this.checkX;
+            double diffy = this.entity.posY - this.checkY;
+            double diffz = this.entity.posZ - this.checkZ;
 
             double distanceTravelled = Math.sqrt((diffx * diffx) + (diffy * diffy) + (diffz * diffz));
 
@@ -52,7 +55,9 @@ public class EntityAIUpdateState extends EntityAIBase
                 }
             }
 
-            this.checkPos = this.entity.getPosition();
+            this.checkX = this.entity.posX;
+            this.checkY = this.entity.posY;
+            this.checkZ = this.entity.posZ;
             this.checkTime = curtime;
         }
     }

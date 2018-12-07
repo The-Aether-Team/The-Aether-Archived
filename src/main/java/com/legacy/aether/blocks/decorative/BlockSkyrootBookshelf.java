@@ -3,44 +3,54 @@ package com.legacy.aether.blocks.decorative;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import com.legacy.aether.Aether;
+import com.legacy.aether.blocks.BlocksAether;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockSkyrootBookshelf extends Block
 {
+
     public BlockSkyrootBookshelf()
     {
-        super(Material.WOOD);
+        super(Material.wood);
         
         this.setHardness(2F);
 		this.setResistance(5F);
-		this.setSoundType(SoundType.WOOD);
+		this.setHarvestLevel("axe", 0);
+		this.setStepSound(soundTypeWood);
+		this.setBlockTextureName(Aether.find("skyroot_bookshelf"));
     }
 
-    /**
-     * Returns the quantity of items to drop on block destruction.
-     */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
+    {
+        return p_149691_1_ != 1 && p_149691_1_ != 0 ? super.getIcon(p_149691_1_, p_149691_2_) : BlocksAether.skyroot_planks.getBlockTextureFromSide(p_149691_1_);
+    }
+
+    @Override
     public int quantityDropped(Random random)
     {
         return 3;
     }
     
     @Override
-	public float getEnchantPowerBonus(World world, BlockPos pos)
+	public float getEnchantPowerBonus(World world, int x, int y, int z)
 	{
 		return 1;
 	}
 
-    /**
-     * Get the Item that this Block should drop when harvested.
-     */
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    @Override
+    public Item getItemDropped(int meta, Random rand, int fortune)
     {
-        return Items.BOOK;
+        return Items.book;
     }
 }

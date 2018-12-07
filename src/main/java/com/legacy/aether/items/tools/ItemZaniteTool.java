@@ -1,6 +1,6 @@
 package com.legacy.aether.items.tools;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
 import com.legacy.aether.items.ItemsAether;
@@ -17,15 +17,15 @@ public class ItemZaniteTool extends ItemAetherTool
 	}
 
 	@Override
-    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-    {
-    	return repair.getItem() == ItemsAether.zanite_gemstone;
-    }
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return repair.getItem() == ItemsAether.zanite_gemstone;
+	}
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state)
+    public float getDigSpeed(ItemStack stack, Block block, int meta)
     {
-		return this.calculateIncrease(stack, this.toolType.getStrVsBlock(stack, state));
+		return this.calculateIncrease(stack, this.toolType.getStrVsBlock(stack, block));
     }
 
     private float calculateIncrease(ItemStack tool, float original)

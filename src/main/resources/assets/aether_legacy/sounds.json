@@ -1,6 +1,6 @@
 {
   "records.aether_tune": {
-	"category": "music",
+	"category": "record",
 	"sounds":[
 	  {
 	    "name": "aether_legacy:record/aether_tune",
@@ -8,8 +8,17 @@
 	  }
 	]
   },
+  "records.legacy": {
+	"category": "record",
+	"sounds":[
+	  {
+	    "name": "aether_legacy:record/legacy",
+	    "stream": true
+	  }
+	]
+  },
   "records.ascending_dawn": {
-	"category": "music",
+	"category": "record",
 	"sounds": [
 	  {
 	    "name": "aether_legacy:record/ascending_dawn",
@@ -18,7 +27,7 @@
 	]
   },
   "records.welcoming_skies": {
-  	"category": "music",
+  	"category": "record",
 	"sounds": [
 	  {
 	    "name": "aether_legacy:record/welcoming_skies",

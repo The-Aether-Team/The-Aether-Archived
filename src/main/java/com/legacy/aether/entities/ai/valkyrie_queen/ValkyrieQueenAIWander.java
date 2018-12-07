@@ -14,7 +14,6 @@ public class ValkyrieQueenAIWander extends EntityAIWander
 		super(creatureIn, speedIn);
 
 		this.theQueen = creatureIn;
-		this.setExecutionChance(50);
 	}
 
 	@Override

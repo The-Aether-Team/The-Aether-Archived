@@ -2,8 +2,7 @@ package com.legacy.aether.entities.passive.mountable;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
+import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,31 +10,20 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.entities.hostile.swet.EnumSwetType;
 import com.legacy.aether.entities.util.EntityMountable;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 
 public class EntitySwet extends EntityMountable
 {
-
-	public static final DataParameter<Boolean> FRIENDLY = EntityDataManager.<Boolean>createKey(EntitySwet.class, DataSerializers.BOOLEAN);
-
-	public static final DataParameter<Integer> SWET_TYPE = EntityDataManager.<Integer>createKey(EntitySwet.class, DataSerializers.VARINT);
 
 	private int slimeJumpDelay = 0;
 
@@ -51,11 +39,11 @@ public class EntitySwet extends EntityMountable
 	{
 		super(world);
 
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(25);
 		this.setHealth(25);
 
-		this.setType(this.rand.nextInt(2));
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.5F);
+		this.setSwetType(this.rand.nextInt(2));
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.5F);
 		this.setSize(0.8F, 0.8F);
 		this.setPosition(this.posX, this.posY, this.posZ);
 		this.hops = 0;
@@ -65,13 +53,22 @@ public class EntitySwet extends EntityMountable
 	}
 
 	@Override
+	public void entityInit()
+	{
+		super.entityInit();
+
+		this.dataWatcher.addObject(20, new Byte((byte) 0));
+		this.dataWatcher.addObject(21, new Byte((byte) this.rand.nextInt(EnumSwetType.values().length)));
+	}
+
+	@Override
 	public void updateRidden()
 	{
 		super.updateRidden();
 
-		if (!this.getPassengers().isEmpty() && this.kickoff)
+		if (this.riddenByEntity != null && this.kickoff)
 		{
-			this.getPassengers().get(0).dismountRidingEntity();
+			this.riddenByEntity.mountEntity(null);
 			this.kickoff = false;
 		}
 	}
@@ -79,6 +76,8 @@ public class EntitySwet extends EntityMountable
 	@Override
 	public void onUpdate()
 	{
+		super.onUpdate();
+
 		if (this.getAttackTarget() != null)
 		{
 			for (int i = 0; i < 3; i++)
@@ -86,23 +85,26 @@ public class EntitySwet extends EntityMountable
 				double d = (float) this.posX + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F;
 				double d1 = (float) this.posY + this.height;
 				double d2 = (float) this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.3F;
-				this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
+
+				this.worldObj.spawnParticle("splash", d, d1 - 0.25D, d2, 0.0D, 0.0D, 0.0D);
 			}
 		}
 
-		super.onUpdate();
-
-		if (this.getPassengers().isEmpty() && !this.isFriendly())
+		if (this.riddenByEntity == null && !this.isFriendly())
 		{
-			List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.5D, 0.75D, 0.5D));
-
-			int j = 0;
-
-			if (j < list.size())
+			List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.5D, 0.75D, 0.5D), new IEntitySelector()
 			{
-				Entity entity = (Entity) list.get(j);
+				@Override
+				public boolean isEntityApplicable(Entity entity)
+				{
+					return !(entity instanceof EntitySwet) && entity instanceof EntityLivingBase && entity.ridingEntity == null;
+				}
+			});
 
-				if (entity instanceof EntityLivingBase && !(entity instanceof EntitySwet))
+			for (int j = 0; j < list.size() && this.riddenByEntity == null; ++j)
+			{
+				EntityLivingBase entity = (EntityLivingBase) list.get(j);
+
 				this.capturePrey(entity);
 			}
 		}
@@ -120,32 +122,25 @@ public class EntitySwet extends EntityMountable
 	}
 
 	@Override
-	public void fall(float distance, float damageMultiplier)
+	public void fall(float distance)
 	{
-		if (this.isFriendly())
+		if (!this.isFriendly())
 		{
-			return;
-		}
+			super.fall(distance);
 
-		super.fall(distance, damageMultiplier);
-
-		if (this.hops >= 3 && this.getHealth() > 0)
-		{
-			this.dissolve();
+			if (this.hops >= 3 && this.getHealth() >= 0)
+			{
+				this.dissolve();
+			}
 		}
 	}
 
 	@Override
-	public void knockBack(Entity entity, float i, double d, double d1)
+	public void knockBack(Entity entity, float damage, double distanceX, double distanceZ)
 	{
-		if (!this.getPassengers().isEmpty() && entity == this.getPassengers().get(0))
+		if (this.riddenByEntity != entity)
 		{
-			return;
-		}
-		else
-		{
-			super.knockBack(entity, i, d, d1);
-			return;
+			super.knockBack(entity, damage, distanceX, distanceZ);
 		}
 	}
 
@@ -157,7 +152,8 @@ public class EntitySwet extends EntityMountable
 			float f1 = this.rand.nextFloat() * 0.5F + 0.25F;
 			float f2 = MathHelper.sin(f) * f1;
 			float f3 = MathHelper.cos(f) * f1;
-			this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX + (double) f2, this.getEntityBoundingBox().minY + 1.25D, this.posZ + (double) f3, (double) f2 * 1.5D + this.motionX, 4D, (double) f3 * 1.5D + this.motionZ);
+
+			this.worldObj.spawnParticle("splash", this.posX + (double) f2, this.boundingBox.minY + 1.25D, this.posZ + (double) f3, (double) f2 * 1.5D + this.motionX, 4D, (double) f3 * 1.5D + this.motionZ);
 		}
 
 		this.setDead();
@@ -179,7 +175,7 @@ public class EntitySwet extends EntityMountable
 		this.setSize(entity.width, entity.height);
 		this.setPosition(this.posX, this.posY, this.posZ);
 
-		entity.startRiding(this);
+		entity.mountEntity(this);
 
 		this.rotationYaw = this.rand.nextFloat() * 360F;
 	}
@@ -196,9 +192,9 @@ public class EntitySwet extends EntityMountable
 
 		boolean flag = super.attackEntityFrom(damageSource, i);
 
-		if (flag && !this.getPassengers().isEmpty() && (this.getPassengers().get(0) instanceof EntityLivingBase))
+		if (flag && this.riddenByEntity != null && (this.riddenByEntity instanceof EntityLivingBase))
 		{
-			EntityLivingBase rider = (EntityLivingBase) this.getPassengers().get(0);
+			EntityLivingBase rider = (EntityLivingBase) this.riddenByEntity;
 
 			if (entity != null && rider == entity)
 			{
@@ -226,10 +222,9 @@ public class EntitySwet extends EntityMountable
 		{
 			EntityLivingBase entityliving = (EntityLivingBase) entity;
 
-			if (entityliving.getHealth() > 0 && (this.getPassengers().isEmpty() || !this.getPassengers().isEmpty() && entityliving != this.getPassengers().get(0)))
+			if (entityliving.getHealth() > 0 && (this.riddenByEntity == null || this.riddenByEntity != null && entityliving != this.riddenByEntity))
 			{
 				this.setAttackTarget((EntityLivingBase) entity);
-				this.faceEntity(entity, 180F, 180F);
 				this.kickoff = true;
 			}
 		}
@@ -243,17 +238,17 @@ public class EntitySwet extends EntityMountable
 	}
 
 	@Override
-	public void onEntityUpdate()
+	public void updateEntityActionState()
 	{
-		super.onEntityUpdate();
+		super.updateEntityActionState();
 		this.entityAge++; 
 
-		if (this.isFriendly() && !this.getPassengers().isEmpty())
+		if (this.isFriendly() && this.riddenByEntity != null)
 		{
 			return;
 		}
 
-		if (this.getAttackTarget() == null && this.getPassengers().isEmpty() && this.getHealth() > 0)
+		if (this.getAttackTarget() == null && this.riddenByEntity == null && this.getHealth() > 0)
 		{
 			if (this.onGround && this.slimeJumpDelay-- <= 0)
 			{
@@ -263,10 +258,10 @@ public class EntitySwet extends EntityMountable
 
 				this.motionY = 0.34999999403953552D;
 
-				this.playSound(SoundEvents.ENTITY_SLIME_JUMP, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+				this.playSound("mob.slime.small", 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
 				this.moveStrafing = 1.0F - this.rand.nextFloat() * 2.0F;
-				this.moveForward = (float) (1 * 16);
+				this.moveForward = 16.0F;
 			}
 			else
 			{
@@ -283,9 +278,22 @@ public class EntitySwet extends EntityMountable
 			this.isJumping = false;
 		}
 
-		if (this.getAttackTarget() != null && this.getPassengers().isEmpty() && this.getHealth() > 0)
+		if (this.getAttackTarget() != null && this.riddenByEntity == null && this.getHealth() > 0)
 		{
-			this.faceEntity(this.getAttackTarget(), 10F, 10F);
+        	float f = MathHelper.wrapAngleTo180_float(20.0F);
+
+            if (f > 20.0F)
+            {
+                f = 10.0F;
+            }
+
+            if (f < -20.0F)
+            {
+                f = -210.0F;
+            }
+
+            this.rotationYaw = f + this.getAttackTarget().rotationYaw + 214.0F;
+			//this.faceEntity(this.getAttackTarget(), 10F, 20F);
 			
 			if (this.onGround && this.slimeJumpDelay-- <= 0)
 			{
@@ -295,10 +303,10 @@ public class EntitySwet extends EntityMountable
 
 				this.motionY = 0.34999999403953552D;
 
-				this.playSound(SoundEvents.ENTITY_SLIME_JUMP, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+				this.playSound("mob.slime.small", 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
-				this.moveStrafing = 1.0F;
-				this.moveForward = (float) (1 * 16);
+				this.moveStrafing = 1.0F - this.rand.nextFloat() * 2.0F;
+				this.moveForward = 16.0F;
 			}
 			else
 			{
@@ -327,12 +335,12 @@ public class EntitySwet extends EntityMountable
 		}
 		else
 		{
-			if (this.onGround && this.getPassengers().isEmpty() && this.hops != 0 && this.hops != 3)
+			if (this.onGround && this.riddenByEntity == null && this.hops != 0 && this.hops != 3)
 			{
 				this.hops = 0;
 			}
 
-			if (this.getAttackTarget() == null && this.getPassengers().isEmpty())
+			if (this.getAttackTarget() == null && this.riddenByEntity == null)
 			{
 				Entity entity = this.getPrey();
 				if (entity != null)
@@ -340,7 +348,7 @@ public class EntitySwet extends EntityMountable
 					this.setAttackTarget((EntityLivingBase) entity);
 				}
 			}
-			else if (this.getAttackTarget() != null && this.getPassengers().isEmpty())
+			else if (this.getAttackTarget() != null && this.riddenByEntity == null)
 			{
 				if (this.getDistanceToEntity(this.getAttackTarget()) <= 9F)
 				{
@@ -349,7 +357,8 @@ public class EntitySwet extends EntityMountable
 						this.splotch();
 						this.flutter = 10;
 						this.isJumping = true;
-						this.moveForward = 1.0F;
+						this.moveForward = 16.0F;
+						this.moveStrafing = 1.0F - this.rand.nextFloat() * 2.0F;
 						this.rotationYaw += 5F * (this.rand.nextFloat() - this.rand.nextFloat());
 					}
 				}
@@ -357,10 +366,10 @@ public class EntitySwet extends EntityMountable
 				{
 					this.setAttackTarget(null);
 					this.isJumping = false;
-					this.moveForward = 0.0F;
+					this.moveStrafing = this.moveForward = 0.0F;
 				}
 			}
-			else if (!this.getPassengers().isEmpty() && this.getPassengers().get(0) != null && this.onGround)
+			else if (this.riddenByEntity != null && this.riddenByEntity != null && this.onGround)
 			{
 				if (this.hops == 0)
 				{
@@ -410,7 +419,7 @@ public class EntitySwet extends EntityMountable
 
 	public void moveEntityWithHeading(float par1, float par2)
 	{
-		EntityPlayer rider = !this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayer ? (EntityPlayer) this.getPassengers().get(0) : null;
+		EntityPlayer rider = this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer ? (EntityPlayer) this.riddenByEntity : null;
 
 		if (rider != null)
 		{
@@ -421,7 +430,7 @@ public class EntitySwet extends EntityMountable
 				return;
 			}
 
-			this.setFriendly(aetherRider.wearingAccessory(ItemsAether.swet_cape) ? true : false);
+			this.setFriendly(aetherRider.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.swet_cape)) ? true : false);
 
 			if (this.isFriendly())
 			{
@@ -514,7 +523,7 @@ public class EntitySwet extends EntityMountable
 
 				if (!this.worldObj.isRemote)
 				{
-					this.setAIMoveSpeed((float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
+					this.setAIMoveSpeed((float) this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
 					super.moveEntityWithHeading(par1, par2);
 				}
 			}
@@ -538,92 +547,57 @@ public class EntitySwet extends EntityMountable
     {
     	super.jump();
 
-		this.playSound(SoundEvents.ENTITY_SLIME_JUMP, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+		this.playSound("mob.slime.small", 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
     }
 
-	@Override
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound)
+	public void setSwetType(int id)
 	{
-		super.writeEntityToNBT(nbttagcompound);
-
-		nbttagcompound.setShort("Hops", (short) this.hops);
-		nbttagcompound.setShort("Flutter", (short) this.flutter);
-		nbttagcompound.setBoolean("Friendly", this.isFriendly());
-		nbttagcompound.setInteger("SwetType", this.getType());
+		this.dataWatcher.updateObject(21, (byte) id);
 	}
 
-	@Override
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound)
+	public EnumSwetType getSwetType()
 	{
-		super.readEntityFromNBT(nbttagcompound);
+		int id = this.dataWatcher.getWatchableObjectByte(21);
 
-		this.hops = nbttagcompound.getShort("Hops");
-		this.flutter = nbttagcompound.getShort("Flutter");
+		return EnumSwetType.get(id);
+	}
 
-		this.setFriendly(nbttagcompound.getBoolean("Friendly"));
-		this.setType(nbttagcompound.getInteger("SwetType"));
+	public void setFriendly(boolean friendly)
+	{
+		this.dataWatcher.updateObject(20, (byte) (friendly ? 1 : 0));
 	}
 
 	public boolean isFriendly()
 	{
-		return this.dataManager.get(FRIENDLY).booleanValue();
-	}
-
-	private void setFriendly(boolean friendly)
-	{
-		this.dataManager.set(FRIENDLY, friendly);
-	}
-
-	public int getType()
-	{
- 		return this.dataManager.get(SWET_TYPE).intValue();
-	}
-
-	private void setType(int type)
-	{
-		this.dataManager.set(SWET_TYPE, type);
-	}
-
-	@Override
-	protected void entityInit()
-	{
-		super.entityInit();
-		this.dataManager.register(FRIENDLY, false);
-		this.dataManager.register(SWET_TYPE, 0);
+		return this.dataWatcher.getWatchableObjectByte(20) == (byte)1;
 	}
 
 	public void splorch()
 	{
-		this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_ATTACK, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+		this.worldObj.playSound(this.posX, this.posY, this.posZ, "mob.attack", 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 	}
 
 	public void splotch()
 	{
-		this.worldObj.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+		this.worldObj.playSound(this.posX, this.posY, this.posZ, "mob.slime.small", 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 	}
 
 	@Override
-	protected SoundEvent getHurtSound()
+	protected String getHurtSound()
 	{
-		return SoundEvents.ENTITY_SLIME_SQUISH;
+		return "mob.slime.small";
 	}
 
 	@Override
-	protected SoundEvent getDeathSound()
+	protected String getDeathSound()
 	{
-		return SoundEvents.ENTITY_SLIME_DEATH;
+		return "mob.slime.small";
 	}
-
-	@Override
-    public SoundCategory getSoundCategory()
-    {
-        return SoundCategory.HOSTILE;
-    }
 
 	@Override
 	public void applyEntityCollision(Entity entity)
 	{
-		if (this.hops == 0 && !this.isFriendly() && this.getPassengers().isEmpty() && this.getAttackTarget() != null && entity != null && entity == this.getAttackTarget() && (entity.getRidingEntity() == null || !(entity.getRidingEntity() instanceof EntitySwet)))
+		if (this.hops == 0 && !this.isFriendly() && this.riddenByEntity == null && this.getAttackTarget() != null && entity != null && entity == this.getAttackTarget() && (entity.ridingEntity == null || !(entity.ridingEntity instanceof EntitySwet)))
 		{
 			this.capturePrey(entity);
 		}
@@ -632,34 +606,26 @@ public class EntitySwet extends EntityMountable
 	}
 
 	@Override
-    public boolean processInteract(EntityPlayer entityplayer, EnumHand hand, @Nullable ItemStack stack)
+    public boolean interact(EntityPlayer player)
 	{
-		if (!this.worldObj.isRemote)
+		if (!this.worldObj.isRemote && this.isFriendly())
 		{
-			if (!this.isFriendly())
+			if (this.riddenByEntity == null)
 			{
-				return true;
+				this.capturePrey(player);
 			}
-
-			if (this.getPassengers().isEmpty())
+			else if (this.riddenByEntity == player)
 			{
-				this.capturePrey(entityplayer);
-			}
-			else
-			{
-				if (this.getPassengers().get(0) == entityplayer)
-				{
-					entityplayer.dismountRidingEntity();
-				}
+				player.mountEntity(null);
 			}
 		}
 
-		return true;
+		return super.interact(player);
 	}
 
 	protected Entity getPrey()
 	{
-		List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(6D, 6D, 6D));
+		List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(6D, 6D, 6D));
 		for (int i = 0; i < list.size(); i++)
 		{
 			Entity entity = (Entity) list.get(i);
@@ -673,21 +639,46 @@ public class EntitySwet extends EntityMountable
 	}
 
 	@Override
-	protected void dropFewItems(boolean var1, int var2)
+	protected void dropFewItems(boolean recentlyHit, int lootLevel)
 	{
-		ItemStack droppedItem = new ItemStack(this.getType() == 1 ? BlocksAether.aercloud : Blocks.GLOWSTONE, 1, this.getType() == 1 ? 1 : 0);
-		this.entityDropItem(droppedItem, 0F);
-		
-		if (this.getType() == 1);
-		{
-			this.dropItem(ItemsAether.swetty_ball, 1);
-		}
+		int count = this.rand.nextInt(3);
+
+        if (lootLevel > 0)
+        {
+        	count += this.rand.nextInt(lootLevel + 1);
+        }
+
+		this.entityDropItem(new ItemStack(this.getSwetType().getId() == 0 ? BlocksAether.aercloud : Blocks.glowstone, count, this.getSwetType().getId() == 0 ? 1 : 0), 1.0F);
+		this.entityDropItem(new ItemStack(ItemsAether.swet_ball, count), 1.0F);
 	}
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable entityageable)
 	{
 		return null;
+	}
+
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound)
+	{
+		super.writeEntityToNBT(compound);
+
+		compound.setShort("Hops", (short) this.hops);
+		compound.setShort("Flutter", (short) this.flutter);
+		compound.setBoolean("isFriendly", this.isFriendly());
+		compound.setInteger("swetType", this.getSwetType().getId());
+	}
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound compound)
+	{
+		super.readEntityFromNBT(compound);
+
+		this.hops = compound.getShort("Hops");
+		this.flutter = compound.getShort("Flutter");
+
+		this.setFriendly(compound.getBoolean("isFriendly"));
+		this.setSwetType(compound.getInteger("swetType"));
 	}
 
 }

@@ -5,22 +5,21 @@ import net.minecraft.util.ResourceLocation;
 public class MoaProperties
 {
 
-	private int maxJumps, moaChances;
+	private int maxJumps;
 
 	private float moaSpeed;
 
 	private ResourceLocation location = null;
 
-	public MoaProperties(int maxJumps, int moaChances, float moaSpeed)
+	public MoaProperties(int maxJumps, float moaSpeed)
 	{
 		this.maxJumps = maxJumps;
-		this.moaChances = moaChances;
 		this.moaSpeed = moaSpeed;
 	}
 
-	public MoaProperties(int maxJumps, int moaChances, float moaSpeed, ResourceLocation location)
+	public MoaProperties(int maxJumps, float moaSpeed, ResourceLocation location)
 	{
-		this(maxJumps, moaChances, moaSpeed);
+		this(maxJumps, moaSpeed);
 
 		this.location = location;
 	}
@@ -28,11 +27,6 @@ public class MoaProperties
 	public int getMaxJumps()
 	{
 		return this.maxJumps;
-	}
-
-	public int getMoaChances()
-	{
-		return this.moaChances;
 	}
 
 	public float getMoaSpeed()
@@ -45,7 +39,7 @@ public class MoaProperties
 		return this.location != null;
 	}
 
-	public ResourceLocation getCustomTexture(boolean isSaddled)
+	public ResourceLocation getCustomTexture(boolean isSaddled, boolean isBeingRidden)
 	{
 		return this.location;
 	}

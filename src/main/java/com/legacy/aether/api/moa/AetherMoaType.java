@@ -1,9 +1,11 @@
 package com.legacy.aether.api.moa;
 
+import com.legacy.aether.api.RegistryEntry;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 
-public class AetherMoaType extends net.minecraftforge.fml.common.registry.IForgeRegistryEntry.Impl<AetherMoaType>
+public class AetherMoaType extends RegistryEntry
 {
 
 	private MoaProperties properties;
@@ -17,7 +19,7 @@ public class AetherMoaType extends net.minecraftforge.fml.common.registry.IForge
 		this.hexColor = hexColor;
 		this.properties = properties;
 
-		this.creativeTab = CreativeTabs.MISC;
+		this.creativeTab = CreativeTabs.tabMisc;
 	}
 
 	public AetherMoaType(int hexColor, MoaProperties properties, CreativeTabs creativeTab)
@@ -27,11 +29,11 @@ public class AetherMoaType extends net.minecraftforge.fml.common.registry.IForge
 		this.creativeTab = creativeTab;
 	}
 
-	public ResourceLocation getTexture(boolean saddled)
+	public ResourceLocation getTexture(boolean saddled, boolean isBeingRidden)
 	{
 		if (this.properties.hasCustomTexture())
 		{
-			return this.properties.getCustomTexture(saddled);
+			return this.properties.getCustomTexture(saddled, isBeingRidden);
 		}
 
 		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + ("moa_") + this.getRegistryName().getResourcePath().toLowerCase() + ".png");

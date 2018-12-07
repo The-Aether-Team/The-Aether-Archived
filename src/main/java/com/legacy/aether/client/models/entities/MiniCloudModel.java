@@ -1,5 +1,7 @@
 package com.legacy.aether.client.models.entities;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -48,6 +50,10 @@ public class MiniCloudModel extends ModelBase
     @Override
     public void render(Entity e, float f, float f1, float f2, float f3, float f4, float f5) 
     {
+    	GL11.glTranslatef(0.0F, 1.3F, 0.0F);
+
+    	this.setRotationAngles(f, f1, f2, f3, f4, f5, e);
+
 		for(int i = 0; i < 5; i ++)
 		{
 			this.head[i].render(f5);

@@ -5,11 +5,12 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Vec3;
 
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
@@ -19,10 +20,16 @@ public class ItemValkyrieLance extends ItemSword
 
 	public ItemValkyrieLance()
 	{
-		super(ToolMaterial.DIAMOND);
+		super(ToolMaterial.EMERALD);
 
 		this.setCreativeTab(AetherCreativeTabs.weapons);
 	}
+
+	@Override
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+        return EnumAction.none;
+    }
 
 	@Override
     public EnumRarity getRarity(ItemStack stack)
@@ -31,6 +38,7 @@ public class ItemValkyrieLance extends ItemSword
     }
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
 	{
 		if (!(entityLiving instanceof EntityPlayer))
@@ -40,8 +48,8 @@ public class ItemValkyrieLance extends ItemSword
 
 		EntityPlayer player = (EntityPlayer) entityLiving;
 
-		Vec3d playerVision = player.getLookVec();
-		AxisAlignedBB reachDistance = player.getEntityBoundingBox().expand(10.0F, 10.0F, 10.0F);
+		Vec3 playerVision = player.getLookVec();
+		AxisAlignedBB reachDistance = player.boundingBox.expand(10.0D, 10.0D, 10.0D);
 
 		List<Entity> locatedEntities = player.worldObj.getEntitiesWithinAABB(Entity.class, reachDistance);
 
@@ -62,7 +70,7 @@ public class ItemValkyrieLance extends ItemSword
 				continue;
 			}
 
-			Vec3d vec = new Vec3d(ent.posX - player.posX, ent.getEntityBoundingBox().minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
+			Vec3 vec = Vec3.createVectorHelper(ent.posX - player.posX, ent.boundingBox.minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
 			double len = vec.lengthVector();
 
 			if (len > 10.0F)
@@ -85,7 +93,7 @@ public class ItemValkyrieLance extends ItemSword
 			}
 		}
 
-		if (found != null && player.getRidingEntity() != found)
+		if (found != null && player.ridingEntity != found)
 		{
 			stack.damageItem(1, player);
 

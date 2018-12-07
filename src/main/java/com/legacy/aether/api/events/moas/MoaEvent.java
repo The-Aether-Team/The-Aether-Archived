@@ -1,8 +1,8 @@
 package com.legacy.aether.api.events.moas;
 
-import net.minecraftforge.fml.common.eventhandler.Event;
-
 import com.legacy.aether.api.moa.AetherMoaType;
+
+import cpw.mods.fml.common.eventhandler.Event;
 
 public class MoaEvent extends Event
 {

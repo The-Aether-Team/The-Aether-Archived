@@ -2,17 +2,14 @@ package com.legacy.aether.world.dungeon;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.slider.EntitySlider;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.world.dungeon.util.AetherDungeon;
@@ -33,25 +30,25 @@ public class BronzeDungeon extends AetherDungeon
     }
 
 	@Override
-	public boolean generate(World world, Random random, BlockPos pos)
+	public boolean generate(World world, Random random, int i, int j, int k)
 	{
 		replaceAir = true;
 		replaceSolid = true;
 		n = 0;
 
-		if(!isBoxSolid(world, new PositionData(pos.getX(), pos.getY(), pos.getZ()), new PositionData(16, 12, 16)) || !isBoxSolid(world, new PositionData(pos.getX() + 20, pos.getY(), pos.getZ() + 2), new PositionData(12, 12, 12)))
+		if(!isBoxSolid(world, new PositionData(i, j, k), new PositionData(16, 12, 16)) || !isBoxSolid(world, new PositionData(i + 20, j, k + 2), new PositionData(12, 12, 12)))
 		{
 			return false;
 		}
 
 		setBlocks(this.lockedBlock(), this.lockedLightBlock(), 20);
 
-		addHollowBox(world, random, new PositionData(pos.getX(), pos.getY(), pos.getZ()), new PositionData(16, 12, 16));
+		addHollowBox(world, random, new PositionData(i, j, k), new PositionData(16, 12, 16));
 
-		addHollowBox(world, random, new PositionData(pos.getX() + 6, pos.getY() - 2, pos.getZ() + 6), new PositionData(4, 4, 4));
+		addHollowBox(world, random, new PositionData(i + 6, j - 2, k + 6), new PositionData(4, 4, 4));
 
 		EntitySlider slider = new EntitySlider(world);
-		slider.setPosition(pos.getX() + 8, pos.getY() + 2, pos.getZ() + 8);
+		slider.setPosition(i + 8, j + 2, k + 8);
 		slider.setDungeon(slider.posX - 8, slider.posY - 2, slider.posZ - 8);
 
 		if (!world.isRemote)
@@ -59,15 +56,15 @@ public class BronzeDungeon extends AetherDungeon
 			world.spawnEntityInWorld(slider);
 		}
 
-		world.setBlockState(pos.add(7, -1, 7), BlocksAether.treasure_chest.getDefaultState());
+		world.setBlock(i + 7, j - 1, k + 7, BlocksAether.treasure_chest);
 
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getY();
+		int x = i;
+		int y = j;
+		int z = k;
 
-		x = pos.getX() + 20;
-		y = pos.getY();
-		z = pos.getZ() + 2;
+		x = i + 20;
+		y = j;
+		z = k + 2;
 
 		if(!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 12, 12)))
 		{
@@ -85,7 +82,7 @@ public class BronzeDungeon extends AetherDungeon
 		{
 			for(int q = z + 2; q < z + 10; q += 3)
 			{
-				world.setBlockState(new BlockPos(p, pos.getY(), q), BlocksAether.dungeon_trap.getDefaultState(), 2);
+				world.setBlock(p, j, q, BlocksAether.carved_trap, 0, 2);
 			}
 		}		
 
@@ -151,9 +148,9 @@ public class BronzeDungeon extends AetherDungeon
 			{
 				for(int r = z; r < z + 12; r++)
 				{
-					if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(p, q, r)) == this.mainBlock() && random.nextInt(100) == 0)
+					if(world.getBlock(p, q, r) == this.mainBlock() && random.nextInt(100) == 0)
 					{
-						world.setBlockState(new BlockPos(p, q, r), BlocksAether.dungeon_trap.getDefaultState());
+						world.setBlock(p, q, r, BlocksAether.carved_trap);
 					}
 				}
 			}
@@ -163,7 +160,7 @@ public class BronzeDungeon extends AetherDungeon
 		{
 			for(int q = z + 2; q < z + 10; q += 7)
 			{
-				world.setBlockState(new BlockPos(p, pos.getY(), q), BlocksAether.dungeon_trap.getDefaultState());
+				world.setBlock(p, pos.getY(), q, BlocksAether.carved_trap);
 			}
 		}
 
@@ -176,15 +173,15 @@ public class BronzeDungeon extends AetherDungeon
 		{
 			case 0 :
 			{
-				world.setBlockState(new BlockPos(p, y + 2, q), BlocksAether.chest_mimic.getDefaultState());
+				world.setBlock(p, y + 2, q, BlocksAether.chest_mimic);
 				break;
 			}
 			case 1 :
 			{
-				if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(p, y + 2, q)).getBlock() == Blocks.AIR)
+				if(world.getBlock(p, y + 2, q) == Blocks.air)
 				{
-					world.setBlockState(new BlockPos(p, y + 2, q), Blocks.CHEST.getDefaultState());
-					TileEntityChest chest = (TileEntityChest)world.getTileEntity(new BlockPos(p, y + 2, q));
+					world.setBlock(p, y + 2, q, Blocks.chest);
+					TileEntityChest chest = (TileEntityChest)world.getTileEntity(p, y + 2, q);
 					
 					for(p = 0; p < 3 + random.nextInt(3); p++)
 					{
@@ -244,19 +241,19 @@ public class BronzeDungeon extends AetherDungeon
 		{
 			x += 11;
 			z += 3;
-
+			
 			while(tunnelling)
 			{
-				if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(1, 8, 6)))
+				if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(1, 8, 6)) || x - pos.getX() > 100)
 				{
 					tunnelling = false;
 				}
 
 				flag = true;
-
-				while(flag && (world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.mainBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.lockedBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.lockedLightBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.mainLightBlock()))
+					
+				while(flag && (world.getBlock(x, y, z) == this.mainBlock() || world.getBlock(x, y, z) == this.lockedBlock() || world.getBlock(x, y, z) == this.lockedLightBlock() || world.getBlock(x, y, z) == this.mainLightBlock()))
 				{
-					if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(x + 1, y, z)) == this.mainBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x + 1, y, z)) == this.lockedBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x + 1, y, z)) == this.lockedLightBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x + 1, y, z)) == this.mainLightBlock())
+					if(world.getBlock(x + 1, y, z) == this.mainBlock() || world.getBlock(x + 1, y, z) == this.lockedBlock() || world.getBlock(x + 1, y, z) == this.lockedLightBlock() || world.getBlock(x + 1, y, z) == this.mainLightBlock())
 					{
 						x++;
 					}
@@ -269,7 +266,7 @@ public class BronzeDungeon extends AetherDungeon
 				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
 
 				addPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
-				setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
+				setBlocks(Blocks.air, Blocks.air, 1);
 				addPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
 				x++;
 			}
@@ -281,16 +278,16 @@ public class BronzeDungeon extends AetherDungeon
 			z += 11;
 			while(tunnelling)
 			{
-				if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)))
+				if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)) || z - pos.getZ() > 100)
 				{
 					tunnelling = false;
 				}
 				
 				flag = true;
 				
-				while(flag && (world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.mainBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.lockedBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.lockedLightBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.mainLightBlock()))
+				while(flag && (world.getBlock(x, y, z) == this.mainBlock() || world.getBlock(x, y, z) == this.lockedBlock() || world.getBlock(x, y, z) == this.lockedLightBlock() || world.getBlock(x, y, z) == this.mainLightBlock()))
 				{
-					if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z + 1)) == this.mainBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z + 1)) == this.lockedBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z + 1)) == this.lockedLightBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z + 1)) == this.mainLightBlock())
+					if(world.getBlock(x, y, z + 1) == this.mainBlock() || world.getBlock(x, y, z + 1) == this.lockedBlock() || world.getBlock(x, y, z + 1) == this.lockedLightBlock() || world.getBlock(x, y, z + 1) == this.mainLightBlock())
 					{
 						z++;
 					}
@@ -302,28 +299,28 @@ public class BronzeDungeon extends AetherDungeon
 				
 				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
 				addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
-				setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
+				setBlocks(Blocks.air, Blocks.air, 1);
 				addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
 				z++;
 			}
 		}
-
+		
 		if(dir == 2)
 		{
 			x += 3;
 			z -= 0;
 			while(tunnelling)
 			{
-				if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)))
+				if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)) || pos.getY() - z > 100)
 				{
 					tunnelling = false;
 				}
 				
 				flag = true;
 				
-				while(flag && (world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.mainBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.lockedBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.lockedLightBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z)) == this.mainLightBlock()))
+				while(flag && (world.getBlock(x, y, z) == this.mainBlock() || world.getBlock(x, y, z) == this.lockedBlock() || world.getBlock(x, y, z) == this.lockedLightBlock() || world.getBlock(x, y, z) == this.mainLightBlock()))
 				{
-					if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z - 1)) == this.mainBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z - 1)) == this.lockedBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z - 1)) == this.lockedLightBlock() || world.getBlockState(new BlockPos.MutableBlockPos().setPos(x, y, z - 1)) == this.mainLightBlock())
+					if(world.getBlock(x, y, z - 1) == this.mainBlock() || world.getBlock(x, y, z - 1) == this.lockedBlock() || world.getBlock(x, y, z - 1) == this.lockedLightBlock() || world.getBlock(x, y, z - 1) == this.mainLightBlock())
 					{
 						z--;
 					}
@@ -335,7 +332,7 @@ public class BronzeDungeon extends AetherDungeon
 
 				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
 				addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
-				setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
+				setBlocks(Blocks.air, Blocks.air, 1);
 				addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
 				z--;
 			}
@@ -381,7 +378,7 @@ public class BronzeDungeon extends AetherDungeon
 			{
 				if(random.nextInt(10) == 0)
 				{
-					return new ItemStack(Items.RECORD_CAT);
+					return new ItemStack(Items.record_cat);
 				}
 
 				break;
@@ -408,7 +405,7 @@ public class BronzeDungeon extends AetherDungeon
 	
 	public static ItemStack getBronzeLoot(Random random)
 	{
-		int item = random.nextInt(9);
+		int item = random.nextInt(10);
 		switch(item)
 		{
 			case 0 :
@@ -427,39 +424,41 @@ public class BronzeDungeon extends AetherDungeon
 				return new ItemStack(ItemsAether.agility_cape);
 			case 7 :
 				return new ItemStack(ItemsAether.sentry_boots);
+			case 8 :
+				return new ItemStack(ItemsAether.repulsion_shield);
 		}
 
 		return new ItemStack(ItemsAether.cloud_staff);
 	}
 
-	public IBlockState lockedLightBlock()
+	public Block lockedLightBlock()
 	{
-		return BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Sentry);
+		return BlocksAether.locked_sentry_stone;
 	}
 
-	public IBlockState lockedBlock()
+	public Block lockedBlock()
 	{
-		return BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Carved);
+		return BlocksAether.locked_carved_stone;
 	}
 
-	public IBlockState mainLightBlock()
+	public Block mainLightBlock()
 	{
-		return BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Sentry);
+		return BlocksAether.sentry_stone;
 	}
 
-	public IBlockState mainBlock()
+	public Block mainBlock()
 	{
-		return BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Carved);
+		return BlocksAether.carved_stone;
 	}
 
-	public IBlockState fillerBlock()
+	public Block fillerBlock()
 	{
-		return BlocksAether.holystone.getDefaultState();
+		return BlocksAether.holystone;
 	}
 
-	public IBlockState fillerBlock1()
+	public Block fillerBlock1()
 	{
-		return BlocksAether.mossy_holystone.getDefaultState();
+		return BlocksAether.mossy_holystone;
 	}
 
 }

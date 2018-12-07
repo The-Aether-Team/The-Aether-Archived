@@ -1,7 +1,5 @@
 package com.legacy.aether.client.gui.inventory;
 
-import java.io.IOException;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -10,10 +8,10 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 
 import org.lwjgl.input.Keyboard;
 
-import com.legacy.aether.entities.AetherEntities;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketPerkChanged;
+import com.legacy.aether.entities.util.AetherMoaTypes;
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketPerkChanged;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.DonatorMoaSkin;
@@ -48,7 +46,7 @@ public class GuiAetherPerks extends GuiScreen
     	this.player = PlayerAether.get(this.mc.thePlayer);
     	this.moaSkin = this.player.donatorMoaSkin;
 
-		this.moa = this.player.thePlayer.getRidingEntity() instanceof EntityMoa ? (EntityMoa) this.player.thePlayer.getRidingEntity() : new EntityMoa(this.mc.theWorld, AetherEntities.WHITE_MOA);
+		this.moa = this.player.getEntity().ridingEntity instanceof EntityMoa ? (EntityMoa) this.player.getEntity().ridingEntity : new EntityMoa(this.mc.theWorld, AetherMoaTypes.blue);
 	}
 
 	@Override
@@ -106,6 +104,7 @@ public class GuiAetherPerks extends GuiScreen
     }
 
 	@Override
+	@SuppressWarnings("unchecked")
     public void initGui()
     {
         Keyboard.enableRepeatEvents(true);
@@ -120,40 +119,40 @@ public class GuiAetherPerks extends GuiScreen
     	this.buttonList.add(this.defualtSkin = new GuiButton(2,  this.width / 2 - 100, this.height - 20, 100, 20, "Default skin: " + this.player.donatorMoaSkin.shouldUseDefualt()));
     	this.buttonList.add(this.confirmPreference = new GuiButton(4,  this.width / 2, this.height - 20, 100, 20, "Confirm Skin"));
 
-    	if (!AetherRankings.isRankedPlayer(this.player.thePlayer.getUniqueID()))
+    	if (!AetherRankings.isRankedPlayer(this.player.getEntity().getUniqueID()))
     	{
     		this.perkHalo.visible = false;
     	}
 
     	this.enableHalo.displayString = this.enableHalo.displayString + Boolean.toString(this.player.shouldRenderHalo ? false : true);
 
-        this.moaEye = new GuiTextField(1, this.fontRendererObj, (this.width / 2) + 105, 70, 45, 20);
+        this.moaEye = new GuiTextField(this.fontRendererObj, (this.width / 2) + 105, 70, 45, 20);
         this.moaEye.setMaxStringLength(6);
         this.moaEye.setText(Integer.toHexString(this.player.donatorMoaSkin.getEyeColor()));
 
-        this.moaWingMarking = new GuiTextField(5, this.fontRendererObj, (this.width / 2) + 105, this.height - 40, 45, 20);
+        this.moaWingMarking = new GuiTextField(this.fontRendererObj, (this.width / 2) + 105, this.height - 40, 45, 20);
         this.moaWingMarking.setMaxStringLength(6);
         this.moaWingMarking.setText(Integer.toHexString(this.player.donatorMoaSkin.getWingMarkingColor()));
 
-        this.moaWing = new GuiTextField(10, this.fontRendererObj, (this.width / 2) + 105, this.height / 2 + 15, 45, 20);
+        this.moaWing = new GuiTextField(this.fontRendererObj, (this.width / 2) + 105, this.height / 2 + 15, 45, 20);
         this.moaWing.setMaxStringLength(6);
         this.moaWing.setText(Integer.toHexString(this.player.donatorMoaSkin.getWingColor()));
 
-        this.moaBody = new GuiTextField(14, this.fontRendererObj, (this.width / 2) - 155, this.height / 2 + 15, 45, 20);
+        this.moaBody = new GuiTextField(this.fontRendererObj, (this.width / 2) - 155, this.height / 2 + 15, 45, 20);
         this.moaBody.setMaxStringLength(6);
         this.moaBody.setText(Integer.toHexString(this.player.donatorMoaSkin.getBodyColor()));
 
-        this.moaBodyMarking = new GuiTextField(18, this.fontRendererObj, (this.width / 2) - 155, this.height - 40, 45, 20);
+        this.moaBodyMarking = new GuiTextField(this.fontRendererObj, (this.width / 2) - 155, this.height - 40, 45, 20);
         this.moaBodyMarking.setMaxStringLength(6);
         this.moaBodyMarking.setText(Integer.toHexString(this.player.donatorMoaSkin.getMarkingColor()));
 
-        this.moaOutside = new GuiTextField(22, this.fontRendererObj, (this.width / 2) - 155, 70, 45, 20);
+        this.moaOutside = new GuiTextField(this.fontRendererObj, (this.width / 2) - 155, 70, 45, 20);
         this.moaOutside.setMaxStringLength(6);
         this.moaOutside.setText(Integer.toHexString(this.player.donatorMoaSkin.getOutsideColor()));
     }
 
 	@Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException
+    protected void keyTyped(char typedChar, int keyCode)
     {
     	super.keyTyped(typedChar, keyCode);
 
@@ -172,7 +171,7 @@ public class GuiAetherPerks extends GuiScreen
     }
 
 	@Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
 
@@ -191,11 +190,11 @@ public class GuiAetherPerks extends GuiScreen
     public void onGuiClosed()
     {
         Keyboard.enableRepeatEvents(false);
-		AetherNetworkingManager.sendToServer(new PacketPerkChanged(this.player.thePlayer.getEntityId(), EnumAetherPerkType.Moa, this.moaSkin));
+		AetherNetwork.sendToServer(new PacketPerkChanged(this.player.getEntity().getEntityId(), EnumAetherPerkType.Moa, this.moaSkin));
     }
 
 	@Override
-    protected void actionPerformed(GuiButton button) throws IOException
+    protected void actionPerformed(GuiButton button)
     {
 		if (button.id == 1)
 		{
@@ -216,7 +215,7 @@ public class GuiAetherPerks extends GuiScreen
 		}
 		else if (button.id == 4)
 		{
-			AetherNetworkingManager.sendToServer(new PacketPerkChanged(this.player.thePlayer.getEntityId(), EnumAetherPerkType.Moa, this.moaSkin));
+			AetherNetwork.sendToServer(new PacketPerkChanged(this.player.getEntity().getEntityId(), EnumAetherPerkType.Moa, this.moaSkin));
 		}
 		else if (button.id == 5)
 		{
@@ -230,7 +229,8 @@ public class GuiAetherPerks extends GuiScreen
 		{
 			boolean enableHalo = this.player.shouldRenderHalo ? false : true;
 
-			AetherNetworkingManager.sendToServer(new PacketPerkChanged(this.player.thePlayer.getEntityId(), EnumAetherPerkType.Halo, enableHalo));
+			this.player.shouldRenderHalo = enableHalo;
+			AetherNetwork.sendToServer(new PacketPerkChanged(this.player.getEntity().getEntityId(), EnumAetherPerkType.Halo, enableHalo));
 			this.enableHalo.displayString = "Enable Halo: " + Boolean.toString(enableHalo);
 		}
     }
@@ -244,7 +244,7 @@ public class GuiAetherPerks extends GuiScreen
 
         if (this.enableMoaEditor)
         {
-        	GuiInventory.drawEntityOnScreen(this.width / 2, this.height / 2 + (this.height / 2) - 30, (this.height / 3) - 20, (float)(this.guiLeft + 51) - (float)mouseX, (float)(75 - 50) - (float)mouseY, this.moa);
+        	GuiInventory.func_147046_a(this.width / 2, this.height / 2 + (this.height / 2) - 30, (this.height / 3) - 20, (float)(this.guiLeft + 51) - (float)mouseX, (float)(75 - 50) - (float)mouseY, this.moa);
 
         	/* Left Side*/
 
@@ -272,7 +272,7 @@ public class GuiAetherPerks extends GuiScreen
 
         if (this.enableHaloEditor)
         {
-        	GuiInventory.drawEntityOnScreen(this.width / 2, this.height / 2 + (this.height / 2) - 30, (this.height / 3) - 20, (float)(this.guiLeft + 51) - (float)mouseX, (float)(75 - 50) - (float)mouseY, this.player.thePlayer);
+        	GuiInventory.func_147046_a(this.width / 2, this.height / 2 + (this.height / 2) - 30, (this.height / 3) - 20, (float)(this.guiLeft + 51) - (float)mouseX, (float)(75 - 50) - (float)mouseY, this.player.getEntity());
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);

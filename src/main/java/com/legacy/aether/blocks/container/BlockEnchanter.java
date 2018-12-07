@@ -2,38 +2,74 @@ package com.legacy.aether.blocks.container;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.networking.AetherGuiHandler;
-import com.legacy.aether.tile_entities.TileEntityEnchanter;
+import com.legacy.aether.network.AetherGuiHandler;
+import com.legacy.aether.tileentity.TileEntityEnchanter;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockEnchanter extends BlockAetherContainer
 {
 
+    @SideOnly(Side.CLIENT)
+    private IIcon blockIconTop;
+
+    @SideOnly(Side.CLIENT)
+    private IIcon blockIconBottom;
+
 	public BlockEnchanter()
 	{
-		super(Material.ROCK);
+		super(Material.rock);
 
         this.setHardness(2.0F);
 	}
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister registry)
+    {
+    	this.blockIcon = registry.registerIcon(Aether.find("enchanter_side"));
+    	this.blockIconTop = registry.registerIcon(Aether.find("enchanter_bottom"));
+    	this.blockIconBottom = registry.registerIcon(Aether.find("enchanter_bottom"));
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(int side, int meta)
+    {
+        return side == 1 ? this.blockIconTop : (side == 0 ? this.blockIconBottom : this.blockIcon);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side)
+    {
+        if (side == 1)
+        {
+            return this.blockIconTop;
+        }
+        else if (side == 0)
+        {
+            return this.blockIconBottom;
+        }
+
+        return this.blockIcon;
+    }
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta)
@@ -42,57 +78,83 @@ public class BlockEnchanter extends BlockAetherContainer
 	}
 
 	@Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
+    public Item getItemDropped(int meta, Random rand, int fortune)
     {
         return Item.getItemFromBlock(BlocksAether.enchanter);
     }
 
 	@Override
     @SideOnly(Side.CLIENT)
-	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
+	public void randomDisplayTick(World world, int x, int y, int z, Random random)
     {
-		if(state.getValue(powered).booleanValue())
+		if(world.getBlockMetadata(x, y, z) == 1)
 		{
-			float f = (float)pos.getX() + 0.5F;
-			float f1 = (float)pos.getY() + 1.0F + (random.nextFloat() * 6F) / 16F;
-			float f2 = (float)pos.getZ() + 0.5F;
+			float f = (float)x + 0.5F;
+			float f1 = (float)y + 1.0F + (random.nextFloat() * 6F) / 16F;
+			float f2 = (float)z + 0.5F;
 
-			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, f, f1, f2, 0.0D, 0.0D, 0.0D);
-			world.spawnParticle(EnumParticleTypes.FLAME, f, f1, f2, 0.0D, 0.0D, 0.0D);
-			
-			if (random.nextDouble() < 0.1D)
-            {
-                world.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-            }
+			world.spawnParticle("smoke", f, f1, f2, 0.0D, 0.0D, 0.0D);
+			world.spawnParticle("flame", f, f1, f2, 0.0D, 0.0D, 0.0D);
 		}
     }
 
 	@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
     {
-    	player.openGui(Aether.instance, AetherGuiHandler.enchanter, world, pos.getX(), pos.getY(), pos.getZ());
+    	player.openGui(Aether.instance, AetherGuiHandler.enchanter, world, x, y, z);
 
         return true;
     }
 
 	@Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    public void breakBlock(World worldIn, int x, int y, int z, Block block, int meta)
     {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
+        TileEntity tileentity = worldIn.getTileEntity(x, y, z);
 
         if (tileentity instanceof TileEntityEnchanter)
         {
-            InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityEnchanter)tileentity);
-            worldIn.updateComparatorOutputLevel(pos, this);
+        	TileEntityEnchanter tile = (TileEntityEnchanter) tileentity;
+
+            for (int i1 = 0; i1 < tile.getSizeInventory(); ++i1)
+            {
+                ItemStack itemstack = tile.getStackInSlot(i1);
+
+                if (itemstack != null)
+                {
+                    float f = worldIn.rand.nextFloat() * 0.8F + 0.1F;
+                    float f1 = worldIn.rand.nextFloat() * 0.8F + 0.1F;
+                    float f2 = worldIn.rand.nextFloat() * 0.8F + 0.1F;
+
+                    while (itemstack.stackSize > 0)
+                    {
+                        int j1 = worldIn.rand.nextInt(21) + 10;
+
+                        if (j1 > itemstack.stackSize)
+                        {
+                            j1 = itemstack.stackSize;
+                        }
+
+                        itemstack.stackSize -= j1;
+                        EntityItem entityitem = new EntityItem(worldIn, (double)((float)x + f), (double)((float)y + f1), (double)((float)z + f2), new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
+
+                        if (itemstack.hasTagCompound())
+                        {
+                            entityitem.getEntityItem().setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
+                        }
+
+                        float f3 = 0.05F;
+                        entityitem.motionX = (double)((float)worldIn.rand.nextGaussian() * f3);
+                        entityitem.motionY = (double)((float)worldIn.rand.nextGaussian() * f3 + 0.2F);
+                        entityitem.motionZ = (double)((float)worldIn.rand.nextGaussian() * f3);
+                        worldIn.spawnEntityInWorld(entityitem);
+                    }
+                }
+            }
+
+            worldIn.func_147453_f(x, y, z, this);
         }
 
-        super.breakBlock(worldIn, pos, state);
-    }
-
-	@Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
-        return EnumBlockRenderType.MODEL;
+        super.breakBlock(worldIn, x, y, z, block, meta);
     }
 
 }

@@ -1,30 +1,22 @@
 package com.legacy.aether.blocks.dungeon;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.BlockChest;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.hostile.EntityMimic;
-import com.legacy.aether.tile_entities.TileEntityChestMimic;
+import com.legacy.aether.tileentity.TileEntityChestMimic;
 
 public class BlockMimicChest extends BlockChest
 {
 
 	public BlockMimicChest() 
 	{
-		super(BlockChest.Type.BASIC);
+		super(13);
 
 		this.setHardness(2.0F);
 	}
@@ -36,46 +28,41 @@ public class BlockMimicChest extends BlockChest
     }
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World worldIn, int x, int y, int z, EntityPlayer playerIn, int side, float hitX, float hitY, float hitZ)
 	{
-		this.spawnMimic(worldIn, playerIn, pos);
-		
-		int i = pos.getX();
-        int j = pos.getY();
-        int k = pos.getZ();
-        
-        double d1 = (double)i + 0.5D;
-        double d2 = (double)k + 0.5D;
-		
-		 worldIn.playSound((EntityPlayer)null, d1, (double)j + 0.5D, d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
+		this.spawnMimic(worldIn, playerIn, x, y, z);
 
+		worldIn.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "random.chestopen", 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 
 		return true;
 	}
 
 	@Override
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack)
+    public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta)
     {
-    	this.spawnMimic(worldIn, player, pos);
+    	this.spawnMimic(worldIn, player, x, y, z);
     }
 
 	@Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player)
     {
-    	return new ItemStack(Blocks.CHEST);
+    	return new ItemStack(Blocks.chest);
     }
 
-	private void spawnMimic(World world, EntityPlayer player, BlockPos pos)
+	private void spawnMimic(World world, EntityPlayer player, int x, int y, int z)
 	{
 		if (!world.isRemote)
 		{
 			EntityMimic mimic = new EntityMimic(world);
-			mimic.setAttackTarget(player);
-            mimic.setPosition((double)pos.getX() + 0.5D, (double)pos.getY() + 1.5D, (double)pos.getZ() + 0.5D);
+			if (!player.capabilities.isCreativeMode)
+			{
+				mimic.setAttackTarget(player);
+			}
+            mimic.setPosition((double)x + 0.5D, (double)y + 1.5D, (double)z + 0.5D);
 			world.spawnEntityInWorld(mimic);
 		}
 
-		world.setBlockToAir(pos);
+		world.setBlockToAir(x, y, z);
 	}
 
 }
