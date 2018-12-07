@@ -5,7 +5,7 @@
 .classpath
 .project
 .settings
-
+/eclipse
 # IntelliJ IDEA
 *.iml
 *.ipr
