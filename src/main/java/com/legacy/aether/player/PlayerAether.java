@@ -192,7 +192,7 @@ public class PlayerAether implements IPlayerAether {
 		else {
             this.prevTimeInPortal = this.timeInPortal;
 
-            if (this.inPortal)
+            if (this.isInsideBlock(BlocksAether.aether_portal))
             {
                 this.timeInPortal += 0.0125F;
 
@@ -200,8 +200,6 @@ public class PlayerAether implements IPlayerAether {
                 {
                     this.timeInPortal = 1.0F;
                 }
-
-                this.inPortal = false;
             }
             else if (this.getEntity().isPotionActive(Potion.confusion) && this.getEntity().getActivePotionEffect(Potion.confusion).getDuration() > 60)
             {
