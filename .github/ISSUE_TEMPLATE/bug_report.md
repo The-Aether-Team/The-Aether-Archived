@@ -12,6 +12,8 @@ _Please make sure you are using the latest version for whatever Minecraft versio
 
 **Minecraft Version(s) Affected:**
 
+**Extra Mod(s):**
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
