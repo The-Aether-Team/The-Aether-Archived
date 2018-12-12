@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Submit your issue you're having with Aether Legacy
-title: "[Bug]"
+title: "[Bug] Type your subject here"
 labels: ''
 assignees: ''
 
@@ -20,8 +20,8 @@ A clear and concise description of what the bug is.
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Logs/Crash Logs and Screenshots**
+If applicable, add crash logs and/or screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
