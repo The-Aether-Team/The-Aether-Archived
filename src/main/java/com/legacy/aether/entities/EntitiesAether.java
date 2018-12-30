@@ -3,14 +3,11 @@ package com.legacy.aether.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.stats.StatBase;
-import net.minecraft.stats.StatList;
-import net.minecraft.world.World;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.entities.block.EntityFloatingBlock;
