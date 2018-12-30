@@ -13,6 +13,7 @@ import com.legacy.aether.client.gui.GuiAetherInGame;
 import com.legacy.aether.client.gui.GuiSunAltar;
 import com.legacy.aether.client.renders.AetherEntityRenderer;
 import com.legacy.aether.client.renders.RendersAether;
+import com.legacy.aether.compatibility.client.AetherClientCompatibility;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -38,6 +39,8 @@ public class ClientProxy extends CommonProxy {
 		registerEvent(new AetherMusicHandler());
 		registerEvent(new AetherClientEvents());
 		registerEvent(new GuiAetherInGame(Minecraft.getMinecraft()));
+
+		AetherClientCompatibility.initialization();
 	}
 
 	@Override

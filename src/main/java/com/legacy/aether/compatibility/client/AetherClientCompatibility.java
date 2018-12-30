@@ -1,7 +1,5 @@
 package com.legacy.aether.compatibility.client;
 
-import com.legacy.aether.CommonProxy;
-
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -14,7 +12,7 @@ public class AetherClientCompatibility
 	{
 		if (Loader.isModLoaded("battlegear2"))
 		{
-			CommonProxy.registerEvent(new BattlegearClientEventHandler());
+			mods.battlegear2.api.core.BattlegearUtils.RENDER_BUS.register(new BattlegearClientEventHandler());
 		}
 	}
 
