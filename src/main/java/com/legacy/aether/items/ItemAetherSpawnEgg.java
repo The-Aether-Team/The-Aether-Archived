@@ -10,7 +10,6 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList.EntityEggInfo;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -25,6 +24,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import com.legacy.aether.entities.EntitiesAether;
+import com.legacy.aether.entities.EntitiesAether.AetherEggInfo;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 import cpw.mods.fml.relauncher.Side;
@@ -32,7 +32,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAetherSpawnEgg extends Item {
 
-	public static HashMap<Integer, EntityEggInfo> entityEggs = new LinkedHashMap<Integer, EntityEggInfo>();
+	public static HashMap<Integer, AetherEggInfo> entityEggs = new LinkedHashMap<Integer, AetherEggInfo>();
 
 	@SideOnly(Side.CLIENT)
 	private IIcon theIcon;
@@ -57,7 +57,7 @@ public class ItemAetherSpawnEgg extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack p_82790_1_, int p_82790_2_) {
-		EntityEggInfo entityegginfo = entityEggs.get(Integer.valueOf(p_82790_1_.getItemDamage()));
+		AetherEggInfo entityegginfo = entityEggs.get(Integer.valueOf(p_82790_1_.getItemDamage()));
 
 		return entityegginfo != null ? (p_82790_2_ == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
 	}
@@ -176,10 +176,10 @@ public class ItemAetherSpawnEgg extends Item {
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List p_150895_3_) {
-		Iterator<EntityEggInfo> iterator = entityEggs.values().iterator();
+		Iterator<AetherEggInfo> iterator = entityEggs.values().iterator();
 
 		while (iterator.hasNext()) {
-			EntityEggInfo entityegginfo = iterator.next();
+			AetherEggInfo entityegginfo = iterator.next();
 			p_150895_3_.add(new ItemStack(p_150895_1_, 1, entityegginfo.spawnedID));
 		}
 	}

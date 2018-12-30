@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.stats.StatBase;
+import net.minecraft.stats.StatList;
 import net.minecraft.world.World;
 
 import com.legacy.aether.Aether;
@@ -119,7 +121,7 @@ public class EntitiesAether {
 			IDtoClassMapping.put(Integer.valueOf(entityID), entityClass);
 			classToIDMapping.put(entityClass, Integer.valueOf(entityID));
 			stringToIDMapping.put(entityName, Integer.valueOf(entityID));
-			ItemAetherSpawnEgg.entityEggs.put(Integer.valueOf(entityID), new EntityList.EntityEggInfo(entityID, primaryEggColor, secondaryEggColor));
+			ItemAetherSpawnEgg.entityEggs.put(Integer.valueOf(entityID), new AetherEggInfo(entityID, primaryEggColor, secondaryEggColor));
 		}
 	}
 
@@ -156,6 +158,20 @@ public class EntitiesAether {
 		Class<?> oclass = getClassFromID(p_75617_0_);
 
 		return oclass != null ? (String) classToStringMapping.get(oclass) : null;
+	}
+
+	public static class AetherEggInfo
+	{
+		public final int spawnedID;
+		public final int primaryColor;
+		public final int secondaryColor;
+
+		public AetherEggInfo(int spawnedID, int primaryColor, int secondaryColor)
+		{
+			this.spawnedID = spawnedID;
+			this.primaryColor = primaryColor;
+			this.secondaryColor = secondaryColor;
+		}
 	}
 
 }
