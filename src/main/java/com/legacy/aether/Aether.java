@@ -21,7 +21,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Aether.MOD_ID, version = "v1.0.0")
+@Mod(modid = Aether.MOD_ID, version = "v1.0.1")
 public class Aether {
 
 	public static final String MOD_ID = "aether_legacy";
