@@ -30,11 +30,11 @@ Thanks so much to these people keep Aether alive.
 ## 🌐 Translations
 If you are interested in translating, come chat with us on Discord and we'll let you know how to go about it!
 
-- [x] English (en_US)
-- [x] Spanish (es_MX) - Translations by [@Aer-ink](https://github.com/Aer-ink)
-- [ ] French (fr_FR)
-- [ ] German (de_DE)
-- [x] Chinese (zh_CH) - Translations by [@ETStareak](https://github.com/ETStareak)
+* Spanish (es_MX) - Translations by [@Aer-ink](https://github.com/Aer-ink)
+* French (fr_FR)
+* German (de_DE)
+* Chinese (zh_CH) - Translations by [@ETStareak](https://github.com/ETStareak)
+* Portuguese Translations by [@lorrampi](https://github.com/lorrampi)
 
 - [x] English Upside Down - (ud_UD) Translations by [@The-Fireplace](https://github.com/The-Fireplace)
 
