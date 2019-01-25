@@ -50,9 +50,9 @@ public class AetherPoisonMovement
         this.poisonTime--;
 	}
 
-    public boolean afflictPoison() 
+    public boolean afflictPoison(int i) 
     {
-        this.poisonTime = 500;
+        this.poisonTime = i;
 
         return true;
     }

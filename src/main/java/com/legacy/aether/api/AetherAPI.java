@@ -3,8 +3,12 @@ package com.legacy.aether.api;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -18,6 +22,8 @@ import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
 import com.legacy.aether.api.freezables.AetherFreezable;
 import com.legacy.aether.api.freezables.AetherFreezableFuel;
 import com.legacy.aether.api.moa.AetherMoaType;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.IPlayerAetherStorage;
 
 @Mod.EventBusSubscriber(modid = "aether_legacy")
 public class AetherAPI
@@ -31,7 +37,10 @@ public class AetherAPI
     private static IForgeRegistry<AetherMoaType> iMoaTypeRegistry;
 
     private static final int MAX_REGISTRY_ID = Short.MAX_VALUE - 1;
-   
+
+    @CapabilityInject(IPlayerAether.class)
+    public static Capability<IPlayerAether> AETHER_PLAYER = null;
+
     private static final AetherAPI instance = new AetherAPI();
 
 	public AetherAPI()
@@ -42,12 +51,19 @@ public class AetherAPI
 	@SubscribeEvent
 	public static void onMakeRegistries(RegistryEvent.NewRegistry event)
 	{
+		CapabilityManager.INSTANCE.register(IPlayerAether.class, new IPlayerAetherStorage(), () -> null);
+
     	iAccessoryRegistry = makeRegistry(new ResourceLocation("aetherAPI:accessories"), AetherAccessory.class, 0, MAX_REGISTRY_ID).create();
     	iEnchantmentRegistry = makeRegistry(new ResourceLocation("aetherAPI:enchantments"), AetherEnchantment.class, 0, MAX_REGISTRY_ID).create();
     	iEnchantmentFuelRegistry = makeRegistry(new ResourceLocation("aetherAPI:enchantment_fuels"), AetherEnchantmentFuel.class, 0, MAX_REGISTRY_ID).create();
     	iFreezableRegistry = makeRegistry(new ResourceLocation("aetherAPI:freezables"), AetherFreezable.class, 0, MAX_REGISTRY_ID).create();
     	iFreezableFuelRegistry = makeRegistry(new ResourceLocation("aetherAPI:freezable_fuels"), AetherFreezableFuel.class, 0, MAX_REGISTRY_ID).create();
     	iMoaTypeRegistry = makeRegistry(new ResourceLocation("aetherAPI:moa_types"), AetherMoaType.class, 0, MAX_REGISTRY_ID).create();
+	}
+
+	public IPlayerAether get(EntityPlayer player)
+	{
+		return player.getCapability(AETHER_PLAYER, null);
 	}
 
     private static <T extends IForgeRegistryEntry<T>> RegistryBuilder<T> makeRegistry(ResourceLocation name, Class<T> type, int min, int max)

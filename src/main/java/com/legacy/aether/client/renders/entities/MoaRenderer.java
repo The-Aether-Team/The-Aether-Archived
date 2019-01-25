@@ -2,6 +2,8 @@ package com.legacy.aether.client.renders.entities;
 
 import org.lwjgl.opengl.GL11;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.client.models.entities.MoaModel;
 import com.legacy.aether.client.renders.entities.layer.LayerMoaSaddle;
 import com.legacy.aether.client.renders.entities.layer.MoaDonatorLayer;
@@ -17,12 +19,13 @@ import net.minecraft.util.math.MathHelper;
 
 public class MoaRenderer extends RenderLiving<EntityMoa>
 {
+
     private static final ResourceLocation MOS = new ResourceLocation("aether_legacy", "textures/entities/moa/mos.png");
 
-    
 	public MoaRenderer(RenderManager renderManager)
 	{
 		super(renderManager, new MoaModel(0.0F), 1.0F);
+
 		this.addLayer(new MoaDonatorLayer(renderManager, (MoaModel) this.getMainModel()));
 		this.addLayer(new LayerMoaSaddle(this));
 	}
@@ -61,9 +64,9 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 		
 		if (moa.isBeingRidden() && moa.getPassengers().get(0) instanceof EntityPlayer)
 		{
-			PlayerAether player = PlayerAether.get((EntityPlayer) moa.getPassengers().get(0));
+			IPlayerAether player = AetherAPI.getInstance().get((EntityPlayer) moa.getPassengers().get(0));
 
-			if (player != null && !player.donatorMoaSkin.shouldUseDefualt())
+			if (player != null && !((PlayerAether)player).donatorMoaSkin.shouldUseDefualt())
 			{
 				return null;
 			}

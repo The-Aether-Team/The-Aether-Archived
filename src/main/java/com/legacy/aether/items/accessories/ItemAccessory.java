@@ -25,9 +25,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.base.Predicates;
 import com.legacy.aether.Aether;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.accessories.AccessoryType;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemAccessory extends Item
@@ -80,9 +81,9 @@ public class ItemAccessory extends Item
             	ItemStack itemstack = stack.copy();
             	itemstack.setCount(1);
             	
-            	PlayerAether playerAether = PlayerAether.get((EntityPlayer) entitylivingbase);
+            	IPlayerAether playerAether = AetherAPI.getInstance().get((EntityPlayer) entitylivingbase);
 
-            	if (!playerAether.accessories.setInventoryAccessory(itemstack))
+            	if (!playerAether.getAccessoryInventory().setAccessorySlot(itemstack))
             	{
             		BehaviorDefaultDispenseItem.doDispense(blockSource.getWorld(), itemstack, 6, (EnumFacing)blockSource.getBlockState().getValue(BlockDispenser.FACING), BlockDispenser.getDispensePosition(blockSource));
             	}
@@ -103,7 +104,7 @@ public class ItemAccessory extends Item
 
         if (heldItem != ItemStack.EMPTY)
         {
-        	if (PlayerAether.get(player).accessories.setInventoryAccessory(heldItem.copy()))
+        	if (AetherAPI.getInstance().get(player).getAccessoryInventory().setAccessorySlot(heldItem.copy()))
         	{
             	heldItem.shrink(1);
 

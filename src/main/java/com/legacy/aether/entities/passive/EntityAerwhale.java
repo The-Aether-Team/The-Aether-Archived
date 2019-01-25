@@ -1,5 +1,6 @@
 package com.legacy.aether.entities.passive;
 
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.entities.ai.EntityAIUpdateState;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
@@ -287,7 +288,7 @@ public class EntityAerwhale extends EntityFlying implements IMob
             this.motionY *= 0.98D;
             this.motionZ *= 0.98D;
 
-			if (PlayerAether.get(player).isJumping())
+			if (AetherAPI.getInstance().get(player).isJumping())
 			{
 				this.motionX = 0.0D;
 				this.motionY = 0.0D;

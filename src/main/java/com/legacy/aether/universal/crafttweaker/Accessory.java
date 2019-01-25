@@ -1,17 +1,17 @@
 package com.legacy.aether.universal.crafttweaker;
 
 
-import com.legacy.aether.Aether;
-import com.legacy.aether.api.accessories.AccessoryType;
-import com.legacy.aether.api.accessories.AetherAccessory;
-import crafttweaker.CraftTweakerAPI;
-import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.minecraft.CraftTweakerMC;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
+
+import com.legacy.aether.api.accessories.AccessoryType;
+import com.legacy.aether.api.accessories.AetherAccessory;
+
+import crafttweaker.CraftTweakerAPI;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
 
 @ZenClass("mods.aether_legacy.Accessory")
 public class Accessory {

@@ -12,16 +12,16 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.util.IAetherBoss;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.bosses.slider.EntitySlider;
-import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
-import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
@@ -40,7 +40,7 @@ public class AetherOverlay
  
     public static void renderPoison(Minecraft mc)
     {
-    	PlayerAether playerAether = PlayerAether.get(mc.player);
+    	IPlayerAether playerAether = AetherAPI.getInstance().get(mc.player);
 
     	if(playerAether.isPoisoned())
     	{
@@ -48,7 +48,7 @@ public class AetherOverlay
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder renderer = tessellator.getBuffer();
 
-    		float alpha = getPoisonAlpha((float)(playerAether.poisonInstance().poisonTime % 50) / 50);
+    		float alpha = getPoisonAlpha((float)(((PlayerAether)playerAether).poisonInstance().poisonTime % 50) / 50);
 
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
@@ -79,7 +79,7 @@ public class AetherOverlay
 
     public static void renderCure(Minecraft mc)
     {
-    	PlayerAether playerAether = PlayerAether.get(mc.player);
+    	IPlayerAether playerAether = AetherAPI.getInstance().get(mc.player);
 
     	if(playerAether.isCured())
     	{
@@ -132,7 +132,7 @@ public class AetherOverlay
 
 		mc.renderEngine.bindTexture(Gui.ICONS);
 
-		int bubbleAmount = PlayerAether.get(mc.player).getAccessoryCount(ItemsAether.iron_bubble);
+		int bubbleAmount = AetherAPI.getInstance().get(mc.player).getAccessoryInventory().getAccessoryCount(new ItemStack(ItemsAether.iron_bubble));
 
 		if (mc.playerController.shouldDrawHUD() && mc.player.isInWater() && mc.player.isInsideOfMaterial(Material.WATER))
 		{
@@ -151,16 +151,16 @@ public class AetherOverlay
 
 	public static void renderCooldown(Minecraft mc)
 	{
-		PlayerAether playerInfo = PlayerAether.get(mc.player);
+		IPlayerAether playerInfo = AetherAPI.getInstance().get(mc.player);
 
-		if (playerInfo.getCooldown() != 0)
+		if (playerInfo.getHammerCooldown() != 0)
 		{
 			ScaledResolution scaledresolution = new ScaledResolution(mc);
 
-			int cooldownRemaining = (int) ((float) (playerInfo.getCooldown()) / (float) (playerInfo.getCooldownMax()) * 128F);
+			int cooldownRemaining = (int) ((float) (playerInfo.getHammerCooldown()) / (float) (playerInfo.getHammerMaxCooldown()) * 128F);
 			int width = scaledresolution.getScaledWidth();
 
-			mc.fontRenderer.drawStringWithShadow(playerInfo.getCooldownName() + " Cooldown", (width / 2) - (mc.fontRenderer.getStringWidth(playerInfo.getCooldownName() + " Cooldown") / 2), 32, 0xffffffff);
+			mc.fontRenderer.drawStringWithShadow(playerInfo.getHammerName() + " Cooldown", (width / 2) - (mc.fontRenderer.getStringWidth(playerInfo.getHammerName() + " Cooldown") / 2), 32, 0xffffffff);
 
 	        GlStateManager.pushMatrix();
 
@@ -190,7 +190,7 @@ public class AetherOverlay
 	{
 		EntityPlayer player = mc.player;
 
-		if (player == null || player.getRidingEntity() == null || !(player.getRidingEntity() instanceof EntityMoa))
+		if (!(player.getRidingEntity() instanceof EntityMoa))
 		{
 			return;
 		}
@@ -263,24 +263,17 @@ public class AetherOverlay
 
 	public static void renderBossHP(Minecraft mc) 
 	{
-		PlayerAether player = PlayerAether.get(mc.player);
+		IPlayerAether player = AetherAPI.getInstance().get(mc.player);
 
-		EntityLiving boss = (EntityLiving) player.getCurrentBoss();
+		IAetherBoss boss = player.getFocusedBoss();
 
-		if (player.getCurrentBoss() != null) 
+		if (player.getFocusedBoss() != null) 
 		{
-			String bossTitle = "";
+			String bossTitle = boss.getBossTitle();
 			ScaledResolution scaledresolution = new ScaledResolution(mc);
 
-	        int healthRemaining = (int) (boss.getHealth() / boss.getMaxHealth() * 256F);
+	        int healthRemaining = (int) (boss.getBossHealth() / boss.getMaxBossHealth() * 256F);
 			int width = scaledresolution.getScaledWidth();
-
-			if (boss instanceof EntitySlider) 
-			{ bossTitle = ((EntitySlider)boss).getBossTitle(); }
-			else if (boss instanceof EntityValkyrieQueen)
-			{ bossTitle = ((EntityValkyrieQueen)boss).getBossTitle(); }
-			else
-			{ bossTitle = ((EntitySunSpirit)boss).getBossTitle(); }
 
 			GlStateManager.pushMatrix();
 

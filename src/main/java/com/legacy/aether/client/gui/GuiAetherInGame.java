@@ -9,6 +9,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.client.overlay.AetherOverlay;
 import com.legacy.aether.player.PlayerAether;
 
@@ -28,9 +30,9 @@ public class GuiAetherInGame extends Gui
 	{
 		if (this.mc.player != null)
 		{
-			PlayerAether player = PlayerAether.get(this.mc.player);
+			IPlayerAether player = AetherAPI.getInstance().get(this.mc.player);
 
-			if (player.isWearingPhoenixSet() && event.getOverlayType() == OverlayType.FIRE)
+			if (player.getAccessoryInventory().isWearingPhoenixSet() && event.getOverlayType() == OverlayType.FIRE)
 			{
 				event.setCanceled(true);
 			}
@@ -45,23 +47,19 @@ public class GuiAetherInGame extends Gui
 			return;
 		}
 
-		PlayerAether player = PlayerAether.get(this.mc.player);
+		IPlayerAether player = AetherAPI.getInstance().get(this.mc.player);
 
-		if (player.poisonInstance() != null)
+		if (player.getEntity() != null)
 		{
 			AetherOverlay.renderCure(this.mc);
 			AetherOverlay.renderPoison(this.mc);
-		}
-
-		if (player.thePlayer != null)
-		{
 			AetherOverlay.renderIronBubble(this.mc);
 			AetherOverlay.renderCooldown(this.mc);
 			AetherOverlay.renderJumps(this.mc);
 			AetherOverlay.renderBossHP(this.mc);
 		}
 
-        float portalTime =  player.portalAnimTime * 1.2F + (player.prevPortalAnimTime -  player.portalAnimTime);
+        float portalTime =  ((PlayerAether)player).portalAnimTime * 1.2F + (((PlayerAether)player).prevPortalAnimTime -  ((PlayerAether)player).portalAnimTime);
 
         if(portalTime > 0.0F)
         {

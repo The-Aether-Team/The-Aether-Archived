@@ -11,26 +11,21 @@ import net.minecraft.item.ItemStack;
 
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.accessories.AccessoryType;
-import com.legacy.aether.containers.inventory.InventoryAccessories;
+import com.legacy.aether.api.player.util.IAccessoryInventory;
 import com.legacy.aether.containers.slots.SlotAccessory;
-import com.legacy.aether.player.PlayerAether;
 
 public class ContainerAccessories extends ContainerPlayer
 {
 
 	public EntityPlayer player;
 
-	public PlayerAether playerAether;
+	private AccessoryType[] slotTypes = new AccessoryType[] {AccessoryType.PENDANT, AccessoryType.CAPE, AccessoryType.SHIELD, AccessoryType.MISC, AccessoryType.RING, AccessoryType.RING, AccessoryType.GLOVE, AccessoryType.MISC};
 
-	private InventoryAccessories inventoryInstance;
-
-	public ContainerAccessories(InventoryAccessories inventory, EntityPlayer player)
+	public ContainerAccessories(IAccessoryInventory inventory, EntityPlayer player)
 	{
 		super(player.inventory, !player.world.isRemote, player);
 
 		this.player = player;
-		this.playerAether = PlayerAether.get(player);
-		this.inventoryInstance = inventory;
 
 		for (Slot slot : (ArrayList<Slot>) this.inventorySlots)
 		{
@@ -55,9 +50,9 @@ public class ContainerAccessories extends ContainerPlayer
 		{
 			for (int y = 0; y < 4; y++)
 			{
-				AccessoryType type = this.playerAether.accessories.slotTypes[slotID];
+				AccessoryType type = this.slotTypes[slotID];
 
-				this.addSlotToContainer(new SlotAccessory(inventoryInstance, slotID, type, 59 + x * 18, 8 + y * 18, player));
+				this.addSlotToContainer(new SlotAccessory(inventory, slotID, type, 59 + x * 18, 8 + y * 18, player));
 				slotID++;
 			}
 		}

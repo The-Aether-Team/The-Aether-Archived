@@ -8,14 +8,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
+import com.legacy.aether.api.player.util.IAetherAbility;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.movement.AetherLiquidMovement;
 
-public class AbilityArmor extends Ability
+public class AbilityArmor implements IAetherAbility
 {
 
-	private AetherLiquidMovement player_movement;
+	private PlayerAether playerAether;
+
+	private AetherLiquidMovement playerMovement;
 
 	private boolean jumpBoosted;
 
@@ -23,70 +26,75 @@ public class AbilityArmor extends Ability
 
 	public AbilityArmor(PlayerAether player)
 	{
-		super(player);
-		
-		this.player_movement = new AetherLiquidMovement(this.playerAether);
+		this.playerAether = player;
+		this.playerMovement = new AetherLiquidMovement(this.playerAether);
+	}
+
+	@Override
+	public boolean shouldExecute()
+	{
+		return false;
 	}
 
 	@Override
 	public void onUpdate()
 	{
-		if (this.playerAether.isWearingNeptuneSet())
+		if (this.playerAether.getAccessoryInventory().isWearingNeptuneSet())
 		{
-			this.player_movement.onUpdate();
+			this.playerMovement.onUpdate();
 		}
 
-		if (this.playerAether.isWearingGravititeSet())
+		if (this.playerAether.getAccessoryInventory().isWearingGravititeSet())
 		{
 			if (this.playerAether.isJumping() && !this.jumpBoosted)
 			{
-				this.player.motionY = 1D;
+				this.playerAether.getEntity().motionY = 1D;
 				this.jumpBoosted = true;
 			}
 
-			this.player.fallDistance = -1F;
+			this.playerAether.getEntity().fallDistance = -1F;
 		}
 
-		if (this.player.isWet())
+		if (this.playerAether.getEntity().isWet())
 		{
-			if (this.playerAether.wearingArmor(ItemsAether.phoenix_boots))
+			if (this.playerAether.getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.phoenix_boots)))
 			{
-				this.damagePhoenixArmor(this.player, ItemsAether.obsidian_boots, 0);
+				this.damagePhoenixArmor(this.playerAether.getEntity(), ItemsAether.obsidian_boots, 0);
 			}
 
-			if (this.playerAether.wearingArmor(ItemsAether.phoenix_leggings))
+			if (this.playerAether.getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.phoenix_leggings)))
 			{
-				this.damagePhoenixArmor(this.player, ItemsAether.obsidian_leggings, 1);
+				this.damagePhoenixArmor(this.playerAether.getEntity(), ItemsAether.obsidian_leggings, 1);
 			}
 
-			if (this.playerAether.wearingArmor(ItemsAether.phoenix_chestplate))
+			if (this.playerAether.getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.phoenix_chestplate)))
 			{
-				this.damagePhoenixArmor(this.player, ItemsAether.obsidian_chestplate, 2);
+				this.damagePhoenixArmor(this.playerAether.getEntity(), ItemsAether.obsidian_chestplate, 2);
 			}
 
-			if (this.playerAether.wearingArmor(ItemsAether.phoenix_helmet))
+			if (this.playerAether.getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.phoenix_helmet)))
 			{
-				this.damagePhoenixArmor(this.player, ItemsAether.obsidian_helmet, 3);
+				this.damagePhoenixArmor(this.playerAether.getEntity(), ItemsAether.obsidian_helmet, 3);
 			}
 		}
 
-		if (this.playerAether.isWearingPhoenixSet())
+		if (this.playerAether.getAccessoryInventory().isWearingPhoenixSet())
 		{
-			this.player.extinguish();
-			this.player_movement.onUpdate();
+			this.playerAether.getEntity().extinguish();
+			this.playerMovement.onUpdate();
 
-			if (this.player.world.isRemote)
+			if (this.playerAether.getEntity().world.isRemote)
 			{
-				FMLClientHandler.instance().getClient().world.spawnParticle(EnumParticleTypes.FLAME, this.player.posX + (this.rand.nextGaussian() / 5D), this.player.posY + (this.rand.nextGaussian() / 5D), this.player.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
+				FMLClientHandler.instance().getClient().world.spawnParticle(EnumParticleTypes.FLAME, this.playerAether.getEntity().posX + (this.rand.nextGaussian() / 5D), this.playerAether.getEntity().posY + (this.rand.nextGaussian() / 5D), this.playerAether.getEntity().posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
 			}
 		}
 
-		if (this.playerAether.wearingArmor(ItemsAether.sentry_boots))
+		if (this.playerAether.getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.sentry_boots)))
 		{
-			this.player.fallDistance = 0F;
+			this.playerAether.getEntity().fallDistance = 0F;
 		}
 
-		if (!this.playerAether.isJumping() && this.player.onGround)
+		if (!this.playerAether.isJumping() && this.playerAether.getEntity().onGround)
 		{
 			this.jumpBoosted = false;
 		}

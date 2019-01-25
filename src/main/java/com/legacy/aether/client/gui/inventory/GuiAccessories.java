@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.client.gui.button.GuiButtonPerks;
 import com.legacy.aether.containers.ContainerAccessories;
@@ -24,11 +25,11 @@ public class GuiAccessories extends GuiContainer
 
 	private static final ResourceLocation ACCESSORIES = new ResourceLocation("aether_legacy", "textures/gui/inventory/accessories.png");
 
-	PlayerAether playerAether;
+	IPlayerAether playerAether;
 
-	public GuiAccessories(PlayerAether player)
+	public GuiAccessories(IPlayerAether player)
 	{
-		super(new ContainerAccessories(player.accessories, player.thePlayer));
+		super(new ContainerAccessories(player.getAccessoryInventory(), player.getEntity()));
 
 		this.playerAether = player;
 		this.allowUserInput = true;
@@ -39,7 +40,7 @@ public class GuiAccessories extends GuiContainer
 	{
 		super.initGui();
 
-		if (AetherRankings.isRankedPlayer(this.playerAether.thePlayer.getUniqueID()) || this.playerAether.isDonator())
+		if (AetherRankings.isRankedPlayer(this.playerAether.getEntity().getUniqueID()) || this.playerAether.isDonator())
 		{
 			this.buttonList.add(new GuiButtonPerks(this.width / 2 - 108, this.height / 2 - 83));
 		}

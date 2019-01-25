@@ -1,27 +1,9 @@
 package com.legacy.aether.player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
-import com.legacy.aether.AetherConfig;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.containers.inventory.InventoryAccessories;
-import com.legacy.aether.entities.movement.AetherPoisonMovement;
-import com.legacy.aether.entities.passive.EntityMiniCloud;
-import com.legacy.aether.entities.passive.mountable.EntityParachute;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketAccessory;
-import com.legacy.aether.player.abilities.Ability;
-import com.legacy.aether.player.abilities.AbilityAccessories;
-import com.legacy.aether.player.abilities.AbilityArmor;
-import com.legacy.aether.player.abilities.AbilityFlight;
-import com.legacy.aether.player.abilities.AbilityRepulsion;
-import com.legacy.aether.player.capability.PlayerAetherManager;
-import com.legacy.aether.player.perks.AetherRankings;
-import com.legacy.aether.player.perks.util.DonatorMoaSkin;
-import com.legacy.aether.world.TeleporterAether;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -36,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
@@ -44,7 +25,27 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-public class PlayerAether
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.util.IAccessoryInventory;
+import com.legacy.aether.api.player.util.IAetherAbility;
+import com.legacy.aether.api.player.util.IAetherBoss;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.containers.inventory.InventoryAccessories;
+import com.legacy.aether.entities.movement.AetherPoisonMovement;
+import com.legacy.aether.entities.passive.mountable.EntityParachute;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketAccessory;
+import com.legacy.aether.player.abilities.AbilityAccessories;
+import com.legacy.aether.player.abilities.AbilityArmor;
+import com.legacy.aether.player.abilities.AbilityFlight;
+import com.legacy.aether.player.abilities.AbilityRepulsion;
+import com.legacy.aether.player.perks.AetherRankings;
+import com.legacy.aether.player.perks.util.DonatorMoaSkin;
+import com.legacy.aether.world.TeleporterAether;
+
+public class PlayerAether implements IPlayerAether
 {
 
 	public EntityPlayer thePlayer;
@@ -55,21 +56,21 @@ public class PlayerAether
 
 	private AttributeModifier healthModifier, reachModifier;
 
-	public InventoryAccessories accessories;
+	public IAccessoryInventory accessories;
 
 	private AetherPoisonMovement poison;
 
 	public float wingSinage;
 
-	public EntityMiniCloud leftCloud, rightCloud;
+	public IAetherBoss currentBoss;
 
-	public Entity currentBoss;
+	private final ArrayList<IAetherAbility> abilities = new ArrayList<IAetherAbility>();
 
-	public Ability[] abilities;
+	public final ArrayList<Entity> clouds = new ArrayList<Entity>(2);
 
 	private boolean isJumping;
 
-	public float lifeShardsUsed;
+	public int lifeShardsUsed;
 
 	public float prevPortalAnimTime, portalAnimTime;
 
@@ -98,34 +99,32 @@ public class PlayerAether
 		this.accessories = new InventoryAccessories(player);
 		this.reachModifier = new AttributeModifier(this.extendedReachUUID, "Aether Reach Modifier", 5.0D, 0);
 
-		this.abilities = new Ability [] {new AbilityArmor(this), new AbilityAccessories(this), new AbilityFlight(this), new AbilityRepulsion(this)};
-	}
-
-	public static PlayerAether get(EntityPlayer player) 
-	{
-		return (PlayerAether) player.getCapability(PlayerAetherManager.AETHER_PLAYER, null);
+		this.abilities.addAll(Arrays.<IAetherAbility>asList(new AbilityArmor(this), new AbilityAccessories(this), new AbilityFlight(this), new AbilityRepulsion(this)));
 	}
 
 	public void onUpdate()
 	{
-		for (Ability ability : this.abilities)
+		for (int i = 0; i < this.abilities.size(); ++i)
 		{
-			if (ability.isEnabled())
+			IAetherAbility ability = this.abilities.get(i);
+
+			if (ability.shouldExecute())
 			{
 				ability.onUpdate();
 			}
 		}
 
-		this.poison.onUpdate();
-
-		if (this.leftCloud != null && this.rightCloud != null)
+		for (int i = 0; i < this.clouds.size(); ++i)
 		{
-			if (this.leftCloud.isDead && this.rightCloud.isDead)
+			Entity entity = this.clouds.get(i);
+
+			if (entity.isDead)
 			{
-				this.leftCloud = new EntityMiniCloud(this.thePlayer.world, this.thePlayer, 0);
-				this.rightCloud = new EntityMiniCloud(this.thePlayer.world, this.thePlayer, 1);
+				this.clouds.remove(i);
 			}
 		}
+
+		this.poison.onUpdate();
 
 		if (!this.thePlayer.onGround)
 		{
@@ -145,9 +144,11 @@ public class PlayerAether
 			this.wingSinage += 0.1F;
 		}
 
-		if (this.currentBoss != null)
+		if (this.currentBoss instanceof EntityLiving)
 		{
-			if (((EntityLiving)this.currentBoss).getHealth() <= 0 || this.currentBoss.isDead || Math.sqrt(Math.pow(currentBoss.posX - this.thePlayer.posX, 2) + Math.pow(currentBoss.posY - this.thePlayer.posY, 2) + Math.pow(currentBoss.posZ - this.thePlayer.posZ, 2)) > 50)
+			EntityLiving boss = (EntityLiving) this.currentBoss;
+
+			if (boss.getHealth() <= 0 || boss.isDead || Math.sqrt(Math.pow(boss.posX - this.thePlayer.posX, 2) + Math.pow(boss.posY - this.thePlayer.posY, 2) + Math.pow(boss.posZ - this.thePlayer.posZ, 2)) > 50.0D)
 			{
 				this.currentBoss = null;
 			}
@@ -162,9 +163,9 @@ public class PlayerAether
 			this.thePlayer.fallDistance = 0.0F;
 		}
 
-		if (this.getCooldown() > 0)
+		if (this.getHammerCooldown() > 0)
 		{
-			this.setCooldown(this.getCooldown() - 1);
+			this.cooldown -= 1;
 		}
 
 		if (this.thePlayer.motionY < -2F)
@@ -241,7 +242,7 @@ public class PlayerAether
 
 	public boolean onPlayerAttacked(DamageSource source)
 	{
-		if (this.isWearingPhoenixSet() && source.isFireDamage())
+		if (this.getAccessoryInventory().isWearingPhoenixSet() && source.isFireDamage())
 		{
 			return true;
 		}
@@ -253,13 +254,13 @@ public class PlayerAether
 	{
 		if (!this.thePlayer.world.getGameRules().getBoolean("keepInventory"))
 		{
-			this.accessories.dropAllItems();
+			this.accessories.dropAccessories();
 		}
 	}
 
 	public void onPlayerRespawn()
 	{
-		this.refreshMaxHP();
+		this.updateShardCount(0);
 
 		this.thePlayer.setHealth(this.thePlayer.getMaxHealth());
 
@@ -281,7 +282,7 @@ public class PlayerAether
 		output.setInteger("hammer_cooldown", this.cooldown);
 		output.setString("notch_hammer_name", this.cooldownName);
 		output.setInteger("max_hammer_cooldown", this.cooldownMax);
-		output.setFloat("shards_used", this.lifeShardsUsed);
+		output.setFloat("shard_count", this.lifeShardsUsed);
 		this.accessories.writeToNBT(output);
 	}
 
@@ -292,10 +293,15 @@ public class PlayerAether
 			this.shouldRenderHalo = input.getBoolean("halo");
 		}
 
+		if (input.hasKey("shards_used"))
+		{
+			input.setInteger("shard_count", (int) (input.getFloat("shards_used") / 2));
+		}
+
 		this.cooldown = input.getInteger("hammer_cooldown");
 		this.cooldownName = input.getString("notch_hammer_name");
 		this.cooldownMax = input.getInteger("max_hammer_cooldown");
-		this.lifeShardsUsed = input.getFloat("shards_used");
+		this.updateShardCount(input.getInteger("shard_count"));
 		this.accessories.readFromNBT(input);
 	}
 
@@ -306,14 +312,14 @@ public class PlayerAether
 	{ 
 		float f = original;
 
-		if(this.wearingAccessory(ItemsAether.zanite_pendant))
+		if(this.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.zanite_pendant)))
 		{
-			f *= (1F + ((float)(this.accessories.getStackFromItem(ItemsAether.zanite_pendant).getItemDamage()) / ((float)(this.accessories.getStackFromItem(ItemsAether.zanite_pendant).getMaxDamage()) * 3F)));
+			f *= (1F + ((float)(((InventoryAccessories) this.accessories).getStackFromItem(ItemsAether.zanite_pendant).getItemDamage()) / ((float)(((InventoryAccessories) this.accessories).getStackFromItem(ItemsAether.zanite_pendant).getMaxDamage()) * 3F)));
 		}
 
-		if(this.wearingAccessory(ItemsAether.zanite_ring))
+		if(this.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.zanite_ring)))
 		{
-			f *= (1F + ((float)(this.accessories.getStackFromItem(ItemsAether.zanite_ring).getItemDamage()) / ((float)(this.accessories.getStackFromItem(ItemsAether.zanite_ring).getMaxDamage()) * 3F)));
+			f *= (1F + ((float)(((InventoryAccessories) this.accessories).getStackFromItem(ItemsAether.zanite_ring).getItemDamage()) / ((float)(((InventoryAccessories) this.accessories).getStackFromItem(ItemsAether.zanite_ring).getMaxDamage()) * 3F)));
 		}
 
 		return f == original ? original : f + original; 
@@ -334,112 +340,6 @@ public class PlayerAether
 		{
 			this.thePlayer.getEntityAttribute(EntityPlayer.REACH_DISTANCE).removeModifier(this.reachModifier);
 		}
-	}
-
-	/*
-	 * Checks if the player is wearing the specified item as an accessory
-	 */
-	public boolean wearingAccessory(Item item)
-	{
-		for (int index = 0; index < 8; index++)
-		{
-			if (this.getAccessoryStacks().get(index).getItem() == item)
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/*
-	 * Checks how many of the specific item the player is wearing (If any)
-	 */
-	public int getAccessoryCount(Item item)
-	{
-		int count = 0;
-
-		for (int index = 0; index < 8; index++)
-		{
-			if (this.getAccessoryStacks().get(index).getItem() == item)
-			{
-				count++;
-			}
-		}
-
-		return count;
-	}
-
-	/*
-	 * Checks if the player is wearing the specified item as armor
-	 */
-	public boolean wearingArmor(Item item)
-	{
-		for (int index = 0; index < 4; index++)
-		{
-			if (this.thePlayer != null && this.thePlayer.inventory.armorInventory.get(index).getItem() == item)
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	/*
-	 * Checks of the player is wearing a full set of Zanite
-	 */
-	public boolean isWearingZaniteSet()
-	{
-		return wearingArmor(ItemsAether.zanite_helmet) && wearingArmor(ItemsAether.zanite_chestplate) && wearingArmor(ItemsAether.zanite_leggings) && wearingArmor(ItemsAether.zanite_boots) && wearingAccessory(ItemsAether.zanite_gloves);
-	}
-
-	/*
-	 * Checks of the player is wearing a full set of Gravitite
-	 */
-	public boolean isWearingGravititeSet()
-	{
-		return wearingArmor(ItemsAether.gravitite_helmet) && wearingArmor(ItemsAether.gravitite_chestplate) && wearingArmor(ItemsAether.gravitite_leggings) && wearingArmor(ItemsAether.gravitite_boots) && wearingAccessory(ItemsAether.gravitite_gloves);
-	}
-
-	/*
-	 * Checks of the player is wearing a full set of Neptune
-	 */
-	public boolean isWearingNeptuneSet()
-	{
-		return wearingArmor(ItemsAether.neptune_helmet) && wearingArmor(ItemsAether.neptune_chestplate) && wearingArmor(ItemsAether.neptune_leggings) && wearingArmor(ItemsAether.neptune_boots) && wearingAccessory(ItemsAether.neptune_gloves);
-	}
-
-	/*
-	 * Checks of the player is wearing a full set of Phoenix
-	 */
-	public boolean isWearingPhoenixSet()
-	{
-		return wearingArmor(ItemsAether.phoenix_helmet) && wearingArmor(ItemsAether.phoenix_chestplate) && wearingArmor(ItemsAether.phoenix_leggings) && wearingArmor(ItemsAether.phoenix_boots) && wearingAccessory(ItemsAether.phoenix_gloves);
-	}
-
-	/*
-	 * Checks of the player is wearing a full set of Valkyrie
-	 */
-	public boolean isWearingValkyrieSet()
-	{
-		return wearingArmor(ItemsAether.valkyrie_helmet) && wearingArmor(ItemsAether.valkyrie_chestplate) && wearingArmor(ItemsAether.valkyrie_leggings) && wearingArmor(ItemsAether.valkyrie_boots) && wearingAccessory(ItemsAether.valkyrie_gloves);
-	}
-
-	/*
-	 * Checks of the player is wearing a full set of Obsidian
-	 */
-	public boolean isWearingObsidianSet()
-	{
-		return wearingArmor(ItemsAether.obsidian_helmet) && wearingArmor(ItemsAether.obsidian_chestplate) && wearingArmor(ItemsAether.obsidian_leggings) && wearingArmor(ItemsAether.obsidian_boots) && wearingAccessory(ItemsAether.obsidian_gloves);
-	}
-
-	/*
-	 * Instance of the accessories
-	 */
-	public NonNullList<ItemStack> getAccessoryStacks() 
-	{
-		return this.accessories.stacks;
 	}
 
 	/*
@@ -533,14 +433,15 @@ public class PlayerAether
 	}
 
 	/*
-	 * Increases the maximum amount of HP (Caps at 20)
+	 * Increases the maximum amount of HP (Caps at 10)
 	 */
-	public void increaseMaxHP()
+	@Override
+	public void updateShardCount(int amount)
 	{
-		this.lifeShardsUsed = this.lifeShardsUsed + 2F;
-		this.healthModifier = new AttributeModifier(healthUUID, "Aether Health Modifier", this.lifeShardsUsed, 0);
+		this.lifeShardsUsed += amount;
+		this.healthModifier = new AttributeModifier(this.healthUUID, "Aether Health Modifier", (this.lifeShardsUsed * 2.0F), 0);
 
-		if (this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getModifier(healthUUID) != null)
+		if (this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getModifier(this.healthUUID) != null)
 		{
 			this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).removeModifier(this.healthModifier);
 		}
@@ -549,93 +450,84 @@ public class PlayerAether
 	}
 
 	/*
-	 * An updater to update the players HP
+	 * Instance of the current shards the player has used
 	 */
-	public void refreshMaxHP()
+	@Override
+	public int getShardsUsed()
 	{
-		this.healthModifier = new AttributeModifier(healthUUID, "Aether Health Modifier", this.lifeShardsUsed, 0);
-
-		if (this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getModifier(healthUUID) != null)
-		{
-			this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).removeModifier(this.healthModifier);
-		}
-
-		this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(this.healthModifier);
+		return this.lifeShardsUsed;
 	}
 
 	/*
-	 * Instance of the current extra health the player has
+	 * Instance of the maximum shards the player can use
 	 */
-	public float getExtraHealth()
+	@Override
+	public int getMaxShardCount()
 	{
-		return this.thePlayer.getMaxHealth() - AetherConfig.getMaxLifeShards();//this.lifeShardsUsed;
-	}
-
-	/*
-	 * Instance of the boss the player is fighting
-	 */
-	public Entity getCurrentBoss()
-	{
-		return this.currentBoss;
+		return AetherConfig.getMaxLifeShards();
 	}
 
 	/*
 	 * Sets the boss the player is fighting
 	 */
-	public void setCurrentBoss(Entity currentBoss)
+	@Override
+	public void setFocusedBoss(IAetherBoss boss)
 	{
-		this.currentBoss = currentBoss;
+		this.currentBoss = boss;
+	}
+
+	/*
+	 * Instance of the boss the player is fighting
+	 */
+	@Override
+	public IAetherBoss getFocusedBoss()
+	{
+		return this.currentBoss;
 	}
 
 	/*
 	 * Sets the cooldown and name of the players hammer
 	 */
-	public boolean setGeneralCooldown(int cooldown, String stackName)
+	@Override
+	public boolean setHammerCooldown(int cooldown, String hammerName)
 	{
 		if (this.cooldown == 0)
 		{
 			this.cooldown = cooldown;
 			this.cooldownMax = cooldown;
-			this.cooldownName = stackName;
+			this.cooldownName = hammerName;
 
 			return true;
 		}
-		else
-		{
-			return false;
-		}
-	}
 
-	/*
-	 * Instance of the hammers cooldown
-	 */
-	public int getCooldown()
-	{
-		return this.cooldown;
-	}
-
-	/*
-	 * Sets the cooldown of the players hammer
-	 */
-	public void setCooldown(int cooldown)
-	{
-		this.cooldown = cooldown;
-	}
-
-	/*
-	 * The max cooldown of the players hammer
-	 */
-	public int getCooldownMax()
-	{
-		return this.cooldownMax;
+		return false;
 	}
 
 	/*
 	 * The name of the players hammer
 	 */
-	public String getCooldownName()
+	@Override
+	public String getHammerName()
 	{
 		return this.cooldownName;
+	}
+
+	/*
+	 * Sets the cooldown of the players hammer
+	 */
+	@Override
+	public int getHammerCooldown()
+	{
+		return this.cooldown;
+	}
+
+	/*
+	 * The max cooldown of the players hammer
+	 */
+	@Override
+	public int getHammerMaxCooldown()
+	{
+		return this.cooldownMax;
 	}
 
 	/*
@@ -649,22 +541,25 @@ public class PlayerAether
 	/*
 	 * Afflicts a set amount of poison to the player
 	 */
-	public void afflictPoison()
+	@Override
+	public void inflictPoison(int ticks)
 	{
-		this.poison.afflictPoison();
+		this.poison.afflictPoison(ticks);
 	}
 
 	/*
 	 * Afflicts a set amount of remedy to the player
 	 */
-	public void attainCure(int time)
+	@Override
+	public void inflictCure(int ticks)
 	{
-		this.poison.curePoison(time);
+		this.poison.curePoison(ticks);
 	}
 
 	/*
 	 * A checker to tell if the player is poisoned or not
 	 */
+	@Override
 	public boolean isPoisoned()
 	{
 		return this.poison.poisonTime > 0;
@@ -673,6 +568,7 @@ public class PlayerAether
 	/*
 	 * A checker to tell if the player is curing or not
 	 */
+	@Override
 	public boolean isCured()
 	{
 		return this.poison.poisonTime < 0;
@@ -681,6 +577,7 @@ public class PlayerAether
 	/*
 	 * Checks if the player is jumping or not
 	 */
+	@Override
 	public boolean isJumping()
 	{
 		return this.isJumping;
@@ -689,6 +586,7 @@ public class PlayerAether
 	/*
 	 * Sets if the player is jumping or not
 	 */
+	@Override
 	public void setJumping(boolean isJumping)
 	{
 		this.isJumping = isJumping;
@@ -724,4 +622,41 @@ public class PlayerAether
 			AetherNetworkingManager.sendToAll(new PacketAccessory(this));
 		}
 	}
+
+	@Override
+	public void setAccessoryInventory(IAccessoryInventory inventory)
+	{
+		this.accessories = inventory;
+	}
+
+	@Override
+	public IAccessoryInventory getAccessoryInventory()
+	{
+		return this.accessories;
+	}
+
+	@Override
+	public ArrayList<IAetherAbility> getAbilities()
+	{
+		return this.abilities;
+	}
+
+	@Override
+	public EntityPlayer getEntity()
+	{
+		return this.thePlayer;
+	}
+
+	@Override
+	public void setMountSneaking(boolean isSneaking) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isMountSneaking() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -11,9 +11,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.entities.projectile.EntityHammerProjectile;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemNotchHammer extends ItemSword
@@ -53,7 +53,7 @@ public class ItemNotchHammer extends ItemSword
 				world.spawnEntity(hammerProjectile);
 			}
 		}
-		else if (PlayerAether.get(entityplayer).setGeneralCooldown(200, itemstack.getDisplayName()))
+		else if (AetherAPI.getInstance().get(entityplayer).setHammerCooldown(200, itemstack.getDisplayName()))
 		{
 			itemstack.damageItem(1, entityplayer);
 

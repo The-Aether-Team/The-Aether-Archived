@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBuf;
 import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,14 +12,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.api.accessories.AetherAccessory;
+import com.legacy.aether.api.player.util.IAccessoryInventory;
+import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
 import com.legacy.aether.player.PlayerAether;
 
-public class InventoryAccessories implements IInventory
+public class InventoryAccessories implements IAccessoryInventory
 {
 
 	public EntityPlayer player;
@@ -29,43 +31,12 @@ public class InventoryAccessories implements IInventory
 
     public static final String[] EMPTY_SLOT_NAMES = new String[] {"pendant", "cape", "shield", "misc", "ring", "ring", "gloves", "misc"};
 
-    public AccessoryType[] slotTypes = new AccessoryType[] {AccessoryType.PENDANT, AccessoryType.CAPE, AccessoryType.SHIELD, AccessoryType.MISC, AccessoryType.RING, AccessoryType.RING, AccessoryType.GLOVE, AccessoryType.MISC};
+    private AccessoryType[] slotTypes = new AccessoryType[] {AccessoryType.PENDANT, AccessoryType.CAPE, AccessoryType.SHIELD, AccessoryType.MISC, AccessoryType.RING, AccessoryType.RING, AccessoryType.GLOVE, AccessoryType.MISC};
 
     public InventoryAccessories(EntityPlayer thePlayer)
     {
         this.player = thePlayer;
     }
-
-	public void dropAllItems()
-	{
-		for (int slot = 0; slot < this.stacks.size(); ++slot)
-		{
-			if (this.stacks.get(slot) != ItemStack.EMPTY)
-			{
-				this.player.dropItem(this.stacks.get(slot), true, true);
-
-				this.stacks.set(slot, ItemStack.EMPTY);
-			}
-		}
-	}
-
-	public void damageItemStackIfWearing(ItemStack itemStack)
-	{
-		ItemStack currentAccessory = this.getStackFromItem(itemStack.getItem());
-
-		if (currentAccessory != ItemStack.EMPTY)
-		{
-			if (!this.player.capabilities.isCreativeMode)
-			{
-				currentAccessory.damageItem(1, this.player);
-
-				if (currentAccessory.getItemDamage() >= currentAccessory.getMaxDamage())
-				{
-					this.breakItem(currentAccessory.getItem());
-				}
-			}
-		}
-	}
 
 	public int breakItem(Item item)
 	{
@@ -108,8 +79,10 @@ public class InventoryAccessories implements IInventory
 
 			int stackIndex = 0;
 
-			for (AccessoryType type : this.slotTypes)
+			for (int i = 0; i < this.slotTypes.length; ++i)
 			{
+				AccessoryType type = this.slotTypes[i];
+
 				if (accessory.getAccessoryType() == type && this.stacks.get(stackIndex) == ItemStack.EMPTY)
 				{
 					this.stacks.set(stackIndex, stack);
@@ -252,7 +225,7 @@ public class InventoryAccessories implements IInventory
 	@Override
 	public void markDirty()
 	{
-		PlayerAether.get(player).updateAccessories();
+		((PlayerAether) AetherAPI.getInstance().get(this.player)).updateAccessories();
 	}
 
 	public void copyAccessories(InventoryAccessories accessories)
@@ -275,17 +248,11 @@ public class InventoryAccessories implements IInventory
 
 	public void writeData(ByteBuf dataOutput)
 	{
-		for (ItemStack stack : this.stacks)
+		for (int i = 0; i < this.stacks.size(); ++i)
 		{
-			PacketBuffer pb = new PacketBuffer(dataOutput);
-			try
-			{
-				pb.writeItemStack(stack);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
+			ItemStack stack = this.stacks.get(i);
+
+			ByteBufUtils.writeItemStack(dataOutput, stack);
 		}
 	}
 
@@ -293,15 +260,7 @@ public class InventoryAccessories implements IInventory
 	{
 		for (int i = 0; i < this.stacks.size(); ++i)
 		{
-			PacketBuffer pb = new PacketBuffer(dataInput);
-			try
-			{
-				this.stacks.set(i, pb.readItemStack());
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
+			this.stacks.set(i, ByteBufUtils.readItemStack(dataInput));
 		}
 	}
 
@@ -357,6 +316,142 @@ public class InventoryAccessories implements IInventory
 		}
 
 		return true;
+	}
+
+	@Override
+	public void dropAccessories()
+	{
+		for (int slot = 0; slot < this.stacks.size(); ++slot)
+		{
+			if (this.stacks.get(slot) != ItemStack.EMPTY)
+			{
+				this.player.dropItem(this.stacks.get(slot), true, true);
+
+				this.stacks.set(slot, ItemStack.EMPTY);
+			}
+		}
+	}
+
+	@Override
+	public void damageWornStack(int damage, ItemStack stack)
+	{
+		ItemStack currentAccessory = this.getStackFromItem(stack.getItem());
+
+		if (currentAccessory != ItemStack.EMPTY)
+		{
+			if (!this.player.capabilities.isCreativeMode)
+			{
+				currentAccessory.damageItem(1, this.player);
+
+				if (currentAccessory.getItemDamage() >= currentAccessory.getMaxDamage())
+				{
+					this.breakItem(currentAccessory.getItem());
+				}
+			}
+		}
+	}
+
+	@Override
+	public boolean setAccessorySlot(ItemStack stack)
+	{
+		for (int i = 0; i < this.getSizeInventory(); ++i)
+		{
+			if (this.isItemValidForSlot(i, stack))
+			{
+				this.stacks.set(i, stack);
+				this.markDirty();
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean wearingAccessory(ItemStack stack)
+	{
+		for (int index = 0; index < this.getSizeInventory(); index++)
+		{
+			if (this.getStackInSlot(index).getItem() == stack.getItem())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean wearingArmor(ItemStack stack)
+	{
+		for (int index = 0; index < 4; index++)
+		{
+			if (this.player != null && this.player.inventory.armorInventory.get(index).getItem() == stack.getItem())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isWearingZaniteSet()
+	{
+		return wearingArmor(new ItemStack(ItemsAether.zanite_helmet)) && wearingArmor(new ItemStack(ItemsAether.zanite_chestplate)) && wearingArmor(new ItemStack(ItemsAether.zanite_leggings)) && wearingArmor(new ItemStack(ItemsAether.zanite_boots)) && wearingAccessory(new ItemStack(ItemsAether.zanite_gloves));
+	}
+
+	@Override
+	public boolean isWearingGravititeSet()
+	{
+		return wearingArmor(new ItemStack(ItemsAether.gravitite_helmet)) && wearingArmor(new ItemStack(ItemsAether.gravitite_chestplate)) && wearingArmor(new ItemStack(ItemsAether.gravitite_leggings)) && wearingArmor(new ItemStack(ItemsAether.gravitite_boots)) && wearingAccessory(new ItemStack(ItemsAether.gravitite_gloves));
+	}
+
+	@Override
+	public boolean isWearingNeptuneSet()
+	{
+		return wearingArmor(new ItemStack(ItemsAether.neptune_helmet)) && wearingArmor(new ItemStack(ItemsAether.neptune_chestplate)) && wearingArmor(new ItemStack(ItemsAether.neptune_leggings)) && wearingArmor(new ItemStack(ItemsAether.neptune_boots)) && wearingAccessory(new ItemStack(ItemsAether.neptune_gloves));
+	}
+
+	@Override
+	public boolean isWearingPhoenixSet()
+	{
+		return wearingArmor(new ItemStack(ItemsAether.phoenix_helmet)) && wearingArmor(new ItemStack(ItemsAether.phoenix_chestplate)) && wearingArmor(new ItemStack(ItemsAether.phoenix_leggings)) && wearingArmor(new ItemStack(ItemsAether.phoenix_boots)) && wearingAccessory(new ItemStack(ItemsAether.phoenix_gloves));
+	}
+
+	@Override
+	public boolean isWearingValkyrieSet()
+	{
+		return wearingArmor(new ItemStack(ItemsAether.valkyrie_helmet)) && wearingArmor(new ItemStack(ItemsAether.valkyrie_chestplate)) && wearingArmor(new ItemStack(ItemsAether.valkyrie_leggings)) && wearingArmor(new ItemStack(ItemsAether.valkyrie_boots)) && wearingAccessory(new ItemStack(ItemsAether.valkyrie_gloves));
+	}
+
+	@Override
+	public boolean isWearingObsidianSet()
+	{
+		return wearingArmor(new ItemStack(ItemsAether.obsidian_helmet)) && wearingArmor(new ItemStack(ItemsAether.obsidian_chestplate)) && wearingArmor(new ItemStack(ItemsAether.obsidian_leggings)) && wearingArmor(new ItemStack(ItemsAether.obsidian_boots)) && wearingAccessory(new ItemStack(ItemsAether.obsidian_gloves));
+	}
+
+	@Override
+	public NonNullList<ItemStack> getAccessories()
+	{
+		return this.stacks;
+	}
+
+	@Override
+	public int getAccessoryCount(ItemStack stack)
+	{
+		int count = 0;
+
+		for (int index = 0; index < this.getSizeInventory(); index++)
+		{
+			if (this.getStackInSlot(index).getItem() == stack.getItem())
+			{
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 }

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.client.gui.GuiEnchanter;
 import com.legacy.aether.client.gui.GuiFreezer;
 import com.legacy.aether.client.gui.GuiIncubator;
@@ -20,7 +21,6 @@ import com.legacy.aether.containers.ContainerEnchanter;
 import com.legacy.aether.containers.ContainerFreezer;
 import com.legacy.aether.containers.ContainerIncubator;
 import com.legacy.aether.containers.ContainerLore;
-import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.tile_entities.TileEntityEnchanter;
 import com.legacy.aether.tile_entities.TileEntityFreezer;
 import com.legacy.aether.tile_entities.TileEntityIncubator;
@@ -36,7 +36,7 @@ public class AetherGuiHandler implements IGuiHandler
 	{
 		if (ID == accessories)
 		{
-			return new ContainerAccessories(PlayerAether.get(player).accessories, player);
+			return new ContainerAccessories(AetherAPI.getInstance().get(player).getAccessoryInventory(), player);
 		}
 		else if (ID == enchanter)
 		{
@@ -68,7 +68,7 @@ public class AetherGuiHandler implements IGuiHandler
 	{
 		if (ID == accessories)
 		{
-			return new GuiAccessories(PlayerAether.get(player));
+			return new GuiAccessories(AetherAPI.getInstance().get(player));
 		}
 		else if (ID == enchanter)
 		{

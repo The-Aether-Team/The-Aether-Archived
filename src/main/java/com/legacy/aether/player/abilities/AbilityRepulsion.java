@@ -16,52 +16,55 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 
+import com.legacy.aether.api.player.util.IAetherAbility;
 import com.legacy.aether.entities.projectile.EntityZephyrSnowball;
 import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 
-public class AbilityRepulsion extends Ability
+public class AbilityRepulsion implements IAetherAbility
 {
+
+	private PlayerAether playerAether;
 
 	private Random rand = new Random();
 
 	public AbilityRepulsion(PlayerAether player) 
 	{
-		super(player);
+		this.playerAether = player;
 	}
 
 	@Override
-	public boolean isEnabled() 
+	public boolean shouldExecute() 
 	{
-		return super.isEnabled() && this.playerAether.wearingAccessory(ItemsAether.repulsion_shield) && this.player.moveForward == 0.0F && this.player.moveStrafing == 0.0F;
+		return this.playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.repulsion_shield)) && this.playerAether.getEntity().moveForward == 0.0F && this.playerAether.getEntity().moveStrafing == 0.0F;
 	}
 
 	@Override
 	public void onUpdate() 
 	{
-		List<?> entities = this.player.world.getEntitiesWithinAABBExcludingEntity(this.player, this.player.getEntityBoundingBox().expand(4.0D, 4.0D, 4.0D));
+		List<?> entities = this.playerAether.getEntity().world.getEntitiesWithinAABBExcludingEntity(this.playerAether.getEntity(), this.playerAether.getEntity().getEntityBoundingBox().expand(4.0D, 4.0D, 4.0D));
 
 		for (int size = 0; size < entities.size(); ++size)
 		{
 			Entity projectile = (Entity) entities.get(size);
 			
-			if (isProjectile(projectile) && this.getShooter(projectile) != this.player)
+			if (isProjectile(projectile) && this.getShooter(projectile) != this.playerAether.getEntity())
 			{
 				double x, y, z;
 
 				if (this.getShooter(projectile) != null)
 				{
 					Entity shooter = this.getShooter(projectile);
-					x = player.posX - shooter.posX;
-					y = player.getEntityBoundingBox().minY - shooter.getEntityBoundingBox().minY;
-					z = player.posZ - shooter.posZ;
+					x = playerAether.getEntity().posX - shooter.posX;
+					y = playerAether.getEntity().getEntityBoundingBox().minY - shooter.getEntityBoundingBox().minY;
+					z = playerAether.getEntity().posZ - shooter.posZ;
 				}
 				else
 				{
-					x = player.posX - projectile.posX;
-					y = player.posY - projectile.posY;
-					z = player.posZ - projectile.posZ;
+					x = playerAether.getEntity().posX - projectile.posX;
+					y = playerAether.getEntity().posY - projectile.posY;
+					z = playerAether.getEntity().posZ - projectile.posZ;
 				}
 
 				double difference = -Math.sqrt((x * x) + (y * y) + (z * z));
@@ -70,8 +73,8 @@ public class AbilityRepulsion extends Ability
 
 				projectile.motionX = x * 0.75F; projectile.motionY = y * 0.75F + 0.05D; projectile.motionZ = z * 0.75F;
 
-				this.setShooter(projectile, this.player);
-				player.world.playSound(this.player, new BlockPos(this.player), SoundEvents.BLOCK_NOTE_SNARE, SoundCategory.PLAYERS, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F + 0.8F) * 1.1F);
+				this.setShooter(projectile, this.playerAether.getEntity());
+				playerAether.getEntity().world.playSound(this.playerAether.getEntity(), new BlockPos(this.playerAether.getEntity()), SoundEvents.BLOCK_NOTE_SNARE, SoundCategory.PLAYERS, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F + 0.8F) * 1.1F);
 
 				for (int pack = 0; pack < 12; ++pack)
 				{
@@ -83,10 +86,10 @@ public class AbilityRepulsion extends Ability
 					packY *= 0.625F;
 					packZ *= 0.625F;
 
-					player.world.spawnParticle(EnumParticleTypes.FLAME, projectile.posX, projectile.posY, projectile.posZ, packX, packY, packZ);
+					playerAether.getEntity().world.spawnParticle(EnumParticleTypes.FLAME, projectile.posX, projectile.posY, projectile.posZ, packX, packY, packZ);
 				}
 				
-				this.playerAether.accessories.damageItemStackIfWearing(new ItemStack(ItemsAether.repulsion_shield));
+				this.playerAether.accessories.damageWornStack(1, new ItemStack(ItemsAether.repulsion_shield));
 			}
 		}
 	}

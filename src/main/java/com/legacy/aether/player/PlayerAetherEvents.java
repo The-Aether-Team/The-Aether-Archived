@@ -1,11 +1,5 @@
 package com.legacy.aether.player;
 
-import com.legacy.aether.Aether;
-import com.legacy.aether.advancements.AetherAdvancements;
-import com.legacy.aether.enchantment.AetherEnchantmentHelper;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.capability.PlayerAetherProvider;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandClearInventory;
 import net.minecraft.entity.Entity;
@@ -32,6 +26,14 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensio
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.IPlayerAetherProvider;
+import com.legacy.aether.enchantment.AetherEnchantmentHelper;
+import com.legacy.aether.items.ItemsAether;
+
 public class PlayerAetherEvents
 {
 
@@ -43,9 +45,9 @@ public class PlayerAetherEvents
 		if (event.getObject() instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) event.getObject();
-			PlayerAetherProvider provider = new PlayerAetherProvider(new PlayerAether(player));
+			IPlayerAetherProvider provider = new IPlayerAetherProvider(new PlayerAether(player));
 
-			if (PlayerAether.get(player) == null)
+			if (AetherAPI.getInstance().get(player) == null)
 			{
 				event.addCapability(PLAYER_LOCATION,  provider);
 			}
@@ -55,9 +57,9 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void checkPlayerVisibility(Visibility event)
 	{
-		PlayerAether capability = PlayerAether.get(event.getEntityPlayer());
+		IPlayerAether playerAether = AetherAPI.getInstance().get(event.getEntityPlayer());
 
-		if (capability != null && capability.wearingAccessory(ItemsAether.invisibility_cape))
+		if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape)))
 		{
 			event.modifyVisibility(0.0D);
 		}
@@ -66,19 +68,20 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void onPlayerCloned(Clone event)
 	{
-		PlayerAether original = PlayerAether.get(event.getOriginal());
+		IPlayerAether original = AetherAPI.getInstance().get(event.getOriginal());
 
-		PlayerAether newPlayer = PlayerAether.get(event.getEntityPlayer());
+		IPlayerAether newPlayer = AetherAPI.getInstance().get(event.getEntityPlayer());
 
 		NBTTagCompound data = new NBTTagCompound();
 
-		if (original != null)
+		if (original instanceof PlayerAether)
 		{
 			original.saveNBTData(data);
 			
-			if (newPlayer != null)
+			if (newPlayer instanceof PlayerAether)
 			{
-				newPlayer.portalCooldown = original.portalCooldown;
+				((PlayerAether) newPlayer).portalCooldown = ((PlayerAether) newPlayer).portalCooldown;
+
 				newPlayer.loadNBTData(data);
 			}
 		}
@@ -87,7 +90,7 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void onPlayerPickupXp(PlayerPickupXpEvent event)
 	{
-		ItemStack itemstack = AetherEnchantmentHelper.getEnchantedAccessory(Enchantments.MENDING, PlayerAether.get(event.getEntityPlayer()));
+		ItemStack itemstack = AetherEnchantmentHelper.getEnchantedAccessory(Enchantments.MENDING, AetherAPI.getInstance().get(event.getEntityPlayer()));
 
         if (!itemstack.isEmpty() && itemstack.isItemDamaged())
         {
@@ -114,11 +117,11 @@ public class PlayerAetherEvents
 	{
 		if ((event.getEntity() instanceof EntityPlayer))
 		{
-			PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.getEntity());
+			IPlayerAether playerAether = AetherAPI.getInstance().get((EntityPlayer) event.getEntity());
 
 			if (playerAether != null)
 			{
-				playerAether.onPlayerDeath();
+				((PlayerAether) playerAether).onPlayerDeath();
 			}
 		}
 	}
@@ -126,11 +129,11 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void onPlayerRespawn(PlayerRespawnEvent event)
 	{
-		PlayerAether playerAether = PlayerAether.get(event.player);
+		IPlayerAether playerAether = AetherAPI.getInstance().get(event.player);
 
 		if (playerAether != null)
 		{
-			playerAether.onPlayerRespawn();
+			((PlayerAether) playerAether).onPlayerRespawn();
 		}
 	}
 
@@ -139,7 +142,7 @@ public class PlayerAetherEvents
 	{
 		if ((event.getEntityLiving() instanceof EntityPlayer))
 		{
-			PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.getEntityLiving());
+			IPlayerAether playerAether = AetherAPI.getInstance().get((EntityPlayer) event.getEntityLiving());
 
 			if (playerAether != null)
 			{
@@ -153,11 +156,11 @@ public class PlayerAetherEvents
 	{
 		if (event.getEntityLiving() instanceof EntityPlayer)
 		{
-			PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.getEntityLiving());
+			IPlayerAether playerAether = AetherAPI.getInstance().get((EntityPlayer) event.getEntityLiving());
 
 			if (playerAether != null)
 			{
-				event.setCanceled(playerAether.onPlayerAttacked(event.getSource()));
+				event.setCanceled(((PlayerAether) playerAether).onPlayerAttacked(event.getSource()));
 			}
 		}
 	}
@@ -165,11 +168,11 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void onChangedDimension(PlayerChangedDimensionEvent event)
 	{
-		PlayerAether playerAether = PlayerAether.get(event.player);
+		IPlayerAether playerAether = AetherAPI.getInstance().get(event.player);
 		
 		if (playerAether != null)
 		{
-			playerAether.onChangedDimension(event.toDim, event.fromDim);
+			((PlayerAether) playerAether).onChangedDimension(event.toDim, event.fromDim);
 		}
 	}
 
@@ -177,11 +180,11 @@ public class PlayerAetherEvents
 	public void onPlayerLogin(PlayerLoggedInEvent event)
 	{
 		EntityPlayer player = event.player;
-		PlayerAether playerAether = PlayerAether.get(player);
+		IPlayerAether playerAether = AetherAPI.getInstance().get(player);
 
 		if (playerAether != null)
 		{
-			playerAether.accessories.markDirty();
+			playerAether.getAccessoryInventory().markDirty();
 		}
 	}
 
@@ -190,11 +193,12 @@ public class PlayerAetherEvents
 	{
 		if (event.getEntityLiving() instanceof EntityPlayer)
 		{
-			PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.getEntityLiving());
+			IPlayerAether playerAether = AetherAPI.getInstance().get((EntityPlayer) event.getEntityLiving());
 
-			if (playerAether != null && playerAether.isWearingObsidianSet())
+			if (playerAether.getAccessoryInventory().isWearingObsidianSet())
 			{
 				float original = event.getAmount();
+
 				event.setAmount(original / 2);
 			}
 		}
@@ -203,11 +207,11 @@ public class PlayerAetherEvents
 	@SubscribeEvent
 	public void onPlayerStrVsBlock(BreakSpeed event)
 	{
-		PlayerAether playerAether = PlayerAether.get(event.getEntityPlayer());
+		IPlayerAether playerAether = AetherAPI.getInstance().get(event.getEntityPlayer());
 
 		if (playerAether != null)
 		{
-			event.setNewSpeed(playerAether.getCurrentPlayerStrVsBlock(event.getNewSpeed()));
+			event.setNewSpeed(((PlayerAether) playerAether).getCurrentPlayerStrVsBlock(event.getNewSpeed()));
 		}
 	}
 
@@ -229,13 +233,13 @@ public class PlayerAetherEvents
 		            return;
 		        }
 
-				PlayerAether playerAether = PlayerAether.get(entityplayermp);
+				IPlayerAether playerAether = AetherAPI.getInstance().get(entityplayermp);
 
 				if (playerAether != null)
 				{
-					if (playerAether.accessories.getFieldCount() != 0)
+					if (playerAether.getAccessoryInventory().getFieldCount() != 0)
 					{
-						playerAether.accessories.clear();
+						playerAether.getAccessoryInventory().clear();
 
 						CommandBase.notifyCommandListener(entityplayermp, event.getCommand(), "Cleared the accessories of " + entityplayermp.getName(), new Object[] {});
 					}

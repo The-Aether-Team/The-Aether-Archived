@@ -1,4 +1,4 @@
-package com.legacy.aether.player.capability;
+package com.legacy.aether.api.player;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -6,14 +6,14 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.api.AetherAPI;
 
-public class PlayerAetherProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>
+public class IPlayerAetherProvider implements ICapabilityProvider, INBTSerializable<NBTTagCompound>
 {
 
-	private final PlayerAether playerAether;
+	private final IPlayerAether playerAether;
 
-	public PlayerAetherProvider(PlayerAether playerAether)
+	public IPlayerAetherProvider(IPlayerAether playerAether)
 	{
 		this.playerAether = playerAether;
 	}
@@ -21,14 +21,14 @@ public class PlayerAetherProvider implements ICapabilityProvider, INBTSerializab
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
 	{
-		return capability == PlayerAetherManager.AETHER_PLAYER;
+		return capability == AetherAPI.AETHER_PLAYER;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked") // Yay...
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) 
 	{
-		if (capability == PlayerAetherManager.AETHER_PLAYER)
+		if (capability == AetherAPI.AETHER_PLAYER)
 		{
 			return (T) this.playerAether;
 		}

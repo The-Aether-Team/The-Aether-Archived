@@ -29,12 +29,15 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.util.IAetherBoss;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
@@ -42,10 +45,9 @@ import com.legacy.aether.entities.util.AetherNameGen;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.tools.ItemAetherTool;
 import com.legacy.aether.items.util.EnumAetherToolType;
-import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
-public class EntitySlider extends EntityFlying 
+public class EntitySlider extends EntityFlying implements IAetherBoss
 {
 
 	public static final DataParameter<String> SLIDER_NAME = EntityDataManager.<String>createKey(EntitySlider.class, DataSerializers.STRING);
@@ -587,8 +589,9 @@ public class EntitySlider extends EntityFlying
 				this.world.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 7), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
 				this.world.setBlockState(new BlockPos(dungeonX + 7, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
 				this.world.setBlockState(new BlockPos(dungeonX + 8, dungeonY + 1, dungeonZ + 8), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
-				PlayerAether.get(player).setCurrentBoss(null);
-				//player.addStat(AchievementsAether.defeat_bronze);
+
+				AetherAPI.getInstance().get(player).setFocusedBoss(null);
+
 				this.world.playSound(null, posX, posY, posZ, SoundsAether.slider_death, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				this.isDead = true;
 			}
@@ -645,7 +648,7 @@ public class EntitySlider extends EntityFlying
 
 		this.hurtAngle = 0.7F - (this.getHealth() / 875F);
 
-		PlayerAether.get(player).setCurrentBoss(this);
+		AetherAPI.getInstance().get(player).setFocusedBoss(null);
 
 		return flag;
 	}
@@ -747,9 +750,10 @@ public class EntitySlider extends EntityFlying
 		return this.dataManager.get(SLIDER_NAME);
 	}
 
+	@Override
 	public String getBossTitle()
 	{
-		return this.getBossName() + ", the Slider";
+		return this.getBossName() + ", " + new TextComponentTranslation("title.aether_legacy.slider.name", new Object[0]).getFormattedText();
 	}
 
 	public void setAwake(boolean isAwake)
@@ -766,6 +770,18 @@ public class EntitySlider extends EntityFlying
 	public boolean canBeLeashedTo(final EntityPlayer player)
 	{
 		return false;
+	}
+
+	@Override
+	public float getBossHealth()
+	{
+		return this.getHealth();
+	}
+
+	@Override
+	public float getMaxBossHealth()
+	{
+		return this.getMaxHealth();
 	}
 
 }

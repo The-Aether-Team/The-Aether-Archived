@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.entities.passive.EntityAetherAnimal;
 import com.legacy.aether.player.PlayerAether;
 
@@ -160,7 +161,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 		        this.rotationYaw = this.updateRotation(this.rotationYaw, f, 40.0F);
 			}
 
-			if (PlayerAether.get(player).isJumping())
+			if (AetherAPI.getInstance().get(player).isJumping())
 			{
 				onMountedJump(strafe, forward);
 			}

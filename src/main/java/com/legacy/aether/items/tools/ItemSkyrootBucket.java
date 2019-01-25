@@ -28,10 +28,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.items.util.FluidSkyrootBucketWrapper;
-import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemSkyrootBucket extends Item
@@ -250,7 +251,7 @@ public class ItemSkyrootBucket extends Item
 
 	public ItemStack onBucketUsed(ItemStack itemstack, World world, EntityPlayer entityplayer)
 	{
-		PlayerAether player = PlayerAether.get(entityplayer);
+		IPlayerAether player = AetherAPI.getInstance().get(entityplayer);
 		int meta = itemstack.getItemDamage();
 
 		if (!entityplayer.capabilities.isCreativeMode)
@@ -260,11 +261,11 @@ public class ItemSkyrootBucket extends Item
 
 		if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Poison)
 		{
-			player.afflictPoison();
+			player.inflictPoison(500);
 		}
 		else if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Remedy)
 		{
-			player.attainCure(200);
+			player.inflictCure(200);
 		}
 		else if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Milk)
 		{

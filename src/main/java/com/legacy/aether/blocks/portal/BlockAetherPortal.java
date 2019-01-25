@@ -21,8 +21,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.cache.LoadingCache;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.entities.particles.ParticleAetherPortal;
-import com.legacy.aether.player.PlayerAether;
 
 public class BlockAetherPortal extends BlockPortal
 {
@@ -40,7 +40,7 @@ public class BlockAetherPortal extends BlockPortal
 	{
 		if (entity instanceof EntityPlayer)
 		{
-			PlayerAether.get((EntityPlayer)entity).setInPortal();
+			AetherAPI.getInstance().get((EntityPlayer)entity).setInPortal();
 		}
 
 		return;

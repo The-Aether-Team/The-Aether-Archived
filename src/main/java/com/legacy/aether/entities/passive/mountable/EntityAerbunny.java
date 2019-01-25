@@ -21,6 +21,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.entities.ai.aerbunny.AerbunnyAIHop;
 import com.legacy.aether.entities.passive.EntityAetherAnimal;
 import com.legacy.aether.items.ItemsAether;
@@ -219,7 +220,7 @@ public class EntityAerbunny extends EntityAetherAnimal
 
             	if (player.motionY < -0.22499999403953552D)
             	{
-            		if (PlayerAether.get((EntityPlayer) this.getRidingEntity()).isJumping())
+            		if (AetherAPI.getInstance().get((EntityPlayer) this.getRidingEntity()).isJumping())
             		{
             			this.setPuffinessClient(11);
             	        this.spawnExplosionParticle();

@@ -1,12 +1,12 @@
 package com.legacy.aether.networking.packets;
 
-import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
-import com.legacy.aether.player.PlayerAether;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
 
 public class PacketInitiateValkyrieFight extends AetherPacket<PacketInitiateValkyrieFight>
 {
@@ -54,7 +54,7 @@ public class PacketInitiateValkyrieFight extends AetherPacket<PacketInitiateValk
 		if (entity instanceof EntityValkyrieQueen)
 		{
 			((EntityValkyrieQueen)entity).setBossReady(true);
-			PlayerAether.get(player).setCurrentBoss((EntityValkyrieQueen)entity);
+			AetherAPI.getInstance().get(player).setFocusedBoss((EntityValkyrieQueen)entity);
 		}
 	}
 

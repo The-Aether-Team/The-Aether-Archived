@@ -12,6 +12,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherNetworkingManager;
@@ -92,13 +93,13 @@ public class EntityDartPoison extends EntityDartBase
 
             if (!this.world.isRemote)
             {
-            	PlayerAether.get(ent).afflictPoison();
+            	AetherAPI.getInstance().get(ent).inflictPoison(500);
             	AetherNetworkingManager.sendToAll(new PacketSendPoison(ent));
             }
     	}
     	else
     	{
-        	this.poison.afflictPoison();
+        	this.poison.afflictPoison(500);
     	}
 
     	this.isDead = false;

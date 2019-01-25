@@ -6,6 +6,8 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.client.models.entities.MoaModel;
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.player.PlayerAether;
@@ -43,11 +45,11 @@ public class MoaDonatorLayer implements LayerRenderer<EntityMoa>
 	{
 		if (!moa.getPassengers().isEmpty() && moa.getPassengers().get(0) instanceof EntityPlayer)
 		{
-			PlayerAether player = PlayerAether.get((EntityPlayer) moa.getPassengers().get(0));
+			IPlayerAether player = AetherAPI.getInstance().get((EntityPlayer) moa.getPassengers().get(0));
 
 			if (player != null)
 			{
-				DonatorMoaSkin moaSkin = player.donatorMoaSkin;
+				DonatorMoaSkin moaSkin = ((PlayerAether)player).donatorMoaSkin;
 
 				if (moaSkin != null && !moaSkin.shouldUseDefualt())
 				{

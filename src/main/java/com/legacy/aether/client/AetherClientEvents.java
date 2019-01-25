@@ -11,6 +11,7 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -23,6 +24,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import com.legacy.aether.AetherConfig;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.client.gui.AetherLoadingScreen;
 import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.containers.inventory.InventoryAccessories;
@@ -172,11 +175,11 @@ public class AetherClientEvents
 	public void onInvisibilityPlayerUpdate(RenderPlayerEvent.Pre event)
 	{
 		EntityPlayer player = event.getEntityPlayer();
-		PlayerAether playerAether = PlayerAether.get(player);
+		IPlayerAether playerAether = AetherAPI.getInstance().get(player);
 
 		if (playerAether != null)
 		{
-			if (playerAether.wearingAccessory(ItemsAether.invisibility_cape))
+			if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape)))
 			{
 				event.setCanceled(true);
 			}

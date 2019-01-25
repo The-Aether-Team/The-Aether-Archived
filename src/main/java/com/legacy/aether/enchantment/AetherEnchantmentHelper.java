@@ -7,29 +7,31 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 
 import com.google.common.collect.Lists;
-import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.api.player.IPlayerAether;
 
-public class AetherEnchantmentHelper 
+public class AetherEnchantmentHelper
 {
 
-    public static ItemStack getEnchantedAccessory(Enchantment enchantment, PlayerAether playerAether)
-    {
-    	if (playerAether == null)
-    	{
-    		return ItemStack.EMPTY;
-    	}
+	public static ItemStack getEnchantedAccessory(Enchantment enchantment, IPlayerAether playerAether)
+	{
+		if (playerAether == null)
+		{
+			return ItemStack.EMPTY;
+		}
 
-        List<ItemStack> list1 = Lists.<ItemStack>newArrayList();
+		List<ItemStack> list1 = Lists.<ItemStack> newArrayList();
 
-        for (ItemStack itemstack : playerAether.getAccessoryStacks())
-        {
-            if (!itemstack.isEmpty() && EnchantmentHelper.getEnchantmentLevel(enchantment, itemstack) > 0)
-            {
-                list1.add(itemstack);
-            }
-        }
+		for (int i = 0; i < playerAether.getAccessoryInventory().getSizeInventory(); ++i)
+		{
+			ItemStack accessory = playerAether.getAccessoryInventory().getStackInSlot(i);
 
-        return list1.isEmpty() ? ItemStack.EMPTY : (ItemStack)list1.get(playerAether.thePlayer.getRNG().nextInt(list1.size()));
-    }
+			if (EnchantmentHelper.getEnchantmentLevel(enchantment, accessory) > 0)
+			{
+				list1.add(accessory);
+			}
+		}
+
+		return list1.isEmpty() ? ItemStack.EMPTY : (ItemStack) list1.get(playerAether.getEntity().getRNG().nextInt(list1.size()));
+	}
 
 }

@@ -62,9 +62,9 @@ public class AetherConfig
 		return AetherConfig.aether_biome_id;
 	}
 
-	public static float getMaxLifeShards()
+	public static int getMaxLifeShards()
 	{
-		return (AetherConfig.max_life_shards * 2.0F);
+		return AetherConfig.max_life_shards;
 	}
 
 	public static boolean triviaDisabled()

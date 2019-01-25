@@ -9,6 +9,8 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.entities.passive.EntityMiniCloud;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
@@ -32,28 +34,31 @@ public class ItemCloudStaff extends Item
 	@Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entityplayer, EnumHand hand)
     {
-		PlayerAether playerAether = PlayerAether.get(entityplayer);
+		IPlayerAether playerAether = AetherAPI.getInstance().get(entityplayer);
 		ItemStack heldItem = entityplayer.getHeldItem(hand);
 
-		if (playerAether.leftCloud == null && playerAether.rightCloud == null)
+		if (world.isRemote)
 		{
-			playerAether.leftCloud = new EntityMiniCloud(world, entityplayer, 0);
-			playerAether.rightCloud = new EntityMiniCloud(world, entityplayer, 1);
+			return super.onItemRightClick(world, entityplayer, hand);
 		}
 
-		if (!playerAether.leftCloud.hasSpawned)
+		if (((PlayerAether)playerAether).clouds.isEmpty())
 		{
-			world.spawnEntity(playerAether.leftCloud);
-			playerAether.leftCloud.hasSpawned = true;
+			EntityMiniCloud leftCloud = new EntityMiniCloud(world, entityplayer, 0);
+			EntityMiniCloud rightCloud = new EntityMiniCloud(world, entityplayer, 1);
+
+			((PlayerAether)playerAether).clouds.add(leftCloud);
+			((PlayerAether)playerAether).clouds.add(rightCloud);
+
+			world.spawnEntity(leftCloud);
+			world.spawnEntity(rightCloud);
+
+			heldItem.damageItem(1, entityplayer);
+
+	    	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
 		}
 
-		if (!playerAether.rightCloud.hasSpawned)
-		{
-			world.spawnEntity(playerAether.rightCloud);
-			playerAether.leftCloud.hasSpawned = true;
-		}
-
-    	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
+    	return new ActionResult<ItemStack>(EnumActionResult.PASS, heldItem);
     }
 
 }

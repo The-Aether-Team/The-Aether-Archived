@@ -2,6 +2,8 @@ package com.legacy.aether.entities.passive.mountable;
 
 import java.util.List;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.util.EntityMountable;
 import com.legacy.aether.items.ItemsAether;
@@ -459,7 +461,7 @@ public class EntitySwet extends EntityMountable
 		if (prey instanceof EntityPlayer)
 		{
 			EntityPlayer rider = (EntityPlayer) prey;
-			PlayerAether aetherRider = PlayerAether.get(rider);
+			IPlayerAether aetherRider = AetherAPI.getInstance().get(rider);
 
 			if (aetherRider == null)
 			{
@@ -468,7 +470,7 @@ public class EntitySwet extends EntityMountable
 
 			//boolean wearingAccessory = aetherRider.wearingAccessory(ItemsAether.swet_cape);
 
-			if (aetherRider.wearingAccessory(ItemsAether.swet_cape))
+			if (aetherRider.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.swet_cape)))
 			{
 				this.setFriendly(true);
 			}

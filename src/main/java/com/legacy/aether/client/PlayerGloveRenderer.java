@@ -10,9 +10,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
-import com.legacy.aether.player.PlayerAether;
 
 public class PlayerGloveRenderer
 {
@@ -60,8 +61,8 @@ public class PlayerGloveRenderer
 
 	private static void renderGloves(AbstractClientPlayer player)
 	{
-		PlayerAether playerAether = PlayerAether.get(player);
-		ItemStack accessoryStack = playerAether.accessories.stacks.get(6);
+		IPlayerAether playerAether = AetherAPI.getInstance().get(player);
+		ItemStack accessoryStack = playerAether.getAccessoryInventory().getStackInSlot(6);
 
 		if (!accessoryStack.isEmpty() && accessoryStack.getItem() instanceof ItemAccessory && !player.isInvisible())
 		{
@@ -75,11 +76,11 @@ public class PlayerGloveRenderer
         }
 	}
 
-    private static void renderArm(PlayerAether playerAether, EnumHandSide hand, ItemAccessory gloves)
+    private static void renderArm(IPlayerAether playerAether, EnumHandSide hand, ItemAccessory gloves)
     {
 		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
 
-		int colour = gloves.getColorFromItemStack(playerAether.accessories.stacks.get(6), 0);
+		int colour = gloves.getColorFromItemStack(playerAether.getAccessoryInventory().getStackInSlot(6), 0);
 		float red = ((colour >> 16) & 0xff) / 255F;
 		float green = ((colour >> 8) & 0xff) / 255F;
 		float blue = (colour & 0xff) / 255F;
@@ -140,8 +141,8 @@ public class PlayerGloveRenderer
 
 	private static void renderGloveFirstPerson(AbstractClientPlayer player, float equipProgress, float swingProgress, EnumHandSide enumhandside) 
 	{
-		PlayerAether playerAether = PlayerAether.get(player);
-		ItemStack accessoryStack = playerAether.accessories.stacks.get(6);
+		IPlayerAether playerAether = AetherAPI.getInstance().get(player);
+		ItemStack accessoryStack = playerAether.getAccessoryInventory().getStackInSlot(6);
 
 		if (!accessoryStack.isEmpty() && accessoryStack.getItem() instanceof ItemAccessory)
 		{
@@ -179,11 +180,11 @@ public class PlayerGloveRenderer
 		}
 	}
 
-	private static void renderRightGlove(PlayerAether playerAether, ItemAccessory gloves)
+	private static void renderRightGlove(IPlayerAether playerAether, ItemAccessory gloves)
     {
 		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
 
-		int colour = gloves.getColorFromItemStack(playerAether.accessories.stacks.get(6), 0);
+		int colour = gloves.getColorFromItemStack(playerAether.getAccessoryInventory().getStackInSlot(6), 0);
 		float red = ((colour >> 16) & 0xff) / 255F;
 		float green = ((colour >> 8) & 0xff) / 255F;
 		float blue = (colour & 0xff) / 255F;
@@ -196,7 +197,7 @@ public class PlayerGloveRenderer
         GlStateManager.enableBlend();
         getModel().swingProgress = 0.0F;
         getModel().isSneak = false;
-        getModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.thePlayer);
+        getModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
         getModel().bipedRightArm.rotateAngleX = 0.0F;
         getModel().bipedRightArm.render(0.0625F);
         GlStateManager.disableBlend();
@@ -204,11 +205,11 @@ public class PlayerGloveRenderer
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-	private static void renderLeftArmGlove(PlayerAether playerAether, ItemAccessory gloves)
+	private static void renderLeftArmGlove(IPlayerAether playerAether, ItemAccessory gloves)
     {
 		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
 
-		int colour = gloves.getColorFromItemStack(playerAether.accessories.stacks.get(6), 0);
+		int colour = gloves.getColorFromItemStack(playerAether.getAccessoryInventory().getStackInSlot(6), 0);
 		float red = ((colour >> 16) & 0xff) / 255F;
 		float green = ((colour >> 8) & 0xff) / 255F;
 		float blue = (colour & 0xff) / 255F;
@@ -221,7 +222,7 @@ public class PlayerGloveRenderer
         GlStateManager.enableBlend();
         getModel().isSneak = false;
         getModel().swingProgress = 0.0F;
-        getModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.thePlayer);
+        getModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
         getModel().bipedLeftArm.rotateAngleX = 0.0F;
         getModel().bipedLeftArm.render(0.0625F);
         GlStateManager.disableBlend();

@@ -3,6 +3,8 @@ package com.legacy.aether.networking.packets;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.perks.util.DonatorMoaSkin;
@@ -83,15 +85,15 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 
 			if (parent != null)
 			{
-				PlayerAether instance = PlayerAether.get(parent);
+				IPlayerAether instance = AetherAPI.getInstance().get(parent);
 
 				if (message.perkType == EnumAetherPerkType.Halo)
 				{
-					instance.shouldRenderHalo = message.renderHalo;
+					((PlayerAether) instance).shouldRenderHalo = message.renderHalo;
 				}
 				else if (message.perkType == EnumAetherPerkType.Moa)
 				{
-					instance.donatorMoaSkin = message.moaSkin;
+					((PlayerAether) instance).donatorMoaSkin = message.moaSkin;
 				}
 			}
 		}

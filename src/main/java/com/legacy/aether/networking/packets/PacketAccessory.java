@@ -3,13 +3,15 @@ package com.legacy.aether.networking.packets;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.util.IAccessoryInventory;
 import com.legacy.aether.containers.inventory.InventoryAccessories;
 import com.legacy.aether.player.PlayerAether;
 
 public class PacketAccessory extends AetherPacket<PacketAccessory>
 {
 
-	private InventoryAccessories accessories;
+	private IAccessoryInventory accessories;
 
 	private int entityID;
 
@@ -37,6 +39,7 @@ public class PacketAccessory extends AetherPacket<PacketAccessory>
 	public void toBytes(ByteBuf buf) 
 	{
 		buf.writeInt(this.entityID);
+
 		this.accessories.writeData(buf);
 	}
 
@@ -49,8 +52,9 @@ public class PacketAccessory extends AetherPacket<PacketAccessory>
 
 			if (parent != null)
 			{
-				message.accessories.player = parent;
-				PlayerAether.get(parent).accessories = message.accessories;
+				((InventoryAccessories) message.accessories).player = parent;
+
+				AetherAPI.getInstance().get(parent).setAccessoryInventory(message.accessories);
 			}
 		}
 	}

@@ -1,17 +1,5 @@
 package com.legacy.aether.entities.bosses.valkyrie_queen;
 
-import com.legacy.aether.Aether;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
-import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
-import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
-import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
-import com.legacy.aether.entities.util.AetherNameGen;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
-
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -38,6 +26,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -45,7 +34,21 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityValkyrieQueen extends EntityMob 
+import com.legacy.aether.Aether;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.util.IAetherBoss;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.util.EnumStoneType;
+import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
+import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
+import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
+import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
+import com.legacy.aether.entities.util.AetherNameGen;
+import com.legacy.aether.items.ItemsAether;
+
+public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 {
 
 	public static final DataParameter<String> VALKYRIE_NAME = EntityDataManager.<String>createKey(EntityValkyrieQueen.class, DataSerializers.STRING);
@@ -374,9 +377,10 @@ public class EntityValkyrieQueen extends EntityMob
         	if (this.getAttackTarget() instanceof EntityPlayer)
         	{
             	chatItUp((EntityPlayer) this.getAttackTarget(), "You are truly... a mighty warrior...");
-            	//((EntityPlayer)this.getAttackTarget()).addStat(AchievementsAether.defeat_silver);
-            	PlayerAether.get((EntityPlayer) this.getAttackTarget()).setCurrentBoss(null);
+
+            	AetherAPI.getInstance().get((EntityPlayer) this.getAttackTarget()).setFocusedBoss(null);
         	}
+
         	spawnExplosionParticle();
         	this.setDead();
         }
@@ -470,7 +474,7 @@ public class EntityValkyrieQueen extends EntityMob
             }
             else
             {
-            	PlayerAether playerAether = PlayerAether.get(player);
+            	IPlayerAether playerAether = AetherAPI.getInstance().get(player);
                 boolean flag;
 
                 if (playerAether != null)
@@ -479,7 +483,7 @@ public class EntityValkyrieQueen extends EntityMob
 
                     if (!player.isDead && flag)
                     {
-                        playerAether.setCurrentBoss(this);
+                        playerAether.setFocusedBoss(this);
                     }
                 }
 
@@ -698,7 +702,7 @@ public class EntityValkyrieQueen extends EntityMob
 	
 	public String getBossTitle()
 	{
-	   return this.getBossName() + ", the Valkyrie Queen";
+	   return this.getBossName() + ", " + new TextComponentTranslation("title.aether_legacy.valkyrie_queen.name", new Object[0]).getFormattedText();
 	}
 
 	public void setBossReady(boolean isReady)
@@ -716,5 +720,17 @@ public class EntityValkyrieQueen extends EntityMob
     {
         return 1.75F;
     }
+
+	@Override
+	public float getBossHealth()
+	{
+		return this.getHealth();
+	}
+
+	@Override
+	public float getMaxBossHealth()
+	{
+		return this.getMaxHealth();
+	}
 
 }
