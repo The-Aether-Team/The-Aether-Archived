@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,6 +31,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -197,7 +199,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
                 this.motionX = this.motionY = this.motionZ = 0.0D;
 
-                this.chatLine(player, "\u00a7cSuch is the fate of a being who opposes the might of the sun.");
+                this.chatLine(player, TextFormatting.RED + I18n.format("gui.spirit.playerdied"));
                 this.chatCount = 100;
 
                 this.setPosition((double)this.originPointX + 0.5D, (double)this.originPointY, (double)this.originPointZ + 0.5D);
@@ -215,7 +217,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
         	if (this.isDead())
         	{
-                this.chatLine(player, "\u00a7bSuch bitter cold... is this the feeling... of pain?");
+                this.chatLine(player, TextFormatting.AQUA + I18n.format("gui.spirit.dead"));
                 this.chatCount = 100;
 
                 if (player instanceof EntityPlayerMP)
@@ -443,64 +445,64 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
         {
             if (this.getChatLine() == 0)
             {
-                this.chatLine(entityPlayer, "\u00a7cYou are certainly a brave soul to have entered this chamber.");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line0"));
                 this.setChatLine(1);
             }
             else if (this.getChatLine() == 1)
             {
-                this.chatLine(entityPlayer, "\u00a7cBegone human, you serve no purpose here.");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line1"));
                 this.setChatLine(2);
             }
             else if (this.getChatLine() == 2)
             {
-                this.chatLine(entityPlayer, "\u00a7cYour presence annoys me. Do you not fear my burning aura?");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line2"));
                 this.setChatLine(3);
             }
             else if (this.getChatLine() == 3)
             {
-                this.chatLine(entityPlayer, "\u00a7cI have nothing to offer you, fool. Leave me at peace.");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line3"));
                 this.setChatLine(4);
             }
             else if (this.getChatLine() == 4)
             {
-                this.chatLine(entityPlayer, "\u00a7cPerhaps you are ignorant. Do you wish to know who I am?");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line4"));
                 this.setChatLine(5);
             }
             else if (this.getChatLine() == 5)
             {
-                this.chatLine(entityPlayer, "\u00a7cI am a sun spirit, embodiment of Aether's eternal daylight. As ");
-                this.chatLine(entityPlayer, "\u00a7clong as I am alive, the sun will never set on this world.");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line5.1"));
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line5.2"));
                 this.setChatLine(6);
             }
             else if (this.getChatLine() == 6)
             {
-                this.chatLine(entityPlayer, "\u00a7cMy body burns with the anger of a thousand beasts. No man, ");
-                this.chatLine(entityPlayer, "\u00a7chero, or villain can harm me. You are no exception.");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line6.1"));
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line6.2"));
                 this.setChatLine(7);
             }
             else if (this.getChatLine() == 7)
             {
-                this.chatLine(entityPlayer, "\u00a7cYou wish to challenge the might of the sun? You are mad. ");
-                this.chatLine(entityPlayer, "\u00a7cDo not further insult me or you will feel my wrath.");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line7.1"));
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line7.2"));
                 this.setChatLine(8);
             }
             else if (this.getChatLine() == 8)
             {
-                this.chatLine(entityPlayer, "\u00a7cThis is your final warning. Leave now, or prepare to burn.");
+                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line8"));
                 this.setChatLine(9);
             }
             else
             {
                 if (this.getChatLine() == 9)
                 {
-                    this.chatLine(entityPlayer, "\u00a76As you wish, your death will be slow and agonizing.");
+                    this.chatLine(entityPlayer, TextFormatting.GOLD + I18n.format("gui.spirit.line9"));
                     this.setChatLine(10);
                     return true;
                 }
 
                 if (this.getChatLine() == 10 && this.getAttackTarget() == null)
                 {
-                    this.chatLine(entityPlayer, "\u00a7cDid your previous death not satisfy your curiosity, human?");
+                    this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line10"));
                     this.setChatLine(9);
                 }
             }

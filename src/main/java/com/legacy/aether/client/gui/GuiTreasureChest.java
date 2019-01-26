@@ -3,6 +3,7 @@ package com.legacy.aether.client.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.util.ResourceLocation;
@@ -32,19 +33,19 @@ public class GuiTreasureChest extends GuiContainer
 
         if (chestInventory.getKind() == 0)
         {
-			this.chestType = "Bronze Treasure Chest";
+			this.chestType = I18n.format("gui.treasure_chest.bronze");
         }
         else if (chestInventory.getKind() == 1)
         {
-			this.chestType = "Silver Treasure Chest";
+			this.chestType = I18n.format("gui.treasure_chest.silver");
         }
         else if (chestInventory.getKind() == 2)
         {
-			this.chestType = "Gold Treasure Chest";
+			this.chestType = I18n.format("gui.treasure_chest.gold");
         }
         else
         {
-        	this.chestType = "Platinum Treasure Chest";
+        	this.chestType = I18n.format("gui.treasure_chest.platinum");
         }
     }
 

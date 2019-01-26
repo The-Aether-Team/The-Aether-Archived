@@ -1,7 +1,22 @@
 package com.legacy.aether.entities.bosses.valkyrie_queen;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.util.IAetherBoss;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.util.EnumStoneType;
+import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
+import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
+import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
+import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
+import com.legacy.aether.entities.util.AetherNameGen;
+import com.legacy.aether.items.ItemsAether;
+
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -33,20 +48,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.legacy.aether.Aether;
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.api.player.IPlayerAether;
-import com.legacy.aether.api.player.util.IAetherBoss;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.client.gui.dialogue.entity.GuiValkyrieDialogue;
-import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
-import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
-import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
-import com.legacy.aether.entities.util.AetherNameGen;
-import com.legacy.aether.items.ItemsAether;
 
 public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 {
@@ -234,7 +235,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 		
 		if (this.isBossReady())
 		{
-			this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
+			this.chatItUp(entityplayer, I18n.format("gui.queen.ready"));
 		}
 		else
 		{
@@ -376,7 +377,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
         	if (this.getAttackTarget() instanceof EntityPlayer)
         	{
-            	chatItUp((EntityPlayer) this.getAttackTarget(), "You are truly... a mighty warrior...");
+            	chatItUp((EntityPlayer) this.getAttackTarget(), I18n.format("gui.queen.deafeated"));
 
             	AetherAPI.getInstance().get((EntityPlayer) this.getAttackTarget()).setFocusedBoss(null);
         	}
@@ -453,7 +454,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
         	if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
         	{
         		this.spawnExplosionParticle();
-        		chatItUp(player, "Sorry, I don't fight with weaklings.");
+        		chatItUp(player, I18n.format("gui.queen.peaceful"));
         		return false;
         	}
  
@@ -464,11 +465,11 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
                 if (pokey == 2)
                 {
-                    chatItUp(player, "Sorry, I don't fight with weaklings.");
+                    chatItUp(player, I18n.format("gui.queen.peaceful"));
                 } 
                 else 
                 {
-                    chatItUp(player, "Try defeating some weaker valkyries first.");
+                    chatItUp(player, I18n.format("gui.queen.nomedals"));
                 }
                 return false;
             }
@@ -490,7 +491,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
                 if (this.getAttackTarget() == null) 
                 {
                 	this.chatTime = 0;
-                    chatItUp(player, "This will be your final battle!");
+                    chatItUp(player, I18n.format("gui.queen.fight"));
                     if (ds.getImmediateSource() instanceof EntityLivingBase)
                     becomeAngryAt((EntityLivingBase) ds.getImmediateSource());
                 }
@@ -525,7 +526,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
         	{
         		this.setAttackTarget(null);
         		this.angerLevel = this.chatTime = 0;
-        		this.chatItUp(player, "As expected of a human.");
+        		this.chatItUp(player, I18n.format("gui.queen.lost"));
         		this.unlockDoor();
         	}
         }

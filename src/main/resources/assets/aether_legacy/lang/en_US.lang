@@ -320,4 +320,38 @@ subtitles.aeboss.slider.death=Slider breaks
 subtitles.aeboss.sun_spirit.shoot=Sun Spirit shoots
 
 # Death messages
-death.attack.inebriation=%1$s was inebriated by Cockatrice
+gui.loading.enteraether=Ascending to the Aether
+gui.loading.exitaether=Decending from the Aether
+
+gui.queen.ready=If you wish to challenge me, strike at any time.
+gui.queen.defeated=You are truly... a mighty warrior...
+gui.queen.peaceful=Sorry, I don't fight with weaklings.
+gui.queen.nomedals=Try defeating some weaker valkyries first.
+gui.queen.fight=This will be your final battle!
+gui.queen.lost=As expected of a human.
+
+gui.treasure_chest.bronze=Bronze Treasure Chest
+gui.treasure_chest.silver=Silver Treasure Chest
+gui.treasure_chest.gold=Gold Treasure Chest
+gui.treasure_chest.platinum=Platinum Treasure Chest
+
+gui.sun_altar.time=Select Time
+
+gui.spirit.line0=You are certainly a brave soul to have entered this chamber.
+gui.spirit.line1=Begone human, you serve no purpose here.
+gui.spirit.line2=Your presence annoys me. Do you not fear my burning aura?
+gui.spirit.line3=I have nothing to offer you, fool. Leave me at peace.
+gui.spirit.line4=Perhaps you are ignorant. Do you wish to know who I am?
+gui.spirit.line5.1=I am a sun spirit, embodiment of Aether's eternal daylight. As
+gui.spirit.line5.2=long as I am alive, the sun will never set on this world.
+gui.spirit.line6.1=My body burns with the anger of a thousand beasts. No man,
+gui.spirit.line6.2=hero, or villain can harm me. You are no exception.
+gui.spirit.line7.1=You wish to challenge the might of the sun? You are mad.
+gui.spirit.line7.2=Do not further insult me or you will feel my wrath.
+gui.spirit.line8=This is your final warning. Leave now, or prepare to burn.
+gui.spirit.line9=As you wish, your death will be slow and agonizing.
+gui.spirit.line10=Did your previous death not satisfy your curiosity, human?
+gui.spirit.dead=Such bitter cold... is this the feeling... of pain?
+gui.spirit.playerdied=Such is the fate of a being who opposes the might of the sun.
+# Death messages
+death.attack.inebriation=%1$s was inebriated by %2$s
