@@ -1,13 +1,14 @@
 package com.legacy.aether.client.renders.entities;
 
+import com.legacy.aether.client.renders.entities.layer.LayerPhygHalo;
+import com.legacy.aether.client.renders.entities.layer.LayerPhygSaddle;
+import com.legacy.aether.client.renders.entities.layer.PhygWingLayer;
+import com.legacy.aether.entities.passive.mountable.EntityPhyg;
+
 import net.minecraft.client.model.ModelPig;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-
-import com.legacy.aether.client.renders.entities.layer.LayerPhygSaddle;
-import com.legacy.aether.client.renders.entities.layer.PhygWingLayer;
-import com.legacy.aether.entities.passive.mountable.EntityPhyg;
 
 public class PhygRenderer extends RenderLiving<EntityPhyg>
 {
@@ -18,6 +19,7 @@ public class PhygRenderer extends RenderLiving<EntityPhyg>
 	{
 		super(rendermanagerIn, new ModelPig(), 0.7F);
 		this.addLayer(new PhygWingLayer(rendermanagerIn));
+		this.addLayer(new LayerPhygHalo(rendermanagerIn));
 		this.addLayer(new LayerPhygSaddle(this));
 	}
 

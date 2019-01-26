@@ -3,12 +3,10 @@ package com.legacy.aether.client.renders.entities.layer;
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.api.player.util.IAccessoryInventory;
 import com.legacy.aether.client.models.attachments.ModelAetherWings;
-import com.legacy.aether.client.models.attachments.ModelHalo;
-import com.legacy.aether.containers.inventory.InventoryAccessories;
+import com.legacy.aether.client.models.attachments.ModelPlayerHalo;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
 import com.legacy.aether.player.PlayerAether;
@@ -37,7 +35,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
 	private boolean slimFit;
 
-	private ModelHalo modelHalo;
+	private ModelPlayerHalo modelHalo;
 
 	public ModelBiped modelMisc;
 
@@ -53,7 +51,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		this.slimFit = slimFit;
 		this.modelWings = new ModelAetherWings(1.0F);
 		this.modelMisc = new ModelBiped(1.0F);
-		this.modelHalo = new ModelHalo();
+		this.modelHalo = new ModelPlayerHalo();
 		this.modelGlow = new ModelPlayer(1.005F, false);
 	}
 
@@ -264,37 +262,40 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			}
 		}
 
-		if (AetherRankings.isRankedPlayer(player.getUniqueID()) && ((PlayerAether)playerAether).shouldRenderHalo) //TODO
+		if (AetherRankings.isRankedPlayer(player.getUniqueID()) && ((PlayerAether)playerAether).shouldRenderHalo && !player.isInvisible()) //TODO
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			float var4 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) + partialTicks - (player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) + partialTicks);
-			float var5 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * partialTicks;
-
-			GlStateManager.rotate(var4, 0.0F, 1.0F, 0.0F);
-			GlStateManager.rotate(var5, 1.0F, 0.0F, 0.0F);
-			GlStateManager.translate(0.0F, -0.67F, 0.0F);
-
 			GlStateManager.enableBlend();
 			GlStateManager.scale(1.1F, 1.1F, 1.1F);
 
-			 GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
-			    GlStateManager.depthMask(true);
-			    int i = 61680;
-			    int j = i % 65536;
-			    int k = i / 65536;
-			    OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
-			    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			    Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
+			//GlStateManager.translate(0.0F, -0.67F, 0.0F);
+			
+			GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+		    GlStateManager.depthMask(true);
+		    int i = 61680;
+		    int j = i % 65536;
+		    int k = i / 65536;
+		    OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
+		    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		    Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 
 			this.manager.renderEngine.bindTexture(TEXTURE_HALO);
 
-			this.modelHalo.halo1.rotateAngleX = 6.25F;
-			this.modelHalo.halo2.rotateAngleX = 6.25F;
-			this.modelHalo.halo3.rotateAngleX = 6.25F;
-			this.modelHalo.halo4.rotateAngleX = 6.25F;
-
-			this.modelHalo.renderHalo(this.modelPlayer.bipedHead, scale);
+			this.modelHalo.halo1.render(scale);
+			this.modelHalo.halo2.render(scale);
+			this.modelHalo.halo3.render(scale);
+			this.modelHalo.halo4.render(scale);
+			
+			this.modelHalo.halo1.rotateAngleX = this.modelPlayer.bipedHead.rotateAngleX;
+			this.modelHalo.halo1.rotateAngleY = this.modelPlayer.bipedHead.rotateAngleY;
+			this.modelHalo.halo2.rotateAngleX = this.modelPlayer.bipedHead.rotateAngleX;
+			this.modelHalo.halo2.rotateAngleY = this.modelPlayer.bipedHead.rotateAngleY;
+			this.modelHalo.halo3.rotateAngleX = this.modelPlayer.bipedHead.rotateAngleX;
+			this.modelHalo.halo3.rotateAngleY = this.modelPlayer.bipedHead.rotateAngleY;
+			this.modelHalo.halo4.rotateAngleX = this.modelPlayer.bipedHead.rotateAngleX;
+	  	  	this.modelHalo.halo4.rotateAngleY = this.modelPlayer.bipedHead.rotateAngleY;
+			
 			GlStateManager.disableBlend();
 			GL11.glDisable(GL11.GL_BLEND);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
