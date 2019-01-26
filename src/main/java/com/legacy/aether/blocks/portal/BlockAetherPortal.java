@@ -2,6 +2,12 @@ package com.legacy.aether.blocks.portal;
 
 import java.util.Random;
 
+import com.google.common.cache.LoadingCache;
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.entities.particles.ParticleAetherPortal;
+import com.legacy.aether.world.TeleporterAether;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.material.Material;
@@ -12,17 +18,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.google.common.cache.LoadingCache;
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.entities.particles.ParticleAetherPortal;
 
 public class BlockAetherPortal extends BlockPortal
 {
@@ -38,12 +43,40 @@ public class BlockAetherPortal extends BlockPortal
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
 	{
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+		int previousDimension = entity.dimension;
+		int transferDimension = previousDimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
+		
 		if (entity instanceof EntityPlayer)
 		{
 			AetherAPI.getInstance().get((EntityPlayer)entity).setInPortal();
 		}
+		else if (!entity.isRiding() && !entity.isBeingRidden() && entity.isNonBoss())
+		{	
+			if (entity.timeUntilPortal > 0)
+	        {
+				entity.timeUntilPortal = entity.getPortalCooldown();
+	        }
+			
+			else if (!world.isRemote && !pos.equals(previousDimension))
+	        {
+	        	transferEntity(true, entity, server.getWorld(previousDimension), server.getWorld(transferDimension));
+	        	entity.timeUntilPortal = 300;
+	        }
+		}
 
 		return;
+	}
+	private void transferEntity(boolean shouldSpawnPortal, Entity entityIn, WorldServer previousWorldIn, WorldServer newWorldIn)
+	{
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+
+		entityIn.dimension = newWorldIn.provider.getDimension();
+		previousWorldIn.removeEntityDangerously(entityIn);
+		entityIn.isDead = false;
+
+		server.getPlayerList().transferEntityToWorld(entityIn, previousWorldIn.provider.getDimension(), previousWorldIn, newWorldIn, new TeleporterAether(true, newWorldIn));
+	
 	}
 
 	@Override

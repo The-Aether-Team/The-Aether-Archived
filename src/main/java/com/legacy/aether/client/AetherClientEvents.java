@@ -2,8 +2,21 @@ package com.legacy.aether.client;
 
 import java.util.List;
 
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.client.gui.AetherLoadingScreen;
+import com.legacy.aether.client.gui.GuiEnterAether;
+import com.legacy.aether.client.gui.button.GuiAccessoryButton;
+import com.legacy.aether.containers.inventory.InventoryAccessories;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.networking.AetherGuiHandler;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketOpenContainer;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiDownloadTerrain;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
@@ -14,30 +27,23 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import com.legacy.aether.AetherConfig;
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.api.player.IPlayerAether;
-import com.legacy.aether.client.gui.AetherLoadingScreen;
-import com.legacy.aether.client.gui.button.GuiAccessoryButton;
-import com.legacy.aether.containers.inventory.InventoryAccessories;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherGuiHandler;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketOpenContainer;
-import com.legacy.aether.player.PlayerAether;
-
 public class AetherClientEvents 
 {
-
+	private final Minecraft mc = FMLClientHandler.instance().getClient();
+	
+	private static boolean wasInAether = false;
+	
 	@SubscribeEvent
 	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
 	{
@@ -99,7 +105,7 @@ public class AetherClientEvents
 	private static int previousSelectedTabIndex = -1;
 
 	@SubscribeEvent
-	public void onGuiOpened(GuiScreenEvent.InitGuiEvent.Post event)
+	public void onScreenOpened(GuiScreenEvent.InitGuiEvent.Post event)
 	{
 		if (event.getGui() instanceof GuiContainer)
 		{
@@ -123,6 +129,28 @@ public class AetherClientEvents
 			else if (clazz == GuiInventory.class)
 			{
 				event.getButtonList().add(ACCESSORY_BUTTON.setPosition(guiLeft + 26, guiTop + 65));
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onOpenGui(GuiOpenEvent event)
+	{
+		if (mc.player != null && event.getGui() instanceof GuiDownloadTerrain) 
+		{
+			GuiEnterAether enterAether = new GuiEnterAether(true);
+			GuiEnterAether exitAether = new GuiEnterAether(false);
+			
+			if (mc.player.dimension == AetherConfig.getAetherDimensionID())
+			{				
+				event.setGui(enterAether);
+				wasInAether = true;
+			}
+			
+			else if (wasInAether)
+			{
+				event.setGui(exitAether);
+				wasInAether = false;
 			}
 		}
 	}

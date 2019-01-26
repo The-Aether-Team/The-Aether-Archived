@@ -1,5 +1,15 @@
 package com.legacy.aether;
 
+import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.portal.BlockAetherPortal;
+import com.legacy.aether.entities.bosses.EntityValkyrie;
+import com.legacy.aether.entities.passive.mountable.EntityFlyingCow;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.items.dungeon.ItemDungeonKey;
+import com.legacy.aether.items.util.EnumSkyrootBucketType;
+import com.legacy.aether.items.weapons.ItemSkyrootSword;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
@@ -8,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSource;
@@ -23,16 +34,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-
-import com.legacy.aether.advancements.AetherAdvancements;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.portal.BlockAetherPortal;
-import com.legacy.aether.entities.bosses.EntityValkyrie;
-import com.legacy.aether.entities.passive.mountable.EntityFlyingCow;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.items.dungeon.ItemDungeonKey;
-import com.legacy.aether.items.util.EnumSkyrootBucketType;
-import com.legacy.aether.items.weapons.ItemSkyrootSword;
 
 public class AetherEventHandler 
 {
@@ -107,6 +108,8 @@ public class AetherEventHandler
 			{
 				if (((BlockAetherPortal) BlocksAether.aether_portal).trySpawnPortal(worldObj, hitPos))
 				{
+					event.getEntityPlayer().playSound(SoundEvents.ENTITY_GENERIC_SWIM, 1.0F, 1.0F);
+					
 					if (!player.capabilities.isCreativeMode)
 					{
 						if (stack.getItem() == ItemsAether.skyroot_bucket || stack.getItemDamage() == 1)
@@ -133,6 +136,9 @@ public class AetherEventHandler
 
 				if (worldObj.isAirBlock(hitPos))
 				{
+					worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, hitPos.getX() + 0.5, hitPos.getY() + 1, hitPos.getZ() + 0.5, 0, 0, 0);
+					event.getEntityPlayer().playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 1.0F, 1.0F);
+					
 					worldObj.setBlockState(hitPos, BlocksAether.aerogel.getDefaultState());
 
 					if (!player.capabilities.isCreativeMode)

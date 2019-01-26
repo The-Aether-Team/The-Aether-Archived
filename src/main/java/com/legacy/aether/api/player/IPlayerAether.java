@@ -47,7 +47,7 @@ public interface IPlayerAether
 	public int getHammerCooldown();
 
 	public int getHammerMaxCooldown();
-
+	
 	public void setJumping(boolean isJumping);
 
 	public boolean isJumping();

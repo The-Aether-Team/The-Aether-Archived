@@ -5,26 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.api.player.util.IAccessoryInventory;
@@ -45,8 +25,35 @@ import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.DonatorMoaSkin;
 import com.legacy.aether.world.TeleporterAether;
 
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+
 public class PlayerAether implements IPlayerAether
 {
+	
+	private final Minecraft mc = FMLClientHandler.instance().getClient();
 
 	public EntityPlayer thePlayer;
 
@@ -85,7 +92,7 @@ public class PlayerAether implements IPlayerAether
 	public boolean shouldRenderHalo = true;
 
 	public DonatorMoaSkin donatorMoaSkin;
-
+	
 	public List<Item> extendedReachItems = Arrays.asList(new Item[] {ItemsAether.valkyrie_shovel, ItemsAether.valkyrie_pickaxe, ItemsAether.valkyrie_axe});
 
 	public PlayerAether() { }
@@ -104,6 +111,18 @@ public class PlayerAether implements IPlayerAether
 
 	public void onUpdate()
 	{
+		if (this.inPortal && this.thePlayer.world.isRemote)
+		{
+			if (this.portalAnimTime == 0.0F)
+            {
+                this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.BLOCK_PORTAL_TRIGGER, this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
+            }
+			
+			if (this.mc.currentScreen instanceof GuiContainer)
+            {
+                this.mc.player.closeScreen();
+            }
+		}
 		for (int i = 0; i < this.abilities.size(); ++i)
 		{
 			IAetherAbility ability = this.abilities.get(i);
@@ -222,6 +241,7 @@ public class PlayerAether implements IPlayerAether
 			}
 			else
 			{
+				
                 if (this.timeInPortal > 0)
                 {
                     this.timeInPortal -= 4;
@@ -348,10 +368,10 @@ public class PlayerAether implements IPlayerAether
 	private void teleportPlayer(boolean shouldSpawnPortal) 
 	{
 		if (this.thePlayer instanceof EntityPlayerMP)
-		{
+		{			
 			int previousDimension = this.thePlayer.dimension;
 			int transferDimension = previousDimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
-
+			
 			if (ForgeHooks.onTravelToDimension(this.thePlayer, transferDimension))
 			{
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -529,7 +549,7 @@ public class PlayerAether implements IPlayerAether
 	{
 		return this.cooldownMax;
 	}
-
+	
 	/*
 	 * Instance of the poison used to move the player
 	 */

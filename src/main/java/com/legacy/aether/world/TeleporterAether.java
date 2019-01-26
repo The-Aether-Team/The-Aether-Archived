@@ -11,6 +11,7 @@ import net.minecraft.block.state.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.network.play.server.SPacketEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -56,6 +57,13 @@ public class TeleporterAether extends Teleporter
         {
             this.makePortal(entityIn);
             this.placeInExistingPortal(entityIn, rotationYaw);
+        }
+        
+        if (entityIn instanceof EntityPlayerMP)
+        {
+        	EntityPlayerMP player = (EntityPlayerMP) entityIn;
+        	
+			player.connection.sendPacket(new SPacketEffect(1032, new BlockPos(player.posX, player.posY, player.posZ), 0, false));
         }
     }
 
