@@ -377,7 +377,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
         	if (this.getAttackTarget() instanceof EntityPlayer)
         	{
-            	chatItUp((EntityPlayer) this.getAttackTarget(), I18n.format("gui.queen.deafeated"));
+            	chatItUp((EntityPlayer) this.getAttackTarget(), I18n.format("gui.queen.defeated"));
 
             	AetherAPI.getInstance().get((EntityPlayer) this.getAttackTarget()).setFocusedBoss(null);
         	}

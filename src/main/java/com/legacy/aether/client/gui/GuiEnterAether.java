@@ -24,12 +24,12 @@ public class GuiEnterAether extends GuiScreen
         
         if (aether)
         {
-        	this.drawCenteredString(this.fontRenderer, "gui.loading.enteraether", this.width / 2, this.height / 2 - 45, 16777215);
+        	this.drawCenteredString(this.fontRenderer, I18n.format("gui.loading.enteraether"), this.width / 2, this.height / 2 - 45, 16777215);
         	this.drawCenteredString(this.fontRenderer, I18n.format("multiplayer.downloadingTerrain"), this.width / 2, this.height / 2 - 25, 16777215);
         }
         else
         {
-        	this.drawCenteredString(this.fontRenderer, "gui.loading.exitaether", this.width / 2, this.height / 2 - 45, 16777215);
+        	this.drawCenteredString(this.fontRenderer, I18n.format("gui.loading.exitaether"), this.width / 2, this.height / 2 - 45, 16777215);
         	this.drawCenteredString(this.fontRenderer, I18n.format("multiplayer.downloadingTerrain"), this.width / 2, this.height / 2 - 25, 16777215);
         }
         super.drawScreen(mouseX, mouseY, partialTicks);
