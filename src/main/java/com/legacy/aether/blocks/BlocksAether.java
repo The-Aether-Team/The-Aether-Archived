@@ -1,17 +1,5 @@
 package com.legacy.aether.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraftforge.registries.IForgeRegistry;
-
 import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.container.BlockEnchanter;
 import com.legacy.aether.blocks.container.BlockFreezer;
@@ -60,6 +48,15 @@ import com.legacy.aether.items.block.ItemSubtype;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class BlocksAether
 {
@@ -213,8 +210,6 @@ public class BlocksAether
 		aerogel_slab = registerSlab("aerogel_slab", new BlockAerogelSlab("aerogel_slab", false, Material.IRON).setHardness(0.5F).setResistance(999F), aerogel_double_slab);
 		sun_altar = register("sun_altar", new BlockSunAltar());
 		skyroot_bookshelf = register("skyroot_bookshelf", new BlockSkyrootBookshelf());
-
-		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlocksAether.aether_log, new ItemStack(Items.COAL, 1, 1), 0.15F);
 	}
 
 	public static Block registerSlab(String name, Block slab1, Block slab2)

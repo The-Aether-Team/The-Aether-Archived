@@ -1,6 +1,10 @@
 package com.legacy.aether;
 
 import com.legacy.aether.universal.crafttweaker.AetherCraftTweakerPlugin;
+
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -62,6 +66,8 @@ public class Aether
 		AetherEntities.initialization();
 		AetherTileEntities.initialization();
 		AetherWorld.initialization();
+
+		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlocksAether.aether_log, new ItemStack(Items.COAL, 1, 1), 0.15F);
 
 		CommonProxy.registerEvent(new AetherEventHandler());
 
