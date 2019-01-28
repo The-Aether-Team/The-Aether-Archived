@@ -124,6 +124,11 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     {
         return false;
     }
+	
+	public boolean isNonBoss()
+    {
+        return false;
+    }
 
     protected SoundEvent getHurtSound()
     {

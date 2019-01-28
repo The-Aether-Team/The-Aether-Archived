@@ -653,6 +653,11 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     {
         return false;
     }
+    
+    public boolean isNonBoss()
+    {
+        return false;
+    }
 
     @Override
     public boolean getCanSpawnHere() 

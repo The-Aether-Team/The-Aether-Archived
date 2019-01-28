@@ -691,6 +691,11 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	{
 		return false;
 	}
+	
+	public boolean isNonBoss()
+    {
+        return false;
+    }
 
 	@Override
 	public boolean canBePushed()
