@@ -50,9 +50,9 @@ public class AetherWorld
 		MapGenStructureIO.registerStructureComponent(ComponentGoldenIsland.class, "aether_legacy:golden_island_component");
 		MapGenStructureIO.registerStructureComponent(ComponentGoldenIslandStub.class, "aether_legacy:golden_island_stub_component");
 
-		aether_dimension_type = DimensionType.register("AetherI", "_aetherI", AetherConfig.getAetherDimensionID(), AetherWorldProvider.class, false);
+		aether_dimension_type = DimensionType.register("AetherI", "_aetherI", AetherConfig.dimension.aether_dimension_id, AetherWorldProvider.class, false);
 
-		DimensionManager.registerDimension(AetherConfig.getAetherDimensionID(), aether_dimension_type);
+		DimensionManager.registerDimension(AetherConfig.dimension.aether_dimension_id, aether_dimension_type);
 	}
 
 }

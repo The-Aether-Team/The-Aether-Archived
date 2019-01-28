@@ -15,8 +15,6 @@ public class ZephyrRenderer extends RenderLiving<EntityZephyr>
 {
 
     private static final ResourceLocation ZEPHYR_TEXTURE = new ResourceLocation("aether_legacy", "textures/entities/zephyr/zephyr_main.png");
-    
-    private static final ResourceLocation OLD_ZEPHYR_TEXTURE = new ResourceLocation("aether_legacy", "textures/entities/zephyr/zephyr_old.png");
 
 	public ZephyrRenderer(RenderManager rendermanagerIn)
 	{
@@ -42,7 +40,7 @@ public class ZephyrRenderer extends RenderLiving<EntityZephyr>
         GlStateManager.translate(0, 0.5D, 0);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         
-        if (AetherConfig.oldMobsEnabled())
+        if (AetherConfig.visual_options.legacy_models.legacyModels)
         {
         	GlStateManager.scale(0.8, 0.8, 0.8);
         	GlStateManager.translate(0, -0.1D, 0);

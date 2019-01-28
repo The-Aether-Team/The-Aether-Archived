@@ -1,96 +1,142 @@
 package com.legacy.aether;
 
-import java.io.File;
-import java.io.IOException;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import net.minecraftforge.common.config.Configuration;
-
-public class AetherConfig 
+/**
+ * PLEASE NOTE: IF YOU ARE GOING TO CHANGE ANY EXISTING
+ * CONFIGURATION VARIABLES, YOU MUST DELETE YOUR EXISTING
+ * aether_legacy.cfg FILE IN THE CONFIG FOLDER OF YOUR
+ * TESTING DIRECTORY (normally named "run")
+ */
+@Config(modid = Aether.modid)
+@Config.LangKey(Aether.modid + ".config.title")
+public class AetherConfig
 {
+	public static final Dimension dimension = new Dimension();
 
-	private static int max_life_shards;
-
-	private static boolean christmas_content, tallgrass;
-
-	private static int aether_biome_id, aether_dimension_id;
-
-	private static boolean disable_trivia, old_mobs;
-
-	private static boolean skyrootBucketOnly;
-
-	public static void init(File location)
+	public static class Dimension
 	{
-		File newFile = new File(location + "/aether" + "/AetherI.cfg");
+		@Config.RangeInt(min=2, max=256)
+		@Config.RequiresMcRestart
+		@Config.Comment("Set the Dimension ID for the Aether.")
+		public int aether_dimension_id = 4;
+	}
+	
+	/*
+	 * public static class Biome
+	 * {
+	 * @Config.RangeInt(min=2, max=256)
+	 * @Config.RequiresMcRestart
+	 * @Config.Comment("Set the Biome ID for the Aether Highlands.")
+	 * public int aether_biome_id = 127;
+	 * }
+	 */
 
-		try
-		{
-			newFile.createNewFile();
-		}
-		catch (IOException e)
-		{
+	public static final WorldGenOptions world_gen = new WorldGenOptions();
 
-		}
+	public static class WorldGenOptions
+	{
+		public final Christmas christmas_content = new Christmas();
 
-		Configuration config = new Configuration(newFile);
+		public final TallGrass tall_grass = new TallGrass();
 
-		config.load();
-
-		christmas_content = config.get("Aether World Generation", "Christmas Content", false).getBoolean(false);
-		tallgrass = config.get("Aether World Generation", "Enable Tall Grass", false).getBoolean(false);
-
-		aether_dimension_id = config.get("World Identification", "Aether Dimension ID", 4).getInt(4);
-		aether_biome_id = config.get("World Identification", "Aether Biome ID", 127).getInt(127);
-
-		skyrootBucketOnly = config.get("Misc", "Activate portal with only Skyroot bucket", false).getBoolean(false);
-
-		disable_trivia = config.get("Trivia", "Disable random trivia", false).getBoolean(false);
+		public final PinkAerclouds pink_aerclouds = new PinkAerclouds();
 		
-		old_mobs = config.get("Misc", "Enable Legacy Visuals", false).getBoolean(false);
-
-		max_life_shards = config.get("Gameplay", "Max Life Shards", 10).getInt(10);
-
-		config.save();
-	}
-
-	public static int getAetherDimensionID()
-	{
-		return AetherConfig.aether_dimension_id;
-	}
-
-	public static int getAetherBiomeID()
-	{
-		return AetherConfig.aether_biome_id;
-	}
-
-	public static int getMaxLifeShards()
-	{
-		return AetherConfig.max_life_shards;
-	}
-
-	public static boolean triviaDisabled()
-	{
-		return AetherConfig.disable_trivia;
+		public static class Christmas
+		{
+			@Config.Comment("Enables natural christmas decor")
+			public boolean christmasTime = false;
+		}
+		
+		public static class TallGrass
+		{
+			@Config.Comment("Enables naturally generating tallgrass")
+			public boolean tallgrassEnabled = false;
+		}
+		
+		public static class PinkAerclouds
+		{
+			@Config.Comment("Enables natural Pink Aercloud generation")
+			public boolean pinkAerclouds = false;
+		}
 	}
 	
-	public static boolean oldMobsEnabled()
+	public static final VisualOptions visual_options = new VisualOptions();
+	
+	public static class VisualOptions
 	{
-		return AetherConfig.old_mobs;
-	}
-
-
-	public static boolean shouldLoadHolidayContent()
-	{
-		return AetherConfig.christmas_content;
+		public final OldMobModels legacy_models = new OldMobModels();
+		
+		public final UpdatedAercloudColors updated_aerclouds = new UpdatedAercloudColors();
+		
+		public final DisableTrivia trivia = new DisableTrivia();
+		
+		public static class OldMobModels
+		{
+			@Config.Comment("Changes Aether mobs to use their old models, if applicable")
+			public boolean legacyModels = false;
+		}
+		
+		public static class UpdatedAercloudColors
+		{
+			@Config.Comment("Aerclouds will use their more saturated colors from later updates")
+			public boolean updatedAercloudColors = false;
+		}
+		
+		public static class DisableTrivia
+		{
+			@Config.Comment("Disables the random trivia/tips you see during loading screens")
+			@Config.RequiresMcRestart
+			public boolean triviaDisabled = false;
+		}
+		
+		public static class EnableMenu
+		{
+			@Config.Comment("Enables the Aether Menu")
+			public boolean menuEnabled = false;
+		}
 	}
 	
-	public static boolean tallgrassEnabled()
-	{
-		return AetherConfig.tallgrass;
-	}
+	public static final GameplayChanges gameplay_changes = new GameplayChanges();
 	
-	public static boolean activateOnlyWithSkyroot()
+	public static class GameplayChanges
 	{
-		return AetherConfig.skyrootBucketOnly;
+		public final LifeShardCount max_shards = new LifeShardCount();
+		
+		public final SkyrootBucketOnly skyroot_bucket_only = new SkyrootBucketOnly();
+		
+		public static class LifeShardCount
+		{
+			@Config.Comment("The max amount of life shards that can be used per player")
+			public int maxLifeShards = 10;
+		}
+		
+		public static class SkyrootBucketOnly
+		{
+			@Config.Comment("If enabled, Aether Portals can only be lit by Skyroot Buckets")
+			public boolean skyrootBucketOnly = false;
+		}
 	}
 
+	@Mod.EventBusSubscriber(modid = Aether.modid)
+	private static class EventHandler
+	{
+		/**
+		 * Inject the new values and save to the config file when the config has been changed from the GUI.
+		 *
+		 * @param event The event
+		 */
+		@SubscribeEvent
+		public static void onConfigChanged(final ConfigChangedEvent.OnConfigChangedEvent event)
+		{
+			if (event.getModID().equals(Aether.modid))
+			{
+				ConfigManager.sync(Aether.modid, Config.Type.INSTANCE);
+			}
+		}
+	}
 }

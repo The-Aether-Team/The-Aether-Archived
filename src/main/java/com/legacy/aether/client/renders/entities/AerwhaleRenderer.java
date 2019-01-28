@@ -42,7 +42,7 @@ public class AerwhaleRenderer extends Render<EntityAerwhale>
 		}
         
         
-        if (AetherConfig.oldMobsEnabled())
+        if (AetherConfig.visual_options.legacy_models.legacyModels)
         {
         	this.renderManager.renderEngine.bindTexture(OLD_AERWHALE_TEXTURE);
         	 //GlStateManager.translate(x - 0.2D, 0 , 0);
@@ -56,7 +56,7 @@ public class AerwhaleRenderer extends Render<EntityAerwhale>
         GlStateManager.rotate(90.0F - (float) aerwhale.aerwhaleRotationYaw, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(180.0F - (float) aerwhale.aerwhaleRotationPitch, 1.0F, 0.0F, 0.0F);
         GlStateManager.scale(2.0F, 2.0F, 2.0F);
-        if (AetherConfig.oldMobsEnabled())
+        if (AetherConfig.visual_options.legacy_models.legacyModels)
         {
         	this.old_model.render(aerwhale, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
             //this.renderManager.renderEngine.bindTexture(OLD_AERWHALE_TEXTURE);

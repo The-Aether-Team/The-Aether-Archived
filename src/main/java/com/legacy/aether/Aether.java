@@ -38,7 +38,7 @@ public class Aether
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
 	{
-		AetherConfig.init(event.getModConfigurationDirectory());
+		//AetherConfig.init(event.getModConfigurationDirectory());
 		//AetherConfig.autoDeveloperMode(version);
 
 		BlocksAether.initialization();

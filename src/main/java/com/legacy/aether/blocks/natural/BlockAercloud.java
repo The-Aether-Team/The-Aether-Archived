@@ -1,5 +1,10 @@
 package com.legacy.aether.blocks.natural;
 
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.blocks.util.EnumCloudType;
+import com.legacy.aether.blocks.util.IAetherMeta;
+import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -23,10 +28,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.legacy.aether.blocks.util.EnumCloudType;
-import com.legacy.aether.blocks.util.IAetherMeta;
-import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
-
 public class BlockAercloud extends Block implements IAetherMeta
 {
 
@@ -46,11 +47,28 @@ public class BlockAercloud extends Block implements IAetherMeta
 	{
 		if (stack.getMetadata() == 1)
 		{
-			return 0xCCFFFF;
+			if (AetherConfig.visual_options.updated_aerclouds.updatedAercloudColors)
+			{
+				return 0x71d2ff;
+			}
+			
+			else
+			{
+				return 0xCCFFFF;
+			}
 		}
+		
 		else if (stack.getMetadata() == 2)
 		{
-			return 0xFFFF80;
+			if (AetherConfig.visual_options.updated_aerclouds.updatedAercloudColors)
+			{
+				return 0xffe082;
+			}
+			
+			else
+			{
+				return 0xFFFF80;
+			}
 		}
 
 		return 16777215; //Default color
@@ -134,7 +152,11 @@ public class BlockAercloud extends Block implements IAetherMeta
         {
         	EnumCloudType cloud_type = EnumCloudType.values()[j];
 
-        	if (cloud_type != EnumCloudType.Pink)
+        	if (AetherConfig.world_gen.pink_aerclouds.pinkAerclouds)
+        	{
+        		list.add(new ItemStack(this, 1, cloud_type.getMeta()));
+        	}
+        	else if (cloud_type != EnumCloudType.Pink)
         	{
                 list.add(new ItemStack(this, 1, cloud_type.getMeta()));
         	}

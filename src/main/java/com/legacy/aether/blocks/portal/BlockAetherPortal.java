@@ -45,7 +45,7 @@ public class BlockAetherPortal extends BlockPortal
 	{
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 		int previousDimension = entity.dimension;
-		int transferDimension = previousDimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
+		int transferDimension = previousDimension == AetherConfig.dimension.aether_dimension_id ? 0 : AetherConfig.dimension.aether_dimension_id;
 		
 		if (entity instanceof EntityPlayer)
 		{

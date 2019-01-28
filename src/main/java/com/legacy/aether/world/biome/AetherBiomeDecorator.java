@@ -75,6 +75,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
         }
     }
 
+	@SuppressWarnings("deprecation")
 	@Override
     protected void genDecorations(Biome biomeGenBaseIn, World worldIn, Random random)
     {
@@ -108,7 +109,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			this.skyroot_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(8) + 8, 0, this.nextInt(8) + 8)));
 		}
 
-		if (AetherConfig.shouldLoadHolidayContent())
+		if (AetherConfig.world_gen.christmas_content.christmasTime)
 		{
 			if (this.shouldSpawn(15))
 			{
@@ -116,7 +117,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			}
 		}
 		
-		if (AetherConfig.tallgrassEnabled())
+		if (AetherConfig.world_gen.tall_grass.tallgrassEnabled)
 		{
 			for (int i3 = 0; i3 < 10; ++i3)
 	        {

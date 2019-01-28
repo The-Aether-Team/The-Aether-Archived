@@ -54,7 +54,7 @@ public class AetherMusicHandler
 
 		if (category == SoundCategory.MUSIC)
 		{
-			if (this.mc.player != null && this.mc.player.dimension == AetherConfig.getAetherDimensionID())
+			if (this.mc.player != null && this.mc.player.dimension == AetherConfig.dimension.aether_dimension_id)
 			{
 				if (!sound.getSoundLocation().toString().contains("aether_legacy") && (this.musicTicker.playingMusic() || !this.musicTicker.playingMusic()))
 				{

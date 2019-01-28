@@ -30,7 +30,7 @@ public class LayerOldZephyrModel implements LayerRenderer<EntityZephyr>
 
     public void doRenderLayer(EntityZephyr entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        if (!entitylivingbaseIn.isInvisible() && AetherConfig.oldMobsEnabled())
+        if (!entitylivingbaseIn.isInvisible() && AetherConfig.visual_options.legacy_models.legacyModels)
         {
         	RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();	
     		renderManager.renderEngine.bindTexture(OLD_ZEPHYR);

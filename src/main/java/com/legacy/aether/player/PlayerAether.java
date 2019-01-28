@@ -192,7 +192,7 @@ public class PlayerAether implements IPlayerAether
 			this.activateParachute();
 		}
 
-		if (this.thePlayer.dimension == AetherConfig.getAetherDimensionID())
+		if (this.thePlayer.dimension == AetherConfig.dimension.aether_dimension_id)
 		{
 			if (this.thePlayer.posY < -2)
 			{
@@ -370,7 +370,7 @@ public class PlayerAether implements IPlayerAether
 		if (this.thePlayer instanceof EntityPlayerMP)
 		{			
 			int previousDimension = this.thePlayer.dimension;
-			int transferDimension = previousDimension == AetherConfig.getAetherDimensionID() ? 0 : AetherConfig.getAetherDimensionID();
+			int transferDimension = previousDimension == AetherConfig.dimension.aether_dimension_id ? 0 : AetherConfig.dimension.aether_dimension_id;
 			
 			if (ForgeHooks.onTravelToDimension(this.thePlayer, transferDimension))
 			{
@@ -484,7 +484,7 @@ public class PlayerAether implements IPlayerAether
 	@Override
 	public int getMaxShardCount()
 	{
-		return AetherConfig.getMaxLifeShards();
+		return AetherConfig.gameplay_changes.max_shards.maxLifeShards;
 	}
 
 	/*

@@ -33,11 +33,11 @@ public class AetherMusicTicker implements ITickable
 
         if (this.mc.player != null)
         {
-           	if (this.mc.player.dimension != AetherConfig.getAetherDimensionID())
+           	if (this.mc.player.dimension != AetherConfig.dimension.aether_dimension_id)
            	{
            		this.stopMusic();
            	}
-           	else if (this.mc.player.dimension == AetherConfig.getAetherDimensionID())
+           	else if (this.mc.player.dimension == AetherConfig.dimension.aether_dimension_id)
            	{
                 if (this.currentMusic != null)
                 {

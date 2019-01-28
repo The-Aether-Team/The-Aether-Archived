@@ -44,7 +44,7 @@ public class AetherEventHandler
 		EntityPlayer player = event.getEntityPlayer();
 		ItemStack currentStack = event.getItemStack();
 
-		if (player.dimension == AetherConfig.getAetherDimensionID())
+		if (player.dimension == AetherConfig.dimension.aether_dimension_id)
 		{
 			if (currentStack.getItem() == Items.FLINT_AND_STEEL || currentStack.getItem() == Item.getItemFromBlock(Blocks.TORCH) || currentStack.getItem() == Items.FIRE_CHARGE)
 			{
@@ -97,10 +97,10 @@ public class AetherEventHandler
 		ItemStack stack = event.getEmptyBucket();
 		EntityPlayer player = event.getEntityPlayer();
 
-		boolean isWater = (!AetherConfig.activateOnlyWithSkyroot() && stack.getItem() == Items.WATER_BUCKET) || stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
+		boolean isWater = (!AetherConfig.gameplay_changes.skyroot_bucket_only.skyrootBucketOnly && stack.getItem() == Items.WATER_BUCKET) || stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
 		boolean isLava = stack.getItem() == Items.LAVA_BUCKET;
 
-		boolean validDimension = (player.dimension == 0 || player.dimension == AetherConfig.getAetherDimensionID());
+		boolean validDimension = (player.dimension == 0 || player.dimension == AetherConfig.dimension.aether_dimension_id);
 
 		if (target != null && target.typeOfHit == Type.BLOCK && validDimension)
 		{
@@ -129,7 +129,7 @@ public class AetherEventHandler
 				}
 			}
 
-			if (isLava && player.dimension == AetherConfig.getAetherDimensionID())
+			if (isLava && player.dimension == AetherConfig.dimension.aether_dimension_id)
 			{
 				if (player.capabilities.isCreativeMode && player.isSneaking())
 				{

@@ -55,7 +55,7 @@ public class AetherClientEvents
 		{
 			if (type.equals(TickEvent.Type.CLIENT))
 			{
-				if (!AetherConfig.triviaDisabled())
+				if (!AetherConfig.visual_options.trivia.triviaDisabled)
 				{
 					if (!(mc.loadingScreen instanceof AetherLoadingScreen))
 					{
@@ -141,7 +141,7 @@ public class AetherClientEvents
 			GuiEnterAether enterAether = new GuiEnterAether(true);
 			GuiEnterAether exitAether = new GuiEnterAether(false);
 			
-			if (mc.player.dimension == AetherConfig.getAetherDimensionID())
+			if (mc.player.dimension == AetherConfig.dimension.aether_dimension_id)
 			{				
 				event.setGui(enterAether);
 				wasInAether = true;
