@@ -18,6 +18,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.world.dungeon.BronzeDungeon;
 import com.legacy.aether.world.dungeon.util.AetherDungeon;
@@ -26,6 +27,7 @@ import com.legacy.aether.world.gen.MapGenColdAercloud;
 import com.legacy.aether.world.gen.MapGenGoldenAercloud;
 import com.legacy.aether.world.gen.MapGenGoldenDungeon;
 import com.legacy.aether.world.gen.MapGenLargeColdAercloud;
+import com.legacy.aether.world.gen.MapGenPinkAercloud;
 import com.legacy.aether.world.gen.MapGenQuicksoil;
 import com.legacy.aether.world.gen.MapGenSilverDungeon;
 
@@ -57,6 +59,8 @@ public class ChunkProviderAether implements  IChunkGenerator
     private MapGenBlueAercloud blueAercloudStructure = new MapGenBlueAercloud();
 
     private MapGenGoldenAercloud goldenAercloudStructure = new MapGenGoldenAercloud();
+    
+    private MapGenPinkAercloud pinkAercloudStructure = new MapGenPinkAercloud();
 
 	public ChunkProviderAether(World world, long seed)
 	{
@@ -295,9 +299,14 @@ public class ChunkProviderAether implements  IChunkGenerator
         this.blueAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.goldenAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.largeColdAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
-
+        
         this.silverDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
+
+        if (AetherConfig.world_gen.pink_aerclouds.pinkAerclouds)
+        {
+        	this.pinkAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
+        }
 
         Chunk chunk = new Chunk(this.worldObj, chunkPrimer, x, z);
         chunk.generateSkylightMap();
@@ -329,18 +338,46 @@ public class ChunkProviderAether implements  IChunkGenerator
 
         this.silverDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
+        
+        if (AetherConfig.world_gen.pink_aerclouds.pinkAerclouds)
+        {
+        	this.pinkAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
+        }
 	}
 
 	@Override
-	public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos) 
+	public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos)
 	{
-		return false;
+		if ("SilverDungeon".equals(structureName) && this.silverDungeonStructure != null)
+        {
+            return this.silverDungeonStructure.isInsideStructure(pos);
+        }
+		else if ("GoldDungeon".equals(structureName) && this.goldenDungeonStructure != null)
+        {
+            return this.goldenDungeonStructure.isInsideStructure(pos);
+        }
+		else
+		{
+			return false;
+		}
 	}
 
 	@Override
 	public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) 
 	{
-		return null;
+		BlockPos whoops = new BlockPos(position.getX() + 20, position.getY(), position.getZ() + 20);
+		if ("SilverDungeon".equals(structureName) && this.silverDungeonStructure != null)
+        {
+            return this.silverDungeonStructure.getNearestStructurePos(worldIn, whoops, findUnexplored);
+        }
+		else if ("GoldDungeon".equals(structureName) && this.goldenDungeonStructure != null)
+        {
+            return this.goldenDungeonStructure.getNearestStructurePos(worldIn, whoops, findUnexplored);
+        }
+		else
+		{
+			return null;
+		}
 	}
 
 	@Override
@@ -368,6 +405,11 @@ public class ChunkProviderAether implements  IChunkGenerator
         this.silverDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
         this.goldenDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
+        if (AetherConfig.world_gen.pink_aerclouds.pinkAerclouds)
+        {
+        	this.pinkAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
+        }
+        
 		biome.decorate(this.worldObj, this.rand, pos);
 
 		if (this.rand.nextInt(10) == 0)
