@@ -29,7 +29,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 	public TileEntityEnchanter() 
 	{
-		super("altar");
+		super("enchanter");
 	}
 
 	@Override
