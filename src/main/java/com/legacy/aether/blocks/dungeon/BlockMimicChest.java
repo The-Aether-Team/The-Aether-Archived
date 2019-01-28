@@ -72,7 +72,7 @@ public class BlockMimicChest extends BlockChest
 			{
 				mimic.setAttackTarget(player);
 			}
-            mimic.setPosition((double)pos.getX() + 0.5D, (double)pos.getY() + 1.5D, (double)pos.getZ() + 0.5D);
+            mimic.setPosition((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D);
 			world.spawnEntity(mimic);
 		}
 
