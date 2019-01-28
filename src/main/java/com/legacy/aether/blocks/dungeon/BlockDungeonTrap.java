@@ -21,6 +21,7 @@ public class BlockDungeonTrap extends BlockDungeonBase
 	public BlockDungeonTrap()
 	{
 		super(true);
+		this.setBlockUnbreakable();
 	}
 
 	@Override

@@ -33,6 +33,7 @@ public class BlockDungeonBase extends Block implements IAetherMeta
 		if (isLocked)
 		{
 			this.setResistance(6000000.0F);
+			this.setBlockUnbreakable();
 		}
 
 		this.setSoundType(SoundType.STONE);
