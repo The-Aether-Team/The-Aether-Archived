@@ -40,6 +40,7 @@ public class BlockAetherPortal extends BlockPortal
 		this.setResistance(900000F);
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
 	{
@@ -47,7 +48,7 @@ public class BlockAetherPortal extends BlockPortal
 		int previousDimension = entity.dimension;
 		int transferDimension = previousDimension == AetherConfig.dimension.aether_dimension_id ? 0 : AetherConfig.dimension.aether_dimension_id;
 		
-		if (entity instanceof EntityPlayer)
+		if (entity instanceof EntityPlayer && !entity.isRiding())
 		{
 			AetherAPI.getInstance().get((EntityPlayer)entity).setInPortal();
 		}

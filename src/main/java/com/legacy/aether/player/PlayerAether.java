@@ -27,7 +27,6 @@ import com.legacy.aether.world.TeleporterAether;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -36,7 +35,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -52,9 +50,6 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class PlayerAether implements IPlayerAether
 {
-	
-	private final Minecraft mc = FMLClientHandler.instance().getClient();
-
 	public EntityPlayer thePlayer;
 
 	private UUID healthUUID = UUID.fromString("df6eabe7-6947-4a56-9099-002f90370706");
@@ -111,18 +106,12 @@ public class PlayerAether implements IPlayerAether
 
 	public void onUpdate()
 	{
-		if (this.inPortal && this.thePlayer.world.isRemote)
-		{
-			if (this.portalAnimTime == 0.0F)
-            {
-                this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.BLOCK_PORTAL_TRIGGER, this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
-            }
-			
-			if (this.mc.currentScreen instanceof GuiContainer)
-            {
-                this.mc.player.closeScreen();
-            }
-		}
+		/*
+		 * if (this.inPortal && this.thePlayer.world.isRemote)
+		 * {
+		 * //TODO
+		 * }
+		 */
 		for (int i = 0; i < this.abilities.size(); ++i)
 		{
 			IAetherAbility ability = this.abilities.get(i);
@@ -387,7 +376,8 @@ public class PlayerAether implements IPlayerAether
 
 				if (this.thePlayer.getRidingEntity() != null)
 				{
-					transferEntity(shouldSpawnPortal, this.thePlayer.getRidingEntity(), server.getWorld(previousDimension), server.getWorld(transferDimension));
+					this.thePlayer.dismountRidingEntity();
+					//transferEntity(shouldSpawnPortal, this.thePlayer.getRidingEntity(), server.getWorld(previousDimension), server.getWorld(transferDimension));
 				}
 			}
 		}
