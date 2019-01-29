@@ -109,6 +109,8 @@ public class AetherConfig
 		
 		public final SkyrootBucketOnly skyroot_bucket_only = new SkyrootBucketOnly();
 		
+		public final EdibleAmbro edible_ambrosium = new EdibleAmbro();
+		
 		public static class LifeShardCount
 		{
 			@Config.Comment("The max amount of life shards that can be used per player")
@@ -119,6 +121,13 @@ public class AetherConfig
 		{
 			@Config.Comment("If enabled, Aether Portals can only be lit by Skyroot Buckets")
 			public boolean skyrootBucketOnly = false;
+		}
+		
+		public static class EdibleAmbro
+		{
+			@Config.Comment("Makes it so you have to eat Ambrosium, instead of just right clicking to heal")
+			//@Config.RequiresMcRestart
+			public boolean ambroIsEdible = false;
 		}
 	}
 
