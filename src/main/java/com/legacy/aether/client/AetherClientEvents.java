@@ -55,7 +55,7 @@ public class AetherClientEvents
 		{
 			if (type.equals(TickEvent.Type.CLIENT))
 			{
-				if (!AetherConfig.visual_options.trivia.triviaDisabled)
+				if (!AetherConfig.visual_options.trivia_disabled)
 				{
 					if (!(mc.loadingScreen instanceof AetherLoadingScreen))
 					{

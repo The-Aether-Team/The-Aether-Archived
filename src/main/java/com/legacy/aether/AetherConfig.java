@@ -40,95 +40,54 @@ public class AetherConfig
 
 	public static class WorldGenOptions
 	{
-		public final Christmas christmas_content = new Christmas();
-
-		public final TallGrass tall_grass = new TallGrass();
-
-		public final PinkAerclouds pink_aerclouds = new PinkAerclouds();
+		/*
+		 * public final Christmas christmas_content = new Christmas();
+		 * public final TallGrass tall_grass = new TallGrass();
+		 * public final PinkAerclouds pink_aerclouds = new PinkAerclouds();
+		 */
 		
-		public static class Christmas
-		{
-			@Config.Comment("Enables natural christmas decor")
-			public boolean christmasTime = false;
-		}
+		@Config.Comment("Enables natural christmas decor")
+		public boolean christmas_time = false;
 		
-		public static class TallGrass
-		{
-			@Config.Comment("Enables naturally generating tallgrass")
-			public boolean tallgrassEnabled = false;
-		}
+		@Config.Comment("Enables naturally generating tallgrass")
+		public boolean tallgrass_enabled = false;
 		
-		public static class PinkAerclouds
-		{
-			@Config.Comment("Enables natural Pink Aercloud generation")
-			public boolean pinkAerclouds = false;
-		}
+		@Config.Comment("Enables natural Pink Aercloud generation")
+		public boolean pink_aerclouds = false;
 	}
 	
 	public static final VisualOptions visual_options = new VisualOptions();
 	
 	public static class VisualOptions
 	{
-		public final OldMobModels legacy_models = new OldMobModels();
+		@Config.Comment("Changes Aether mobs to use their old models, if applicable")
+		public boolean legacy_models = false;
 		
-		public final UpdatedAercloudColors updated_aerclouds = new UpdatedAercloudColors();
+		@Config.Comment("Aerclouds will use their more saturated colors from later updates")
+		public boolean updated_aercloud_colors = false;
 		
-		public final DisableTrivia trivia = new DisableTrivia();
+		@Config.Comment("Disables the random trivia/tips you see during loading screens")
+		@Config.RequiresMcRestart
+		public boolean trivia_disabled = false;
 		
-		public static class OldMobModels
-		{
-			@Config.Comment("Changes Aether mobs to use their old models, if applicable")
-			public boolean legacyModels = false;
-		}
-		
-		public static class UpdatedAercloudColors
-		{
-			@Config.Comment("Aerclouds will use their more saturated colors from later updates")
-			public boolean updatedAercloudColors = false;
-		}
-		
-		public static class DisableTrivia
-		{
-			@Config.Comment("Disables the random trivia/tips you see during loading screens")
-			@Config.RequiresMcRestart
-			public boolean triviaDisabled = false;
-		}
-		
-		public static class EnableMenu
-		{
-			@Config.Comment("Enables the Aether Menu")
-			public boolean menuEnabled = false;
-		}
+		/*
+		 * @Config.Comment("Enables the Aether Menu")
+		 * public boolean menu_enabled = false;
+		 */
 	}
 	
 	public static final GameplayChanges gameplay_changes = new GameplayChanges();
 	
 	public static class GameplayChanges
 	{
-		public final LifeShardCount max_shards = new LifeShardCount();
+		@Config.Comment("The max amount of life shards that can be used per player")
+		public int max_life_shards = 10;
 		
-		public final SkyrootBucketOnly skyroot_bucket_only = new SkyrootBucketOnly();
+		@Config.Comment("If enabled, Aether Portals can only be lit by Skyroot Buckets")
+		public boolean skyroot_bucket_only = false;
 		
-		public final EdibleAmbro edible_ambrosium = new EdibleAmbro();
-		
-		public static class LifeShardCount
-		{
-			@Config.Comment("The max amount of life shards that can be used per player")
-			public int maxLifeShards = 10;
-		}
-		
-		public static class SkyrootBucketOnly
-		{
-			@Config.Comment("If enabled, Aether Portals can only be lit by Skyroot Buckets")
-			public boolean skyrootBucketOnly = false;
-		}
-		
-		public static class EdibleAmbro
-		{
-			@Config.Comment("Makes it so you have to eat Ambrosium, instead of just right clicking to heal")
-			//@Config.RequiresMcRestart
-			public boolean ambroIsEdible = false;
-		}
+		@Config.Comment("Makes it so you have to eat Ambrosium, instead of just right clicking to heal")
+		public boolean ambro_is_edible = false;
 	}
 
 	@Mod.EventBusSubscriber(modid = Aether.modid)

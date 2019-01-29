@@ -1,7 +1,7 @@
 package com.legacy.aether.events;
 
 import com.legacy.aether.AetherConfig;
-import com.legacy.aether.entities.util.EntityMountable;
+import com.legacy.aether.entities.util.EntitySaddleMount;
 import com.legacy.aether.world.TeleporterAether;
 
 import net.minecraft.entity.Entity;
@@ -22,11 +22,11 @@ public class AetherEntityEvents
 	
 	private void entityUpdateEvents(EntityLiving entity, Event event)
 	{
-		if (entity instanceof EntityMountable)
+		if (entity instanceof EntitySaddleMount)
 		{
-			//EntityMountable mountable = (EntityMountable) entity;
+			EntitySaddleMount mountable = (EntitySaddleMount) entity;
 			
-			if (entity.dimension == AetherConfig.dimension.aether_dimension_id && !entity.world.isRemote)
+			if (entity.dimension == AetherConfig.dimension.aether_dimension_id && !entity.world.isRemote && mountable.getSaddled())
 			{
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 				int previousDimension = entity.dimension;

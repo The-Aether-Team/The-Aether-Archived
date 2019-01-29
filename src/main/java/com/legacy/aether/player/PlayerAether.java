@@ -474,7 +474,7 @@ public class PlayerAether implements IPlayerAether
 	@Override
 	public int getMaxShardCount()
 	{
-		return AetherConfig.gameplay_changes.max_shards.maxLifeShards;
+		return AetherConfig.gameplay_changes.max_life_shards;
 	}
 
 	/*

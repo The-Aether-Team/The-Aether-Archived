@@ -109,7 +109,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			this.skyroot_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(8) + 8, 0, this.nextInt(8) + 8)));
 		}
 
-		if (AetherConfig.world_gen.christmas_content.christmasTime)
+		if (AetherConfig.world_gen.christmas_time)
 		{
 			if (this.shouldSpawn(15))
 			{
@@ -117,7 +117,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			}
 		}
 		
-		if (AetherConfig.world_gen.tall_grass.tallgrassEnabled)
+		if (AetherConfig.world_gen.tallgrass_enabled)
 		{
 			for (int i3 = 0; i3 < 10; ++i3)
 	        {

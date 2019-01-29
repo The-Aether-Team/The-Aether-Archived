@@ -40,7 +40,7 @@ public class ZephyrRenderer extends RenderLiving<EntityZephyr>
         GlStateManager.translate(0, 0.5D, 0);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         
-        if (AetherConfig.visual_options.legacy_models.legacyModels)
+        if (AetherConfig.visual_options.legacy_models)
         {
         	GlStateManager.scale(0.8, 0.8, 0.8);
         	GlStateManager.translate(0, -0.1D, 0);

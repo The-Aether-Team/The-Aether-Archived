@@ -51,7 +51,7 @@ public class ItemAmbrosiumShard extends ItemAetherFood
     {
 		ItemStack heldItem = playerIn.getHeldItem(hand);
 
-    	if (!AetherConfig.gameplay_changes.edible_ambrosium.ambroIsEdible && playerIn.shouldHeal())
+    	if (!AetherConfig.gameplay_changes.ambro_is_edible && playerIn.shouldHeal())
     	{
         	if (!playerIn.capabilities.isCreativeMode)
         	{
@@ -62,7 +62,7 @@ public class ItemAmbrosiumShard extends ItemAetherFood
 
     		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
     	}
-    	else if (AetherConfig.gameplay_changes.edible_ambrosium.ambroIsEdible)
+    	else if (AetherConfig.gameplay_changes.ambro_is_edible)
     	{
     		return super.onItemRightClick(worldIn, playerIn, hand);
     	}
@@ -75,7 +75,7 @@ public class ItemAmbrosiumShard extends ItemAetherFood
 	@Override
     protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player)
     {
-		if (AetherConfig.gameplay_changes.edible_ambrosium.ambroIsEdible)
+		if (AetherConfig.gameplay_changes.ambro_is_edible)
 		{
 			player.heal(2F);
 			super.onFoodEaten(stack, worldIn, player);

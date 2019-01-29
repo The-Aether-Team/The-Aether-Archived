@@ -47,7 +47,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 	{
 		if (stack.getMetadata() == 1)
 		{
-			if (AetherConfig.visual_options.updated_aerclouds.updatedAercloudColors)
+			if (AetherConfig.visual_options.updated_aercloud_colors)
 			{
 				return 0x71d2ff;
 			}
@@ -60,7 +60,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 		
 		else if (stack.getMetadata() == 2)
 		{
-			if (AetherConfig.visual_options.updated_aerclouds.updatedAercloudColors)
+			if (AetherConfig.visual_options.updated_aercloud_colors)
 			{
 				return 0xffe082;
 			}
@@ -152,7 +152,7 @@ public class BlockAercloud extends Block implements IAetherMeta
         {
         	EnumCloudType cloud_type = EnumCloudType.values()[j];
 
-        	if (AetherConfig.world_gen.pink_aerclouds.pinkAerclouds)
+        	if (AetherConfig.world_gen.pink_aerclouds)
         	{
         		list.add(new ItemStack(this, 1, cloud_type.getMeta()));
         	}

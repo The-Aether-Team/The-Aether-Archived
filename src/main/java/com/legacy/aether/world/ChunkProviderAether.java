@@ -303,7 +303,7 @@ public class ChunkProviderAether implements  IChunkGenerator
         this.silverDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
 
-        if (AetherConfig.world_gen.pink_aerclouds.pinkAerclouds)
+        if (AetherConfig.world_gen.pink_aerclouds)
         {
         	this.pinkAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
         }
@@ -339,7 +339,7 @@ public class ChunkProviderAether implements  IChunkGenerator
         this.silverDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         
-        if (AetherConfig.world_gen.pink_aerclouds.pinkAerclouds)
+        if (AetherConfig.world_gen.pink_aerclouds)
         {
         	this.pinkAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         }
@@ -405,7 +405,7 @@ public class ChunkProviderAether implements  IChunkGenerator
         this.silverDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
         this.goldenDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
-        if (AetherConfig.world_gen.pink_aerclouds.pinkAerclouds)
+        if (AetherConfig.world_gen.pink_aerclouds)
         {
         	this.pinkAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
         }

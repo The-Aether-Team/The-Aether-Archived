@@ -97,7 +97,7 @@ public class AetherEventHandler
 		ItemStack stack = event.getEmptyBucket();
 		EntityPlayer player = event.getEntityPlayer();
 
-		boolean isWater = (!AetherConfig.gameplay_changes.skyroot_bucket_only.skyrootBucketOnly && stack.getItem() == Items.WATER_BUCKET) || stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
+		boolean isWater = (!AetherConfig.gameplay_changes.skyroot_bucket_only && stack.getItem() == Items.WATER_BUCKET) || stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
 		boolean isLava = stack.getItem() == Items.LAVA_BUCKET;
 
 		boolean validDimension = (player.dimension == 0 || player.dimension == AetherConfig.dimension.aether_dimension_id);

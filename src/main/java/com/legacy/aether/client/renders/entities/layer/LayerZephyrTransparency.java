@@ -30,7 +30,7 @@ public class LayerZephyrTransparency implements LayerRenderer<EntityZephyr>
 
     public void doRenderLayer(EntityZephyr entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        if (!entitylivingbaseIn.isInvisible() && !AetherConfig.visual_options.legacy_models.legacyModels)
+        if (!entitylivingbaseIn.isInvisible() && !AetherConfig.visual_options.legacy_models)
         {
         	RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();	
     		renderManager.renderEngine.bindTexture(TRANS);

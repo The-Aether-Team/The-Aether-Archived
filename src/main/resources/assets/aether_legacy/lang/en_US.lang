@@ -356,6 +356,33 @@ gui.spirit.line9=As you wish, your death will be slow and agonizing.
 gui.spirit.line10=Did your previous death not satisfy your curiosity, human?
 gui.spirit.dead=Such bitter cold... is this the feeling... of pain?
 gui.spirit.playerdied=Such is the fate of a being who opposes the might of the sun.
+
 # Death messages
 death.attack.inebriation=%1$s was inebriated
 death.attack.inebriation_indirect=%1$s was inebriated by %2$s
+
+# Config
+aether_legacy.config.title=Aether Legacy Configuration
+aether_legacy.general.dimension=Dimension Settings
+aether_legacy.general.gameplay_changes=Gameplay Changes
+aether_legacy.general.gameplay_changes.tooltip=These options affect gameplay, and how some of the content works.
+aether_legacy.general.gameplay_changes.ambro_is_edible=Edible Ambrosium
+aether_legacy.general.gameplay_changes.max_life_shards=Maximum Life Shards
+aether_legacy.general.gameplay_changes.skyroot_bucket_only=Skyroot Bucket Only
+
+aether_legacy.general.visual_options=Visual Options
+aether_legacy.general.visual_options.tooltip=These options do not affect gameplay, and are purely visual.
+aether_legacy.general.visual_options.legacy_models=Classic Models
+aether_legacy.general.visual_options.trivia_disabled=Aether Trivia
+aether_legacy.general.visual_options.updated_aercloud_colors=Updated Aercloud Colors
+aether_legacy.general.visual_options.menu_enabled=Aether Menu
+
+aether_legacy.general.world_gen=World Generation Options
+aether_legacy.general.world_gen.tooltip=These options affect world generation.
+
+aether_legacy.general.world_gen.christmas_time=Holiday Generation
+aether_legacy.general.world_gen.pink_aerclouds=Pink Aercloud Generation
+aether_legacy.general.world_gen.tallgrass_enabled=Tall Grass Generation
+
+aether_legacy.general.dimension.aether_dimension_id=Aether Dimension ID
+aether_legacy.general.dimension.aether_dimension_id.tooltip=Set the Dimension ID for the Aether.
