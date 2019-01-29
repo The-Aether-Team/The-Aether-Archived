@@ -1,6 +1,16 @@
 package com.legacy.aether;
 
+import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.entities.AetherEntities;
+import com.legacy.aether.events.AetherEntityEvents;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.player.capability.PlayerAetherManager;
+import com.legacy.aether.registry.AetherRegistryEvent;
+import com.legacy.aether.registry.sounds.SoundsAether;
+import com.legacy.aether.tile_entities.AetherTileEntities;
 import com.legacy.aether.universal.crafttweaker.AetherCraftTweakerPlugin;
+import com.legacy.aether.world.AetherWorld;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,23 +25,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import com.legacy.aether.advancements.AetherAdvancements;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.AetherEntities;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.player.capability.PlayerAetherManager;
-import com.legacy.aether.registry.AetherRegistryEvent;
-import com.legacy.aether.registry.sounds.SoundsAether;
-import com.legacy.aether.tile_entities.AetherTileEntities;
-import com.legacy.aether.world.AetherWorld;
-
 @Mod(name = "Aether Legacy", modid = Aether.modid, version = Aether.version, acceptedMinecraftVersions = "1.12.2")
 public class Aether 
 {
 
 	public static final String modid = "aether_legacy";
 
-	public static final String version = "1.12.2-v3.2";
+	public static final String version = "1.12.2-v1.3.3";
 
 	@Instance(Aether.modid)
 	public static Aether instance;
@@ -70,7 +70,8 @@ public class Aether
 		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlocksAether.aether_log, new ItemStack(Items.COAL, 1, 1), 0.15F);
 
 		CommonProxy.registerEvent(new AetherEventHandler());
-
+		CommonProxy.registerEvent(new AetherEntityEvents());
+		
 		proxy.initialization();
 	}
 
