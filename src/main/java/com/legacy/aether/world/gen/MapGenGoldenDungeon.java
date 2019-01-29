@@ -28,7 +28,7 @@ public class MapGenGoldenDungeon extends MapGenStructure
 	@Override
 	public String getStructureName()
 	{
-		return "aether_legacy:golden_dungeon";
+		return "GoldDungeon";
 	}
 
 	@Override

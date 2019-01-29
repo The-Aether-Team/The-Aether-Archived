@@ -25,7 +25,7 @@ public class MapGenSilverDungeon extends MapGenStructure
 	@Override
 	public String getStructureName()
 	{
-		return "aether_legacy:silver_dungeon";
+		return "SilverDungeon";
 	}
 
 	@Override
