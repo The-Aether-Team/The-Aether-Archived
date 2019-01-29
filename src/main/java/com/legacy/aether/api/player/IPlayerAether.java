@@ -39,7 +39,7 @@ public interface IPlayerAether
 	public void inflictCure(int ticks);
 
 	public boolean isCured();
-
+	
 	public boolean setHammerCooldown(int cooldown, String hammerName);
 
 	public String getHammerName();
@@ -64,4 +64,8 @@ public interface IPlayerAether
 
 	public boolean isDonator();
 
+	public boolean shouldPortalSound();
+	
+	public boolean inPortalBlock();
+	
 }

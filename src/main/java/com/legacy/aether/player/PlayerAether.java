@@ -26,8 +26,6 @@ import com.legacy.aether.player.perks.util.DonatorMoaSkin;
 import com.legacy.aether.world.TeleporterAether;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -44,7 +42,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -78,7 +75,7 @@ public class PlayerAether implements IPlayerAether
 
 	public int timeInPortal, portalCooldown;
 
-	public boolean hasTeleported = false, inPortal = false;
+	public boolean hasTeleported = false, inPortal = false, shouldPlayPortalSound = false;
 
 	private String cooldownName = "Hammer of Notch";
 
@@ -106,12 +103,15 @@ public class PlayerAether implements IPlayerAether
 
 	public void onUpdate()
 	{
-		/*
-		 * if (this.inPortal && this.thePlayer.world.isRemote)
-		 * {
-		 * //TODO
-		 * }
-		 */
+		
+		  if (this.inPortal && this.thePlayer.world.isRemote)
+		  {
+			  if (this.portalAnimTime == 0.0F)
+			  {
+				  this.shouldPlayPortalSound = true;
+			  }
+		  }
+		 
 		for (int i = 0; i < this.abilities.size(); ++i)
 		{
 			IAetherAbility ability = this.abilities.get(i);
@@ -513,6 +513,14 @@ public class PlayerAether implements IPlayerAether
 		return false;
 	}
 
+	
+	  @Override
+	  public boolean shouldPortalSound()
+	  {
+	  return this.shouldPlayPortalSound;
+	  }
+	 
+	
 	/*
 	 * The name of the players hammer
 	 */
@@ -658,15 +666,20 @@ public class PlayerAether implements IPlayerAether
 	}
 
 	@Override
-	public void setMountSneaking(boolean isSneaking) {
-		// TODO Auto-generated method stub
-		
+	public void setMountSneaking(boolean isSneaking)
+	{		
 	}
 
 	@Override
-	public boolean isMountSneaking() {
-		// TODO Auto-generated method stub
+	public boolean isMountSneaking()
+	{
 		return false;
+	}
+
+	@Override
+	public boolean inPortalBlock()
+	{
+		return this.inPortal;
 	}
 
 }

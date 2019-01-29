@@ -136,7 +136,7 @@ public class TeleporterAether extends Teleporter
             d1 = Math.abs(MathHelper.pct(d1 - (double)(blockpattern$patternhelper.getForwards().rotateY().getAxisDirection() == EnumFacing.AxisDirection.NEGATIVE ? 1 : 0), d2, d2 - (double)blockpattern$patternhelper.getWidth()));
             double d22 = MathHelper.pct(blockpos.getY() - 1.0D, (double)blockpattern$patternhelper.getFrontTopLeft().getY(), (double)(blockpattern$patternhelper.getFrontTopLeft().getY() - blockpattern$patternhelper.getHeight()));
 
-            double d6 = (double)(blockpattern$patternhelper.getFrontTopLeft().getY() + 1) - new Vec3d(d1, d22, 0.0D).y * (double)blockpattern$patternhelper.getHeight();
+            double d6 = (double)(blockpattern$patternhelper.getFrontTopLeft().getY() + 1D) - new Vec3d(d1, d22, 0.0D).y * (double)blockpattern$patternhelper.getHeight();
 
             if (flag1)
             {
