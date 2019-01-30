@@ -1,17 +1,5 @@
 package com.legacy.aether.client.renders.entities.layer;
 
-import org.lwjgl.opengl.GL11;
-
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.api.player.IPlayerAether;
-import com.legacy.aether.api.player.util.IAccessoryInventory;
-import com.legacy.aether.client.models.attachments.ModelAetherWings;
-import com.legacy.aether.client.models.attachments.ModelPlayerHalo;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.items.accessories.ItemAccessory;
-import com.legacy.aether.player.PlayerAether;
-import com.legacy.aether.player.perks.AetherRankings;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
@@ -23,6 +11,17 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+
+import org.lwjgl.opengl.GL11;
+
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.util.IAccessoryInventory;
+import com.legacy.aether.client.models.attachments.ModelAetherWings;
+import com.legacy.aether.client.models.attachments.ModelPlayerHalo;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.items.accessories.ItemAccessory;
+import com.legacy.aether.player.PlayerAether;
 
 public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 {
@@ -262,7 +261,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			}
 		}
 
-		if (AetherRankings.isRankedPlayer(player.getUniqueID()) && ((PlayerAether)playerAether).shouldRenderHalo && !player.isInvisible()) //TODO
+		//if (AetherRankings.isRankedPlayer(player.getUniqueID()) && ((PlayerAether)playerAether).shouldRenderHalo && !player.isInvisible()) //TODO
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -287,14 +286,14 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			this.modelHalo.halo3.render(scale);
 			this.modelHalo.halo4.render(scale);
 			
-			this.modelHalo.halo1.rotateAngleX = this.modelPlayer.bipedHead.rotateAngleX;
-			this.modelHalo.halo1.rotateAngleY = this.modelPlayer.bipedHead.rotateAngleY;
-			this.modelHalo.halo2.rotateAngleX = this.modelPlayer.bipedHead.rotateAngleX;
-			this.modelHalo.halo2.rotateAngleY = this.modelPlayer.bipedHead.rotateAngleY;
-			this.modelHalo.halo3.rotateAngleX = this.modelPlayer.bipedHead.rotateAngleX;
-			this.modelHalo.halo3.rotateAngleY = this.modelPlayer.bipedHead.rotateAngleY;
-			this.modelHalo.halo4.rotateAngleX = this.modelPlayer.bipedHead.rotateAngleX;
-	  	  	this.modelHalo.halo4.rotateAngleY = this.modelPlayer.bipedHead.rotateAngleY;
+			this.modelHalo.halo1.rotateAngleX = this.modelMisc.bipedHead.rotateAngleX;
+			this.modelHalo.halo1.rotateAngleY = this.modelMisc.bipedHead.rotateAngleY;
+			this.modelHalo.halo2.rotateAngleX = this.modelMisc.bipedHead.rotateAngleX;
+			this.modelHalo.halo2.rotateAngleY = this.modelMisc.bipedHead.rotateAngleY;
+			this.modelHalo.halo3.rotateAngleX = this.modelMisc.bipedHead.rotateAngleX;
+			this.modelHalo.halo3.rotateAngleY = this.modelMisc.bipedHead.rotateAngleY;
+			this.modelHalo.halo4.rotateAngleX = this.modelMisc.bipedHead.rotateAngleX;
+	  	  	this.modelHalo.halo4.rotateAngleY = this.modelMisc.bipedHead.rotateAngleY;
 			
 			GlStateManager.disableBlend();
 			GL11.glDisable(GL11.GL_BLEND);
