@@ -75,14 +75,12 @@ public class AetherClientEvents
 	            }
 			}
 			
-			/*
-			 * if (AetherAPI.getInstance().get(mc.player).shouldPortalSound())
-			 * {
-			 * this.mc.getSoundHandler().playSound(PositionedSoundRecord.
-			 * getMasterRecord(SoundEvents.BLOCK_PORTAL_TRIGGER,
-			 * this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
-			 * }
-			 */
+			
+			  //if (AetherAPI.getInstance().get(mc.player).shouldPortalSound())
+			  //{
+			  //this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.BLOCK_PORTAL_TRIGGER,this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
+			  //}
+			 
 		}
 			
 	}

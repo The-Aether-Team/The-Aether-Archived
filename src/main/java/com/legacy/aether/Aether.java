@@ -42,15 +42,13 @@ public class Aether
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
 	{
-		//AetherConfig.init(event.getModConfigurationDirectory());
-		//AetherConfig.autoDeveloperMode(version);
-
 		BlocksAether.initialization();
 		SoundsAether.initialization();
 		AetherAdvancements.initialization();
 		AetherNetworkingManager.preInitialization();
 
-		if(Loader.isModLoaded("crafttweaker")) {
+		if(Loader.isModLoaded("crafttweaker"))
+		{
 			AetherCraftTweakerPlugin.preInitialization();
 		}
 

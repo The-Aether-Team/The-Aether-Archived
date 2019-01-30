@@ -104,7 +104,7 @@ public class PlayerAether implements IPlayerAether
 	public void onUpdate()
 	{
 		
-		  if (this.inPortal && this.thePlayer.world.isRemote)
+		  if (this.inPortal)
 		  {
 			  if (this.portalAnimTime == 0.0F)
 			  {

@@ -1,6 +1,8 @@
 package com.legacy.aether.client.gui.dialogue.entity;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumDifficulty;
 
 import com.legacy.aether.client.gui.dialogue.DialogueOption;
@@ -21,7 +23,7 @@ public class GuiValkyrieDialogue extends GuiDialogue
 
 	public GuiValkyrieDialogue(EntityValkyrieQueen valkyrieQueen) 
 	{
-		super("[\247e" + valkyrieQueen.getBossName() + ", the Valkyrie Queen\247r]", new DialogueOption[] {new DialogueOption("What can you tell me about this place?"), new DialogueOption("I wish to fight you!"), new DialogueOption("Nevermind")});
+		super("[" + TextFormatting.YELLOW + valkyrieQueen.getBossName() + ", " + I18n.format("title.aether_legacy.valkyrie_queen.name") + TextFormatting.RESET + "]", new DialogueOption[] {new DialogueOption(I18n.format("gui.queen.dialog.0")), new DialogueOption("I wish to fight you!"), new DialogueOption("Nevermind")});
 
 		this.title = this.getDialogue();
 		this.valkyrieQueen = valkyrieQueen;
@@ -34,18 +36,18 @@ public class GuiValkyrieDialogue extends GuiDialogue
 		{
 			if (dialogue.getDialogueId() == 0)
 			{
-				this.addDialogueMessage(this.title + ": This is a sanctuary for us Valkyries who seek rest.");
+				this.addDialogueMessage(this.title + ": " + I18n.format("gui.queen.answer.0"));
 				this.dialogueTreeCompleted();
 			}
 			else if (dialogue.getDialogueId() == 1)
 			{
 				DialogueOption medalDialogue = new DialogueOption(this.getMedalDiaulogue());
 
-				this.addDialogueWithOptions(this.title + ": Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.", medalDialogue, new DialogueOption("On second thought, i'd rather not."));
+				this.addDialogueWithOptions(this.title + ": " + I18n.format("gui.queen.answer.1"), medalDialogue, new DialogueOption(I18n.format("gui.valkyrie.dialog.player.denyfight")));
 			}
 			else if (dialogue.getDialogueId() == 2)
 			{
-				this.addDialogueMessage(this.title + ": Goodbye adventurer.");
+				this.addDialogueMessage(this.title + ": " + I18n.format("gui.queen.answer.2"));
 				this.dialogueTreeCompleted();
 			}
 		}
@@ -55,7 +57,7 @@ public class GuiValkyrieDialogue extends GuiDialogue
 			{
 	        	if (this.mc.world.getDifficulty() == EnumDifficulty.PEACEFUL)
 	        	{
-	        		this.addDialogueMessage(this.title +  ": Sorry, I don't fight with weaklings.");
+	        		this.addDialogueMessage(this.title +  ": " + I18n.format("gui.queen.peaceful"));
 					this.dialogueTreeCompleted();
 
 					return;
@@ -66,18 +68,18 @@ public class GuiValkyrieDialogue extends GuiDialogue
 					AetherNetworkingManager.sendToServer(new PacketInitiateValkyrieFight(this.medalSlotId, this.valkyrieQueen.getEntityId()));
 
 					this.valkyrieQueen.setBossReady(true);
-					this.addDialogueMessage(this.title + ": Now then, let's begin!");
+					this.addDialogueMessage(this.title + ": " + I18n.format("gui.valkyrie.dialog.ready"));
 					this.dialogueTreeCompleted();
 				}
 				else
 				{
-					this.addDialogueMessage(this.title + ": Take your time.");
+					this.addDialogueMessage(this.title + ": " + I18n.format("gui.valkyrie.dialog.nomedals"));
 					this.dialogueTreeCompleted();
 				}
 			}
 			else if (dialogue.getDialogueId() == 1)
 			{
-				this.addDialogueMessage(this.title + ": So be it then. Goodbye adventurer.");
+				this.addDialogueMessage(this.title + ": " + I18n.format("gui.valkyrie.dialog.nofight"));
 				this.dialogueTreeCompleted();
 			}
 		}
@@ -94,16 +96,16 @@ public class GuiValkyrieDialogue extends GuiDialogue
 				if (stack.getCount() >= 10)
 				{
 					this.medalSlotId = slotId;
-					return "I'm ready, I have the medals right here!";
+					return I18n.format("gui.valkyrie.dialog.player.havemedals");
 				}
 				else
 				{
-					return "I'll return when I have them. (" + stack.getCount() + "/10)";
+					return I18n.format("gui.valkyrie.dialog.player.lackmedals") + " (" + stack.getCount() + "/10)";
 				}
 			}
 		}
 
-		return "I'll return when I have them. (0/10)";
+		return I18n.format("gui.valkyrie.dialog.player.lackmedals") + " (0/10)";
 	}
 
 }
