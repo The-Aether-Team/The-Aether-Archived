@@ -23,6 +23,8 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.util.EnumCloudType;
+import com.legacy.aether.world.biome.decoration.AetherGenClouds;
 import com.legacy.aether.world.biome.decoration.AetherGenFloatingIsland;
 import com.legacy.aether.world.biome.decoration.AetherGenFoilage;
 import com.legacy.aether.world.biome.decoration.AetherGenHolidayTree;
@@ -40,6 +42,8 @@ public class AetherBiomeDecorator extends BiomeDecorator
 	public Random rand;
 
 	public Biome aetherBiome;
+
+	public AetherGenClouds clouds = new AetherGenClouds();
 
 	public AetherGenFoilage foilage = new AetherGenFoilage();
 
@@ -126,6 +130,18 @@ public class AetherBiomeDecorator extends BiomeDecorator
 		}
 
 		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Post(worldIn, random, this.chunkPos));
+
+		if (TerrainGen.decorate(worldIn, random, pos, EventType.CUSTOM))
+		{
+			if (AetherConfig.world_gen.pink_aerclouds)
+			{
+				this.generateClouds(EnumCloudType.Pink, 1, 50, this.nextInt(64) + 110);
+			}
+
+			this.generateClouds(EnumCloudType.Golden, 4, 50, this.nextInt(64) + 96);
+			this.generateClouds(EnumCloudType.Blue, 8, 26, this.nextInt(64) + 32);
+			this.generateClouds(EnumCloudType.Cold, 16, 14, this.nextInt(64) + 64);
+		}
 
 		if (TerrainGen.decorate(worldIn, random, pos, EventType.FLOWERS))
 		{
@@ -222,6 +238,17 @@ public class AetherBiomeDecorator extends BiomeDecorator
 		for (int n = 0; n < 2; n++)
 		{
 			foilage.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16) + 8, this.nextInt(128), this.nextInt(16) + 8));
+		}
+	}
+
+	public void generateClouds(EnumCloudType type, int amount, int chance, int y)
+	{
+		if (this.shouldSpawn(chance))
+		{
+			this.clouds.setAmount(amount);
+			this.clouds.setCloudType(type);
+
+			this.clouds.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16) + 8, y, this.nextInt(16) + 8));
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.template.TemplateManager;
@@ -16,7 +17,7 @@ import com.legacy.aether.world.gen.AetherStructure;
 public class ComponentLargeColdAercloud extends AetherStructure
 {
 
-	private NBTTagCompound data = new NBTTagCompound();
+	private NBTTagList data = new NBTTagList();
 
 	private int xTendency, zTendency;
 
@@ -40,7 +41,7 @@ public class ComponentLargeColdAercloud extends AetherStructure
 	{
 		this.replaceAir = true;
 
-		if (!this.data.hasKey("initialized"))
+		if (this.data.hasNoTags())
 		{
 			NBTTagCompound icd;
 
@@ -48,55 +49,52 @@ public class ComponentLargeColdAercloud extends AetherStructure
 	        {
 	        	icd = new NBTTagCompound();
 
-	        	int xOffset = this.random.nextInt(3) - 1;
-	        	int yOffset = this.random.nextInt(3) - 1;
-	        	int zOffset = this.random.nextInt(3) - 1;
+	        	int xOffset = this.random.nextInt(3);
+	        	int yOffset = this.random.nextInt(3);
+	        	int zOffset = this.random.nextInt(3);
 
-	        	icd.setInteger("xOffset", xOffset);
+	        	icd.setByte("xOffset", (byte) xOffset);
 
 	            if (this.random.nextInt(10) == 0)
 	            {
-		        	icd.setInteger("yOffset", yOffset);
+		        	icd.setByte("yOffset", (byte) yOffset);
 	            }
 
-	        	icd.setInteger("zOffset", zOffset);
+	        	icd.setByte("zOffset", (byte) zOffset);
 
 	        	int xMax = this.random.nextInt(4) + 9;
 	        	int yMax = this.random.nextInt(1) + 2;
 	        	int zMax = this.random.nextInt(4) + 9;
 
-	        	icd.setInteger("xMax", xMax);
-	        	icd.setInteger("yMax", yMax);
-	        	icd.setInteger("zMax", zMax);
-	        	icd.setInteger("shapeOffset", this.random.nextInt(2));
+	        	icd.setByte("xMax", (byte) xMax);
+	        	icd.setByte("yMax", (byte) yMax);
+	        	icd.setByte("zMax", (byte) zMax);
+	        	icd.setByte("shapeOffset", (byte) this.random.nextInt(2));
 
-	            this.data.setTag("ICD_" + n, icd);
+	        	this.data.appendTag(icd);
 	        }
-
-	        this.data.setBoolean("initialized", true);
 		}
 
 		int x = 0, y = 0, z = 0;
 		NBTTagCompound icd;
 
-		this.setStructureOffset(50, 4, 100);
         for (int n = 0; n < 64; ++n)
         {
-        	icd = this.data.getCompoundTag("ICD_" + n);
+        	icd = this.data.getCompoundTagAt(n);
 
-        	x += icd.getInteger("xOffset") + this.xTendency;
+        	x += icd.getByte("xOffset") - 1 + this.xTendency;
 
         	if (icd.hasKey("yOffset"))
         	{
-        		y += icd.getInteger("yOffset");
+        		y += icd.getByte("yOffset") - 1;
         	}
 
-        	z += icd.getInteger("zOffset") + this.zTendency;
+        	z += icd.getByte("zOffset") - 1 + this.zTendency;
 
-        	int xMax = icd.getInteger("xMax");
-        	int yMax = icd.getInteger("yMax");
-        	int zMax = icd.getInteger("zMax");
-        	int shapeOffset = icd.getInteger("shapeOffset");
+        	int xMax = icd.getByte("xMax");
+        	int yMax = icd.getByte("yMax");
+        	int zMax = icd.getByte("zMax");
+        	int shapeOffset = icd.getByte("shapeOffset");
 
         	for (int x1 = x; x1 < x + xMax; ++x1)
             {
@@ -104,11 +102,11 @@ public class ComponentLargeColdAercloud extends AetherStructure
                 {
                     for (int z1 = z; z1 < z + zMax; ++z1)
                     {
-                        if (this.getBlockStateWithOffset(x1, y1, z1).getBlock() == Blocks.AIR)
+                        if (this.getBlockState(x1 + 50, y1 + 4, z1 + 50).getBlock() == Blocks.AIR)
                         {
                         	if (Math.abs(x1 - x) + Math.abs(y1 - y) + Math.abs(z1 - z) < 12 + shapeOffset)
                         	{
-                        		this.setBlockWithOffset(x1, y1, z1, BlocksAether.aercloud.getDefaultState().withProperty(BlockAercloud.cloud_type, EnumCloudType.Cold));
+                        		this.setBlock(x1 + 50, y1 + 4, z1 + 50, BlocksAether.aercloud.getDefaultState().withProperty(BlockAercloud.cloud_type, EnumCloudType.Cold));
                         	}
                         }
                     }
@@ -128,7 +126,7 @@ public class ComponentLargeColdAercloud extends AetherStructure
 	@Override
 	protected void readStructureFromNBT(NBTTagCompound tagCompound, TemplateManager p_143011_2_) 
 	{
-		this.data = tagCompound.getCompoundTag("cloudData");
+		this.data = tagCompound.getTagList("cloudData", 10);
 	}
 
 }

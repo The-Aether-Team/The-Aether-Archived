@@ -18,16 +18,11 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
-import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.world.dungeon.BronzeDungeon;
 import com.legacy.aether.world.dungeon.util.AetherDungeon;
-import com.legacy.aether.world.gen.MapGenBlueAercloud;
-import com.legacy.aether.world.gen.MapGenColdAercloud;
-import com.legacy.aether.world.gen.MapGenGoldenAercloud;
 import com.legacy.aether.world.gen.MapGenGoldenDungeon;
 import com.legacy.aether.world.gen.MapGenLargeColdAercloud;
-import com.legacy.aether.world.gen.MapGenPinkAercloud;
 import com.legacy.aether.world.gen.MapGenQuicksoil;
 import com.legacy.aether.world.gen.MapGenSilverDungeon;
 
@@ -53,14 +48,6 @@ public class ChunkProviderAether implements  IChunkGenerator
     private MapGenGoldenDungeon goldenDungeonStructure = new MapGenGoldenDungeon();
 
     private MapGenLargeColdAercloud largeColdAercloudStructure = new MapGenLargeColdAercloud();
-
-    private MapGenColdAercloud coldAercloudStructure = new MapGenColdAercloud();
-
-    private MapGenBlueAercloud blueAercloudStructure = new MapGenBlueAercloud();
-
-    private MapGenGoldenAercloud goldenAercloudStructure = new MapGenGoldenAercloud();
-    
-    private MapGenPinkAercloud pinkAercloudStructure = new MapGenPinkAercloud();
 
 	public ChunkProviderAether(World world, long seed)
 	{
@@ -111,31 +98,6 @@ public class ChunkProviderAether implements  IChunkGenerator
                             	int z1 = k2 + j1 * 8;
 
                                 IBlockState filler = Blocks.AIR.getDefaultState();
-
-                            	if (d15 < -38D)
-                            	{
-                                	//chunkPrimer.setBlockState(x1, 1, z1, BlocksAether.aercloud.getDefaultState());
-                            	}
-
-                                if (d15 < -39D && d15 > -43D)
-                                {
-                                	if (d15 < -41D)
-                                	{
-                                    	//chunkPrimer.setBlockState(x1, 2, z1, BlocksAether.aercloud.getDefaultState());
-                                	}
-
-                                	//chunkPrimer.setBlockState(x1, 1, z1, BlocksAether.aercloud.getDefaultState());
-                                }
-
-                                if (d15 < -44D && d15 > -46D)
-                                {
-                                	if (d15 < -44.25D)
-                                	{
-                                    	//chunkPrimer.setBlockState(x1, 2, z1, BlocksAether.aercloud.getDefaultState());
-                                	}
-
-                                	//chunkPrimer.setBlockState(x1, 1, z1, BlocksAether.aercloud.getDefaultState());
-                                }
 
                                 if(d15 > 0.0D)
                                 {
@@ -295,18 +257,10 @@ public class ChunkProviderAether implements  IChunkGenerator
 
         this.quicksoilGen.generate(this.worldObj, x, z, chunkPrimer);
 
-        this.coldAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
-        this.blueAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
-        this.goldenAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.largeColdAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
         
         this.silverDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
-
-        if (AetherConfig.world_gen.pink_aerclouds)
-        {
-        	this.pinkAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
-        }
 
         Chunk chunk = new Chunk(this.worldObj, chunkPrimer, x, z);
         chunk.generateSkylightMap();
@@ -331,18 +285,10 @@ public class ChunkProviderAether implements  IChunkGenerator
 	@Override
 	public void recreateStructures(Chunk p_180514_1_, int x, int z)
 	{
-        this.coldAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
-        this.blueAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
-        this.goldenAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         this.largeColdAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
 
         this.silverDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
-        
-        if (AetherConfig.world_gen.pink_aerclouds)
-        {
-        	this.pinkAercloudStructure.generate(this.worldObj, x, z, (ChunkPrimer)null);
-        }
 	}
 
 	@Override
@@ -398,18 +344,9 @@ public class ChunkProviderAether implements  IChunkGenerator
 
 		this.largeColdAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
-        this.coldAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
-        this.blueAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
-        this.goldenAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
-
         this.silverDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
         this.goldenDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
-        if (AetherConfig.world_gen.pink_aerclouds)
-        {
-        	this.pinkAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
-        }
-        
 		biome.decorate(this.worldObj, this.rand, pos);
 
 		if (this.rand.nextInt(10) == 0)

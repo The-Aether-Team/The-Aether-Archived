@@ -42,15 +42,13 @@ public class Aether
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
 	{
-		//AetherConfig.init(event.getModConfigurationDirectory());
-		//AetherConfig.autoDeveloperMode(version);
-
 		BlocksAether.initialization();
 		SoundsAether.initialization();
 		AetherAdvancements.initialization();
 		AetherNetworkingManager.preInitialization();
 
-		if(Loader.isModLoaded("crafttweaker")) {
+		if(Loader.isModLoaded("crafttweaker"))
+		{
 			AetherCraftTweakerPlugin.preInitialization();
 		}
 
@@ -67,11 +65,9 @@ public class Aether
 		AetherTileEntities.initialization();
 		AetherWorld.initialization();
 
-		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlocksAether.aether_log, new ItemStack(Items.COAL, 1, 1), 0.15F);
-
 		CommonProxy.registerEvent(new AetherEventHandler());
 		CommonProxy.registerEvent(new AetherEntityEvents());
-		
+
 		proxy.initialization();
 	}
 
@@ -79,6 +75,8 @@ public class Aether
 	public void postInitialization(FMLPostInitializationEvent event)
 	{
 		proxy.postInitialization();
+
+		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlocksAether.aether_log, new ItemStack(Items.COAL, 1, 1), 0.15F);
 	}
 
 	public static ResourceLocation locate(String location)

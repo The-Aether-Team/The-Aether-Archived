@@ -60,10 +60,7 @@ public class AetherRegistryEvent
 	@SubscribeEvent
 	public void onRegisterCraftingEvent(RegistryEvent.Register<IRecipe> event)
 	{
-		AetherRegistries.craftingRegistry = event.getRegistry();
-
 		AetherDictionary.initialization();
-		AetherRegistries.registerRecipes();
 	}
 
 	@SubscribeEvent
