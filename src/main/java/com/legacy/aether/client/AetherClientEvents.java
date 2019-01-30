@@ -13,6 +13,7 @@ import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
+import com.legacy.aether.networking.packets.PacketSendJump;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -30,6 +31,7 @@ import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
+import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -43,7 +45,9 @@ public class AetherClientEvents
 	private final Minecraft mc = FMLClientHandler.instance().getClient();
 	
 	private static boolean wasInAether = false;
-	
+
+	private static boolean wasJumping = false;
+
 	@SubscribeEvent
 	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
 	{
@@ -85,6 +89,19 @@ public class AetherClientEvents
 			 */
 		}
 			
+	}
+
+	@SubscribeEvent
+	public void onUpdateJump(InputUpdateEvent event)
+	{
+		IPlayerAether playerAether = AetherAPI.getInstance().get(event.getEntityPlayer());
+		boolean isJumping = event.getMovementInput().jump;
+
+		if (isJumping != playerAether.isJumping())
+		{
+			AetherNetworkingManager.sendToServer(new PacketSendJump(event.getEntityPlayer().getUniqueID(), isJumping));
+			playerAether.setJumping(isJumping);
+		}
 	}
 
 	@SubscribeEvent

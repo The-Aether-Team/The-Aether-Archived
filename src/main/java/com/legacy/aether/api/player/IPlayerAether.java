@@ -52,10 +52,6 @@ public interface IPlayerAether
 
 	public boolean isJumping();
 
-	public void setMountSneaking(boolean isSneaking);
-
-	public boolean isMountSneaking();
-
 	public void updateShardCount(int amount);
 
 	public int getShardsUsed();

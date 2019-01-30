@@ -5,6 +5,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.api.player.util.IAccessoryInventory;
@@ -25,28 +43,9 @@ import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.DonatorMoaSkin;
 import com.legacy.aether.world.TeleporterAether;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-
 public class PlayerAether implements IPlayerAether
 {
+
 	public EntityPlayer thePlayer;
 
 	private UUID healthUUID = UUID.fromString("df6eabe7-6947-4a56-9099-002f90370706");
@@ -103,15 +102,14 @@ public class PlayerAether implements IPlayerAether
 
 	public void onUpdate()
 	{
-		
-		  if (this.inPortal && this.thePlayer.world.isRemote)
-		  {
-			  if (this.portalAnimTime == 0.0F)
-			  {
-				  this.shouldPlayPortalSound = true;
-			  }
-		  }
-		 
+		if (this.inPortal && this.thePlayer.world.isRemote)
+		{
+			if (this.portalAnimTime == 0.0F)
+			{
+				this.shouldPlayPortalSound = true;
+			}
+		}
+
 		for (int i = 0; i < this.abilities.size(); ++i)
 		{
 			IAetherAbility ability = this.abilities.get(i);
@@ -134,7 +132,7 @@ public class PlayerAether implements IPlayerAether
 
 		this.poison.onUpdate();
 
-		if (!this.thePlayer.onGround)
+		if (!this.thePlayer.onGround && (this.thePlayer.isRiding() && !this.thePlayer.getRidingEntity().onGround))
 		{
 			this.wingSinage += 0.75F;
 		}
@@ -161,10 +159,6 @@ public class PlayerAether implements IPlayerAether
 				this.currentBoss = null;
 			}
 		}
-
-		boolean hasJumped = ReflectionHelper.getPrivateValue(EntityLivingBase.class, this.thePlayer, "isJumping", "field_70703_bu");
-
-		this.setJumping(hasJumped);
 
 		if (this.isInBlock(BlocksAether.aercloud))
 		{
@@ -513,14 +507,12 @@ public class PlayerAether implements IPlayerAether
 		return false;
 	}
 
-	
-	  @Override
-	  public boolean shouldPortalSound()
-	  {
-	  return this.shouldPlayPortalSound;
-	  }
-	 
-	
+	@Override
+	public boolean shouldPortalSound()
+	{
+		return this.shouldPlayPortalSound;
+	}
+
 	/*
 	 * The name of the players hammer
 	 */
@@ -663,17 +655,6 @@ public class PlayerAether implements IPlayerAether
 	public EntityPlayer getEntity()
 	{
 		return this.thePlayer;
-	}
-
-	@Override
-	public void setMountSneaking(boolean isSneaking)
-	{		
-	}
-
-	@Override
-	public boolean isMountSneaking()
-	{
-		return false;
 	}
 
 	@Override

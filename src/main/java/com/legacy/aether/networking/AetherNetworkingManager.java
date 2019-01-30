@@ -14,6 +14,7 @@ import com.legacy.aether.networking.packets.PacketDisplayDialogue;
 import com.legacy.aether.networking.packets.PacketInitiateValkyrieFight;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
 import com.legacy.aether.networking.packets.PacketPerkChanged;
+import com.legacy.aether.networking.packets.PacketSendJump;
 import com.legacy.aether.networking.packets.PacketSendPoison;
 import com.legacy.aether.networking.packets.PacketSetTime;
 
@@ -33,6 +34,8 @@ public class AetherNetworkingManager
 		INSTANCE.registerMessage(PacketAccessory.class, PacketAccessory.class, discriminant++, Side.CLIENT);
 
 		INSTANCE.registerMessage(PacketSendPoison.class, PacketSendPoison.class, discriminant++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketSendJump.class, PacketSendJump.class, discriminant++, Side.SERVER);
 
 		INSTANCE.registerMessage(PacketInitiateValkyrieFight.class, PacketInitiateValkyrieFight.class, discriminant++, Side.SERVER);
 
