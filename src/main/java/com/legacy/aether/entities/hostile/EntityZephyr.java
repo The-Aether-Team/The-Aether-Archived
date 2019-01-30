@@ -1,24 +1,26 @@
 package com.legacy.aether.entities.hostile;
 
+import javax.annotation.Nullable;
+
+import com.legacy.aether.entities.ai.EntityAIUpdateState;
+import com.legacy.aether.entities.ai.zephyr.ZephyrAIShootTarget;
+import com.legacy.aether.entities.ai.zephyr.ZephyrAITravelCourse;
+import com.legacy.aether.registry.AetherLootTables;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.ai.EntityAIUpdateState;
-import com.legacy.aether.entities.ai.zephyr.ZephyrAIShootTarget;
-import com.legacy.aether.entities.ai.zephyr.ZephyrAITravelCourse;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityZephyr extends EntityFlying implements IMob
 {
@@ -113,7 +115,7 @@ public class EntityZephyr extends EntityFlying implements IMob
 	@Override
 	protected void dropFewItems(boolean var1, int var2) 
 	{
-		this.dropItem(Item.getItemFromBlock(BlocksAether.aercloud), 1);
+		//this.dropItem(Item.getItemFromBlock(BlocksAether.aercloud), 1);
 	}
 
     @Override
@@ -126,6 +128,12 @@ public class EntityZephyr extends EntityFlying implements IMob
     protected float getSoundVolume()
     {
         return 3F;
+    }
+    
+    @Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.zephyr;
     }
 
 }

@@ -1,5 +1,15 @@
 package com.legacy.aether.entities.passive.mountable;
 
+import javax.annotation.Nullable;
+
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.moa.AetherMoaType;
+import com.legacy.aether.entities.util.EntitySaddleMount;
+import com.legacy.aether.items.ItemMoaEgg;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.MoverType;
@@ -11,7 +21,6 @@ import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,18 +31,12 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.api.moa.AetherMoaType;
-import com.legacy.aether.entities.util.EntitySaddleMount;
-import com.legacy.aether.items.ItemMoaEgg;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityMoa extends EntitySaddleMount
 {
@@ -454,14 +457,6 @@ public class EntityMoa extends EntitySaddleMount
 		this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_PIG_STEP, SoundCategory.NEUTRAL, 0.15F, 1.0F);
 	}
 
-	@Override
-	protected void dropFewItems(boolean var1, int var2)
-	{
-		super.dropFewItems(var1, var2);
-
-		this.dropItem(Items.FEATHER, 3);
-	}
-
 	public void fall()
 	{
 		boolean blockBeneath = !this.world.isAirBlock(new BlockPos(this).down());
@@ -498,4 +493,10 @@ public class EntityMoa extends EntitySaddleMount
 		return new EntityMoa(this.world, this.getMoaType());
 	}
 
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.moa;
+    }
+	
 }

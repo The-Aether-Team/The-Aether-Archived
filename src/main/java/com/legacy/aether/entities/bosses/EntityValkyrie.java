@@ -1,7 +1,10 @@
 package com.legacy.aether.entities.bosses;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.Aether;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -18,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -495,6 +499,12 @@ public class EntityValkyrie extends EntityMob
     protected SoundEvent getDeathSound()
     {
        return SoundEvents.ENTITY_GENERIC_HURT;
+    }
+    
+    @Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.valkyrie;
     }
 
 }

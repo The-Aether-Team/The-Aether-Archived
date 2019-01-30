@@ -2,8 +2,11 @@ package com.legacy.aether.entities.passive;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.entities.ai.SheepuffAIEatAetherGrass;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 import net.minecraft.block.Block;
@@ -29,6 +32,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -95,23 +99,9 @@ public class EntitySheepuff extends EntityAetherAnimal
 	{
         if(!this.getSheared())
         {
-            entityDropItem(new ItemStack(Blocks.WOOL, 1 + rand.nextInt(2), getFleeceColor()), 0.0F);
+            this.entityDropItem(new ItemStack(Blocks.WOOL, 1 + rand.nextInt(2), getFleeceColor()), 0.0F);
         }
-        
-        int i = this.rand.nextInt(2) + 1 + this.rand.nextInt(1 + ammount);
-
-        for (int j = 0; j < i; ++j)
-        {
-            if (this.isBurning())
-            {
-                this.dropItem(Items.COOKED_MUTTON, 1);
-            }
-            else
-            {
-                this.dropItem(Items.MUTTON, 1);
-            }
-        }
-    }
+	}
 
 	@Override
     protected void updateAITasks()
@@ -355,4 +345,10 @@ public class EntitySheepuff extends EntityAetherAnimal
 		return new EntitySheepuff(world);
 	}
 
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.sheepuff;
+    }
+	
 }

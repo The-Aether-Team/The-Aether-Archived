@@ -8,16 +8,20 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.ai.aechorplant.AechorPlantAIShootPlayer;
 import com.legacy.aether.entities.passive.EntityAetherAnimal;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
+import com.legacy.aether.registry.AetherLootTables;
 
 public class EntityAechorPlant extends EntityAetherAnimal 
 {
@@ -169,7 +173,7 @@ public class EntityAechorPlant extends EntityAetherAnimal
     @Override
     protected void dropFewItems(boolean var1, int var2) 
     {
-    	this.dropItem(ItemsAether.aechor_petal, 2);
+    	//this.dropItem(ItemsAether.aechor_petal, 2);
     }
 
 	@Override
@@ -194,6 +198,12 @@ public class EntityAechorPlant extends EntityAetherAnimal
     protected boolean canDespawn()
     {
         return true;
+    }
+	
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.aechor_plant;
     }
 
 }

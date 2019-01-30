@@ -2,6 +2,8 @@ package com.legacy.aether.entities.bosses.slider;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.Aether;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.util.IAetherBoss;
@@ -9,9 +11,9 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.util.AetherNameGen;
-import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.tools.ItemAetherTool;
 import com.legacy.aether.items.util.EnumAetherToolType;
+import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 import net.minecraft.block.Block;
@@ -29,7 +31,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -39,6 +40,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -485,9 +487,9 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	@Override
 	protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) 
 	{
-		this.dropItem(Item.getItemFromBlock(BlocksAether.dungeon_block), 7 + rand.nextInt(3));
-
-		this.entityDropItem(new ItemStack(ItemsAether.dungeon_key), 0.5F);
+		//this.dropItem(Item.getItemFromBlock(BlocksAether.dungeon_block), 7 + rand.nextInt(3));
+//TODO
+		//this.entityDropItem(new ItemStack(ItemsAether.dungeon_key), 0.5F);
     }
 
     @Override
@@ -803,4 +805,9 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 		return this.getMaxHealth();
 	}
 
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.slider;
+    }
 }

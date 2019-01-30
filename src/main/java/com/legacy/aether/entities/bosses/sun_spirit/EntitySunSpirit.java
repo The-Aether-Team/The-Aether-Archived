@@ -2,6 +2,21 @@ package com.legacy.aether.entities.bosses.sun_spirit;
 
 import java.util.List;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.util.IAetherBoss;
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.util.EnumStoneType;
+import com.legacy.aether.entities.bosses.EntityFireMinion;
+import com.legacy.aether.entities.projectile.crystals.EntityFireBall;
+import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
+import com.legacy.aether.entities.util.AetherNameGen;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -35,21 +50,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
-
-import com.legacy.aether.Aether;
-import com.legacy.aether.advancements.AetherAdvancements;
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.api.player.IPlayerAether;
-import com.legacy.aether.api.player.util.IAetherBoss;
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
-import com.legacy.aether.blocks.util.EnumStoneType;
-import com.legacy.aether.entities.bosses.EntityFireMinion;
-import com.legacy.aether.entities.projectile.crystals.EntityFireBall;
-import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
-import com.legacy.aether.entities.util.AetherNameGen;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 {
@@ -744,5 +744,4 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 	{
 		return this.getMaxHealth();
 	}
-
 }

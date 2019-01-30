@@ -20,13 +20,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.entities.util.EntitySaddleMount;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityFlyingCow extends EntitySaddleMount
@@ -234,40 +238,16 @@ public class EntityFlyingCow extends EntitySaddleMount
 		return new EntityFlyingCow(this.world);
 	}
 
-	protected void dropFewItems(boolean par1, int par2)
-	{
-		int j = this.rand.nextInt(3) + this.rand.nextInt(1 + par2);
-		int k;
-
-		for (k = 0; k < j; ++k)
-		{
-			this.dropItem(Items.LEATHER, 1);
-		}
-
-		j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
-
-		for (k = 0; k < j; ++k)
-		{
-			if (this.isBurning())
-			{
-				this.dropItem(Items.COOKED_BEEF, 1);
-			}
-			else
-			{
-				this.dropItem(Items.BEEF, 1);
-			}
-		}
-
-		if (this.getSaddled())
-		{
-			this.dropItem(Items.SADDLE, 1);
-		}
-	}
-
 	@Override
 	protected double getMountJumpStrength()
 	{
 		return 5.0D;
 	}
 
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.flying_cow;
+    }
+	
 }
