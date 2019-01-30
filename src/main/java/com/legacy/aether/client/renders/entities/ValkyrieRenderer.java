@@ -1,11 +1,12 @@
 package com.legacy.aether.client.renders.entities;
 
+import com.legacy.aether.client.models.entities.ValkyrieModel;
+import com.legacy.aether.client.renders.entities.layer.LayerValkyrieHalo;
+import com.legacy.aether.entities.bosses.EntityValkyrie;
+
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-
-import com.legacy.aether.client.models.entities.ValkyrieModel;
-import com.legacy.aether.entities.bosses.EntityValkyrie;
 
 public class ValkyrieRenderer extends RenderLiving<EntityValkyrie> 
 {
@@ -15,13 +16,14 @@ public class ValkyrieRenderer extends RenderLiving<EntityValkyrie>
 	public ValkyrieRenderer(RenderManager rendermanagerIn)
 	{
 		super(rendermanagerIn, new ValkyrieModel(), 0.3F);
+		this.addLayer(new LayerValkyrieHalo(rendermanagerIn));
 	}
 
     protected void preRenderCallback(EntityValkyrie valkyrie, float partialTickTime)
     {
         ((ValkyrieModel)this.getMainModel()).sinage = valkyrie.sinage;
         ((ValkyrieModel)this.getMainModel()).gonRound = valkyrie.onGround;
-        ((ValkyrieModel)this.getMainModel()).halow = true;
+        //((ValkyrieModel)this.getMainModel()).halow = true;
     }
 
 	@Override
