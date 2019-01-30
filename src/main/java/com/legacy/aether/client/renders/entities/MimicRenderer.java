@@ -5,62 +5,39 @@ import java.util.Calendar;
 import com.legacy.aether.client.models.entities.MimicModel;
 import com.legacy.aether.entities.hostile.EntityMimic;
 
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
 public class MimicRenderer extends RenderLiving<EntityMimic>
 {
+    private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/entities/mimic/mimic.png");
 
-	private MimicModel modelbase;
+    private static final ResourceLocation XMAS_TEXTURE = new ResourceLocation("aether_legacy", "textures/entities/mimic/christmas_mimic.png");
 
     public MimicRenderer(RenderManager renderManager)
     {
-        super(renderManager, new MimicModel(), 0.0F);
-
-        this.modelbase = (MimicModel) this.mainModel;
+        super(renderManager, new MimicModel(), 1.0F);
     }
 
     @Override
-    public void doRender(EntityMimic mimic, double x, double y, double z, float pitch, float yaw)
+    public void doRender(EntityMimic entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate((float)x, (float)y, (float)z);
-        GlStateManager.rotate(180F - pitch, 0.0F, 1.0F, 0.0F);
-        GlStateManager.scale(-1F, -1F, 1.0F);
-		this.modelbase.setRotationAngles(0,0F, 0.0F, 0.0F, 0.0F, 0.0F, mimic);
-		
-		if (mimic.hurtResistantTime > 11)
-		{
-			GlStateManager.color(1.0F, 0.5F, 0.5F);
-		}
-		else
-		{
-			GlStateManager.color(1.0F, 1.0F, 1.0F);
-		}
-		
-		Calendar calendar = Calendar.getInstance();
-		if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 && calendar.get(5) <= 26)
-		{
-			this.renderManager.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/entities/mimic/mimic_head_christmas.png"));
-			this.modelbase.renderHead(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, mimic);
-			this.renderManager.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/entities/mimic/mimic_legs_christmas.png"));
-			this.modelbase.renderLegs(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, mimic);
-		}
-		else
-		{
-			this.renderManager.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/entities/mimic/mimic_head.png"));
-			this.modelbase.renderHead(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, mimic);
-			this.renderManager.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/entities/mimic/mimic_legs.png"));
-			this.modelbase.renderLegs(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, mimic);
-		}
-		GlStateManager.popMatrix();
+    	super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 
 	protected ResourceLocation getEntityTexture(EntityMimic entity)
     {
-		return null;
+		Calendar calendar = Calendar.getInstance();
+
+		if (calendar.get(2) + 1 == 12 && calendar.get(5) >= 24 && calendar.get(5) <= 26)
+		{
+			return XMAS_TEXTURE;
+		}
+		else
+		{
+			return TEXTURE;	
+		}
     }
 
 }

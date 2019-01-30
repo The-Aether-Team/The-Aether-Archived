@@ -17,7 +17,7 @@ public class CockatriceRenderer extends RenderLiving<EntityCockatrice>
 
 	public CockatriceRenderer(RenderManager rendermanagerIn) 
 	{
-		super(rendermanagerIn, new CockatriceModel(), 1.0F);
+		super(rendermanagerIn, new CockatriceModel(), 0.5F);
 	}
 
     protected float getWingRotation(EntityCockatrice cockatrice, float f)

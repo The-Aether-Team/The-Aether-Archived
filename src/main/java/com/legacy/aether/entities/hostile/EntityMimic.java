@@ -1,6 +1,11 @@
 package com.legacy.aether.entities.hostile;
 
+import javax.annotation.Nullable;
+
+import com.legacy.aether.registry.AetherLootTables;
+
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -12,19 +17,15 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
 public class EntityMimic extends EntityMob
 {
-
-	public float mouth, legs;
-
-	private float legsDirection = 1;
 
     public EntityMimic(World world)
     {
@@ -54,28 +55,6 @@ public class EntityMimic extends EntityMob
     public void onUpdate()
     {
 		super.onUpdate();
-
-		this.mouth = (float)((Math.cos((float)ticksExisted / 10F * 3.14159265F)) + 1F) * 0.6F;
-		this.legs *= 0.9F;
-
-		if (this.prevPosX - this.posX != 0 || this.prevPosZ - this.posZ != 0)
-		{
-			this.legs += legsDirection * 0.2F;
-
-			if(this.legs > 1.0F)
-			{
-				this.legsDirection = -1;
-			}
-
-			if(this.legs < -1.0F)
-			{
-				this.legsDirection = 1;
-			}
-		}
-		else
-		{
-			this.legs = 0.0F;
-		}
     }
 
     protected SoundEvent getHurtSound(DamageSource source)
@@ -94,22 +73,14 @@ public class EntityMimic extends EntityMob
     }
 
 	@Override
-	protected void dropFewItems(boolean var1, int var2) 
-	{
-		dropItem(Item.getItemFromBlock(Blocks.CHEST), 1);
-	}
-
-	@Override
 	public boolean attackEntityFrom(DamageSource ds, float var2)
 	{
-		
-		
 		if (ds.getImmediateSource() instanceof EntityMimic)
 		{
 			return false;
 		}
 
-		if (ds.getImmediateSource() instanceof EntityLivingBase)
+		if (ds.getImmediateSource() instanceof EntityLivingBase && this.hurtTime == 0)
 		{
 			if (this.world instanceof WorldServer)
 	        {
@@ -132,5 +103,21 @@ public class EntityMimic extends EntityMob
 		}
 		return super.attackEntityFrom(ds, var2);
 	}
+	
+	@Override
+	public boolean attackEntityAsMob(Entity entityIn)
+	{
+		super.attackEntityAsMob(entityIn);
+		
+		this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, this.getSoundPitch());
+		
+		return true;
+	}
+	
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.chest_mimic;
+    }
 
 }
