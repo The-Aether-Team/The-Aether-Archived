@@ -2,6 +2,25 @@ package com.legacy.aether.world.biome;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.gen.feature.WorldGenDoublePlant;
+import net.minecraft.world.gen.feature.WorldGenLakes;
+import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
+import net.minecraftforge.event.terraingen.OreGenEvent;
+import net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable;
+import net.minecraftforge.event.terraingen.TerrainGen;
+
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.world.biome.decoration.AetherGenFloatingIsland;
@@ -9,23 +28,11 @@ import com.legacy.aether.world.biome.decoration.AetherGenFoilage;
 import com.legacy.aether.world.biome.decoration.AetherGenHolidayTree;
 import com.legacy.aether.world.biome.decoration.AetherGenLakes;
 import com.legacy.aether.world.biome.decoration.AetherGenLiquids;
-import com.legacy.aether.world.biome.decoration.AetherGenMinable;
 import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import com.legacy.aether.world.biome.decoration.AetherGenQuicksoil;
 import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
 
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeDecorator;
-import net.minecraft.world.gen.feature.WorldGenDoublePlant;
-import net.minecraft.world.gen.feature.WorldGenLakes;
-import net.minecraft.world.gen.feature.WorldGenerator;
-
-public class AetherBiomeDecorator extends BiomeDecorator 
+public class AetherBiomeDecorator extends BiomeDecorator
 {
 
 	public World world;
@@ -36,13 +43,21 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 	public AetherGenFoilage foilage = new AetherGenFoilage();
 
-	public AetherGenMinable ores = new AetherGenMinable();
+	public WorldGenMinable aetherDirtGen = new WorldGenMinable(BlocksAether.aether_dirt.getDefaultState(), 32, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
+
+	public WorldGenMinable icestoneGen = new WorldGenMinable(BlocksAether.icestone.getDefaultState(), 16, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
+
+	public WorldGenMinable ambrosiumGen = new WorldGenMinable(BlocksAether.ambrosium_ore.getDefaultState(), 16, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
+
+	public WorldGenMinable zaniteGen = new WorldGenMinable(BlocksAether.zanite_ore.getDefaultState(), 8, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
+
+	public WorldGenMinable gravititeGen = new WorldGenMinable(BlocksAether.zanite_ore.getDefaultState(), 6, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
 
 	public AetherGenSkyrootTree skyroot_tree = new AetherGenSkyrootTree(false);
 
 	public AetherGenQuicksoil quicksoil_patches = new AetherGenQuicksoil();
 
-    public AetherGenFloatingIsland crystal_island = new AetherGenFloatingIsland();
+	public AetherGenFloatingIsland crystal_island = new AetherGenFloatingIsland();
 
 	public AetherGenLiquids liquid_overhang = new AetherGenLiquids();
 
@@ -50,7 +65,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 	public AetherGenLakes aether_lakes = new AetherGenLakes();
 
-    protected static final WorldGenDoublePlant double_grass = new WorldGenDoublePlant();
+	public WorldGenDoublePlant doubleGrass = new WorldGenDoublePlant();
 
 	public AetherBiomeDecorator()
 	{
@@ -58,132 +73,164 @@ public class AetherBiomeDecorator extends BiomeDecorator
 	}
 
 	@Override
-    public void decorate(World worldIn, Random random, Biome biome, BlockPos pos)
-    {
-        if (this.decorating)
-        {
-            throw new RuntimeException("Already decorating");
-        }
-        else
-        {
-            this.chunkPos = pos;
-            this.world = worldIn;
-            this.rand = random;
-            this.aetherBiome = biome;
-            this.genDecorations(biome, worldIn, random);
-            this.decorating = false;
-        }
-    }
+	public void decorate(World worldIn, Random random, Biome biome, BlockPos pos)
+	{
+		this.doubleGrass.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
+		if (this.decorating)
+		{
+			throw new RuntimeException("Already decorating");
+		}
+		else
+		{
+			this.chunkPos = pos;
+			this.world = worldIn;
+			this.rand = random;
+			this.aetherBiome = biome;
+			this.genDecorations(biome, worldIn, random);
+			this.decorating = false;
+		}
+	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-    protected void genDecorations(Biome biomeGenBaseIn, World worldIn, Random random)
-    {
-		if (this.shouldSpawn(37))
-    	{
-    		this.crystal_island.generate(this.world, this.rand, this.chunkPos.add(8, this.nextInt(64) + 32, 8));
-    	}
+	protected void genDecorations(Biome biomeGenBaseIn, World worldIn, Random random)
+	{
+		ChunkPos pos = new ChunkPos(this.chunkPos);
 
-    	if (this.shouldSpawn(3))
-    	{
-        	this.spawnOre(BlocksAether.aether_dirt.getDefaultState(), 32, 20, 128);
-    	}
+		MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Pre(worldIn, random, pos));
 
-    	this.generateFoilage(BlocksAether.white_flower.getDefaultState());
-    	this.generateFoilage(BlocksAether.purple_flower.getDefaultState());
+		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Pre(worldIn, random, this.chunkPos));
 
-    	this.spawnOre(BlocksAether.icestone.getDefaultState(), 16, 10, 128);
-    	this.spawnOre(BlocksAether.ambrosium_ore.getDefaultState(), 16, 15, 128);
-    	this.spawnOre(BlocksAether.zanite_ore.getDefaultState(), 8, 15, 64);
-    	this.spawnOre(BlocksAether.gravitite_ore.getDefaultState(), 6, 8, 32);
-
-    	this.generateFoilage(BlocksAether.berry_bush.getDefaultState());
-
-		if (this.shouldSpawn(2))
+		if (this.shouldSpawn(3) && TerrainGen.generateOre(worldIn, random, this.aetherDirtGen, this.chunkPos, GenerateMinable.EventType.CUSTOM))
 		{
-			this.getTree().generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
+			this.spawnOre(this.aetherDirtGen, 20, 128);
 		}
 
-		if (this.shouldSpawn(1))
+		if (TerrainGen.generateOre(worldIn, random, this.icestoneGen, this.chunkPos, GenerateMinable.EventType.CUSTOM))
 		{
-			this.skyroot_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(8) + 8, 0, this.nextInt(8) + 8)));
+			this.spawnOre(this.icestoneGen, 10, 128);
 		}
 
-		if (AetherConfig.world_gen.christmas_time)
+		if (TerrainGen.generateOre(worldIn, random, this.ambrosiumGen, this.chunkPos, GenerateMinable.EventType.CUSTOM))
 		{
-			if (this.shouldSpawn(15))
+			this.spawnOre(this.ambrosiumGen, 10, 128);
+		}
+
+		if (TerrainGen.generateOre(worldIn, random, this.zaniteGen, this.chunkPos, GenerateMinable.EventType.CUSTOM))
+		{
+			this.spawnOre(this.zaniteGen, 10, 128);
+		}
+
+		if (TerrainGen.generateOre(worldIn, random, this.gravititeGen, this.chunkPos, GenerateMinable.EventType.CUSTOM))
+		{
+			this.spawnOre(this.gravititeGen, 10, 128);
+		}
+
+		MinecraftForge.ORE_GEN_BUS.post(new OreGenEvent.Post(worldIn, random, this.chunkPos));
+
+		if (TerrainGen.decorate(worldIn, random, pos, EventType.FLOWERS))
+		{
+			this.generateFoilage(BlocksAether.white_flower.getDefaultState());
+			this.generateFoilage(BlocksAether.purple_flower.getDefaultState());
+			this.generateFoilage(BlocksAether.berry_bush.getDefaultState());
+		}
+
+		if (TerrainGen.decorate(worldIn, random, pos, EventType.TREE))
+		{
+			if (this.shouldSpawn(2))
 			{
-				this.holiday_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
+				this.getTree().generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
+			}
+
+			if (this.shouldSpawn(1))
+			{
+				this.skyroot_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(8) + 8, 0, this.nextInt(8) + 8)));
+			}
+
+			if (this.shouldSpawn(37))
+			{
+				this.crystal_island.generate(this.world, this.rand, this.chunkPos.add(8, this.nextInt(64) + 32, 8));
+			}
+
+			if (AetherConfig.world_gen.christmas_time)
+			{
+				if (this.shouldSpawn(15))
+				{
+					this.holiday_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
+				}
 			}
 		}
-		
+
 		if (AetherConfig.world_gen.tallgrass_enabled)
 		{
-			for (int i3 = 0; i3 < 10; ++i3)
-	        {
-	            int j7 = random.nextInt(16) + 8;
-	            int i11 = random.nextInt(16) + 8;
-	            int k14 = worldIn.getHeight(this.chunkPos.add(j7, 0, i11)).getY() * 2;
+			if (TerrainGen.decorate(worldIn, random, pos, EventType.GRASS))
+			{
+				for (int i3 = 0; i3 < 10; ++i3)
+				{
+					int j7 = random.nextInt(16) + 8;
+					int i11 = random.nextInt(16) + 8;
+					int k14 = worldIn.getHeight(this.chunkPos.add(j7, 0, i11)).getY() * 2;
 
-	            if (k14 > 0)
-	            {
-	            	int l17 = random.nextInt(k14);
-	                biomeGenBaseIn.getRandomWorldGenForGrass(random).generate(worldIn, random, this.chunkPos.add(j7, l17, i11));
-	            }
-	        }
-	        
-	        double_grass.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
+					if (k14 > 0)
+					{
+						int l17 = random.nextInt(k14);
 
-	        if(net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, this.chunkPos, net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.GRASS))
-	        for (int i = 0; i < 7; ++i)
-	        {
-	            int j = rand.nextInt(16) + 8;
-	            int k = rand.nextInt(16) + 8;
-	            int l = rand.nextInt(worldIn.getHeight(this.chunkPos.add(j, 0, k)).getY() + 32);
-	            double_grass.generate(worldIn, rand, this.chunkPos.add(j, l, k));
-	        }
+						biomeGenBaseIn.getRandomWorldGenForGrass(random).generate(worldIn, random, this.chunkPos.add(j7, l17, i11));
+					}
+				}
+
+				for (int i = 0; i < 7; ++i)
+				{
+					int j = random.nextInt(16) + 8;
+					int k = random.nextInt(16) + 8;
+					int l = random.nextInt(worldIn.getHeight(this.chunkPos.add(j, 0, k)).getY() + 32);
+
+					this.doubleGrass.generate(worldIn, random, this.chunkPos.add(j, l, k));
+				}
+			}
 		}
 
-		if (this.shouldSpawn(10))
+		if (TerrainGen.decorate(worldIn, random, pos, EventType.LAKE_WATER))
 		{
-            (new WorldGenLakes(Blocks.WATER)).generate(this.world, this.rand, this.chunkPos.add(this.rand.nextInt(16) + 8, this.rand.nextInt(256), this.rand.nextInt(16) + 8));
+			if (this.shouldSpawn(10))
+			{
+				(new WorldGenLakes(Blocks.WATER)).generate(this.world, this.rand, this.chunkPos.add(this.rand.nextInt(16) + 8, this.rand.nextInt(256), this.rand.nextInt(16) + 8));
+			}
 		}
-    }
+
+		MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(worldIn, random, pos));
+	}
 
 	public int nextInt(int max)
-    {
-    	return this.rand.nextInt(max);
-    }
+	{
+		return this.rand.nextInt(max);
+	}
 
-    public boolean shouldSpawn(int chance)
-    {
-    	return this.nextInt(chance) == 0;
-    }
+	public boolean shouldSpawn(int chance)
+	{
+		return this.nextInt(chance) == 0;
+	}
 
-    public WorldGenerator getTree()
-    {
-        return this.shouldSpawn(13) ? new AetherGenOakTree() : new AetherGenSkyrootTree(true);
-    }
+	public WorldGenerator getTree()
+	{
+		return this.shouldSpawn(13) ? new AetherGenOakTree() : new AetherGenSkyrootTree(true);
+	}
 
 	public void generateFoilage(IBlockState block)
 	{
 		this.foilage.setPlantBlock(block);
 
-        for(int n = 0; n < 2; n++)
-        {
-        	foilage.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16) + 8, this.nextInt(128), this.nextInt(16) + 8));
-        }
+		for (int n = 0; n < 2; n++)
+		{
+			foilage.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16) + 8, this.nextInt(128), this.nextInt(16) + 8));
+		}
 	}
 
-    public void spawnOre(IBlockState state, int size, int chance, int y)
-    {
-		this.ores.setSize(size);
-		this.ores.setBlock(state);
-
-    	for (int chances = 0; chances < chance; chances++)
-    	{
-        	this.ores.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16), this.nextInt(y), this.nextInt(16)));
-    	}
-    }
+	public void spawnOre(WorldGenMinable gen, int chance, int y)
+	{
+		for (int chances = 0; chances < chance; chances++)
+		{
+			gen.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16), this.nextInt(y), this.nextInt(16)));
+		}
+	}
 
 }
