@@ -2,13 +2,6 @@ package com.legacy.aether.client.gui.inventory;
 
 import java.io.IOException;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
 import com.legacy.aether.api.player.IPlayerAether;
@@ -17,8 +10,14 @@ import com.legacy.aether.client.gui.button.GuiButtonPerks;
 import com.legacy.aether.containers.ContainerAccessories;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
-import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.perks.AetherRankings;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
 
 public class GuiAccessories extends GuiContainer
 {

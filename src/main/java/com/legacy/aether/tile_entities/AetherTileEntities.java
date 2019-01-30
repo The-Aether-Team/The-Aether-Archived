@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class AetherTileEntities 
 {
 
+	@SuppressWarnings("deprecation")
 	public static void initialization()
 	{
 		GameRegistry.registerTileEntity(TileEntityEnchanter.class, "enchanter");

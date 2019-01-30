@@ -118,6 +118,7 @@ class NamespacedWrapper<V extends IForgeRegistryEntry<V>> extends RegistryNamesp
         return this.delegate.getKeys();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     @Nullable
     public V getRandomObject(Random random)

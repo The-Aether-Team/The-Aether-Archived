@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 public class SwetLayer implements LayerRenderer<EntitySwet> 
 {
 
+	@SuppressWarnings("unused")
 	private RenderManager manager;
 
 	private SwetRenderer render;

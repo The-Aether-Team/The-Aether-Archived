@@ -1,5 +1,9 @@
 package com.legacy.aether.player.abilities;
 
+import com.legacy.aether.api.player.util.IAetherAbility;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.player.PlayerAether;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -10,11 +14,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-
-import com.legacy.aether.api.accessories.AccessoryType;
-import com.legacy.aether.api.player.util.IAetherAbility;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
 
 public class AbilityAccessories implements IAetherAbility
 {

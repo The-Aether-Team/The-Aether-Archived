@@ -1,5 +1,11 @@
 package com.legacy.aether.entities.projectile.darts;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.entities.movement.AetherPoisonMovement;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketSendPoison;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,13 +17,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.entities.movement.AetherPoisonMovement;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketSendPoison;
-import com.legacy.aether.player.PlayerAether;
 
 public class EntityDartPoison extends EntityDartBase
 {
