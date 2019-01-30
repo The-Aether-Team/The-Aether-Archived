@@ -551,7 +551,14 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 		boolean isTCPickaxe = stack.getItem().getClass().getName().equals("slimeknights.tconstruct.tools.tools.Pickaxe");
 		
-		if (!isTCPickaxe)
+		if (stack.getItem() == Items.APPLE)
+		{
+			this.sendMessage(player, I18n.format("gui.slider.apple")); 
+
+			return false; 
+		}
+		
+		else if (!isTCPickaxe)
 		{
 			if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool))
 			{
@@ -566,13 +573,6 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	
 				return false; 
 			}
-		}
-		
-		if (stack.getItem() == Items.APPLE)
-		{
-			this.sendMessage(player, I18n.format("gui.slider.apple")); 
-
-			return false; 
 		}
 
 		boolean flag = super.attackEntityFrom(ds, Math.max(0, var2));
@@ -662,7 +662,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 		this.hurtAngle = 0.7F - (this.getHealth() / 875F);
 
-		AetherAPI.getInstance().get(player).setFocusedBoss(null);
+		AetherAPI.getInstance().get(player).setFocusedBoss(this);
 
 		return flag;
 	}
