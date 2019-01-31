@@ -80,8 +80,6 @@ public class PlayerAetherEvents
 			
 			if (newPlayer instanceof PlayerAether)
 			{
-				((PlayerAether) newPlayer).portalCooldown = ((PlayerAether) newPlayer).portalCooldown;
-
 				newPlayer.loadNBTData(data);
 			}
 		}

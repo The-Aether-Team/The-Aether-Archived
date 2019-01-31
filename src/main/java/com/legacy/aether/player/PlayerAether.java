@@ -72,7 +72,7 @@ public class PlayerAether implements IPlayerAether
 
 	public float prevPortalAnimTime, portalAnimTime;
 
-	public int timeInPortal, portalCooldown;
+	public int timeInPortal;
 
 	public boolean hasTeleported = false, inPortal = false, shouldPlayPortalSound = false;
 
@@ -216,7 +216,7 @@ public class PlayerAether implements IPlayerAether
 				if (this.timeInPortal++ >= limit)
 				{
 					this.timeInPortal = limit;
-					this.portalCooldown = this.thePlayer.getPortalCooldown();
+					this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
 					this.teleportPlayer(true);
 				}
 
@@ -235,9 +235,9 @@ public class PlayerAether implements IPlayerAether
                     this.timeInPortal = 0;
                 }
 
-                if (this.portalCooldown > 0)
+                if (this.thePlayer.timeUntilPortal > 0)
                 {
-                    --this.portalCooldown;
+                    --this.thePlayer.timeUntilPortal;
                 }
 			}
 		}
@@ -611,9 +611,9 @@ public class PlayerAether implements IPlayerAether
 
 	public void setInPortal()
 	{
-		if (this.portalCooldown > 0)
+		if (this.thePlayer.timeUntilPortal > 0)
 		{
-			this.portalCooldown = this.thePlayer.getPortalCooldown();
+			this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
 		}
 		else
 		{
