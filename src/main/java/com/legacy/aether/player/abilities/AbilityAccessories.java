@@ -133,7 +133,7 @@ public class AbilityAccessories implements IAetherAbility
 			}
 		}
 
-		if (this.playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.golden_feather)) && !this.playerAether.getEntity().isElytraFlying())
+		if ((this.playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.golden_feather)) || this.playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.valkyrie_cape))) && !this.playerAether.getEntity().isElytraFlying())
 		{
 			if (!this.playerAether.getEntity().onGround && this.playerAether.getEntity().motionY < 0.0D && !this.playerAether.getEntity().isInWater() && !this.playerAether.getEntity().isSneaking())
 			{

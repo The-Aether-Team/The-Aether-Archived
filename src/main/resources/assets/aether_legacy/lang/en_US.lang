@@ -407,11 +407,12 @@ aether_legacy.general.gameplay_changes.tooltip=These options affect gameplay, an
 aether_legacy.general.gameplay_changes.ambro_is_edible=Edible Ambrosium
 aether_legacy.general.gameplay_changes.max_life_shards=Maximum Life Shards
 aether_legacy.general.gameplay_changes.skyroot_bucket_only=Skyroot Bucket Only
+aether_legacy.general.gameplay_changes.valkyrie_cape=Valkyrie Cape
 
 aether_legacy.general.visual_options=Visual Options
 aether_legacy.general.visual_options.tooltip=These options do not affect gameplay, and are purely visual.
 aether_legacy.general.visual_options.legacy_models=Classic Models
-aether_legacy.general.visual_options.trivia_disabled=Aether Trivia
+aether_legacy.general.visual_options.trivia_disabled=Disable Aether Trivia
 aether_legacy.general.visual_options.updated_aercloud_colors=Updated Aercloud Colors
 aether_legacy.general.visual_options.menu_enabled=Aether Menu
 

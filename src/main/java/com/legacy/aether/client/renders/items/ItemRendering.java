@@ -120,7 +120,8 @@ public class ItemRendering
 		register(ItemsAether.white_cape, "white_cape");
 		register(ItemsAether.agility_cape, "agility_cape");
 		register(ItemsAether.invisibility_cape, "invisibility_cape");
-
+		register(ItemsAether.valkyrie_cape, "valkyrie_cape");
+		
 		register(ItemsAether.iron_bubble, "iron_bubble");
 		register(ItemsAether.regeneration_stone, "regeneration_stone");
 		register(ItemsAether.golden_feather, "golden_feather");

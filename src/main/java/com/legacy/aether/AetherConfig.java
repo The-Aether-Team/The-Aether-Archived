@@ -88,6 +88,9 @@ public class AetherConfig
 		
 		@Config.Comment("Makes it so you have to eat Ambrosium, instead of just right clicking to heal")
 		public boolean ambro_is_edible = false;
+		
+		@Config.Comment("Swaps the Golden Feather with the Valkyrie Cape in dungeon loot")
+		public boolean valkyrie_cape = false;
 	}
 
 	@Mod.EventBusSubscriber(modid = Aether.modid)

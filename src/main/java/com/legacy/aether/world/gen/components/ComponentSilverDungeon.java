@@ -14,6 +14,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
@@ -670,7 +671,15 @@ public class ComponentSilverDungeon extends AetherStructure
 				if(random.nextBoolean())
 					return new ItemStack(ItemsAether.valkyrie_chestplate);
 		}
-		return new ItemStack(ItemsAether.golden_feather);
+		
+		if (AetherConfig.gameplay_changes.valkyrie_cape)
+		{
+			return new ItemStack(ItemsAether.valkyrie_cape);
+		}
+		else
+		{
+			return new ItemStack(ItemsAether.golden_feather);	
+		}
 	}
 
 }

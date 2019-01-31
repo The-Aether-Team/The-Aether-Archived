@@ -49,7 +49,8 @@ public class AetherRegistries
 		registry.register(new AetherAccessory(ItemsAether.swet_cape, AccessoryType.CAPE));
 		registry.register(new AetherAccessory(ItemsAether.invisibility_cape, AccessoryType.CAPE));
 		registry.register(new AetherAccessory(ItemsAether.agility_cape, AccessoryType.CAPE));
-
+		registry.register(new AetherAccessory(ItemsAether.valkyrie_cape, AccessoryType.CAPE));
+		
 		registry.register(new AetherAccessory(ItemsAether.golden_feather, AccessoryType.MISC));
 		registry.register(new AetherAccessory(ItemsAether.regeneration_stone, AccessoryType.MISC));
 		registry.register(new AetherAccessory(ItemsAether.iron_bubble, AccessoryType.MISC));
