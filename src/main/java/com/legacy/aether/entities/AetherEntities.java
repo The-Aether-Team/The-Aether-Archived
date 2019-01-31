@@ -69,8 +69,8 @@ public class AetherEntities
 		register(EntityIceyBall.class, "ice_ball", 20);
 		register(EntityThunderBall.class, "thunder_ball", 21);
 
-		register(EntityValkyrie.class, "valkyrie", 22);
-		register(EntityFireMinion.class, "fire_minion", 23);
+		register(EntityValkyrie.class, "valkyrie", 22,0x8f8f8e, 0xfff088);
+		register(EntityFireMinion.class, "fire_minion", 23, 0xff611c, 0xffe31c);
 		register(EntityMiniCloud.class, "mini_cloud", 24);
 
 		register(EntityFloatingBlock.class, "floating_block", 25);
