@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -133,12 +134,13 @@ public class AetherOverlay
 		mc.renderEngine.bindTexture(Gui.ICONS);
 
 		int bubbleAmount = AetherAPI.getInstance().get(mc.player).getAccessoryInventory().getAccessoryCount(new ItemStack(ItemsAether.iron_bubble));
+		int thirstOffset = Loader.isModLoaded("toughasnails") ? -10 : 0;
 
 		if (mc.playerController.shouldDrawHUD() && mc.player.isInWater() && mc.player.isInsideOfMaterial(Material.WATER))
 		{
 			for (int i = 0; i < bubbleAmount; ++i)
 			{
-				drawTexturedModalRect((width / 2 - 8 * i) + 81, height - 49, 16, 18, 9, 9);
+				drawTexturedModalRect((width / 2 - 8 * i) + 81, height - 49 + thirstOffset, 16, 18, 9, 9);
 			}
 		}
 
