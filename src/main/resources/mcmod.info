@@ -8,9 +8,9 @@
   "url": "https://www.moddinglegacy.com/",
   "updateUrl": "",
   "authorList": ["115kino, KingPhygieBoo, xJonL"],
-  "credits": "Gilded Games for allowing me permission to do this project, and InsomniaKitten for providing the inventory texture.",
-  "logoFile": "",
-  "screenshots": [],
+  "credits": "Gilded Games for allowing us permission to do this project, and InsomniaKitten for providing the inventory texture.",
+  "logoFile": "aether.png",
+  "screenshots": ["rise.png, set.png"],
   "dependencies": []
 }
 ]
