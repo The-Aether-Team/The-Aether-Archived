@@ -181,5 +181,11 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 	{
 		return null;
 	}
+	
+	@Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
+    {
+        return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(state));
+    }
 
 }

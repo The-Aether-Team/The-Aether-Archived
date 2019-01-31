@@ -1,5 +1,12 @@
 package com.legacy.aether.items.tools;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.items.util.EnumSkyrootBucketType;
+import com.legacy.aether.items.util.FluidSkyrootBucketWrapper;
+import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
+
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,13 +35,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
 
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.api.player.IPlayerAether;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.items.util.EnumSkyrootBucketType;
-import com.legacy.aether.items.util.FluidSkyrootBucketWrapper;
-import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
-
 public class ItemSkyrootBucket extends Item
 {
 
@@ -50,15 +50,13 @@ public class ItemSkyrootBucket extends Item
 	@Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-		if (tab != this.getCreativeTab() || tab == CreativeTabs.SEARCH)
-		{
-			return;
-		}
-
-    	for (int meta = 0; meta < EnumSkyrootBucketType.values().length; ++meta)
-    	{
-    		subItems.add(new ItemStack(this, 1, meta));
-    	}
+    	if (this.isInCreativeTab(tab))
+        {
+            for (int meta = 0; meta < EnumSkyrootBucketType.values().length; ++meta)
+            {
+            	subItems.add(new ItemStack(this, 1, meta));
+            }
+        }
     }
 
 	@Override

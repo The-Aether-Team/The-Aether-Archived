@@ -1,5 +1,14 @@
 package com.legacy.aether.items.weapons.projectile;
 
+import com.legacy.aether.entities.projectile.darts.EntityDartBase;
+import com.legacy.aether.entities.projectile.darts.EntityDartEnchanted;
+import com.legacy.aether.entities.projectile.darts.EntityDartGolden;
+import com.legacy.aether.entities.projectile.darts.EntityDartPoison;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.items.util.EnumDartShooterType;
+import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -14,15 +23,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-import com.legacy.aether.entities.projectile.darts.EntityDartBase;
-import com.legacy.aether.entities.projectile.darts.EntityDartEnchanted;
-import com.legacy.aether.entities.projectile.darts.EntityDartGolden;
-import com.legacy.aether.entities.projectile.darts.EntityDartPoison;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.items.util.EnumDartShooterType;
-import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
-import com.legacy.aether.registry.sounds.SoundsAether;
-
 public class ItemDartShooter extends Item
 {
 
@@ -30,6 +30,7 @@ public class ItemDartShooter extends Item
 	{
 		this.maxStackSize = 1;
 		this.setHasSubtypes(true);
+		this.setCreativeTab(AetherCreativeTabs.weapons);
 	}
 
 	@Override
@@ -45,18 +46,16 @@ public class ItemDartShooter extends Item
     }
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
-	{
-		if (tab != AetherCreativeTabs.weapons || tab == CreativeTabs.SEARCH)
-		{
-			return;
-		}
-
-		for (int var4 = 0; var4 < EnumDartShooterType.values().length; ++var4)
-		{
-			subItems.add(new ItemStack(this, 1, var4));
-		}
-	}
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
+    {
+    	if (this.isInCreativeTab(tab))
+        {
+            for (int meta = 0; meta < EnumDartShooterType.values().length; ++meta)
+            {
+            	subItems.add(new ItemStack(this, 1, meta));
+            }
+        }
+    }
 
 	private int consumeItem(EntityPlayer player, Item itemID, int maxDamage)
 	{

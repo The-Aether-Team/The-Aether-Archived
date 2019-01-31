@@ -12,6 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
@@ -194,6 +195,12 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
     protected BlockStateContainer createBlockState()
     {
         return new BlockStateContainer(this, new IProperty[] {wood_type, double_drop, LOG_AXIS});
+    }
+	
+	@Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
+    {
+        return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(state));
     }
 
 }

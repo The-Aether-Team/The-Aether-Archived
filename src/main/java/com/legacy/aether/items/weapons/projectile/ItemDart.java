@@ -1,13 +1,13 @@
 package com.legacy.aether.items.weapons.projectile;
 
+import com.legacy.aether.items.util.EnumDartType;
+import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-
-import com.legacy.aether.items.util.EnumDartType;
-import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemDart extends Item
 {
@@ -16,6 +16,7 @@ public class ItemDart extends Item
     {
         super();
         this.setHasSubtypes(true);
+        this.setCreativeTab(AetherCreativeTabs.weapons);
     }
 
 	@Override
@@ -33,16 +34,14 @@ public class ItemDart extends Item
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
-		if (tab != AetherCreativeTabs.weapons || tab == CreativeTabs.SEARCH)
-		{
-			return;
-		}
-
-        for (int var4 = 0; var4 < EnumDartType.values().length ; ++var4)
+    	if (this.isInCreativeTab(tab))
         {
-        	subItems.add(new ItemStack(this, 1, var4));
+            for (int meta = 0; meta < EnumDartType.values().length; ++meta)
+            {
+            	subItems.add(new ItemStack(this, 1, meta));
+            }
         }
     }
 

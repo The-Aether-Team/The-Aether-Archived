@@ -13,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -38,7 +39,7 @@ public class BlockHolidayLeaves extends BlockLeaves implements IAetherMeta
 	public BlockHolidayLeaves() 
 	{
 		super();
-
+		
 		this.setHardness(0.2F);
 		this.setLightOpacity(1);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
@@ -172,6 +173,12 @@ public class BlockHolidayLeaves extends BlockLeaves implements IAetherMeta
         List<ItemStack> ret = new ArrayList<ItemStack>();
 
         return ret;
+    }
+    
+    @Override
+    public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
+    {
+        return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(state));
     }
 
 }
