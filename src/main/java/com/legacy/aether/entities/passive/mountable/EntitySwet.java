@@ -1,5 +1,7 @@
 package com.legacy.aether.entities.passive.mountable;
 
+import io.netty.buffer.ByteBuf;
+
 import java.util.List;
 
 import com.legacy.aether.api.AetherAPI;
@@ -28,15 +30,16 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public class EntitySwet extends EntityMountable
+public class EntitySwet extends EntityMountable implements IEntityAdditionalSpawnData
 {
 
 	public static final DataParameter<Boolean> FRIENDLY = EntityDataManager.<Boolean>createKey(EntitySwet.class, DataSerializers.BOOLEAN);
 
-	public static final DataParameter<Integer> SWET_TYPE = EntityDataManager.<Integer>createKey(EntitySwet.class, DataSerializers.VARINT);
-
 	public static final DataParameter<Integer> ATTACK_COOLDOWN = EntityDataManager.<Integer>createKey(EntitySwet.class, DataSerializers.VARINT);
+
+	private int swetType;
 
 	private int slimeJumpDelay = 0;
 
@@ -67,12 +70,23 @@ public class EntitySwet extends EntityMountable
 	}
 
 	@Override
+	public void writeSpawnData(ByteBuf buffer)
+	{
+		buffer.writeInt(this.swetType);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf buffer)
+	{
+		this.swetType = buffer.readInt();
+	}
+
+	@Override
 	protected void entityInit()
 	{
 		super.entityInit();
 
 		this.dataManager.register(FRIENDLY, false);
-		this.dataManager.register(SWET_TYPE, 0);
 		this.dataManager.register(ATTACK_COOLDOWN, 100);
 	}
 
@@ -283,7 +297,6 @@ public class EntitySwet extends EntityMountable
 	public void onEntityUpdate()
 	{
 		super.onEntityUpdate();
-		this.addGrowth(1);
 
 		if (this.isFriendly() && !this.hasPrey())
 		{
@@ -630,12 +643,12 @@ public class EntitySwet extends EntityMountable
 
 	public int getType()
 	{
-		return this.dataManager.get(SWET_TYPE).intValue();
+		return this.swetType;
 	}
 
 	private void setType(int type)
 	{
-		this.dataManager.set(SWET_TYPE, type);
+		this.swetType = type;
 	}
 
 	public int getAttackCooldown()
