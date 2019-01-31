@@ -67,34 +67,6 @@ public class InventoryAccessories implements IAccessoryInventory
 		return this.stacks.size();
 	}
 
-	public boolean setInventoryAccessory(ItemStack stack)
-	{
-		if (stack != ItemStack.EMPTY && AetherAPI.getInstance().isAccessory(stack))
-		{
-			AetherAccessory accessory = AetherAPI.getInstance().getAccessory(stack);
-
-			int stackIndex = 0;
-
-			for (int i = 0; i < this.slotTypes.length; ++i)
-			{
-				AccessoryType type = this.slotTypes[i];
-
-				if (accessory.getAccessoryType() == type && this.stacks.get(stackIndex) == ItemStack.EMPTY)
-				{
-					this.stacks.set(stackIndex, stack);
-
-					this.markDirty();
-
-					return true;
-				}
-
-				stackIndex++;
-			}
-		}
-
-		return false;
-	}
-
 	@Override
 	public void setInventorySlotContents(int slotID, ItemStack stack)
 	{
@@ -350,14 +322,22 @@ public class InventoryAccessories implements IAccessoryInventory
 	@Override
 	public boolean setAccessorySlot(ItemStack stack)
 	{
-		for (int i = 0; i < this.getSizeInventory(); ++i)
+		if (!stack.isEmpty() && AetherAPI.getInstance().isAccessory(stack))
 		{
-			if (this.isItemValidForSlot(i, stack))
-			{
-				this.stacks.set(i, stack);
-				this.markDirty();
+			AetherAccessory accessory = AetherAPI.getInstance().getAccessory(stack);
 
-				return true;
+			for (int i = 0; i < this.slotTypes.length; ++i)
+			{
+				AccessoryType type = this.slotTypes[i];
+
+				if (accessory.getAccessoryType() == type && this.stacks.get(i).isEmpty())
+				{
+					this.stacks.set(i, stack);
+
+					this.markDirty();
+
+					return true;
+				}
 			}
 		}
 
