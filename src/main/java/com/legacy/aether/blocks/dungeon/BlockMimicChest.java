@@ -1,5 +1,8 @@
 package com.legacy.aether.blocks.dungeon;
 
+import com.legacy.aether.entities.hostile.EntityMimic;
+import com.legacy.aether.tile_entities.TileEntityChestMimic;
+
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,13 +12,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-
-import com.legacy.aether.entities.hostile.EntityMimic;
-import com.legacy.aether.tile_entities.TileEntityChestMimic;
 
 public class BlockMimicChest extends BlockChest
 {
@@ -47,7 +48,17 @@ public class BlockMimicChest extends BlockChest
 		
 		 worldIn.playSound((EntityPlayer)null, d1, (double)j + 0.5D, d2, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 
-
+		 if (worldIn.isRemote)
+	        {
+	            for (int e = 0; e < 20; ++e)
+	            {
+	                double e0 = worldIn.rand.nextGaussian() * 0.02D;
+	                double e1 = worldIn.rand.nextGaussian() * 0.02D;
+	                double e2 = worldIn.rand.nextGaussian() * 0.02D;
+	                worldIn.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, i + (double)(worldIn.rand.nextFloat() * 1.0F * 2.0F) - (double)1.0F - e0 * 10.0D, j + (double)(worldIn.rand.nextFloat() * 2.0F) - e1 * 10.0D, k + (double)(worldIn.rand.nextFloat() * 1.0F * 2.0F) - (double)1.0F - e2 * 10.0D, e0, e1, e2);
+	            }
+	        }
+		 
 		return true;
 	}
 

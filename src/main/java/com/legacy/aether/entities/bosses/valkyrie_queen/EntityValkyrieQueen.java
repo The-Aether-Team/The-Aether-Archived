@@ -1,5 +1,7 @@
 package com.legacy.aether.entities.bosses.valkyrie_queen;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.Aether;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.IPlayerAether;
@@ -13,6 +15,7 @@ import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
 import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
 import com.legacy.aether.entities.util.AetherNameGen;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
 
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
@@ -27,7 +30,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,6 +40,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -537,8 +540,8 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     @Override
     protected void dropFewItems(boolean var1, int var2)
     {
-        this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 1), 0.5F);
-        this.dropItem(Items.GOLDEN_SWORD, 1);
+        //this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 1), 0.5F);
+        //this.dropItem(Items.GOLDEN_SWORD, 1);
     }
     
     @Override
@@ -739,4 +742,10 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 		return this.getMaxHealth();
 	}
 
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.valkyrie_queen;
+    }
+	
 }

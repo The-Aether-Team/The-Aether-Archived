@@ -47,16 +47,11 @@ public abstract class EntitySaddleMount extends EntityMountable
 	}
 
 	@Override
-	protected void dropFewItems(boolean var1, int var2)
+	public void onDeath(DamageSource cause)
 	{
-		super.dropFewItems(var1, var2);
+		super.onDeath(cause);
 		
-		this.dropSaddle();
-	}
-
-	protected void dropSaddle()
-	{
-		if (this.getSaddled())
+		if (!this.world.isRemote && this.getSaddled())
 		{
 			this.dropItem(Items.SADDLE, 1);
 		}

@@ -323,6 +323,38 @@ subtitles.aeboss.sun_spirit.shoot=Sun Spirit shoots
 gui.loading.enteraether=Ascending to the Aether
 gui.loading.exitaether=Decending from the Aether
 
+# GUI and Dialog
+gui.slider.notpickaxe=Hmm. Perhaps I need to attack it with a Pickaxe?
+gui.slider.apple=This message is only here because KingPhygieBoo asked Kino a random item and he said apple.
+
+gui.valkyrie.dialog.1=What's that? You want to fight? Aww, what a cute little human.
+gui.valkyrie.dialog.2=You're not thinking of fighting a big, strong Valkyrie are you?
+gui.valkyrie.dialog.3=I don't think you should bother me, you could get really hurt.
+
+gui.valkyrie.dialog.medal.1=Umm... that's a nice pile of medallions you have there...
+gui.valkyrie.dialog.medal.2=That's pretty impressive, but you won't defeat me.
+gui.valkyrie.dialog.medal.3=You think you're a tough guy, eh? Well, bring it on!
+
+gui.valkyrie.dialog.defeated.1=Alright, alright! You win!
+gui.valkyrie.dialog.defeated.2=Okay, I give up! Geez!
+gui.valkyrie.dialog.defeated.3=Oww! Fine, here's your medal...
+
+gui.valkyrie.dialog.attack.1=I'm not going easy on you!
+gui.valkyrie.dialog.attack.2=You're gonna regret that!
+gui.valkyrie.dialog.attack.3=Now you're in for it!
+
+gui.valkyrie.dialog.playerdead.1=You want a medallion? Try being less pathetic.
+gui.valkyrie.dialog.playerdead.2=Maybe some day
+gui.valkyrie.dialog.playerdead.3=Humans aren't nearly as cute when they're dead.
+
+gui.valkyrie.dialog.ready=Now then, let's begin!
+gui.valkyrie.dialog.nomedals=Take your time.
+gui.valkyrie.dialog.nofight=So be it then. Goodbye adventurer.
+
+gui.valkyrie.dialog.player.havemedals=I'm ready, I have the medals right here!
+gui.valkyrie.dialog.player.lackmedals=I'll return when I have them.
+gui.valkyrie.dialog.player.denyfight=On second thought, I'd rather not.
+
 gui.queen.ready=If you wish to challenge me, strike at any time.
 gui.queen.defeated=You are truly... a mighty warrior...
 gui.queen.peaceful=Sorry, I don't fight with weaklings.
@@ -330,15 +362,11 @@ gui.queen.nomedals=Try defeating some weaker valkyries first.
 gui.queen.fight=This will be your final battle!
 gui.queen.lost=As expected of a human.
 
-gui.treasure_chest.bronze=Bronze Treasure Chest
-gui.treasure_chest.silver=Silver Treasure Chest
-gui.treasure_chest.gold=Gold Treasure Chest
-gui.treasure_chest.platinum=Platinum Treasure Chest
+gui.queen.dialog.0=What can you tell me about this place?
 
-gui.sun_altar.time=Select Time
-title.aether_legacy.sun_spirit.name=the Slider
-title.aether_legacy.valkyrie_queen.name=the Valkyrie Queen
-title.aether_legacy.sun_spirit.name=the Sun Spirit
+gui.queen.answer.0=This is a sanctuary for us Valkyries who seek rest.
+gui.queen.answer.1=Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.
+gui.queen.answer.2=Goodbye adventurer.
 
 gui.spirit.line0=You are certainly a brave soul to have entered this chamber.
 gui.spirit.line1=Begone human, you serve no purpose here.
@@ -356,6 +384,17 @@ gui.spirit.line9=As you wish, your death will be slow and agonizing.
 gui.spirit.line10=Did your previous death not satisfy your curiosity, human?
 gui.spirit.dead=Such bitter cold... is this the feeling... of pain?
 gui.spirit.playerdied=Such is the fate of a being who opposes the might of the sun.
+
+gui.treasure_chest.bronze=Bronze Treasure Chest
+gui.treasure_chest.silver=Silver Treasure Chest
+gui.treasure_chest.gold=Gold Treasure Chest
+gui.treasure_chest.platinum=Platinum Treasure Chest
+
+gui.sun_altar.time=Select Time
+
+title.aether_legacy.slider.name=the Slider
+title.aether_legacy.valkyrie_queen.name=the Valkyrie Queen
+title.aether_legacy.sun_spirit.name=the Sun Spirit
 
 # Death messages
 death.attack.inebriation=%1$s was inebriated

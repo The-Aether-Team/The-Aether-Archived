@@ -1,5 +1,8 @@
 package com.legacy.aether.entities.util;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.entities.passive.EntityAetherAnimal;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
@@ -11,10 +14,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.entities.passive.EntityAetherAnimal;
-import com.legacy.aether.player.PlayerAether;
 
 public abstract class EntityMountable extends EntityAetherAnimal
 {

@@ -1,8 +1,10 @@
 package com.legacy.aether.entities.passive;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.entities.ai.EntityAIUpdateState;
-import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 import net.minecraft.entity.Entity;
@@ -14,6 +16,7 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -425,4 +428,9 @@ public class EntityAerwhale extends EntityFlying implements IMob
         return true;
     }
 
+    @Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.aerwhale;
+    }
 }

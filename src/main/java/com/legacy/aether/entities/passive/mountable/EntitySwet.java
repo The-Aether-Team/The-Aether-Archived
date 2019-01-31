@@ -7,7 +7,6 @@ import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.util.EntityMountable;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;

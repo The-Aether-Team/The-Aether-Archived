@@ -1,5 +1,14 @@
 package com.legacy.aether.entities.passive.mountable;
 
+import javax.annotation.Nullable;
+
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.entities.ai.aerbunny.AerbunnyAIHop;
+import com.legacy.aether.entities.passive.EntityAetherAnimal;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -17,16 +26,10 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.entities.ai.aerbunny.AerbunnyAIHop;
-import com.legacy.aether.entities.passive.EntityAetherAnimal;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.player.PlayerAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityAerbunny extends EntityAetherAnimal
 {
@@ -275,12 +278,6 @@ public class EntityAerbunny extends EntityAetherAnimal
     }
 
     @Override
-    protected void dropFewItems(boolean var1, int var2)
-    {
-        this.dropItem(Items.STRING, 1);
-    }
-
-    @Override
     public boolean attackEntityFrom(DamageSource source, float damage)
     {
         return source.getImmediateSource() == this.getRidingEntity() ? false : super.attackEntityFrom(source, damage);
@@ -310,4 +307,10 @@ public class EntityAerbunny extends EntityAetherAnimal
         return new EntityAerbunny(this.world);
     }
 
+    @Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.aerbunny;
+    }
+    
 }

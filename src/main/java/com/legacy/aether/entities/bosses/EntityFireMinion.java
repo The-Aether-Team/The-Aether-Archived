@@ -1,5 +1,9 @@
 package com.legacy.aether.entities.bosses;
 
+import javax.annotation.Nullable;
+
+import com.legacy.aether.registry.AetherLootTables;
+
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
@@ -8,6 +12,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class EntityFireMinion extends EntityMob
@@ -68,6 +73,12 @@ public class EntityFireMinion extends EntityMob
     public float getEyeHeight()
     {
         return 2.0F;
+    }
+    
+    @Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.fire_minion;
     }
 
 }

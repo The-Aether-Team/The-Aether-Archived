@@ -1,5 +1,12 @@
 package com.legacy.aether.entities.passive.mountable;
 
+import javax.annotation.Nullable;
+
+import com.legacy.aether.entities.util.EntitySaddleMount;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,18 +19,14 @@ import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import com.legacy.aether.entities.util.EntitySaddleMount;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class EntityPhyg extends EntitySaddleMount
 {
@@ -145,29 +148,6 @@ public class EntityPhyg extends EntitySaddleMount
 		}
 	}
 
-	@Override
-	protected void dropFewItems(boolean par1, int par2)
-	{
-		int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + par2);
-
-		for (int k = 0; k < j; ++k)
-		{
-			if (this.isBurning())
-			{
-				this.dropItem(Items.COOKED_PORKCHOP, 1);
-			}
-			else
-			{
-				this.dropItem(Items.PORKCHOP, 1);
-			}
-		}
-
-		if (this.getSaddled())
-		{
-			this.dropItem(Items.SADDLE, 1);
-		}
-	}
-
 	private void fall()
 	{
 		if (this.motionY < 0.0D && !this.isRiderSneaking())
@@ -219,5 +199,11 @@ public class EntityPhyg extends EntitySaddleMount
 	{
 		return new EntityPhyg(this.world);
 	}
+	
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.phyg;
+    }
 
 }

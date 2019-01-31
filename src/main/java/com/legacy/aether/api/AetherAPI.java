@@ -3,6 +3,15 @@ package com.legacy.aether.api;
 import java.util.List;
 import java.util.Random;
 
+import com.legacy.aether.api.accessories.AetherAccessory;
+import com.legacy.aether.api.enchantments.AetherEnchantment;
+import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
+import com.legacy.aether.api.freezables.AetherFreezable;
+import com.legacy.aether.api.freezables.AetherFreezableFuel;
+import com.legacy.aether.api.moa.AetherMoaType;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.IPlayerAetherStorage;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -15,15 +24,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
-
-import com.legacy.aether.api.accessories.AetherAccessory;
-import com.legacy.aether.api.enchantments.AetherEnchantment;
-import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
-import com.legacy.aether.api.freezables.AetherFreezable;
-import com.legacy.aether.api.freezables.AetherFreezableFuel;
-import com.legacy.aether.api.moa.AetherMoaType;
-import com.legacy.aether.api.player.IPlayerAether;
-import com.legacy.aether.api.player.IPlayerAetherStorage;
 
 @Mod.EventBusSubscriber(modid = "aether_legacy")
 public class AetherAPI
@@ -121,26 +121,31 @@ public class AetherAPI
 		return iFreezableFuelRegistry.getValue(new ResourceLocation(stack.getItem().getRegistryName().toString() + "_meta_" + (stack.isItemStackDamageable() ? 0 : stack.getMetadata())));
 	}
 
+	@SuppressWarnings("deprecation")
     public List<AetherEnchantment> getEnchantmentValues()
     {
     	return iEnchantmentRegistry.getValues();
     }
-
+    
+    @SuppressWarnings("deprecation")
     public List<AetherFreezable> getFreezableValues()
     {
     	return iFreezableRegistry.getValues();
     }
 
-    public int getMoaTypeId(AetherMoaType type)
+    @SuppressWarnings("deprecation")
+	public int getMoaTypeId(AetherMoaType type)
     {
     	return iMoaTypeRegistry.getValues().indexOf(type);
     }
 
+    @SuppressWarnings("deprecation")
     public AetherMoaType getMoaType(int id)
     {
     	return iMoaTypeRegistry.getValues().get(id);
     }
 
+    @SuppressWarnings("deprecation")
     public AetherMoaType getRandomMoaType()
     {
     	return iMoaTypeRegistry.getValues().get(new Random().nextInt(this.getMoaTypeSize()));

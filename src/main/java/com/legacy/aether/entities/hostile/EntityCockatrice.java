@@ -1,7 +1,10 @@
 package com.legacy.aether.entities.hostile;
 
+import javax.annotation.Nullable;
+
 import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.entities.projectile.EntityPoisonNeedle;
+import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,12 +15,12 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -218,10 +221,10 @@ public class EntityCockatrice extends EntityMob
 		return 1.25D;
 	}
 
-	@Override
-	protected void dropFewItems(boolean var1, int var2)
-	{
-		this.dropItem(Items.FEATHER, 1 + this.rand.nextInt(4));
-	}
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return AetherLootTables.cockatrice;
+    }
 
 }

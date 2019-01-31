@@ -3,55 +3,58 @@ package com.legacy.aether.client.models.entities;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-
-import com.legacy.aether.entities.hostile.EntityMimic;
+import net.minecraft.util.math.MathHelper;
 
 public class MimicModel extends ModelBase
 {
-
-    ModelRenderer box, boxLid;
-
-    ModelRenderer leftLeg, rightLeg;
+    public ModelRenderer upper_body;
+    public ModelRenderer lower_body;
+    public ModelRenderer left_leg;
+    public ModelRenderer right_leg;
 
     public MimicModel()
     {
-        this.box = new ModelRenderer(this, 0, 0);
-        this.box.addBox(-8F, 0F, -8F, 16, 10, 16);
-        this.box.setRotationPoint(0F, -24F, 0F);
-		
-        this.boxLid = new ModelRenderer(this, 16, 10);
-        this.boxLid.addBox(0F, 0F, 0F, 16, 6, 16);
-        this.boxLid.setRotationPoint(-8F, -24F, 8F);
-		
-        this.leftLeg = new ModelRenderer(this, 0, 0);
-		this.leftLeg.addBox(-3F, 0F, -3F, 6, 15, 6);
-		this.leftLeg.setRotationPoint(-4F, -15F, 0F);
-		
-		this.rightLeg = new ModelRenderer(this, 0, 0);
-		this.rightLeg.addBox(-3F, 0F, -3F, 6, 15, 6);
-		this.rightLeg.setRotationPoint(4F, -15F, 0F);
-	
+        this.textureWidth = 128;
+        this.textureHeight = 64;
+        this.left_leg = new ModelRenderer(this, 64, 0);
+        this.left_leg.setRotationPoint(1.5F, 9.0F, 0.0F);
+        this.left_leg.addBox(0.0F, 0.0F, -3.0F, 6, 15, 6, 0.0F);
+        this.upper_body = new ModelRenderer(this, 0, 10);
+        this.upper_body.setRotationPoint(-8.0F, 0.0F, 8.0F);
+        this.upper_body.addBox(0.0F, 0.0F, 0.0F, 16, 6, 16, 0.0F);
+        this.setRotateAngle(upper_body, 3.141592653589793F, 0.0F, 0.0F);
+        this.right_leg = new ModelRenderer(this, 64, 0);
+        this.right_leg.mirror = true;
+        this.right_leg.setRotationPoint(-2.5F, 9.0F, 0.0F);
+        this.right_leg.addBox(-5.1F, 0.0F, -3.0F, 6, 15, 6, 0.0F);
+        this.lower_body = new ModelRenderer(this, 0, 38);
+        this.lower_body.setRotationPoint(-8.0F, 0.0F, -8.0F);
+        this.lower_body.addBox(0.0F, 0.0F, 0.0F, 16, 10, 16, 0.0F);
     }
 
     @Override
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+    { 
+        this.left_leg.render(f5);
+        this.upper_body.render(f5);
+        this.right_leg.render(f5);
+        this.lower_body.render(f5);
+    }
+
+    public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z)
+    {
+        modelRenderer.rotateAngleX = x;
+        modelRenderer.rotateAngleY = y;
+        modelRenderer.rotateAngleZ = z;
+    }
+    
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
     {
-    	EntityMimic mimic = (EntityMimic) entityIn;
-		this.boxLid.rotateAngleX = 3.14159265F - mimic.mouth;
-		this.rightLeg.rotateAngleX = mimic.legs;
-		this.leftLeg.rotateAngleX = - mimic.legs;
+
+    	this.upper_body.rotateAngleX = 3.14159265F - (float)((Math.cos((float)ageInTicks / 10F * 3.14159265F)) + 1F) * 0.6F;
+    	
+    	//this.topbun.rotateAngleX = (MathHelper.cos(ageInTicks * 0.2F) * 0.1F);
+    	 this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.7F;
+         this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount * 0.7F;
     }
-
-    public void renderHead(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, EntityMimic mimic)
-    {
-		this.box.render(scale);
-    }
-
-    public void renderLegs(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale, EntityMimic mimic)
-    {
-		boxLid.render(scale);
-		leftLeg.render(scale);
-		rightLeg.render(scale);
-	}
-
 }

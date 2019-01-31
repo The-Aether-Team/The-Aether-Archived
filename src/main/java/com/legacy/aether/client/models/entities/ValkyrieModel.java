@@ -5,8 +5,6 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-import org.lwjgl.opengl.GL11;
-
 public class ValkyrieModel extends ModelBiped 
 {
 
@@ -260,7 +258,7 @@ public class ValkyrieModel extends ModelBiped
 			this.strand[i].render(scale);
         }
 		
-		if(halow) 
+		/*if(halow) 
 		{
 			GL11.glEnable(GL11.GL_NORMALIZE);
 			GL11.glEnable(GL11.GL_BLEND);
@@ -273,7 +271,7 @@ public class ValkyrieModel extends ModelBiped
 			}
 
 			GL11.glEnable(GL11.GL_ALPHA_TEST);
-		}
+		}*/
     }
 
     @Override

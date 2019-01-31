@@ -1,19 +1,5 @@
 package com.legacy.aether.containers.inventory;
 
-import io.netty.buffer.ByteBuf;
-
-import java.io.IOException;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.api.accessories.AetherAccessory;
@@ -21,6 +7,16 @@ import com.legacy.aether.api.player.util.IAccessoryInventory;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
 import com.legacy.aether.player.PlayerAether;
+
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 public class InventoryAccessories implements IAccessoryInventory
 {
