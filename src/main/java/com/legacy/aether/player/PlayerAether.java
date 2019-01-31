@@ -354,7 +354,7 @@ public class PlayerAether implements IPlayerAether
 		{			
 			int previousDimension = this.thePlayer.dimension;
 			int transferDimension = previousDimension == AetherConfig.dimension.aether_dimension_id ? 0 : AetherConfig.dimension.aether_dimension_id;
-			
+
 			if (ForgeHooks.onTravelToDimension(this.thePlayer, transferDimension))
 			{
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -371,7 +371,6 @@ public class PlayerAether implements IPlayerAether
 				if (this.thePlayer.getRidingEntity() != null)
 				{
 					this.thePlayer.dismountRidingEntity();
-					//transferEntity(shouldSpawnPortal, this.thePlayer.getRidingEntity(), server.getWorld(previousDimension), server.getWorld(transferDimension));
 				}
 			}
 		}
