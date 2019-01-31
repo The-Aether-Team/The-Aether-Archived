@@ -14,6 +14,7 @@ import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
 import com.legacy.aether.networking.packets.PacketSendJump;
+import com.legacy.aether.universal.fastcrafting.FastCraftingUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -42,11 +43,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class AetherClientEvents 
 {
+
 	private final Minecraft mc = FMLClientHandler.instance().getClient();
 	
 	private static boolean wasInAether = false;
-
-	private static boolean wasJumping = false;
 
 	@SubscribeEvent
 	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
@@ -164,7 +164,7 @@ public class AetherClientEvents
 					}
 				}
 			}
-			else if (clazz == GuiInventory.class)
+			else if (clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz))
 			{
 				event.getButtonList().add(ACCESSORY_BUTTON.setPosition(guiLeft + 26, guiTop + 65));
 			}
@@ -225,7 +225,7 @@ public class AetherClientEvents
 	{
 		Class<?> clazz = event.getGui().getClass();
 
-		if ((clazz == GuiInventory.class || clazz == GuiContainerCreative.class) && event.getButton().id == 18067)
+		if ((clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz) || clazz == GuiContainerCreative.class) && event.getButton().id == 18067)
 		{
 			AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
 		}

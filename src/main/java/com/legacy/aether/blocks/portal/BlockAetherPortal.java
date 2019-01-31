@@ -68,6 +68,7 @@ public class BlockAetherPortal extends BlockPortal
 
 		return;
 	}
+
 	private void transferEntity(boolean shouldSpawnPortal, Entity entityIn, WorldServer previousWorldIn, WorldServer newWorldIn)
 	{
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -77,7 +78,6 @@ public class BlockAetherPortal extends BlockPortal
 		entityIn.isDead = false;
 
 		server.getPlayerList().transferEntityToWorld(entityIn, previousWorldIn.provider.getDimension(), previousWorldIn, newWorldIn, new TeleporterAether(true, newWorldIn));
-	
 	}
 
 	@Override
