@@ -22,6 +22,7 @@ import com.legacy.aether.client.models.attachments.ModelPlayerHalo;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
 import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.player.perks.AetherRankings;
 
 public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 {
@@ -261,20 +262,17 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			}
 		}
 
-		//if (AetherRankings.isRankedPlayer(player.getUniqueID()) && ((PlayerAether)playerAether).shouldRenderHalo && !player.isInvisible()) //TODO
+		if (AetherRankings.isRankedPlayer(player.getUniqueID()) && ((PlayerAether)playerAether).shouldRenderHalo && !player.isInvisible()) //TODO
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			GlStateManager.enableBlend();
 			GlStateManager.scale(1.1F, 1.1F, 1.1F);
 
-			//GlStateManager.translate(0.0F, -0.67F, 0.0F);
-			
-			GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
 		    GlStateManager.depthMask(true);
 		    int i = 61680;
-		    int j = i % 65536;
-		    int k = i / 65536;
+		    int j = 240;
+		    int k = 240;
 		    OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
 		    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		    Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
@@ -294,13 +292,16 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			this.modelHalo.halo3.rotateAngleY = this.modelMisc.bipedHead.rotateAngleY;
 			this.modelHalo.halo4.rotateAngleX = this.modelMisc.bipedHead.rotateAngleX;
 	  	  	this.modelHalo.halo4.rotateAngleY = this.modelMisc.bipedHead.rotateAngleY;
-			
+
+	        i = player.getBrightnessForRender();
+	        j = i % 65536;
+	        k = i / 65536;
+	        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
 			GlStateManager.disableBlend();
-			GL11.glDisable(GL11.GL_BLEND);
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			GlStateManager.popMatrix();
 		}
-		
+
 		if (player.getUniqueID().toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837"))
 		{
 			this.manager.renderEngine.bindTexture(player.getLocationSkin());
