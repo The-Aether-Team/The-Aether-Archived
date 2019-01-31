@@ -249,7 +249,6 @@ entity.moa.name=Moa
 entity.whirlwind.name=Torbellino
 # Containers
 container.aether_legacy.incubator=Incubadora
-container.aether_legacy.altar=Altar
 container.aether_legacy.freezer=Congelador
 # Advancements
 advancement.aether_legacy.enter_aether=Paraiso Hostil
@@ -319,11 +318,6 @@ gui.queen.peaceful=Lo siento, no peleo con debiluchos.
 gui.queen.nomedals=Intenta derrotar primero algunas valquirias más débiles.
 gui.queen.fight=¡Esta será tu batalla final!
 gui.queen.lost=Como se espera de un humano.
-gui.treasure_chest.bronze=Cofre de Tesoro Bronce
-gui.treasure_chest.silver=Cofre de Tesoro Plateado
-gui.treasure_chest.gold=Cofre de Tesoro Dorado
-gui.treasure_chest.platinum=Cofre de Tesoro Platino
-gui.sun_altar.time=Seleciona el Tiempo
 gui.spirit.line0=Ciertamente eres un alma valiente por haber entrado en esta cámara.
 gui.spirit.line1=Alejate humano, no sirves para nada aquí.
 gui.spirit.line2=Tu presencia me molesta. ¿No temes mi aura ardiente?
@@ -340,5 +334,10 @@ gui.spirit.line9=Como desees, tu muerte será lenta y agonizante.
 gui.spirit.line10=¿Tu muerte anterior no satisfizo tu curiosidad, humano?
 gui.spirit.dead=Qué frío tan amargo ... ¿es esta la sensación ... de dolor?
 gui.spirit.playerdied=Tal es el destino de un ser que se opone al poder del sol.
+gui.treasure_chest.bronze=Cofre de Tesoro Bronce
+gui.treasure_chest.silver=Cofre de Tesoro Plateado
+gui.treasure_chest.gold=Cofre de Tesoro Dorado
+gui.treasure_chest.platinum=Cofre de Tesoro Platino
+gui.sun_altar.time=Seleciona el Tiempo
 # Death messages
 death.attack.inebriation=%1$s fue embriagado por %2$s
