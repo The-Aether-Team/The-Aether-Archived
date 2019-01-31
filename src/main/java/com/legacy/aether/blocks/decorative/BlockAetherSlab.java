@@ -30,9 +30,11 @@ public class BlockAetherSlab extends BlockSlab
 		super(materialIn);
 		this.name = name;
 		this.double_slab = double_slab;
+		this.useNeighborBrightness = true;
 
-		this.setDefaultState(double_slab ? this.getDefaultState() : this.getDefaultState().withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM));
+		this.setLightOpacity(0);
 		this.setSoundType(materialIn == Material.WOOD ? SoundType.WOOD : SoundType.STONE);
+		this.setDefaultState(double_slab ? this.getDefaultState() : this.getDefaultState().withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM));
 	}
 
 	@Override
