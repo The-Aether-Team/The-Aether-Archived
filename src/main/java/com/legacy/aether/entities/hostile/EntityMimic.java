@@ -109,7 +109,19 @@ public class EntityMimic extends EntityMob
 	{
 		super.attackEntityAsMob(entityIn);
 		
-		this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, this.getSoundPitch());
+		EntityLivingBase entityLiving = (EntityLivingBase) entityIn;
+		if (entityIn instanceof EntityLivingBase)
+		{
+		
+			if (entityLiving.getHealth() <= 0)
+			{
+				this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, this.getSoundPitch());
+			}
+			else
+			{
+				this.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1.0F, this.getSoundPitch());
+			}
+		}
 		
 		return true;
 	}
