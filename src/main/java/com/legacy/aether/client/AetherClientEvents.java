@@ -15,6 +15,7 @@ import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
 import com.legacy.aether.networking.packets.PacketSendJump;
 import com.legacy.aether.universal.fastcrafting.FastCraftingUtil;
+import com.legacy.aether.universal.pixelmon.PixelmonUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -162,7 +163,7 @@ public class AetherClientEvents
 					}
 				}
 			}
-			else if (clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz))
+			else if (clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz) || PixelmonUtil.isOverridenInventoryGUI(clazz))
 			{
 				event.getButtonList().add(ACCESSORY_BUTTON.setPosition(guiLeft + 26, guiTop + 65));
 			}
@@ -223,7 +224,7 @@ public class AetherClientEvents
 	{
 		Class<?> clazz = event.getGui().getClass();
 
-		if ((clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz) || clazz == GuiContainerCreative.class) && event.getButton().id == 18067)
+		if ((clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz) || PixelmonUtil.isOverridenInventoryGUI(clazz) || PixelmonUtil.isOverridenCreativeGUI(clazz) || clazz == GuiContainerCreative.class) && event.getButton().id == 18067)
 		{
 			AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
 		}
