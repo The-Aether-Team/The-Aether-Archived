@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class ItemDeveloperStick extends Item
 {
@@ -29,13 +30,13 @@ public class ItemDeveloperStick extends Item
 		}
 		else if (playerIn.getUniqueID().toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837"))
 		{
-			Aether.proxy.sendMessage(playerIn, "YOu a cheeto or somethin'?");
+			Aether.proxy.sendMessage(playerIn, new TextComponentTranslation("YOu a cheeto or somethin'?"));
     		heldItem.shrink(1);
 			return false;
 		}
 		else
 		{
-			Aether.proxy.sendMessage(playerIn, "You aren't skilled enough to use this item!");
+			Aether.proxy.sendMessage(playerIn, new TextComponentTranslation("gui.item.developer_stick.notdev"));
     		heldItem.shrink(1);
 			return false;
 		}

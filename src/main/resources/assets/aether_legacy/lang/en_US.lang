@@ -320,6 +320,9 @@ subtitles.aeboss.slider.death=Slider breaks
 subtitles.aeboss.sun_spirit.shoot=Sun Spirit shoots
 
 # GUI and Dialog
+gui.item.life_shard.maxshards=You can only use a total of 10 life shards.
+gui.item.developer_stick.notdev=You aren't skilled enough to use this item!
+
 gui.slider.notpickaxe=Hmm. Perhaps I need to attack it with a Pickaxe?
 gui.slider.apple=This message is only here because KingPhygieBoo asked Kino a random item and he said apple.
 
@@ -340,7 +343,7 @@ gui.valkyrie.dialog.attack.2=You're gonna regret that!
 gui.valkyrie.dialog.attack.3=Now you're in for it!
 
 gui.valkyrie.dialog.playerdead.1=You want a medallion? Try being less pathetic.
-gui.valkyrie.dialog.playerdead.2=Maybe some day
+gui.valkyrie.dialog.playerdead.2=Maybe some day, %s... maybe some day.
 gui.valkyrie.dialog.playerdead.3=Humans aren't nearly as cute when they're dead.
 
 gui.valkyrie.dialog.ready=Now then, let's begin!

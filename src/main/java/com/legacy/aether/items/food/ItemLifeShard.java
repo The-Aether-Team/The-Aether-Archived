@@ -1,5 +1,11 @@
 package com.legacy.aether.items.food;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -7,13 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-
-import com.legacy.aether.Aether;
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.api.player.IPlayerAether;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class ItemLifeShard extends Item
 {
@@ -39,7 +40,7 @@ public class ItemLifeShard extends Item
 
 		if (worldIn.isRemote && playerAether.getShardsUsed() >= playerAether.getMaxShardCount())
 		{
-            Aether.proxy.sendMessage(player, "You can only use a total of 10 life shards.");
+            Aether.proxy.sendMessage(player, new TextComponentTranslation("gui.item.life_shard.maxshards"));
 		}
 
 		if (!worldIn.isRemote && playerAether.getShardsUsed() < playerAether.getMaxShardCount())

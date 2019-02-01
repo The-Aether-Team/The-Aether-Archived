@@ -19,7 +19,6 @@ import com.legacy.aether.registry.AetherLootTables;
 
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -44,6 +43,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -55,11 +55,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 {
 
-	public static final DataParameter<String> VALKYRIE_NAME = EntityDataManager.<String>createKey(EntityValkyrieQueen.class, DataSerializers.STRING);
+    public static final DataParameter<String> VALKYRIE_NAME = EntityDataManager.<String>createKey(EntityValkyrieQueen.class, DataSerializers.STRING);
 
-	public static final DataParameter<Boolean> VALKYRIE_READY = EntityDataManager.<Boolean>createKey(EntityValkyrieQueen.class, DataSerializers.BOOLEAN);
+    public static final DataParameter<Boolean> VALKYRIE_READY = EntityDataManager.<Boolean>createKey(EntityValkyrieQueen.class, DataSerializers.BOOLEAN);
 
-	private EntityAIAttackContinuously enhancedCombat = new EntityAIAttackContinuously(this, 0.65D);
+    private EntityAIAttackContinuously enhancedCombat = new EntityAIAttackContinuously(this, 0.65D);
 
     public int angerLevel;
 
@@ -89,9 +89,9 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
         this.timeUntilTeleport = this.rand.nextInt(250);
 
         this.registerEntityAI();
-		this.setBossName(AetherNameGen.valkGen());
+        this.setBossName(AetherNameGen.valkGen());
 
-		this.setSpawnPosition((int) this.posX, (int) this.posY, (int) this.posZ);
+        this.setSpawnPosition((int) this.posX, (int) this.posY, (int) this.posZ);
     }
 
     public EntityValkyrieQueen(World world, double x, double y, double z)
@@ -111,72 +111,72 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     }
 
     @Override
-	protected void applyEntityAttributes()
-	{
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(28.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(13.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500.0D);
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(28.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(13.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500.0D);
         this.setHealth(500F);
-	}
+    }
 
     public void entityInit()
-	{	    
-    	super.entityInit();
-    	this.posX = Math.floor(this.posX + 0.5D);
-    	this.posY = Math.floor(this.posY + 0.5D);
-    	this.posZ = Math.floor(this.posZ + 0.5D);
-    	this.dataManager.register(VALKYRIE_READY, false);
-    	this.dataManager.register(VALKYRIE_NAME, AetherNameGen.valkGen());
-	}
+    {       
+        super.entityInit();
+        this.posX = Math.floor(this.posX + 0.5D);
+        this.posY = Math.floor(this.posY + 0.5D);
+        this.posZ = Math.floor(this.posZ + 0.5D);
+        this.dataManager.register(VALKYRIE_READY, false);
+        this.dataManager.register(VALKYRIE_NAME, AetherNameGen.valkGen());
+    }
 
     public void swingArm()
     {
         if (!this.isSwingInProgress)
         {
-        	this.isSwingInProgress = true;
+            this.isSwingInProgress = true;
         }
     }
 
     private void becomeAngryAt(EntityLivingBase entity)
     {
-    	this.setAttackTarget(entity);
-    	this.angerLevel = 200 + rand.nextInt(200);
+        this.setAttackTarget(entity);
+        this.angerLevel = 200 + rand.nextInt(200);
     }
 
     public void setSpawnPosition(int i, int j, int k)
     {
-    	this.safeX = i;
-    	this.safeY = j;
-    	this.safeZ = k;	
+        this.safeX = i;
+        this.safeY = j;
+        this.safeZ = k; 
     }
 
     public void setDungeonPosition(int i, int j, int k) 
     {
-    	this.dungeonX = i;
-    	this.dungeonY = j;
-    	this.dungeonZ = k;
+        this.dungeonX = i;
+        this.dungeonY = j;
+        this.dungeonZ = k;
     }
 
     private void unlockDoor() 
     {
-    	IBlockState state = Blocks.AIR.getDefaultState();
+        IBlockState state = Blocks.AIR.getDefaultState();
 
-    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ), state);
-    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1), state);
-    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1), state);
-    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ), state);
+        this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ), state);
+        this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1), state);
+        this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1), state);
+        this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ), state);
     }
 
     private void unlockTreasure() 
     {
-		IBlockState state = Blocks.TRAPDOOR.getDefaultState();
+        IBlockState state = Blocks.TRAPDOOR.getDefaultState();
 
-		this.world.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
-		this.world.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
-		this.world.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
-		this.world.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
+        this.world.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
+        this.world.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 9), state.withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH), 2);
+        this.world.setBlockState(new BlockPos(this.dungeonX + 16, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
+        this.world.setBlockState(new BlockPos(this.dungeonX + 17, dungeonY + 1, dungeonZ + 10), state.withProperty(BlockTrapDoor.FACING, EnumFacing.NORTH), 2);
 
         for (int x = this.dungeonX - 27; x < this.dungeonX + 30; x++)
         {
@@ -184,36 +184,36 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
             {
                 for (int z = this.dungeonZ - 6; z < this.dungeonZ + 26; z++) 
                 {
-                	BlockPos pos = new BlockPos(x, y, z);
+                    BlockPos pos = new BlockPos(x, y, z);
                     IBlockState block = this.world.getBlockState(pos);
                     
                     if (block == this.lockedDungeonStone)
                     {
-                    	this.world.setBlockState(pos, this.dungeonStone, 2);
+                        this.world.setBlockState(pos, this.dungeonStone, 2);
                     }
                     if (block == this.dungeonStone) 
                     {
-                    	this.world.setBlockState(pos, this.dungeonStone, 2);
+                        this.world.setBlockState(pos, this.dungeonStone, 2);
                     }
                     if (block == this.lockedLightDungeonStone) 
                     {
-                    	this.world.setBlockState(pos, this.dungeonStone, 2);
+                        this.world.setBlockState(pos, this.dungeonStone, 2);
                     }
                 }
             }
         }
     }
 
-    private void chatItUp(EntityPlayer player, String s)
+    private void chatItUp(EntityPlayer player, ITextComponent s)
     {
-		Side side = FMLCommonHandler.instance().getEffectiveSide();
+        Side side = FMLCommonHandler.instance().getEffectiveSide();
 
         if (this.chatTime <= 0)
         {
-        	if (side.isClient())
-        	{
+            if (side.isClient())
+            {
                 Aether.proxy.sendMessage(player, s);
-        	}
+            }
 
             this.chatTime = 60;
         }
@@ -223,27 +223,27 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     {
         for (int i = 0; i < shots; i++) 
         {
-        	EntityThunderBall e1 = new EntityThunderBall(this.world, this.posX - (this.motionX / 2D), this.posY, this.posZ - (this.motionZ / 2D), player);
-        	if (!this.world.isRemote)
-        	{
-            	this.world.spawnEntity(e1);
-        	}
+            EntityThunderBall e1 = new EntityThunderBall(this.world, this.posX - (this.motionX / 2D), this.posY, this.posZ - (this.motionZ / 2D), player);
+            if (!this.world.isRemote)
+            {
+                this.world.spawnEntity(e1);
+            }
         }
     }
 
     @Override
     public boolean processInteract(EntityPlayer entityplayer, EnumHand hand)
     {
-		faceEntity(entityplayer, 180F, 180F);
-		
-		if (this.isBossReady())
-		{
-			this.chatItUp(entityplayer, I18n.format("gui.queen.ready"));
-		}
-		else
-		{
-			this.displayValkyrieDialogue();
-		}
+        faceEntity(entityplayer, 180F, 180F);
+        
+        if (this.isBossReady())
+        {
+            this.chatItUp(entityplayer, new TextComponentTranslation("gui.queen.ready"));
+        }
+        else
+        {
+            this.displayValkyrieDialogue();
+        }
 
         return true;
     }
@@ -251,44 +251,44 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     @SideOnly(Side.CLIENT)
     public void displayValkyrieDialogue()
     {
-		if (this.world.isRemote)
-		{
-			FMLClientHandler.instance().getClient().displayGuiScreen(new GuiValkyrieDialogue(this));
-		}
+        if (this.world.isRemote)
+        {
+            FMLClientHandler.instance().getClient().displayGuiScreen(new GuiValkyrieDialogue(this));
+        }
     }
 
     @Override
     public void onEntityUpdate() 
     {
-    	super.onEntityUpdate();
+        super.onEntityUpdate();
 
         if (!this.isBossReady()) 
         {
-        	this.motionY *= .5f;
-        	this.moveStrafing = this.moveForward = 0;
+            this.motionY *= .5f;
+            this.moveStrafing = this.moveForward = 0;
         }
         else
         {
             if (this.getAttackTarget() instanceof EntityPlayer) 
             {
-            	if (this.timeUntilTeleport++ >= 450)
-            	{
+                if (this.timeUntilTeleport++ >= 450)
+                {
                     if (this.onGround && this.rand.nextInt(10) == 0)
                     {
                         this.makeHomeShot(1, (EntityPlayer) this.getAttackTarget());
                     }
                     else
                     {
-                    	this.teleport(this.getAttackTarget().posX, this.getAttackTarget().posY, this.getAttackTarget().posZ, 4);
+                        this.teleport(this.getAttackTarget().posX, this.getAttackTarget().posY, this.getAttackTarget().posZ, 4);
                     }
-            	}
+                }
                 else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D)))
                 {
-                	this.timeUntilTeleport = 446;
+                    this.timeUntilTeleport = 446;
                 }
                 else if ((this.timeUntilTeleport % 5) == 0 && !canEntityBeSeen(this.getAttackTarget()))
                 {
-                	this.timeUntilTeleport += 100;
+                    this.timeUntilTeleport += 100;
                 }
             }
 
@@ -296,18 +296,18 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
             {
                 for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) 
                 {
-                	IBlockState state = this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k));
+                    IBlockState state = this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(this.dungeonX - 1, this.dungeonY, k));
 
                     if (state != this.lockedDungeonStone || state != this.lockedLightDungeonStone)
                     {
-                    	this.dungeonEntranceZ = k;
-                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), this.lockedDungeonStone, 2);
-                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), this.lockedDungeonStone, 2);
-                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), this.lockedDungeonStone, 2);
-                    	this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), this.lockedDungeonStone, 2);
+                        this.dungeonEntranceZ = k;
+                        this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k), this.lockedDungeonStone, 2);
+                        this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, k + 1), this.lockedDungeonStone, 2);
+                        this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k + 1), this.lockedDungeonStone, 2);
+                        this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), this.lockedDungeonStone, 2);
                         return;
                     }
-                }	
+                }   
             }
         }
         
@@ -315,21 +315,21 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
         if (this.getAttackTarget() != null && this.getAttackTarget().isDead)
         {
-        	this.setAttackTarget(null);
+            this.setAttackTarget(null);
             unlockDoor();
             this.angerLevel = 0;
         }
 
         if (this.chatTime > 0)
         {
-        	this.chatTime--;
+            this.chatTime--;
         }
     }
 
     @Override
     public void onUpdate() 
     {
-    	this.lastMotionY = motionY;
+        this.lastMotionY = motionY;
         super.onUpdate();
         
         if (!this.onGround && this.getAttackTarget() != null && this.lastMotionY >= 0.0D && motionY < 0.0D && getDistance(this.getAttackTarget()) <= 16F && canEntityBeSeen(this.getAttackTarget())) 
@@ -343,55 +343,55 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
         if (!this.onGround && !isOnLadder() && Math.abs(this.motionY - this.lastMotionY) > 0.07D && Math.abs(this.motionY - this.lastMotionY) < 0.09D)
         {
-        	this.motionY += 0.055F;
+            this.motionY += 0.055F;
             
             if (this.motionY < -0.275F)
             {
-            	this.motionY = -0.275F;
+                this.motionY = -0.275F;
             }
         }
 
         if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL && (this.getAttackTarget() != null || this.angerLevel > 0)) 
         {
-        	this.angerLevel = 0;
+            this.angerLevel = 0;
             this.setAttackTarget(null);
         }
 
         if (!this.onGround) 
         {
-        	this.sinage += 0.75F;
+            this.sinage += 0.75F;
         } 
         else 
         {
-        	this.sinage += 0.15F;
+            this.sinage += 0.15F;
         }
 
         if (this.sinage > 3.141593F * 2F)
         {
-        	this.sinage -= (3.141593F * 2F);
+            this.sinage -= (3.141593F * 2F);
         }
 
         this.dismountRidingEntity();
         
         if (this.getHealth() <= 0 || this.isDead) 
         {
-        	unlockDoor();
-        	unlockTreasure();
+            unlockDoor();
+            unlockTreasure();
 
-        	if (this.getAttackTarget() instanceof EntityPlayer)
-        	{
-            	chatItUp((EntityPlayer) this.getAttackTarget(), I18n.format("gui.queen.defeated"));
+            if (this.getAttackTarget() instanceof EntityPlayer)
+            {
+                chatItUp((EntityPlayer) this.getAttackTarget(), new TextComponentTranslation("gui.queen.defeated"));
 
-            	AetherAPI.getInstance().get((EntityPlayer) this.getAttackTarget()).setFocusedBoss(null);
-        	}
+                AetherAPI.getInstance().get((EntityPlayer) this.getAttackTarget()).setFocusedBoss(null);
+            }
 
-        	spawnExplosionParticle();
-        	this.setDead();
+            spawnExplosionParticle();
+            this.setDead();
         }
 
         if (!otherDimension())
         {
-        	this.timeLeft--;
+            this.timeLeft--;
             if (this.timeLeft <= 0)
             {
                 spawnExplosionParticle();
@@ -403,14 +403,14 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     @Override
     public void move(MoverType type, double x, double y, double z)
     {
-		if (this.isBossReady())
-		{
-			super.move(type, x, y, z);
-		}
-		else
-		{
-			super.move(type, 0, y, 0);
-		}
+        if (this.isBossReady())
+        {
+            super.move(type, x, y, z);
+        }
+        else
+        {
+            super.move(type, 0, y, 0);
+        }
     }
 
     @Override
@@ -452,14 +452,14 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     {
         if (ds.getImmediateSource() instanceof EntityPlayer) 
         {
-        	EntityPlayer player = (EntityPlayer)ds.getImmediateSource();
+            EntityPlayer player = (EntityPlayer)ds.getImmediateSource();
 
-        	if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
-        	{
-        		this.spawnExplosionParticle();
-        		chatItUp(player, I18n.format("gui.queen.peaceful"));
-        		return false;
-        	}
+            if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
+            {
+                this.spawnExplosionParticle();
+                chatItUp(player, new TextComponentTranslation("gui.queen.peaceful"));
+                return false;
+            }
  
             if (!this.isBossReady()) 
             {
@@ -468,17 +468,17 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
                 if (pokey == 2)
                 {
-                    chatItUp(player, I18n.format("gui.queen.peaceful"));
+                    chatItUp(player, new TextComponentTranslation("gui.queen.peaceful"));
                 } 
                 else 
                 {
-                    chatItUp(player, I18n.format("gui.queen.nomedals"));
+                    chatItUp(player, new TextComponentTranslation("gui.queen.nomedals"));
                 }
                 return false;
             }
             else
             {
-            	IPlayerAether playerAether = AetherAPI.getInstance().get(player);
+                IPlayerAether playerAether = AetherAPI.getInstance().get(player);
                 boolean flag;
 
                 if (playerAether != null)
@@ -493,8 +493,8 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
                 if (this.getAttackTarget() == null) 
                 {
-                	this.chatTime = 0;
-                    chatItUp(player, I18n.format("gui.queen.fight"));
+                    this.chatTime = 0;
+                    chatItUp(player, new TextComponentTranslation("gui.queen.fight"));
                     if (ds.getImmediateSource() instanceof EntityLivingBase)
                     becomeAngryAt((EntityLivingBase) ds.getImmediateSource());
                 }
@@ -516,22 +516,22 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     @Override
     public boolean attackEntityAsMob(Entity entity)
     {
-    	boolean flag = false;
+        boolean flag = false;
 
         this.swingArm();
         flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 8);
 
         if (entity != null && this.getAttackTarget() != null && entity == this.getAttackTarget() && entity instanceof EntityPlayer) 
         {
-        	EntityPlayer player = (EntityPlayer)entity;
+            EntityPlayer player = (EntityPlayer)entity;
 
-        	if (player.getHealth() <= 0 || player.isDead)
-        	{
-        		this.setAttackTarget(null);
-        		this.angerLevel = this.chatTime = 0;
-        		this.chatItUp(player, I18n.format("gui.queen.lost"));
-        		this.unlockDoor();
-        	}
+            if (player.getHealth() <= 0 || player.isDead)
+            {
+                this.setAttackTarget(null);
+                this.angerLevel = this.chatTime = 0;
+                this.chatItUp(player, new TextComponentTranslation("gui.queen.lost"));
+                this.unlockDoor();
+            }
         }
 
         return flag;
@@ -545,10 +545,10 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     }
     
     @Override
-	public boolean canBeLeashedTo(final EntityPlayer player)
-	{
-		return false;
-	}
+    public boolean canBeLeashedTo(final EntityPlayer player)
+    {
+        return false;
+    }
 
 
     @Override
@@ -622,7 +622,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
             if (this.posY <= 0D)
             {
-            	this.timeUntilTeleport = 446;
+                this.timeUntilTeleport = 446;
             }
         }
         else 
@@ -641,8 +641,8 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
     public boolean isAirySpace(int x, int y, int z)
     {
-    	BlockPos pos = new BlockPos(x, y, z);
-    	IBlockState state = this.world.getBlockState(new BlockPos(x, y, z));
+        BlockPos pos = new BlockPos(x, y, z);
+        IBlockState state = this.world.getBlockState(new BlockPos(x, y, z));
 
         return state == Blocks.AIR || state.getCollisionBoundingBox(world, pos) == null;
     }
@@ -673,25 +673,25 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
     public int getMedals(EntityPlayer entityplayer)
     {
-    	int medals = 0;
+        int medals = 0;
 
-    	for (ItemStack item : entityplayer.inventory.mainInventory)
-    	{
-    		if (item != null)
-    		{
-    			if (item.getItem() == ItemsAether.victory_medal)
-    			{
-    				medals += item.getCount();
-    			}
-    		}
-    	}
+        for (ItemStack item : entityplayer.inventory.mainInventory)
+        {
+            if (item != null)
+            {
+                if (item.getItem() == ItemsAether.victory_medal)
+                {
+                    medals += item.getCount();
+                }
+            }
+        }
 
         return medals;
     }
 
     protected SoundEvent getHurtSound()
     {
-    	return SoundEvents.ENTITY_GENERIC_HURT;
+        return SoundEvents.ENTITY_GENERIC_HURT;
     }
     
     protected SoundEvent getDeathSound()
@@ -706,46 +706,46 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
     public void setBossName(String name)
     {
-    	this.dataManager.set(VALKYRIE_NAME, name);
+        this.dataManager.set(VALKYRIE_NAME, name);
     }
-	
-	public String getBossTitle()
-	{
-	   return this.getBossName() + ", " + new TextComponentTranslation("title.aether_legacy.valkyrie_queen.name", new Object[0]).getFormattedText();
-	}
+    
+    public String getBossTitle()
+    {
+       return this.getBossName() + ", " + new TextComponentTranslation("title.aether_legacy.valkyrie_queen.name", new Object[0]).getFormattedText();
+    }
 
-	public void setBossReady(boolean isReady)
-	{
-		this.dataManager.set(VALKYRIE_READY, isReady);
-	}
+    public void setBossReady(boolean isReady)
+    {
+        this.dataManager.set(VALKYRIE_READY, isReady);
+    }
 
-	public boolean isBossReady()
-	{
-		return this.dataManager.get(VALKYRIE_READY).booleanValue();
-	}
-	
-	@Override
+    public boolean isBossReady()
+    {
+        return this.dataManager.get(VALKYRIE_READY).booleanValue();
+    }
+    
+    @Override
     public float getEyeHeight()
     {
         return 1.75F;
     }
 
-	@Override
-	public float getBossHealth()
-	{
-		return this.getHealth();
-	}
+    @Override
+    public float getBossHealth()
+    {
+        return this.getHealth();
+    }
 
-	@Override
-	public float getMaxBossHealth()
-	{
-		return this.getMaxHealth();
-	}
+    @Override
+    public float getMaxBossHealth()
+    {
+        return this.getMaxHealth();
+    }
 
-	@Nullable
+    @Nullable
     protected ResourceLocation getLootTable()
     {
         return AetherLootTables.valkyrie_queen;
     }
-	
+    
 }

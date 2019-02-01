@@ -19,7 +19,6 @@ import com.legacy.aether.registry.sounds.SoundsAether;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -45,6 +44,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -54,11 +55,11 @@ import net.minecraftforge.fml.relauncher.Side;
 public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 {
 
-	public static final DataParameter<String> SUN_SPIRIT_NAME = EntityDataManager.<String>createKey(EntitySunSpirit.class, DataSerializers.STRING);
+    public static final DataParameter<String> SUN_SPIRIT_NAME = EntityDataManager.<String>createKey(EntitySunSpirit.class, DataSerializers.STRING);
 
-	public static final DataParameter<Integer> CHAT_LINE = EntityDataManager.<Integer>createKey(EntitySunSpirit.class, DataSerializers.VARINT);
+    public static final DataParameter<Integer> CHAT_LINE = EntityDataManager.<Integer>createKey(EntitySunSpirit.class, DataSerializers.VARINT);
 
-	public static final DataParameter<Boolean> FROZEN = EntityDataManager.<Boolean>createKey(EntitySunSpirit.class, DataSerializers.BOOLEAN);
+    public static final DataParameter<Boolean> FROZEN = EntityDataManager.<Boolean>createKey(EntitySunSpirit.class, DataSerializers.BOOLEAN);
 
     public int originPointX, originPointY, originPointZ;
 
@@ -95,7 +96,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
     protected void applyEntityAttributes()
     {
-    	super.applyEntityAttributes();
+        super.applyEntityAttributes();
 
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);
@@ -110,29 +111,29 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     @Override
     public void move(MoverType type, double x, double y, double z)
     {
-		if (this.getAttackTarget() != null)
-		{
-			super.move(type, x, 0, z);
-		}
-		else
-		{
-			super.move(type, 0, 0, 0);
-		}
+        if (this.getAttackTarget() != null)
+        {
+            super.move(type, x, 0, z);
+        }
+        else
+        {
+            super.move(type, 0, 0, 0);
+        }
     }
 
-	public boolean canDespawn()
+    public boolean canDespawn()
     {
         return false;
     }
-	
-	public boolean isNonBoss()
+    
+    public boolean isNonBoss()
     {
         return false;
     }
 
     protected SoundEvent getHurtSound()
     {
-    	return null;
+        return null;
     }
 
     protected SoundEvent getDeathSound()
@@ -168,7 +169,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
         tag.setBoolean("isFreezing", this.isFreezing());
     }
 
-	public void readEntityFromNBT(NBTTagCompound tag)
+    public void readEntityFromNBT(NBTTagCompound tag)
     {
         super.readEntityFromNBT(tag);
 
@@ -178,13 +179,13 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
         this.direction = tag.getInteger("dungeonDirection");
 
         this.setChatLine(tag.getInteger("chatLog"));
-		this.setBossName(tag.getString("bossName"));
-		this.setFreezing(tag.getBoolean("isFreezing"));
+        this.setBossName(tag.getString("bossName"));
+        this.setFreezing(tag.getBoolean("isFreezing"));
     }
 
     public void onUpdate()
     {
-    	this.noClip = true;
+        this.noClip = true;
         super.onUpdate();
         this.noClip = false;
 
@@ -193,18 +194,18 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
         if (this.getAttackTarget() instanceof EntityPlayer)
         {
-        	EntityPlayer player = (EntityPlayer) this.getAttackTarget();
-        	IPlayerAether playerAether = AetherAPI.getInstance().get(player);
+            EntityPlayer player = (EntityPlayer) this.getAttackTarget();
+            IPlayerAether playerAether = AetherAPI.getInstance().get(player);
 
-        	if (player.isDead)
-        	{
+            if (player.isDead)
+            {
                 this.setPosition((double)this.originPointX + 0.5D, (double)this.originPointY, (double)this.originPointZ + 0.5D);
 
                 this.chatLog = 10;
 
                 this.motionX = this.motionY = this.motionZ = 0.0D;
 
-                this.chatLine(player, TextFormatting.RED + I18n.format("gui.spirit.playerdied"));
+                this.chatLine(player, new TextComponentTranslation("gui.spirit.playerdied").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.chatCount = 100;
 
                 this.setPosition((double)this.originPointX + 0.5D, (double)this.originPointY, (double)this.originPointZ + 0.5D);
@@ -213,16 +214,16 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
                 this.setFreezing(false);
                 this.setAttackTarget(null);
                 this.setHealth(this.getMaxHealth());
-        	}
-        	else
-        	{
-				playerAether.setFocusedBoss(this);
+            }
+            else
+            {
+                playerAether.setFocusedBoss(this);
 
-        	}
+            }
 
-        	if (this.isDead())
-        	{
-                this.chatLine(player, TextFormatting.AQUA + I18n.format("gui.spirit.dead"));
+            if (this.isDead())
+            {
+                this.chatLine(player, new TextComponentTranslation("gui.spirit.dead").setStyle(new Style().setColor(TextFormatting.AQUA)));
                 this.chatCount = 100;
 
                 if (player instanceof EntityPlayerMP)
@@ -232,7 +233,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
                 this.setDoor(Blocks.AIR.getDefaultState());
                 this.unlockTreasure();
-        	}
+            }
         }
 
         this.setFreezing(this.hurtTime > 0);
@@ -344,8 +345,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
             if (entity instanceof EntityLivingBase && !entity.isImmuneToFire())
             {
-            	entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
-            	entity.setFire(15);
+                entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
+                entity.setFire(15);
             }
         }
     }
@@ -383,7 +384,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
     public void makeFireBall(int var1)
     {
-    	this.world.playSound(null, this.getPosition(), SoundsAether.sun_spirit_shoot, SoundCategory.HOSTILE, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F,1.0F);
+        this.world.playSound(null, this.getPosition(), SoundsAether.sun_spirit_shoot, SoundCategory.HOSTILE, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F,1.0F);
 
         boolean shootIceyBall = false;
 
@@ -391,31 +392,31 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
         if (this.ballCount >= 3 + this.rand.nextInt(3))
         {
-        	shootIceyBall = true;
+            shootIceyBall = true;
             this.ballCount = 0;
         }
 
         for (int var3 = 0; var3 < var1; ++var3)
         {
-        	if (shootIceyBall == false)
-        	{
-        		EntityFireBall fireball = new EntityFireBall(this.world, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D);
+            if (shootIceyBall == false)
+            {
+                EntityFireBall fireball = new EntityFireBall(this.world, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D);
 
-        		if (!this.world.isRemote)
-        		{
-            		this.world.spawnEntity(fireball);
-        		}
-        	}
-        	
-        	if (shootIceyBall == true)
-        	{
-        		EntityIceyBall iceBall = new EntityIceyBall(this.world, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D, false);
+                if (!this.world.isRemote)
+                {
+                    this.world.spawnEntity(fireball);
+                }
+            }
+            
+            if (shootIceyBall == true)
+            {
+                EntityIceyBall iceBall = new EntityIceyBall(this.world, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D, false);
 
-        		if (!this.world.isRemote)
-        		{
-            		this.world.spawnEntity(iceBall);
-        		}
-        	}
+                if (!this.world.isRemote)
+                {
+                    this.world.spawnEntity(iceBall);
+                }
+            }
         }
     }
 
@@ -431,15 +432,15 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
         }
     }
 
-    private void chatLine(EntityPlayer player, String s)
+    private void chatLine(EntityPlayer player, ITextComponent s)
     {
-		Side side = FMLCommonHandler.instance().getEffectiveSide();
+        Side side = FMLCommonHandler.instance().getEffectiveSide();
 
         if (this.chatCount <= 0)
         {
             if (side.isClient())
             {
-            	Aether.proxy.sendMessage(player, s);
+                Aether.proxy.sendMessage(player, s);
             }
         }
     }
@@ -450,64 +451,64 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
         {
             if (this.getChatLine() == 0)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line0"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line0").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(1);
             }
             else if (this.getChatLine() == 1)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line1"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line1").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(2);
             }
             else if (this.getChatLine() == 2)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line2"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line2").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(3);
             }
             else if (this.getChatLine() == 3)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line3"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line3").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(4);
             }
             else if (this.getChatLine() == 4)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line4"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line4").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(5);
             }
             else if (this.getChatLine() == 5)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line5.1"));
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line5.2"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line5.1").setStyle(new Style().setColor(TextFormatting.RED)));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line5.2").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(6);
             }
             else if (this.getChatLine() == 6)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line6.1"));
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line6.2"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line6.1").setStyle(new Style().setColor(TextFormatting.RED)));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line6.2").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(7);
             }
             else if (this.getChatLine() == 7)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line7.1"));
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line7.2"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line7.1").setStyle(new Style().setColor(TextFormatting.RED)));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line7.2").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(8);
             }
             else if (this.getChatLine() == 8)
             {
-                this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line8"));
+                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line8").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(9);
             }
             else
             {
                 if (this.getChatLine() == 9)
                 {
-                    this.chatLine(entityPlayer, TextFormatting.GOLD + I18n.format("gui.spirit.line9"));
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line9").setStyle(new Style().setColor(TextFormatting.GOLD)));
                     this.setChatLine(10);
                     return true;
                 }
 
                 if (this.getChatLine() == 10 && this.getAttackTarget() == null)
                 {
-                    this.chatLine(entityPlayer, TextFormatting.RED + I18n.format("gui.spirit.line10"));
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line10").setStyle(new Style().setColor(TextFormatting.RED)));
                     this.setChatLine(9);
                 }
             }
@@ -522,12 +523,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
         if (this.chatWithMe(player))
         {
             //this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
-        	//this.getLookHelper().setLookPosition(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ, (float)this.getHorizontalFaceSpeed(), (float)this.getVerticalFaceSpeed());
+            //this.getLookHelper().setLookPosition(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ, (float)this.getHorizontalFaceSpeed(), (float)this.getVerticalFaceSpeed());
             this.setAttackTarget(player);
             this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
 
             return true;
-            	
+                
         }
         else
         {
@@ -610,7 +611,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
             {
                 for (z = this.originPointZ - 1; z < this.originPointZ + 2; ++z)
                 {
-                	BlockPos pos = new BlockPos(this.originPointX + (this.direction == 0 ? -13 : 13), y, z);
+                    BlockPos pos = new BlockPos(this.originPointX + (this.direction == 0 ? -13 : 13), y, z);
 
                     this.world.setBlockState(pos, block, 2);
                 }
@@ -622,7 +623,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
             {
                 for (x = this.originPointX - 1; x < this.originPointX + 2; ++x)
                 {
-                	BlockPos pos = new BlockPos(x, y, this.originPointZ + (this.direction != 3 ? 13 : -13));
+                    BlockPos pos = new BlockPos(x, y, this.originPointZ + (this.direction != 3 ? 13 : -13));
 
                     this.world.setBlockState(pos, block, 2);
                 }
@@ -632,7 +633,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
     private void unlockTreasure()
     {
-    	int x, y, z;
+        int x, y, z;
 
         if (this.direction / 2 == 0)
         {
@@ -657,32 +658,32 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
         for (x = this.originPointX - 20; x < this.originPointX + 20; ++x)
         {
-        	for (y = this.originPointY  - 3; y < this.originPointY + 6; ++y)
-        	{
-        		for (z = this.originPointZ - 20; z < this.originPointZ + 20; ++z)
-        		{
-        			BlockPos newPos = new BlockPos(x, y, z);
-        			IBlockState unlock_block = this.world.getBlockState(newPos);
+            for (y = this.originPointY  - 3; y < this.originPointY + 6; ++y)
+            {
+                for (z = this.originPointZ - 20; z < this.originPointZ + 20; ++z)
+                {
+                    BlockPos newPos = new BlockPos(x, y, z);
+                    IBlockState unlock_block = this.world.getBlockState(newPos);
 
-        			if (unlock_block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire))
-        			{
-        				this.world.setBlockState(newPos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(unlock_block.getBlock().getMetaFromState(unlock_block))), 2);
-        			}
-        			else if (unlock_block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_hellfire))
-        			{
-        				this.world.setBlockState(newPos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(unlock_block.getBlock().getMetaFromState(unlock_block))), 2);
-        			}
-        		}
-        	}
+                    if (unlock_block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire))
+                    {
+                        this.world.setBlockState(newPos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(unlock_block.getBlock().getMetaFromState(unlock_block))), 2);
+                    }
+                    else if (unlock_block == BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_hellfire))
+                    {
+                        this.world.setBlockState(newPos, BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.getType(unlock_block.getBlock().getMetaFromState(unlock_block))), 2);
+                    }
+                }
+            }
         }
         
     }
 
     public void setOriginPosition(int x, int y, int z)
     {
-    	this.originPointX = x;
-    	this.originPointY = y;
-    	this.originPointZ = z;
+        this.originPointX = x;
+        this.originPointY = y;
+        this.originPointZ = z;
     }
 
     public String getBossName()
@@ -692,7 +693,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
     public void setBossName(String name)
     {
-    	this.dataManager.set(SUN_SPIRIT_NAME, name);
+        this.dataManager.set(SUN_SPIRIT_NAME, name);
     }
 
     public String getBossTitle()
@@ -702,23 +703,23 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
     public int getChatLine()
     {
-    	return this.dataManager.get(CHAT_LINE).intValue();
+        return this.dataManager.get(CHAT_LINE).intValue();
     }
 
     public void setChatLine(int lineNumber)
     {
         this.chatCount = 100;
-    	this.dataManager.set(CHAT_LINE, lineNumber);
+        this.dataManager.set(CHAT_LINE, lineNumber);
     }
 
     public boolean isFreezing()
     {
-    	return this.dataManager.get(FROZEN).booleanValue();
+        return this.dataManager.get(FROZEN).booleanValue();
     }
 
     public void setFreezing(boolean isFreezing)
     {
-    	this.dataManager.set(FROZEN, isFreezing);
+        this.dataManager.set(FROZEN, isFreezing);
     }
     
     @Override
@@ -728,20 +729,20 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     }
     
     @Override
-	public boolean canBeLeashedTo(final EntityPlayer player)
-	{
-		return false;
-	}
+    public boolean canBeLeashedTo(final EntityPlayer player)
+    {
+        return false;
+    }
 
-	@Override
-	public float getBossHealth()
-	{
-		return this.getHealth();
-	}
+    @Override
+    public float getBossHealth()
+    {
+        return this.getHealth();
+    }
 
-	@Override
-	public float getMaxBossHealth()
-	{
-		return this.getMaxHealth();
-	}
+    @Override
+    public float getMaxBossHealth()
+    {
+        return this.getMaxHealth();
+    }
 }

@@ -3,6 +3,7 @@ package com.legacy.aether;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -18,7 +19,7 @@ public class CommonProxy
 
 	public EntityPlayer getThePlayer() { return null; }
 
-	public void sendMessage(EntityPlayer player, String message) { }
+	public void sendMessage(EntityPlayer player, ITextComponent message) { }
 
 	public void spawnBlockBrokenFX(IBlockState state, BlockPos pos) { }
 

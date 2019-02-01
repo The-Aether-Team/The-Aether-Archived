@@ -2,16 +2,6 @@ package com.legacy.aether.client;
 
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.FMLClientHandler;
-
 import com.legacy.aether.CommonProxy;
 import com.legacy.aether.client.audio.AetherMusicHandler;
 import com.legacy.aether.client.gui.GuiAetherInGame;
@@ -20,6 +10,16 @@ import com.legacy.aether.client.gui.toast.GuiAetherToast;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.blocks.BlockRendering;
 import com.legacy.aether.client.renders.items.ItemRendering;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class ClientProxy extends CommonProxy
 {
@@ -56,11 +56,11 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void sendMessage(EntityPlayer reciever, String message)
+	public void sendMessage(EntityPlayer reciever, ITextComponent message)
 	{
 		if (this.getThePlayer() == reciever)
 		{
-			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new TextComponentString(message));
+			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(message);
 		}
 	}
 
