@@ -59,7 +59,7 @@ public class AetherBiomeDecorator extends BiomeDecorator {
 	@Override
 	public void decorateChunk(World worldIn, Random random, BiomeGenBase biome, int x, int z) {
 		if (this.world != null) {
-			throw new RuntimeException("Already decorating");
+			System.out.println("Already decorating");
 		} else {
 			this.world = worldIn;
 			this.rand = random;
