@@ -60,6 +60,8 @@ public interface IPlayerAether
 
 	public boolean isDonator();
 
+	public void shouldPortalSound(boolean playSound);
+
 	public boolean shouldPortalSound();
 	
 	public boolean inPortalBlock();

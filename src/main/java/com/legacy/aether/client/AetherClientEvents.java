@@ -18,6 +18,7 @@ import com.legacy.aether.universal.fastcrafting.FastCraftingUtil;
 import com.legacy.aether.universal.pixelmon.PixelmonUtil;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDownloadTerrain;
 import net.minecraft.client.gui.GuiScreen;
@@ -26,6 +27,7 @@ import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -79,13 +81,12 @@ public class AetherClientEvents
 	                this.mc.player.closeScreen();
 	            }
 			}
-			
-			
-			  //if (AetherAPI.getInstance().get(mc.player).shouldPortalSound())
-			  //{
-			  //this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.BLOCK_PORTAL_TRIGGER,this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
-			  //}
-			 
+
+			if (AetherAPI.getInstance().get(mc.player).shouldPortalSound())
+			{
+				this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.BLOCK_PORTAL_TRIGGER,this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
+				AetherAPI.getInstance().get(mc.player).shouldPortalSound(false);
+			}
 		}
 			
 	}
