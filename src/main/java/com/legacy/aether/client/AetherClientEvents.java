@@ -248,7 +248,10 @@ public class AetherClientEvents {
 		if (event.entity instanceof EntityPlayer) {
 			PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.entity);
 
-			PlayerAetherRenderer.instance().renderAccessories(playerAether, (RenderPlayer) event.renderer, event.x, event.y, event.z, PlayerAetherRenderer.instance().getPartialTicks());
+			if (event.renderer instanceof RenderPlayer)
+			{
+				PlayerAetherRenderer.instance().renderAccessories(playerAether, (RenderPlayer) event.renderer, event.x, event.y, event.z, PlayerAetherRenderer.instance().getPartialTicks());
+			}
 		}
 	}
 
