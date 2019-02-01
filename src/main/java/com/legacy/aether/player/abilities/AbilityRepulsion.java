@@ -50,6 +50,11 @@ public class AbilityRepulsion implements IAetherAbility {
 
 				Entity shooter = this.getShooter(projectile);
 
+				if (shooter == null)
+				{
+					return;
+				}
+
 				x = this.player.getEntity().posX - shooter.posX;
 				y = this.player.getEntity().boundingBox.minY - shooter.boundingBox.minY;
 				z = this.player.getEntity().posZ - shooter.posZ;
