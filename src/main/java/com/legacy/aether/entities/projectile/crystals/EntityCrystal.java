@@ -219,7 +219,7 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
     }
 
     public void moveTowardsTarget(Entity target, double speed) {
-        if (this.worldObj.isRemote) {
+        if (target == null || this.worldObj.isRemote) {
             return;
         }
 
