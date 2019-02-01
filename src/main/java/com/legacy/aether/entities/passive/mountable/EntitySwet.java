@@ -35,9 +35,9 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 public class EntitySwet extends EntityMountable implements IEntityAdditionalSpawnData
 {
 
-	public static final DataParameter<Boolean> FRIENDLY = EntityDataManager.<Boolean>createKey(EntitySwet.class, DataSerializers.BOOLEAN);
-
 	public static final DataParameter<Integer> ATTACK_COOLDOWN = EntityDataManager.<Integer>createKey(EntitySwet.class, DataSerializers.VARINT);
+
+	private boolean isFriendly;
 
 	private int swetType;
 
@@ -86,7 +86,6 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 	{
 		super.entityInit();
 
-		this.dataManager.register(FRIENDLY, false);
 		this.dataManager.register(ATTACK_COOLDOWN, 100);
 	}
 
@@ -633,12 +632,12 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 
 	public boolean isFriendly()
 	{
-		return this.dataManager.get(FRIENDLY).booleanValue();
+		return this.isFriendly;
 	}
 
 	private void setFriendly(boolean friendly)
 	{
-		this.dataManager.set(FRIENDLY, friendly);
+		this.isFriendly = friendly;
 	}
 
 	public int getType()
