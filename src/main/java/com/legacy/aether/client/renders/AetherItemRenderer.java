@@ -67,25 +67,28 @@ public class AetherItemRenderer extends ItemRenderer {
 
 		renderPlayer.renderFirstPersonArm(playerIn);
 
-		this.mc.getTextureManager().bindTexture(((ItemAccessory) gloves.getItem()).texture);
+		if (gloves.getItem() instanceof ItemAccessory)
+		{
+			this.mc.getTextureManager().bindTexture(((ItemAccessory) gloves.getItem()).texture);
 
-		int colour = gloves.getItem().getColorFromItemStack(gloves, 0);
-		float red = ((colour >> 16) & 0xff) / 255F;
-		float green = ((colour >> 8) & 0xff) / 255F;
-		float blue = (colour & 0xff) / 255F;
+			int colour = gloves.getItem().getColorFromItemStack(gloves, 0);
+			float red = ((colour >> 16) & 0xff) / 255F;
+			float green = ((colour >> 8) & 0xff) / 255F;
+			float blue = (colour & 0xff) / 255F;
 
-		if (gloves.getItem() != ItemsAether.phoenix_gloves) {
-			GL11.glColor3f(red, green, blue);
+			if (gloves.getItem() != ItemsAether.phoenix_gloves) {
+				GL11.glColor3f(red, green, blue);
+			}
+
+			GL11.glEnable(GL11.GL_BLEND);
+
+			renderPlayer.modelBipedMain.onGround = 0.0F;
+			renderPlayer.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerIn);
+			renderPlayer.modelBipedMain.bipedRightArm.render(0.0625F);
+
+			GL11.glDisable(GL11.GL_BLEND);
+			GL11.glColor3f(1.0F, 1.0F, 1.0F);
 		}
-
-		GL11.glEnable(GL11.GL_BLEND);
-
-		renderPlayer.modelBipedMain.onGround = 0.0F;
-		renderPlayer.modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerIn);
-		renderPlayer.modelBipedMain.bipedRightArm.render(0.0625F);
-
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glColor3f(1.0F, 1.0F, 1.0F);
 	}
 
 	@Override
