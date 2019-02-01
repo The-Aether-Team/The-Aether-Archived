@@ -281,7 +281,10 @@ public class PlayerAether implements IPlayerAether {
 				this.getEntity().riddenByEntity.mountEntity(null);
 			}
 
-			server.getConfigurationManager().transferPlayerToDimension((EntityPlayerMP) this.getEntity(), transferDimension, teleporter);
+			if (server != null && server.getConfigurationManager() != null)
+			{
+				server.getConfigurationManager().transferPlayerToDimension((EntityPlayerMP) this.getEntity(), transferDimension, teleporter);	
+			}
 		}
 	}
 

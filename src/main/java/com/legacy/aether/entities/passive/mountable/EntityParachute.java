@@ -150,13 +150,13 @@ public class EntityParachute extends Entity implements IEntityAdditionalSpawnDat
     @Override
     public void writeSpawnData(ByteBuf buffer) {
         buffer.writeBoolean(this.isGoldenParachute);
-        buffer.writeInt(this.ridingPlayer.getEntityId());
+        buffer.writeInt(this.ridingPlayer == null ? 0 : this.ridingPlayer.getEntityId());
     }
 
     @Override
     public void readSpawnData(ByteBuf buffer) {
         this.isGoldenParachute = buffer.readBoolean();
-        this.ridingPlayer = (EntityPlayer) this.worldObj.getEntityByID(buffer.readInt());
+        this.ridingPlayer = buffer.readInt() == 0 ? null : (EntityPlayer) this.worldObj.getEntityByID(buffer.readInt());
     }
 
 }
