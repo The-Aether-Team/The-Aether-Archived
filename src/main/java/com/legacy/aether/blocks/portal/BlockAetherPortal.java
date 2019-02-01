@@ -59,8 +59,8 @@ public class BlockAetherPortal extends BlockPortal
 	        }
 			else if (!world.isRemote)
 	        {
+				entity.timeUntilPortal = 300;
 				entity.changeDimension(transferDimension, new TeleporterAether(true, server.getWorld(transferDimension)));
-	        	entity.timeUntilPortal = 300;
 	        }
 		}
 	}
