@@ -240,7 +240,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
         {
             this.chatItUp(entityplayer, new TextComponentTranslation("gui.queen.ready"));
         }
-        else
+        else if (this.world.isRemote)
         {
             this.displayValkyrieDialogue();
         }
@@ -307,11 +307,9 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
                         this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, k), this.lockedDungeonStone, 2);
                         return;
                     }
-                }   
+                }
             }
         }
-        
-        
 
         if (this.getAttackTarget() != null && this.getAttackTarget().isDead)
         {
