@@ -344,6 +344,11 @@ public class EntitySheepuff extends EntityAetherAnimal
 	{
 		return new EntitySheepuff(world);
 	}
+	
+	public float getEyeHeight()
+    {
+        return 0.95F * this.height;
+    }
 
 	@Nullable
     protected ResourceLocation getLootTable()

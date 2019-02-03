@@ -51,15 +51,14 @@ public class EntityFlyingCow extends EntitySaddleMount
 	public EntityFlyingCow(World world)
 	{
 		super(world);
-
+		this.setSize(0.9F, 1.4F);
+		
 		this.ticks = 0;
 		this.maxJumps = 1;
 		this.jumpsRemaining = 0;
 		this.stepHeight = 1.0F;
 		this.ignoreFrustumCheck = true;
 		this.canJumpMidAir = true;
-
-		this.setSize(0.9F, 1.3F);
 	}
 
 	@Override
@@ -226,6 +225,11 @@ public class EntityFlyingCow extends EntitySaddleMount
 		return 0.4F;
 	}
 
+	public float getEyeHeight()
+    {
+        return this.isChild() ? this.height : 1.3F;
+    }
+	
 	@Override
 	protected void playStepSound(BlockPos pos, Block par4)
 	{

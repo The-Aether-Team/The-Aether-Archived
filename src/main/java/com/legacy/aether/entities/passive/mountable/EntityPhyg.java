@@ -46,15 +46,14 @@ public class EntityPhyg extends EntitySaddleMount
 	public EntityPhyg(World world)
 	{
 		super(world);
-
+		this.setSize(0.9F, 0.9F);
+		
 		this.jumpsRemaining = 0;
 		this.maxJumps = 1;
 		this.stepHeight = 1.0F;
 
 		this.ignoreFrustumCheck = true;
 		this.canJumpMidAir = true;
-
-		this.setSize(0.9F, 1.3F);
 	}
 
 	@Override
