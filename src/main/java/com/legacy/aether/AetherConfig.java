@@ -91,6 +91,9 @@ public class AetherConfig
 		
 		@Config.Comment("Swaps the Golden Feather with the Valkyrie Cape in dungeon loot")
 		public boolean valkyrie_cape = false;
+
+		@Config.Comment("Disables spawn of Aether Legacy portal for use with portal being provided by another mod.")
+		public boolean disable_portal = false;
 	}
 
 	@Mod.EventBusSubscriber(modid = Aether.modid)
