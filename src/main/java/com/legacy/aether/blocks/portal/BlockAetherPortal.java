@@ -68,6 +68,11 @@ public class BlockAetherPortal extends BlockPortal
 	@Override
 	public boolean trySpawnPortal(World worldIn, BlockPos pos)
 	{
+        if (AetherConfig.gameplay_changes.disable_portal)
+        {
+            return false;
+        }
+
 		AetherPortalSize aetherportal$size = new AetherPortalSize(worldIn, pos, EnumFacing.Axis.X);
 
         if (aetherportal$size.isValid() && aetherportal$size.portalBlockCount == 0)
