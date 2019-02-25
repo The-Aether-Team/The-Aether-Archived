@@ -152,7 +152,7 @@ public class EntityValkyrie extends EntityMob
             return false;
         }
 
-        return true;
+        return super.processInteract(entityplayer, hand);
     }
 
     public void teleport(double x, double y, double z, int rad) 
@@ -454,6 +454,17 @@ public class EntityValkyrie extends EntityMob
         return flag;
     }
 
+    @Override
+    public void updateRidden()
+    {
+        super.updateRidden();
+
+        if (this.getRidingEntity() != null)
+        {
+        	this.dismountRidingEntity();
+        }
+    }
+    
     @Override
     protected void dropFewItems(boolean var1, int var2) 
     {

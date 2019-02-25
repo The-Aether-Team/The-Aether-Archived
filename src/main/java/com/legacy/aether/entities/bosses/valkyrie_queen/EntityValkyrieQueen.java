@@ -245,7 +245,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
             this.displayValkyrieDialogue();
         }
 
-        return true;
+        return super.processInteract(entityplayer, hand);
     }
 
     @SideOnly(Side.CLIENT)
@@ -369,8 +369,6 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
             this.sinage -= (3.141593F * 2F);
         }
 
-        this.dismountRidingEntity();
-        
         if (this.getHealth() <= 0 || this.isDead) 
         {
             unlockDoor();
@@ -533,6 +531,17 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
         }
 
         return flag;
+    }
+    
+    @Override
+    public void updateRidden()
+    {
+        super.updateRidden();
+
+        if (this.getRidingEntity() != null)
+        {
+        	this.dismountRidingEntity();
+        }
     }
 
     @Override
