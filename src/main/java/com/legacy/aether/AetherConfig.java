@@ -94,6 +94,9 @@ public class AetherConfig
 
 		@Config.Comment("Disables spawn of Aether Legacy portal for use with portal being provided by another mod.")
 		public boolean disable_portal = false;
+		
+		@Config.Comment("Disables startup loot when entering the Aether")
+		public boolean disable_startup_loot = false;
 	}
 
 	@Mod.EventBusSubscriber(modid = Aether.modid)

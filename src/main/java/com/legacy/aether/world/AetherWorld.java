@@ -1,6 +1,7 @@
 package com.legacy.aether.world;
 
 import com.legacy.aether.AetherConfig;
+import com.legacy.aether.entities.util.PlayerStartupLoot;
 import com.legacy.aether.world.biome.AetherBiome;
 import com.legacy.aether.world.gen.MapGenGoldenDungeon;
 import com.legacy.aether.world.gen.MapGenLargeColdAercloud;
@@ -14,6 +15,7 @@ import com.legacy.aether.world.gen.components.ComponentSilverDungeon;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
+import net.minecraft.world.storage.loot.properties.EntityPropertyManager;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.DimensionManager;
 
@@ -43,11 +45,9 @@ public class AetherWorld
 
 		DimensionManager.registerDimension(AetherConfig.dimension.aether_dimension_id, aether_dimension_type);
 		
-		BiomeDictionary.addTypes(aether_biome, 
-                BiomeDictionary.Type.VOID,
-                BiomeDictionary.Type.COLD,
-                BiomeDictionary.Type.MAGICAL
-                );
+		BiomeDictionary.addTypes(aether_biome, BiomeDictionary.Type.VOID, BiomeDictionary.Type.COLD, BiomeDictionary.Type.MAGICAL);
+
+		EntityPropertyManager.registerProperty(new PlayerStartupLoot.Serializer());
 	}
 
 }
