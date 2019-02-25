@@ -278,6 +278,12 @@ public class EntityAerbunny extends EntityAetherAnimal
     }
 
     @Override
+    public void onKillCommand()
+    {
+        this.setDead();
+    }
+    
+    @Override
     public boolean attackEntityFrom(DamageSource source, float damage)
     {
         return source.getImmediateSource() == this.getRidingEntity() ? false : super.attackEntityFrom(source, damage);
