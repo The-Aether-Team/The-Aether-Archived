@@ -1,6 +1,22 @@
 package com.legacy.aether;
 
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
 import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.api.player.IPlayerAetherStorage;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.AetherEntities;
 import com.legacy.aether.events.AetherEntityEvents;
@@ -11,19 +27,6 @@ import com.legacy.aether.registry.sounds.SoundsAether;
 import com.legacy.aether.tile_entities.AetherTileEntities;
 import com.legacy.aether.universal.crafttweaker.AetherCraftTweakerPlugin;
 import com.legacy.aether.world.AetherWorld;
-
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(name = "Aether Legacy", modid = Aether.modid, version = Aether.version, acceptedMinecraftVersions = "1.12.2")
 public class Aether 
@@ -42,6 +45,8 @@ public class Aether
 	@EventHandler
 	public void preInitialization(FMLPreInitializationEvent event)
 	{
+		CapabilityManager.INSTANCE.register(IPlayerAether.class, new IPlayerAetherStorage(), () -> null);
+
 		BlocksAether.initialization();
 		SoundsAether.initialization();
 		AetherAdvancements.initialization();
