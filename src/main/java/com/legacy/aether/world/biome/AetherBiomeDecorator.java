@@ -55,7 +55,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 	public WorldGenMinable zaniteGen = new WorldGenMinable(BlocksAether.zanite_ore.getDefaultState(), 8, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
 
-	public WorldGenMinable gravititeGen = new WorldGenMinable(BlocksAether.zanite_ore.getDefaultState(), 6, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
+	public WorldGenMinable gravititeGen = new WorldGenMinable(BlocksAether.gravitite_ore.getDefaultState(), 6, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
 
 	public AetherGenSkyrootTree skyroot_tree = new AetherGenSkyrootTree(false);
 
