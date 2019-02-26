@@ -1,8 +1,13 @@
 package com.legacy.aether.entities.hostile;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackRanged;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -12,25 +17,24 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.ai.aechorplant.AechorPlantAIShootPlayer;
 import com.legacy.aether.entities.passive.EntityAetherAnimal;
+import com.legacy.aether.entities.projectile.EntityPoisonNeedle;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.registry.AetherLootTables;
 
-public class EntityAechorPlant extends EntityAetherAnimal 
+public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAttackMob
 {
 
 	public float sinage;
 
 	public int poisonRemaining, size;
 
-	public EntityAechorPlant(World world) 
+	public EntityAechorPlant(World world)
 	{
 		super(world);
 
@@ -38,116 +42,166 @@ public class EntityAechorPlant extends EntityAetherAnimal
 		this.sinage = this.rand.nextFloat() * 6F;
 		this.poisonRemaining = this.rand.nextInt(4) + 2;
 
+		this.setCanPickUpLoot(false);
 		this.setPosition(this.posX, this.posY, this.posZ);
-		this.setSize(0.75F + ((float)this.size * 0.125F), 0.5F + ((float)this.size * 0.075F));
+		this.setSize(0.75F + ((float) this.size * 0.125F), 0.5F + ((float) this.size * 0.075F));
 	}
 
 	@Override
-    protected void applyEntityAttributes()
-    {
-        super.applyEntityAttributes();
-
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(15.0D);
-        this.setHealth(20F);
-    }
-
-	@Override
-    protected void initEntityAI()
-    {
-    	this.tasks.addTask(0, new AechorPlantAIShootPlayer(this));
-    }
-
-	@Override
-    public int getMaxSpawnedInChunk()
-    {
-        return 3;
-    }
-
-	@Override
-	public void onLivingUpdate() 
+	protected void applyEntityAttributes()
 	{
-		if(this.getHealth() <= 0)
-		{
-			super.onLivingUpdate();
-			return;
-		}
-		else
-		{
-			this.despawnEntity();
-		}
- 
-        if (this.isServerWorld())
-        {
-            this.world.profiler.startSection("newAi");
-            this.updateEntityActionState();
-            this.world.profiler.endSection();
-        }
+		super.applyEntityAttributes();
 
-		if(this.hurtTime > 0) 
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(15.0D);
+	}
+
+	@Override
+	protected void initEntityAI()
+	{
+		this.tasks.addTask(0, new EntityAIAttackRanged(this, 0.0D, 30, 1.0F));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
+	}
+
+	@Override
+	public int getMaxSpawnedInChunk()
+	{
+		return 3;
+	}
+
+	@Override
+	public void onLivingUpdate()
+	{
+		super.onLivingUpdate();
+
+		if (this.hurtTime > 0)
 		{
 			this.sinage += 0.9F;
-		} 
+		}
 		else
 		{
-			if(this.getAttackTarget() != null)
+			if (this.getAttackTarget() != null)
 			{
 				this.sinage += 0.3F;
 			}
-			else 
+			else
 			{
 				this.sinage += 0.1F;
 			}
 		}
 
-		if(this.sinage > 3.141593F * 2F) 
+		if (this.sinage > 3.141593F * 2F)
 		{
 			this.sinage -= (3.141593F * 2F);
 		}
+	}
 
-		if(this.getAttackTarget() == null) 
-		{
-			EntityPlayer player = this.world.getNearestAttackablePlayer(this, 10, 2);
-
-			this.setAttackTarget(player);
-		}
-
-		if(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(MathHelper.floor(this.posX), MathHelper.floor(this.posY) - 1, MathHelper.floor(this.posZ))).getBlock() != BlocksAether.aether_grass)
+	@Override
+	protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos)
+	{
+		if (state.getBlock() != BlocksAether.aether_grass)
 		{
 			this.setDead();
 		}
-
 	}
 
 	@Override
 	public void knockBack(Entity entity, float strength, double xRatio, double zRatio)
 	{
-		if(this.getHealth() >= 0) 
+		if (this.getHealth() < 0.0F)
+		{
+			super.knockBack(entity, strength, xRatio, zRatio);
+		}
+	}
+
+	@Override
+	protected void collideWithEntity(Entity entityIn)
+	{
+		if (!entityIn.isRidingSameEntity(this))
+		{
+			if (!this.noClip && !entityIn.noClip)
+			{
+				double d0 = this.posX - entityIn.posX;
+				double d1 = this.posZ - entityIn.posZ;
+				double d2 = MathHelper.absMax(d0, d1);
+
+				if (d2 >= 0.009999999776482582D)
+				{
+					d2 = (double) MathHelper.sqrt(d2);
+					d0 = d0 / d2;
+					d1 = d1 / d2;
+
+					double d3 = 1.0D / d2;
+
+					if (d3 > 1.0D)
+					{
+						d3 = 1.0D;
+					}
+
+					d0 = d0 * d3;
+					d1 = d1 * d3;
+					d0 = d0 * 0.05000000074505806D;
+					d1 = d1 * 0.05000000074505806D;
+					d0 = d0 * (double) (1.0F - entityIn.entityCollisionReduction);
+					d1 = d1 * (double) (1.0F - entityIn.entityCollisionReduction);
+
+					if (!entityIn.isBeingRidden())
+					{
+						entityIn.addVelocity(-d0, 0.0D, -d1);
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor)
+	{
+		if(this.world.getDifficulty().equals(EnumDifficulty.PEACEFUL)) 
 		{
 			return;
 		}
 
-		super.knockBack(entity, strength, xRatio, zRatio);
+		double x = target.posX - this.posX;
+		double z = target.posZ - this.posZ;
+		double y = 0.1D + (Math.sqrt((x * x) + (z * z) + 0.1D) * 0.5D) + ((this.posY - target.posY) * 0.25D);
+
+		double distance = 1.5D / Math.sqrt((x * x) + (z * z) + 0.1D);
+
+		x = x * distance;
+		z = z * distance;
+
+		EntityPoisonNeedle poisonNeedle = new EntityPoisonNeedle(this.world, this);
+
+		poisonNeedle.shoot(this, this.rotationPitch, this.rotationYaw, 0.0F, 0.5F, 1.0F);
+		poisonNeedle.posY = this.posY + 1D;
+
+        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.getRNG().nextFloat() * 0.2F + 0.9F));
+		this.world.spawnEntity(poisonNeedle);
+
+		poisonNeedle.shoot(x, y, z, 0.285F + ((float)y * 0.05F), 1.0F);
 	}
 
 	@Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand)
+	public boolean processInteract(EntityPlayer player, EnumHand hand)
 	{
 		ItemStack heldItem = player.getHeldItem(hand);
 
-		if(heldItem != null && !this.world.isRemote)
+		if (!this.world.isRemote)
 		{
 			if (heldItem.getItem() == ItemsAether.skyroot_bucket && EnumSkyrootBucketType.getType(heldItem.getMetadata()) == EnumSkyrootBucketType.Empty && this.poisonRemaining > 0)
 			{
-	            if (heldItem.getCount() - 1 == 0)
-	            {
-	                player.setHeldItem(hand, new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.meta));
-	            }
-	            else if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.meta)))
-	            {
-	                player.dropItem(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.meta), false);
-	            }
+				heldItem.shrink(1);
 
-	            --this.poisonRemaining;
+				if (heldItem.getCount() == 0)
+				{
+					player.setHeldItem(hand, new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.getMeta()));
+				}
+				else if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.getMeta())))
+				{
+					player.dropItem(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Poison.getMeta()), false);
+				}
+
+				--this.poisonRemaining;
 			}
 		}
 
@@ -155,38 +209,28 @@ public class EntityAechorPlant extends EntityAetherAnimal
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound nbttagcompound)
-    {
-        super.writeEntityToNBT(nbttagcompound);
-
-		nbttagcompound.setInteger("Size", this.size);
-    }
-
-	@Override
-    public void readEntityFromNBT(NBTTagCompound nbttagcompound)
-    {
-        super.readEntityFromNBT(nbttagcompound);
-
-		this.size = nbttagcompound.getInteger("Size");
-    }
-
-    @Override
-    protected void dropFewItems(boolean var1, int var2) 
-    {
-    	//this.dropItem(ItemsAether.aechor_petal, 2);
-    }
-
-	@Override
-	public EntityAgeable createChild(EntityAgeable baby) 
+	public void writeEntityToNBT(NBTTagCompound compound)
 	{
-		return null;
+		super.writeEntityToNBT(compound);
+
+		compound.setInteger("Size", this.size);
 	}
 
 	@Override
-	protected SoundEvent getDeathSound()
+	public void readEntityFromNBT(NBTTagCompound compound)
 	{
-        return SoundEvents.ENTITY_GENERIC_BIG_FALL;
-    }
+		super.readEntityFromNBT(compound);
+
+		this.size = compound.getInteger("Size");
+	}
+
+	@Override
+	public boolean canEntityBeSeen(Entity entity)
+	{
+		double distance = this.getDistance(entity);
+
+		return distance <= 4.0F && super.canEntityBeSeen(entity);
+	}
 
 	@Override
 	public boolean getCanSpawnHere()
@@ -195,15 +239,39 @@ public class EntityAechorPlant extends EntityAetherAnimal
 	}
 
 	@Override
-    protected boolean canDespawn()
-    {
-        return true;
-    }
-	
-	@Nullable
-    protected ResourceLocation getLootTable()
-    {
-        return AetherLootTables.aechor_plant;
-    }
+	public EntityAgeable createChild(EntityAgeable entity)
+	{
+		return null;
+	}
+
+	@Override
+	protected ResourceLocation getLootTable()
+	{
+		return AetherLootTables.aechor_plant;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound()
+	{
+		return SoundEvents.ENTITY_GENERIC_BIG_FALL;
+	}
+
+	@Override
+	public void setSwingingArms(boolean swingingArms)
+	{
+
+	}
+
+	@Override
+	public boolean canBePushed()
+	{
+		return false;
+	}
+
+	@Override
+	protected boolean canDespawn()
+	{
+		return true;
+	}
 
 }
