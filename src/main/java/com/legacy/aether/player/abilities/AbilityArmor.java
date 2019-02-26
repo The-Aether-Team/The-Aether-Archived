@@ -33,7 +33,7 @@ public class AbilityArmor implements IAetherAbility
 	@Override
 	public boolean shouldExecute()
 	{
-		return false;
+		return true;
 	}
 
 	@Override
