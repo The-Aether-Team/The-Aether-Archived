@@ -11,7 +11,8 @@ public class MimicModel extends ModelBase
     public ModelRenderer lower_body;
     public ModelRenderer left_leg;
     public ModelRenderer right_leg;
-
+    public ModelRenderer nob;
+    
     public MimicModel()
     {
         this.textureWidth = 128;
@@ -30,6 +31,10 @@ public class MimicModel extends ModelBase
         this.lower_body = new ModelRenderer(this, 0, 38);
         this.lower_body.setRotationPoint(-8.0F, 0.0F, -8.0F);
         this.lower_body.addBox(0.0F, 0.0F, 0.0F, 16, 10, 16, 0.0F);
+        this.nob = new ModelRenderer(this, 0, 0);
+        this.nob.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.nob.addBox(-1.0F, -2.0F, 16.0F, 2, 4, 1, 0.0F);
+        this.upper_body.addChild(this.nob);
     }
 
     @Override
@@ -47,14 +52,11 @@ public class MimicModel extends ModelBase
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
     }
-    
-    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
-    {
 
-    	this.upper_body.rotateAngleX = 3.14159265F - (float)((Math.cos((float)ageInTicks / 10F * 3.14159265F)) + 1F) * 0.6F;
-    	
-    	//this.topbun.rotateAngleX = (MathHelper.cos(ageInTicks * 0.2F) * 0.1F);
-    	 this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.7F;
-         this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount * 0.7F;
-    }
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
+	{
+		this.upper_body.rotateAngleX = 3.14159265F - (float) ((Math.cos((float) ageInTicks / 10F * 3.14159265F)) + 1F) * 0.6F;
+		this.right_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.7F;
+		this.left_leg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount * 0.7F;
+	}
 }
