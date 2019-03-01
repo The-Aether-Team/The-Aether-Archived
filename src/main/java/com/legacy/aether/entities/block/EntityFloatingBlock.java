@@ -82,10 +82,20 @@ public class EntityFloatingBlock extends Entity
 
         for (int stack = 0; stack < list.size(); ++stack)
         {
-            if (list.get(stack) instanceof EntityFallingBlock && block.canPlaceBlockAt(this.world, pos))
+        	Entity entity = (Entity) list.get(stack);
+
+            if (entity instanceof EntityFallingBlock && block.canPlaceBlockAt(this.world, pos))
             {
                 this.world.setBlockState(pos.up(), this.getBlockState(), 2);
                 this.setDead();
+            }
+            else
+            {
+            	entity.move(MoverType.PLAYER, this.motionX, this.motionY, this.motionZ);
+            	entity.setPosition(entity.posX, this.posY + 1.0D, entity.posZ);
+            	entity.motionY = 0.0D;
+            	entity.onGround = true;
+            	entity.fallDistance = 0.0F;
             }
         }
 
