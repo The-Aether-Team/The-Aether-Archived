@@ -444,7 +444,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource ds, float i) 
+    public boolean attackEntityFrom(DamageSource ds, float amount) 
     {
         if (ds.getImmediateSource() instanceof EntityPlayer) 
         {
@@ -506,7 +506,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
               return false;
            }
 
-        return super.attackEntityFrom(ds, i);
+        return super.attackEntityFrom(ds, Math.min(10, amount));
     }
 
     @Override
