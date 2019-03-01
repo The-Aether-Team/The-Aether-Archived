@@ -38,6 +38,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -218,7 +219,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
             else
             {
                 playerAether.setFocusedBoss(this);
-
             }
 
             if (this.isDead())
@@ -345,7 +345,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
             if (entity instanceof EntityLivingBase && !entity.isImmuneToFire())
             {
-                entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
+                entity.attackEntityFrom(new EntityDamageSource("incineration", this), 10);
                 entity.setFire(15);
             }
         }
@@ -404,6 +404,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
                 if (!this.world.isRemote)
                 {
+                	fireball.shootingEntity = this;
                     this.world.spawnEntity(fireball);
                 }
             }
@@ -414,6 +415,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
                 if (!this.world.isRemote)
                 {
+                	iceBall.shootingEntity = this;
                     this.world.spawnEntity(iceBall);
                 }
             }
@@ -447,8 +449,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
     public boolean chatWithMe(EntityPlayer entityPlayer)
     {
+        IPlayerAether playerAether = AetherAPI.getInstance().get(entityPlayer);
+        
         if (this.chatCount <= 0)
         {
+        	//if (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && !((PlayerAether)playerAether).seenSpiritDialog)
+        	//{
             if (this.getChatLine() == 0)
             {
                 this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line0").setStyle(new Style().setColor(TextFormatting.RED)));
@@ -497,6 +503,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
                 this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line8").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(9);
             }
+        	//}
             else
             {
                 if (this.getChatLine() == 9)
@@ -522,8 +529,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     {
         if (this.chatWithMe(player))
         {
-            //this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
-            //this.getLookHelper().setLookPosition(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ, (float)this.getHorizontalFaceSpeed(), (float)this.getVerticalFaceSpeed());
             this.setAttackTarget(player);
             this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
 
@@ -553,6 +558,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     {
         if (source.getImmediateSource() instanceof EntityIceyBall)
         {
+        	//EntityIceyBall ball = (EntityIceyBall)source.getImmediateSource();
             this.velocity = 0.5D - (double)this.getHealth() / 70.0D * 0.2D;
             boolean flag = super.attackEntityFrom(source, amount);
 

@@ -37,6 +37,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -471,7 +472,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
     {
         if (this.isAwake() && this.isMoving)
         {
-            boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 6);
+            boolean flag = entity.attackEntityFrom(new EntityDamageSource("crush", this), 6);
 
             if(flag && entity instanceof EntityLivingBase)
             {
@@ -488,7 +489,6 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
     protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) 
     {
         //this.dropItem(Item.getItemFromBlock(BlocksAether.dungeon_block), 7 + rand.nextInt(3));
-//TODO
         //this.entityDropItem(new ItemStack(ItemsAether.dungeon_key), 0.5F);
     }
 
@@ -536,14 +536,14 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource ds, float var2)
+    public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        if(ds.getImmediateSource() == null || !(ds.getImmediateSource() instanceof EntityPlayer))
+        if(source.getImmediateSource() == null || !(source.getImmediateSource() instanceof EntityPlayer))
         {
             return false;
         }
 
-        EntityPlayer player = (EntityPlayer)ds.getImmediateSource();
+        EntityPlayer player = (EntityPlayer)source.getImmediateSource();
         ItemStack stack = player.inventory.getCurrentItem();
 
         if (stack == null || stack.getItem() == null)
@@ -560,11 +560,17 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
             return false; 
         }
         
+        if (!source.isCreativePlayer() && source.getTrueSource().getDistance(this) > 6 && !this.isAwake())
+        {
+        	this.sendMessage(player, new TextComponentTranslation("It seems I'm too far away to wake it."));
+        	return false;
+        }
+        
         else if (!isTCPickaxe)
         {
-            if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool))
+            if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool) && !stack.getItem().getUnlocalizedName().contains("pickaxe"))
             {
-                this.sendMessage(player, new TextComponentTranslation("gui.slider.notpickaxe")); 
+                this.sendMessage(player, new TextComponentTranslation("gui.slider.notpickaxe"));
     
                 return false; 
             }
@@ -577,7 +583,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
             }
         }
 
-        boolean flag = super.attackEntityFrom(ds, Math.min(10, var2));
+        boolean flag = super.attackEntityFrom(source, Math.min(10, amount));
     
         if(flag)
         {

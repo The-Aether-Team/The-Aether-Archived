@@ -401,6 +401,11 @@ gui.loading.exitaether=Decending from the Aether
 # Death messages
 death.attack.inebriation=%1$s was inebriated
 death.attack.inebriation_indirect=%1$s was inebriated by %2$s
+death.attack.crush=%1$s was crushed by %2$s
+death.attack.incineration=%1$s was incinerated by %2$s
+death.attack.incineration_fir0=%1$s was incinerated by %2$s's Firo Ball
+death.attack.icey_ball=%1$s was chilled by %2$s's Icey Ball
+death.attack.lightning_ball=%1$s was zapped by %2$s's Thunder Ball
 
 # Config
 aether_legacy.config.title=Aether Legacy Configuration
