@@ -50,7 +50,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		this.modelWings = new ModelAetherWings(1.0F);
 		this.modelMisc = new ModelBiped(1.0F);
 		this.modelHalo = new ModelPlayerHalo();
-		this.modelGlow = new ModelPlayer(1.005F, false);
+		this.modelGlow = new ModelPlayer(0.7F, slimFit);
 	}
 
 	@Override
@@ -68,10 +68,13 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
 		this.modelMisc.setModelAttributes(this.modelPlayer);
 		this.modelWings.setModelAttributes(this.modelPlayer);
+		this.modelGlow.setModelAttributes(this.modelPlayer);
 
 		this.modelMisc.setLivingAnimations(player, prevLimbSwing, rotation, partialTicks);
-		//this.modelGlow.setLivingAnimations(player, prevLimbSwing, rotation, partialTicks);
+		this.modelGlow.setLivingAnimations(player, prevLimbSwing, rotation, partialTicks);
 		this.modelWings.setLivingAnimations(player, prevLimbSwing, rotation, partialTicks);
+		
+		this.modelGlow.setRotationAngles(limbSwing, prevLimbSwing, partialTicks, interpolateRotation, prevRotationPitch, scale, player);
 
         GlStateManager.scale(0.9375F, 0.9375F, 0.9375F);
 
@@ -83,8 +86,6 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
         GlStateManager.enableAlpha();
 
         GlStateManager.translate(0, player.isSneaking() ? 0.25D : 0, 0);
-
-		//this.modelGlow.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 
 		this.modelMisc.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
 		this.modelWings.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
@@ -310,8 +311,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	        GlStateManager.enableNormalize();
 	        GlStateManager.enableBlend();
 	        GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
-	        this.modelGlow.setRotationAngles(limbSwing, prevLimbSwing, rotation, interpolateRotation, prevRotationPitch, scale, player);
-	        this.modelGlow.setModelAttributes(this.modelPlayer);
+
 	        this.modelGlow.render(player, limbSwing, prevLimbSwing, partialTicks, interpolateRotation, prevRotationPitch, scale);
 
 	        GlStateManager.disableBlend();

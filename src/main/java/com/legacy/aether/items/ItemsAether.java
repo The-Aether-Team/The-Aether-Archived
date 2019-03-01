@@ -145,30 +145,30 @@ public class ItemsAether
 		valkyrie_axe = register("valkyrie_axe", new ItemValkyrieTool(EnumAetherToolType.AXE));
 		valkyrie_shovel = register("valkyrie_shovel", new ItemValkyrieTool(EnumAetherToolType.SHOVEL));
 
-		zanite_helmet = register("zanite_helmet", new ItemZaniteArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
-		zanite_chestplate = register("zanite_chestplate", new ItemZaniteArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
-		zanite_leggings = register("zanite_leggings", new ItemZaniteArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
-		zanite_boots = register("zanite_boots", new ItemZaniteArmor(EntityEquipmentSlot.FEET, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8));
+		zanite_helmet = register("zanite_helmet", new ItemZaniteArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.IRON, "zanite", zanite_gemstone));
+		zanite_chestplate = register("zanite_chestplate", new ItemZaniteArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.IRON, "zanite", zanite_gemstone));
+		zanite_leggings = register("zanite_leggings", new ItemZaniteArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.IRON, "zanite", zanite_gemstone));
+		zanite_boots = register("zanite_boots", new ItemZaniteArmor(EntityEquipmentSlot.FEET, ArmorMaterial.IRON, "zanite", zanite_gemstone));
 
-		gravitite_helmet = register("gravitite_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
-		gravitite_chestplate = register("gravitite_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
-		gravitite_leggings = register("gravitite_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
-		gravitite_boots = register("gravitite_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite), 0xe752db));
+		gravitite_helmet = register("gravitite_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite)));
+		gravitite_chestplate = register("gravitite_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite)));
+		gravitite_leggings = register("gravitite_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite)));
+		gravitite_boots = register("gravitite_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "gravitite", Item.getItemFromBlock(BlocksAether.enchanted_gravitite)));
 
-		neptune_helmet = register("neptune_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
-		neptune_chestplate = register("neptune_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
-		neptune_leggings = register("neptune_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
-		neptune_boots = register("neptune_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "neptune", null, 0x2654FF));
+		neptune_helmet = register("neptune_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "neptune", null));
+		neptune_chestplate = register("neptune_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "neptune", null));
+		neptune_leggings = register("neptune_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "neptune", null));
+		neptune_boots = register("neptune_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "neptune", null));
 
 		phoenix_helmet = register("phoenix_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "phoenix", null));
 		phoenix_chestplate = register("phoenix_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "phoenix", null));
 		phoenix_leggings = register("phoenix_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "phoenix", null));
 		phoenix_boots = register("phoenix_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "phoenix", null));
 
-		obsidian_helmet = register("obsidian_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447));
-		obsidian_chestplate = register("obsidian_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447));
-		obsidian_leggings = register("obsidian_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447));
-		obsidian_boots = register("obsidian_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "obsidian", null, 0x1b1447));
+		obsidian_helmet = register("obsidian_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "obsidian", null));
+		obsidian_chestplate = register("obsidian_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "obsidian", null));
+		obsidian_leggings = register("obsidian_leggings", new ItemAetherArmor(EntityEquipmentSlot.LEGS, ArmorMaterial.DIAMOND, "obsidian", null));
+		obsidian_boots = register("obsidian_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "obsidian", null));
 
 		valkyrie_helmet = register("valkyrie_helmet", new ItemAetherArmor(EntityEquipmentSlot.HEAD, ArmorMaterial.DIAMOND, "valkyrie", null));
 		valkyrie_chestplate = register("valkyrie_chestplate", new ItemAetherArmor(EntityEquipmentSlot.CHEST, ArmorMaterial.DIAMOND, "valkyrie", null));
@@ -217,21 +217,21 @@ public class ItemsAether
 		chain_gloves = register("chain_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("chain"));
 		diamond_gloves = register("diamond_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x33ebcb));
 
-		zanite_gloves = register("zanite_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x711ae8));
-		gravitite_gloves = register("gravitite_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xe752db));
-		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setColor(0x2654FF));
-		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("phoenix").setDungeonLoot().setColor(0xff7700).setMaxDamage(152));
-		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setColor(0x1b1447));
+		zanite_gloves = register("zanite_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("zanite"));
+		gravitite_gloves = register("gravitite_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("gravitite"));
+		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setTexture("neptune"));
+		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("phoenix").setDungeonLoot().setMaxDamage(152));
+		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setTexture("obsidian"));
 		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setTexture("valkyrie"));
 
 		iron_ring = register("iron_ring", new ItemAccessory(AccessoryType.RING));
 		golden_ring = register("golden_ring", new ItemAccessory(AccessoryType.RING).setColor(0xeaee57));
-		zanite_ring = register("zanite_ring", new ItemAccessory(AccessoryType.RING).setColor(0x711ae8).setMaxDamage(49));
+		zanite_ring = register("zanite_ring", new ItemAccessory(AccessoryType.RING).setTexture("zanite").setMaxDamage(49));
 		ice_ring = register("ice_ring", new ItemAccessory(AccessoryType.RING).setColor(0x95e6e7).setMaxDamage(125));
 
 		iron_pendant = register("iron_pendant", new ItemAccessory(AccessoryType.PENDANT));
 		golden_pendant = register("golden_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0xeaee57));
-		zanite_pendant = register("zanite_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x711ae8).setMaxDamage(98));
+		zanite_pendant = register("zanite_pendant", new ItemAccessory(AccessoryType.PENDANT).setTexture("zanite").setMaxDamage(98));
 		ice_pendant = register("ice_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x95e6e7).setMaxDamage(250));
 
 		red_cape = register("red_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xe81111));
@@ -257,7 +257,7 @@ public class ItemsAether
 
 		aether_tune = register("aether_tune", new ItemAetherDisc("aether_tune", SoundsAether.aether_tune, "Noisestorm", "Aether Tune"));
 		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", SoundsAether.ascending_dawn, "HEmile", "Ascending Dawn"));
-		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Void", "Welcoming Skies")).setCreativeTab(null);
+		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Voyed", "Welcoming Skies")).setCreativeTab(null);
 
 		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512));
 		lore_book = register("lore_book", new ItemLoreBook());

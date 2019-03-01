@@ -22,9 +22,9 @@ public class ItemZaniteArmor extends ItemAetherArmor implements ISpecialArmor
 
     private final int[][] damageReductionAmountArray = new int[][] { new int[]{1, 2, 3, 1}, new int[]{1, 4, 5, 2}, new int[]{2, 5, 6, 2}, new int[]{3, 6, 8, 3}, new int[] {4, 8, 10, 4} };
 
-	public ItemZaniteArmor(EntityEquipmentSlot armorType, ArmorMaterial material, String name, Item repair, int hex)
+	public ItemZaniteArmor(EntityEquipmentSlot armorType, ArmorMaterial material, String name, Item repair)
 	{
-		super(armorType, material, name, repair, hex);
+		super(armorType, material, name, repair);
 	}
 
 	@Override
