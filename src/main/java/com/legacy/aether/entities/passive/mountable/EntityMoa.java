@@ -328,6 +328,7 @@ public class EntityMoa extends EntitySaddleMount
 				if (!this.world.isRemote)
 				{
 					this.setRemainingJumps(this.getRemainingJumps() - 1);
+					net.minecraftforge.common.ForgeHooks.onLivingJump(this);
 				}
 
 				if (!this.world.isRemote)
