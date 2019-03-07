@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -180,7 +181,7 @@ public class EntityFireBall extends EntityFlying
             {
             	if (this.shootingEntity != null)
             	{
-            		var2 = var1.attackEntityFrom(new EntityDamageSource("incineration_firo", this.shootingEntity).setProjectile(), 5);	
+            		var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("incineration_firo", this, this.shootingEntity).setProjectile(), 5);	
             	}
             	else
             	{
