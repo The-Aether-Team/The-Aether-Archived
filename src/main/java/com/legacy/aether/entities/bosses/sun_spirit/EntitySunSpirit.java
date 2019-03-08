@@ -22,7 +22,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
@@ -38,6 +40,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -52,7 +55,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
+public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, IEntityMultiPart
 {
 
     public static final DataParameter<String> SUN_SPIRIT_NAME = EntityDataManager.<String>createKey(EntitySunSpirit.class, DataSerializers.STRING);
@@ -73,14 +76,16 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     public double rotary;
     public double velocity;
 
-    public EntitySunSpirit(World var1)
+    public MultiPartEntityPart SpiritPartHead = new MultiPartEntityPart(this, "head", 6.0F, 6.0F);
+    
+    public EntitySunSpirit(World world)
     {
-        super(var1);
+        super(world);
     }
 
-    public EntitySunSpirit(World var1, int posX, int posY, int posZ, int var6)
+    public EntitySunSpirit(World world, int posX, int posY, int posZ, int var6)
     {
-        super(var1);
+        super(world);
         this.setSize(2.25F, 2.6F);
         this.setPosition((double)posX + 0.5D, (double)posY, (double)posZ + 0.5D);
         this.setOriginPosition(posX, posY, posZ);
@@ -89,7 +94,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
         this.noClip = true;
         this.rotary = (double)this.rand.nextFloat() * 360.0D;;
         this.direction = var6;
-        //this.rotationYaw = this.rotationYawHead = var6 == 3 ? 0 : var6 == 0 ? 90 : var6 == 2 ? 180 : 270;
         
         this.tasks.addTask(1, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F, 200.0F));
     }
@@ -218,7 +222,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
             else
             {
                 playerAether.setFocusedBoss(this);
-
             }
 
             if (this.isDead())
@@ -345,7 +348,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
             if (entity instanceof EntityLivingBase && !entity.isImmuneToFire())
             {
-                entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
+                entity.attackEntityFrom(new EntityDamageSource("incineration", this), 10);
                 entity.setFire(15);
             }
         }
@@ -404,6 +407,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
                 if (!this.world.isRemote)
                 {
+                	fireball.shootingEntity = this;
                     this.world.spawnEntity(fireball);
                 }
             }
@@ -414,6 +418,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
                 if (!this.world.isRemote)
                 {
+                	iceBall.shootingEntity = this;
                     this.world.spawnEntity(iceBall);
                 }
             }
@@ -447,8 +452,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
 
     public boolean chatWithMe(EntityPlayer entityPlayer)
     {
+        //IPlayerAether playerAether = AetherAPI.getInstance().get(entityPlayer);
+        
         if (this.chatCount <= 0)
         {
+        	//if (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && !((PlayerAether)playerAether).seenSpiritDialog)
+        	//{
             if (this.getChatLine() == 0)
             {
                 this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line0").setStyle(new Style().setColor(TextFormatting.RED)));
@@ -497,6 +506,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
                 this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line8").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(9);
             }
+        	//}
             else
             {
                 if (this.getChatLine() == 9)
@@ -522,8 +532,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     {
         if (this.chatWithMe(player))
         {
-            //this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
-            //this.getLookHelper().setLookPosition(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ, (float)this.getHorizontalFaceSpeed(), (float)this.getVerticalFaceSpeed());
             this.setAttackTarget(player);
             this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
 
@@ -553,6 +561,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     {
         if (source.getImmediateSource() instanceof EntityIceyBall)
         {
+        	//EntityIceyBall ball = (EntityIceyBall)source.getImmediateSource();
             this.velocity = 0.5D - (double)this.getHealth() / 70.0D * 0.2D;
             boolean flag = super.attackEntityFrom(source, amount);
 
@@ -745,4 +754,16 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss
     {
         return this.getMaxHealth();
     }
+
+	@Override
+	public World getWorld()
+	{
+		return this.getEntityWorld();
+	}
+
+	@Override
+	public boolean attackEntityFromPart(MultiPartEntityPart spiritPart, DamageSource source, float damage)
+	{
+		return this.attackEntityFrom(source, damage);
+	}
 }

@@ -731,4 +731,5 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 	{
 		return AetherLootTables.valkyrie_queen;
 	}
+
 }

@@ -39,7 +39,9 @@ public class MimicModel extends ModelBase
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-    { 
+    {
+    	this.nob.offsetX = 0.5F;
+    	this.nob.offsetY = 0.0F;
         this.left_leg.render(f5);
         this.upper_body.render(f5);
         this.right_leg.render(f5);

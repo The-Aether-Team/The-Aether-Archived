@@ -82,6 +82,8 @@ public class PlayerAether implements IPlayerAether
 
 	public boolean shouldRenderHalo = true;
 
+	public boolean seenSpiritDialog = false;
+	
 	public DonatorMoaSkin donatorMoaSkin;
 	
 	public List<Item> extendedReachItems = Arrays.asList(new Item[] {ItemsAether.valkyrie_shovel, ItemsAether.valkyrie_pickaxe, ItemsAether.valkyrie_axe});
@@ -282,6 +284,7 @@ public class PlayerAether implements IPlayerAether
 			output.setBoolean("halo", this.shouldRenderHalo);
 		}
 
+		output.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
 		output.setInteger("hammer_cooldown", this.cooldown);
 		output.setString("notch_hammer_name", this.cooldownName);
 		output.setInteger("max_hammer_cooldown", this.cooldownMax);
@@ -301,6 +304,11 @@ public class PlayerAether implements IPlayerAether
 			input.setInteger("shard_count", (int) (input.getFloat("shards_used") / 2));
 		}
 
+		if (input.hasKey("seen_spirit_dialog"))
+		{
+			this.seenSpiritDialog = input.getBoolean("seen_spirit_dialog");
+		}
+		
 		this.cooldown = input.getInteger("hammer_cooldown");
 		this.cooldownName = input.getString("notch_hammer_name");
 		this.cooldownMax = input.getInteger("max_hammer_cooldown");

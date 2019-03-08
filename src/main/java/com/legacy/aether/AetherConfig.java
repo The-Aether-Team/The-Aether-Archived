@@ -97,6 +97,9 @@ public class AetherConfig
 		
 		@Config.Comment("Disables startup loot when entering the Aether")
 		public boolean disable_startup_loot = false;
+		
+		//@Config.Comment("If disabed, the Sun Spirit's dialog will only show once per world.")
+		//public boolean repeat_sun_spirit_dialog = true;
 	}
 
 	@Mod.EventBusSubscriber(modid = Aether.modid)

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.properties.IProperty;
@@ -35,6 +36,8 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 {
 
 	public static final PropertyEnum<EnumLeafType> leaf_type = PropertyEnum.create("aether_leaves", EnumLeafType.class);
+
+	int[] surroundings;
 
 	public BlockAetherLeaves() 
 	{
@@ -188,4 +191,118 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
         return new ItemStack(Item.getItemFromBlock(this), 1, this.getMetaFromState(state));
     }
 
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+    {
+        if (!worldIn.isRemote)
+        {
+            if (((Boolean)state.getValue(CHECK_DECAY)).booleanValue() && ((Boolean)state.getValue(DECAYABLE)).booleanValue())
+            {
+                int k = pos.getX();
+                int l = pos.getY();
+                int i1 = pos.getZ();
+                int loadedRange = 7;
+                int checkRange = 6;
+                
+                if (this.surroundings == null)
+                {
+                    this.surroundings = new int[32768]; // 2^15
+                }
+
+                if (worldIn.isAreaLoaded(new BlockPos(k - loadedRange, l - loadedRange, i1 - loadedRange), new BlockPos(k + loadedRange, l + loadedRange, i1 + loadedRange)))
+                {
+                    BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+
+                    for (int x = -checkRange; x <= checkRange; ++x)
+                    {
+                        for (int y = -checkRange; y <= checkRange; ++y)
+                        {
+                            for (int z = -checkRange; z <= checkRange; ++z)
+                            {
+                                IBlockState iblockstate = worldIn.getBlockState(blockpos$mutableblockpos.setPos(k + x, l + y, i1 + z));
+                                Block block = iblockstate.getBlock();
+
+                                if (!block.canSustainLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(k + x, l + y, i1 + z)))
+                                {
+                                    if (block.isLeaves(iblockstate, worldIn, blockpos$mutableblockpos.setPos(k + x, l + y, i1 + z)))
+                                    {
+                                    	// if leaves -2
+                                        this.surroundings[(x + 16) * 1024 + (y + 16) * 32 + z + 16] = -2;
+                                    }
+                                    else
+                                    {
+                                    	// if not sustain -1
+                                        this.surroundings[(x + 16) * 1024 + (y + 16) * 32 + z + 16] = -1;
+                                    }
+                                }
+                                else
+                                {
+                                	// if sustain 0
+                                    this.surroundings[(x + 16) * 1024 + (y + 16) * 32 + z + 16] = 0;
+                                }
+                            }
+                        }
+                    }
+
+                    for (int i3 = 1; i3 <= checkRange; ++i3)
+                    {
+                        for (int x = -checkRange; x <= checkRange; ++x)
+                        {
+                            for (int y = -checkRange; y <= checkRange; ++y)
+                            {
+                                for (int z = -checkRange; z <= checkRange; ++z)
+                                {
+                                    if (this.surroundings[(x + 16) * 1024 + (y + 16) * 32 + z + 16] == i3 - 1)
+                                    {
+                                        if (this.surroundings[(x + 16 - 1) * 1024 + (y + 16) * 32 + z + 16] == -2)
+                                        {
+                                            this.surroundings[(x + 16 - 1) * 1024 + (y + 16) * 32 + z + 16] = i3;
+                                        }
+
+                                        if (this.surroundings[(x + 16 + 1) * 1024 + (y + 16) * 32 + z + 16] == -2)
+                                        {
+                                            this.surroundings[(x + 16 + 1) * 1024 + (y + 16) * 32 + z + 16] = i3;
+                                        }
+
+                                        if (this.surroundings[(x + 16) * 1024 + (y + 16 - 1) * 32 + z + 16] == -2)
+                                        {
+                                            this.surroundings[(x + 16) * 1024 + (y + 16 - 1) * 32 + z + 16] = i3;
+                                        }
+
+                                        if (this.surroundings[(x + 16) * 1024 + (y + 16 + 1) * 32 + z + 16] == -2)
+                                        {
+                                            this.surroundings[(x + 16) * 1024 + (y + 16 + 1) * 32 + z + 16] = i3;
+                                        }
+
+                                        if (this.surroundings[(x + 16) * 1024 + (y + 16) * 32 + (z + 16 - 1)] == -2)
+                                        {
+                                            this.surroundings[(x + 16) * 1024 + (y + 16) * 32 + (z + 16 - 1)] = i3;
+                                        }
+
+                                        if (this.surroundings[(x + 16) * 1024 + (y + 16) * 32 + z + 16 + 1] == -2)
+                                        {
+                                            this.surroundings[(x + 16) * 1024 + (y + 16) * 32 + z + 16 + 1] = i3;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                int l2 = this.surroundings[16912];
+
+                if (l2 >= 0)
+                {
+                    worldIn.setBlockState(pos, state.withProperty(CHECK_DECAY, Boolean.valueOf(false)), 4);
+                }
+                else
+                {
+                	this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
+                    worldIn.setBlockToAir(pos);
+                }
+            }
+        }
+    }
+	
 }

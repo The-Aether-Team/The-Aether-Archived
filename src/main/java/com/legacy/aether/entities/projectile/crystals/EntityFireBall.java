@@ -1,5 +1,8 @@
 package com.legacy.aether.entities.projectile.crystals;
 
+import com.legacy.aether.entities.bosses.EntityFireMinion;
+import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,6 +12,8 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -16,11 +21,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import com.legacy.aether.entities.bosses.EntityFireMinion;
-import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
-
 public class EntityFireBall extends EntityFlying
 {
+
+	public Entity shootingEntity;
 
     public float[] sinage;
 
@@ -175,7 +179,14 @@ public class EntityFireBall extends EntityFlying
         {
             if (!(var1 instanceof EntitySunSpirit) && !(var1 instanceof EntityFireMinion))
             {
-                var2 = var1.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
+            	if (this.shootingEntity != null)
+            	{
+            		var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("incineration_firo", this, this.shootingEntity).setProjectile(), 5);	
+            	}
+            	else
+            	{
+            		var2 = var1.attackEntityFrom(new EntityDamageSource("incineration", this).setProjectile(), 5);
+            	}
 
                 if (var2)
                 {
@@ -205,6 +216,7 @@ public class EntityFireBall extends EntityFlying
                 this.smotionZ = var3.z;
             }
 
+            this.shootingEntity = var1.getTrueSource();
             this.smacked = true;
             return true;
         }
