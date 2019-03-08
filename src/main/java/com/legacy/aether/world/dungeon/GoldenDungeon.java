@@ -234,83 +234,72 @@ public class GoldenDungeon extends AetherDungeon
 
 	public static ItemStack getGoldLoot(Random random)
 	{
-		int item = random.nextInt(10);
-		switch(item)
+		int chance = random.nextInt(10);
+
+		switch (chance)
 		{
-			case 0 :
+			case 0:
 				return new ItemStack(ItemsAether.iron_bubble);
-			case 1 :
+			case 1:
 				return new ItemStack(ItemsAether.vampire_blade);
-			case 2 :
+			case 2:
 				return new ItemStack(ItemsAether.pig_slayer);
-			case 3 :
+			case 3:
 			{
-				if(random.nextBoolean())
+				if (random.nextBoolean())
 				{
 					return new ItemStack(ItemsAether.phoenix_helmet);
 				}
 
-				if(random.nextBoolean())
-				{
-					return new ItemStack(ItemsAether.phoenix_chestplate);
-				}
-
-				break;
+				return new ItemStack(ItemsAether.phoenix_chestplate);
 			}
-			case 4 :
+			case 4:
 			{
-				if(random.nextBoolean())
+				if (random.nextBoolean())
 				{
 					return new ItemStack(ItemsAether.phoenix_boots);
 				}
 
 				return new ItemStack(ItemsAether.phoenix_gloves);
 			}
-			case 5 :
+			case 5:
 			{
 				return new ItemStack(ItemsAether.life_shard);
 			}
-			case 6 :
+			case 6:
 			{
-				if(random.nextBoolean())
+				if (random.nextBoolean())
 				{
 					return new ItemStack(ItemsAether.gravitite_helmet);
 				}
-
-				if(random.nextBoolean())
+				else if (random.nextBoolean())
 				{
 					return new ItemStack(ItemsAether.gravitite_leggings);
 				}
 
-				if(random.nextBoolean())
-				{
-					return new ItemStack(ItemsAether.gravitite_chestplate);
-				}
-
-				break;
+				return new ItemStack(ItemsAether.gravitite_chestplate);
 			}
-			case 7 :
+			case 7:
 			{
-				if(random.nextBoolean())
+				if (random.nextBoolean())
 				{
 					return new ItemStack(ItemsAether.gravitite_boots);
 				}
 
 				return new ItemStack(ItemsAether.gravitite_gloves);
 			}
-			
-			case 8 :
+			case 8:
 			{
-				if(random.nextBoolean())
+				if (random.nextBoolean())
 				{
 					return new ItemStack(ItemsAether.phoenix_leggings);
 				}
-				
+
 				return new ItemStack(ItemsAether.chain_gloves);
 			}
-
+			default:
+				return new ItemStack(ItemsAether.obsidian_chestplate);
 		}
-		return new ItemStack(ItemsAether.obsidian_chestplate);
 	}
 
 	public IBlockState getCeilingBase() 

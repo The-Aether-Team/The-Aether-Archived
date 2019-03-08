@@ -409,30 +409,31 @@ public class BronzeDungeon extends AetherDungeon
 	
 	public static ItemStack getBronzeLoot(Random random)
 	{
-		int item = random.nextInt(10);
-		switch(item)
-		{
-			case 0 :
-				return new ItemStack(ItemsAether.gummy_swet, random.nextInt(7) + 1, random.nextInt(2));
-			case 1 :
-				return new ItemStack(ItemsAether.phoenix_bow);
-			case 2 :
-				return new ItemStack(ItemsAether.flaming_sword);
-			case 3 :
-				return new ItemStack(ItemsAether.notch_hammer);
-			case 4 :
-				return new ItemStack(ItemsAether.lightning_knife, random.nextInt(15) + 1);
-			case 5 :
-				return new ItemStack(ItemsAether.valkyrie_lance);
-			case 6 :
-				return new ItemStack(ItemsAether.agility_cape);
-			case 7 :
-				return new ItemStack(ItemsAether.sentry_boots);
-			case 8 :
-				return new ItemStack(ItemsAether.repulsion_shield);
-		}
+		int chance = random.nextInt(10);
 
-		return new ItemStack(ItemsAether.cloud_staff);
+		switch (chance)
+		{
+			case 0:
+				return new ItemStack(ItemsAether.gummy_swet, random.nextInt(7) + 1, random.nextInt(2));
+			case 1:
+				return new ItemStack(ItemsAether.phoenix_bow);
+			case 2:
+				return new ItemStack(ItemsAether.flaming_sword);
+			case 3:
+				return new ItemStack(ItemsAether.notch_hammer);
+			case 4:
+				return new ItemStack(ItemsAether.lightning_knife, random.nextInt(15) + 1);
+			case 5:
+				return new ItemStack(ItemsAether.valkyrie_lance);
+			case 6:
+				return new ItemStack(ItemsAether.agility_cape);
+			case 7:
+				return new ItemStack(ItemsAether.sentry_boots);
+			case 8:
+				return new ItemStack(ItemsAether.repulsion_shield);
+			default:
+				return new ItemStack(ItemsAether.cloud_staff);
+		}
 	}
 
 	public IBlockState lockedLightBlock()

@@ -617,68 +617,48 @@ public class ComponentSilverDungeon extends AetherStructure
 
 	public static ItemStack getSilverLoot(Random random)
 	{
-		int item = random.nextInt(13);
+		int chance = random.nextInt(20);
 
-		switch(item)
+		switch(chance)
 		{
-			case 0 :
+			case 0:
 				return new ItemStack(ItemsAether.gummy_swet, random.nextInt(15) + 1);
-			case 1 :
+			case 1:
 				return new ItemStack(ItemsAether.lightning_sword);
-			case 2 :
-			{
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.valkyrie_axe);
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.valkyrie_shovel);
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.valkyrie_pickaxe);
-				break;
-			}
-			case 3 :
+			case 2:
+				return new ItemStack(ItemsAether.valkyrie_axe);
+			case 3:
+				return new ItemStack(ItemsAether.valkyrie_shovel);
+			case 4:
+				return new ItemStack(ItemsAether.valkyrie_pickaxe);
+			case 5:
 				return new ItemStack(ItemsAether.holy_sword);
-			case 4 :
-				return new ItemStack(ItemsAether.valkyrie_helmet);			
-			case 5 :
+			case 6:
+				return new ItemStack(ItemsAether.valkyrie_helmet);
+			case 7:
 				return new ItemStack(ItemsAether.regeneration_stone);
-			case 6 :
-			{
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.neptune_helmet);
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.neptune_leggings);
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.neptune_chestplate);
-				break;
-			}
-			case 7 :
-			{
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.neptune_boots);
+			case 8:
+				return new ItemStack(ItemsAether.neptune_helmet);
+			case 9:
+				return new ItemStack(ItemsAether.neptune_leggings);
+			case 10:
+				return new ItemStack(ItemsAether.neptune_chestplate);
+			case 11:
+				return new ItemStack(ItemsAether.neptune_boots);
+			case 12:
 				return new ItemStack(ItemsAether.neptune_gloves);
-			}
-			case 8 :
+			case 13:
 				return new ItemStack(ItemsAether.invisibility_cape);
-			case 9 :
-			{
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.valkyrie_boots);
+			case 14:
+				return new ItemStack(ItemsAether.valkyrie_boots);
+			case 15:
 				return new ItemStack(ItemsAether.valkyrie_gloves);
-			}
-			case 10 :
+			case 16:
 				return new ItemStack(ItemsAether.valkyrie_leggings);
-			case 11 :
-				if(random.nextBoolean())
-					return new ItemStack(ItemsAether.valkyrie_chestplate);
-		}
-		
-		if (AetherConfig.gameplay_changes.valkyrie_cape)
-		{
-			return new ItemStack(ItemsAether.valkyrie_cape);
-		}
-		else
-		{
-			return new ItemStack(ItemsAether.golden_feather);	
+			case 17:
+				return new ItemStack(ItemsAether.valkyrie_chestplate);
+			default:
+				return AetherConfig.gameplay_changes.valkyrie_cape ? new ItemStack(ItemsAether.valkyrie_cape) : new ItemStack(ItemsAether.golden_feather);
 		}
 	}
 
