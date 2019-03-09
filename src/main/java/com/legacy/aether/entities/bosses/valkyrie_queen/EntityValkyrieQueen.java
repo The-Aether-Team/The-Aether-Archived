@@ -105,6 +105,8 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 	{
 		super.initEntityAI();
 
+		this.enhancedCombat = new EntityAIAttackContinuously(this, 0.65D);
+
 		this.targetTasks.addTask(0, this.enhancedCombat);
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, new ValkyrieQueenAIWander(this, 0.5D));
@@ -276,7 +278,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 					}
 					else if (!this.world.isRemote)
 					{
-						this.teleport(this.getAttackTarget().posX, this.getAttackTarget().posY, this.getAttackTarget().posZ, 4);
+						this.teleport(this.safeX, this.safeY, this.safeZ, 4);
 					}
 				}
 				else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D)))
@@ -369,8 +371,12 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
 		if (this.getHealth() <= 0 || this.isDead)
 		{
-			unlockDoor();
-			unlockTreasure();
+			if (!this.world.isRemote)
+			{
+				unlockDoor();
+				unlockTreasure();
+			}
+
 			if (this.getAttackTarget() instanceof EntityPlayer)
 			{
 				chatItUp((EntityPlayer) this.getAttackTarget(), new TextComponentTranslation("gui.queen.defeated"));
@@ -417,6 +423,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 		this.dungeonX = nbttagcompound.getInteger("DungeonX");
 		this.dungeonY = nbttagcompound.getInteger("DungeonY");
 		this.dungeonZ = nbttagcompound.getInteger("DungeonZ");
+		this.dungeonPos = new BlockPos(this.dungeonX, this.dungeonY, this.dungeonZ);
 		this.dungeonEntranceZ = nbttagcompound.getInteger("DungeonEntranceZ");
 		NBTTagList nbttaglist = nbttagcompound.getTagList("SafePos", 10);
 		this.setBossName(nbttagcompound.getString("BossName"));
@@ -594,7 +601,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 			}
 
 			int i = newX + (this.rand.nextInt(rad / 2) - this.rand.nextInt(rad / 2));
-			int j = newY + (this.rand.nextInt(rad / 2) - this.rand.nextInt(rad / 2));
+			int j = newY + (this.rand.nextInt(rad / 2));
 			int k = newZ + (this.rand.nextInt(rad / 2) - this.rand.nextInt(rad / 2));
 
 			if (this.isAirySpace(i, j, k) && this.isAirySpace(i, j + 1, k) && !this.isAirySpace(i, j - 1, k))
