@@ -1,0 +1,13 @@
+{
+
+	"variants": {
+
+		"": [
+			{ "model": "aether_legacy:block/aether_grass" },
+			{ "model": "aether_legacy:block/aether_grass", "y": 90 },
+			{ "model": "aether_legacy:block/aether_grass", "y": 180 },
+			{ "model": "aether_legacy:block/aether_grass", "y": 270 }
+		]
+	}
+
+}

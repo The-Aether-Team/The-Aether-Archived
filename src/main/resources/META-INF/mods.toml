@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="[25,)"
+issueTrackerURL="https://github.com/Modding-Legacy/Aether-Legacy/issues"
+[[mods]] #mandatory
+modId="aether_legacy"
+version="1.0.0"
+displayName="Aether Legacy" #mandatory
+
+updateJSONURL="https://gist.githubusercontent.com/Lachney/7e1b5016559ac92bb15e579f12216382/raw/c674c1b6744ed69c8392394aa8e2f17b90457150/1.13.2-updater.json" #optional
+
+displayURL="https://moddinglegacy.com/"
+logoFile="examplemod.png" #optional
+
+credits="Put something here"
+authors="Put something here"
+
+description='''
+Put
+something
+here.
+'''
+
+[[dependencies.aether_legacy]]
+    modId="forge"
+    mandatory=true
+    versionRange="[25,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.aether_legacy]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13.2]"
+    ordering="NONE"
+    side="BOTH"
