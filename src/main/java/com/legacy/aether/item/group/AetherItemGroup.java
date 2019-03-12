@@ -1,6 +1,7 @@
 package com.legacy.aether.item.group;
 
 import com.legacy.aether.block.BlocksAether;
+
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;

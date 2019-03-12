@@ -40,6 +40,7 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 		this.size = this.rand.nextInt(4) + 1;
 		this.sinage = this.rand.nextFloat() * 6.0F;
 		this.poisonRemaining = this.rand.nextInt(4) + 2;
+
 		this.setCanPickUpLoot(false);
 		this.setPosition(this.posX, this.posY, this.posZ);
 		this.setSize(0.75F + (float) this.size * 0.125F, 0.5F + (float) this.size * 0.075F);

@@ -8,9 +8,9 @@ import com.legacy.aether.entity.ai.EntityAISliderMove;
 import com.legacy.aether.entity.boss.name.BossNameGenerator;
 import com.legacy.aether.sound.SoundsAether;
 import com.legacy.aether.util.AetherTranslation;
+
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,6 +25,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumFacing;
@@ -38,9 +39,9 @@ import net.minecraftforge.common.ToolType;
 public class EntitySlider extends EntityFlying implements IAetherBoss
 {
 
-	public static final DataParameter<Boolean> AWAKE;
+	public static final DataParameter<Boolean> AWAKE = EntityDataManager.createKey(EntitySlider.class, DataSerializers.BOOLEAN);
 
-	private final EntityAISliderMove movementAI = new EntityAISliderMove(this);
+	private EntityAISliderMove movementAI;
 
 	private BlockPos dungeonPosition;
 
@@ -51,10 +52,6 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	public float hurtAngleZ;
 
 	public int chatTime;
-	static
-	{
-		AWAKE = EntityDataManager.createKey(EntitySlider.class, DataSerializers.BOOLEAN);
-	}
 
 	public EntitySlider(World world)
 	{
@@ -76,7 +73,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	@Override
 	protected void initEntityAI()
 	{
-		this.tasks.addTask(0, this.movementAI);
+		this.tasks.addTask(0, this.getMovementAI());
 	}
 
 	@Override
@@ -105,7 +102,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 		if (!this.isAwake())
 		{
-			this.setAttackTarget((EntityLivingBase) null);
+			this.setAttackTarget(null);
 		}
 		else
 		{
@@ -136,21 +133,15 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 			}
 			else if (stack.getItem() == Items.APPLE)
 			{
-				player.sendMessage(AetherTranslation.getKeyComponent("gui.slider.apple", new Object[0]));
-
-				return false;
+				player.sendMessage(AetherTranslation.getKeyComponent("gui.slider.apple"));
 			}
 			else if (!source.isCreativePlayer() && source.getTrueSource().getDistance(this) > 6.0F && !this.isAwake())
 			{
 				player.sendMessage(new TextComponentString("It seems I'm too far away to wake it."));
-
-				return false;
 			}
 			else if (!stack.getItem().getToolTypes(stack).contains(ToolType.PICKAXE))
 			{
-				player.sendMessage(AetherTranslation.getKeyComponent("gui.slider.notpickaxe", new Object[0]));
-
-				return false;
+				player.sendMessage(AetherTranslation.getKeyComponent("gui.slider.notpickaxe"));
 			}
 			else
 			{
@@ -160,13 +151,13 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 				{
 					for (int j = 0; j < 4; ++j)
 					{
-						double randomX = this.posX + (double) (this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D;
+						double randomX = this.posX + (this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D;
 						double randomY = this.getBoundingBox().minY + 1.75D;
-						double randomZ = this.posZ + (double) (this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D;
+						double randomZ = this.posZ + (this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D;
 
 						if (this.world.isRemote)
 						{
-							Blocks.STONE.getDefaultState().addDestroyEffects(this.world, new BlockPos(randomX, randomY, randomZ), Minecraft.getInstance().particles);
+							Blocks.STONE.getDefaultState().addDestroyEffects(this.world, new BlockPos(randomX, randomY, randomZ), net.minecraft.client.Minecraft.getInstance().particles);
 						}
 					}
 
@@ -175,10 +166,10 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 						this.setAwake(true);
 						this.setAttackTarget(player);
 						this.setDungeonDoor(BlocksAether.CARVED_STONE.getDefaultState());
-						this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundsAether.SLIDER_AWAKEN, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+						this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsAether.SLIDER_AWAKEN, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					}
 
-					this.movementAI.onSliderHit();
+					this.getMovementAI().onSliderHit();
 				}
 
 				double distanceX = Math.abs(this.posX - player.posX);
@@ -211,13 +202,15 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 				return flag;
 			}
+
+			return false;
 		}
 	}
 
 	@Override
 	public void applyEntityCollision(Entity entityIn)
 	{
-		if (this.isAwake() && this.movementAI.isMoving())
+		if (this.isAwake() && this.getMovementAI().isMoving())
 		{
 			boolean flag = entityIn.attackEntityFrom(new EntityDamageSource("crush", this), 6.0F);
 
@@ -225,9 +218,9 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 			{
 				entityIn.addVelocity(entityIn.motionY, 0.35D, entityIn.motionZ);
 
-				this.world.playSound((EntityPlayer) null, this.posX, this.posY, this.posZ, SoundsAether.SLIDER_COLLIDE, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsAether.SLIDER_COLLIDE, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
 
-				this.movementAI.resetTask();
+				this.getMovementAI().resetTask();
 			}
 		}
 	}
@@ -239,6 +232,11 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 		this.unlockDungeon(this.dungeonPosition);
 		this.setDungeonDoor(Blocks.AIR.getDefaultState());
 
+		this.world.setBlockState(this.dungeonPosition.add(7, 1, 7), Blocks.OAK_TRAPDOOR.getDefaultState().with(BlockHorizontal.HORIZONTAL_FACING, EnumFacing.SOUTH));
+		this.world.setBlockState(this.dungeonPosition.add(8, 1, 7), Blocks.OAK_TRAPDOOR.getDefaultState().with(BlockHorizontal.HORIZONTAL_FACING, EnumFacing.SOUTH));
+		this.world.setBlockState(this.dungeonPosition.add(7, 1, 8), Blocks.OAK_TRAPDOOR.getDefaultState().with(BlockHorizontal.HORIZONTAL_FACING, EnumFacing.NORTH));
+		this.world.setBlockState(this.dungeonPosition.add(8, 1, 8), Blocks.OAK_TRAPDOOR.getDefaultState().with(BlockHorizontal.HORIZONTAL_FACING, EnumFacing.NORTH));
+
 		for (int j = 0; j < 2; ++j)
 		{
 			double randomX = this.posX + (double) (this.rand.nextFloat() - this.rand.nextFloat()) * 1.5D;
@@ -249,38 +247,35 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 		if (source.getImmediateSource() instanceof EntityPlayer)
 		{
-			AetherAPI.getInstance().get((EntityPlayer) source.getImmediateSource()).setFocusedBoss((IAetherBoss) null);
+			AetherAPI.getInstance().get((EntityPlayer) source.getImmediateSource()).setFocusedBoss(null);
 		}
 	}
 
 	public void resetSlider()
 	{
-		this.movementAI.resetTask();
+		this.getMovementAI().resetTask();
+
 		this.setAwake(false);
-		this.setAttackTarget((EntityLivingBase) null);
+		this.setAttackTarget(null);
 		this.setHealth(this.getMaxHealth());
 		this.setDungeonDoor(Blocks.AIR.getDefaultState());
-		this.setPositionAndUpdate((double) (this.dungeonPosition.getX() + 8), (double) (this.dungeonPosition.getY() + 2), (double) (this.dungeonPosition.getZ() + 8));
+		this.setPositionAndUpdate(this.dungeonPosition.getX() + 8, this.dungeonPosition.getY() + 2, this.dungeonPosition.getZ() + 8);
 	}
 
 	private void setDungeonDoor(IBlockState state)
 	{
-		int x = this.dungeonPosition.getX() + 15;
-
 		for (int y = this.dungeonPosition.getY() + 1; y < this.dungeonPosition.getY() + 5; ++y)
 		{
 			for (int z = this.dungeonPosition.getZ() + 6; z < this.dungeonPosition.getZ() + 10; ++z)
 			{
-				this.world.setBlockState(new BlockPos(x, y, z), state);
+				this.world.setBlockState(new BlockPos(this.dungeonPosition.getX() + 15, y, z), state);
 			}
 		}
 	}
 
 	private void unlockDungeon(BlockPos pos)
 	{
-		IBlockState state = this.world.getBlockState(pos);
-
-		if (state.getBlock() == BlocksAether.LOCKED_CARVED_STONE)
+		if (this.world.getBlockState(pos).getBlock() == BlocksAether.LOCKED_CARVED_STONE)
 		{
 			this.world.setBlockState(pos, BlocksAether.LOCKED_CARVED_STONE.getDefaultState());
 
@@ -291,11 +286,6 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 			this.unlockDungeon(pos.south());
 			this.unlockDungeon(pos.north());
 		}
-
-		this.world.setBlockState(this.dungeonPosition.add(7, 1, 7), (IBlockState) Blocks.OAK_TRAPDOOR.getDefaultState().with(BlockHorizontal.HORIZONTAL_FACING, EnumFacing.SOUTH));
-		this.world.setBlockState(this.dungeonPosition.add(8, 1, 7), (IBlockState) Blocks.OAK_TRAPDOOR.getDefaultState().with(BlockHorizontal.HORIZONTAL_FACING, EnumFacing.SOUTH));
-		this.world.setBlockState(this.dungeonPosition.add(7, 1, 8), (IBlockState) Blocks.OAK_TRAPDOOR.getDefaultState().with(BlockHorizontal.HORIZONTAL_FACING, EnumFacing.NORTH));
-		this.world.setBlockState(this.dungeonPosition.add(8, 1, 8), (IBlockState) Blocks.OAK_TRAPDOOR.getDefaultState().with(BlockHorizontal.HORIZONTAL_FACING, EnumFacing.NORTH));
 	}
 
 	@Override
@@ -314,6 +304,12 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
 		this.setAwake(compound.getBoolean("awake"));
 		this.dungeonPosition = BlockPos.fromLong(compound.getLong("dungeonPosition"));
+	}
+
+	@Override
+	public boolean isPotionApplicable(PotionEffect effect)
+	{
+		return false;
 	}
 
 	@Override
@@ -337,10 +333,20 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 		this.dungeonPosition = new BlockPos(posX, posY, posZ);
 	}
 
+	public EntityAISliderMove getMovementAI()
+	{
+		if (this.movementAI == null)
+		{
+			this.movementAI = new EntityAISliderMove(this);
+		}
+
+		return this.movementAI;
+	}
+
 	@Override
 	public String getBossTitle()
 	{
-		return this.getName().getFormattedText() + ", " + AetherTranslation.getTranslatedKey("title.aether_legacy.slider.name", new Object[0]);
+		return this.getName().getFormattedText() + ", " + AetherTranslation.getTranslatedKey("title.aether_legacy.slider.name");
 	}
 
 	@Override

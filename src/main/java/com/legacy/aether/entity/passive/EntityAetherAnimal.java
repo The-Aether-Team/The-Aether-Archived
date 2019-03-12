@@ -1,6 +1,7 @@
 package com.legacy.aether.entity.passive;
 
 import com.legacy.aether.block.BlocksAether;
+
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.item.ItemStack;

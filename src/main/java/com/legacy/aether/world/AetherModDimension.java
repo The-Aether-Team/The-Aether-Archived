@@ -1,8 +1,10 @@
 package com.legacy.aether.world;
 
+import java.util.function.Function;
+
 import com.legacy.aether.Aether;
 import com.legacy.aether.world.dimension.AetherDimension;
-import java.util.function.Function;
+
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;

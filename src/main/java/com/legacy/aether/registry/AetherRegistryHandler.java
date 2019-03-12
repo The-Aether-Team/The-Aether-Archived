@@ -5,6 +5,8 @@ import com.legacy.aether.block.BlocksAether;
 import com.legacy.aether.block.natural.BlockAetherDirt;
 import com.legacy.aether.block.natural.BlockAetherGrass;
 import com.legacy.aether.block.natural.BlockHolystone;
+import com.legacy.aether.entity.boss.EntitySlider;
+import com.legacy.aether.entity.passive.EntityAerwhale;
 import com.legacy.aether.item.group.AetherItemGroup;
 import com.legacy.aether.world.AetherModDimension;
 import com.legacy.aether.world.biome.HighlandsBiome;
@@ -46,7 +48,8 @@ public class AetherRegistryHandler
 	@SubscribeEvent
 	public static void onRegisterEntityTypes(Register<EntityType<?>> event)
 	{
-
+		register(event.getRegistry(), "aerwhale", EntityType.Builder.create(EntityAerwhale.class, EntityAerwhale::new).disableSerialization().build(""));
+		register(event.getRegistry(), "slider", EntityType.Builder.create(EntitySlider.class, EntitySlider::new).disableSerialization().build(""));
 	}
 
 	@SubscribeEvent

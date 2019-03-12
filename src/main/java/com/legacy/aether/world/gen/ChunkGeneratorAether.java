@@ -1,14 +1,16 @@
 package com.legacy.aether.world.gen;
 
-import com.legacy.aether.block.BlocksAether;
 import java.util.List;
+
+import com.legacy.aether.block.BlocksAether;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEntitySpawner;
@@ -18,9 +20,9 @@ import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.AbstractChunkGenerator;
+import net.minecraft.world.gen.Heightmap.Type;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.WorldGenRegion;
-import net.minecraft.world.gen.Heightmap.Type;
 
 public class ChunkGeneratorAether extends AbstractChunkGenerator<AetherGenSettings>
 {
