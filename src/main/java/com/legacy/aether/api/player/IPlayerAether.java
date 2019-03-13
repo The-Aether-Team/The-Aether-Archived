@@ -1,6 +1,7 @@
 package com.legacy.aether.api.player;
 
 import com.legacy.aether.api.player.util.IAetherBoss;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 

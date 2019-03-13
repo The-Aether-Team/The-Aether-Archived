@@ -6,6 +6,7 @@ import com.legacy.aether.api.player.IPlayerAetherProvider;
 import com.legacy.aether.network.AetherNetwork;
 import com.legacy.aether.network.message.UpdatePlayerMessage;
 import com.legacy.aether.world.AetherModDimension;
+
 import io.netty.buffer.Unpooled;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

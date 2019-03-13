@@ -12,25 +12,19 @@ import net.minecraft.util.ResourceLocation;
 public class SliderRenderer extends RenderLiving<EntitySlider>
 {
 
-	private static final ResourceLocation TEXTURE_AWAKE = Aether.locate("textures/bosses/slider/slider_awake.png");
+	private static final ResourceLocation TEXTURE_AWAKE = Aether.locate("textures/entity/slider/slider_awake.png");
 
-	private static final ResourceLocation TEXTURE_AWAKE_RED = Aether.locate("textures/bosses/slider/slider_awake_critical.png");
+	private static final ResourceLocation TEXTURE_AWAKE_RED = Aether.locate("textures/entity/slider/slider_awake_critical.png");
 
-	private static final ResourceLocation TEXTURE_SLEEP = Aether.locate("textures/bosses/slider/slider_asleep.png");
+	private static final ResourceLocation TEXTURE_SLEEP = Aether.locate("textures/entity/slider/slider_asleep.png");
 
-	private static final ResourceLocation TEXTURE_SLEEP_RED = Aether.locate("textures/bosses/slider/slider_asleep_critical.png");
+	private static final ResourceLocation TEXTURE_SLEEP_RED = Aether.locate("textures/entity/slider/slider_asleep_critical.png");
 
 	public SliderRenderer(RenderManager renderManager)
 	{
 		super(renderManager, new SliderModel(0.0F, 12.0F), 1.5F);
 
 		this.addLayer(new SliderLayer(this));
-	}
-
-	@Override
-	protected void preRenderCallback(EntitySlider slider, float f)
-	{
-
 	}
 
 	@Override

@@ -10,11 +10,11 @@ import com.legacy.aether.entity.passive.EntityAerwhale;
 import com.legacy.aether.item.group.AetherItemGroup;
 import com.legacy.aether.world.AetherModDimension;
 import com.legacy.aether.world.biome.HighlandsBiome;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.Item.Properties;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.ModDimension;
@@ -40,16 +40,16 @@ public class AetherRegistryHandler
 	@SubscribeEvent
 	public static void onRegisterItems(Register<Item> event)
 	{
-		register(event.getRegistry(), "aether_grass", new ItemBlock(BlocksAether.AETHER_GRASS, (new Properties()).group(AetherItemGroup.BLOCKS)));
-		register(event.getRegistry(), "aether_dirt", new ItemBlock(BlocksAether.AETHER_DIRT, (new Properties()).group(AetherItemGroup.BLOCKS)));
-		register(event.getRegistry(), "holystone", new ItemBlock(BlocksAether.HOLYSTONE, (new Properties()).group(AetherItemGroup.BLOCKS)));
+		register(event.getRegistry(), "aether_grass", new ItemBlock(BlocksAether.AETHER_GRASS, (new Item.Properties()).group(AetherItemGroup.BLOCKS)));
+		register(event.getRegistry(), "aether_dirt", new ItemBlock(BlocksAether.AETHER_DIRT, (new Item.Properties()).group(AetherItemGroup.BLOCKS)));
+		register(event.getRegistry(), "holystone", new ItemBlock(BlocksAether.HOLYSTONE, (new Item.Properties()).group(AetherItemGroup.BLOCKS)));
 	}
 
 	@SubscribeEvent
 	public static void onRegisterEntityTypes(Register<EntityType<?>> event)
 	{
 		register(event.getRegistry(), "aerwhale", EntityType.Builder.create(EntityAerwhale.class, EntityAerwhale::new).disableSerialization().build(""));
-		register(event.getRegistry(), "slider", EntityType.Builder.create(EntitySlider.class, EntitySlider::new).disableSerialization().build(""));
+		register(event.getRegistry(), "slider", EntityType.Builder.create(EntitySlider.class, EntitySlider::new).tracker(80, 3, true).disableSerialization().build(""));
 	}
 
 	@SubscribeEvent

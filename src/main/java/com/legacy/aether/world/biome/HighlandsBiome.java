@@ -5,6 +5,8 @@ import com.legacy.aether.world.gen.surfacebuilders.HighlandsSurfaceBuilder;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.BiomeBuilder;
+import net.minecraft.world.biome.Biome.RainType;
 import net.minecraft.world.gen.surfacebuilders.CompositeSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;

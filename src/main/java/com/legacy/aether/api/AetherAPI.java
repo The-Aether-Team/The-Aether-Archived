@@ -1,6 +1,7 @@
 package com.legacy.aether.api;
 
 import com.legacy.aether.api.player.IPlayerAether;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;

@@ -3,6 +3,7 @@ package com.legacy.aether.entity.hostile;
 import com.legacy.aether.block.BlocksAether;
 import com.legacy.aether.entity.EntityTypesAether;
 import com.legacy.aether.entity.passive.EntityAetherAnimal;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;

@@ -13,9 +13,9 @@ import net.minecraft.util.ResourceLocation;
 public class SliderLayer implements LayerRenderer<EntitySlider>
 {
 
-	private static final ResourceLocation TEXTURE_GLOW = Aether.locate("textures/bosses/slider/slider_awake_glow.png");
+	private static final ResourceLocation TEXTURE_GLOW = Aether.locate("textures/entity/slider/slider_awake_glow.png");
 
-	private static final ResourceLocation TEXTURE_GLOW_RED = Aether.locate("textures/bosses/slider/slider_awake_critical_glow.png");
+	private static final ResourceLocation TEXTURE_GLOW_RED = Aether.locate("textures/entity/slider/slider_awake_critical_glow.png");
 
 	private final SliderRenderer renderer;
 
@@ -39,16 +39,13 @@ public class SliderLayer implements LayerRenderer<EntitySlider>
 			GlStateManager.depthMask(!slider.isInvisible());
 
 			int i = 61680;
-			int j = i % 65536;
-			int k = i / 65536;
+			int j = 150;
+			int k = 150;
 			OpenGlHelper.glMultiTexCoord2f(OpenGlHelper.GL_TEXTURE1, (float) j, (float) k);
-			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			Minecraft.getInstance().entityRenderer.setupFogColor(true);
 			this.renderer.getMainModel().render(slider, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-			Minecraft.getInstance().entityRenderer.setupFogColor(false);
 			i = slider.getBrightnessForRender();
-			j = i % 65536;
-			k = i / 65536;
+			j = 150;
+			k = 150;
 			OpenGlHelper.glMultiTexCoord2f(OpenGlHelper.GL_TEXTURE1, (float) j, (float) k);
 			this.renderer.setLightmap(slider);
 

@@ -26,7 +26,7 @@ public class PlayerAether implements IPlayerAether
 	@Override
 	public void onUpdate()
 	{
-
+		//this.player.getMaxInPortalTime()
 	}
 
 	@Override

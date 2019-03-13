@@ -43,6 +43,53 @@ public class EntityAISliderMove extends EntityAIBase
 	@Override
 	public boolean shouldExecute()
 	{
+		if (this.slider.getAttackTarget() == null)
+		{
+			return false;
+		}
+
+		double x = Math.abs(this.slider.posX - this.slider.getAttackTarget().posX);
+		double y = Math.abs(this.slider.getBoundingBox().minY - this.slider.getAttackTarget().getBoundingBox().minY);
+		double z = Math.abs(this.slider.posZ - this.slider.getAttackTarget().posZ);
+
+		if (x > z)
+		{
+			this.direction = EnumFacing.EAST;
+
+			if (this.slider.posX > this.slider.getAttackTarget().posX)
+			{
+				this.direction = EnumFacing.WEST;
+			}
+		}
+		else
+		{
+			this.direction = EnumFacing.SOUTH;
+
+			if (this.slider.posZ > this.slider.getAttackTarget().posZ)
+			{
+				this.direction = EnumFacing.NORTH;
+			}
+		}
+		if (y > x && y > z || y > 0.25D && this.slider.world.rand.nextInt(5) == 0)
+		{
+			this.direction = EnumFacing.UP;
+
+			if (this.slider.posY > this.slider.getAttackTarget().posY)
+			{
+				this.direction = EnumFacing.DOWN;
+			}
+		}
+
+		this.slider.world.playSound((EntityPlayer) null, this.slider.posX, this.slider.posY, this.slider.posZ, SoundsAether.SLIDER_MOVE, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.slider.world.rand.nextFloat() * 0.2F + 0.9F));
+
+		this.moving = true;
+
+		return this.shouldContinueExecuting();
+	}
+
+	@Override
+	public boolean shouldContinueExecuting()
+	{
 		return --this.moveTime <= 0 && this.slider.getAttackTarget() != null && this.slider.isAwake();
 	}
 
@@ -206,7 +253,7 @@ public class EntityAISliderMove extends EntityAIBase
 				}
 			}
 		}
-		else if (this.moveTime > 0)
+		/*else if (this.moveTime > 0)
 		{
 			--this.moveTime;
 
@@ -216,52 +263,15 @@ public class EntityAISliderMove extends EntityAIBase
 			}
 
 			this.slider.motionX = this.slider.motionY = this.slider.motionZ = 0.0D;
-		}
-		else
-		{
-			x = Math.abs(this.slider.posX - this.slider.getAttackTarget().posX);
-			y = Math.abs(this.slider.getBoundingBox().minY - this.slider.getAttackTarget().getBoundingBox().minY);
-			z = Math.abs(this.slider.posZ - this.slider.getAttackTarget().posZ);
-
-			if (x > z)
-			{
-				this.direction = EnumFacing.EAST;
-
-				if (this.slider.posX > this.slider.getAttackTarget().posX)
-				{
-					this.direction = EnumFacing.WEST;
-				}
-			}
-			else
-			{
-				this.direction = EnumFacing.SOUTH;
-
-				if (this.slider.posZ > this.slider.getAttackTarget().posZ)
-				{
-					this.direction = EnumFacing.NORTH;
-				}
-			}
-			if (y > x && y > z || y > 0.25D && this.slider.world.rand.nextInt(5) == 0)
-			{
-				this.direction = EnumFacing.UP;
-
-				if (this.slider.posY > this.slider.getAttackTarget().posY)
-				{
-					this.direction = EnumFacing.DOWN;
-				}
-			}
-
-			this.slider.world.playSound((EntityPlayer) null, this.slider.posX, this.slider.posY, this.slider.posZ, SoundsAether.SLIDER_MOVE, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.slider.world.rand.nextFloat() * 0.2F + 0.9F));
-
-			this.moving = true;
-		}
+		}*/
 	}
 
 	public void resetTask()
 	{
 		this.moving = false;
 		this.direction = EnumFacing.UP;
-		this.moveTime = this.hasCriticalHealth() ? 4 : 8;
+		this.moveTime = 6;
+		//this.moveTime = this.hasCriticalHealth() ? 3 : 5;
 		this.slider.motionX = this.slider.motionY = this.slider.motionZ = 0.0D;
 		this.slider.setAIMoveSpeed(0.0F);
 	}

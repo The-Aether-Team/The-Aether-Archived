@@ -1,5 +1,6 @@
 package com.legacy.aether.entity.boss;
 
+import com.legacy.aether.Aether;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.util.IAetherBoss;
 import com.legacy.aether.block.BlocksAether;
@@ -32,6 +33,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
@@ -208,20 +210,70 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	}
 
 	@Override
+	protected void collideWithEntity(Entity entityIn)
+	{
+		if (!entityIn.isRidingSameEntity(this) && !this.noClip && !entityIn.noClip)
+		{
+			double d0 = this.posX - entityIn.posX;
+			double d1 = this.posZ - entityIn.posZ;
+			double d2 = MathHelper.absMax(d0, d1);
+
+			if (d2 >= 0.009999999776482582D)
+			{
+				d2 = (double) MathHelper.sqrt(d2);
+				d0 /= d2;
+				d1 /= d2;
+
+				double d3 = 1.0D / d2;
+
+				if (d3 > 1.0D)
+				{
+					d3 = 1.0D;
+				}
+
+				d0 *= d3;
+				d1 *= d3;
+				d0 *= 0.05000000074505806D;
+				d1 *= 0.05000000074505806D;
+				d0 *= (double) (1.0F - entityIn.entityCollisionReduction);
+				d1 *= (double) (1.0F - entityIn.entityCollisionReduction);
+
+				if (!entityIn.isBeingRidden())
+				{
+					entityIn.addVelocity(-d0 * 2.5D, 0.0D, -d1 * 2.5D);
+				}
+			}
+		}
+	}
+
+	@Override
 	public void applyEntityCollision(Entity entityIn)
 	{
 		if (this.isAwake() && this.getMovementAI().isMoving())
 		{
-			boolean flag = entityIn.attackEntityFrom(new EntityDamageSource("crush", this), 6.0F);
-
-			if (flag && entityIn instanceof EntityLivingBase)
+			if (entityIn instanceof EntityLivingBase)
 			{
-				entityIn.addVelocity(entityIn.motionY, 0.35D, entityIn.motionZ);
+				boolean flag = ((EntityLivingBase)entityIn).attackEntityFrom(new EntityDamageSource("crush", this), 6.0F);
 
-				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsAether.SLIDER_COLLIDE, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				if (flag)
+				{
+					entityIn.addVelocity(entityIn.motionY, 0.35D, entityIn.motionZ);
+					entityIn.velocityChanged = true;
 
-				this.getMovementAI().resetTask();
+					this.world.playSound(null, this.posX, this.posY, this.posZ, SoundsAether.SLIDER_COLLIDE, SoundCategory.HOSTILE, 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
+
+					this.getMovementAI().resetTask();
+				}
 			}
+		}
+	}
+
+	@Override
+	public void knockBack(Entity entity, float strength, double xRatio, double zRatio)
+	{
+		if (this.getHealth() < 0.0F)
+		{
+			super.knockBack(entity, strength, xRatio, zRatio);
 		}
 	}
 
