@@ -91,6 +91,7 @@ public class EntityMoa extends EntitySaddleMount {
         super.applyEntityAttributes();
 
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(35.0D);
     }
 
     public boolean isSitting() {
@@ -138,6 +139,7 @@ public class EntityMoa extends EntitySaddleMount {
     public int getRemainingJumps() {
         return (int) this.dataWatcher.getWatchableObjectByte(21);
     }
+
 
     public void setRemainingJumps(int jumps) {
         this.dataWatcher.updateObject(21, (byte) jumps);
