@@ -157,10 +157,10 @@ public class AetherClientEvents
 			{
 				if (event.getGui() instanceof GuiContainerCreative)
 				{
-					if (((GuiContainerCreative)event.getGui()).getSelectedTabIndex() == CreativeTabs.INVENTORY.getTabIndex())
+					if (((GuiContainerCreative)event.getGui()).getSelectedTabIndex() == CreativeTabs.INVENTORY.getIndex())
 					{
 						event.getButtonList().add(ACCESSORY_BUTTON.setPosition(guiLeft + 73, guiTop + 38));
-						previousSelectedTabIndex = CreativeTabs.INVENTORY.getTabIndex();
+						previousSelectedTabIndex = CreativeTabs.INVENTORY.getIndex();
 					}
 				}
 			}
@@ -203,14 +203,14 @@ public class AetherClientEvents
 
 			if (previousSelectedTabIndex != guiScreen.getSelectedTabIndex())
 			{
-				if (guiScreen.getSelectedTabIndex() == CreativeTabs.INVENTORY.getTabIndex() && !buttonList.contains(ACCESSORY_BUTTON))
+				if (guiScreen.getSelectedTabIndex() == CreativeTabs.INVENTORY.getIndex() && !buttonList.contains(ACCESSORY_BUTTON))
 				{
 					int guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiLeft", "field_147003_i");
 					int guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiTop", "field_147009_r");
 
 					buttonList.add(ACCESSORY_BUTTON.setPosition(guiLeft + 73, guiTop + 38));
 				}
-				else if (previousSelectedTabIndex == CreativeTabs.INVENTORY.getTabIndex())
+				else if (previousSelectedTabIndex == CreativeTabs.INVENTORY.getIndex())
 				{
 					buttonList.remove(ACCESSORY_BUTTON);
 				}

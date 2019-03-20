@@ -378,7 +378,7 @@ public class EntityAerwhale extends EntityFlying implements IMob
         float f9 = f3 * f5;
 
         Vec3d vec3d = new Vec3d(this.posX, this.getEntityBoundingBox().minY, this.posZ);
-        Vec3d vec3d1 = vec3d.addVector((double)f7 * standard, (double)f8 * standard, (double)f9 * standard);
+        Vec3d vec3d1 = vec3d.add((double)f7 * standard, (double)f8 * standard, (double)f9 * standard);
 
         RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec3d, vec3d1, true);
 

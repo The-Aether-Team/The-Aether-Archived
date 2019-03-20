@@ -36,7 +36,7 @@ public class AetherMoaType extends AetherRegistryEntry<AetherMoaType>
 			return this.properties.getCustomTexture(saddled);
 		}
 
-		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + ("moa_") + this.getRegistryName().getResourcePath().toLowerCase() + ".png");
+		return new ResourceLocation("aether_legacy", "textures/entities/moa/" + ("moa_") + this.getRegistryName().getPath().toLowerCase() + ".png");
 	}
 
 	public MoaProperties getMoaProperties()

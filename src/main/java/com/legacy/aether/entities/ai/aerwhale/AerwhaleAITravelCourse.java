@@ -181,7 +181,7 @@ public class AerwhaleAITravelCourse extends EntityAIBase
         float f9 = f3 * f5;
 
         Vec3d vec3d = new Vec3d(this.aerwhale.getPosition());
-        Vec3d vec3d1 = vec3d.addVector((double)f7 * standard, (double)f8 * standard, (double)f9 * standard);
+        Vec3d vec3d1 = vec3d.add((double)f7 * standard, (double)f8 * standard, (double)f9 * standard);
 
         RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec3d, vec3d1, false);
 

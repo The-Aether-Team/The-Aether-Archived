@@ -54,11 +54,11 @@ public class ItemGummySwet extends ItemAetherFood
 
 
 	@Override
-	public String getUnlocalizedName(ItemStack itemstack)
+	public String getTranslationKey(ItemStack itemstack)
 	{
 		int meta = itemstack.getItemDamage();
 
-		return this.getUnlocalizedName() + "_" + EnumGummySwetType.getType(meta).toString();
+		return this.getTranslationKey() + "_" + EnumGummySwetType.getType(meta).toString();
 	}
 
 }

@@ -75,7 +75,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity)
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity)
 	{
     	entity.fallDistance = 0;
 
@@ -183,7 +183,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
+    public BlockRenderLayer getRenderLayer()
     {
         return BlockRenderLayer.TRANSLUCENT;
     }

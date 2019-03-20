@@ -41,7 +41,7 @@ public class ComponentLargeColdAercloud extends AetherStructure
 	{
 		this.replaceAir = true;
 
-		if (this.data.hasNoTags())
+		if (this.data.tagCount() <= 0)
 		{
 			NBTTagCompound icd;
 

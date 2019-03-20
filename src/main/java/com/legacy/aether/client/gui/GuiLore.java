@@ -95,7 +95,7 @@ public class GuiLore extends GuiContainer
 
         	for (String name : this.fontRenderer.listFormattedStringToWidth(searchedStack.getItem().getItemStackDisplayName(searchedStack), 109))
         	{
-        		this.drawCenteredString(this.fontRenderer, searchedStack.getRarity().rarityColor.toString() + name, 71, 18 + (10 * nameSize), 4210752);
+        		this.drawCenteredString(this.fontRenderer, searchedStack.getRarity().color.toString() + name, 71, 18 + (10 * nameSize), 4210752);
 
         		++nameSize;
         	}

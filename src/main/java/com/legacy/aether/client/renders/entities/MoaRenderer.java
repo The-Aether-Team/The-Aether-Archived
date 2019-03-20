@@ -24,7 +24,7 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
 
 	public MoaRenderer(RenderManager renderManager)
 	{
-		super(renderManager, new MoaModel(0.0F), 1.0F);
+		super(renderManager, new MoaModel(0.0F), 0.7F);
 
 		this.addLayer(new MoaDonatorLayer(renderManager, (MoaModel) this.getMainModel()));
 		this.addLayer(new LayerMoaSaddle(this));

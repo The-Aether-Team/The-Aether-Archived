@@ -54,19 +54,13 @@ public class AetherCreativeTabs
 		}
 
 	    @SideOnly(Side.CLIENT)
-	    public String getTranslatedTabLabel()
+	    public String getTranslationKey()
 	    {
 	        return "tab." + this.getTabLabel();
 	    }
 
 		@Override
-		public ItemStack getIconItemStack()
-		{
-			return stack;
-		}
-
-		@Override
-		public ItemStack getTabIconItem()
+		public ItemStack createIcon()
 		{
 			return stack;
 		}

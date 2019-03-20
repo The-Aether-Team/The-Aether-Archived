@@ -42,11 +42,11 @@ public class ItemDungeonKey extends Item
     }
 
 	@Override
-	public String getUnlocalizedName(ItemStack itemstack)
+	public String getTranslationKey(ItemStack itemstack)
 	{
 		int meta = itemstack.getItemDamage();
 
-		return this.getUnlocalizedName() + "_" + EnumDungeonKeyType.getType(meta).toString();
+		return this.getTranslationKey() + "_" + EnumDungeonKeyType.getType(meta).toString();
 	}
 
 }

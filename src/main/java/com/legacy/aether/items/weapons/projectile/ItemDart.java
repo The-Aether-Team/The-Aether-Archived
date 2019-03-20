@@ -26,11 +26,11 @@ public class ItemDart extends Item
     }
 
 	@Override
-	public String getUnlocalizedName(ItemStack itemstack)
+	public String getTranslationKey(ItemStack itemstack)
 	{
 		int i = itemstack.getItemDamage();
 
-		return this.getUnlocalizedName() + "_" + EnumDartType.values()[i].toString();
+		return this.getTranslationKey() + "_" + EnumDartType.values()[i].toString();
 	}
 
 	@Override

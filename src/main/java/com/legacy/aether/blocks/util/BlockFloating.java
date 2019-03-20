@@ -40,7 +40,7 @@ public class BlockFloating extends Block
 	@Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand)
 	{
-		if (!this.leveled || this.leveled && world.isBlockIndirectlyGettingPowered(pos) != 0)
+		if (!this.leveled || this.leveled && world.isBlockPowered(pos))
 		{
 			this.floatBlock(world, pos);
 		}

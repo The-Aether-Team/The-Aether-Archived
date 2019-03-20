@@ -72,11 +72,11 @@ public class ItemSkyrootBucket extends Item
     }
 
 	@Override
-	public String getUnlocalizedName(ItemStack itemstack)
+	public String getTranslationKey(ItemStack itemstack)
 	{
 		int meta = itemstack.getItemDamage();
 
-		return this.getUnlocalizedName() + "_" + EnumSkyrootBucketType.getType(meta).toString();
+		return this.getTranslationKey() + "_" + EnumSkyrootBucketType.getType(meta).toString();
 	}
 
 	@Override

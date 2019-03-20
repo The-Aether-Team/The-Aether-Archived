@@ -267,7 +267,7 @@ public class ItemsAether
 
 	public static Item register(String name, Item item)
 	{
-		item.setUnlocalizedName(name);
+		item.setTranslationKey(name);
 		itemRegistry.register(item.setRegistryName(Aether.locate(name)));
 
 		return item;

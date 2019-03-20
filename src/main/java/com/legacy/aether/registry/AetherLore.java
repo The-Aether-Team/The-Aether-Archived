@@ -18,7 +18,7 @@ public class AetherLore
 
 	public static String getLoreEntry(ItemStack stack)
 	{
-		ResourceLocation location = new ResourceLocation(stack.getItem().getRegistryName().getResourceDomain(), "lore/" + stack.getUnlocalizedName().replace("item.", "").replace("tile.", "").replace(".", "_") + ".txt");
+		ResourceLocation location = new ResourceLocation(stack.getItem().getRegistryName().getNamespace(), "lore/" + stack.getTranslationKey().replace("item.", "").replace("tile.", "").replace(".", "_") + ".txt");
         IResource iresource = null;
 
         try

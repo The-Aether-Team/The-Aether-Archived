@@ -71,7 +71,7 @@ public class ItemAetherArmor extends ItemArmor
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
     {
-    	boolean leggings = this.getUnlocalizedName().contains("leggings");
+    	boolean leggings = this.getTranslationKey().contains("leggings");
     	String type1 = leggings ? "layer_2" : "layer_1";
 
         return this.shouldDefualt ? (leggings ? defualt_location[1] : defualt_location[0]) : Aether.modAddress() + "textures/armor/" + this.armorName + "_" + type1 + ".png";
@@ -82,7 +82,7 @@ public class ItemAetherArmor extends ItemArmor
     {
     	if (shouldDefualt)
     	{
-    		return new ModelColoredArmor(this.getUnlocalizedName().contains("leggings") ? 0.5F : 1.0F, this, armorSlot);
+    		return new ModelColoredArmor(this.getTranslationKey().contains("leggings") ? 0.5F : 1.0F, this, armorSlot);
     	}
 
         return super.getArmorModel(entityLiving, itemStack, armorSlot, _default);

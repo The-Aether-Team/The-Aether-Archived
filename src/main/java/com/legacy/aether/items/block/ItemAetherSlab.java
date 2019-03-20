@@ -38,7 +38,7 @@ public class ItemAetherSlab extends ItemBlock
 
     public String getUnlocalizedName(ItemStack stack)
     {
-        return this.singleSlab.getUnlocalizedName(stack.getMetadata());
+        return this.singleSlab.getTranslationKey(stack.getMetadata());
     }
 
     public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)

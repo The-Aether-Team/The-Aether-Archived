@@ -107,7 +107,7 @@ public class ItemMoaEgg extends Item
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack)
+	public String getTranslationKey(ItemStack stack)
 	{
 		NBTTagCompound tag = stack.getTagCompound();
 
@@ -115,10 +115,10 @@ public class ItemMoaEgg extends Item
 		{
 			AetherMoaType moaType = AetherAPI.getInstance().getMoaType(tag.getInteger("typeId"));
 
-			return "item." + moaType.getRegistryName().getResourcePath().replace(" ", "_").toLowerCase() + "_moa_egg.name";
+			return "item." + moaType.getRegistryName().getPath().replace(" ", "_").toLowerCase() + "_moa_egg.name";
 		}
 
-		return super.getUnlocalizedName();
+		return super.getTranslationKey();
 	}
 
 	@Override

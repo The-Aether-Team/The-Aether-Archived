@@ -226,7 +226,7 @@ public class BlocksAether
 
 	public static Block register(String name, Block block)
 	{
-		block.setUnlocalizedName(name);
+		block.setTranslationKey(name);
 		block.setCreativeTab(AetherCreativeTabs.blocks);
 
 		blockList[availableId] = block.setRegistryName(Aether.locate(name));

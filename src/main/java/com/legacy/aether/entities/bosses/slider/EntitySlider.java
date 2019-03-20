@@ -568,7 +568,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         
         else if (!isTCPickaxe)
         {
-            if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool) && !stack.getItem().getUnlocalizedName().contains("pickaxe"))
+            if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool) && !stack.getItem().getTranslationKey().contains("pickaxe"))
             {
                 this.sendMessage(player, new TextComponentTranslation("gui.slider.notpickaxe"));
     
