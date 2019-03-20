@@ -28,7 +28,7 @@ import com.legacy.aether.tile_entities.AetherTileEntities;
 import com.legacy.aether.universal.crafttweaker.AetherCraftTweakerPlugin;
 import com.legacy.aether.world.AetherWorld;
 
-@Mod(name = "Aether Legacy", modid = Aether.modid, version = Aether.version, acceptedMinecraftVersions = "1.12.2", updateJSON = "https://gist.githubusercontent.com/Lachney/2ff6d3444e7aabf946d3705b41c895c0/raw/322953b2618eff33fcc83118f82a27aae95bf13a/aether-legacy-changelog.json")
+@Mod(name = "Aether Legacy", modid = Aether.modid, version = Aether.version, acceptedMinecraftVersions = "1.12.2", updateJSON = "https://gist.githubusercontent.com/Lachney/15c84626b96a07cf8312a108cc4c8fb4/raw/aether-legacy-changelog.json")
 public class Aether 
 {
 
