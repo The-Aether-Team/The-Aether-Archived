@@ -47,7 +47,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	{
 		this.modelPlayer = modelPlayer;
 		this.slimFit = slimFit;
-		this.modelWings = new ModelAetherWings(1.0F);
+		this.modelWings = new ModelAetherWings(0.0F);
 		this.modelMisc = new ModelBiped(1.0F);
 		this.modelHalo = new ModelPlayerHalo();
 		this.modelGlow = new ModelPlayer(0.7F, slimFit);
