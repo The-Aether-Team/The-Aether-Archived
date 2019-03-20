@@ -19,7 +19,7 @@ import net.minecraftforge.registries.RegistryManager;
 
 import org.apache.commons.lang3.Validate;
 
-class NamespacedWrapper<V extends IForgeRegistryEntry<V>> extends RegistryNamespaced<ResourceLocation, V> implements ILockableRegistry
+public class NamespacedWrapper<V extends IForgeRegistryEntry<V>> extends RegistryNamespaced<ResourceLocation, V> implements ILockableRegistry
 {
     private boolean locked = false;
     private ForgeRegistry<V> delegate;
