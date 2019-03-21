@@ -1,6 +1,8 @@
-﻿# Item Names
+# Item Names
 item.lore_book.name=Buch der Überlieferung
-item.MoaEgg.name=Moa Ei
+item.blue_moa_egg.name=Blaues Moa Ei
+item.white_moa_egg.name=Weißes Moa Ei
+item.black_moa_egg.name=Schwarzes Moa Ei
 item.leather_gloves.name=Leder Handschuhe
 item.chain_gloves.name=Ketten Handschuhe
 item.golden_gloves.name=Goldene Handschuhe
@@ -122,7 +124,6 @@ item.dart_golden.name=Goldener Pfeil
 item.dart_poison.name=Giftiger Pfeil
 item.dart_enchanted.name=Verzauberter Pfeil
 item.enchanted_blueberry.name=Verzauberte Beere
-
 # Block Names
 tile.aether_portal.name=Aether Portal
 tile.aether_grass.name=Aether Gras
@@ -131,6 +132,7 @@ tile.enchanted_aether_grass.name=Verzaubertes Aether Gras
 tile.cold_aercloud.name=Kalte Aerwolke
 tile.blue_aercloud.name=Blaue Aerwolke
 tile.golden_aercloud.name=Goldene Aerwolke
+tile.pink_aercloud.name=Pinke Aerwolke
 tile.berry_bush_stem.name=Beerenbusch Stengel
 tile.berry_bush.name=Beerenbusch
 tile.purple_flower.name=Lila Blume
@@ -181,6 +183,7 @@ tile.hellfire_wall.name=Höllenfeuer Mauer
 tile.holystone_wall.name=Heiligstein Mauer
 tile.holystone_brick_wall.name=Heiligstein Ziegel Wand
 tile.mossy_holystone_wall.name=Moosige Heiligstein Wand
+tile.aerogel_wall.name=Luftgel Wand
 tile.carved_stairs.name=Geschnitzte Treppe
 tile.angelic_stairs.name=Angelic Treppe
 tile.hellfire_stairs.name=Höllenfeuer Treppe
@@ -188,6 +191,7 @@ tile.skyroot_stairs.name=Himmelswurzel Treppe
 tile.mossy_holystone_stairs.name=Moosige Heiligstein Treppe
 tile.holystone_stairs.name=Heiligstein Treppen
 tile.holystone_brick_stairs.name=Heiligstein Ziegel Treppe
+tile.aerogel_stairs.name=Luftgel Treppe
 skyroot_slab.name=Himmelswurzel Stufe
 tile.skyroot_double_slab.name=Himmelswurzel Doppelstufe
 carved_slab.name=Geschnitzte Stufe
@@ -202,9 +206,10 @@ mossy_holystone_slab.name=Moosige Heiligstein Stufe
 tile.mossy_holystone_double_slab.name=Moosige Heiligstein Doppelstufe
 holystone_brick_slab.name=Heiligstein Ziegeltreppe
 tile.holystone_brick_double_slab.name=Heiligstein Ziegeldoppeltreppe
-tile.pink_aercloud.name=Pinke Aerwolke
+aerogel_slab.name=Luftgel Stufe
+tile.aerogel_double_slab.name=Luftgel Doppel Stufe
 tile.skyroot_fence_gate.name=Himmelswurzel Zauntor
-
+tile.sun_altar.name=Sonnen Altar
 # Entities
 entity.aechor_plant.name=Aechor Pflanze
 entity.cockatrice.name=Cockatrice
@@ -235,32 +240,29 @@ entity.flying_cow.name=Fliegende Kuh
 entity.phyg.name=Fliegendes Schwein
 entity.swet.name=Swet
 entity.moa.name=Moa
-entity.whirly.name=Wirbelwind
-
-# Achievements
-achievement.enter_aether=Feindliches Paradies
-achievement.blue_aercloud=Bis zur Unendlichkeit und noch viel Weiter!
-achievement.grav_tools=Pink ist das neue Blau
-achievement.incubator=Jetzt bist du Familie
-achievement.enchanter=Glaubst du an Magie?
-achievement.flying_pig=Wenn Schweine fliegen
-achievement.defeat_bronze=Like a Bossaru!
-achievement.defeat_silver=Entthront
-achievement.defeat_gold=Ausgelöscht
-achievement.loreception=Loreception
-
-# Achievement Descriptions
-achievement.enter_aether.desc=Betritt das Aether
-achievement.blue_aercloud.desc=Hüpf auf eine Blaue Aerwolke
-achievement.grav_tools.desc=Crafte ein gravitite Werkzeug
-achievement.incubator.desc=Inkubiere eine Moa
-achievement.enchanter.desc=Crafte einen Altar
-achievement.flying_pig.desc=Fliege auf einem Schwein
-achievement.defeat_bronze.desc=Besiege den Bronzenen Dungeon Boss
-achievement.defeat_silver.desc=Besiege den Silbernen Dungeon Boss
-achievement.defeat_gold.desc=Besiege den Goldenen Dungeon Boss
-achievement.loreception.desc=Lies das Buch der Überlieferung
-
+entity.whirlwind.name=Wirbelwind
+# Advancements
+advancement.aether_legacy.enter_aether=Feindliches Paradies
+advancement.aether_legacy.blue_aercloud=Bis zur Unendlichkeit und noch viel Weiter!
+advancement.aether_legacy.gravitite_tools=Pink ist das neue Blau
+advancement.aether_legacy.incubator=Jetzt bist du Familie
+advancement.aether_legacy.enchanter=Glaubst du an Magie?
+advancement.aether_legacy.mount_phyg=Wenn Schweine fliegen
+advancement.aether_legacy.bronze_dungeon=Like a Bossaru!
+advancement.aether_legacy.silver_dungeon=Entthront
+advancement.aether_legacy.gold_dungeon=Ausgelöscht
+advancement.aether_legacy.loreception=Loreception
+# Advancement Descriptions
+advancement.aether_legacy.enter_aether.desc=Betritt den Aether
+advancement.aether_legacy.blue_aercloud.desc=Hüpf auf einer Blaue Aerwolke
+advancement.aether_legacy.gravitite_tools.desc=Crafte ein gravitite Werkzeug
+advancement.aether_legacy.incubator.desc=Brüte einen Moa aus
+advancement.aether_legacy.enchanter.desc=Crafte einen Altar
+advancement.aether_legacy.mount_phyg.desc=Fliege auf einem Schwein
+advancement.aether_legacy.bronze_dungeon.desc=Besiege den Bronzenen Dungeon Boss
+advancement.aether_legacy.silver_dungeon.desc=Besiege den Silbernen Dungeon Boss
+advancement.aether_legacy.gold_dungeon.desc=Besiege den Goldenen Dungeon Boss
+advancement.aether_legacy.loreception.desc=Lies das Buch der Überlieferung
 # Creative Tabs Names
 tab.aether_blocks=Aether Blöcke
 tab.aether_tools=Aether Werkeuge
@@ -270,6 +272,8 @@ tab.aether_food=Aether Essen
 tab.aether_accessories=Aether Zubehör
 tab.aether_material=Aether Materialien
 tab.aether_misc=Aether Verschiedenes
-
 # Tab Names
 tab.accessories.name=Zubehör
+# GUI and Dialog
+gui.item.life_shard.maxshards=Du kannst Maximal nur 10 Lebens Spliter benutzen.
+gui.valkyrie.dialog.1=Was ist das? Du möchtest kämpen? Aww, was für ein süßer kleiner Mensch.
