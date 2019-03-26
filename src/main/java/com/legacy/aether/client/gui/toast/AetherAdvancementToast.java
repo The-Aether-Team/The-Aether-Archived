@@ -7,7 +7,6 @@ import com.legacy.aether.client.audio.AetherMusicHandler;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.toasts.AdvancementToast;
 import net.minecraft.client.gui.toasts.GuiToast;
 import net.minecraft.client.gui.toasts.IToast;
@@ -15,7 +14,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 
 public class AetherAdvancementToast extends AdvancementToast
@@ -23,14 +21,12 @@ public class AetherAdvancementToast extends AdvancementToast
 
 	private final Advancement advancement;
     private boolean hasPlayedSound = false;
-    private int advancementType;
 
 	public AetherAdvancementToast(Advancement advancementIn, int advancementTypeIn) 
 	{
 		super(advancementIn);
 
 		this.advancement = advancementIn;
-		this.advancementType = advancementTypeIn;
 	}
 
 	@Override
@@ -74,15 +70,8 @@ public class AetherAdvancementToast extends AdvancementToast
             if (!this.hasPlayedSound && delta > 0L)
             {
                 this.hasPlayedSound = true;
-
-                if (displayinfo.getFrame() == FrameType.CHALLENGE)
-                {
-                    toastGui.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getRecord(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1.0F, 1.0F));
-                }
-                else
-                {
-                	toastGui.getMinecraft().getSoundHandler().playSound(AetherMusicHandler.getAchievementSound(this.advancementType));
-                }
+                int type = this.advancement.getId().getPath().equals("like_a_bossaru") ? 1 : this.advancement.getId().getPath().equals("dethroned") ? 2 : 0;
+                toastGui.getMinecraft().getSoundHandler().playSound(AetherMusicHandler.getAchievementSound(type));
             }
 
             RenderHelper.enableGUIStandardItemLighting();
