@@ -79,6 +79,8 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 
 	private IBlockState dungeonStone = BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic);
 
+	private IBlockState lightDungeonStone = BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic);
+	
 	private IBlockState lockedDungeonStone = BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic);
 
 	private IBlockState lockedLightDungeonStone = BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic);
@@ -195,7 +197,7 @@ public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
 					}
 					if (block == this.lockedLightDungeonStone)
 					{
-						this.world.setBlockState(pos, this.dungeonStone, 2);
+						this.world.setBlockState(pos, this.lightDungeonStone, 2);
 					}
 				}
 			}
