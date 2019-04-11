@@ -1,3 +1,12 @@
+## What is this repository?
+This is a fork of the Aether Legacy mod which makes dungeon chests use loot tables instead of the loot being hardcoded,
+allowing for mod authors and resource pack creators to change or add loot to dungeons.
+
+## Original README.md text:
+
+________________________________________________
+
+
 <img src="http://i.imgur.com/r0ztn.png" >
 
 
