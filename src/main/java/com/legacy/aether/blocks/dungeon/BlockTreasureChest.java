@@ -2,6 +2,11 @@ package com.legacy.aether.blocks.dungeon;
 
 import java.util.Random;
 
+import com.legacy.aether.Aether;
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.networking.AetherGuiHandler;
+import com.legacy.aether.tile_entities.TileEntityTreasureChest;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -27,11 +32,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import com.legacy.aether.Aether;
-import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.networking.AetherGuiHandler;
-import com.legacy.aether.tile_entities.TileEntityTreasureChest;
 
 public class BlockTreasureChest extends BlockContainer
 {

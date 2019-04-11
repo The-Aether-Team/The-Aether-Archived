@@ -40,8 +40,7 @@ public class SheepuffCoatLayer implements LayerRenderer<EntitySheepuff>
         {
         	GlStateManager.pushMatrix();
             this.renderManager.renderEngine.bindTexture(TEXTURE_FUR);
-            int j = sheepuff.getFleeceColor();
-            float[] dye = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(j));
+            float[] dye = EntitySheep.getDyeRgb(sheepuff.getFleeceColor());
             GlStateManager.color(dye[0], dye[1], dye[2]);
 
             if (sheepuff.hasCustomName() && "jeb_".equals(sheepuff.getCustomNameTag()))

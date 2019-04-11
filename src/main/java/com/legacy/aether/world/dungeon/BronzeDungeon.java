@@ -7,14 +7,12 @@ import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.slider.EntitySlider;
-import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.world.dungeon.util.AetherDungeon;
 import com.legacy.aether.world.dungeon.util.PositionData;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -184,13 +182,10 @@ public class BronzeDungeon extends AetherDungeon
 			{
 				if(world.getBlockState(new BlockPos.MutableBlockPos().setPos(p, y + 2, q)).getBlock() == Blocks.AIR)
 				{
-					world.setBlockState(new BlockPos(p, y + 2, q), Blocks.CHEST.getDefaultState());
+					world.setBlockState(new BlockPos(p, y + 2, q), BlocksAether.dungeon_chest.getDefaultState());
 					TileEntityChest chest = (TileEntityChest)world.getTileEntity(new BlockPos(p, y + 2, q));
 					
-					for(p = 0; p < 3 + random.nextInt(3); p++)
-					{
-						chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), this.getNormalLoot(random));
-					}
+					chest.setLootTable(AetherLootTables.bronze_dungeon_chest, random.nextLong());
 				}
 				break;
 			}			
@@ -344,7 +339,7 @@ public class BronzeDungeon extends AetherDungeon
 		finished = true;
 	}
 
-	private ItemStack getNormalLoot(Random random)
+	/*private ItemStack getNormalLoot(Random random)
 	{
 		int item = random.nextInt(15);
 		switch(item)
@@ -405,9 +400,9 @@ public class BronzeDungeon extends AetherDungeon
 			}
 		}
 		return new ItemStack(BlocksAether.ambrosium_torch);
-	}
+	}*/
 	
-	public static ItemStack getBronzeLoot(Random random)
+	/*public static ItemStack getBronzeLoot(Random random)
 	{
 		int chance = random.nextInt(10);
 
@@ -434,7 +429,7 @@ public class BronzeDungeon extends AetherDungeon
 			default:
 				return new ItemStack(ItemsAether.cloud_staff);
 		}
-	}
+	}*/
 
 	public IBlockState lockedLightBlock()
 	{

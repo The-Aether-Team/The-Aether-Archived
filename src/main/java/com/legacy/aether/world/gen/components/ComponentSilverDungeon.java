@@ -1,31 +1,25 @@
 package com.legacy.aether.world.gen.components;
 
-import java.util.Random;
-
-import net.minecraft.block.BlockColored;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.structure.StructureBoundingBox;
-
-import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
 import com.legacy.aether.blocks.util.EnumCloudType;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
-import com.legacy.aether.entities.util.AetherMoaTypes;
-import com.legacy.aether.items.ItemMoaEgg;
-import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.world.gen.AetherGenUtils;
 import com.legacy.aether.world.gen.AetherStructure;
+
+import net.minecraft.block.BlockColored;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.EnumDyeColor;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 public class ComponentSilverDungeon extends AetherStructure
 {
@@ -311,16 +305,14 @@ public class ComponentSilverDungeon extends AetherStructure
 
 									if(this.getBlockState(u, 5 * q + 1, v).getMaterial() == Material.AIR)
 									{
-										this.setBlockWithOffset(u, 5 * q + 1, v, Blocks.CHEST.getDefaultState());
+										this.setBlockWithOffset(u, 5 * q + 1, v, BlocksAether.dungeon_chest.getDefaultState());
 
 										TileEntity tileEntity = this.getTileEntityFromPosWithOffset(u, 5 * q + 1, v);
 
 										if (tileEntity instanceof TileEntityChest)
 										{
-											for(u = 0; u < 3 + random.nextInt(3); u++)
-											{
-												((TileEntityChest)tileEntity).setInventorySlotContents(this.random.nextInt(((TileEntityChest)tileEntity).getSizeInventory()), this.getNormalLoot(this.random));
-											}
+											TileEntityChest chest = (TileEntityChest)tileEntity;
+											chest.setLootTable(AetherLootTables.silver_dungeon_chest, random.nextLong());
 										}
 									}
 
@@ -547,7 +539,7 @@ public class ComponentSilverDungeon extends AetherStructure
 		}
     }
 
-	//Get loot for normal chests scattered around
+	/*//Get loot for normal chests scattered around
 	private ItemStack getNormalLoot(Random random)
 	{
 		int item = random.nextInt(16);
@@ -613,9 +605,9 @@ public class ComponentSilverDungeon extends AetherStructure
 		}
 
 		return new ItemStack(BlocksAether.ambrosium_torch, random.nextInt(4) + 1);
-	}
+	}*/
 
-	public static ItemStack getSilverLoot(Random random)
+	/*public static ItemStack getSilverLoot(Random random)
 	{
 		int chance = random.nextInt(20);
 
@@ -660,6 +652,6 @@ public class ComponentSilverDungeon extends AetherStructure
 			default:
 				return AetherConfig.gameplay_changes.valkyrie_cape ? new ItemStack(ItemsAether.valkyrie_cape) : new ItemStack(ItemsAether.golden_feather);
 		}
-	}
+	}*/
 
 }

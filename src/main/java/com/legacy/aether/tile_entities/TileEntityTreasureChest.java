@@ -2,6 +2,10 @@ package com.legacy.aether.tile_entities;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
+import com.legacy.aether.registry.AetherLootTables;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,11 +13,11 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.LootTableManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-
-import com.legacy.aether.world.dungeon.BronzeDungeon;
-import com.legacy.aether.world.dungeon.GoldenDungeon;
-import com.legacy.aether.world.gen.components.ComponentSilverDungeon;
 
 public class TileEntityTreasureChest extends TileEntityChest
 {
@@ -41,35 +45,63 @@ public class TileEntityTreasureChest extends TileEntityChest
 
         return par1nbtTagCompound;
     }
+    
+    @Override
+    public void fillWithLoot(@Nullable EntityPlayer player)
+    {
+    	if (this.lootTable != null)
+        {
+    		LootTableManager loottablemanager = this.world.getLootTableManager();
+    		if (loottablemanager == null)
+    		{
+    			// added this because sometimes the returned loot table manager is null
+    			return;
+    		}
+            LootTable loottable = loottablemanager.getLootTableFromLocation(this.lootTable);
+            this.lootTable = null;
+            Random random;
+
+            if (this.lootTableSeed == 0L)
+            {
+                random = new Random();
+            }
+            else
+            {
+                random = new Random(this.lootTableSeed);
+            }
+
+            LootContext.Builder lootcontext$builder = new LootContext.Builder((WorldServer)this.world);
+
+            if (player != null)
+            {
+                lootcontext$builder.withLuck(player.getLuck()).withPlayer(player); // Forge: add player to LootContext
+            }
+
+            loottable.fillInventory(this, random, lootcontext$builder.build());
+        }
+    }
 
     public void unlock(int kind)
     {
         this.kind = kind;
-        Random random = new Random();
-        int p;
 
-        if (kind == 0)
+        switch (kind)
         {
-            for (p = 0; p < 5 + random.nextInt(1); ++p)
-            {
-                this.setInventorySlotContents(random.nextInt(this.getSizeInventory()), BronzeDungeon.getBronzeLoot(random));
-            }
-        }
-
-        if (kind == 1)
-        {
-            for (p = 0; p < 5 + random.nextInt(1); ++p)
-            {
-                this.setInventorySlotContents(random.nextInt(this.getSizeInventory()), ComponentSilverDungeon.getSilverLoot(random));
-            }
-        }
-
-        if (kind == 2)
-        {
-            for (p = 0; p < 5 + random.nextInt(1); ++p)
-            {
-                this.setInventorySlotContents(random.nextInt(this.getSizeInventory()), GoldenDungeon.getGoldLoot(random));
-            }
+	        case 0:
+	        {
+	            this.lootTable = AetherLootTables.bronze_dungeon_reward;
+	            break;
+	        }
+	        case 1:
+	        {
+	            this.lootTable = AetherLootTables.silver_dungeon_reward;
+	            break;
+	        }
+	        case 2:
+	        {
+	            this.lootTable = AetherLootTables.gold_dungeon_reward;
+	            break;
+	        }
         }
 
         this.locked = false;
@@ -125,7 +157,7 @@ public class TileEntityTreasureChest extends TileEntityChest
 
     public boolean isLocked()
     {
-        return this.locked;
+        return this.locked || super.isLocked();
     }
 
     public int getKind()

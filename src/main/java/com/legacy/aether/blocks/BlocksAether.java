@@ -50,6 +50,7 @@ import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -110,6 +111,8 @@ public class BlocksAether
 	public static Block sun_altar;
 	
 	public static Block skyroot_bookshelf;
+	
+	public static BlockChest dungeon_chest = Blocks.CHEST;
 
 	private static int availableId;
 
