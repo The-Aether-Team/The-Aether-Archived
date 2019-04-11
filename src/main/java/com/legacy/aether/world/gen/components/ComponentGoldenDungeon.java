@@ -1,20 +1,16 @@
 package com.legacy.aether.world.gen.components;
 
-import java.util.Random;
-
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.structure.StructureBoundingBox;
-
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
-import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.world.gen.AetherStructure;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 public class ComponentGoldenDungeon extends AetherStructure
 {
@@ -241,7 +237,7 @@ public class ComponentGoldenDungeon extends AetherStructure
 		return true;
 	}
 
-	public static ItemStack getGoldLoot(Random random)
+	/*public static ItemStack getGoldLoot(Random random)
 	{
 		int item = random.nextInt(10);
 
@@ -320,6 +316,6 @@ public class ComponentGoldenDungeon extends AetherStructure
 		}
 
 		return new ItemStack(ItemsAether.obsidian_chestplate);
-	}
+	}*/
 
 }

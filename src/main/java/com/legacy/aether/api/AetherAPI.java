@@ -1,7 +1,16 @@
 package com.legacy.aether.api;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+
+import com.legacy.aether.api.accessories.AetherAccessory;
+import com.legacy.aether.api.enchantments.AetherEnchantment;
+import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
+import com.legacy.aether.api.freezables.AetherFreezable;
+import com.legacy.aether.api.freezables.AetherFreezableFuel;
+import com.legacy.aether.api.moa.AetherMoaType;
+import com.legacy.aether.api.player.IPlayerAether;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,14 +23,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
-
-import com.legacy.aether.api.accessories.AetherAccessory;
-import com.legacy.aether.api.enchantments.AetherEnchantment;
-import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
-import com.legacy.aether.api.freezables.AetherFreezable;
-import com.legacy.aether.api.freezables.AetherFreezableFuel;
-import com.legacy.aether.api.moa.AetherMoaType;
-import com.legacy.aether.api.player.IPlayerAether;
 
 @Mod.EventBusSubscriber(modid = "aether_legacy")
 public class AetherAPI
@@ -149,6 +150,17 @@ public class AetherAPI
 	public AetherMoaType getRandomMoaType()
 	{
 		return iMoaTypeRegistry.getValues().get(new Random().nextInt(this.getMoaTypeSize()));
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Collection<AetherMoaType> getMoaTypes()
+	{
+		return iMoaTypeRegistry.getValues();
+	}
+	
+	public AetherMoaType getMoaType(ResourceLocation key)
+	{
+		return iMoaTypeRegistry.getValue(key);
 	}
 
 	public int getMoaTypeSize()

@@ -6,12 +6,10 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.sun_spirit.EntitySunSpirit;
-import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.world.dungeon.util.AetherDungeon;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -232,7 +230,7 @@ public class GoldenDungeon extends AetherDungeon
 		return true;
 	}
 
-	public static ItemStack getGoldLoot(Random random)
+	/*public static ItemStack getGoldLoot(Random random)
 	{
 		int chance = random.nextInt(10);
 
@@ -300,7 +298,7 @@ public class GoldenDungeon extends AetherDungeon
 			default:
 				return new ItemStack(ItemsAether.obsidian_chestplate);
 		}
-	}
+	}*/
 
 	public IBlockState getCeilingBase() 
 	{
