@@ -107,7 +107,7 @@ public class ItemsAether
 
 	public static Item sentry_boots, lightning_knife;
 
-	public static Item aether_tune, ascending_dawn, welcoming_skies;
+	public static Item aether_tune, ascending_dawn, welcoming_skies, legacy;
 
 	public static Item repulsion_shield;
 
@@ -256,8 +256,9 @@ public class ItemsAether
 		sentry_boots = register("sentry_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "sentry", null));
 
 		aether_tune = register("aether_tune", new ItemAetherDisc("aether_tune", SoundsAether.aether_tune, "Noisestorm", "Aether Tune"));
-		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", SoundsAether.ascending_dawn, "HEmile", "Ascending Dawn"));
+		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", SoundsAether.ascending_dawn, "Emile van Krieken", "Ascending Dawn"));
 		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Voyed", "Welcoming Skies")).setCreativeTab(null);
+		legacy = register("legacy", new ItemAetherDisc("legacy", SoundsAether.legacy, "Jon Lachney", "Legacy")).setCreativeTab(null);
 
 		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512));
 		lore_book = register("lore_book", new ItemLoreBook());

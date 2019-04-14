@@ -27,11 +27,11 @@ public class SoundsAether
 
 	public static SoundEvent sun_spirit_shoot;
 
-	public static SoundEvent aether_tune, ascending_dawn, welcoming_skies;
+	public static SoundEvent aether_tune, ascending_dawn, welcoming_skies, legacy;
 
 	public static SoundEvent achievement_gen, achievement_bronze, achievement_silver;
 
-	public static SoundEvent projectile_shoot, dart_shooter_shoot;
+	public static SoundEvent projectile_shoot, dart_shooter_shoot, aether_portal_idle;
 
 	public static SoundEvent aether1, aether2, aether3, aether4, aether_menu;
 
@@ -77,6 +77,9 @@ public class SoundsAether
 		aether_tune = register(Aether.locate("records.aether_tune"));
 		ascending_dawn = register(Aether.locate("records.ascending_dawn"));
 		welcoming_skies = register(Aether.locate("records.welcoming_skies"));
+		legacy = register(Aether.locate("records.legacy"));
+		
+		aether_portal_idle = register(Aether.locate("aemisc.aether_portal.idle"));
 
 		achievement_gen = register(Aether.locate("achievement"));
 		achievement_bronze = register(Aether.locate("achievement_bronze"));

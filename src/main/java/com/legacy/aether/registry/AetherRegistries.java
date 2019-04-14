@@ -107,7 +107,7 @@ public class AetherRegistries
 		registry.register(new AetherEnchantment(Items.RECORD_11, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_13, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_BLOCKS, ItemsAether.aether_tune, 2500));
-		registry.register(new AetherEnchantment(Items.RECORD_CAT, ItemsAether.aether_tune, 2500));
+		registry.register(new AetherEnchantment(Items.RECORD_CAT, ItemsAether.legacy, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_FAR, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_MALL, ItemsAether.aether_tune, 2500));
 		registry.register(new AetherEnchantment(Items.RECORD_MELLOHI, ItemsAether.aether_tune, 2500));

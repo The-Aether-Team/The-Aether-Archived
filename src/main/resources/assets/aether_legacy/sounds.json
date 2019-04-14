@@ -26,6 +26,15 @@
 	  }
 	]
   },
+  "records.legacy": {
+  	"category": "music",
+	"sounds": [
+	  {
+	    "name": "aether_legacy:record/legacy",
+	    "stream": true
+	  }
+	]
+  },
   "music.menu": {
 	"category": "music",
 	"sounds": [
@@ -96,6 +105,13 @@
 	    "name": "aether_legacy:achievement/achievement_bronze",
 	    "stream": true
 	  }
+	]
+  },
+  "aemisc.aether_portal.idle": {
+  	"category": "neutral",
+	"subtitle": "subtitles.aemisc.portal.idle",
+	"sounds": [
+	    "portal/portal"
 	]
   },
   "aemob.moa.say": {

@@ -147,7 +147,8 @@ public class ItemRendering
 		register(ItemsAether.aether_tune, "aether_tune");
 		register(ItemsAether.ascending_dawn, "ascending_dawn");
 		register(ItemsAether.welcoming_skies, "welcoming_skies");
-
+		register(ItemsAether.legacy, "legacy");
+		
 		register(ItemsAether.repulsion_shield, "repulsion_shield");
 
 		register(ItemsAether.cloud_parachute, "cold_parachute");
