@@ -80,7 +80,7 @@ public class PlayerAether implements IPlayerAether
 
 	private int cooldown, cooldownMax;
 
-	public boolean shouldRenderHalo = true;
+	public boolean shouldRenderHalo = true, shouldRenderGlow = false;
 
 	public boolean seenSpiritDialog = false;
 	
@@ -283,6 +283,11 @@ public class PlayerAether implements IPlayerAether
 		{
 			output.setBoolean("halo", this.shouldRenderHalo);
 		}
+		
+		if (AetherRankings.isDeveloper(this.thePlayer.getUniqueID()))
+		{
+			output.setBoolean("glow", this.shouldRenderGlow);
+		}
 
 		output.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
 		output.setInteger("hammer_cooldown", this.cooldown);
@@ -297,6 +302,11 @@ public class PlayerAether implements IPlayerAether
 		if (input.hasKey("halo"))
 		{
 			this.shouldRenderHalo = input.getBoolean("halo");
+		}
+		
+		if (input.hasKey("glow"))
+		{
+			this.shouldRenderGlow = input.getBoolean("glow");
 		}
 
 		if (input.hasKey("shards_used"))

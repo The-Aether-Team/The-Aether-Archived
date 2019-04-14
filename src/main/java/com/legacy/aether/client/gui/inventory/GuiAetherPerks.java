@@ -24,15 +24,15 @@ import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 public class GuiAetherPerks extends GuiScreen 
 {
 
-	private boolean enableMoaEditor, enableHaloEditor;
+	private boolean enableMoaEditor, enableHaloEditor, enableGlowEditor;
 
 	private IPlayerAether player;
 
 	private EntityMoa moa;
 
-	public GuiButton perkMoa, perkHalo;
+	public GuiButton perkMoa, perkHalo, perkGlow;
 
-	private GuiButton defualtSkin, enableHalo, confirmPreference;
+	private GuiButton defualtSkin, enableHalo, confirmPreference, enableGlow;
 
 	private GuiTextField moaWingMarking, moaWing, moaBody, moaBodyMarking, moaEye, moaOutside;
 
@@ -105,6 +105,11 @@ public class GuiAetherPerks extends GuiScreen
     		this.defualtSkin.visible = false;
     		this.confirmPreference.visible = false;
     	}
+    	
+    	if (!this.enableGlowEditor)
+    	{
+    		this.enableGlow.visible = false;
+    	}
     }
 
 	@Override
@@ -118,7 +123,8 @@ public class GuiAetherPerks extends GuiScreen
     	this.buttonList.add(this.perkMoa = new GuiButton(1, 4, 17, 100, 20, "Moa Customizer"));
     	this.buttonList.add(this.perkHalo = new GuiButton(5, 110, 17, 100, 20, "Developer Perks"));
 
-    	this.buttonList.add(this.enableHalo = new GuiButton(6, this.width / 2 - 50, this.height - 20, 100, 20, "Enable Halo: "));
+    	this.buttonList.add(this.enableHalo = new GuiButton(6, this.width / 2 - 0, this.height - 20, 100, 20, "Enable Halo: "));
+    	this.buttonList.add(this.enableGlow = new GuiButton(7, this.width / 2 - 120, this.height - 20, 100, 20, "Enable Glow: "));
     	this.buttonList.add(this.defualtSkin = new GuiButton(2,  this.width / 2 - 100, this.height - 20, 100, 20, "Default skin: " + ((PlayerAether)this.player).donatorMoaSkin.shouldUseDefualt()));
     	this.buttonList.add(this.confirmPreference = new GuiButton(4,  this.width / 2, this.height - 20, 100, 20, "Confirm Skin"));
 
@@ -126,9 +132,14 @@ public class GuiAetherPerks extends GuiScreen
     	{
     		this.perkHalo.visible = false;
     	}
+    	if (!AetherRankings.isDeveloper(this.player.getEntity().getUniqueID()))
+    	{
+    		this.perkGlow.visible = false;
+    	}
 
     	this.enableHalo.displayString = this.enableHalo.displayString + Boolean.toString(((PlayerAether)this.player).shouldRenderHalo ? false : true);
-
+    	this.enableGlow.displayString = this.enableGlow.displayString + Boolean.toString(((PlayerAether)this.player).shouldRenderGlow ? false : true);
+    	
         this.moaEye = new GuiTextField(1, this.fontRenderer, (this.width / 2) + 105, 70, 45, 20);
         this.moaEye.setMaxStringLength(6);
         this.moaEye.setText(Integer.toHexString(((PlayerAether)this.player).donatorMoaSkin.getEyeColor()));
@@ -208,6 +219,8 @@ public class GuiAetherPerks extends GuiScreen
 			this.enableHalo.visible = false;
 			this.confirmPreference.visible = true;
 			this.defualtSkin.visible = true;
+			this.enableGlowEditor = false;
+			this.enableGlow.visible = false;
 		}
 		else if (button.id == 2)
 		{
@@ -223,10 +236,14 @@ public class GuiAetherPerks extends GuiScreen
 		else if (button.id == 5)
 		{
 			boolean shouldEnable = this.enableHaloEditor ? false : true;
+			boolean shouldEnableGlow = this.enableGlowEditor ? false : true;
 
 			this.enableHaloEditor = shouldEnable;
 			this.enableMoaEditor = false;
 			this.enableHalo.visible = true;
+			
+			this.enableGlowEditor = shouldEnableGlow;
+			this.enableGlow.visible = true;
 		}
 		else if (button.id == 6)
 		{
@@ -234,6 +251,13 @@ public class GuiAetherPerks extends GuiScreen
 
 			AetherNetworkingManager.sendToServer(new PacketPerkChanged(this.player.getEntity().getEntityId(), EnumAetherPerkType.Halo, enableHalo));
 			this.enableHalo.displayString = "Enable Halo: " + Boolean.toString(enableHalo);
+		}
+		else if (button.id == 7)
+		{
+			boolean enableGlow = ((PlayerAether)this.player).shouldRenderGlow ? false : true;
+
+			AetherNetworkingManager.sendToServer(new PacketPerkChanged(this.player.getEntity().getEntityId(), EnumAetherPerkType.Glow, enableGlow));
+			this.enableGlow.displayString = "Enable Glow: " + Boolean.toString(enableGlow);
 		}
     }
 

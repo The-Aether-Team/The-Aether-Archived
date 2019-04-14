@@ -301,7 +301,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			GlStateManager.popMatrix();
 		}
 
-		if (player.getUniqueID().toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837"))
+		if ((player.getUniqueID().toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837") || AetherRankings.isDeveloper(player.getUniqueID()) && ((PlayerAether)playerAether).shouldRenderGlow) && !player.isInvisible())
 		{
 			this.manager.renderEngine.bindTexture(player.getLocationSkin());
 			GlStateManager.enableBlend();

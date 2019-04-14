@@ -2,7 +2,7 @@ package com.legacy.aether.player.perks.util;
 
 public enum EnumAetherPerkType
 {
-	Information(0), Halo(1), Moa(2);
+	Information(0), Halo(1), Moa(2), Glow(3);
 
 	private int perkID;
 
@@ -18,6 +18,6 @@ public enum EnumAetherPerkType
 
 	public static EnumAetherPerkType getPerkByID(int id)
 	{
-		return id == 0 ? Information : id == 1 ? Halo : Moa;
+		return id == 0 ? Information : id == 1 ? Halo : id == 3 ? Glow : Moa;
 	}
 }

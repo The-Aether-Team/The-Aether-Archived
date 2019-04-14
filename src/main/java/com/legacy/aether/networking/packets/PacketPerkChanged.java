@@ -15,7 +15,7 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 
 	public int entityID;
 
-	public boolean renderHalo;
+	public boolean renderHalo, renderGlow;
 
 	public DonatorMoaSkin moaSkin;
 
@@ -34,6 +34,11 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 		if (type == EnumAetherPerkType.Halo) 
 		{ 
 			this.renderHalo = info;
+		}
+		
+		if (type == EnumAetherPerkType.Glow) 
+		{ 
+			this.renderGlow = info;
 		}
 	}
 
@@ -58,6 +63,10 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 		{
 			this.moaSkin = DonatorMoaSkin.readMoaSkin(buf);
 		}
+		else if (this.perkType == EnumAetherPerkType.Glow)
+		{
+			this.renderGlow = buf.readBoolean();
+		}
 	}
 
 	@Override
@@ -73,6 +82,10 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 		else if (this.perkType == EnumAetherPerkType.Moa)
 		{
 			this.moaSkin.writeMoaSkin(buf);
+		}
+		else if (this.perkType == EnumAetherPerkType.Glow)
+		{
+			buf.writeBoolean(this.renderGlow);
 		}
 	}
 
@@ -94,6 +107,10 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 				else if (message.perkType == EnumAetherPerkType.Moa)
 				{
 					((PlayerAether) instance).donatorMoaSkin = message.moaSkin;
+				}
+				else if (message.perkType == EnumAetherPerkType.Glow)
+				{
+					((PlayerAether) instance).shouldRenderGlow = message.renderGlow;
 				}
 			}
 		}

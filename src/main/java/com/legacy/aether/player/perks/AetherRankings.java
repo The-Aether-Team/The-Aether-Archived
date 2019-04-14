@@ -94,6 +94,28 @@ public class AetherRankings
 
 		return false;
 	}
+	
+	public static boolean isDeveloper(UUID uuid)
+	{
+		if (ranks.get("Aether Legacy Developer-" + uuid.toString()) != null)
+		{
+			return true;
+		}
+		else if (ranks.get("Retired Developer-" + uuid.toString()) != null)
+		{
+			return true;
+		}
+		else if (ranks.get("Gilded Games-" + uuid.toString()) != null)
+		{
+			return true;
+		}
+		else if (ranks.get("Retired Gilded Games-" + uuid.toString()) != null)
+		{
+			return true;
+		}
+
+		return false;
+	}
 
 	public static void addCelebrityRank(String uuid)
 	{
