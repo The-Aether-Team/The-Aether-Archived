@@ -12,7 +12,7 @@ public class AetherRankings
 	{
 		//Developer
 		addDeveloperRank("6a0e8505-1556-4ee9-bec0-6af32f05888d"); // 115kino
-		addDeveloperRank("1d680bb6-2a9a-4f25-bf2f-a1af74361d69"); // Bailey Schaefer (KingPhygieBoo)
+		addDeveloperRank("1d680bb6-2a9a-4f25-bf2f-a1af74361d69"); // Phygie
 		
 		//Retired Developer
 		addRetiredRank("6e8be0ba-e4bb-46af-aea8-2c1f5eec5bc2"); // Brendan Freeman
@@ -52,6 +52,7 @@ public class AetherRankings
 		addContributor("4f0e8dd5-caf4-4d88-bfa4-1b0f1e13779f"); // Indianajaune
 		addContributor("6c249311-f939-4e66-9f31-49b753bfb14b"); // InsomniaKitten
 		addContributor("2b5187c9-dc5d-480e-ab6f-e884e92fce45"); // ItzDennisz
+		addContributor("c3e6871e-8e60-490a-8a8d-2bbe35ad1604"); // Raptor__
 	}
 
 	public static UUID getUUID(String string)
