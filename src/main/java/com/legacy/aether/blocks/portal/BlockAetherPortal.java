@@ -2,6 +2,13 @@ package com.legacy.aether.blocks.portal;
 
 import java.util.Random;
 
+import com.google.common.cache.LoadingCache;
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.entities.particles.ParticleAetherPortal;
+import com.legacy.aether.registry.sounds.SoundsAether;
+import com.legacy.aether.world.TeleporterAether;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
 import net.minecraft.block.material.Material;
@@ -11,7 +18,6 @@ import net.minecraft.block.state.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
@@ -21,12 +27,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.google.common.cache.LoadingCache;
-import com.legacy.aether.AetherConfig;
-import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.entities.particles.ParticleAetherPortal;
-import com.legacy.aether.world.TeleporterAether;
 
 public class BlockAetherPortal extends BlockPortal
 {
@@ -129,7 +129,7 @@ public class BlockAetherPortal extends BlockPortal
 	{
         if (rand.nextInt(100) == 0)
         {
-        	world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+        	world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundsAether.aether_portal_idle, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
         }
 
         for (int i = 0; i < 4; ++i)
