@@ -1,4 +1,7 @@
 pipeline {
+  options {
+    buildDiscarder(logRotator(artifactNumToKeepStr: '10'))
+  }
   agent {
     docker {
       args '-v gradle-cache:/home/gradle/.gradle'
@@ -9,7 +12,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'gradle build'
+        sh 'gradle build --no-daemon'
       }
     }
     stage('Archive') {
