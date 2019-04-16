@@ -52,7 +52,7 @@ public class BlockHolidayLeaves extends BlockLeaves implements IAetherMeta
     }
 
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
+    public BlockRenderLayer getRenderLayer()
     {
         return BlockRenderLayer.CUTOUT_MIPPED;
     }
