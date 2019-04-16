@@ -38,7 +38,7 @@ public class BlockDungeonTrap extends BlockDungeonBase
 
         	if (type == EnumStoneType.Carved || type == EnumStoneType.Sentry)
         	{
-        		EntitySentry sentry = new EntitySentry(world, pos.getX() + 2D, pos.getY() + 1D, pos.getZ() + 2D);
+        		EntitySentry sentry = new EntitySentry(world, pos.getX() + 0.5F, pos.getY() + 1D, pos.getZ() + 0.5F);
         		if (!world.isRemote)
         		world.spawnEntity(sentry);
         	}

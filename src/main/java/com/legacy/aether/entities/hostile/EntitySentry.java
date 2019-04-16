@@ -177,7 +177,7 @@ public class EntitySentry extends EntityLiving implements IMob
 
     protected void explode(EntityLivingBase entity)
     {
-        if (this.isAwake() && this.canEntityBeSeen(entity) && entity.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F))
+        if (this.isAwake() && this.canEntityBeSeen(entity) && entity.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F) && this.ticksExisted > 20)
         {
         	entity.addVelocity(0.5D, 0.5D, 0.5D);
 
