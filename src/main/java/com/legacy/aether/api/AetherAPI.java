@@ -69,7 +69,7 @@ public class AetherAPI
 
 	private static <T extends IForgeRegistryEntry<T>> RegistryBuilder<T> makeRegistry(ResourceLocation name, Class<T> type, int min, int max)
 	{
-		return new RegistryBuilder<T>().setName(name).setType(type).setIDRange(min, max).addCallback(new NamespacedWrapper.Factory<T>());
+		return new RegistryBuilder<T>().setName(name).setType(type).setIDRange(min, max);
 	}
 
 	public boolean isAccessory(ItemStack stack)
