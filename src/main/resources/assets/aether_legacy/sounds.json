@@ -114,6 +114,14 @@
 	    "portal/portal"
 	]
   },
+  "aemisc.dungeon_trap.trigger": {
+  	"category": "block",
+	"subtitle": "subtitles.aemisc.dungeon_trap.trigger",
+	"sounds": [
+	    "block/fence_gate/open1",
+		"block/fence_gate/open2"
+	]
+  },
   "aemob.moa.say": {
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.moa.say",

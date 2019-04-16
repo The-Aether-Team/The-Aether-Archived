@@ -320,6 +320,7 @@ subtitles.aeboss.slider.move=Slider slides
 subtitles.aeboss.slider.death=Slider breaks
 subtitles.aeboss.sun_spirit.shoot=Sun Spirit shoots
 subtitles.aemisc.portal.idle=Aether Portal wooshes
+subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
 gui.item.life_shard.maxshards=You can only use a total of 10 life shards.

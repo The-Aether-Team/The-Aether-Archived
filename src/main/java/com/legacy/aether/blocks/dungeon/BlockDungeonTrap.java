@@ -1,19 +1,19 @@
 package com.legacy.aether.blocks.dungeon;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.EntityFireMinion;
 import com.legacy.aether.entities.bosses.EntityValkyrie;
 import com.legacy.aether.entities.hostile.EntitySentry;
+import com.legacy.aether.registry.sounds.SoundsAether;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class BlockDungeonTrap extends BlockDungeonBase
 {
@@ -57,7 +57,7 @@ public class BlockDungeonTrap extends BlockDungeonBase
         		world.spawnEntity(minion);
         	}
 
-        	world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_FENCE_GATE_CLOSE, SoundCategory.PLAYERS, 1.0F, 1.5F);
+        	world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsAether.dungeon_trap, SoundCategory.BLOCKS, 1.0F, 1.5F);
     	}
     }
 
