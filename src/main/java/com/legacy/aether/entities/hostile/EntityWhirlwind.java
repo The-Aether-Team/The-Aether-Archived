@@ -3,6 +3,12 @@ package com.legacy.aether.entities.hostile;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.entities.particles.AetherParticle;
+import com.legacy.aether.entities.particles.ParticleEvilWhirly;
+import com.legacy.aether.entities.particles.ParticlePassiveWhirly;
+import com.legacy.aether.player.perks.AetherRankings;
+
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -28,12 +34,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.particles.AetherParticle;
-import com.legacy.aether.entities.particles.ParticleEvilWhirly;
-import com.legacy.aether.entities.particles.ParticlePassiveWhirly;
-import com.legacy.aether.player.perks.AetherRankings;
 
 public class EntityWhirlwind extends EntityMob 
 {
@@ -139,7 +139,7 @@ public class EntityWhirlwind extends EntityMob
         	super.onLivingUpdate();
         }
 
-        if(this.lifeLeft-- <= 0 || handleWaterMovement()) 
+        if((this.lifeLeft-- <= 0 || handleWaterMovement()) && !this.world.isRemote) 
         {
             this.setDead();
         }
@@ -234,7 +234,7 @@ public class EntityWhirlwind extends EntityMob
             	this.lifeLeft -= 50;
             }
 
-            if (this.world.getGameRules().getBoolean("mobGriefing"))
+            if (this.world.getGameRules().getBoolean("mobGriefing") && !world.isRemote)
             {
                 int i2 = (MathHelper.floor(this.posX) - 1) + this.rand.nextInt(3);
                 int j2 = MathHelper.floor(this.posY) + this.rand.nextInt(5);
@@ -242,7 +242,8 @@ public class EntityWhirlwind extends EntityMob
 
                 if(this.world.getBlockState(new BlockPos.MutableBlockPos().setPos(i2, j2, k2)).getBlock() instanceof BlockLeaves)
                 {
-                	this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
+                	this.world.destroyBlock(new BlockPos(i2, j2, k2), false);
+                	//this.world.setBlockState(new BlockPos(i2, j2, k2), Blocks.AIR.getDefaultState());
                 }
             }
         }
