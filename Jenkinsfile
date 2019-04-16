@@ -1,4 +1,7 @@
 pipeline {
+  options {
+    buildDiscarder(logRotator(artifactNumToKeepStr: '10'))
+  }
   agent {
     docker {
       args '-v gradle-cache:/home/gradle/.gradle'
