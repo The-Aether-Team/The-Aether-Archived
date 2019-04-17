@@ -19,6 +19,7 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent.GenerateMinable;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import com.legacy.aether.AetherConfig;
@@ -133,7 +134,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 		if (TerrainGen.decorate(worldIn, random, pos, EventType.CUSTOM))
 		{
-			if (AetherConfig.world_gen.pink_aerclouds)
+			if (AetherConfig.world_gen.pink_aerclouds || Loader.isModLoaded("lost_aether"))
 			{
 				this.generateClouds(EnumCloudType.Pink, 1, 50, this.nextInt(64) + 110);
 			}
