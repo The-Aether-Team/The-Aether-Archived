@@ -124,17 +124,13 @@ public class GuiAetherPerks extends GuiScreen
     	this.buttonList.add(this.perkHalo = new GuiButton(5, 110, 17, 100, 20, "Developer Perks"));
 
     	this.buttonList.add(this.enableHalo = new GuiButton(6, this.width / 2 - 0, this.height - 20, 100, 20, "Enable Halo: "));
-    	this.buttonList.add(this.enableGlow = new GuiButton(7, this.width / 2 - 120, this.height - 20, 100, 20, "Enable Glow: "));
+    	this.buttonList.add(this.enableGlow = new GuiButton(7, this.width / 2 - 100, this.height - 20, 100, 20, "Enable Glow: "));
     	this.buttonList.add(this.defualtSkin = new GuiButton(2,  this.width / 2 - 100, this.height - 20, 100, 20, "Default skin: " + ((PlayerAether)this.player).donatorMoaSkin.shouldUseDefualt()));
     	this.buttonList.add(this.confirmPreference = new GuiButton(4,  this.width / 2, this.height - 20, 100, 20, "Confirm Skin"));
 
     	if (!AetherRankings.isRankedPlayer(this.player.getEntity().getUniqueID()))
     	{
     		this.perkHalo.visible = false;
-    	}
-    	if (!AetherRankings.isDeveloper(this.player.getEntity().getUniqueID()))
-    	{
-    		this.perkGlow.visible = false;
     	}
 
     	this.enableHalo.displayString = this.enableHalo.displayString + Boolean.toString(((PlayerAether)this.player).shouldRenderHalo ? false : true);
@@ -236,14 +232,18 @@ public class GuiAetherPerks extends GuiScreen
 		else if (button.id == 5)
 		{
 			boolean shouldEnable = this.enableHaloEditor ? false : true;
+			
 			boolean shouldEnableGlow = this.enableGlowEditor ? false : true;
 
 			this.enableHaloEditor = shouldEnable;
 			this.enableMoaEditor = false;
 			this.enableHalo.visible = true;
 			
-			this.enableGlowEditor = shouldEnableGlow;
-			this.enableGlow.visible = true;
+			if (AetherRankings.isDeveloper(this.player.getEntity().getUniqueID()))
+	    	{
+				this.enableGlowEditor = shouldEnableGlow;
+				this.enableGlow.visible = true;	
+	    	}
 		}
 		else if (button.id == 6)
 		{
