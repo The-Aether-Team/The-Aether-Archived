@@ -1,4 +1,4 @@
-# Aether: Legacy
+# The Aether
 [![Code license (GNU GPL 3.0)](https://img.shields.io/badge/code%20license-GNU%20GPLv3-green.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://creativecommons.org/licenses/by-sa/4.0/)
 
@@ -25,7 +25,7 @@ We use Curseforge to publish **stable builds** of the Aether for Minecraft. You 
 If you're feeling a bit more adventurous (or a developer has suggested you to do so), we provide **bleeding edge builds** which are produced on [our official Jenkins instance](https://jenkins.gildedgames.com/blue/organizations/jenkins/The-Aether/activity). These builds are very frequently created by an automatic service and contain the latest available code without undergoing any form of quality control. We do not generally recommend users use these builds as they may contain serious issues and will not generally receive support.
 
 ## :bug: Report bugs or other issues
-If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://gitea.gildedgames.com/GildedGames/Aether-Legacy/issues). When doing so, we ask that you provide the following information:
+If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://gitea.gildedgames.com/GildedGames/The-Aether/issues). When doing so, we ask that you provide the following information:
 
 - The exact version of the Aether you are running, such as `1.10.2-1.0.0`, and the version of Forge you are using, such as `14.23.5.2768`. Please do not state "the latest stable release" or "latest Forge".
 - If your issue is a bug or otherwise unexpected behavior, state what you expected to happen.
@@ -35,7 +35,7 @@ If you're running into bugs or other problems, feel free to open an issue on our
 Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details. Failure to follow any of the above may result in your issue being closed.
 
 ## :wrench: Contribute to the project
-Looking to contribute to the project? We ask that you read over our [Contributor's Guide](https://gitea.gildedgames.com/GildedGames/Aether-Legacy/src/branch/1.12.2/CONTRIBUTING.md) for more details and our Contributor License Agreement (CLA) before getting started.
+Looking to contribute to the project? We ask that you read over our [Contributor's Guide](https://gitea.gildedgames.com/GildedGames/The-Aether/src/branch/1.12.2/CONTRIBUTING.md) for more details and our Contributor License Agreement (CLA) before getting started.
 
 Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://gitea.gildedgames.com/GildedGames/Aether-II/issues?label_name%5B%5D=Contributions+Welcome) which shows all the currently open issues that we'd love some help on.
 
