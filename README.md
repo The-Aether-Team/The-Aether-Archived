@@ -62,10 +62,10 @@ The Aether project makes use of crowd sourced translations. The Aether is availa
 - Polish * (pl_PL)
 - Romanian (ro_RO)
 - Russian (ru_RU) - Translations by: LeyxorCheysen, andreyalex1236, LunarP1, and zombi1944
-- Spanish (es_MX) - Translations by: Aer-ink
+- Spanish * (es_MX) - Translations by: Aer-ink
 - Thai * (th_TH)
 - Ukranian * (uk_UK)
 
 _\* Indicates only partial language support._
 
-The above list is incomplete, and as such, if your name is missing from it, please contact us. Unfortunately, if you're wanting to submit additional translations, you will need to open a merge request to this repository. We plan to bring back our crowd-sourced translation center soon, but no ETA has been made yet.
+The above list is incomplete, and as such, if your name is missing from it, please contact us. **You can help translate The Aether Mod to additional languages by joining our team of avid translators [here](https://aether.oneskyapp.com/collaboration/project?id=158541).**
