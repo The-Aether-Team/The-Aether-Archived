@@ -1,39 +1,71 @@
-<img src="http://i.imgur.com/r0ztn.png" >
+# Aether: Legacy
+[![Code license (GNU GPL 3.0)](https://img.shields.io/badge/code%20license-GNU%20GPLv3-green.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://creativecommons.org/licenses/by-sa/4.0/)
 
+## :heart: Support Gilded Games
 
-# Aether Legacy [![Twitter Follow](https://img.shields.io/twitter/follow/moddinglegacy.svg?label=Follow&style=social)](https://twitter.com/ModdingLegacy)
-[![Discord](https://img.shields.io/discord/223938153260515328.svg)](https://discord.gg/qZcfwet)
-[![GitHub release](https://img.shields.io/github/release-pre/modding-legacy/aether-legacy.svg)](https://github.com/Modding-Legacy/Aether-Legacy/releases)
-[![GitHub](https://img.shields.io/github/license/modding-legacy/aether-legacy.svg)](https://github.com/Modding-Legacy/Aether-Legacy/blob/master/LICENSE)
-[![CurseForge Total Downloads](http://cf.way2muchnoise.eu/full_255308_downloads.svg)](https://minecraft.curseforge.com/projects/aether-legacy/)
+[![Patreon pledgers](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.herokuapp.com%2FGildedGames&style=flat-square)](https://patreon.com/GildedGames)
+[![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/YgTv7Vg)
+[![Twitter followers](https://img.shields.io/twitter/follow/DevAether.svg?logo=twitter&label=twitter&style=flat-square)](https://twitter.com/DevAether)
 
-[![Availability](http://cf.way2muchnoise.eu/versions/255308.svg)](https://minecraft.curseforge.com/projects/aether-legacy/files)
+If you enjoy our work, [please consider making a pledge](https://patreon.com/GildedGames) today to help fund development and gain access to special perks. Every pledge goes directly into the development process and enables us to continue making the Minecraft mods you know and love.
 
+You can also support the Aether project and Gilded Games by telling your friends, joining our Discord server, and sharing our progress and announcements on social media. Every bit helps!
 
-* [**Website**](https://moddinglegacy.com)
+## :package: Download the latest releases
+### "Stable" builds
+[![CurseForge downloads](https://cf.way2muchnoise.eu/full_255308_downloads.svg)](https://minecraft.curseforge.com/projects/the-aether-mod)
+[![CurseForge packs](https://cf.way2muchnoise.eu/packs/full_255308_in_packs.svg)](https://minecraft.curseforge.com/projects/the-aether-mod)
 
-## 📖 Summary 
-Aether II is indeed an amazing mod and shall continue to grow into something even greater. However, some people haven't played the original Aether mostly due to it being outdated and unavailable to the general public through official ways. Aether Legacy is a port of the original Aether mod that allows people to play the original experience on newer versions of Minecraft with more bug fixes, optimizations, mod & multiplayer support!
+We use Curseforge to publish **stable builds** of the Aether for Minecraft. You can download the latest stable builds from our [official page found here](https://minecraft.curseforge.com/projects/the-aether-mod) without signing up for an account, and even install the Aether for Minecraft using the [Twitch Launcher](https://www.curseforge.com/twitch-client) with built-in integration for Curseforge mods. We recommend using our stable Curseforge releases for most people.
 
-## 🕹️ How to Play
-For all still new to the experience of the Aether (be it Aether I/Aether II) to get to the Aether you must make a portal frame using Glowstone. From there a water bucket is needed to get the portal going and from there you are ready to head to the Aether.
+### Bleeding edge builds
+[![Jenkins build status](https://img.shields.io/jenkins/s/https/jenkins.gildedgames.com/job/The-Aether/job/1.12.2.svg?style=flat-square)](https://jenkins.gildedgames.com/blue/organizations/jenkins/The-Aether/activity)
 
-## 🏆 Goal
-The goal of this project is to help show how much the Aether has grown from then to now. With this project it should help bring more appreciation towards Aether II and the amount of dedication Gilded Games is putting out to make it as outstanding as it can ever be.
+If you're feeling a bit more adventurous (or a developer has suggested you to do so), we provide **bleeding edge builds** which are produced on [our official Jenkins instance](https://jenkins.gildedgames.com/blue/organizations/jenkins/The-Aether/activity). These builds are very frequently created by an automatic service and contain the latest available code without undergoing any form of quality control. We do not generally recommend users use these builds as they may contain serious issues and will not generally receive support.
 
-## ⚠️ Disclaimer
-There's only 2 programmers, with limited time, so if you find any bugs we do apologize. Please list all bugs on the issue tracker and a patch will be done every other week. Also, we are not adding any new content at all to keep the "legacy" in Aether Legacy.
+## :bug: Report bugs or other issues
+If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://gitea.gildedgames.com/GildedGames/Aether-Legacy/issues). When doing so, we ask that you provide the following information:
 
-## ✏️ Contributors
-Thanks so much to these people keep Aether alive.
+- The exact version of the Aether you are running, such as `1.10.2-1.0.0`, and the version of Forge you are using, such as `14.23.5.2768`. Please do not state "the latest stable release" or "latest Forge".
+- If your issue is a bug or otherwise unexpected behavior, state what you expected to happen.
+- If your issue is a crash, attach the latest client or server log and the complete crash report as a file.
+- If your issue only occurs with other mods/plugins installed, list the exact mod/plugin versions installed.
 
-## 🌐 Translations
-If you are interested in translating, come chat with us on Discord and we'll let you know how to go about it!
+Make sure to keep your issue's description clear and concise. Your issue's title should also be easy to digest, giving our developers and reporters a good idea of what's wrong without including too many details. Failure to follow any of the above may result in your issue being closed.
 
-* Spanish (es_MX) - Translations by [@Aer-ink](https://github.com/Aer-ink)
-* French (fr_FR)
-* German (de_DE)
-* Chinese (zh_CH) - Translations by [@ETStareak](https://github.com/ETStareak)
-* Portuguese Translations by [@lorrampi](https://github.com/lorrampi)
+## :wrench: Contribute to the project
+Looking to contribute to the project? We ask that you read over our [Contributor's Guide](https://gitea.gildedgames.com/GildedGames/Aether-Legacy/src/branch/1.12.2/CONTRIBUTING.md) for more details and our Contributor License Agreement (CLA) before getting started.
 
-- [x] English Upside Down - (ud_UD) Translations by [@The-Fireplace](https://github.com/The-Fireplace)
+Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://gitea.gildedgames.com/GildedGames/Aether-II/issues?label_name%5B%5D=Contributions+Welcome) which shows all the currently open issues that we'd love some help on.
+
+## :scroll: License information
+If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for the Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. We ask however that if you are using code or assets from The Aether project that you adhere to the licenses below, and that you please don't advertise using our brand. If you're interested in sponsoring The Aether project or Gilded Games or wish to otherwise use our brand, please [contact us](mailto:support@gildedgames.com).
+
+The source code of The Aether mod for Minecraft 1.7+ is under the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html) license. **All assets of the The Aether for Minecraft 1.7+ (found in the [resources folder](https://gitea.gildedgames.com/GildedGames/Aether-II/src/branch/1.12.2/src/main/resources/assets)) are unlicensed and all rights are reserved to them by Gilded Games.** 
+
+[Wiki contributions](https://gitea.gildedgames.com/GildedGames/Aether-II/wiki) are under the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) unless otherwise stated.
+
+Previous versions of The Aether are not licensed freely and all rights are reserved to them by Gilded Games. Unlicensed assets are owned and copyrighted by their respective authors and all other rights to them are reserved by Gilded Games. If you would like to use
+our unlicensed assets, please [get in contact with us](mailto:support@gildedgames.com) for details.
+
+## :star2: Special mentions
+### :speech_balloon: Translations
+The Aether project makes use of crowd sourced translations. The Aether is available in these languages thanks to the following contributors:
+
+- Chinese (zh_CN, zh_TW) - Translations by: ETStareak, y830705
+- Dutch (nl_NL) - Translations by: Critical
+- French (fr_FR) - Translations by: lololoustau and Beethov46
+- German (de_DE)
+- Italian * (it_IT)
+- Korean * (ko_KR)
+- Polish * (pl_PL)
+- Romanian (ro_RO)
+- Russian (ru_RU) - Translations by: LeyxorCheysen, andreyalex1236, LunarP1, and zombi1944
+- Spanish (es_MX) - Translations by: Aer-ink
+- Thai * (th_TH)
+- Ukranian * (uk_UK)
+
+_\* Indicates only partial language support._
+
+The above list is incomplete, and as such, if your name is missing from it, please contact us. Unfortunately, if you're wanting to submit additional translations, you will need to open a merge request to this repository. We plan to bring back our crowd-sourced translation center soon, but no ETA has been made yet.
