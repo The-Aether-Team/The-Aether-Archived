@@ -1,14 +1,14 @@
 [
 {
   "modid": "aether_legacy",
-  "name": "Aether Legacy",
-  "description": "Aether Legacy, a port of Aether I which has been updated to the latest version of Minecraft. This version of the aether includes multiplayer support to play with friends and others alike.",
-  "version": "v1.4.4",
+  "name": "Aether Legacy XP",
+  "description": "Aether Legacy XP, a port of Aether I which has been updated to Minecraft 1.12.2, but with extra features backported from Aether II.",
+  "version": "v1.4.5",
   "mcversion": "1.12.2",
   "url": "https://www.moddinglegacy.com/",
   "updateUrl": "",
-  "authorList": ["115kino, KingPhygieBoo, xJonL"],
-  "credits": "Gilded Games for allowing us permission to do this project, and InsomniaKitten for providing the inventory texture.",
+  "authorList": ["115kino, KingPhygieBoo, xJonL", "TheGag96"],
+  "credits": "Gilded Games for the amazing Aether mod series!",
   "logoFile": "aether.png",
   "screenshots": [""],
   "dependencies": []

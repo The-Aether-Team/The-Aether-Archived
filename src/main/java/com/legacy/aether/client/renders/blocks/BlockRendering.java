@@ -1,6 +1,10 @@
 package com.legacy.aether.client.renders.blocks;
 
+import com.google.common.collect.Maps;
+//import com.legacy.aether.AetherLogger;
+import com.legacy.aether.blocks.natural.*;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -17,19 +21,13 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.container.BlockAetherContainer;
 import com.legacy.aether.blocks.decorative.BlockAetherFenceGate;
-import com.legacy.aether.blocks.natural.BlockAetherDirt;
-import com.legacy.aether.blocks.natural.BlockAetherGrass;
-import com.legacy.aether.blocks.natural.BlockAetherLeaves;
-import com.legacy.aether.blocks.natural.BlockAetherLog;
-import com.legacy.aether.blocks.natural.BlockCrystalLeaves;
-import com.legacy.aether.blocks.natural.BlockHolidayLeaves;
-import com.legacy.aether.blocks.natural.BlockHolystone;
-import com.legacy.aether.blocks.natural.BlockQuicksoil;
 import com.legacy.aether.blocks.natural.ore.BlockAmbrosiumOre;
 import com.legacy.aether.blocks.util.EnumCloudType;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.client.renders.AetherEntityRenderingRegistry;
 import com.legacy.aether.client.renders.items.util.AetherColor;
+
+import java.util.LinkedHashMap;
 
 public class BlockRendering 
 {
@@ -51,6 +49,30 @@ public class BlockRendering
         registerBlockWithStateMapper(BlocksAether.enchanter, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
         registerBlockWithStateMapper(BlocksAether.incubator, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
         registerBlockWithStateMapper(BlocksAether.freezer, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
+
+		ModelLoader.setCustomStateMapper(BlocksAether.aercloud, new StateMapperBase()
+		{
+			@Override
+			protected ModelResourceLocation getModelResourceLocation(final IBlockState state)
+			{
+				final LinkedHashMap<IProperty<?>, Comparable<?>> mappings = Maps.newLinkedHashMap(state.getProperties());
+
+				if (state.getValue(BlockAercloud.cloud_type) != EnumCloudType.Purple)
+				{
+					mappings.remove(BlockAercloud.property_facing);
+				}
+
+//				AetherLogger.print("Hello friends: " + mappings.toString());
+
+				final ResourceLocation resource = Block.REGISTRY.getNameForObject(state.getBlock());
+
+
+//				return new ModelResourceLocation(state.getBlock().getRegistryName(), this.getPropertyString(mappings));
+				return new ModelResourceLocation(resource, this.getPropertyString(mappings));
+			}
+		});
+
+
 
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
 		register(BlocksAether.holystone_brick, "holystone_brick");
@@ -135,7 +157,7 @@ public class BlockRendering
 			register(BlocksAether.dungeon_trap, meta, name);
 		}
 
-		registerMetadata(BlocksAether.aercloud, Aether.locate("cold_aercloud"), Aether.locate("blue_aercloud"), Aether.locate("golden_aercloud"), Aether.locate("pink_aercloud"));
+		registerMetadata(BlocksAether.aercloud, Aether.locate("cold_aercloud"), Aether.locate("blue_aercloud"), Aether.locate("golden_aercloud"), Aether.locate("pink_aercloud"), Aether.locate("green_aercloud"), Aether.locate("storm_aercloud"), Aether.locate("purple_aercloud"));
 		registerMetadata(BlocksAether.aether_leaves, Aether.locate("green_leaves"), Aether.locate("golden_oak_leaves"));
 		registerMetadata(BlocksAether.holiday_leaves, Aether.locate("holiday_leaves"), Aether.locate("decorated_holiday_leaves"));
 		registerMetadata(BlocksAether.crystal_leaves, Aether.locate("crystal_leaves"), Aether.locate("crystal_fruit_leaves"));
