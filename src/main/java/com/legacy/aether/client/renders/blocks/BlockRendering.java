@@ -1,7 +1,6 @@
 package com.legacy.aether.client.renders.blocks;
 
 import com.google.common.collect.Maps;
-//import com.legacy.aether.AetherLogger;
 import com.legacy.aether.blocks.natural.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -62,12 +61,8 @@ public class BlockRendering
 					mappings.remove(BlockAercloud.property_facing);
 				}
 
-//				AetherLogger.print("Hello friends: " + mappings.toString());
-
 				final ResourceLocation resource = Block.REGISTRY.getNameForObject(state.getBlock());
 
-
-//				return new ModelResourceLocation(state.getBlock().getRegistryName(), this.getPropertyString(mappings));
 				return new ModelResourceLocation(resource, this.getPropertyString(mappings));
 			}
 		});

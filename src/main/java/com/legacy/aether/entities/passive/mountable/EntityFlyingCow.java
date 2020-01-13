@@ -160,7 +160,7 @@ public class EntityFlyingCow extends EntitySaddleMount
 				this.motionY *= 0.6D;
 			}
 
-			if (this.onGround && !this.world.isRemote)
+			if (this.onGround)
 			{
 				this.jumpsRemaining = this.maxJumps;
 			}

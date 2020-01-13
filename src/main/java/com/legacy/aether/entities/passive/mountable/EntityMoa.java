@@ -206,6 +206,7 @@ public class EntityMoa extends EntitySaddleMount
 	@Override
 	public void onUpdate()
 	{
+		this.updateWingRotation();
 		super.onUpdate();
 
 		this.setMaxJumps(this.getMoaType().getMoaProperties().getMaxJumps());
@@ -215,7 +216,6 @@ public class EntityMoa extends EntitySaddleMount
 			this.motionY += 0.05F;
 		}
 
-		this.updateWingRotation();
 		this.fall();
 		
 		if (this.secsUntilHungry > 0)
@@ -325,11 +325,8 @@ public class EntityMoa extends EntitySaddleMount
 				this.motionY = 0.7D;
 				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
 
-				if (!this.world.isRemote)
-				{
-					this.setRemainingJumps(this.getRemainingJumps() - 1);
-					net.minecraftforge.common.ForgeHooks.onLivingJump(this);
-				}
+				this.setRemainingJumps(this.getRemainingJumps() - 1);
+				net.minecraftforge.common.ForgeHooks.onLivingJump(this);
 
 				if (!this.world.isRemote)
 				{

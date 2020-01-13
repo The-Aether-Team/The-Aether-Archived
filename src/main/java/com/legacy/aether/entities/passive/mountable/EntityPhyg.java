@@ -156,7 +156,7 @@ public class EntityPhyg extends EntitySaddleMount
 
 		if (!this.onGround && !this.isJumping)
 		{
-			if (this.onGround && !this.world.isRemote)
+			if (this.onGround)
 			{
 				this.jumpsRemaining = this.maxJumps;
 			}

@@ -576,12 +576,9 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 				this.stepHeight = 1.0F;
 				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.1F;
 
-				if (!this.world.isRemote)
-				{
-					this.setAIMoveSpeed((float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
+				this.setAIMoveSpeed((float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
 
-					super.travel(strafe, vertical, forward);
-				}
+				super.travel(strafe, vertical, forward);
 			}
 			else
 			{
