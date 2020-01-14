@@ -71,7 +71,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 		this.updateRider();
 		super.onUpdate();
 
-		if (this.isBeingRidden() && this.isRiding())
+		if (!this.world.isRemote && this.isBeingRidden() && this.isRiding())
 		{
 			for (Entity entity : this.getPassengers())
 			{
@@ -82,7 +82,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 	public void updateRider()
 	{
-		if (this.isBeingRidden())
+		if (!this.world.isRemote && this.isBeingRidden())
 		{
 			Entity passenger = this.getPassengers().get(0);
 
