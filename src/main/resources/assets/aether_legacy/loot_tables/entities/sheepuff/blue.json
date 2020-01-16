@@ -1,6 +1,7 @@
 {
     "pools": [
         {
+            "name": "wool",
             "rolls": 1,
             "entries": [
                 {
@@ -17,6 +18,7 @@
             ]
         },
         {
+            "name": "common",
             "rolls": 1,
             "entries": [
                 {
