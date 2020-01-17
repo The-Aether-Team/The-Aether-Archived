@@ -53,7 +53,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 			{
 				return 0x71d2ff;
 			}
-			
+
 			else
 			{
 				return 0xCCFFFF;
@@ -65,7 +65,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 			{
 				return 0xffe082;
 			}
-			
+
 			else
 			{
 				return 0xFFFF80;
@@ -111,39 +111,30 @@ public class BlockAercloud extends Block implements IAetherMeta
 	@Override
 	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity)
 	{
-    	entity.fallDistance = 0;
+		entity.fallDistance = 0;
 
-    	if (state.getValue(cloud_type).equals(EnumCloudType.Blue))
-    	{
-			if (entity instanceof EntityPlayer)
+		boolean isSneakingPlayer = false;
+
+		if (entity instanceof EntityPlayer)
+		{
+			EntityPlayer player = (EntityPlayer) entity;
+
+			if (player.isSneaking())
 			{
-				EntityPlayer player = (EntityPlayer) entity;
-
-				//player.addStat(AchievementsAether.blue_cloud);
-
-				if (player.isSneaking())
-				{
-		    		if (entity.motionY < 0)
-		    		{
-		    			entity.motionY *= 0.005D;
-		    		}
-
-		    		return;
-				}
-
-				entity.motionY = 2.0D;
+				isSneakingPlayer = true;
 			}
-			else
-			{
-				entity.motionY = 2.0D;
-			}
+		}
+
+		if (state.getValue(cloud_type).equals(EnumCloudType.Blue) && !isSneakingPlayer)
+		{
+			entity.motionY = 2.0D;
 
 			if (world.isRemote)
 			{
 				if (!(entity instanceof EntityItem))
 				{
 					world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundsAether.aercloud_bounce, SoundCategory.BLOCKS, 0.8f,
-								0.9f + (world.rand.nextFloat() * 0.2f), false);
+							0.9f + (world.rand.nextFloat() * 0.2f), false);
 				}
 
 				for (int count = 0; count < 50; count++)
@@ -155,45 +146,44 @@ public class BlockAercloud extends Block implements IAetherMeta
 					world.spawnParticle(EnumParticleTypes.WATER_SPLASH, xOffset, yOffset, zOffset, 0, 0, 0);
 				}
 			}
-    	}
-    	else if (state.getValue(cloud_type).equals(EnumCloudType.Green) || state.getValue(cloud_type).equals(EnumCloudType.Purple))
-    	{
+		}
+		else if ((state.getValue(cloud_type).equals(EnumCloudType.Green) || state.getValue(cloud_type).equals(EnumCloudType.Purple)) && !isSneakingPlayer)
+		{
 			final EnumFacing facing = state.getValue(cloud_type).equals(EnumCloudType.Green) ? EnumFacing.random(world.rand) : state.getValue(property_facing);
 
 			entity.motionX = facing.getXOffset() * 2.5D;
 			entity.motionZ = facing.getZOffset() * 2.5D;
 
-    		if (world.isRemote && !(entity instanceof EntityItem))
-			{
+			if (world.isRemote && !(entity instanceof EntityItem)) {
 				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundsAether.aercloud_bounce, SoundCategory.BLOCKS, 0.8f,
-							0.9f + (world.rand.nextFloat() * 0.2f), false);
+						0.9f + (world.rand.nextFloat() * 0.2f), false);
 			}
-    	}
-    	else if (state.getValue(cloud_type).equals(EnumCloudType.Golden))
+		}
+		else if (state.getValue(cloud_type).equals(EnumCloudType.Golden) && !isSneakingPlayer)
 		{
 			entity.motionY = -1.2D;
 
 			if (world.isRemote && !(entity instanceof EntityItem))
 			{
 				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundsAether.aercloud_bounce, SoundCategory.BLOCKS, 0.8f,
-							0.9f + (world.rand.nextFloat() * 0.2f), false);
+						0.9f + (world.rand.nextFloat() * 0.2f), false);
 			}
 		}
-    	else
-    	{
-    		if (state.getValue(cloud_type).equals(EnumCloudType.Pink))
-    		{
-    			if (entity.ticksExisted % 20 == 0 && entity instanceof EntityLivingBase)
-    			{
-    				((EntityLivingBase)entity).heal(1.0F);
-    			}
-    		}
+		else
+		{
+			if (state.getValue(cloud_type).equals(EnumCloudType.Pink))
+			{
+				if (entity.ticksExisted % 20 == 0 && entity instanceof EntityLivingBase)
+				{
+					((EntityLivingBase)entity).heal(1.0F);
+				}
+			}
 
-    		if (entity.motionY < 0)
-    		{
-    			entity.motionY *= 0.005D;
-    		}
-    	}
+			if (entity.motionY < 0)
+			{
+				entity.motionY *= 0.005D;
+			}
+		}
 	}
 
 	@Override
@@ -203,100 +193,100 @@ public class BlockAercloud extends Block implements IAetherMeta
 	}
 
 	@Override
-    public int damageDropped(IBlockState state)
-    {
-        return ((EnumCloudType)state.getValue(cloud_type)).getMeta();
-    }
+	public int damageDropped(IBlockState state)
+	{
+		return ((EnumCloudType)state.getValue(cloud_type)).getMeta();
+	}
 
 	@Override
-    public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
-    {
-        for (int j = 0; j < EnumCloudType.values().length; ++j)
-        {
-        	EnumCloudType cloud_type = EnumCloudType.values()[j];
+	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
+	{
+		for (int j = 0; j < EnumCloudType.values().length; ++j)
+		{
+			EnumCloudType cloud_type = EnumCloudType.values()[j];
 
-        	if (AetherConfig.world_gen.pink_aerclouds)
-        	{
-        		list.add(new ItemStack(this, 1, cloud_type.getMeta()));
-        	}
-        	else if (cloud_type != EnumCloudType.Pink)
-        	{
-                list.add(new ItemStack(this, 1, cloud_type.getMeta()));
-        	}
-        }
-    }
+			if (AetherConfig.world_gen.pink_aerclouds)
+			{
+				list.add(new ItemStack(this, 1, cloud_type.getMeta()));
+			}
+			else if (cloud_type != EnumCloudType.Pink)
+			{
+				list.add(new ItemStack(this, 1, cloud_type.getMeta()));
+			}
+		}
+	}
 
 	@Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-    	if (meta >= EnumCloudType.Purple.getMeta()) //Purple
+	public IBlockState getStateFromMeta(int meta)
+	{
+		if (meta >= EnumCloudType.Purple.getMeta()) //Purple
 		{
 			return this.getDefaultState().withProperty(cloud_type, EnumCloudType.Purple)
 					.withProperty(property_facing, EnumFacing.byHorizontalIndex(meta - EnumCloudType.Purple.getMeta()));
 		}
 
 
-        return this.getDefaultState().withProperty(cloud_type, EnumCloudType.getType(meta));
-    }
+		return this.getDefaultState().withProperty(cloud_type, EnumCloudType.getType(meta));
+	}
 
 	@Override
-    public int getMetaFromState(IBlockState state)
-    {
-    	if (state.getValue(cloud_type) == EnumCloudType.Purple)
+	public int getMetaFromState(IBlockState state)
+	{
+		if (state.getValue(cloud_type) == EnumCloudType.Purple)
 		{
 			return EnumCloudType.Purple.getMeta() + state.getValue(property_facing).getHorizontalIndex();
 		}
 
-        return ((EnumCloudType)state.getValue(cloud_type)).getMeta();
-    }
+		return ((EnumCloudType)state.getValue(cloud_type)).getMeta();
+	}
 
 	@Override
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {cloud_type, property_facing});
-    }
+	protected BlockStateContainer createBlockState()
+	{
+		return new BlockStateContainer(this, new IProperty[] {cloud_type, property_facing});
+	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getRenderLayer()
-    {
-        return BlockRenderLayer.TRANSLUCENT;
-    }
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getRenderLayer()
+	{
+		return BlockRenderLayer.TRANSLUCENT;
+	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState state, IBlockAccess worldIn, BlockPos pos, EnumFacing side)
-    {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
-        Block block = iblockstate.getBlock();
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockState state, IBlockAccess worldIn, BlockPos pos, EnumFacing side)
+	{
+		IBlockState iblockstate = worldIn.getBlockState(pos);
+		Block block = iblockstate.getBlock();
 
-        if (worldIn.getBlockState(pos.offset(side)) != iblockstate)
-        {
-            return true;
-        }
+		if (worldIn.getBlockState(pos.offset(side)) != iblockstate)
+		{
+			return true;
+		}
 
-        if (block == this)
-        {
-            return false;
-        }
+		if (block == this)
+		{
+			return false;
+		}
 
-        return !worldIn.getBlockState(pos.offset(side)).doesSideBlockRendering(worldIn, pos.offset(side), side.getOpposite());
-    }
-
-	@Override
-    public boolean isFullCube(IBlockState state)
-    {
-        return false;
-    }
+		return !worldIn.getBlockState(pos.offset(side)).doesSideBlockRendering(worldIn, pos.offset(side), side.getOpposite());
+	}
 
 	@Override
-    public boolean isOpaqueCube(IBlockState state)
-    {
-        return false;
-    }
+	public boolean isFullCube(IBlockState state)
+	{
+		return false;
+	}
 
 	@Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
+	public boolean isOpaqueCube(IBlockState state)
+	{
+		return false;
+	}
+
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
 	{
 		if (blockState.getValue(cloud_type) == EnumCloudType.Blue   ||
 			blockState.getValue(cloud_type) == EnumCloudType.Golden ||
@@ -313,8 +303,8 @@ public class BlockAercloud extends Block implements IAetherMeta
 
 	@Override
 	public IBlockState getStateForPlacement(final World world, final BlockPos pos, final EnumFacing facing, final float hitX, final float hitY,
-			final float hitZ, final int meta,
-			final EntityLivingBase placer)
+											final float hitZ, final int meta,
+											final EntityLivingBase placer)
 	{
 		return this.getStateFromMeta(meta).withProperty(property_facing, placer.getHorizontalFacing().getOpposite());
 	}
