@@ -89,12 +89,7 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 			meta |= 1;
 		}
 
-		if (state.getValue(snowy))
-		{
-			meta |= 1 << 1;
-		}
-
-		meta |= state.getValue(variant).getMeta() << 2;
+		meta |= state.getValue(variant).getMeta() << 1;
 
 		return meta;
 	}
@@ -103,8 +98,7 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 	public IBlockState getStateFromMeta(int meta)
 	{
 		return this.getDefaultState().withProperty(double_drop, (meta & 1) == 0)
-				.withProperty(snowy, (meta & (1 << 1)) != 0)
-				.withProperty(variant, EnumGrassType.getType(meta >> 2));
+				.withProperty(variant, EnumGrassType.getType(meta >> 1));
 	}
 
 	@Override
@@ -156,7 +150,10 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 						if (iblockstate1.getBlock() == BlocksAether.aether_dirt && world.getLightFromNeighbors(blockpos.up()) >= 4 && iblockstate.getLightOpacity(world, blockpos.up()) <= 2)
 						{
 							boolean shouldContainDoubleDrop = ((boolean)iblockstate1.getValue(BlockAetherDirt.double_drop));
-							world.setBlockState(blockpos, BlocksAether.aether_grass.getDefaultState().withProperty(double_drop, shouldContainDoubleDrop));
+							EnumGrassType theVariant = state.getValue(variant);
+							world.setBlockState(blockpos, BlocksAether.aether_grass.getDefaultState()
+								.withProperty(double_drop, shouldContainDoubleDrop)
+								.withProperty(variant, theVariant));
 							return;
 						}
 					}
@@ -243,7 +240,7 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 	@Override
 	public int damageDropped(IBlockState state)
 	{
-		return state.getValue(variant).getMeta() << 2;
+		return state.getValue(variant).getMeta() << 1;
 	}
 
 	@Override
@@ -251,8 +248,9 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 	{
 		for (int j = 0; j < EnumGrassType.lookup.length; ++j)
 		{
+			//add all variants, but with no double drop or snowy
 			EnumGrassType variant = EnumGrassType.lookup[j];
-			list.add(new ItemStack(this, 1, (variant.getMeta() << 2) | 1 ));
+			list.add(new ItemStack(this, 1, (variant.getMeta() << 1) | 1 ));
 		}
 	}
 

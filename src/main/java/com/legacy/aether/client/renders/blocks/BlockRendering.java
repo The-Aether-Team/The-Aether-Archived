@@ -176,9 +176,8 @@ public class BlockRendering
 
 		for (int meta = 0; meta < EnumGrassType.values().length; ++meta)
 		{
-			register(BlocksAether.aether_grass, meta << 2, EnumGrassType.getType(meta).getName()) ;
-			register(BlocksAether.aether_grass, (meta << 2) | 1, EnumGrassType.getType(meta).getName()) ;
-			register(BlocksAether.aether_grass, (meta << 2) | 1 | (1<<1), EnumGrassType.getType(meta).getName()) ;
+			register(BlocksAether.aether_grass, meta << 1, EnumGrassType.getType(meta).getName()) ;
+			register(BlocksAether.aether_grass, (meta << 1) | 1, EnumGrassType.getType(meta).getName()) ;
 		}
 
 		registerMetadata(BlocksAether.aether_grass, Aether.locate("aether_grass"), Aether.locate("arctic_aether_grass"), Aether.locate("magnetic_aether_grass"), Aether.locate("irradiated_aether_grass"));
