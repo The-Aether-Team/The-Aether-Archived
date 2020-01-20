@@ -144,6 +144,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			this.generateClouds(EnumCloudType.Cold, 16, 14, this.nextInt(64) + 64);
 			this.generateClouds(EnumCloudType.Green, 4, 70, this.nextInt(64) + 32);
 			this.generateClouds(EnumCloudType.Purple, 4, 70, this.nextInt(64) + 32);
+			this.generateClouds(EnumCloudType.Storm, 4, 60, this.nextInt(24) + 8);
 		}
 
 		if (TerrainGen.decorate(worldIn, random, pos, EventType.FLOWERS))
