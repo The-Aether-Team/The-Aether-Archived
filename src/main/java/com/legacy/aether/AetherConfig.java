@@ -25,7 +25,7 @@ public class AetherConfig
 		@Config.Comment("Set the Dimension ID for the Aether.")
 		public int aether_dimension_id = 4;
 	}
-	
+
 	/*
 	 * public static class Biome
 	 * {
@@ -45,59 +45,59 @@ public class AetherConfig
 		 * public final TallGrass tall_grass = new TallGrass();
 		 * public final PinkAerclouds pink_aerclouds = new PinkAerclouds();
 		 */
-		
+
 		@Config.Comment("Enables natural christmas decor")
 		public boolean christmas_time = false;
-		
+
 		@Config.Comment("Enables naturally generating tallgrass")
-		public boolean tallgrass_enabled = false;
-		
+		public boolean tallgrass_enabled = true;
+
 		@Config.Comment("Enables natural Pink Aercloud generation")
 		public boolean pink_aerclouds = false;
 	}
-	
+
 	public static final VisualOptions visual_options = new VisualOptions();
-	
+
 	public static class VisualOptions
 	{
 		@Config.Comment("Changes Aether mobs to use their old models, if applicable")
 		public boolean legacy_models = false;
-		
+
 		@Config.Comment("Aerclouds will use their more saturated colors from later updates")
 		public boolean updated_aercloud_colors = false;
-		
+
 		@Config.Comment("Disables the random trivia/tips you see during loading screens")
 		@Config.RequiresMcRestart
 		public boolean trivia_disabled = false;
-		
+
 		/*
 		 * @Config.Comment("Enables the Aether Menu")
 		 * public boolean menu_enabled = false;
 		 */
 	}
-	
+
 	public static final GameplayChanges gameplay_changes = new GameplayChanges();
-	
+
 	public static class GameplayChanges
 	{
 		@Config.Comment("The max amount of life shards that can be used per player")
 		public int max_life_shards = 10;
-		
+
 		@Config.Comment("If enabled, Aether Portals can only be lit by Skyroot Buckets")
 		public boolean skyroot_bucket_only = false;
-		
+
 		@Config.Comment("Makes it so you have to eat Ambrosium, instead of just right clicking to heal")
 		public boolean ambro_is_edible = false;
-		
+
 		@Config.Comment("Swaps the Golden Feather with the Valkyrie Cape in dungeon loot")
 		public boolean valkyrie_cape = false;
 
 		@Config.Comment("Disables spawn of Aether Legacy portal for use with portal being provided by another mod.")
 		public boolean disable_portal = false;
-		
+
 		@Config.Comment("Disables startup loot when entering the Aether")
 		public boolean disable_startup_loot = false;
-		
+
 		//@Config.Comment("If disabed, the Sun Spirit's dialog will only show once per world.")
 		//public boolean repeat_sun_spirit_dialog = true;
 	}

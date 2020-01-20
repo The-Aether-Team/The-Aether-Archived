@@ -1,0 +1,7 @@
+{
+	"parent": "aether_legacy:block/tinted_crossbase",
+	"textures": {
+		"cross": "aether_legacy:blocks/tall_grass/normal_snowy",
+		"texture": "aether_legacy:blocks/highlands_snow"
+	}
+}

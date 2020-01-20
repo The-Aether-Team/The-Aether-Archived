@@ -24,19 +24,7 @@ import com.legacy.aether.blocks.dungeon.BlockDungeonTrap;
 import com.legacy.aether.blocks.dungeon.BlockMimicChest;
 import com.legacy.aether.blocks.dungeon.BlockPillar;
 import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
-import com.legacy.aether.blocks.natural.BlockAercloud;
-import com.legacy.aether.blocks.natural.BlockAetherDirt;
-import com.legacy.aether.blocks.natural.BlockAetherFlower;
-import com.legacy.aether.blocks.natural.BlockAetherGrass;
-import com.legacy.aether.blocks.natural.BlockAetherLeaves;
-import com.legacy.aether.blocks.natural.BlockAetherLog;
-import com.legacy.aether.blocks.natural.BlockBerryBush;
-import com.legacy.aether.blocks.natural.BlockBerryBushStem;
-import com.legacy.aether.blocks.natural.BlockCrystalLeaves;
-import com.legacy.aether.blocks.natural.BlockHolidayLeaves;
-import com.legacy.aether.blocks.natural.BlockHolystone;
-import com.legacy.aether.blocks.natural.BlockIcestone;
-import com.legacy.aether.blocks.natural.BlockQuicksoil;
+import com.legacy.aether.blocks.natural.*;
 import com.legacy.aether.blocks.natural.enchanted.BlockEnchantedAetherGrass;
 import com.legacy.aether.blocks.natural.enchanted.BlockEnchantedGravitite;
 import com.legacy.aether.blocks.natural.ore.BlockAmbrosiumOre;
@@ -62,7 +50,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class BlocksAether
 {
 
-	public static Block aether_grass, enchanted_aether_grass, aether_dirt;
+	public static Block aether_grass, enchanted_aether_grass, aether_dirt, aether_tall_grass;
 
 	public static Block holystone, mossy_holystone, holystone_brick;
 
@@ -109,16 +97,16 @@ public class BlocksAether
 	public static Block holiday_leaves, present;
 
 	public static Block sun_altar;
-	
+
 	public static Block skyroot_bookshelf;
-	
+
 	public static BlockChest dungeon_chest = Blocks.CHEST;
 
 	private static int availableId;
 
-	public static Block[] blockList = new Block[75];
+	public static Block[] blockList = new Block[76];
 
-	public static Item[] itemList = new Item[75];
+	public static Item[] itemList = new Item[76];
 
 	public static void registerBlocks(IForgeRegistry<Block> blockRegistry)
 	{
@@ -135,6 +123,7 @@ public class BlocksAether
 		aether_grass = registerMeta("aether_grass", new BlockAetherGrass());
 		enchanted_aether_grass = register("enchanted_aether_grass", new BlockEnchantedAetherGrass());
 		aether_dirt = register("aether_dirt", new BlockAetherDirt());
+		aether_tall_grass = registerMeta("aether_tall_grass", new BlockTallAetherGrass());
 		holystone = register("holystone", new BlockHolystone());
 		mossy_holystone = register("mossy_holystone", new BlockHolystone());
 		holystone_brick = register("holystone_brick", new Block(Material.ROCK).setHardness(0.5F).setResistance(10.0F));

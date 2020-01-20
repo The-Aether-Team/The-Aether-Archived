@@ -3,6 +3,7 @@ package com.legacy.aether.client.renders.blocks;
 import com.google.common.collect.Maps;
 import com.legacy.aether.blocks.natural.*;
 import com.legacy.aether.blocks.util.EnumGrassType;
+import com.legacy.aether.blocks.util.EnumTallGrassType;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -83,6 +84,28 @@ public class BlockRendering
 				else
 				{
 					mappings.remove(BlockAetherGrass.snowy);
+				}
+
+				final ResourceLocation resource = Block.REGISTRY.getNameForObject(state.getBlock());
+
+				return new ModelResourceLocation(resource, this.getPropertyString(mappings));
+			}
+		});
+
+		ModelLoader.setCustomStateMapper(BlocksAether.aether_tall_grass, new StateMapperBase()
+		{
+			@Override
+			protected ModelResourceLocation getModelResourceLocation(final IBlockState state)
+			{
+				final LinkedHashMap<IProperty<?>, Comparable<?>> mappings = Maps.newLinkedHashMap(state.getProperties());
+
+				if (state.getValue(BlockTallAetherGrass.snowy))
+				{
+					mappings.remove(BlockTallAetherGrass.type);
+				}
+				else
+				{
+					mappings.remove(BlockTallAetherGrass.snowy);
 				}
 
 				final ResourceLocation resource = Block.REGISTRY.getNameForObject(state.getBlock());
@@ -180,7 +203,15 @@ public class BlockRendering
 			register(BlocksAether.aether_grass, (meta << 1) | 1, EnumGrassType.getType(meta).getName()) ;
 		}
 
+		int numTallGrassLengths = EnumTallGrassType.values().length;
+		for (int meta = 0; meta < numTallGrassLengths; ++meta)
+		{
+			register(BlocksAether.aether_tall_grass, meta, EnumTallGrassType.getType(meta).getName());
+			register(BlocksAether.aether_tall_grass, meta + numTallGrassLengths, EnumTallGrassType.getType(meta).getName());
+		}
+
 		registerMetadata(BlocksAether.aether_grass, Aether.locate("aether_grass"), Aether.locate("arctic_aether_grass"), Aether.locate("magnetic_aether_grass"), Aether.locate("irradiated_aether_grass"));
+		registerMetadata(BlocksAether.aether_tall_grass, Aether.locate("short_tallgrass"), Aether.locate("normal_tallgrass"), Aether.locate("long_tallgrass"));
 		registerMetadata(BlocksAether.aercloud, Aether.locate("cold_aercloud"), Aether.locate("blue_aercloud"), Aether.locate("golden_aercloud"), Aether.locate("pink_aercloud"), Aether.locate("green_aercloud"), Aether.locate("storm_aercloud"), Aether.locate("purple_aercloud"));
 		registerMetadata(BlocksAether.aether_leaves, Aether.locate("green_leaves"), Aether.locate("golden_oak_leaves"));
 		registerMetadata(BlocksAether.holiday_leaves, Aether.locate("holiday_leaves"), Aether.locate("decorated_holiday_leaves"));
