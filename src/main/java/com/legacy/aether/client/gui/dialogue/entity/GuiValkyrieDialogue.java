@@ -19,9 +19,11 @@ public class GuiValkyrieDialogue extends GuiDialogue
 
 	private String title;
 
-	private int medalSlotId = -1;
+	private boolean medalCountMet = false;
 
-	public GuiValkyrieDialogue(EntityValkyrieQueen valkyrieQueen) 
+	public static final int MEDALS_NEEDED = 10;
+
+	public GuiValkyrieDialogue(EntityValkyrieQueen valkyrieQueen)
 	{
 		super("[" + TextFormatting.YELLOW + valkyrieQueen.getBossName() + ", " + I18n.format("title.aether_legacy.valkyrie_queen.name") + TextFormatting.RESET + "]", new DialogueOption[] {new DialogueOption(I18n.format("gui.queen.dialog.0")), new DialogueOption("I wish to fight you!"), new DialogueOption("Nevermind")});
 
@@ -63,9 +65,9 @@ public class GuiValkyrieDialogue extends GuiDialogue
 					return;
 	        	}
 
-				if (this.medalSlotId != -1)
+				if (this.medalCountMet)
 				{
-					AetherNetworkingManager.sendToServer(new PacketInitiateValkyrieFight(this.medalSlotId, this.valkyrieQueen.getEntityId()));
+					AetherNetworkingManager.sendToServer(new PacketInitiateValkyrieFight(this.valkyrieQueen.getEntityId()));
 
 					this.valkyrieQueen.setBossReady(true);
 					this.addDialogueMessage(this.title + ": " + I18n.format("gui.valkyrie.dialog.ready"));
@@ -87,25 +89,25 @@ public class GuiValkyrieDialogue extends GuiDialogue
 
 	private String getMedalDiaulogue()
 	{
+		int medals = 0;
 		for (int slotId = 0; slotId < this.mc.player.inventory.mainInventory.size(); ++slotId)
 		{
 			ItemStack stack = this.mc.player.inventory.mainInventory.get(slotId);
 
 			if (stack.getItem() == ItemsAether.victory_medal)
 			{
-				if (stack.getCount() >= 10)
-				{
-					this.medalSlotId = slotId;
-					return I18n.format("gui.valkyrie.dialog.player.havemedals");
-				}
-				else
-				{
-					return I18n.format("gui.valkyrie.dialog.player.lackmedals") + " (" + stack.getCount() + "/10)";
-				}
+				medals += stack.getCount();
 			}
 		}
 
-		return I18n.format("gui.valkyrie.dialog.player.lackmedals") + " (0/10)";
+		if (medals >= MEDALS_NEEDED)
+		{
+			this.medalCountMet = true;
+			return I18n.format("gui.valkyrie.dialog.player.havemedals");
+		}
+		else
+		{
+			return I18n.format("gui.valkyrie.dialog.player.lackmedals") + " (" + medals + "/" + MEDALS_NEEDED + ")";
+		}
 	}
-
 }
