@@ -18,6 +18,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -45,67 +46,44 @@ public class BlockAercloud extends Block implements IAetherMeta
 		this.setDefaultState(this.blockState.getBaseState().withProperty(cloud_type, EnumCloudType.Cold).withProperty(property_facing, EnumFacing.NORTH));
 	}
 
+	private static final int[] tintColors = new int[]
+	{
+		0xFFFFFF, //Cold
+		0xCCFFFF, //Blue
+		0xFFFF80, //Gold
+		0xffceed, //Pink
+		0xcfff94, //Green
+		0x8497b6, //Storm
+		0xe0c3ff, //Purple
+		0xe0c3ff,
+		0xe0c3ff,
+		0xe0c3ff
+	};
+
+	private static final int[] tintColorsUpdated = new int[]
+	{
+		0xFFFFFF, //Cold
+		0x71d2ff, //Blue
+		0xffe082, //Gold
+		0xff9ab5, //Pink
+		0xb0ea6b, //Green
+		0x576d90, //Storm
+		0xb77ff3, //Purple
+		0xb77ff3,
+		0xb77ff3,
+		0xb77ff3
+	};
+
 	public static int getHexColor(ItemStack stack)
 	{
-		if (stack.getMetadata() == 1)
+		if (AetherConfig.visual_options.updated_aercloud_colors)
 		{
-			if (AetherConfig.visual_options.updated_aercloud_colors)
-			{
-				return 0x71d2ff;
-			}
-
-			else
-			{
-				return 0xCCFFFF;
-			}
+			return tintColorsUpdated[stack.getMetadata()];
 		}
-		else if (stack.getMetadata() == 2)
+		else
 		{
-			if (AetherConfig.visual_options.updated_aercloud_colors)
-			{
-				return 0xffe082;
-			}
-
-			else
-			{
-				return 0xFFFF80;
-			}
+			return tintColors[stack.getMetadata()];
 		}
-		else if (stack.getMetadata() == 4)	//Green
-		{
-			if (AetherConfig.visual_options.updated_aercloud_colors)
-			{
-				return 0xb0ea6b;
-			}
-			else
-			{
-				return 0xcfff94;
-			}
-		}
-		else if (stack.getMetadata() == 5) //Storm
-		{
-			if (AetherConfig.visual_options.updated_aercloud_colors)
-			{
-				return 0x576d90;
-			}
-			else
-			{
-				return 0x8497b6;
-			}
-		}
-		else if (stack.getMetadata() >= 6) //Purple
-		{
-			if (AetherConfig.visual_options.updated_aercloud_colors)
-			{
-				return 0xb77ff3;
-			}
-			else
-			{
-				return 0xe0c3ff;
-			}
-		}
-
-		return 16777215; //Default color
 	}
 
 	@Override
@@ -325,6 +303,16 @@ public class BlockAercloud extends Block implements IAetherMeta
 			final float motionZ = facing.getZOffset() * ((rand.nextFloat() * 0.01f) + 0.05f);
 
 			world.spawnParticle(EnumParticleTypes.CLOUD, x, y, z, motionX, 0, motionZ);
+		}
+		else if (state.getValue(cloud_type) == EnumCloudType.Storm)
+		{
+			BlockPos down = pos.down();
+			if (world.getBlockState(down).getBlock().isPassable(world, down))
+			{
+				final float x = pos.getX() + rand.nextFloat();
+				final float z = pos.getZ() + rand.nextFloat();
+				world.spawnParticle(EnumParticleTypes.DRIP_WATER, x, pos.getY(), z, 0, 0, 0);
+			}
 		}
 	}
 }

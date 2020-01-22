@@ -53,7 +53,7 @@ public class AetherConfig
 		public boolean tallgrass_enabled = true;
 
 		@Config.Comment("Enables natural Pink Aercloud generation")
-		public boolean pink_aerclouds = false;
+		public boolean pink_aerclouds = true;
 	}
 
 	public static final VisualOptions visual_options = new VisualOptions();
