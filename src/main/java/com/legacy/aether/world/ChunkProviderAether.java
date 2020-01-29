@@ -3,6 +3,7 @@ package com.legacy.aether.world;
 import java.util.List;
 import java.util.Random;
 
+import com.legacy.aether.AetherLogger;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
@@ -48,6 +49,8 @@ public class ChunkProviderAether implements  IChunkGenerator
     private MapGenGoldenDungeon goldenDungeonStructure = new MapGenGoldenDungeon();
 
     private MapGenLargeColdAercloud largeColdAercloudStructure = new MapGenLargeColdAercloud();
+
+    protected Biome[] biomesForGeneration;
 
 	public ChunkProviderAether(World world, long seed)
 	{
@@ -210,7 +213,7 @@ public class ChunkProviderAether implements  IChunkGenerator
                     if(d12 < 0.0D)
                     {
                         d8 = d10;
-                    } 
+                    }
                     else if(d12 > 1.0D)
                     {
                         d8 = d11;
@@ -247,7 +250,7 @@ public class ChunkProviderAether implements  IChunkGenerator
     }
 
 	@Override
-	public Chunk generateChunk(int x, int z) 
+	public Chunk generateChunk(int x, int z)
 	{
         this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
 		ChunkPrimer chunkPrimer = new ChunkPrimer();
@@ -258,18 +261,26 @@ public class ChunkProviderAether implements  IChunkGenerator
         this.quicksoilGen.generate(this.worldObj, x, z, chunkPrimer);
 
         this.largeColdAercloudStructure.generate(this.worldObj, x, z, chunkPrimer);
-        
+
         this.silverDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
         this.goldenDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
 
         Chunk chunk = new Chunk(this.worldObj, chunkPrimer, x, z);
         chunk.generateSkylightMap();
 
+        //Fix blocks not having their proper biome
+        this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(this.biomesForGeneration, x * 16, z * 16, 16, 16);
+
+        byte[] chunkBiomes = chunk.getBiomeArray();
+		for (int i = 0; i < chunkBiomes.length; ++i) {
+			chunkBiomes[i] = (byte) Biome.getIdForBiome(this.biomesForGeneration[i]);
+		}
+
 		return chunk;
 	}
 
 	@Override
-	public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) 
+	public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos)
 	{
 		Biome biome = this.worldObj.getBiomeProvider().getBiome(pos);
 
@@ -277,7 +288,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 	}
 
 	@Override
-	public boolean generateStructures(Chunk chunkIn, int chunkX, int chunkZ) 
+	public boolean generateStructures(Chunk chunkIn, int chunkX, int chunkZ)
 	{
 		return false;
 	}
