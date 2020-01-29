@@ -14,10 +14,17 @@ import com.legacy.aether.blocks.util.EnumLeafType;
 
 public class AetherGenSkyrootTree extends WorldGenAbstractTree
 {
+    private final IBlockState leaves;
 
     public AetherGenSkyrootTree(boolean notify)
     {
-    	super(notify);
+    	this(BlocksAether.aether_leaves.getDefaultState(), notify);
+    }
+
+    public AetherGenSkyrootTree(IBlockState leaves, boolean notify)
+    {
+        super(notify);
+        this.leaves = leaves;
     }
 
     @Override
@@ -51,7 +58,7 @@ public class AetherGenSkyrootTree extends WorldGenAbstractTree
 
                     if((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.nextInt(2) != 0 && j2 != 0) && !world.getBlockState(newPos).isOpaqueCube())
                     {
-                    	this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aether_leaves.getDefaultState());
+                    	this.setBlockAndNotifyAdequately(world, newPos, this.leaves);
                     }
                 }
 
@@ -63,7 +70,7 @@ public class AetherGenSkyrootTree extends WorldGenAbstractTree
         	BlockPos newPos = new BlockPos(pos.up(l1));
             IBlockState k2 = world.getBlockState(newPos);
 
-            if(k2.getBlock() == Blocks.AIR || k2 == BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Green) || k2.getBlock() == Blocks.SNOW_LAYER)
+            if(k2.getBlock() == Blocks.AIR || k2 == this.leaves || k2.getBlock() == Blocks.SNOW_LAYER)
             {
             	this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aether_log.getDefaultState());
             }

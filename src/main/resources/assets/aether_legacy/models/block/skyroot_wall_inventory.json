@@ -1,0 +1,12 @@
+{
+
+	"parent": "aether_legacy:block/wall_inventory_special_top",
+
+	"textures": {
+
+		"wall": "aether_legacy:blocks/skyroot_log_side",
+		"top": "aether_legacy:blocks/skyroot_log_base"
+
+	}
+
+}

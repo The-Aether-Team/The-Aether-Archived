@@ -1,6 +1,7 @@
 package com.legacy.aether.client.renders.blocks;
 
 import com.google.common.collect.Maps;
+import com.legacy.aether.blocks.decorative.BlockSkyrootWall;
 import com.legacy.aether.blocks.natural.*;
 import com.legacy.aether.blocks.util.EnumGrassType;
 import com.legacy.aether.blocks.util.EnumTallGrassType;
@@ -43,6 +44,7 @@ public class BlockRendering
         registerBlockWithStateMapper(BlocksAether.ambrosium_ore, (new AetherStateMap.Builder()).ignore(BlockAmbrosiumOre.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.aether_log, (new AetherStateMap.Builder()).ignore(BlockAetherLog.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.aether_leaves, (new AetherStateMap.Builder()).ignore(BlockAetherLeaves.CHECK_DECAY).ignore(BlockAetherLeaves.DECAYABLE).build());
+        registerBlockWithStateMapper(BlocksAether.aether_leaves_2, (new AetherStateMap.Builder()).ignore(BlockAetherLeaves.CHECK_DECAY).ignore(BlockAetherLeaves.DECAYABLE).build());
         registerBlockWithStateMapper(BlocksAether.crystal_leaves, (new AetherStateMap.Builder()).ignore(BlockCrystalLeaves.CHECK_DECAY).ignore(BlockCrystalLeaves.DECAYABLE).build());
         registerBlockWithStateMapper(BlocksAether.holiday_leaves, (new AetherStateMap.Builder()).ignore(BlockHolidayLeaves.CHECK_DECAY).ignore(BlockHolidayLeaves.DECAYABLE).build());
         registerBlockWithStateMapper(BlocksAether.skyroot_fence_gate, (new AetherStateMap.Builder()).ignore(BlockAetherFenceGate.POWERED).build());
@@ -114,6 +116,8 @@ public class BlockRendering
 			}
 		});
 
+		ModelLoader.setCustomStateMapper(BlocksAether.skyroot_wall, (new AetherStateMap.Builder()).ignore(BlockSkyrootWall.PROPERTY_GENERATED).build());
+
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
 		register(BlocksAether.holystone_brick, "holystone_brick");
 		register(BlocksAether.icestone, "icestone");
@@ -135,6 +139,9 @@ public class BlockRendering
 		register(BlocksAether.purple_flower,  "purple_flower");
 		register(BlocksAether.skyroot_sapling, "skyroot_sapling");
 		register(BlocksAether.golden_oak_sapling, "golden_oak_sapling");
+		register(BlocksAether.blue_sapling, "blue_sapling");
+		register(BlocksAether.dark_blue_sapling, "dark_blue_sapling");
+		register(BlocksAether.purple_sapling, "purple_sapling");
 		register(BlocksAether.treasure_chest, "treasure_chest");
 		register(BlocksAether.chest_mimic, "chest_mimic");
 		register(BlocksAether.present, "present");
@@ -151,6 +158,7 @@ public class BlockRendering
 		register(BlocksAether.mossy_holystone_wall, "mossy_holystone_wall");
 		register(BlocksAether.holystone_wall, "holystone_wall");
 		register(BlocksAether.aerogel_wall, "aerogel_wall");
+		register(BlocksAether.skyroot_wall, "skyroot_wall");
 
 		register(BlocksAether.skyroot_stairs, "skyroot_stairs");
 		register(BlocksAether.carved_stairs, "carved_stairs");
@@ -213,7 +221,9 @@ public class BlockRendering
 		registerMetadata(BlocksAether.aether_grass, Aether.locate("aether_grass"), Aether.locate("arctic_aether_grass"), Aether.locate("magnetic_aether_grass"), Aether.locate("irradiated_aether_grass"));
 		registerMetadata(BlocksAether.aether_tall_grass, Aether.locate("short_tallgrass"), Aether.locate("normal_tallgrass"), Aether.locate("long_tallgrass"));
 		registerMetadata(BlocksAether.aercloud, Aether.locate("cold_aercloud"), Aether.locate("blue_aercloud"), Aether.locate("golden_aercloud"), Aether.locate("pink_aercloud"), Aether.locate("green_aercloud"), Aether.locate("storm_aercloud"), Aether.locate("purple_aercloud"));
-		registerMetadata(BlocksAether.aether_leaves, Aether.locate("green_leaves"), Aether.locate("golden_oak_leaves"));
+		registerMetadata(BlocksAether.aether_leaves, Aether.locate("green_leaves"), Aether.locate("golden_oak_leaves"), Aether.locate("blue_leaves"), Aether.locate("dark_blue_leaves"));
+//		registerMetadata(BlocksAether.aether_leaves, Aether.locate("green_leaves"), Aether.locate("golden_oak_leaves"), Aether.locate("blue_leaves"), Aether.locate("dark_blue_leaves"), Aether.locate("purple_leaves"));
+		registerMetadata(BlocksAether.aether_leaves_2, Aether.locate("purple_leaves"));
 		registerMetadata(BlocksAether.holiday_leaves, Aether.locate("holiday_leaves"), Aether.locate("decorated_holiday_leaves"));
 		registerMetadata(BlocksAether.crystal_leaves, Aether.locate("crystal_leaves"), Aether.locate("crystal_fruit_leaves"));
 		registerMetadata(BlocksAether.aether_log, Aether.locate("skyroot_log"), Aether.locate("golden_oak_log"));

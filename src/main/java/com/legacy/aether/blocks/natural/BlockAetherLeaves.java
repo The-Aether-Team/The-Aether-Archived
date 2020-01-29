@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.legacy.aether.AetherLogger;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -38,21 +39,23 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 	public static final PropertyEnum<EnumLeafType> leaf_type = PropertyEnum.create("aether_leaves", EnumLeafType.class);
 
 	int[] surroundings;
+	int startMeta;
 
-	public BlockAetherLeaves() 
+	public BlockAetherLeaves(EnumLeafType startType)
 	{
 		super();
 
+		this.startMeta = startType.getMeta();
 		this.setHardness(0.2F);
 		this.setLightOpacity(1);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
-        this.setDefaultState(this.getDefaultState().withProperty(leaf_type, EnumLeafType.Green).withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
+        this.setDefaultState(this.getDefaultState().withProperty(leaf_type, EnumLeafType.Green).withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
 	}
 
 	@Override
-	public String getMetaName(ItemStack stack) 
+	public String getMetaName(ItemStack stack)
 	{
-		return ((EnumLeafType)this.getStateFromMeta(stack.getItemDamage()).getValue(leaf_type)).getName();
+		return this.getStateFromMeta(stack.getItemDamage()).getValue(leaf_type).getName();
 	}
 
 	@Override
@@ -100,7 +103,7 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 
 		if (Minecraft.getMinecraft().gameSettings.particleSetting != 2)
 		{
-			if (((EnumLeafType)state.getValue(leaf_type)) == EnumLeafType.Golden)
+			if (state.getValue(leaf_type) == EnumLeafType.Golden)
 			{
 				for (int ammount = 0; ammount < 4; ammount++)
 				{
@@ -121,31 +124,35 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 	@Override
     public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list)
     {
-        for (int j = 0; j < EnumLeafType.values().length; ++j)
+        for (int j = this.startMeta; j < Math.min(this.startMeta+4, EnumLeafType.lookup.length); ++j)
         {
-        	EnumLeafType leafType = EnumLeafType.values()[j];
+        	EnumLeafType leafType = EnumLeafType.lookup[j];
 
-            list.add(new ItemStack(this, 1, leafType.getMeta()));
+            list.add(new ItemStack(this, 1, leafType.getMeta() - this.startMeta));
         }
     }
 
 	@Override
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(leaf_type,  EnumLeafType.getType(meta % 2)).withProperty(DECAYABLE, Boolean.valueOf((meta & 4) == 0)).withProperty(CHECK_DECAY, Boolean.valueOf((meta & 8) > 0));
+        return this.getDefaultState().withProperty(leaf_type,  EnumLeafType.getType((meta & 3) + startMeta)).withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY, (meta & 8) > 0);
     }
 
     public int getMetaFromState(IBlockState state)
     {
         int i = 0;
-        i = i | ((EnumLeafType)state.getValue(leaf_type)).getMeta();
 
-        if (!((Boolean)state.getValue(DECAYABLE)).booleanValue())
+    	int adjusted = state.getValue(leaf_type).getMeta() - this.startMeta;
+    	if (adjusted < 0) adjusted = 0;
+
+        i = i | adjusted;
+
+        if (!state.getValue(DECAYABLE))
         {
             i |= 4;
         }
 
-        if (((Boolean)state.getValue(CHECK_DECAY)).booleanValue())
+        if (state.getValue(CHECK_DECAY))
         {
             i |= 8;
         }
@@ -162,11 +169,36 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 	@Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return ((EnumLeafType)state.getValue(leaf_type)) == EnumLeafType.Green ? Item.getItemFromBlock(BlocksAether.skyroot_sapling) : Item.getItemFromBlock(BlocksAether.golden_oak_sapling);
+    	Block saplingBlock = null;
+
+    	switch (state.getValue(leaf_type))
+		{
+			case Green:
+				saplingBlock = BlocksAether.skyroot_sapling;
+				break;
+
+			case Golden:
+				saplingBlock = BlocksAether.golden_oak_sapling;
+				break;
+
+			case Blue:
+				saplingBlock = BlocksAether.blue_sapling;
+				break;
+
+			case DarkBlue:
+				saplingBlock = BlocksAether.dark_blue_sapling;
+				break;
+
+			case Purple:
+				saplingBlock = BlocksAether.purple_sapling;
+				break;
+		}
+
+		return Item.getItemFromBlock(saplingBlock);
     }
 
 	@Override
-	public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) 
+	public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune)
 	{
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 		IBlockState state = world.getBlockState(pos);
@@ -184,7 +216,7 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 	{
 		return null;
 	}
-	
+
 	@Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
     {
@@ -196,14 +228,14 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
     {
         if (!worldIn.isRemote)
         {
-            if (((Boolean)state.getValue(CHECK_DECAY)).booleanValue() && ((Boolean)state.getValue(DECAYABLE)).booleanValue())
+            if (state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE))
             {
                 int k = pos.getX();
                 int l = pos.getY();
                 int i1 = pos.getZ();
                 int loadedRange = 7;
                 int checkRange = 6;
-                
+
                 if (this.surroundings == null)
                 {
                     this.surroundings = new int[32768]; // 2^15
@@ -294,7 +326,7 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 
                 if (l2 >= 0)
                 {
-                    worldIn.setBlockState(pos, state.withProperty(CHECK_DECAY, Boolean.valueOf(false)), 4);
+                    worldIn.setBlockState(pos, state.withProperty(CHECK_DECAY, false), 4);
                 }
                 else
                 {
@@ -304,5 +336,5 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
             }
         }
     }
-	
+
 }

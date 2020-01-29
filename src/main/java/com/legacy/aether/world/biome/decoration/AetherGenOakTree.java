@@ -16,9 +16,9 @@ import com.legacy.aether.blocks.util.EnumLogType;
 public class AetherGenOakTree extends WorldGenAbstractTree
 {
 
-	public AetherGenOakTree() 
+	public AetherGenOakTree(boolean notify)
 	{
-		super(true);
+		super(notify);
 	}
 
 	public boolean branch(World world, Random random, int x, int y, int z, int slant)
@@ -74,7 +74,7 @@ public class AetherGenOakTree extends WorldGenAbstractTree
 						world.setBlockState(mutablePos,  BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Golden));
 					}
 				}
-			}		
+			}
 		}
 
 		for(int n = 0; n < height; n++)

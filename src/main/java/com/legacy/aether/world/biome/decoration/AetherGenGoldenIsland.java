@@ -71,7 +71,7 @@ public class AetherGenGoldenIsland extends WorldGenerator
                     {
                         i4 = MathHelper.floor((double)i4 * 1.375D);
                         i4 -= 6;
-                    } 
+                    }
                     else if(l2 < -15)
                     {
                         i4 = MathHelper.floor((double)i4 * 1.3500000238418579D);
@@ -94,7 +94,7 @@ public class AetherGenGoldenIsland extends WorldGenerator
 
                                 if(j5 < 2)
                                 {
-                                    new AetherGenOakTree().generate(world, random, new BlockPos.MutableBlockPos(i2 + i, l2 + j + 1, i3 + k));
+                                    new AetherGenOakTree(false).generate(world, random, new BlockPos.MutableBlockPos(i2 + i, l2 + j + 1, i3 + k));
                                 }
                                 else if(j5 == 3)
                                 {
@@ -205,7 +205,7 @@ public class AetherGenGoldenIsland extends WorldGenerator
 
                                 if(l3 == 0)
                                 {
-                                    new AetherGenOakTree().generate(world, random, new BlockPos.MutableBlockPos(i1 + i, k1 + j + 1, i2 + k));
+                                    new AetherGenOakTree(false).generate(world, random, new BlockPos.MutableBlockPos(i1 + i, k1 + j + 1, i2 + k));
                                 }
                                 else if(l3 == 5)
                                 {
@@ -215,7 +215,7 @@ public class AetherGenGoldenIsland extends WorldGenerator
                                     }
                                 }
                             }
-                        } 
+                        }
                         else if(BlocksAether.isGood(world.getBlockState(mutablePos.setPos(i1 + i, k1 + j, i2 + k))))
                         {
                             world.setBlockState(new BlockPos.MutableBlockPos(i1 + i, k1 + j, i2 + k), BlocksAether.holystone.getDefaultState(), 2);
