@@ -70,7 +70,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 	public AetherGenMassiveTree blue_massive_tree = new AetherGenMassiveTree(BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Blue), 8, false, false);
 	public AetherGenMassiveTree dark_blue_massive_tree = new AetherGenMassiveTree(BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.DarkBlue), 35, true, false);
 	public AetherGenFruitTree purple_fruit_tree = new AetherGenFruitTree(BlocksAether.aether_leaves_2.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Purple),
-			BlocksAether.aether_leaves_2.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Purple), 50, 5, false, false);
+			BlocksAether.aether_leaves_2.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Purple), 50, 5, true, false);
 
 	public AetherGenLakes aether_lakes = new AetherGenLakes();
 

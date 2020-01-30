@@ -62,4 +62,10 @@ public class BlockSkyrootWall extends BlockAetherWall
 	{
 		return new BlockStateContainer(this, new IProperty[] {UP, NORTH, EAST, WEST, SOUTH, PROPERTY_GENERATED});
 	}
+
+	@Override
+	public boolean canSustainLeaves(IBlockState state, IBlockAccess world, BlockPos pos)
+	{
+		return true;
+	}
 }
