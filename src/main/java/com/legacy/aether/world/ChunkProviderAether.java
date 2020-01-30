@@ -3,7 +3,6 @@ package com.legacy.aether.world;
 import java.util.List;
 import java.util.Random;
 
-import com.legacy.aether.AetherLogger;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
@@ -320,7 +319,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 	}
 
 	@Override
-	public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) 
+	public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored)
 	{
 		BlockPos whoops = new BlockPos(position.getX() + 20, position.getY(), position.getZ() + 20);
 		if ("SilverDungeon".equals(structureName) && this.silverDungeonStructure != null)

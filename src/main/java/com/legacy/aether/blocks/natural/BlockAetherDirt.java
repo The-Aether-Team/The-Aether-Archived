@@ -1,5 +1,6 @@
 package com.legacy.aether.blocks.natural;
 
+import com.legacy.aether.blocks.util.BlockUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -11,12 +12,15 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.items.util.DoubleDropHelper;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
+import net.minecraftforge.fml.common.Loader;
 
 public class BlockAetherDirt extends Block
 {
@@ -27,7 +31,7 @@ public class BlockAetherDirt extends Block
 	{
 		super(Material.GROUND);
 
-		this.setHardness(0.2F);
+		this.setHardness(0.5F);
 		this.setSoundType(SoundType.GROUND);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE));
@@ -43,7 +47,7 @@ public class BlockAetherDirt extends Block
     public int getMetaFromState(IBlockState state)
     {
 		int meta = 0;
-		
+
 		if (!((Boolean)state.getValue(double_drop)).booleanValue())
 		{
 			meta |= 1;
@@ -70,4 +74,22 @@ public class BlockAetherDirt extends Block
 		return new BlockStateContainer(this, new IProperty[] {double_drop});
 	}
 
+	@Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+    	if (Loader.isModLoaded("quark"))
+		{
+			return BlockUtil.tryPathBlock(double_drop, world, pos, state, player, hand, side);
+		}
+    	else
+		{
+			return false;
+		}
+    }
+
+    @Override
+	public boolean isToolEffective(String type, IBlockState state)
+	{
+		return type != null && type.equals("shovel");
+	}
 }

@@ -3,8 +3,8 @@ package com.legacy.aether.blocks.natural;
 import java.util.Random;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.AetherLogger;
 import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.util.BlockUtil;
 import com.legacy.aether.blocks.util.EnumGrassType;
 import com.legacy.aether.blocks.util.IAetherMeta;
 import com.legacy.aether.items.util.DoubleDropHelper;
@@ -24,15 +24,19 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 {
@@ -46,7 +50,7 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 		super(Material.GRASS);
 
 		this.setTickRandomly(true);
-		this.setHardness(0.2F);
+		this.setHardness(0.6F);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setSoundType(SoundType.PLANT);
 		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE).withProperty(snowy, Boolean.FALSE).withProperty(variant, EnumGrassType.Aether));
@@ -260,5 +264,17 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 											final EntityLivingBase placer)
 	{
 		return this.getStateFromMeta(meta);
+	}
+
+	@Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+    	return BlockUtil.tryPathBlock(double_drop, world, pos, state, player, hand, side);
+    }
+
+    @Override
+	public boolean isToolEffective(String type, IBlockState state)
+	{
+		return type != null && type.equals("shovel");
 	}
 }

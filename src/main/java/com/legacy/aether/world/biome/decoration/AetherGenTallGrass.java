@@ -1,16 +1,12 @@
 package com.legacy.aether.world.biome.decoration;
 
-import com.legacy.aether.AetherLogger;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.natural.BlockAetherPlant;
 import com.legacy.aether.blocks.natural.BlockTallAetherGrass;
 import com.legacy.aether.blocks.util.EnumTallGrassType;
-import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;

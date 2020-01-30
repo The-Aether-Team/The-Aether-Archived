@@ -1,9 +1,5 @@
 package com.legacy.aether.blocks.natural;
 
-//import com.gildedgames.aether.common.blocks.IBlockMultiName;
-//import com.gildedgames.aether.common.blocks.properties.BlockVariant;
-//import com.gildedgames.aether.common.blocks.properties.PropertyVariant;
-import com.legacy.aether.AetherLogger;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.util.EnumGrassType;
 import com.legacy.aether.blocks.util.EnumTallGrassType;

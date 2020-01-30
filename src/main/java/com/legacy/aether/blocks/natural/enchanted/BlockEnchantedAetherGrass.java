@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +21,7 @@ public class BlockEnchantedAetherGrass extends Block
 	{
 		super(Material.GRASS);
 
-		this.setHardness(0.2F);
+		this.setHardness(0.6F);
 		this.setTickRandomly(true);
 		this.setSoundType(SoundType.PLANT);
 	}
@@ -43,4 +44,9 @@ public class BlockEnchantedAetherGrass extends Block
         }
     }
 
+    @Override
+	public boolean isToolEffective(String type, IBlockState state)
+	{
+		return type != null && type.equals("shovel");
+	}
 }
