@@ -6,7 +6,8 @@
   ],
   "key": {
     "#": {
-      "item": "aether_legacy:aether_log"
+      "item": "aether_legacy:aether_log",
+      "data": 0
     }
   },
   "result": {
