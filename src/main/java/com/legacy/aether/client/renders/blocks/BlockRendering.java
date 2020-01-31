@@ -192,6 +192,8 @@ public class BlockRendering
 
 		register(BlocksAether.skyroot_bookshelf, "skyroot_bookshelf");
 
+		register(BlocksAether.ambrosium_lamp, "ambrosium_lamp");
+
 		for (int meta = 0; meta < EnumCloudType.values().length; ++meta)
 		{
 			register(BlocksAether.aercloud, meta, EnumCloudType.getType(meta).getName());
