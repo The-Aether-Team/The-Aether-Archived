@@ -8,11 +8,12 @@ import com.legacy.aether.blocks.util.BlockFloating;
 public class BlockGravititeOre extends BlockFloating
 {
 
-	public BlockGravititeOre() 
+	public BlockGravititeOre()
 	{
 		super(Material.ROCK, false);
 
 		this.setHardness(5F);
+		this.setResistance(5F);
 		this.setSoundType(SoundType.STONE);
 	}
 

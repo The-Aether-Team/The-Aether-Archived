@@ -20,6 +20,7 @@ public class BlockZaniteOre extends Block
 		super(Material.ROCK);
 
 		this.setHardness(3F);
+		this.setResistance(5F);
 		this.setSoundType(SoundType.STONE);
 	}
 

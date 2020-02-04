@@ -27,7 +27,8 @@ public class BlockHolystone extends Block
 	{
 		super(Material.ROCK);
 
-		this.setHardness(0.5F);
+		this.setHardness(1.5F);
+		this.setResistance(10.0F);
 		this.setSoundType(SoundType.STONE);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE));
