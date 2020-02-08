@@ -6,6 +6,7 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.util.BlockUtil;
 import com.legacy.aether.blocks.util.EnumGrassType;
+import com.legacy.aether.blocks.util.EnumTallGrassType;
 import com.legacy.aether.blocks.util.IAetherMeta;
 import com.legacy.aether.items.util.DoubleDropHelper;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
@@ -211,9 +212,10 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 						}
 						else
 						{
-							IBlockState iblockstate1 = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
+							IBlockState iblockstate1 = BlocksAether.aether_tall_grass.getDefaultState()
+									.withProperty(BlockTallAetherGrass.variant, EnumTallGrassType.getType(rand.nextInt(EnumTallGrassType.getMaxValues())));
 
-							if (Blocks.TALLGRASS.canBlockStay(worldIn, blockpos1, iblockstate1))
+							if (((BlockAetherPlant) BlocksAether.aether_tall_grass).isSuitableSoilBlock(worldIn.getBlockState(blockpos1.down())))
 							{
 								worldIn.setBlockState(blockpos1, iblockstate1, 3);
 							}
