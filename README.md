@@ -1,7 +1,40 @@
 ![Banner image](https://gitea.gildedgames.com/GildedGames/The-Aether/raw/branch/1.12.2/doc/banner.webp)
-# The Aether
+# The Aether Ascension
 [![Code license (GNU GPL 3.0)](https://img.shields.io/badge/code%20license-GNU%20GPLv3-green.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://creativecommons.org/licenses/by-sa/4.0/)
+
+This is a fork of Aether Legacy with the aim is to create an Aether mod that retains the original mod's faithfulness to vanilla Minecraft with more content and quality of life changes. So far, this vision has been carried out in the form of backporting content from Aether II, but various extra tweaks, features, and additions have been added as well.    
+
+Changes made so far:
+  - Added Aether II aerclouds (green, purple, storm). Additionally:
+    * Textures edited to be monochrome so that they can be tinted, like Aether I aerclouds (including pink)
+    * All bouncy aerclouds now make the bounce sound from Aether II
+    * All bouncy aerclouds won't bounce if sneak is held, not just blue
+    * Storm aerclouds now drip water below them
+    * Pink aerclouds now generate by default
+  - All mounts are controlled clientside like horses (no more laggy Moas!)
+  - Added new grass types from Aether II (arctic, magnetic, irradiated)
+  - Added tallgrass from Aether II (generates by default now)
+  - Skyroot tools with silk touch will now drop double of the silk touched block, not just double of the normal drop
+  - Changed Neptune and Phoenix armor textures to the Aether II: Genesis of the Void versions to make them unique
+  - Water is now the Aether II color
+  - New tree types from Genesis of the Void
+    * Blue - normal, massive
+    * Dark Blue - massive + branches
+    * Purple - "fruit tree" but without the fruit, as crystal trees have fruit already
+  - Added Aether Grass Paths (idea by 💎☁Blade Foxfairy✎🎮#0429)
+  - Added Ambrosium Lamps (idea and texture by 💎☁Blade Foxfairy✎🎮#0429 on the Aether Discord)
+  - Fixed bugs/improvements:
+    * No more errors in console due to Sheepuff loot tables not having name fields
+    * Fixed Valkyrie Queens from only checking the first inventory slot containing medals to see if you have enough
+    * Made holystone, quicksoil, and Aether ores have more vanilla-standard hardness/resistance values
+    * Aether grass, dirt, and quicksoil are now efficient with shovels
+
+Things to do:
+  - Bosses more gracefully support multiple players (tried this already but was having trouble)
+  - New biomes from Aether II
+
+Original README begins below:
 
 ## :heart: Support Gilded Games
 
