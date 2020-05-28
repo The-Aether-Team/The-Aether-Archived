@@ -39,10 +39,10 @@ public class GuiAccessories extends GuiContainer
 	{
 		super.initGui();
 
-		if (AetherRankings.isRankedPlayer(this.playerAether.getEntity().getUniqueID()) || this.playerAether.isDonator())
-		{
-			this.buttonList.add(new GuiButtonPerks(this.width / 2 - 108, this.height / 2 - 83));
-		}
+		//if (AetherRankings.isRankedPlayer(this.playerAether.getEntity().getUniqueID()) || this.playerAether.isDonator())
+		//{
+		//	this.buttonList.add(new GuiButtonPerks(this.width / 2 - 108, this.height / 2 - 83));
+		//}
 
 		this.buttonList.add(new GuiAccessoryButton(this.guiLeft + 8, this.guiTop + 65));
 	}
