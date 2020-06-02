@@ -1,6 +1,7 @@
 {
     "pools": [
         {
+            "name": "sheepuff_cyan",
             "rolls": 1,
             "entries": [
                 {
@@ -17,6 +18,7 @@
             ]
         },
         {
+            "name": "sheepuff_cyan",
             "rolls": 1,
             "entries": [
                 {
