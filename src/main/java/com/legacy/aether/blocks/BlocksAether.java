@@ -217,6 +217,7 @@ public class BlocksAether
 
 	public static Block registerSlab(String name, Block slab1, Block slab2)
 	{
+		slab1.setTranslationKey(name);
 		slab1.setCreativeTab(AetherCreativeTabs.blocks);
 
 		blockList[availableId] = slab1.setRegistryName(Aether.locate(name));
