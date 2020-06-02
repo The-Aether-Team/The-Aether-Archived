@@ -3,11 +3,14 @@ package com.legacy.aether.client.gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import com.legacy.aether.Aether;
 import com.legacy.aether.client.gui.button.GuiSunAltarSlider;
+
+import java.io.IOException;
 
 public class GuiSunAltar extends GuiScreen
 {
@@ -55,4 +58,11 @@ public class GuiSunAltar extends GuiScreen
 		return false;
 	}
 
+	protected void keyTyped(char typedChar, int keyCode) throws IOException
+	{
+		if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode))
+		{
+			this.mc.player.closeScreen();
+		}
+	}
 }
