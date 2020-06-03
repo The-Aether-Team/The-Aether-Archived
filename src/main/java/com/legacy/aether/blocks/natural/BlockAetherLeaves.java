@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -21,6 +23,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockAetherLeaves extends BlockLeaves {
+
+	@SideOnly(Side.CLIENT)
+	private IIcon fastIcon;
+
+	@SideOnly(Side.CLIENT)
+	private IIcon fancyIcon;
 
 	public BlockAetherLeaves() {
 		super();
@@ -54,7 +62,6 @@ public class BlockAetherLeaves extends BlockLeaves {
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
 		super.randomDisplayTick(world, x, y, z, rand);
-
 		if (!world.isRemote) {
 			return;
 		}
@@ -128,8 +135,23 @@ public class BlockAetherLeaves extends BlockLeaves {
 
 	@Override
 	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister p_149651_1_)
+	{
+		this.fancyIcon = p_149651_1_.registerIcon(this.getTextureName());
+		this.fastIcon = p_149651_1_.registerIcon(this.getTextureName() + "_opaque");
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int meta) {
-		return super.blockIcon;
+		if (Minecraft.getMinecraft().gameSettings.fancyGraphics)
+		{
+			return fancyIcon;
+		}
+		else
+		{
+			return fastIcon;
+		}
 	}
 
 	@Override

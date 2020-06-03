@@ -28,6 +28,9 @@ public class BlockAetherGrass extends Block implements IGrowable {
 	@SideOnly(Side.CLIENT)
 	private IIcon blockIconTop;
 
+	@SideOnly(Side.CLIENT)
+	private IIcon blockIconSnowy;
+
 	public BlockAetherGrass() {
 		super(Material.grass);
 
@@ -75,6 +78,7 @@ public class BlockAetherGrass extends Block implements IGrowable {
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister registry) {
 		this.blockIcon = registry.registerIcon("aether_legacy:aether_grass_side");
+		this.blockIconSnowy = registry.registerIcon("aether_legacy:aether_grass_side_snowy");
 		this.blockIconTop = registry.registerIcon("aether_legacy:aether_grass_top");
 	}
 
@@ -87,13 +91,19 @@ public class BlockAetherGrass extends Block implements IGrowable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
-		if (side == 1) {
+		if (side == 1)
+		{
 			return this.blockIconTop;
-		} else if (side == 0) {
+		}
+		else if (side == 0)
+		{
 			return BlocksAether.aether_dirt.getBlockTextureFromSide(side);
 		}
-
-		return this.blockIcon;
+		else
+		{
+			Material material = world.getBlock(x, y + 1, z).getMaterial();
+			return material != Material.snow && material != Material.craftedSnow ? this.blockIcon : this.blockIconSnowy;
+		}
 	}
 
 	@Override
