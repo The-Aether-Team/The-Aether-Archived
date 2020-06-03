@@ -67,11 +67,25 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
         return false;
     }
 
-	@Override
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void setGraphicsLevel(boolean fancy)
+    {
+        this.leavesFancy = Minecraft.getMinecraft().gameSettings.fancyGraphics;
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getRenderLayer()
     {
-        return BlockRenderLayer.CUTOUT_MIPPED;
+        return Minecraft.getMinecraft().gameSettings.fancyGraphics ? BlockRenderLayer.CUTOUT_MIPPED : BlockRenderLayer.SOLID;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(final IBlockState blockState, final IBlockAccess blockAccess, final BlockPos pos, final EnumFacing side)
+    {
+        return (Minecraft.getMinecraft().gameSettings.fancyGraphics || blockAccess.getBlockState(pos.offset(side)).getBlock() != this);
     }
 
     @Override
@@ -80,14 +94,8 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
         return this.getStateFromMeta(meta).withProperty(DECAYABLE, false).withProperty(CHECK_DECAY, false);
     }
 
-	@Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
-    {
-    	return true;
-    }
 
-	@Override
+    @Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random)
 	{
@@ -304,5 +312,4 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
             }
         }
     }
-	
 }
