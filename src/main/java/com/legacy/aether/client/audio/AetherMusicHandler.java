@@ -3,6 +3,7 @@ package com.legacy.aether.client.audio;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -64,7 +65,7 @@ public class AetherMusicHandler
 				}
 			}
 		}
-		else if (category == SoundCategory.RECORDS)
+		else if (category == SoundCategory.RECORDS && !(event.getName().contains("block.note")))
 		{
 			this.musicTicker.stopMusic();
 			this.mc.getSoundHandler().stopSounds();
