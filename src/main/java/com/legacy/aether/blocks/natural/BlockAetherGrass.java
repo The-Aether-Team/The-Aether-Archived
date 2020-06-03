@@ -30,8 +30,9 @@ import net.minecraftforge.common.EnumPlantType;
 
 public class BlockAetherGrass extends Block implements IGrowable
 {
-
 	public static final PropertyBool double_drop = PropertyBool.create(Aether.doubleDropNotifier());
+
+    public static final PropertyBool SNOWY = PropertyBool.create("snowy");
 
 	public BlockAetherGrass()
 	{
@@ -41,8 +42,15 @@ public class BlockAetherGrass extends Block implements IGrowable
 		this.setHardness(0.2F);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setSoundType(SoundType.PLANT);
-		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE));
+		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE).withProperty(SNOWY, Boolean.FALSE));
 	}
+
+	@Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+        Block block = worldIn.getBlockState(pos.up()).getBlock();
+        return state.withProperty(SNOWY, block == Blocks.SNOW || block == Blocks.SNOW_LAYER);
+    }
 
 	@Override
     public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, net.minecraftforge.common.IPlantable plantable)
@@ -99,7 +107,7 @@ public class BlockAetherGrass extends Block implements IGrowable
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, new IProperty[] {double_drop});
+		return new BlockStateContainer(this, double_drop, SNOWY);
 	}
 
 	@Override

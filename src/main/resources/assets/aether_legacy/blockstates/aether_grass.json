@@ -1,10 +1,11 @@
 {
 	"variants": {
-		"normal": [
+		"snowy=false": [
 			{ "model": "aether_legacy:aether_grass" },
 			{ "model": "aether_legacy:aether_grass", "y": 90 },
 			{ "model": "aether_legacy:aether_grass", "y": 180 },
 			{ "model": "aether_legacy:aether_grass", "y": 270 }
-		]
+		],
+		"snowy=true":  { "model": "aether_legacy:aether_grass_snowy" }
 	}
 }

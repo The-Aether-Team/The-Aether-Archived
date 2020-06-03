@@ -58,7 +58,7 @@ public class GuiSunAltar extends GuiScreen
 		return false;
 	}
 
-	protected void keyTyped(char typedChar, int keyCode) throws IOException
+	protected void keyTyped(char typedChar, int keyCode)
 	{
 		if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode))
 		{
