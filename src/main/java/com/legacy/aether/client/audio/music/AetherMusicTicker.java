@@ -19,7 +19,7 @@ public class AetherMusicTicker implements ITickable
 {
     private final Random rand = new Random();
     private final Minecraft mc;
-    private ISound currentMusic;
+    private ISound currentMusic, currentRecord;
     private int timeUntilNextMusic = 100;
 
     public AetherMusicTicker(Minecraft mcIn)
@@ -63,6 +63,16 @@ public class AetherMusicTicker implements ITickable
     	return this.currentMusic != null;
     }
 
+    public boolean playingRecord()
+    {
+        return this.currentRecord != null;
+    }
+
+    public ISound getRecord()
+    {
+        return this.currentRecord;
+    }
+
     public AetherMusicTicker.TrackType getRandomTrack()
     {
     	int num = this.rand.nextInt(4);
@@ -75,6 +85,11 @@ public class AetherMusicTicker implements ITickable
         this.currentMusic = PositionedSoundRecord.getMusicRecord(requestedMusicType.getMusicLocation());
         this.mc.getSoundHandler().playSound(this.currentMusic);
         this.timeUntilNextMusic = Integer.MAX_VALUE;
+    }
+
+    public void trackRecord(ISound record)
+    {
+        this.currentRecord = record;
     }
 
     public void stopMusic()

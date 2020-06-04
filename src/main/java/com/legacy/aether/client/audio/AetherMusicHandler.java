@@ -18,7 +18,6 @@ import com.legacy.aether.registry.sounds.SoundsAether;
 
 public class AetherMusicHandler 
 {
-
 	private Minecraft mc = Minecraft.getMinecraft();
 
 	private AetherMusicTicker musicTicker = new AetherMusicTicker(mc);
@@ -35,9 +34,17 @@ public class AetherMusicHandler
 			{
 				if (!mc.isGamePaused())
 				{
-					musicTicker.update();
+					if (!musicTicker.playingRecord())
+					{
+						musicTicker.update();
+					}
 				}
 			}
+		}
+
+		if (!(mc.getSoundHandler().isSoundPlaying(musicTicker.getRecord())))
+		{
+			musicTicker.trackRecord(null);
 		}
 	}
 
@@ -67,7 +74,7 @@ public class AetherMusicHandler
 		}
 		else if (category == SoundCategory.RECORDS && !(event.getName().contains("block.note")))
 		{
-			this.musicTicker.stopMusic();
+			this.musicTicker.trackRecord(event.getSound());
 			this.mc.getSoundHandler().stopSounds();
 
 			return;
