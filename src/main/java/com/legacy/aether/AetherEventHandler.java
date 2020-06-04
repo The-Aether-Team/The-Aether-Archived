@@ -14,6 +14,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
@@ -211,6 +212,15 @@ AetherEventHandler {
 					}
 				}
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityHurt(EntityStruckByLightningEvent event)
+	{
+		if (event.entity instanceof EntityPlayer)
+		{
+			event.setCanceled(true);
 		}
 	}
 
