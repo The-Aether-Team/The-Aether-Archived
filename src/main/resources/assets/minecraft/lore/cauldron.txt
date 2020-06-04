@@ -1,1 +1,1 @@
-A container which carries water and can be used to clean leather armor and can extinguish.
+A container which carries Water and can be used to clean Leather armor and can extinguish.

@@ -1,1 +1,1 @@
-A dyable chestplate with minimal protection.
+A dyeable chestplate with minimal protection.
