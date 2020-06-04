@@ -208,7 +208,12 @@ public class AetherEventHandler
 	{
 		if (event.getEntity() instanceof EntityPlayer)
 		{
-			event.setCanceled(true);
+			EntityPlayer player = (EntityPlayer) event.getEntity();
+
+			if (player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_sword || player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_knife)
+			{
+				event.setCanceled(true);
+			}
 		}
 	}
 
