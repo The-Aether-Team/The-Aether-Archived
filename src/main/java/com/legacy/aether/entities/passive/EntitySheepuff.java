@@ -26,7 +26,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntitySheepuff extends EntityAetherAnimal {
 
-	private SheepuffAIEatAetherGrass entityAIEatGrass;
+	private SheepuffAIEatAetherGrass entityAIEatGrass = new SheepuffAIEatAetherGrass(this);
 
 	private int sheepTimer, amountEaten;
 
@@ -38,33 +38,16 @@ public class EntitySheepuff extends EntityAetherAnimal {
 		this.setFleeceColor(getRandomFleeceColor(rand));
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
-		this.tasks.addTask(5, this.entityAIEatGrass = new SheepuffAIEatAetherGrass(this));
+		this.tasks.addTask(5, this.entityAIEatGrass);
 		this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
 		this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 		this.tasks.addTask(8, new EntityAILookIdle(this));
 	}
 
 	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(8.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
-	}
-
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-
-		this.dataWatcher.addObject(16, new Byte((byte) 0));
-		this.dataWatcher.addObject(17, new Byte((byte) 0));
-		this.dataWatcher.addObject(18, new Byte((byte) 0));
-	}
-
-	@Override
-	protected void dropFewItems(boolean var1, int ammount) {
-		if (!this.getSheared()) {
-			this.entityDropItem(new ItemStack(Blocks.wool, 1 + this.rand.nextInt(2), this.getFleeceColor()), 0.0F);
-		}
+	protected boolean isAIEnabled()
+	{
+		return true;
 	}
 
 	@Override
@@ -80,6 +63,29 @@ public class EntitySheepuff extends EntityAetherAnimal {
 		}
 
 		super.onLivingUpdate();
+	}
+
+	@Override
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(8.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
+	}
+
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+
+		this.dataWatcher.addObject(16, (byte) 0);
+		this.dataWatcher.addObject(17, (byte) 0);
+		this.dataWatcher.addObject(18, (byte) 0);
+	}
+
+	@Override
+	protected void dropFewItems(boolean var1, int ammount) {
+		if (!this.getSheared()) {
+			this.entityDropItem(new ItemStack(Blocks.wool, 1 + this.rand.nextInt(2), this.getFleeceColor()), 0.0F);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -177,14 +183,14 @@ public class EntitySheepuff extends EntityAetherAnimal {
 			}
 		}
 
-		if (this.amountEaten == 5 && !this.getSheared() && !this.getPuffed()) {
+		if (this.amountEaten >= 2 && !this.getSheared() && !this.getPuffed()) {
 			this.setPuffed(true);
 			this.amountEaten = 0;
 		}
 
-		if (this.amountEaten == 10 && this.getSheared() && !this.getPuffed()) {
+		if (this.amountEaten == 1 && this.getSheared() && !this.getPuffed()) {
 			this.setSheared(false);
-			this.setFleeceColor(15);
+			this.setFleeceColor(0);
 			this.amountEaten = 0;
 		}
 	}

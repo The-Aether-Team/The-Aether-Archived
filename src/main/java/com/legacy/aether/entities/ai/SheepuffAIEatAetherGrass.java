@@ -2,6 +2,7 @@ package com.legacy.aether.entities.ai;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
@@ -15,21 +16,33 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase {
 
 	int eatingGrassTimer;
 
-	public SheepuffAIEatAetherGrass(EntitySheepuff sheepuff) {
+	public SheepuffAIEatAetherGrass(EntitySheepuff sheepuff)
+	{
 		this.sheepuff = sheepuff;
 		this.entityWorld = sheepuff.worldObj;
 		this.setMutexBits(7);
 	}
 
-	public boolean shouldExecute() {
-		if (this.sheepuff.getRNG().nextInt(1000) != 0) {
+	public boolean shouldExecute()
+	{
+		System.out.println(eatingGrassTimer);
+
+		if (this.sheepuff.getRNG().nextInt(this.sheepuff.isChild() ? 50 : 1000) != 0)
+		{
 			return false;
-		} else {
-			return this.entityWorld.getBlock((int) this.sheepuff.posX, (int) this.sheepuff.posY - 1, (int) this.sheepuff.posZ) == BlocksAether.aether_grass;
+		}
+		else
+		{
+			int i = MathHelper.floor_double(this.sheepuff.posX);
+			int j = MathHelper.floor_double(this.sheepuff.posY);
+			int k = MathHelper.floor_double(this.sheepuff.posZ);
+
+			return this.entityWorld.getBlock(i, j - 1, k) == BlocksAether.aether_grass;
 		}
 	}
 
-	public void startExecuting() {
+	public void startExecuting()
+	{
 		this.eatingGrassTimer = 40;
 		this.entityWorld.setEntityState(this.sheepuff, (byte) 10);
 		this.sheepuff.getNavigator().clearPathEntity();
@@ -47,15 +60,22 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase {
 		return this.eatingGrassTimer;
 	}
 
-	public void updateTask() {
+	public void updateTask()
+	{
 		this.eatingGrassTimer = Math.max(0, this.eatingGrassTimer - 1);
 
-		if (this.eatingGrassTimer == 4) {
+		if (this.eatingGrassTimer == 4)
+		{
+			int i = MathHelper.floor_double(this.sheepuff.posX);
+			int j = MathHelper.floor_double(this.sheepuff.posY);
+			int k = MathHelper.floor_double(this.sheepuff.posZ);
 
-			if (this.entityWorld.getBlock((int) this.sheepuff.posX, (int) this.sheepuff.posY - 1, (int) this.sheepuff.posZ) == BlocksAether.aether_grass) {
-				if (this.entityWorld.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
-					this.entityWorld.playAuxSFX(2001, (int) this.sheepuff.posX, (int) this.sheepuff.posY - 1, (int) this.sheepuff.posZ, Block.getIdFromBlock(BlocksAether.aether_grass));
-					this.entityWorld.setBlock((int) this.sheepuff.posX, (int) this.sheepuff.posY - 1, (int) this.sheepuff.posZ, BlocksAether.aether_dirt);
+			if (this.entityWorld.getBlock(i, j - 1, k) == BlocksAether.aether_grass)
+			{
+				if (this.entityWorld.getGameRules().getGameRuleBooleanValue("mobGriefing"))
+				{
+					this.entityWorld.playAuxSFX(2001, i, j - 1, k, Block.getIdFromBlock(BlocksAether.aether_grass));
+					this.entityWorld.setBlock(i, j - 1, k, BlocksAether.aether_dirt);
 				}
 
 				this.sheepuff.eatGrassBonus();
