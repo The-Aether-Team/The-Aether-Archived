@@ -114,93 +114,6 @@
 	    "aether_legacy:aemob/moa/say"
 	]
   },
-  "aemob.moa.flap": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.moa.flap",
-	"sounds": [
-	    "mob/bat/takeoff"
-	]
-  },
-  "aemob.sheepuff.say": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.sheepuff.say",
-	"sounds": [
-	    "mob/sheep/say1",
-		"mob/sheep/say2",
-		"mob/sheep/say3"
-	]
-  },
-  "aemob.sheepuff.hurt": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.sheepuff.hurt",
-	"sounds": [
-	    "mob/sheep/say1",
-		"mob/sheep/say2",
-		"mob/sheep/say3"
-	]
-  },
-  "aemob.sheepuff.death": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.sheepuff.death",
-	"sounds": [
-	    "mob/sheep/say1",
-		"mob/sheep/say2",
-		"mob/sheep/say3"
-	]
-  },
-  "aemob.flyingcow.say": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.flyingcow.say",
-	"sounds": [
-	    "mob/cow/say1",
-		"mob/cow/say2",
-		"mob/cow/say3",
-		"mob/cow/say4"
-	]
-  },
-  "aemob.flyingcow.hurt": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.flyingcow.hurt",
-	"sounds": [
-	    "mob/cow/hurt1",
-		"mob/cow/hurt2",
-		"mob/cow/hurt3"
-	]
-  },
-  "aemob.flyingcow.death": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.flyingcow.death",
-	"sounds": [
-	    "mob/cow/hurt1",
-		"mob/cow/hurt2",
-		"mob/cow/hurt3"
-	]
-  },
-  "aemob.phyg.say": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.phyg.say",
-	"sounds": [
-	    "mob/pig/say1",
-		"mob/pig/say2",
-		"mob/pig/say3"
-	]
-  },
-  "aemob.phyg.hurt": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.phyg.hurt",
-	"sounds": [
-	    "mob/pig/say1",
-		"mob/pig/say2",
-		"mob/pig/say3"
-	]
-  },
-  "aemob.phyg.death": {
-  	"category": "neutral",
-	"subtitle": "subtitles.aemob.phyg.death",
-	"sounds": [
-	    "mob/pig/death"
-	]
-  },
   "aemob.aerbunny.hurt": {
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.aerbunny.hurt",
@@ -291,12 +204,5 @@
 	"sounds": [
 	    "aether_legacy:aeboss/slider/death"
 	]
-   },
-  "aeboss.sun_spirit.shoot": {
-	"category": "hostile",
-	"subtitle": "subtitles.aeboss.sun_spirit.shoot",
-	"sounds": [
-	    "mob/ghast/fireball4"
-	]
-	}
+   }
 }
