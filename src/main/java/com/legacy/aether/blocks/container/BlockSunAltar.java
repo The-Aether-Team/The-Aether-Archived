@@ -1,11 +1,14 @@
 package com.legacy.aether.blocks.container;
 
+import com.legacy.aether.AetherConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -58,11 +61,21 @@ public class BlockSunAltar extends Block {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 
-		if (server != null && ((server.isDedicatedServer() && server.getConfigurationManager().func_152596_g(player.getGameProfile()) && player.capabilities.isCreativeMode) || !server.isDedicatedServer())) {
-			Aether.proxy.openSunAltar();
-		} else if (world.isRemote) {
-			if (player instanceof EntityPlayerSP && player.capabilities.isCreativeMode) {
+		if (player.dimension == AetherConfig.getAetherDimensionID())
+		{
+			if (server != null && ((server.isDedicatedServer() && server.getConfigurationManager().func_152596_g(player.getGameProfile()) && player.capabilities.isCreativeMode) || !server.isDedicatedServer())) {
 				Aether.proxy.openSunAltar();
+			} else if (world.isRemote) {
+				if (player instanceof EntityPlayerSP && player.capabilities.isCreativeMode) {
+					Aether.proxy.openSunAltar();
+				}
+			}
+		}
+		else
+		{
+			if (world.isRemote)
+			{
+				player.addChatComponentMessage(new ChatComponentText(I18n.format("gui.sun_altar.message")));
 			}
 		}
 

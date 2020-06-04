@@ -390,3 +390,6 @@ subtitles.aeboss.sun_spirit.shoot=Sun Spirit shoots
 
 # Death messages
 death.attack.inebriation=%1$s was inebriated by Cockatrice
+
+# Chat messages
+gui.sun_altar.message=The sun spirit has no power over this realm.
