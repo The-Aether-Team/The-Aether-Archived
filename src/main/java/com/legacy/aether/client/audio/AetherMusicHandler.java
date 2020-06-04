@@ -31,9 +31,16 @@ public class AetherMusicHandler {
 		if (phase == TickEvent.Phase.END) {
 			if (type.equals(TickEvent.Type.CLIENT)) {
 				if (!this.mc.isGamePaused()) {
-					this.musicTicker.update();
+					if (!musicTicker.playingRecord()) {
+						this.musicTicker.update();
+					}
 				}
 			}
+		}
+
+		if (!(mc.getSoundHandler().isSoundPlaying(musicTicker.getRecord())))
+		{
+			musicTicker.trackRecord(null);
 		}
 	}
 
@@ -56,9 +63,9 @@ public class AetherMusicHandler {
 				}
 			}
 		} else if (category == SoundCategory.RECORDS && !(event.name.contains("note"))) {
-			this.musicTicker.stopMusic();
+			this.musicTicker.trackRecord(event.sound);
 			this.mc.getSoundHandler().stopSounds();
-			
+
 			return;
 		}
 	}
