@@ -1,1 +1,1 @@
-A Dart Shooter which shoots Enchanted darts, the strongest one!
+A Dart Shooter which shoots Enchanted Darts, the strongest one!
