@@ -63,10 +63,7 @@ public class AetherGenSkyrootTree extends WorldGenAbstractTree
         	BlockPos newPos = new BlockPos(pos.up(l1));
             IBlockState k2 = world.getBlockState(newPos);
 
-            if(k2.getBlock() == Blocks.AIR || k2 == BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Green) || k2.getBlock() == Blocks.SNOW_LAYER)
-            {
-            	this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aether_log.getDefaultState());
-            }
+            this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aether_log.getDefaultState());
         }
 
         return true;
