@@ -128,11 +128,8 @@ public class EntitySheepuff extends EntityAetherAnimal {
 
 		if (itemstack != null && itemstack.getItem() == Items.shears && !this.getSheared()) {
 			if (!this.worldObj.isRemote) {
-				if (this.getPuffed()) {
-					this.setPuffed(false);
-				} else {
-					this.setSheared(true);
-				}
+				this.setSheared(true);
+				this.setPuffed(false);
 
 				int i = 2 + this.rand.nextInt(3);
 

@@ -25,7 +25,7 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase {
 
 	public boolean shouldExecute()
 	{
-		if (this.sheepuff.getRNG().nextInt(this.sheepuff.isChild() ? 50 : 1000) != 0)
+		if (this.sheepuff.getRNG().nextInt(1000) != 0)
 		{
 			return false;
 		}
