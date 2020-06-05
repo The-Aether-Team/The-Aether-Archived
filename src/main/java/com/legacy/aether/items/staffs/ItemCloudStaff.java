@@ -37,11 +37,6 @@ public class ItemCloudStaff extends Item
 		IPlayerAether playerAether = AetherAPI.getInstance().get(entityplayer);
 		ItemStack heldItem = entityplayer.getHeldItem(hand);
 
-		if (world.isRemote)
-		{
-			return super.onItemRightClick(world, entityplayer, hand);
-		}
-
 		if (((PlayerAether)playerAether).clouds.isEmpty())
 		{
 			EntityMiniCloud leftCloud = new EntityMiniCloud(world, entityplayer, 0);
