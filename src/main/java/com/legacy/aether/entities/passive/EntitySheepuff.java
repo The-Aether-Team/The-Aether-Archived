@@ -277,8 +277,6 @@ public class EntitySheepuff extends EntityAetherAnimal implements net.minecraftf
 			this.setFleeceColor(EnumDyeColor.WHITE);
 			this.amountEaten = 0;
 		}
-
-		System.out.println(this.amountEaten);
 	}
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
