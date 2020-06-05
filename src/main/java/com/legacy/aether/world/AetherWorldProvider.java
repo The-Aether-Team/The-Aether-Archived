@@ -77,17 +77,6 @@ public class AetherWorldProvider extends WorldProvider
     {
         return false;
     }
-    
-    @Override
-	public void updateWeather()
-    {
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void setWeatherRenderer(net.minecraftforge.client.IRenderHandler renderer)
-    {
-        renderer = null;
-    }
 
 	@Override
 	public Vec3d getFogColor(float f, float f1)
