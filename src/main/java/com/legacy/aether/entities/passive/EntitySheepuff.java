@@ -226,6 +226,7 @@ public class EntitySheepuff extends EntityAetherAnimal implements net.minecraftf
     public java.util.List<ItemStack> onSheared(ItemStack item, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune)
     {
         this.setSheared(true);
+        this.setPuffed(false);
         int i = 1 + this.rand.nextInt(3);
 
         java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
@@ -276,6 +277,8 @@ public class EntitySheepuff extends EntityAetherAnimal implements net.minecraftf
 			this.setFleeceColor(EnumDyeColor.WHITE);
 			this.amountEaten = 0;
 		}
+
+		System.out.println(this.amountEaten);
 	}
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
