@@ -9,6 +9,7 @@ import com.legacy.aether.events.AetherEntityEvents;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.player.capability.PlayerAetherManager;
 import com.legacy.aether.registry.AetherRegistryEvent;
+import com.legacy.aether.registry.recipes.AetherOreDict;
 import com.legacy.aether.registry.sounds.SoundsAether;
 import com.legacy.aether.tile_entities.AetherTileEntities;
 import com.legacy.aether.universal.crafttweaker.AetherCraftTweakerPlugin;
@@ -73,6 +74,7 @@ public class Aether
 		AetherEntities.initialization();
 		AetherTileEntities.initialization();
 		AetherWorld.initialization();
+		AetherOreDict.initialization();
 
 		CommonProxy.registerEvent(new AetherEventHandler());
 		CommonProxy.registerEvent(new AetherEntityEvents());
