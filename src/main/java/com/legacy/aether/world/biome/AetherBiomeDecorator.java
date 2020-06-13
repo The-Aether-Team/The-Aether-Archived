@@ -172,7 +172,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			{
 				if (this.shouldSpawn(15))
 				{
-					this.holiday_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16) + 8, 0, this.nextInt(16) + 8)));
+					this.holiday_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos));
 				}
 			}
 		}
@@ -249,7 +249,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			this.clouds.setAmount(amount);
 			this.clouds.setCloudType(type);
 
-			this.clouds.generate(this.world, this.rand, this.chunkPos.add(this.nextInt(16) + 8, y, this.nextInt(16) + 8));
+			this.clouds.generate(this.world, this.rand, this.chunkPos.add(0, y, 0));
 		}
 	}
 

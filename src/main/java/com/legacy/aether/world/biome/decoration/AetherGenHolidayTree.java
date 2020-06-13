@@ -23,8 +23,10 @@ public class AetherGenHolidayTree extends WorldGenerator
 	}
 
 	@Override /* No time and effort was made into fixing this ~Kino*/
-	public boolean generate(World world, Random rand, BlockPos position) 
+	public boolean generate(World world, Random rand, BlockPos origin)
 	{
+		BlockPos position = origin.add(8, 0, 8);
+
 		Block huhu = world.getBlockState(position.down()).getBlock();
 
 		if (huhu == BlocksAether.aether_grass)
@@ -303,11 +305,11 @@ public class AetherGenHolidayTree extends WorldGenerator
 						{
 							if(rand.nextInt(80) == 0 && (huhu1 == BlocksAether.aether_grass))
 							{
-								world.setBlockState(pos.up(), BlocksAether.present.getDefaultState());
+								world.setBlockState(pos.up(), BlocksAether.present.getDefaultState(), 2 | 16);
 							}
 							else
 							{
-								world.setBlockState(pos.up(), Blocks.SNOW_LAYER.getDefaultState());
+								world.setBlockState(pos.up(), Blocks.SNOW_LAYER.getDefaultState(), 2 | 16);
 							}
 						}
 					}

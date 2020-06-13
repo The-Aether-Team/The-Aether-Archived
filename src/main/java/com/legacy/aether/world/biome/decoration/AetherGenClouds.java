@@ -35,8 +35,8 @@ public class AetherGenClouds extends WorldGenerator
 	@Override
 	public boolean generate(World world, Random random, BlockPos pos)
 	{
-		BlockPos origin = new BlockPos(pos.getX() - 14, pos.getY(), pos.getZ() - 14);
-        BlockPos position = new BlockPos(origin);
+		BlockPos origin = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
+        BlockPos position = new BlockPos(origin.getX() + 8, origin.getY(), origin.getZ() + 8);
 
 		for (int amount = 0; amount < this.amount; ++amount)
 		{
