@@ -53,6 +53,10 @@ public class AetherDictionary
 		register("chest", BlocksAether.chest_mimic);
 		register("chestTreasure", BlocksAether.treasure_chest);
 		register("chestMimic", BlocksAether.chest_mimic);
+
+		//eggs
+		register("egg", ItemsAether.moa_egg);
+		register("listAllEgg", ItemsAether.moa_egg);
 	}
 
 	public static void register(String name, Block block)
