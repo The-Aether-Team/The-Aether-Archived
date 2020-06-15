@@ -75,7 +75,7 @@ public class AetherBiome extends Biome
 	@Override
     public int getSkyColorByTemp(float currentTemperature)
     {
-    	return 0xC0C0FF; // Lavender Blue
+    	return 0xBCBCFA; // Lavender Blue
     }
 	
 	@Override

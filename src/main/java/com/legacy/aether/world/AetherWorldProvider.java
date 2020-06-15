@@ -81,7 +81,7 @@ public class AetherWorldProvider extends WorldProvider
 	@Override
 	public Vec3d getFogColor(float f, float f1)
 	{
-		int i = 0x8080a0;
+		int i = 0x9393BC;
 
 		float f2 = MathHelper.cos(f * 3.141593F * 2.0F) * 2.0F + 0.5F;
 		if (f2 < 0.0F)
