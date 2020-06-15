@@ -51,7 +51,7 @@ public class AetherBiome extends BiomeGenBase {
 		this.topBlock = BlocksAether.aether_grass;
 		this.fillerBlock = BlocksAether.holystone;
 
-		this.setBiomeName("Aether Highlands");
+		this.setBiomeName("Aether");
 		this.setDisableRain();
 		this.setColor(0);
 	}
@@ -87,7 +87,7 @@ public class AetherBiome extends BiomeGenBase {
 
 	@Override
 	public int getSkyColorByTemp(float currentTemperature) {
-		return 0xC0C0FF; // Lavender Blue
+		return 0xBCBCFA; // Lavender Blue
 	}
 
 	@Override
