@@ -65,7 +65,7 @@ public class ItemValkyrieLance extends ItemSword
 			Vec3d vec = new Vec3d(ent.posX - player.posX, ent.getEntityBoundingBox().minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
 			double len = vec.length();
 
-			if (len > 10.0F)
+			if (len > 8.0F)
 			{
 				continue;
 			}
@@ -100,5 +100,4 @@ public class ItemValkyrieLance extends ItemSword
 	{
 		return false;
 	}
-
 }
