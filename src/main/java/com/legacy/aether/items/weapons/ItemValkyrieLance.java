@@ -64,7 +64,7 @@ public class ItemValkyrieLance extends ItemSword {
 			Vec3 vec = Vec3.createVectorHelper(ent.posX - player.posX, ent.boundingBox.minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
 			double len = vec.lengthVector();
 
-			if (len > 10.0F) {
+			if (len > 8.0F) {
 				continue;
 			}
 
