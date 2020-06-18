@@ -1,5 +1,7 @@
 package com.legacy.aether.blocks;
 
+import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.items.block.ItemBlockRarity;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -47,6 +49,7 @@ import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.EnumRarity;
 
 public class BlocksAether {
 
@@ -110,19 +113,19 @@ public class BlocksAether {
 
 	public static void initialization() {
 		aether_grass = registerMeta("aether_grass", new BlockAetherGrass());
-		enchanted_aether_grass = register("enchanted_aether_grass", new BlockEnchantedAetherGrass());
+		enchanted_aether_grass = registerRarity("enchanted_aether_grass", new BlockEnchantedAetherGrass(), EnumRarity.rare);
 		aether_dirt = registerMeta("aether_dirt", new BlockAetherDirt());
 		holystone = registerMeta("holystone", new BlockHolystone());
 		mossy_holystone = registerMeta("mossy_holystone", new BlockHolystone().setBlockTextureName(Aether.find("mossy_holystone")));
 		holystone_brick = register("holystone_brick", new BlockAether(Material.rock, Aether.find("holystone_brick")).setHardness(0.5F).setResistance(10.0F));
 		aercloud = registerMeta("aercloud", new BlockAercloud());
-		aerogel = register("aerogel", new BlockAerogel());
+		aerogel = registerRarity("aerogel", new BlockAerogel(), ItemsAether.aether_loot);
 		quicksoil = registerMeta("quicksoil", new BlockQuicksoil());
 		icestone = register("icestone", new BlockIcestone());
 		ambrosium_ore = register("ambrosium_ore", new BlockAetherOre(0).setBlockTextureName(Aether.find("ambrosium_ore")));
 		zanite_ore = register("zanite_ore", new BlockAetherOre(1).setBlockTextureName(Aether.find("zanite_ore")));
 		gravitite_ore = register("gravitite_ore", new BlockFloating(Material.rock, false).setHardness(5.0F).setBlockTextureName(Aether.find("gravitite_ore")));
-		enchanted_gravitite = register("enchanted_gravitite", new BlockFloating(Material.rock, true).setHardness(5.0F).setBlockTextureName(Aether.find("enchanted_gravitite")));
+		enchanted_gravitite = registerRarity("enchanted_gravitite", new BlockFloating(Material.rock, true).setHardness(5.0F).setBlockTextureName(Aether.find("enchanted_gravitite")), EnumRarity.rare);
 		zanite_block = register("zanite_block", new BlockZanite());
 		skyroot_leaves = register("skyroot_leaves", new BlockAetherLeaves().setBlockTextureName(Aether.find("skyroot_leaves")));
 		golden_oak_leaves = register("golden_oak_leaves", new BlockAetherLeaves().setBlockTextureName(Aether.find("golden_oak_leaves")));
@@ -134,7 +137,7 @@ public class BlocksAether {
 		skyroot_log = registerMeta("skyroot_log", new BlockAetherLog().setBlockTextureName(Aether.find("skyroot_log")));
 		golden_oak_log = registerMeta("golden_oak_log", new BlockAetherLog().setBlockTextureName(Aether.find("golden_oak_log")));
 		skyroot_planks = register("skyroot_planks", new BlockSkyrootPlanks());
-		quicksoil_glass = register("quicksoil_glass", new BlockQuicksoilGlass());
+		quicksoil_glass = registerRarity("quicksoil_glass", new BlockQuicksoilGlass(), EnumRarity.rare);
 		ambrosium_torch = register("ambrosium_torch", new BlockAmbrosiumTorch().setBlockTextureName(Aether.find("ambrosium_torch")));
 		berry_bush_stem = register("berry_bush_stem", new BlockBerryBushStem());
 		berry_bush = register("berry_bush", new BlockBerryBush());
@@ -216,6 +219,15 @@ public class BlocksAether {
 		block.setCreativeTab(AetherCreativeTabs.blocks);
 
 		GameRegistry.registerBlock(block, name);
+
+		return block;
+	}
+
+	public static Block registerRarity(String name, Block block, EnumRarity rarity) {
+		block.setBlockName(name);
+		block.setCreativeTab(AetherCreativeTabs.blocks);
+
+		GameRegistry.registerBlock(block, ItemBlockRarity.class, name, rarity);
 
 		return block;
 	}
