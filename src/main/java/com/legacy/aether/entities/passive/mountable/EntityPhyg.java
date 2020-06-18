@@ -1,15 +1,10 @@
 package com.legacy.aether.entities.passive.mountable;
 
+import com.legacy.aether.items.ItemsAether;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,6 +42,7 @@ public class EntityPhyg extends EntitySaddleMount {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
         this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
+        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, ItemsAether.blueberry, false));
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(5, new EntityAILookIdle(this));
         this.tasks.addTask(5, new EntityAIFollowParent(this, 1.1D));
