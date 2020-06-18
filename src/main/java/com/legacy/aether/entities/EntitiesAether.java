@@ -60,18 +60,18 @@ public class EntitiesAether {
 	private static final Logger logger = LogManager.getLogger();
 
 	public static void initialization() {
-		register(EntityMoa.class, "moa", 0, 0x9fc3f7, 0x343e44);
-		register(EntityPhyg.class, "phyg", 1, 0x9fc3f7, 0xdb635f);
-		register(EntityFlyingCow.class, "flying_cow", 2, 0x9fc3f7, 0x3e3122);
-		register(EntitySheepuff.class, "sheepuff", 3, 0x9fc3f7, 0xcb9090);
-		register(EntityAerbunny.class, "aerbunny", 4, 0x9fc3f7, 0x917575);
-		register(EntityAerwhale.class, "aerwhale", 5, 0x9fc3f7, 0x81939d);
-		register(EntitySwet.class, "swet", 6, 0x9fc3f7, 0x5f809c);
-		register(EntityCockatrice.class, "cockatrice", 7, 0x9fc3f7, 0x3d2338);
-		register(EntitySentry.class, "sentry", 8, 0x9fc3f7, 0xadadad);
-		register(EntityZephyr.class, "zephyr", 9, 0x9fc3f7, 0x799fac);
-		register(EntityAechorPlant.class, "aechor_plant", 10, 0x9fc3f7, 0x29a793);
-		register(EntityMimic.class, "mimic", 11, 0x9fc3f7, 0xffffff);
+		register(EntityMoa.class, "moa", 0, 0x87bfef, 0x7a7a7a);
+		register(EntityPhyg.class, "phyg", 1, 0xffc1d0, 0xffd939);
+		register(EntityFlyingCow.class, "flying_cow", 2, 0xd8d8d8, 0xffd939);
+		register(EntitySheepuff.class, "sheepuff", 3, 0xe2fcff, 0xcb9090);
+		register(EntityAerbunny.class, "aerbunny", 4, 0xe2fcff, 0xffdff9);
+		register(EntityAerwhale.class, "aerwhale", 5, 0x79b7d1, 0xe0d25c);
+		register(EntitySwet.class, "swet", 6, 0xcdda4f, 0x4fb1da);
+		register(EntityCockatrice.class, "cockatrice", 7, 0x6cb15c, 0x6c579d);
+		register(EntitySentry.class, "sentry", 8, 0x838c9a, 0x2561ba);
+		register(EntityZephyr.class, "zephyr", 9, 0xdfdfdf, 0x99cfe8);
+		register(EntityAechorPlant.class, "aechor_plant", 10, 0x076178, 0x4bc69e);
+		register(EntityMimic.class, "mimic", 11, 0xb18132, 0x605a4e);
 
 		register(EntitySlider.class, "slider", 12, 80, 3, true);
 		register(EntityValkyrieQueen.class, "valkyrie_queen", 13, 80, 3, true);
