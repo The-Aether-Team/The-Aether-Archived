@@ -1,20 +1,20 @@
-# Item Names
+# Item 이름
 item.lore_book.name=지식의 서
 item.blue_moa_egg.name=파란색 모아 알
 item.orange_moa_egg.name=주황색 모아 알
 item.white_moa_egg.name=하얀색 모아 알
 item.black_moa_egg.name=검은색 모아 알
-item.leather_gloves.name=가죽 글러브
-item.chain_gloves.name=체인 글러브
-item.golden_gloves.name=금 글러브
-item.iron_gloves.name=철 글러브
-item.diamond_gloves.name=다이아몬드 글러브
-item.zanite_gloves.name=자나이트 글러브
-item.gravitite_gloves.name=그래비타이트 글러브
-item.neptune_gloves.name=넵튠 글러브
-item.phoenix_gloves.name=피닉스의 글러브
-item.obsidian_gloves.name=흑요석 글러브
-item.valkyrie_gloves.name=발키리의 글러브
+item.leather_gloves.name=가죽 장갑
+item.chain_gloves.name=사슬 장갑
+item.golden_gloves.name=황금 장갑
+item.iron_gloves.name=철 장갑
+item.diamond_gloves.name=다이아몬드 장갑
+item.zanite_gloves.name=자나이트 장갑
+item.gravitite_gloves.name=부중력 장갑
+item.neptune_gloves.name=바다신의 장갑
+item.phoenix_gloves.name=불사조의 장갑
+item.obsidian_gloves.name=흑요석 장갑
+item.valkyrie_gloves.name=발키리의 장갑
 item.skyroot_pickaxe.name=하늘나무 곡괭이
 item.skyroot_axe.name=하늘나무 도끼
 item.skyroot_shovel.name=하늘나무 삽
@@ -24,16 +24,415 @@ item.holystone_shovel.name=신성한 돌 삽
 item.zanite_pickaxe.name=자나이트 곡괭이
 item.zanite_axe.name=자나이트 도끼
 item.zanite_shovel.name=자나이트 삽
-item.gravitite_pickaxe.name=그래비타이트 곡괭이
-item.gravitite_axe.name=그래비타이트 도끼
-item.gravitite_shovel.name=그래비타이트 삽
+item.gravitite_pickaxe.name=부중력 곡괭이
+item.gravitite_axe.name=부중력 도끼
+item.gravitite_shovel.name=부중력 삽
 item.valkyrie_pickaxe.name=발키리의 곡괭이
 item.valkyrie_axe.name=발키리의 도끼
 item.valkyrie_shovel.name=발키리의 삽
 item.skyroot_sword.name=하늘나무 검
 item.holystone_sword.name=신성한 돌 검
 item.zanite_sword.name=자나이트 검
-item.gravitite_sword.name=그래비타이트 검
-item.phoenix_bow.name=피닉스의 활
+item.gravitite_sword.name=부중력 검
+item.flaming_sword.name=불의 검
+item.lightning_sword.name=번개의 검
+item.holy_sword.name=신성한 검
+item.lightning_knife.name=번개 던지기 검
+item.candy_cane_sword.name=막대사탕 검
+item.vampire_blade.name=흡혈의 블레이드
+item.pig_slayer.name=도축용 칼
+item.valkyrie_lance.name=발키리의 창
+item.notch_hammer.name=노치의 망치
+item.dart_shooter_golden.name=황금 화살총
+item.dart_shooter_poison.name=독침총
+item.dart_shooter_enchanted.name=개선된 화살총
+item.phoenix_bow.name=불사조의 활
 item.zanite_helmet.name=자나이트 투구
 item.zanite_chestplate.name=자나이트 흉갑
+item.zanite_leggings.name=자나이트 각반
+item.zanite_boots.name=자나이트 부츠
+item.gravitite_helmet.name=부중력 투구
+item.gravitite_chestplate.name=부중력 흉갑
+item.gravitite_leggings.name=부중력 각반
+item.gravitite_boots.name=부중력 부츠
+item.neptune_helmet.name=바다신의 투구
+item.neptune_chestplate.name=바다신의 흉갑
+item.neptune_leggings.name=바다신의 각반
+item.neptune_boots.name=바다신의 부츠
+item.phoenix_helmet.name=불사조의 투구
+item.phoenix_chestplate.name=불사조의 흉갑
+item.phoenix_leggings.name=불사조의 각반
+item.phoenix_boots.name=불사조의 부츠
+item.obsidian_helmet.name=흑요석 투구
+item.obsidian_chestplate.name=흑요석 흉갑
+item.obsidian_leggings.name=흑요석 각반
+item.obsidian_boots.name=흑요석 부츠
+item.valkyrie_helmet.name=발키리의 투구
+item.valkyrie_chestplate.name=발키리의 흉갑
+item.valkyrie_leggings.name=발키리의 각반
+item.valkyrie_boots.name=발키리의 부츠
+item.sentry_boots.name=빛이 새겨진 부츠
+item.blue_berry.name=블루베리
+item.gummy_swet_blue.name=파란색 젤리
+item.gummy_swet_golden.name=황금 젤리
+item.white_apple.name=하얀색 사과
+item.candy_cane.name=막대사탕
+item.ginger_bread_man.name=생강빵
+item.healing_stone.name=생명의 돌
+item.iron_pendant.name=철 펜던트
+item.golden_pendant.name=황금 펜던트
+item.zanite_pendant.name=자나이트 펜던트
+item.ice_pendant.name=얼음 펜던트
+item.iron_ring.name=철 반지
+item.golden_ring.name=황금 반지
+item.zanite_ring.name=자나이트 반지
+item.ice_ring.name=얼음 반지
+item.white_cape.name=하얀색 망토
+item.red_cape.name=빨간색 망토
+item.blue_cape.name=파란색 망토
+item.yellow_cape.name=노란색 망토
+item.swet_cape.name=스웨트 망토
+item.valkyrie_cape.name=발키리의 망토
+item.invisibility_cape.name=투명 망토
+item.agility_cape.name=민첩의 망토
+item.repulsion_shield.name=반사의 방패
+item.regeneration_stone.name=재생의 돌
+item.golden_feather.name=황금 깃털
+item.iron_bubble.name=철 방울
+item.aechor_petal.name=에코르 연꽃잎
+item.ambrosium_shard.name=암브로시움 조각
+item.zanite_gemstone.name=자나이트 보석
+item.skyroot_stick.name=하늘나무 막대기
+item.golden_amber.name=황금 호박 보석
+item.aether_spawn_egg.name=생성
+item.skyroot_bucket_empty.name=하늘나무 양동이
+item.skyroot_bucket_water.name=하늘나무 물 양동이
+item.skyroot_bucket_poison.name=하늘나무 맹독 양동이
+item.skyroot_bucket_remedy.name=하늘나무 치료약 양동이
+item.skyroot_bucket_milk.name=하늘나무 우유 양동이
+item.aether_tune.name=에더 음반
+item.ascending_dawn.name=에더 음반
+item.welcoming_skies.name=에더 음반
+item.legacy.name=에더 음반
+item.victory_medal.name=승리의 메달
+item.life_shard.name=생명 조각
+item.cloud_staff.name=구름 지팡이
+item.nature_staff.name=자연 지팡이
+item.dungeon_key_bronze.name=동 열쇠
+item.dungeon_key_silver.name=은 열쇠
+item.dungeon_key_golden.name=황금 열쇠
+item.cold_parachute.name=차가운 낙하산
+item.golden_parachute.name=황금 낙하산
+item.dart_golden.name=황금 다트
+item.dart_poison.name=독침
+item.dart_enchanted.name=개선된 다트
+item.enchanted_blueberry.name=마법이 깃든 열매
+item.swetty_ball.name=스웨트 볼
+item.developer_stick.name=개발자 막대기
+
+# 블록 이름
+tile.aether_portal.name=에더 포탈
+tile.aether_grass.name=에더 잔디 블록
+tile.aether_dirt.name=에더 흙
+tile.enchanted_aether_grass.name=마법이 깃든 에더 잔디 블록
+tile.cold_aercloud.name=차가운 공중구름
+tile.blue_aercloud.name=파란색 공중구름
+tile.golden_aercloud.name=황금 공중구름
+tile.pink_aercloud.name=분홍색 공중구름
+tile.berry_bush_stem.name=열매 덤불 줄기
+tile.berry_bush.name=열매 덤불
+tile.purple_flower.name=보라색 꽃
+tile.white_flower.name=하얀색 꽃
+tile.enchanted_gravitite.name=마법의 부중력
+tile.holystone.name=신성한 돌
+tile.mossy_holystone.name=이끼 낀 신성한 돌
+tile.carved_stone.name=문양이 새겨진 돌
+tile.angelic_stone.name=천사의 돌
+tile.hellfire_stone.name=지옥화염 돌
+tile.sentry_stone.name=빛이 새겨진 돌
+tile.light_angelic_stone.name=빛나는 천사의 돌
+tile.light_hellfire_stone.name=빛나는 지옥화염 돌
+tile.ambrosium_ore.name=암브로시움 광석
+tile.zanite_ore.name=자나이트 광석
+tile.gravitite_ore.name=부중력 광석
+tile.zanite_block.name=자나이트 블록
+tile.skyroot_log.name=하늘나무 원목
+tile.golden_oak_log.name=황금하늘나무 원목
+tile.green_leaves.name=하늘나무 잎
+tile.golden_oak_leaves.name=황금하늘나무 잎
+tile.crystal_fruit_leaves.name=보석 과일 잎
+tile.crystal_leaves.name=보석 잎
+tile.decorated_holiday_leaves.name=장식한 기념일 잎
+tile.holiday_leaves.name=Holiday 잎
+tile.skyroot_sapling.name=하늘나무 묘목
+tile.golden_oak_sapling.name=황금하늘나무 묘목
+tile.crystal_sapling.name=보석 묘목
+tile.ambrosium_torch.name=암브로시움 횃불
+tile.skyroot_plank.name=하늘나무 판자
+tile.present.name=선물상자
+tile.pillar.name=필러
+tile.pillar_top.name=필러 끝
+tile.quicksoil.name=미끌모래
+tile.quicksoil_glass.name=미끌모래 유리
+tile.aerogel.name=공중강석
+tile.icestone.name=얼음돌
+tile.treasure_chest.name=보물 상자
+tile.enchanter.name=요술기
+tile.incubator.name=항온기
+tile.chest_mimic.name=상자 미믹
+tile.freezer.name=냉장고
+tile.holystone_brick.name=신성한 석재 벽돌
+tile.aether_present.name=선물상자
+tile.skyroot_fence.name=하늘나무 울타리
+tile.carved_wall.name=문양이 새겨진 담장
+tile.angelic_wall.name=천사의 담장
+tile.hellfire_wall.name=지옥화염 담장
+tile.holystone_wall.name=신성한 돌 담장
+tile.holystone_brick_wall.name=신성한 석재 벽돌 담장
+tile.mossy_holystone_wall.name=이끼 낀 신성한 돌 담장
+tile.aerogel_wall.name=공중강석 담장
+tile.carved_stairs.name=문양이 새겨진 계단
+tile.angelic_stairs.name=천사의 계단
+tile.hellfire_stairs.name=지옥화염 계단
+tile.skyroot_stairs.name=하늘나무 계단
+tile.mossy_holystone_stairs.name=이끼 낀 신성한 돌 계단
+tile.holystone_stairs.name=신성한 돌 계단
+tile.holystone_brick_stairs.name=신성한 석재 벽돌 계단
+tile.aerogel_stairs.name=공중강석 계단
+tile.skyroot_slab.name=하늘나무 반 블록
+tile.skyroot_double_slab.name=하늘나무 겹친 반 블록
+tile.carved_slab.name=문양이 새겨진 반 블록
+tile.carved_double_slab.name=문양이 새겨진 겹친 반 블록
+tile.angelic_slab.name=천사의 반 블록
+tile.angelic_double_slab.name=천사의 겹친 반 블록
+tile.hellfire_slab.name=지옥화염 반 블록
+tile.hellfire_double_slab.name=지옥화염 겹친 반 블록
+tile.holystone_slab.name=신성한 돌 반 블록
+tile.holystone_double_slab.name=신성한 돌 겹친 반 블록
+tile.mossy_holystone_slab.name=이끼 낀 신성한 돌 반 블록
+tile.mossy_holystone_double_slab.name=이끼 낀 신성한 돌 겹친 반 블록
+tile.holystone_brick_slab.name=신성한 석재 벽돌 반 블록
+tile.holystone_brick_double_slab.name=신성한 석재 벽돌 겹친 반 블록
+tile.aerogel_slab.name=공중강석 반 블록
+tile.aerogel_double_slab.name=공중강석 겹친 반 블록
+tile.skyroot_fence_gate.name=하늘나무 울타리 문
+tile.sun_altar.name=시간 조종기
+tile.skyroot_bookshelf.name=하늘나무 책장
+
+# Entities
+entity.aechor_plant.name=에코르 연꽃
+entity.cockatrice.name=코카트라이스
+entity.mimic.name=미믹
+entity.sentry.name=빛이 새겨진 생명체
+entity.zephyr.name=작은 바람
+entity.aerwhale.name=공중고래
+entity.aerbunny.name=공중토끼
+entity.sheepuff.name=풍선부양
+entity.valkyrie.name=발키리
+entity.valkyrie_queen.name=발키리의 여왕
+entity.slider.name=슬라이더
+entity.sun_spirit.name=태양의 영혼
+entity.fire_minion.name=불의 부하
+entity.mini_cloud.name=작은 구름
+entity.tnt_present.name=TNT 선물
+entity.lightning_knife.name=번개 던지기 검
+entity.thunder_ball.name=썬더볼
+entity.zephyr_snowball.name=작은 바람 눈덩이
+entity.floating_block.name=떠있는 블록
+entity.parachute.name=낙하산
+entity.golden_dart.name=황금 다트
+entity.poison_dart.name=맹독 다트
+entity.enchanted_dart.name=개선된 다트
+entity.fire_ball.name=파이어볼
+entity.ice_ball.name=아이스볼
+entity.flying_cow.name=날개소
+entity.phyg.name=날개돼지
+entity.swet.name=스웨트
+entity.moa.name=모아
+entity.whirlwind.name=굴돌풍
+
+# Containers
+container.aether_legacy.incubator=항온기
+container.aether_legacy.enchanter=요술기
+container.aether_legacy.freezer=냉동고
+
+# Advancements
+advancement.aether_legacy.enter_aether=적대의 낙원
+advancement.aether_legacy.blue_aercloud=무한한 세계 속으로!
+advancement.aether_legacy.gravitite_tools=중력의 집합체
+advancement.aether_legacy.incubator=새 가족이 되다
+advancement.aether_legacy.enchanter=요술을 부린 기계
+advancement.aether_legacy.mount_phyg=날개돼지, 날다
+advancement.aether_legacy.bronze_dungeon=돌의 눈이 감기다
+advancement.aether_legacy.silver_dungeon=여왕의 폐위
+advancement.aether_legacy.gold_dungeon=태양의 소멸
+advancement.aether_legacy.loreception=물건 속 설명서
+
+# Advancement Descriptions
+advancement.aether_legacy.enter_aether.desc=에더에 들어가세요
+advancement.aether_legacy.blue_aercloud.desc=파란색 공중구름 위에서 뛰세요
+advancement.aether_legacy.gravitite_tools.desc=부중력 도구를 만드세요
+advancement.aether_legacy.incubator.desc=모아를 부화시키세요
+advancement.aether_legacy.enchanter.desc=요술기를 제작하세요
+advancement.aether_legacy.mount_phyg.desc=날개돼지에 타세요
+advancement.aether_legacy.bronze_dungeon.desc=동 던전의 보스를 처치하세요
+advancement.aether_legacy.silver_dungeon.desc=은 던전의 보스를 처치하세요
+advancement.aether_legacy.gold_dungeon.desc=황금 던전의 보스를 처치하세요
+advancement.aether_legacy.loreception.desc=지식의 서 안에 지식의 서를 두세요
+
+# Creative Tabs 이름
+tab.aether_blocks=에더 블록
+tab.aether_tools=에더 도구
+tab.aether_weapons=에더 무기
+tab.aether_armor=에더 갑옷
+tab.aether_food=에더 음식
+tab.aether_accessories=에더 악세서리
+tab.aether_material=에더 재료
+tab.aether_misc=에더 기타
+
+# Tab 이름
+tab.accessories.name=악세서리
+
+# 자막
+subtitles.aemob.moa.say=모아가 부름
+subtitles.aemob.moa.flap=모아가 안절부절 못함
+subtitles.aemob.phyg.say=날개돼지가 꿀꿀거림
+subtitles.aemob.phyg.hurt=날개돼지가 상처를 입음
+subtitles.aemob.phyg.death=날개돼지가 죽음
+subtitles.aemob.sheepuff.say=풍선부양이 매애거림
+subtitles.aemob.sheepuff.hurt=풍선부양이 상처를 입음
+subtitles.aemob.sheepuff.death=풍선부양이 죽음
+subtitles.aemob.flyingcow.say=날개소가 욺
+subtitles.aemob.flyingcow.hurt=날개소가 상처를 입음
+subtitles.aemob.flyingcow.death=날개소가 죽음
+subtitles.aemob.aerbunny.hurt=공중토끼가 상처를 입음
+subtitles.aemob.aerbunny.death=공중토끼가 죽음
+subtitles.aemob.aerbunny.lift=공중토끼가 몸을 부풀림
+subtitles.aemob.zephyr.say=작은 바람이 붊
+subtitles.aemob.zephyr.shoot=작은 바람이 눈을 발사함
+subtitles.aemob.aerwhale.say=공중고래가 욺
+subtitles.aemob.aerwhale.death=공중고래가 죽음
+subtitles.aemisc.projectile.shoot=맹독 화살총을 발사함
+subtitles.aemisc.dart_shooter.shoot=화살총을 발사함
+subtitles.aeboss.slider.awaken=슬라이더가 일어남
+subtitles.aeboss.slider.collide=슬라이더가 부딫침
+subtitles.aeboss.slider.move=슬라이더가 움직임
+subtitles.aeboss.slider.death=슬라이더가 죽음
+subtitles.aeboss.sun_spirit.shoot=태양의 영혼이 던짐
+subtitles.aemisc.portal.idle=에더 포탈이 만들어짐
+
+# GUI and Dialog
+gui.item.life_shard.maxshards=생명의 조각은 10개까지만 사용할 수 있습니다.
+gui.item.developer_stick.notdev=당신은 개발자가 아닙니다!
+
+gui.slider.notpickaxe=흠... 곡괭이로 공격해야 할 것 같은데...?
+gui.slider.apple=이 문구는 KingPhygieBoo가 Kino에게 아무 아이템이나 말하라 그랬고 사과를 말했기 때문에 여기 있습니다.
+
+gui.valkyrie.dialog.1=그게 뭐야? 싸우고 싶은 게냐? 우쭈쭈, 약한 인간이구만.
+gui.valkyrie.dialog.2=니가 내 상대가 될 거라 생각하냐? 이 강한 발키리를 니가 이길 수 있을 거 같애?
+gui.valkyrie.dialog.3=날 방해하면 안될 것 같은데... 나를 방해하면 너가 얼마나 크게 다칠텐데.
+
+gui.valkyrie.dialog.medal.1=음... 정말 굉장한 메달꾸러미를 가지고 있구만...
+gui.valkyrie.dialog.medal.2=흥미롭다만, 넌 날 이길 수 없어.
+gui.valkyrie.dialog.medal.3=넌 니가 가장 세다고 생각하냐? 하, 덤벼!
+
+gui.valkyrie.dialog.defeated.1=알겠어, 알겠다고! 니가 이겼어!
+gui.valkyrie.dialog.defeated.2=아 그래! 그만둬! 가져가!
+gui.valkyrie.dialog.defeated.3=아놔! 그래, 니 메달이나 가져가...
+
+gui.valkyrie.dialog.attack.1=날 만만하게 보지 마!
+gui.valkyrie.dialog.attack.2=넌 후회하게 될꺼야!
+gui.valkyrie.dialog.attack.3=너가 시작한 일이야!
+
+gui.valkyrie.dialog.playerdead.1=메달을 원하니? 그런 한심한 전투력으로는 부족하다구.
+gui.valkyrie.dialog.playerdead.2=언젠간, %s... 니가 날 이길 수 있겠지... 아마 언젠가는.
+gui.valkyrie.dialog.playerdead.3=인간들을 이길 쯤에는 귀엽지가 않단 말이지.
+
+gui.valkyrie.dialog.ready=그렇다면, 이제 시작이다!
+gui.valkyrie.dialog.nomedals=천천히 하고 와라.
+gui.valkyrie.dialog.nofight=그렇다면, 잘 가거라 모험가여.
+
+gui.valkyrie.dialog.player.havemedals=준비 됬습니다! 바로 싸우자구요!
+gui.valkyrie.dialog.player.lackmedals=가지고 있을 때 돌아오도록 하겠습니다.
+gui.valkyrie.dialog.player.denyfight=아마도, 그냥 떠나는게 나을 듯 하군요.
+
+gui.queen.ready=나에게 도전하고 싶다면, 먼저 공격하여라.
+gui.queen.defeated=넌 정말... 강한 전사로구나...
+gui.queen.peaceful=미안하지만, 난 약골과 싸우지 않아.
+gui.queen.nomedals=내 부하 발키리들을 먼저 처치하고 와.
+gui.queen.fight=이것이 너의 마지막 싸움이다!
+gui.queen.lost=또 다른 어리석은 인간이였군.
+
+gui.queen.dialog.0=이 장소는 어떤 장소인가요?
+
+gui.queen.answer.0=이 곳은 발키리들의 휴식의 성이니라.
+gui.queen.answer.1=뭐 그렇다면, 내 부하 발키리들을 이기고 10개의 메달을 가져와라. 그때 우리의 싸움을 시작할테니.
+gui.queen.answer.2=모험가여, 잘 가거라.
+
+gui.spirit.line0=넌 이곳에 들어올 정도로 확실히 강한 영혼이군.
+gui.spirit.line1=저리 가라, 인간이여. 이 곳에 온 목적이 없지 않은가.
+gui.spirit.line2=니가 여기 있다는게 매우 화가 나는군. 진정 넌 내 불의 기운이 무섭지 않은건가?
+gui.spirit.line3=난 너에게 아무런 이득도 되지 않는다, 멍청한 인간이여. 이곳에서 나가라.
+gui.spirit.line4=넌 정말 멍청하구나. 내가 누군지 알고 싶은건가?
+gui.spirit.line5.1=난, 태양의 영혼이자 이 에더 세계의 시간이다. 내가
+gui.spirit.line5.2=살아 있는 한, 이 세계에 해가 계속 떠있을 것이다.
+gui.spirit.line6.1=내 몸은 천 마리의 짐승들도 화상을 입을 정도의 불을 지니고 있다.
+gui.spirit.line6.2=아무도 날 공격할 수 없다. 너라고 다를 거란 생각하진 마라.
+gui.spirit.line7.1=지금 태양 그 자체와 싸우고 싶은 건가? 아직도 떠나지 않는군.
+gui.spirit.line7.2=더 이상 방해하지 마라. 내 분노가 가라앉지 않는다.
+gui.spirit.line8=마지막 경고다. 지금 나가지 않는다면, 태양과의 싸움이 시작된다.
+gui.spirit.line9=니 소원대로, 천천히 고통스럽게 불태워주마.
+gui.spirit.line10=지난번의 죽음으로도 만족할 수 없는건가?
+gui.spirit.dead=이 쓰라린 추위... 이것이... 고통이란 말인가?
+gui.spirit.playerdied=태양의 힘을 무시한 댓가이자 운명이다.
+
+gui.treasure_chest.bronze=동 보물 상자
+gui.treasure_chest.silver=은 보물 상자
+gui.treasure_chest.gold=황금 보물 상자
+gui.treasure_chest.platinum=백금 보물 상자
+
+gui.sun_altar.time=시간 선택
+
+title.aether_legacy.slider.name=슬리더
+title.aether_legacy.valkyrie_queen.name=발키리의 여왕
+title.aether_legacy.sun_spirit.name=태양의 영혼
+
+gui.loading.enteraether=에더로 보내는 중
+gui.loading.exitaether=에더에서 나오는 중
+
+# Death messages
+death.attack.inebriation=%1$s(이)가 맹독에 중독되었습니다
+death.attack.inebriation_indirect=%1$s(이)가 %2$s에 의해 맹독에 중독되었습니다
+death.attack.crush=%1$s(이)가 %2$s에 의해 뭉게졌습니다
+death.attack.incineration=%1$s(이)가 %2$s에 의해 소각되었습니다
+death.attack.incineration_firo=%1$s(이)가 %2$s의 파이어볼에 의해 소각되었습니다
+death.attack.icey_ball=%1$s(이)가 %2$s의 아이스볼에 의해 얼어붙었습니다
+death.attack.lightning_ball=%1$s이(가) %2$s의 썬더볼에 의해 쇼크사했습니다
+
+# Config
+aether_legacy.config.title=추억의 에더 구성
+aether_legacy.general.dimension=차원 설정
+aether_legacy.general.gameplay_changes=게임 플레이 설정
+aether_legacy.general.gameplay_changes.tooltip=이러한 옵션은 게임 플레이 및 일부 컨텐츠 작동 방식에 영향을 줍니다.
+aether_legacy.general.gameplay_changes.ambro_is_edible=암브로시움 먹기 가능
+aether_legacy.general.gameplay_changes.max_life_shards=최대 생명 조각
+aether_legacy.general.gameplay_changes.skyroot_bucket_only=하늘나무 양동이만 쓰기
+aether_legacy.general.gameplay_changes.valkyrie_cape=발키리의 망토 사용
+aether_legacy.general.gameplay_changes.disable_portal=포탈 비활성화
+
+aether_legacy.general.visual_options=시각 설정
+aether_legacy.general.visual_options.tooltip=이 옵션은 게임 플레이에 영향을 미치지 않으며, 보이는 것만 달라질 뿐입니다.
+aether_legacy.general.visual_options.legacy_models=클래식 모델
+aether_legacy.general.visual_options.trivia_disabled=에더 잡상식 비활성화
+aether_legacy.general.visual_options.updated_aercloud_colors=공중구름 색깔 추가
+aether_legacy.general.visual_options.menu_enabled=에더 메뉴
+
+aether_legacy.general.world_gen=세계 생성 설정
+aether_legacy.general.world_gen.tooltip=이 설정은 세계 생성에 영향을 미칩니다.
+
+aether_legacy.general.world_gen.christmas_time=기념일 생성
+aether_legacy.general.world_gen.pink_aerclouds=분홍 공중구름 생성
+aether_legacy.general.world_gen.tallgrass_enabled=큰 잔디 생성
+
+aether_legacy.general.dimension.aether_dimension_id=에더 차원 ID
+aether_legacy.general.dimension.aether_dimension_id.tooltip=에더 차원 ID 숫자 설정
