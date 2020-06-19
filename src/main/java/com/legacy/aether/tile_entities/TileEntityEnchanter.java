@@ -76,7 +76,12 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
 
-					if (!this.getStackInSlot(2).isEmpty())
+					if (this.getStackInSlot(0).hasTagCompound())
+					{
+						result.setTagCompound(this.getStackInSlot(0).getTagCompound());
+					}
+
+					if (!this.getStackInSlot(2).isEmpty() && this.getStackInSlot(2).isStackable())
 					{
 						result.setCount(this.getStackInSlot(2).getCount() + 1);
 
@@ -132,7 +137,7 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 			if (enchantment != null)
 			{
-				if (this.getStackInSlot(2).isEmpty() || (enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata()))
+				if (this.getStackInSlot(2).isEmpty() || (enchantment.getOutput().getItem() == this.getStackInSlot(2).getItem() && enchantment.getOutput().getMetadata() == this.getStackInSlot(2).getMetadata() && this.getStackInSlot(2).isStackable()))
 				{
 					this.currentEnchantment = enchantment;
 					this.ticksRequired = this.currentEnchantment.getTimeRequired();
