@@ -1,5 +1,6 @@
 package com.legacy.aether.dictionary;
 
+import com.legacy.aether.items.util.EnumSkyrootBucketType;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -7,6 +8,8 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.ItemsAether;
+
+import java.util.Arrays;
 
 public class AetherDictionary 
 {
@@ -56,7 +59,11 @@ public class AetherDictionary
 
 		//eggs
 		register("egg", ItemsAether.moa_egg);
-		register("listAllEgg", ItemsAether.moa_egg);
+		register("listAllegg", ItemsAether.moa_egg);
+
+		//buckets
+		register("milkBucket", new ItemStack(ItemsAether.skyroot_bucket, EnumSkyrootBucketType.Milk.getMeta()));
+		register("listAllmilk", new ItemStack(ItemsAether.skyroot_bucket, EnumSkyrootBucketType.Milk.getMeta()));
 	}
 
 	public static void register(String name, Block block)
