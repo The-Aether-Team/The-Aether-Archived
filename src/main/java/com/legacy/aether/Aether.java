@@ -1,5 +1,6 @@
 package com.legacy.aether;
 
+import com.legacy.aether.events.AetherEntityEvents;
 import net.minecraft.util.ResourceLocation;
 
 import com.legacy.aether.blocks.BlocksAether;
@@ -54,6 +55,7 @@ public class Aether {
 
 		CommonProxy.registerEvent(new PlayerAetherEvents());
 		CommonProxy.registerEvent(new AetherEventHandler());
+		CommonProxy.registerEvent(new AetherEntityEvents());
 	}
 
 	public static ResourceLocation locate(String location) {

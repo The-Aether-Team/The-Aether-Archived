@@ -24,7 +24,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 
 public class EntityHook implements IExtendedEntityProperties {
 
-	private EntityLivingBase entity;
+	private Entity entity;
 
 	private boolean inPortal;
 
@@ -32,7 +32,7 @@ public class EntityHook implements IExtendedEntityProperties {
 
 	@Override
 	public void init(Entity entity, World world) {
-		this.entity = (EntityLivingBase) entity;
+		this.entity = entity;
 	}
 
 	@Override
@@ -50,7 +50,9 @@ public class EntityHook implements IExtendedEntityProperties {
 
 		if (this.entity.dimension == AetherConfig.getAetherDimensionID()) {
 			if (this.entity.posY < -2 && this.entity.riddenByEntity == null && this.entity.ridingEntity == null) {
-				this.teleportEntity(false);
+				if (!this.entity.worldObj.isRemote) {
+					this.teleportEntity(false);
+				}
 			}
 		}
 
@@ -96,11 +98,16 @@ public class EntityHook implements IExtendedEntityProperties {
 			}
 		}
 
-		if (this.entity.getAITarget() instanceof EntityPlayer) {
-			PlayerAether playerAether = PlayerAether.get((EntityPlayer) this.entity.getAITarget());
+		if (this.entity instanceof EntityLivingBase)
+		{
+			EntityLivingBase living = (EntityLivingBase) this.entity;
 
-			if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape))) {
-				this.entity.setRevengeTarget(null);
+			if (living.getAITarget() instanceof EntityPlayer) {
+				PlayerAether playerAether = PlayerAether.get((EntityPlayer) living.getAITarget());
+
+				if (playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape))) {
+					living.setRevengeTarget(null);
+				}
 			}
 		}
 	}
