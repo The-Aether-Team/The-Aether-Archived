@@ -400,14 +400,14 @@ title.aether_legacy.valkyrie_queen.name=the Valkyrie Queen
 title.aether_legacy.sun_spirit.name=the Sun Spirit
 
 gui.loading.enteraether=Ascending to the Aether
-gui.loading.exitaether=Decending from the Aether
+gui.loading.exitaether=Descending from the Aether
 
 # Death messages
 death.attack.inebriation=%1$s was inebriated
 death.attack.inebriation_indirect=%1$s was inebriated by %2$s
 death.attack.crush=%1$s was crushed by %2$s
 death.attack.incineration=%1$s was incinerated by %2$s
-death.attack.incineration_firo=%1$s was incinerated by %2$s's Firo Ball
+death.attack.incineration_firo=%1$s was incinerated by %2$s's Fire Ball
 death.attack.icey_ball=%1$s was chilled by %2$s's Icey Ball
 death.attack.lightning_ball=%1$s was zapped by %2$s's Thunder Ball
 
@@ -421,6 +421,7 @@ aether_legacy.general.gameplay_changes.max_life_shards=Maximum Life Shards
 aether_legacy.general.gameplay_changes.skyroot_bucket_only=Skyroot Bucket Only
 aether_legacy.general.gameplay_changes.valkyrie_cape=Valkyrie Cape
 aether_legacy.general.gameplay_changes.disable_portal=Disable Portal
+aether_legacy.general.gameplay_changes.disable_startup_loot=Disable Startup Loot
 
 aether_legacy.general.visual_options=Visual Options
 aether_legacy.general.visual_options.tooltip=These options do not affect gameplay, and are purely visual.
