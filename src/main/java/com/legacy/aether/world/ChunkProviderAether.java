@@ -39,8 +39,6 @@ public class ChunkProviderAether implements  IChunkGenerator
 
     double pnr[], ar[], br[];
 
-    private Biome[] biomesForGeneration;
-
     protected AetherDungeon dungeon_bronze = new BronzeDungeon();
 
     private MapGenQuicksoil quicksoilGen = new MapGenQuicksoil();
@@ -251,6 +249,8 @@ public class ChunkProviderAether implements  IChunkGenerator
     @Override
     public Chunk generateChunk(int x, int z)
     {
+        Biome[] biomesForGeneration = new Biome[0];
+        
         this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
         ChunkPrimer chunkPrimer = new ChunkPrimer();
 
@@ -266,12 +266,12 @@ public class ChunkProviderAether implements  IChunkGenerator
 
         Chunk chunk = new Chunk(this.worldObj, chunkPrimer, x, z);
 
-        this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(biomesForGeneration, x * 16, z * 16, 16, 16);
+        biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(biomesForGeneration, x * 16, z * 16, 16, 16);
 
         byte[] chunkBiomes = chunk.getBiomeArray();
         for (int i = 0; i < chunkBiomes.length; ++i)
         {
-            chunkBiomes[i] = (byte) Biome.getIdForBiome(this.biomesForGeneration[i]);
+            chunkBiomes[i] = (byte) Biome.getIdForBiome(biomesForGeneration[i]);
         }
 
         chunk.generateSkylightMap();
