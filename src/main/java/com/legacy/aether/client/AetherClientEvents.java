@@ -2,8 +2,11 @@ package com.legacy.aether.client;
 
 import java.util.List;
 
+import com.legacy.aether.client.gui.GuiEnterAether;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiDownloadTerrain;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
@@ -16,11 +19,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.FOVUpdateEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
 
 import com.legacy.aether.AetherConfig;
@@ -41,6 +41,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 
 public class AetherClientEvents {
+
+	private static boolean wasInAether = false;
 
 	@SubscribeEvent
 	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception {
@@ -74,6 +76,31 @@ public class AetherClientEvents {
 			}
 		}
 	}
+
+	@SubscribeEvent
+	public void onOpenGui(GuiOpenEvent event)
+	{
+		Minecraft mc = FMLClientHandler.instance().getClient();
+
+		if (mc.thePlayer != null && event.gui instanceof GuiDownloadTerrain)
+		{
+			GuiEnterAether enterAether = new GuiEnterAether(true);
+			GuiEnterAether exitAether = new GuiEnterAether(false);
+
+			if (mc.thePlayer.dimension == AetherConfig.getAetherDimensionID())
+			{
+				event.gui = enterAether;
+				wasInAether = true;
+			}
+
+			else if (wasInAether)
+			{
+				event.gui = exitAether;
+				wasInAether = false;
+			}
+		}
+	}
+
 
 	private void sendPickupPacket(Minecraft mc) {
 		if (mc.objectMouseOver != null) {
