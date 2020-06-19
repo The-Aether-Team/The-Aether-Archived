@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -296,7 +297,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
             Entity entity = (Entity) entityList.get(ammount);
 
             if (entity instanceof EntityLivingBase && !entity.isImmuneToFire()) {
-                entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
+                entity.attackEntityFrom(new EntityDamageSource("incineration", this), 10);
                 entity.setFire(15);
             }
         }

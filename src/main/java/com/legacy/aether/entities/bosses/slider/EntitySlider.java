@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
@@ -352,7 +353,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
     @Override
     public void applyEntityCollision(Entity entity) {
         if (this.isAwake() && this.isMoving()) {
-            boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 6);
+            boolean flag = entity.attackEntityFrom(new EntityDamageSource("crush", this), 6);
 
             if (flag && entity instanceof EntityLivingBase) {
                 EntityLivingBase collidedEntity = (EntityLivingBase) entity;

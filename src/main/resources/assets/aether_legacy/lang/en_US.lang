@@ -389,7 +389,13 @@ subtitles.aeboss.slider.death=Slider breaks
 subtitles.aeboss.sun_spirit.shoot=Sun Spirit shoots
 
 # Death messages
-death.attack.inebriation=%1$s was inebriated by Cockatrice
+death.attack.inebriation=%1$s was inebriated
+death.attack.inebriation_indirect=%1$s was inebriated by %2$s
+death.attack.crush=%1$s was crushed by %2$s
+death.attack.incineration=%1$s was incinerated by %2$s
+death.attack.incineration_firo=%1$s was incinerated by %2$s's Fire Ball
+death.attack.icey_ball=%1$s was chilled by %2$s's Icey Ball
+death.attack.lightning_ball=%1$s was zapped by %2$s's Thunder Ball
 
 # Gui messages
 gui.sun_altar.message=The sun spirit has no power over this realm.

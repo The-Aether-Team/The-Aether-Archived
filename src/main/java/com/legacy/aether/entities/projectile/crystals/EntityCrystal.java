@@ -8,11 +8,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -23,6 +19,8 @@ import com.legacy.aether.entities.bosses.EntityFireMinion;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 
 public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpawnData {
+
+    public Entity shootingEntity;
 
     public float[] sinage = new float[3];
 
@@ -153,6 +151,7 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
     @Override
     public void applyEntityCollision(Entity entity) {
         super.applyEntityCollision(entity);
+        boolean flag;
 
         if (entity instanceof EntityCrystal && this.worldObj.difficultySetting == EnumDifficulty.HARD) {
             EntityCrystal crystal = (EntityCrystal) entity;
@@ -167,14 +166,23 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
             }
         } else if (entity instanceof EntityLivingBase) {
             if (this.type == EnumCrystalType.FIRE && !(entity instanceof IAetherBoss) && !(entity instanceof EntityFireMinion)) {
-                if (entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5.0F)) {
+                if (this.shootingEntity != null) {
+                    flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("incineration_firo", this, this.shootingEntity).setProjectile(), 5);
+                }
+                else {
+                    flag = entity.attackEntityFrom(new EntityDamageSource("incineration", this).setProjectile(), 5);
+                }
+
+                if (flag) {
                     this.explode();
                     this.expire();
                     this.setDead();
                     entity.setFire(100);
                 }
             } else if (this.type == EnumCrystalType.ICE && this.wasHit()) {
-                if (entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5.0F)) {
+                flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(), 5);
+
+                if (flag) {
                     this.explode();
                     this.expire();
                     this.setDead();
@@ -186,7 +194,9 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
                 this.setDead();
                 entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5.0F);
             } else if (this.type == EnumCrystalType.THUNDER && entity == this.getAttackTarget()) {
-                if (entity.attackEntityFrom(DamageSource.causeMobDamage(this), 1.0F)) {
+                flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("lightning_ball", this, this.shootingEntity).setProjectile(), 5);
+
+                if (flag) {
                     this.moveTowardsTarget(entity, -0.3D);
                 }
             }
@@ -210,6 +220,7 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
                 this.smotionZ = var3.zCoord;
             }
 
+            this.shootingEntity = source.getSourceOfDamage();
             this.wasHit = true;
 
             return true;
