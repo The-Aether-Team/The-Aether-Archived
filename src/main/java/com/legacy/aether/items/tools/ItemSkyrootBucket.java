@@ -48,6 +48,16 @@ public class ItemSkyrootBucket extends Item
 	}
 
 	@Override
+	public ItemStack getContainerItem(ItemStack itemStack)
+	{
+		if (!hasContainerItem(itemStack) || itemStack.getMetadata() == EnumSkyrootBucketType.Empty.meta)
+		{
+			return ItemStack.EMPTY;
+		}
+		return new ItemStack(getContainerItem());
+	}
+
+	@Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
     {
     	if (this.isInCreativeTab(tab))
