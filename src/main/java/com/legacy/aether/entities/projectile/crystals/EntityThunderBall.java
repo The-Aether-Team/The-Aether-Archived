@@ -8,10 +8,13 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.world.World;
 
 public class EntityThunderBall extends EntityFlying 
 {
+
+	public Entity shootingEntity;
 
 	public float sinage[];
 
@@ -162,9 +165,9 @@ public class EntityThunderBall extends EntityFlying
 		
         if(entity != null && target != null && entity == target) 
         {
-			boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 1);
+			boolean flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("lightning_ball", this, this.shootingEntity).setProjectile(), 5);
 			
-			if(flag) 
+			if (flag)
 			{
 				this.moveTowardsTarget(entity, -0.1D);
 			}
@@ -176,6 +179,16 @@ public class EntityThunderBall extends EntityFlying
 		if(entity != null)
 		{
 			this.moveTowardsTarget(entity, -0.15D - ((double)i / 8D));
+			return true;
+		}
+		return false;
+	}
+
+	public boolean attackEntityFrom(DamageSource source, float i)
+	{
+		if(source.getImmediateSource() != null)
+		{
+			this.shootingEntity = source.getTrueSource();
 			return true;
 		}
 		return false;

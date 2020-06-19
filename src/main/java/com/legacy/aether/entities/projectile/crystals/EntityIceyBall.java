@@ -9,9 +9,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumParticleTypes;
@@ -20,6 +24,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.Objects;
 
 public class EntityIceyBall extends EntityFlying
 {
@@ -198,6 +204,11 @@ public class EntityIceyBall extends EntityFlying
             if ((!(var1 instanceof EntitySunSpirit) || this.smacked && !this.fromCloud) && !(var1 instanceof EntityFireMinion) && !(var1 instanceof EntityFireBall))
             {
                 var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(), 5);
+
+                if (var2)
+                {
+                    ((EntityLivingBase) var1).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 10));
+                }
             }
         }
 
