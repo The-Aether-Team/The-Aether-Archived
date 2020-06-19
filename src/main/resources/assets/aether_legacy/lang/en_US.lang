@@ -396,3 +396,8 @@ gui.sun_altar.message=The sun spirit has no power over this realm.
 
 gui.loading.enteraether=Ascending to the Aether
 gui.loading.exitaether=Descending from the Aether
+
+gui.treasure_chest.bronze=Bronze Treasure Chest
+gui.treasure_chest.silver=Silver Treasure Chest
+gui.treasure_chest.gold=Gold Treasure Chest
+gui.treasure_chest.platinum=Platinum Treasure Chest
