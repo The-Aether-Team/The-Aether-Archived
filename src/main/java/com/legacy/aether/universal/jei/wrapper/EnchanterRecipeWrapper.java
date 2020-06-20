@@ -3,6 +3,7 @@ package com.legacy.aether.universal.jei.wrapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -11,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import com.google.common.collect.Lists;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.enchantments.AetherEnchantment;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class EnchanterRecipeWrapper implements IRecipeWrapper
 {
@@ -19,6 +21,8 @@ public class EnchanterRecipeWrapper implements IRecipeWrapper
 
 	private final ArrayList<ItemStack> outputs;
 
+	private final ArrayList<ItemStack> fuels;
+
 	public AetherEnchantment enchantment;
 
 	public EnchanterRecipeWrapper(AetherEnchantment recipe)
@@ -26,6 +30,7 @@ public class EnchanterRecipeWrapper implements IRecipeWrapper
 		this.enchantment = recipe;
 
 		this.inputs = Lists.newArrayList();
+		this.fuels = Lists.newArrayList();
 		this.outputs = Lists.newArrayList();
 
 		for (AetherEnchantment enchantment : AetherAPI.getInstance().getEnchantmentValues())
@@ -33,10 +38,20 @@ public class EnchanterRecipeWrapper implements IRecipeWrapper
 			this.inputs.add(enchantment.getInput());
 			this.outputs.add(enchantment.getOutput());
 		}
+
+		for (AetherEnchantmentFuel fuel : AetherAPI.getInstance().getEnchantmentFuelValues())
+		{
+			this.fuels.add(fuel.getFuelStack());
+		}
+	}
+
+	public ArrayList<ItemStack> getFuels()
+	{
+		return this.fuels;
 	}
 
 	@Override
-	public void getIngredients(IIngredients ingredients) 
+	public void getIngredients(IIngredients ingredients)
 	{
 		ingredients.setInput(ItemStack.class, this.enchantment.getInput());
 		ingredients.setOutput(ItemStack.class, this.enchantment.getOutput());

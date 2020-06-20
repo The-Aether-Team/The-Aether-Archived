@@ -129,9 +129,21 @@ public class AetherAPI
 	}
 
 	@SuppressWarnings("deprecation")
+	public List<AetherEnchantmentFuel> getEnchantmentFuelValues()
+	{
+		return iEnchantmentFuelRegistry.getValues();
+	}
+
+	@SuppressWarnings("deprecation")
 	public List<AetherFreezable> getFreezableValues()
 	{
 		return iFreezableRegistry.getValues();
+	}
+
+	@SuppressWarnings("deprecation")
+	public List<AetherFreezableFuel> getFreezableFuelValues()
+	{
+		return iFreezableFuelRegistry.getValues();
 	}
 
 	@SuppressWarnings("deprecation")

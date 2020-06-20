@@ -3,6 +3,8 @@ package com.legacy.aether.universal.jei.wrapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.legacy.aether.api.enchantments.AetherEnchantmentFuel;
+import com.legacy.aether.api.freezables.AetherFreezableFuel;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
@@ -19,6 +21,8 @@ public class FreezerRecipeWrapper implements IRecipeWrapper
 
 	private final ArrayList<ItemStack> outputs;
 
+	private final ArrayList<ItemStack> fuels;
+
 	public AetherFreezable freezable;
 
 	public FreezerRecipeWrapper(AetherFreezable recipe)
@@ -26,6 +30,7 @@ public class FreezerRecipeWrapper implements IRecipeWrapper
 		this.freezable = recipe;
 
 		this.inputs = Lists.newArrayList();
+		this.fuels = Lists.newArrayList();
 		this.outputs = Lists.newArrayList();
 
 		for (AetherFreezable freezable : AetherAPI.getInstance().getFreezableValues())
@@ -33,6 +38,16 @@ public class FreezerRecipeWrapper implements IRecipeWrapper
 			this.inputs.add(freezable.getInput());
 			this.outputs.add(freezable.getOutput());
 		}
+
+		for (AetherFreezableFuel fuel : AetherAPI.getInstance().getFreezableFuelValues())
+		{
+			this.fuels.add(fuel.getFuelStack());
+		}
+	}
+
+	public ArrayList<ItemStack> getFuels()
+	{
+		return this.fuels;
 	}
 
 	@Override

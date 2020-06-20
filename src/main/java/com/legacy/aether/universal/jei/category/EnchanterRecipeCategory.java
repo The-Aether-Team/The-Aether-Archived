@@ -82,7 +82,7 @@ public class EnchanterRecipeCategory implements IRecipeCategory<EnchanterRecipeW
 		stacks.init(2, true, 90, 29);
 
 		stacks.set(0, recipeWrapper.enchantment.getInput());
-		stacks.set(1, new ItemStack(ItemsAether.ambrosium_shard));
+		stacks.set(1, recipeWrapper.getFuels());
 		stacks.set(2, recipeWrapper.enchantment.getOutput());
 	}
 
