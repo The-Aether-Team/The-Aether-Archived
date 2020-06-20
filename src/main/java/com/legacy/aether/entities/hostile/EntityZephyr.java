@@ -2,16 +2,19 @@ package com.legacy.aether.entities.hostile;
 
 import javax.annotation.Nullable;
 
-import com.legacy.aether.entities.ai.EntityAIUpdateState;
+import com.legacy.aether.entities.ai.zephyr.ZephyrAILookAround;
 import com.legacy.aether.entities.ai.zephyr.ZephyrAIShootTarget;
-import com.legacy.aether.entities.ai.zephyr.ZephyrAITravelCourse;
+import com.legacy.aether.entities.ai.zephyr.ZephyrAIRandomFly;
+import com.legacy.aether.entities.ai.zephyr.ZephyrMoveHelper;
 import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -33,16 +36,17 @@ public class EntityZephyr extends EntityFlying implements IMob
 
         this.setSize(4F, 4F);
 
-        this.tasks.addTask(1, this.shootingAI = new ZephyrAIShootTarget(this));
+        this.moveHelper = new ZephyrMoveHelper(this);
+
+        this.tasks.addTask(7, this.shootingAI = new ZephyrAIShootTarget(this));
     }
 
     @Override
     protected void initEntityAI()
     {
-        this.tasks.addTask(0, new EntityAIUpdateState(this));
-        this.tasks.addTask(2, new ZephyrAITravelCourse(this));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(6, new EntityAILookIdle(this));
+        this.tasks.addTask(5, new ZephyrAIRandomFly(this));
+        this.tasks.addTask(7, new ZephyrAILookAround(this));
+        this.targetTasks.addTask(1, new EntityAIFindEntityNearestPlayer(this));
     }
     
     @Override
