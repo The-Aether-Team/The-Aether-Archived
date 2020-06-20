@@ -64,8 +64,13 @@ public class TileEntityFreezer extends AetherTileEntity {
 
 					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
 
-					if (this.getStackInSlot(2) != null) {
-						result.stackSize += (this.getStackInSlot(2).stackSize + 1);
+					if (this.getStackInSlot(0).hasTagCompound())
+					{
+						result.setTagCompound(this.getStackInSlot(0).getTagCompound());
+					}
+
+					if (this.getStackInSlot(2) != null && this.getStackInSlot(2).isStackable()) {
+						result.stackSize += (this.getStackInSlot(2).stackSize);
 
 						this.setInventorySlotContents(2, result);
 					} else {
@@ -105,7 +110,7 @@ public class TileEntityFreezer extends AetherTileEntity {
 			AetherFreezable freezable = AetherAPI.instance().getFreezable(itemstack);
 
 			if (freezable != null) {
-				if (this.getStackInSlot(2) == null || (freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getItemDamage() == this.getStackInSlot(2).getItemDamage())) {
+				if (this.getStackInSlot(2) == null || (freezable.getOutput().getItem() == this.getStackInSlot(2).getItem() && freezable.getOutput().getItemDamage() == this.getStackInSlot(2).getItemDamage() && this.getStackInSlot(2).isStackable())) {
 					this.currentFreezable = freezable;
 					this.ticksRequired = this.currentFreezable.getTimeRequired();
 					this.addEnchantmentWeight(itemstack);
