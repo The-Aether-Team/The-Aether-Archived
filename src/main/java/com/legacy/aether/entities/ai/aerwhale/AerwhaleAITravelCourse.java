@@ -25,7 +25,7 @@ public class AerwhaleAITravelCourse extends EntityAIBase {
     public AerwhaleAITravelCourse(EntityAerwhale aerwhale) {
         this.aerwhale = aerwhale;
         this.worldObj = aerwhale.worldObj;
-        this.setMutexBits(4);
+        this.setMutexBits(2);
     }
 
     @Override
@@ -74,15 +74,30 @@ public class AerwhaleAITravelCourse extends EntityAIBase {
         this.aerwhale.rotationPitch += 0.1D * this.motionPitch;
         this.aerwhale.rotationYaw += 0.1D * this.motionYaw;
 
+        this.aerwhale.aerwhaleRotationPitch += 0.1D * this.motionPitch;
+        this.aerwhale.aerwhaleRotationYaw += 0.1D * this.motionYaw;
+
+
         if (this.aerwhale.rotationPitch < -60F) {
             this.aerwhale.rotationPitch = -60F;
+        }
+
+        if (this.aerwhale.aerwhaleRotationPitch < -60D)
+        {
+            this.aerwhale.aerwhaleRotationPitch = -60D;
         }
 
         if (this.aerwhale.rotationPitch > 60F) {
             this.aerwhale.rotationPitch = 60F;
         }
 
+        if (this.aerwhale.aerwhaleRotationPitch < -60D)
+        {
+            this.aerwhale.aerwhaleRotationPitch = -60D;
+        }
+
         this.aerwhale.rotationPitch *= 0.99D;
+        this.aerwhale.aerwhaleRotationPitch *= 0.99D;
 
         this.aerwhale.motionX += 0.005D * Math.cos((this.aerwhale.rotationYaw / 180D) * 3.1415926535897931D) * Math.cos((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
         this.aerwhale.motionY += 0.005D * Math.sin((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
@@ -120,10 +135,6 @@ public class AerwhaleAITravelCourse extends EntityAIBase {
             this.motionYaw += 10F;
         }
 
-        // System.out.println(this.aerwhale.motionY);
-        //this.aerwhale.moveEntityWithHeading(this.aerwhale.moveStrafing, this.aerwhale.moveForward);
-
-        //this.aerwhale.moveFlying(p_70060_1_, p_70060_2_, p_70060_3_);
         this.aerwhale.moveFlying((float) this.aerwhale.motionX, (float) this.aerwhale.motionY, (float) this.aerwhale.motionZ);
     }
 
@@ -145,7 +156,7 @@ public class AerwhaleAITravelCourse extends EntityAIBase {
         double standard = 50D;
 
         float yaw = this.aerwhale.rotationYaw + rotationYawOffset;
-        float pitch = this.aerwhale.rotationYaw + rotationYawOffset;
+        float pitch = this.aerwhale.rotationPitch + rotationPitchOffset;
 
         float f3 = MathHelper.cos(-yaw * 0.01745329F - 3.141593F);
         float f4 = MathHelper.sin(-yaw * 0.01745329F - 3.141593F);

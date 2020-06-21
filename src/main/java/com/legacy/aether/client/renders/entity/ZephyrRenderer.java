@@ -26,7 +26,7 @@ public class ZephyrRenderer extends RenderLiving {
     }
 
     protected void renderZephyrMovement(EntityZephyr zephyr, float partialTickTime) {
-        float f1 = ((float) zephyr.shootingAI.prevAttackCounter + (float) (zephyr.shootingAI.attackCounter - zephyr.shootingAI.prevAttackCounter) * partialTickTime) / 20.0F;
+        float f1 = ((float) zephyr.prevAttackCounter + (float) (zephyr.attackCounter - zephyr.prevAttackCounter) * partialTickTime) / 20.0F;
 
         if (f1 < 0.0F) {
             f1 = 0.0F;

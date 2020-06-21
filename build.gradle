@@ -21,6 +21,11 @@ version = "1.7.10-v1.0.2"
 group= "com.legacy.aether" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "aether_legacy"
 
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
 minecraft {
     version = "1.7.10-10.13.4.1558-1.7.10"
     runDir = "eclipse"
