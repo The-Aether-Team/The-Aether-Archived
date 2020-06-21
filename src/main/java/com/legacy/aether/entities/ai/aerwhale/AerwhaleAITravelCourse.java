@@ -27,7 +27,7 @@ public class AerwhaleAITravelCourse extends EntityAIBase
 	{
 		this.aerwhale = aerwhale;
 		this.worldObj = aerwhale.world;
-        this.setMutexBits(4);
+        this.setMutexBits(2);
 	}
 
 	@Override
@@ -39,6 +39,11 @@ public class AerwhaleAITravelCourse extends EntityAIBase
 	@Override
     public void updateTask()
     {
+        if (this.aerwhale.isBeingRidden())
+        {
+            return;
+        }
+
         this.origin_direction = this.checkForTravelableCourse(0F, 0F);
         this.westward_direction = this.checkForTravelableCourse(45F, 0F);
         this.upward_direction = this.checkForTravelableCourse(0F, 45F);
@@ -87,14 +92,22 @@ public class AerwhaleAITravelCourse extends EntityAIBase
         }
 
         this.motionYaw += 2F * this.aerwhale.getRNG().nextFloat() - 1F;
-        this.motionPitch += 2F * this.aerwhale.getRNG().nextFloat() - 1F;	
+        this.motionPitch += 2F * this.aerwhale.getRNG().nextFloat() - 1F;
 
         this.aerwhale.rotationPitch += 0.1D * this.motionPitch;
         this.aerwhale.rotationYaw += 0.1D * this.motionYaw;
 
+        this.aerwhale.aerwhaleRotationPitch += 0.1D * this.motionPitch;
+        this.aerwhale.aerwhaleRotationYaw += 0.1D * this.motionYaw;
+
         if(this.aerwhale.rotationPitch < -60F)
         {
         	this.aerwhale.rotationPitch = -60F;
+        }
+
+        if (this.aerwhale.aerwhaleRotationPitch < -60D)
+        {
+            this.aerwhale.aerwhaleRotationPitch = -60D;
         }
 
         if(this.aerwhale.rotationPitch > 60F)
@@ -102,7 +115,13 @@ public class AerwhaleAITravelCourse extends EntityAIBase
         	this.aerwhale.rotationPitch = 60F;
         }
 
+        if (this.aerwhale.aerwhaleRotationPitch > 60D)
+        {
+            this.aerwhale.aerwhaleRotationPitch = 60D;
+        }
+
         this.aerwhale.rotationPitch *= 0.99D;
+        this.aerwhale.aerwhaleRotationPitch *= 0.99D;
 
         this.aerwhale.motionX += 0.005D * Math.cos((this.aerwhale.rotationYaw / 180D) * 3.1415926535897931D) * Math.cos((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
         this.aerwhale.motionY += 0.005D * Math.sin((this.aerwhale.rotationPitch / 180D) * 3.1415926535897931D);
@@ -112,15 +131,15 @@ public class AerwhaleAITravelCourse extends EntityAIBase
         this.aerwhale.motionY *= 0.98D;
         this.aerwhale.motionZ *= 0.98D;
 
-        if(this.aerwhale.motionX > 0D && worldObj.getBlockState(this.aerwhale.getPosition().east()).getBlock() != Blocks.AIR) 
+        if(this.aerwhale.motionX > 0D && worldObj.getBlockState(this.aerwhale.getPosition().east()).getBlock() != Blocks.AIR)
         {
-        	this.aerwhale.motionX = -this.aerwhale.motionX;
-        	this.motionYaw -= 10F;
+            this.aerwhale.motionX = -this.aerwhale.motionX;
+            this.motionYaw -= 10F;
         }
         else if(this.aerwhale.motionX < 0D && worldObj.getBlockState(this.aerwhale.getPosition().west()).getBlock() != Blocks.AIR)
         {
-        	this.aerwhale.motionX = -this.aerwhale.motionX;
-        	this.motionYaw += 10F;
+            this.aerwhale.motionX = -this.aerwhale.motionX;
+            this.motionYaw += 10F;
         }
 
         else if(this.aerwhale.motionY > 0D && this.worldObj.getBlockState(this.aerwhale.getPosition().up()).getBlock() != Blocks.AIR)
@@ -128,21 +147,21 @@ public class AerwhaleAITravelCourse extends EntityAIBase
             this.aerwhale.motionY = -this.aerwhale.motionY;
             this.motionPitch -= 10F;
         }
-        else if(this.aerwhale.motionY < 0D && this.worldObj.getBlockState(this.aerwhale.getPosition().down()).getBlock() != Blocks.AIR) 
+        else if(this.aerwhale.motionY < 0D && this.worldObj.getBlockState(this.aerwhale.getPosition().down()).getBlock() != Blocks.AIR)
         {
-        	this.aerwhale.motionY = -this.aerwhale.motionY;
-        	this.motionPitch += 10F;
+            this.aerwhale.motionY = -this.aerwhale.motionY;
+            this.motionPitch += 10F;
         }
 
-        if(this.aerwhale.motionZ > 0D && worldObj.getBlockState(this.aerwhale.getPosition().south()).getBlock() != Blocks.AIR) 
+        if(this.aerwhale.motionZ > 0D && worldObj.getBlockState(this.aerwhale.getPosition().south()).getBlock() != Blocks.AIR)
         {
-        	this.aerwhale.motionZ = -this.aerwhale.motionZ;
-        	this.motionYaw -= 10F;
+            this.aerwhale.motionZ = -this.aerwhale.motionZ;
+            this.motionYaw -= 10F;
         }
         else if(this.aerwhale.motionZ < 0D && worldObj.getBlockState(this.aerwhale.getPosition().north()).getBlock() != Blocks.AIR)
         {
-        	this.aerwhale.motionZ = -this.aerwhale.motionZ;
-        	this.motionYaw += 10F;
+            this.aerwhale.motionZ = -this.aerwhale.motionZ;
+            this.motionYaw += 10F;
         }
 
         this.aerwhale.move(MoverType.SELF, this.aerwhale.motionX, this.aerwhale.motionY, this.aerwhale.motionZ);
@@ -170,17 +189,18 @@ public class AerwhaleAITravelCourse extends EntityAIBase
     	double standard = 50D;
  
         float yaw = this.aerwhale.rotationYaw + rotationYawOffset;
-        float pitch = this.aerwhale.rotationYaw + rotationYawOffset;
+        float pitch = this.aerwhale.rotationPitch + rotationPitchOffset;
 
-        float f3 = MathHelper.cos(-yaw * 0.01745329F - 3.141593F);
-        float f4 = MathHelper.sin(-yaw * 0.01745329F - 3.141593F);
+        float f3 = MathHelper.cos(-yaw * 0.01745329F - (float)Math.PI);
+        float f4 = MathHelper.sin(-yaw * 0.01745329F - (float)Math.PI);
         float f5 = MathHelper.cos(-pitch * 0.01745329F);
+        float f6 = MathHelper.sin(-pitch * 0.01745329F);
 
         float f7 = f4 * f5;
-        float f8 = MathHelper.sin(-pitch * 0.01745329F);
+        float f8 = f6;
         float f9 = f3 * f5;
 
-        Vec3d vec3d = new Vec3d(this.aerwhale.getPosition());
+        Vec3d vec3d = new Vec3d(this.aerwhale.posX, this.aerwhale.getEntityBoundingBox().minY, this.aerwhale.posZ);
         Vec3d vec3d1 = vec3d.add((double)f7 * standard, (double)f8 * standard, (double)f9 * standard);
 
         RayTraceResult movingobjectposition = this.worldObj.rayTraceBlocks(vec3d, vec3d1, false);
@@ -193,7 +213,7 @@ public class AerwhaleAITravelCourse extends EntityAIBase
         if(movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
         {
             double i = movingobjectposition.getBlockPos().getX() - this.aerwhale.posX;
-            double j = movingobjectposition.getBlockPos().getY() - this.aerwhale.posY;
+            double j = movingobjectposition.getBlockPos().getY() - this.aerwhale.getEntityBoundingBox().minY;
             double k = movingobjectposition.getBlockPos().getZ() - this.aerwhale.posZ;
             return Math.sqrt(i * i + j * j + k * k);
         }
