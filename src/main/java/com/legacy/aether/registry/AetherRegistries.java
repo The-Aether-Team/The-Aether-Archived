@@ -104,7 +104,7 @@ public class AetherRegistries {
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_11, ItemsAether.aether_tune, 2500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_13, ItemsAether.aether_tune, 2500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_blocks, ItemsAether.aether_tune, 2500));
-		AetherAPI.instance().register(new AetherEnchantment(Items.record_cat, ItemsAether.aether_tune, 2500));
+		AetherAPI.instance().register(new AetherEnchantment(Items.record_cat, ItemsAether.legacy, 2500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_far, ItemsAether.aether_tune, 2500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_mall, ItemsAether.aether_tune, 2500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_mellohi, ItemsAether.aether_tune, 2500));
@@ -112,10 +112,6 @@ public class AetherRegistries {
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_strad, ItemsAether.aether_tune, 2500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_wait, ItemsAether.aether_tune, 2500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.record_ward, ItemsAether.aether_tune, 2500));
-
-		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.aether_tune, ItemsAether.legacy, 2500));
-		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.ascending_dawn, ItemsAether.legacy, 2500));
-		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.welcoming_skies, ItemsAether.legacy, 2500));
 
 		AetherAPI.instance().register(new AetherEnchantment(Items.wooden_pickaxe, 225));
 		AetherAPI.instance().register(new AetherEnchantment(Items.wooden_axe, 225));
