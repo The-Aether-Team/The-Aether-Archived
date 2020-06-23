@@ -394,6 +394,9 @@ gui.treasure_chest.platinum=Platinum Treasure Chest
 
 gui.sun_altar.time=Select Time
 gui.sun_altar.message=The sun spirit has no power over this realm.
+gui.sun_altar.eternal_day=The sun spirit is still in control of this realm.
+gui.sun_altar.cycle_catchup=The sun is still moving to its correct position.
+gui.sun_altar.permission=You don't have permission to perform this action.
 
 title.aether_legacy.slider.name=the Slider
 title.aether_legacy.valkyrie_queen.name=the Valkyrie Queen

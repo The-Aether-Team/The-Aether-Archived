@@ -17,6 +17,7 @@ import com.legacy.aether.entities.util.AetherNameGen;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
+import com.legacy.aether.world.AetherWorldProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -52,6 +53,8 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -607,6 +610,25 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
         else
         {
             return null;
+        }
+    }
+
+    @Override
+    protected void onDeathUpdate()
+    {
+        WorldProvider provider = this.world.provider;
+
+        if (provider instanceof AetherWorldProvider)
+        {
+            AetherWorldProvider aetherProvider = (AetherWorldProvider) provider;
+
+            if (aetherProvider.getEternalDayManager() != null)
+            {
+                if (aetherProvider.getEternalDayManager().isEternalDay())
+                {
+                    aetherProvider.getEternalDayManager().setEternalDay(false);
+                }
+            }
         }
     }
 

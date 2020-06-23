@@ -1,18 +1,28 @@
 package com.legacy.aether.world;
 
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketSendEternalDay;
+import com.legacy.aether.networking.packets.PacketSendShouldCycle;
+import com.legacy.aether.networking.packets.PacketSendTime;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class AetherWorldProvider extends WorldProvider
 {
-
 	private float[] colorsSunriseSunset = new float[4];
+
+	private EternalDayManager eternalDayManager;
+
+	private boolean eternalDay;
+	private boolean shouldCycleCatchup;
+	private long aetherTime = 6000;
 
 	public AetherWorldProvider()
 	{
@@ -24,6 +34,9 @@ public class AetherWorldProvider extends WorldProvider
 	{
 		this.hasSkyLight = true;
 		this.biomeProvider = new WorldChunkManagerAether();
+
+		NBTTagCompound nbttagcompound = this.world.getWorldInfo().getDimensionData(AetherConfig.dimension.aether_dimension_id);
+		this.eternalDayManager = this.world instanceof WorldServer ? new EternalDayManager((WorldServer) this.world, nbttagcompound.getCompoundTag("EternalDay")) : null;
 	}
 
 	@Override
@@ -103,6 +116,84 @@ public class AetherWorldProvider extends WorldProvider
 	}
 
 	@Override
+	public float calculateCelestialAngle(long worldTime, float partialTicks)
+	{
+		if (this.eternalDayManager != null)
+		{
+			if (!this.eternalDayManager.isEternalDay())
+			{
+				if (this.eternalDayManager.shouldCycleCatchup())
+				{
+					if (this.eternalDayManager.getTime() != (worldTime % 24000L))
+					{
+						this.eternalDayManager.setTime(Math.floorMod(this.eternalDayManager.getTime() - 1, 24000L));
+					}
+					else if (this.eternalDayManager.getTime() == (worldTime + 1 % 24000L) || this.eternalDayManager.getTime() == (worldTime - 1 % 24000L) || this.eternalDayManager.getTime() == (worldTime % 24000L))
+					{
+						this.eternalDayManager.setShouldCycleCatchup(false);
+					}
+				}
+				else
+				{
+					this.eternalDayManager.setTime(worldTime);
+				}
+
+				this.aetherTime = this.eternalDayManager.getTime();
+				AetherNetworkingManager.sendToAll(new PacketSendTime(this.aetherTime));
+				this.eternalDayManager.setTime(this.aetherTime);
+			}
+		}
+
+		int i = (int)(this.aetherTime % 24000L);
+
+		float f = ((float)i + partialTicks) / 24000.0F - 0.25F;
+
+		if (f < 0.0F)
+		{
+			++f;
+		}
+
+		if (f > 1.0F)
+		{
+			--f;
+		}
+
+		float f1 = 1.0F - (float)((Math.cos((double)f * Math.PI) + 1.0D) / 2.0D);
+		f = f + (f1 - f) / 3.0F;
+		return f;
+	}
+
+	public void setIsEternalDay(boolean set)
+	{
+		this.eternalDay = set;
+	}
+
+	public boolean getIsEternalDay()
+	{
+		return this.eternalDay;
+	}
+
+	public void setShouldCycleCatchup(boolean set)
+	{
+		this.shouldCycleCatchup = set;
+	}
+
+	public boolean getShouldCycleCatchup()
+	{
+		return this.shouldCycleCatchup;
+	}
+
+	public void setAetherTime(long time)
+	{
+		this.aetherTime = time;
+	}
+
+	public long getAetherTime()
+	{
+		return this.aetherTime;
+	}
+
+	@Override
 	public String getSaveFolder()
 	{
 		return "Dim-Aether";
@@ -144,4 +235,34 @@ public class AetherWorldProvider extends WorldProvider
 		return AetherWorld.aether_dimension_type;
 	}
 
+	@Override
+	public void onWorldSave()
+	{
+		NBTTagCompound nbttagcompound = new NBTTagCompound();
+
+		if (this.eternalDayManager != null)
+		{
+			nbttagcompound.setTag("EternalDay", this.eternalDayManager.getCompound());
+		}
+
+		this.world.getWorldInfo().setDimensionData(AetherConfig.dimension.aether_dimension_id, nbttagcompound);
+	}
+
+	@Override
+	public void onWorldUpdateEntities()
+	{
+		if (this.eternalDayManager != null)
+		{
+			this.eternalDay = this.eternalDayManager.isEternalDay();
+			AetherNetworkingManager.sendToAll(new PacketSendEternalDay(this.eternalDay));
+
+			this.shouldCycleCatchup = this.eternalDayManager.shouldCycleCatchup();
+			AetherNetworkingManager.sendToAll(new PacketSendShouldCycle(this.shouldCycleCatchup));
+		}
+	}
+
+	public EternalDayManager getEternalDayManager()
+	{
+		return this.eternalDayManager;
+	}
 }

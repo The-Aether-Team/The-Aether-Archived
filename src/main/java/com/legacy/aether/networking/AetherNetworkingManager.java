@@ -1,5 +1,6 @@
 package com.legacy.aether.networking;
 
+import com.legacy.aether.networking.packets.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -8,15 +9,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.networking.packets.PacketAccessory;
-import com.legacy.aether.networking.packets.PacketDialogueClicked;
-import com.legacy.aether.networking.packets.PacketDisplayDialogue;
-import com.legacy.aether.networking.packets.PacketInitiateValkyrieFight;
-import com.legacy.aether.networking.packets.PacketOpenContainer;
-import com.legacy.aether.networking.packets.PacketPerkChanged;
-import com.legacy.aether.networking.packets.PacketSendJump;
-import com.legacy.aether.networking.packets.PacketSendPoison;
-import com.legacy.aether.networking.packets.PacketSetTime;
 
 public class AetherNetworkingManager
 {
@@ -46,6 +38,10 @@ public class AetherNetworkingManager
 		INSTANCE.registerMessage(PacketPerkChanged.class, PacketPerkChanged.class, discriminant++, Side.CLIENT);
 
 		INSTANCE.registerMessage(PacketSetTime.class, PacketSetTime.class, discriminant++, Side.SERVER);
+
+		INSTANCE.registerMessage(PacketSendTime.class, PacketSendTime.class, discriminant++, Side.CLIENT);
+		INSTANCE.registerMessage(PacketSendEternalDay.class, PacketSendEternalDay.class, discriminant++, Side.CLIENT);
+		INSTANCE.registerMessage(PacketSendShouldCycle.class, PacketSendShouldCycle.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message)
