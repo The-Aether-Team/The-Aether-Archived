@@ -119,7 +119,7 @@ public class BlockAetherLeaves extends BlockLeaves {
 
 	@Override
 	public Item getItemDropped(int meta, Random random, int fortune) {
-		return this == BlocksAether.skyroot_leaves ? Item.getItemFromBlock(BlocksAether.skyroot_sapling) : this == BlocksAether.golden_oak_leaves ? Item.getItemFromBlock(BlocksAether.golden_oak_leaves) : null;
+		return this == BlocksAether.skyroot_leaves ? Item.getItemFromBlock(BlocksAether.skyroot_sapling) : this == BlocksAether.golden_oak_leaves ? Item.getItemFromBlock(BlocksAether.golden_oak_sapling) : null;
 	}
 
 	@Override
