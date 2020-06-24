@@ -3,6 +3,8 @@ package com.legacy.aether.entities.bosses.sun_spirit;
 import java.util.List;
 
 import com.legacy.aether.world.AetherWorldProvider;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -362,19 +364,14 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
     }
 
     private void chatLine(EntityPlayer player, String s) {
-        List<?> dungeonPlayers = this.getPlayersInDungeon();
+        Side side = FMLCommonHandler.instance().getEffectiveSide();
 
-        for (int i = 0; i < dungeonPlayers.size(); ++i) {
-            Entity entity = (Entity) dungeonPlayers.get(i);
-
-            if (entity instanceof EntityPlayer) {
-                if (this.chatCount <= 0) {
-                    Aether.proxy.sendMessage((EntityPlayer) entity, s);
-                }
+        if (this.chatCount <= 0) {
+            if (side == Side.CLIENT)
+            {
+                Aether.proxy.sendMessage(player, s);
             }
         }
-
-        Aether.proxy.sendMessage(player, s);
     }
 
     public boolean chatWithMe(EntityPlayer entityPlayer) {
@@ -429,12 +426,14 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
     @Override
     public boolean interact(EntityPlayer player) {
         if (this.chatWithMe(player)) {
+            System.out.println("s: " + this.dataWatcher.getWatchableObjectByte(18));
             this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
             this.setAttackTarget(player);
             this.setDoor(BlocksAether.locked_hellfire_stone);
 
             return true;
         }
+        System.out.println("s: " + this.dataWatcher.getWatchableObjectByte(18));
 
         return false;
     }
