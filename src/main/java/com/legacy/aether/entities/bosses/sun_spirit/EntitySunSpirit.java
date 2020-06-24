@@ -426,14 +426,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
     @Override
     public boolean interact(EntityPlayer player) {
         if (this.chatWithMe(player)) {
-            System.out.println("s: " + this.dataWatcher.getWatchableObjectByte(18));
             this.rotary = (180D / Math.PI) * Math.atan2(this.posX - player.posX, this.posZ - player.posZ);
             this.setAttackTarget(player);
             this.setDoor(BlocksAether.locked_hellfire_stone);
 
             return true;
         }
-        System.out.println("s: " + this.dataWatcher.getWatchableObjectByte(18));
 
         return false;
     }
