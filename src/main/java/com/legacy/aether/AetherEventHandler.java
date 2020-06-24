@@ -1,5 +1,13 @@
 package com.legacy.aether;
 
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketSendEternalDay;
+import com.legacy.aether.network.packets.PacketSendShouldCycle;
+import com.legacy.aether.network.packets.PacketSendTime;
+import com.legacy.aether.world.AetherData;
+import com.legacy.aether.world.AetherWorldProvider;
+import cpw.mods.fml.common.gameevent.TickEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
@@ -10,10 +18,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
@@ -34,6 +44,7 @@ import com.legacy.aether.registry.achievements.AchievementsAether;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.event.world.WorldEvent;
 
 public class
 AetherEventHandler {
@@ -233,4 +244,25 @@ AetherEventHandler {
 		return stackID == ItemsAether.gravitite_shovel || stackID == ItemsAether.gravitite_axe || stackID == ItemsAether.gravitite_pickaxe;
 	}
 
+	@SubscribeEvent
+	public void onWorldTick(TickEvent.WorldTickEvent event)
+	{
+		if (!event.world.isRemote)
+		{
+			AetherData data = AetherData.getInstance(event.world);
+
+			WorldProvider provider = event.world.provider;
+
+			if (provider instanceof AetherWorldProvider)
+			{
+				AetherWorldProvider providerAether = (AetherWorldProvider) provider;
+
+				providerAether.setIsEternalDay(data.isEternalDay());
+				AetherNetwork.sendToAll(new PacketSendEternalDay(providerAether.getIsEternalDay()));
+
+				providerAether.setShouldCycleCatchup(data.isShouldCycleCatchup());
+				AetherNetwork.sendToAll(new PacketSendShouldCycle(providerAether.getShouldCycleCatchup()));
+			}
+		}
+	}
 }

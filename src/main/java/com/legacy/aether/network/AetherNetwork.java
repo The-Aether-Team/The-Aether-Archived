@@ -1,18 +1,9 @@
 package com.legacy.aether.network;
 
+import com.legacy.aether.network.packets.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import com.legacy.aether.Aether;
-import com.legacy.aether.network.packets.PacketAccessory;
-import com.legacy.aether.network.packets.PacketAchievement;
-import com.legacy.aether.network.packets.PacketDialogueClicked;
-import com.legacy.aether.network.packets.PacketDisplayDialogue;
-import com.legacy.aether.network.packets.PacketInitiateValkyrieFight;
-import com.legacy.aether.network.packets.PacketOpenContainer;
-import com.legacy.aether.network.packets.PacketPerkChanged;
-import com.legacy.aether.network.packets.PacketSendPoison;
-import com.legacy.aether.network.packets.PacketSendSneaking;
-import com.legacy.aether.network.packets.PacketSetTime;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -48,6 +39,10 @@ public class AetherNetwork {
 		INSTANCE.registerMessage(PacketSetTime.class, PacketSetTime.class, discriminant++, Side.SERVER);
 
 		INSTANCE.registerMessage(PacketSendSneaking.class, PacketSendSneaking.class, discriminant++, Side.SERVER);
+
+		INSTANCE.registerMessage(PacketSendEternalDay.class, PacketSendEternalDay.class, discriminant++, Side.CLIENT);
+		INSTANCE.registerMessage(PacketSendShouldCycle.class, PacketSendShouldCycle.class, discriminant++, Side.CLIENT);
+		INSTANCE.registerMessage(PacketSendTime.class, PacketSendTime.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message) {

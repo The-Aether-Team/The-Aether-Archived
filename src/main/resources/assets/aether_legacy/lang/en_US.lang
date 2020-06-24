@@ -399,6 +399,9 @@ death.attack.lightning_ball=%1$s was zapped by %2$s's Thunder Ball
 
 # Gui messages
 gui.sun_altar.message=The sun spirit has no power over this realm.
+gui.sun_altar.eternal_day=The sun spirit is still in control of this realm.
+gui.sun_altar.cycle_catchup=The sun is still moving to its correct position.
+gui.sun_altar.permission=You don't have permission to perform this action.
 
 gui.loading.enteraether=Ascending to the Aether
 gui.loading.exitaether=Descending from the Aether

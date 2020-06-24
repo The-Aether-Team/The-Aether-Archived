@@ -1,5 +1,8 @@
 package com.legacy.aether.world;
 
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketSendTime;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
@@ -13,6 +16,10 @@ public class AetherWorldProvider extends WorldProvider {
 
 	private float[] colorsSunriseSunset = new float[4];
 
+	private boolean eternalDay;
+	private boolean shouldCycleCatchup;
+	private long aetherTime = 6000;
+
 	public AetherWorldProvider() {
 		super();
 	}
@@ -20,6 +27,90 @@ public class AetherWorldProvider extends WorldProvider {
 	@Override
 	protected void registerWorldChunkManager() {
 		this.worldChunkMgr = new WorldChunkManagerAether();
+	}
+
+	@Override
+	public float calculateCelestialAngle(long worldTime, float partialTicks)
+	{
+		if (!this.worldObj.isRemote)
+		{
+			AetherData data = AetherData.getInstance(this.worldObj);
+
+			if (data.isEternalDay())
+			{
+				if (!data.isShouldCycleCatchup())
+				{
+					if (data.getAetherTime() != (worldTime % 24000L))
+					{
+						data.setAetherTime(Math.floorMod(data.getAetherTime() - 1, 24000L));
+					}
+					else if (data.getAetherTime() == ((worldTime + 1) % 24000L) || data.getAetherTime() == ((worldTime - 1) % 24000L) || data.getAetherTime() == (worldTime % 24000L))
+					{
+						data.setShouldCycleCatchup(true);
+					}
+				}
+				else
+				{
+					data.setAetherTime(worldTime);
+				}
+
+				this.aetherTime = data.getAetherTime();
+				AetherNetwork.sendToAll(new PacketSendTime(this.aetherTime));
+				data.setAetherTime(this.aetherTime);
+			}
+			else
+			{
+				data.setAetherTime(6000);
+			}
+		}
+
+		int i = (int)(this.aetherTime % 24000L);
+
+		float f = ((float)i + partialTicks) / 24000.0F - 0.25F;
+
+		if (f < 0.0F)
+		{
+			++f;
+		}
+
+		if (f > 1.0F)
+		{
+			--f;
+		}
+
+		float f1 = 1.0F - (float)((Math.cos((double)f * Math.PI) + 1.0D) / 2.0D);
+		f = f + (f1 - f) / 3.0F;
+		return f;
+	}
+
+	public void setIsEternalDay(boolean set)
+	{
+		this.eternalDay = set;
+	}
+
+	public boolean getIsEternalDay()
+	{
+		return this.eternalDay;
+	}
+
+	public void setShouldCycleCatchup(boolean set)
+	{
+		this.shouldCycleCatchup = set;
+	}
+
+	public boolean getShouldCycleCatchup()
+	{
+		return this.shouldCycleCatchup;
+	}
+
+	public void setAetherTime(long time)
+	{
+		this.aetherTime = time;
+	}
+
+	public long getAetherTime()
+	{
+		return this.aetherTime;
 	}
 
 	@Override
@@ -122,10 +213,10 @@ public class AetherWorldProvider extends WorldProvider {
 	}
 
 	@Override
-    @SideOnly(Side.CLIENT)
-    public boolean getWorldHasVoidParticles() {
-    	return false;
-    }
+	@SideOnly(Side.CLIENT)
+	public boolean getWorldHasVoidParticles() {
+		return false;
+	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -137,5 +228,4 @@ public class AetherWorldProvider extends WorldProvider {
 			}
 		};
 	}
-
 }

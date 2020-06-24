@@ -2,6 +2,7 @@ package com.legacy.aether.entities.bosses.sun_spirit;
 
 import java.util.List;
 
+import com.legacy.aether.world.AetherWorldProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -33,6 +34,7 @@ import com.legacy.aether.entities.util.EntityAetherItem;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.achievements.AchievementsAether;
+import net.minecraft.world.WorldProvider;
 
 public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
 
@@ -485,6 +487,25 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
             return entityitem;
         } else {
             return null;
+        }
+    }
+
+    @Override
+    protected void onDeathUpdate()
+    {
+        WorldProvider provider = this.worldObj.provider;
+
+        if (provider instanceof AetherWorldProvider)
+        {
+            AetherWorldProvider aetherProvider = (AetherWorldProvider) provider;
+
+            if (!this.worldObj.isRemote)
+            {
+                if (aetherProvider.getIsEternalDay())
+                {
+                    aetherProvider.setIsEternalDay(true);
+                }
+            }
         }
     }
 
