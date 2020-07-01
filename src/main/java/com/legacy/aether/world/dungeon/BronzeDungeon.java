@@ -1,5 +1,7 @@
 package com.legacy.aether.world.dungeon;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -21,10 +23,13 @@ public class BronzeDungeon extends AetherDungeon {
 
 	private int n;
 
-	private boolean finished;
+	private boolean needsCorridor;
+
+	private boolean hasCorridor;
 
 	public BronzeDungeon() {
-		finished = false;
+		hasCorridor = false;
+		needsCorridor = false;
 	}
 
 	@Override
@@ -33,7 +38,7 @@ public class BronzeDungeon extends AetherDungeon {
 		replaceSolid = true;
 		n = 0;
 
-		if (!isBoxSolid(world, new PositionData(i, j, k), new PositionData(16, 12, 16)) || !isBoxSolid(world, new PositionData(i + 20, j, k + 2), new PositionData(12, 12, 12))) {
+		if (!isBoxSolid(world, new PositionData(i, j - 3, k), new PositionData(16, 15, 16)) || !isBoxSolid(world, new PositionData(i + 20, j, k + 2), new PositionData(12, 12, 12))) {
 			return false;
 		}
 
@@ -57,24 +62,145 @@ public class BronzeDungeon extends AetherDungeon {
 		int y = j;
 		int z = k;
 
-		x = i + 20;
-		y = j;
-		z = k + 2;
+		int rooms = random.nextInt(4);
 
-		if (!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 12, 12))) {
-			return true;
-		}
+		switch (rooms)
+		{
+			case 0:
+			{
+				//EAST
+				x = i + 20;
+				y = j;
+				z = k + 2;
 
-		setBlocks(this.mainBlock(), this.mainLightBlock(), 20);
-		addHollowBox(world, random, new PositionData(x, y, z), new PositionData(12, 12, 12));
+				if (!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 12, 12))) {
+					return true;
+				}
 
-		setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+				setBlocks(this.mainBlock(), this.mainLightBlock(), 20);
+				addHollowBox(world, random, new PositionData(x, y, z), new PositionData(12, 12, 12));
 
-		addSquareTube(world, random, new PositionData(x - 5, y, z + 3), new PositionData(6, 6, 6), 0);
+				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
 
-		for (int p = x + 2; p < x + 10; p += 3) {
-			for (int q = z + 2; q < z + 10; q += 3) {
-				world.setBlock(p, j, q, BlocksAether.carved_trap, 0, 2);
+				addSquareTube(world, random, new PositionData(x - 5, y, z + 3), new PositionData(6, 6, 6), 0);
+
+				for (int p = x + 2; p < x + 10; p += 3) {
+					for (int q = z + 2; q < z + 10; q += 3) {
+						world.setBlock(p, j, q, BlocksAether.carved_trap, 0, 2);
+					}
+				}
+
+				break;
+
+				/*
+				x = pos.getX() + 20;
+				y = pos.getY();
+				z = pos.getZ() + 2;
+
+				if(!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 12, 12)) || isSpaceTaken(world, new PositionData(x, y, z), new PositionData(12, 12, 12)))
+				{
+					this.placementStorage.clear();
+					this.replacementStorage.clear();
+					slider.setDead();
+					return false;
+				}
+
+				setBlocks(this.mainBlock(), this.mainLightBlock(), 20);
+				addHollowBox(world, random, new PositionData(x, y, z), new PositionData(12, 12, 12));
+
+				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+
+				addSquareTube(world, random, new PositionData(x - 5, y, z + 3), new PositionData(6, 6, 6), 0);
+
+				for(int p = x + 2; p < x + 10; p += 3)
+				{
+					for(int q = z + 2; q < z + 10; q += 3)
+					{
+						if (this.placementStorage.get(new BlockPos.MutableBlockPos().setPos(p, pos.getY(), q)) != Blocks.AIR && this.placementStorage.get(new BlockPos.MutableBlockPos().setPos(p, pos.getY(), q)) != null)
+						{
+							this.storeReplacementBlock(world, new BlockPos(p, pos.getY(), q), BlocksAether.dungeon_trap.getDefaultState());
+						}
+					}
+				}
+				break;
+				 */
+			}
+			case 1:
+			{
+				//WEST
+				x = i - 16;
+				y = j;
+				z = k + 2;
+
+				if (!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 12, 12))) {
+					return true;
+				}
+
+				setBlocks(this.mainBlock(), this.mainLightBlock(), 20);
+				addHollowBox(world, random, new PositionData(x, y, z), new PositionData(12, 12, 12));
+
+				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+
+				addSquareTube(world, random, new PositionData(x + 11, y, z + 3), new PositionData(6, 6, 6), 0);
+
+				for (int p = x + 2; p < x + 10; p += 3) {
+					for (int q = z + 2; q < z + 10; q += 3) {
+						world.setBlock(p, j, q, BlocksAether.carved_trap, 0, 2);
+					}
+				}
+
+				break;
+			}
+			case 2:
+			{
+				//SOUTH
+				x = i + 2;
+				y = j;
+				z = k + 20;
+
+				if (!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 12, 12))) {
+					return true;
+				}
+
+				setBlocks(this.mainBlock(), this.mainLightBlock(), 20);
+				addHollowBox(world, random, new PositionData(x, y, z), new PositionData(12, 12, 12));
+
+				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+
+				addSquareTube(world, random, new PositionData(x + 3, y, z - 5), new PositionData(6, 6, 6), 2);
+
+				for (int p = x + 2; p < x + 10; p += 3) {
+					for (int q = z + 2; q < z + 10; q += 3) {
+						world.setBlock(p, j, q, BlocksAether.carved_trap, 0, 2);
+					}
+				}
+
+				break;
+			}
+			case 3:
+			{
+				//NORTH
+				x = i + 2;
+				y = j;
+				z = k - 16;
+
+				if (!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 12, 12))) {
+					return true;
+				}
+
+				setBlocks(this.mainBlock(), this.mainLightBlock(), 20);
+				addHollowBox(world, random, new PositionData(x, y, z), new PositionData(12, 12, 12));
+
+				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+
+				addSquareTube(world, random, new PositionData(x + 3, y, z + 11), new PositionData(6, 6, 6), 2);
+
+				for (int p = x + 2; p < x + 10; p += 3) {
+					for (int q = z + 2; q < z + 10; q += 3) {
+						world.setBlock(p, j, q, BlocksAether.carved_trap, 0, 2);
+					}
+				}
+				break;
 			}
 		}
 
@@ -83,15 +209,20 @@ public class BronzeDungeon extends AetherDungeon {
 		generateNextRoom(world, random, new PositionData(x, y, z));
 		generateNextRoom(world, random, new PositionData(x, y, z));
 
-		if (n > numRooms || !finished) {
+		if (needsCorridor)
+		{
+			System.out.println("called 1");
 			endCorridor(world, random, new PositionData(x, y, z));
+			return true;
 		}
 
 		return true;
 	}
 
 	public boolean generateNextRoom(World world, Random random, PositionData pos) {
-		if (n > numRooms && !finished) {
+		if (needsCorridor)
+		{
+			System.out.println("called 2");
 			endCorridor(world, random, pos);
 			return false;
 		}
@@ -116,6 +247,7 @@ public class BronzeDungeon extends AetherDungeon {
 		}
 
 		if (!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 8, 12))) {
+			this.needsCorridor = true;
 			return false;
 		}
 
@@ -185,101 +317,290 @@ public class BronzeDungeon extends AetherDungeon {
 
 		n++;
 
-		if (!generateNextRoom(world, random, new PositionData(x, y, z))) {
+		if(!generateNextRoom(world, random,  new PositionData(x, y, z)))
+		{
+			System.out.println("called 3");
+			this.needsCorridor = true;
 			return false;
 		}
 
 		return generateNextRoom(world, random, new PositionData(x, y, z));
 	}
 
-	public void endCorridor(World world, Random random, PositionData pos) {
+	public boolean endCorridor(World world, Random random, PositionData pos)
+	{
+		ArrayList<Integer> sides = new ArrayList<>();
+		sides.add(1);
+		sides.add(2);
+		sides.add(3);
+		sides.add(4);
+
+		Collections.shuffle(sides);
+
+		if (generateEndCorridor(world, random, pos, sides.get(0)))
+		{
+			return true;
+		}
+		else if (generateEndCorridor(world, random, pos, sides.get(1)))
+		{
+			return true;
+		}
+		else if (generateEndCorridor(world, random, pos, sides.get(2)))
+		{
+			return true;
+		}
+		else if (generateEndCorridor(world, random, pos, sides.get(3)))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public boolean generateEndCorridor(World world, Random random, PositionData pos, int switchCase)
+	{
 		replaceAir = false;
-		boolean tunnelling = true;
-		boolean flag;
-		int dir = random.nextInt(3);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		if (dir == 0) {
-			x += 11;
-			z += 3;
 
-			while (tunnelling) {
-				if (isBoxEmpty(world, new PositionData(x, y, z), new PositionData(1, 8, 6)) || x - pos.getX() > 100) {
-					tunnelling = false;
+		switch (switchCase)
+		{
+			case 1:
+			{
+				//EAST
+
+				boolean tunnelling = true;
+				boolean maxLength = false;
+				int x = pos.getX();
+				int y = pos.getY();
+				int z = pos.getZ();
+
+				x += 11;
+				z += 3;
+
+				if (!isBoxSolid(world, new PositionData(x + 1, y, z), new PositionData(2, 8, 6)))
+				{
+					return false;
 				}
 
-				flag = true;
+				System.out.println("east");
 
-				while (flag && (world.getBlock(x, y, z) == this.mainBlock() || world.getBlock(x, y, z) == this.lockedBlock() || world.getBlock(x, y, z) == this.lockedLightBlock() || world.getBlock(x, y, z) == this.mainLightBlock())) {
-					if (world.getBlock(x + 1, y, z) == this.mainBlock() || world.getBlock(x + 1, y, z) == this.lockedBlock() || world.getBlock(x + 1, y, z) == this.lockedLightBlock() || world.getBlock(x + 1, y, z) == this.mainLightBlock()) {
-						x++;
-					} else {
-						flag = false;
+				while(tunnelling)
+				{
+					if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(1, 8, 6)))
+					{
+						tunnelling = false;
 					}
+
+					if (hasBlock(world, new PositionData(x + 1, y, z), new PositionData(2, 8, 6), BlocksAether.carved_stone)
+							|| hasBlock(world, new PositionData(x + 1, y, z), new PositionData(2, 8, 6), BlocksAether.locked_carved_stone))
+					{
+						tunnelling = false;
+					}
+
+					if (x - pos.getX() > 100)
+					{
+						maxLength = true;
+						tunnelling = false;
+					}
+
+					setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+					addPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
+
+					setBlocks(Blocks.air, Blocks.air, 1);
+					addPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
+
+					x++;
 				}
 
-				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+				if (maxLength)
+				{
+					return false;
+				}
 
-				addPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
-				setBlocks(Blocks.air, Blocks.air, 1);
-				addPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
-				x++;
+				this.hasCorridor = true;
+				this.needsCorridor = false;
+
+				return true;
+			}
+			case 2:
+			{
+				//WEST
+
+				boolean tunnelling = true;
+				boolean maxLength = false;
+				int x = pos.getX();
+				int y = pos.getY();
+				int z = pos.getZ();
+
+				x -= 0;
+				z += 3;
+
+				if (!isBoxSolid(world, new PositionData(x - 1, y, z), new PositionData(1, 8, 6)))
+				{
+					return false;
+				}
+
+				System.out.println("west");
+
+				while(tunnelling)
+				{
+					if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(1, 8, 6)))
+					{
+						tunnelling = false;
+					}
+
+					if (hasBlock(world, new PositionData(x - 1, y, z), new PositionData(1, 8, 6), BlocksAether.carved_stone)
+							|| hasBlock(world, new PositionData(x - 1, y, z), new PositionData(1, 8, 6), BlocksAether.locked_carved_stone))
+					{
+						tunnelling = false;
+					}
+
+					if (pos.getX() - x > 100)
+					{
+						maxLength = true;
+						tunnelling = false;
+					}
+
+					setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+					addPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
+
+					setBlocks(Blocks.air, Blocks.air, 1);
+					addPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
+
+					x--;
+				}
+
+				if (maxLength)
+				{
+					return false;
+				}
+
+				this.hasCorridor = true;
+				this.needsCorridor = false;
+
+				return true;
+			}
+			case 3:
+			{
+				//SOUTH
+				// BUGGED
+
+				boolean tunnelling = true;
+				boolean maxLength = false;
+				int x = pos.getX();
+				int y = pos.getY();
+				int z = pos.getZ();
+
+				x += 3;
+				z += 11;
+
+				if (!isBoxSolid(world, new PositionData(x, y, z + 1), new PositionData(6, 8, 2)))
+				{
+					return false;
+				}
+
+				System.out.println("south");
+
+				while(tunnelling)
+				{
+					if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)))
+					{
+						tunnelling = false;
+					}
+
+					if (hasBlock(world, new PositionData(x, y, z + 1), new PositionData(6, 8, 2), BlocksAether.carved_stone)
+							|| hasBlock(world, new PositionData(x, y, z + 1), new PositionData(6, 8, 2), BlocksAether.locked_carved_stone))
+					{
+						tunnelling = false;
+					}
+
+					if (z - pos.getZ() > 100)
+					{
+						maxLength = true;
+						tunnelling = false;
+					}
+
+					setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+					addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
+
+					setBlocks(Blocks.air, Blocks.air, 1);
+					addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
+
+					z++;
+				}
+
+				if (maxLength)
+				{
+					return false;
+				}
+
+				this.hasCorridor = true;
+				this.needsCorridor = false;
+
+				return true;
+			}
+			case 4:
+			{
+				//NORTH
+
+				boolean tunnelling = true;
+				boolean maxLength = false;
+				int x = pos.getX();
+				int y = pos.getY();
+				int z = pos.getZ();
+
+				x += 3;
+				z -= 0;
+
+				if (!isBoxSolid(world, new PositionData(x, y, z - 1), new PositionData(6, 8, 1)))
+				{
+					return false;
+				}
+
+				System.out.println("north");
+
+				while(tunnelling)
+				{
+					if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)))
+					{
+						tunnelling = false;
+					}
+
+					if (hasBlock(world, new PositionData(x, y, z - 1), new PositionData(6, 8, 1), BlocksAether.carved_stone)
+							|| hasBlock(world, new PositionData(x, y, z - 1), new PositionData(6, 8, 1), BlocksAether.locked_carved_stone))
+					{
+						tunnelling = false;
+					}
+
+					if (pos.getZ() - z > 100)
+					{
+						maxLength = true;
+						tunnelling = false;
+					}
+
+					setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+					addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
+
+					setBlocks(Blocks.air, Blocks.air, 1);
+					addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
+
+					z--;
+				}
+
+				if (maxLength)
+				{
+					return false;
+				}
+
+				this.hasCorridor = true;
+				this.needsCorridor = false;
+
+				return true;
 			}
 		}
 
-		if (dir == 1) {
-			x += 3;
-			z += 11;
-			while (tunnelling) {
-				if (isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)) || z - pos.getZ() > 100) {
-					tunnelling = false;
-				}
-
-				flag = true;
-
-				while (flag && (world.getBlock(x, y, z) == this.mainBlock() || world.getBlock(x, y, z) == this.lockedBlock() || world.getBlock(x, y, z) == this.lockedLightBlock() || world.getBlock(x, y, z) == this.mainLightBlock())) {
-					if (world.getBlock(x, y, z + 1) == this.mainBlock() || world.getBlock(x, y, z + 1) == this.lockedBlock() || world.getBlock(x, y, z + 1) == this.lockedLightBlock() || world.getBlock(x, y, z + 1) == this.mainLightBlock()) {
-						z++;
-					} else {
-						flag = false;
-					}
-				}
-
-				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
-				addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
-				setBlocks(Blocks.air, Blocks.air, 1);
-				addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
-				z++;
-			}
-		}
-
-		if (dir == 2) {
-			x += 3;
-			z -= 0;
-			while (tunnelling) {
-				if (isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)) || pos.getY() - z > 100) {
-					tunnelling = false;
-				}
-
-				flag = true;
-
-				while (flag && (world.getBlock(x, y, z) == this.mainBlock() || world.getBlock(x, y, z) == this.lockedBlock() || world.getBlock(x, y, z) == this.lockedLightBlock() || world.getBlock(x, y, z) == this.mainLightBlock())) {
-					if (world.getBlock(x, y, z - 1) == this.mainBlock() || world.getBlock(x, y, z - 1) == this.lockedBlock() || world.getBlock(x, y, z - 1) == this.lockedLightBlock() || world.getBlock(x, y, z - 1) == this.mainLightBlock()) {
-						z--;
-					} else {
-						flag = false;
-					}
-				}
-
-				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
-				addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
-				setBlocks(Blocks.air, Blocks.air, 1);
-				addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
-				z--;
-			}
-		}
-		finished = true;
+		return false;
 	}
 
 	private ItemStack getNormalLoot(Random random) {

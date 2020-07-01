@@ -265,8 +265,9 @@ public class ChunkProviderAether implements IChunkProvider {
 
 		biome.decorate(this.worldObj, this.rand, x, z);
 
-		if (this.rand.nextInt(10) == 0) {
-			this.dungeon_bronze.generate(this.worldObj, this.rand, x + this.rand.nextInt(16), this.rand.nextInt(64) + 32, z + this.rand.nextInt(16));
+		if (this.rand.nextInt(1) == 0)
+		{
+			this.dungeon_bronze.generate(this.worldObj, this.rand, x, this.rand.nextInt(96) + 24, z);
 		}
 
 		SpawnerAnimals.performWorldGenSpawning(this.worldObj, biome, x + 8, z + 8, 16, 16, this.rand);

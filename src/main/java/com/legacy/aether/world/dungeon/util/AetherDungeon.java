@@ -2,6 +2,7 @@ package com.legacy.aether.world.dungeon.util;
 
 import java.util.Random;
 
+import com.legacy.aether.blocks.BlocksAether;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -252,6 +253,22 @@ public abstract class AetherDungeon extends WorldGenerator {
 				for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++) {
 					if (world.getBlock(lineX, lineY, lineZ) != Blocks.air) {
 						flag = false;
+					}
+				}
+			}
+		}
+
+		return flag;
+	}
+
+	public boolean hasBlock(World world, PositionData pos, PositionData radius, Block block) {
+		boolean flag = false;
+
+		for (int lineX = pos.getX(); lineX < pos.getX() + radius.getX(); lineX++) {
+			for (int lineY = pos.getY(); lineY < pos.getY() + radius.getY(); lineY++) {
+				for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++) {
+					if (world.getBlock(lineX, lineY, lineZ) == block) {
+						flag = true;
 					}
 				}
 			}

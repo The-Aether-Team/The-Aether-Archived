@@ -1,7 +1,11 @@
 package com.legacy.aether.entities.bosses.slider;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
@@ -39,6 +43,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class EntitySlider extends EntityFlying implements IAetherBoss {
 
     private int dungeonX, dungeonY, dungeonZ;
+
+    private int[] doorStart = new int[3], doorEnd = new int[3];
 
     public float hurtAngle, hurtAngleX, hurtAngleZ;
 
@@ -98,6 +104,9 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
         nbttagcompound.setInteger("dungeonY", this.dungeonY);
         nbttagcompound.setInteger("dungeonZ", this.dungeonZ);
 
+        nbttagcompound.setIntArray("doorStart", this.doorStart);
+        nbttagcompound.setIntArray("doorEnd", this.doorEnd);
+
         nbttagcompound.setBoolean("isAwake", this.isAwake());
         nbttagcompound.setString("bossName", this.getName());
     }
@@ -108,6 +117,9 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
         this.dungeonX = nbttagcompound.getInteger("dungeonX");
         this.dungeonY = nbttagcompound.getInteger("dungeonY");
         this.dungeonZ = nbttagcompound.getInteger("dungeonZ");
+
+        this.doorStart = nbttagcompound.getIntArray("doorStart");
+        this.doorEnd = nbttagcompound.getIntArray("doorEnd");
 
         this.setAwake(nbttagcompound.getBoolean("isAwake"));
         this.setBossName(nbttagcompound.getString("bossName"));
@@ -342,10 +354,109 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
         this.worldObj.spawnParticle("smoke", a, b, c, 0.0D, 0.0D, 0.0D);
     }
 
-    private void openDoor() {
-        for (int y = this.dungeonY + 1; y < this.dungeonY + 5; y++) {
-            for (int z = this.dungeonZ + 6; z < this.dungeonZ + 10; z++) {
-                this.worldObj.setBlock(this.dungeonX + 15, y, z, Blocks.air);
+    private boolean checkIsAir(int x1, int y1, int z1, int x2, int y2, int z2)
+    {
+        ArrayList<Block> blockList = Lists.newArrayListWithCapacity(9);
+
+        for (int x = x1; x < x2 + 1; x++)
+        {
+            for (int z = z1; z < z2 + 1; z++)
+            {
+                for (int y = y1; y < y2 + 1; y++)
+                {
+                    blockList.add(this.worldObj.getBlock(x, y, z));
+                }
+            }
+        }
+
+        Set<Block> blockSet = new HashSet<>(blockList);
+
+        if (blockSet.size() == 1)
+        {
+            return blockList.get(1) == Blocks.air;
+        }
+
+        return false;
+    }
+
+    private void openDoor()
+    {
+        for (int x = this.doorStart[0]; x < this.doorEnd[0] + 1; x++)
+        {
+            for (int y = this.doorStart[1]; y < this.doorEnd[1] + 1; y++)
+            {
+                for (int z = this.doorStart[2]; z < this.doorEnd[2] + 1; z++)
+                {
+                    this.worldObj.setBlock(x, y, z, Blocks.air);
+                }
+            }
+        }
+    }
+
+    private void closeDoor()
+    {
+        if (checkIsAir(this.dungeonX + 15, this.dungeonY + 1, this.dungeonZ + 6, this.dungeonX + 15, this.dungeonY + 4, this.dungeonZ + 9))
+        {
+            //EAST
+            this.doorStart = new int[] {this.dungeonX + 15, this.dungeonY + 1, this.dungeonZ + 6};
+            this.doorEnd = new int[] {this.dungeonX + 15, this.dungeonY + 4, this.dungeonZ + 9};
+
+            int x = this.dungeonX + 15;
+
+            for(int y = this.dungeonY + 1; y < this.dungeonY + 8; y++)
+            {
+                for(int z = this.dungeonZ + 5; z < this.dungeonZ + 11; z++)
+                {
+                    this.worldObj.setBlock(x, y, z, BlocksAether.locked_carved_stone);
+                }
+            }
+        }
+        else if (checkIsAir(this.dungeonX, this.dungeonY + 1, this.dungeonZ + 6, this.dungeonX, this.dungeonY + 4, this.dungeonZ + 9))
+        {
+            //WEST
+            this.doorStart = new int[] {this.dungeonX, this.dungeonY + 1, this.dungeonZ + 6};
+            this.doorEnd = new int[] {this.dungeonX, this.dungeonY + 4, this.dungeonZ + 9};
+
+            int x = this.dungeonX;
+
+            for(int y = this.dungeonY + 1; y < this.dungeonY + 8; y++)
+            {
+                for(int z = this.dungeonZ + 5; z < this.dungeonZ + 11; z++)
+                {
+                    this.worldObj.setBlock(x, y, z, BlocksAether.locked_carved_stone);
+                }
+            }
+        }
+        else if (checkIsAir(this.dungeonX + 6, this.dungeonY + 1, this.dungeonZ + 15, this.dungeonX + 9, this.dungeonY + 4, this.dungeonZ + 15))
+        {
+            //SOUTH
+            this.doorStart = new int[] {this.dungeonX + 6, this.dungeonY + 1, this.dungeonZ + 15};
+            this.doorEnd = new int[] {this.dungeonX + 9, this.dungeonY + 4, this.dungeonZ + 15};
+
+            int z = this.dungeonZ + 15;
+
+            for(int y = this.dungeonY + 1; y < this.dungeonY + 8; y++)
+            {
+                for(int x = this.dungeonX + 5; x < this.dungeonX + 11; x++)
+                {
+                    this.worldObj.setBlock(x, y, z, BlocksAether.locked_carved_stone);
+                }
+            }
+        }
+        else if (checkIsAir(this.dungeonX + 6, this.dungeonY + 1, this.dungeonZ, this.dungeonX + 9, this.dungeonY + 4, this.dungeonZ))
+        {
+            //NORTH
+            this.doorStart = new int[] {this.dungeonX + 6, this.dungeonY + 1, this.dungeonZ};
+            this.doorEnd = new int[] {this.dungeonX + 9, this.dungeonY + 4, this.dungeonZ};
+
+            int z = this.dungeonZ;
+
+            for(int y = this.dungeonY + 1; y < this.dungeonY + 8; y++)
+            {
+                for(int x = this.dungeonX + 5; x < this.dungeonX + 11; x++)
+                {
+                    this.worldObj.setBlock(x, y, z, BlocksAether.locked_carved_stone);
+                }
             }
         }
     }
@@ -490,13 +601,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
                 this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "aether_legacy:aeboss_slider.awaken", 2.5F, 1.0F / (this.rand.nextFloat() * 0.2F + 0.9F));
                 this.setAttackTarget(player);
 
-                int x = this.dungeonX + 15;
-
-                for (int y = this.dungeonY + 1; y < this.dungeonY + 8; y++) {
-                    for (int z = this.dungeonZ + 5; z < this.dungeonZ + 11; z++) {
-                        this.worldObj.setBlock(x, y, z, BlocksAether.locked_carved_stone);
-                    }
-                }
+                this.closeDoor();
 
                 this.setAwake(true);
             }
