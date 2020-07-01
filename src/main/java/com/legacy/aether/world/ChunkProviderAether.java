@@ -1,12 +1,14 @@
 package com.legacy.aether.world;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
+import com.legacy.aether.registry.AetherLootTables;
+import com.legacy.aether.world.dungeon.util.AetherDungeonVirtual;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -20,15 +22,13 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.world.dungeon.BronzeDungeon;
-import com.legacy.aether.world.dungeon.util.AetherDungeon;
 import com.legacy.aether.world.gen.MapGenGoldenDungeon;
 import com.legacy.aether.world.gen.MapGenLargeColdAercloud;
 import com.legacy.aether.world.gen.MapGenQuicksoil;
 import com.legacy.aether.world.gen.MapGenSilverDungeon;
 
-public class ChunkProviderAether implements  IChunkGenerator
+public class ChunkProviderAether implements IChunkGenerator
 {
-
     private Random rand;
 
     private World worldObj;
@@ -39,7 +39,7 @@ public class ChunkProviderAether implements  IChunkGenerator
 
     double pnr[], ar[], br[];
 
-    protected AetherDungeon dungeon_bronze = new BronzeDungeon();
+    protected AetherDungeonVirtual dungeon_bronze = new BronzeDungeon();
 
     private MapGenQuicksoil quicksoilGen = new MapGenQuicksoil();
 
@@ -249,8 +249,6 @@ public class ChunkProviderAether implements  IChunkGenerator
     @Override
     public Chunk generateChunk(int x, int z)
     {
-        Biome[] biomesForGeneration = new Biome[0];
-        
         this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
         ChunkPrimer chunkPrimer = new ChunkPrimer();
 
@@ -266,6 +264,8 @@ public class ChunkProviderAether implements  IChunkGenerator
 
         Chunk chunk = new Chunk(this.worldObj, chunkPrimer, x, z);
 
+        Biome[] biomesForGeneration = new Biome[0];
+
         biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(biomesForGeneration, x * 16, z * 16, 16, 16);
 
         byte[] chunkBiomes = chunk.getBiomeArray();
@@ -275,7 +275,6 @@ public class ChunkProviderAether implements  IChunkGenerator
         }
 
         chunk.generateSkylightMap();
-
         return chunk;
     }
 
@@ -360,12 +359,67 @@ public class ChunkProviderAether implements  IChunkGenerator
 
         biome.decorate(this.worldObj, this.rand, pos);
 
-        if (this.rand.nextInt(10) == 0)
+        if (this.rand.nextInt(1) == 0)
         {
-            this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(this.rand.nextInt(16), this.rand.nextInt(64) + 32, this.rand.nextInt(16)));
+            BlockPos dungeonPos = pos.add(0, this.rand.nextInt(96) + 24, 0);
+
+            generateBronzeDungeon(dungeonPos);
         }
 
         WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, x + 8, z + 8, 16, 16, this.rand);
     }
 
+    private void generateBronzeDungeon(BlockPos pos)
+    {
+        this.dungeon_bronze.generate(this.worldObj, this.rand, pos);
+        this.dungeon_bronze.storeVariables();
+
+        Map<BlockPos, IBlockState> placementSelection = this.dungeon_bronze.getPlacement();
+        Map<BlockPos, IBlockState> replacementSelection = this.dungeon_bronze.getReplacement();
+
+        for (Map.Entry<BlockPos, IBlockState> placement : placementSelection.entrySet())
+        {
+            if (this.worldObj.isBlockLoaded(placement.getKey()))
+            {
+                if (placement.getValue() != null)
+                {
+                    if ((this.worldObj.getBlockState(placement.getKey()).getBlock() != BlocksAether.dungeon_block && this.worldObj.getBlockState(placement.getKey()).getBlock() != BlocksAether.locked_dungeon_block)
+                            || (placement.getValue().getBlock() != BlocksAether.holystone && placement.getValue().getBlock() != BlocksAether.mossy_holystone && placement.getValue().getBlock() != Blocks.AIR))
+                    {
+                        if ((placement.getValue().getBlock() != BlocksAether.holystone && placement.getValue().getBlock() != BlocksAether.mossy_holystone)
+                                || this.worldObj.getBlockState(placement.getKey()).getBlock() != Blocks.AIR)
+                        {
+                            this.worldObj.setBlockState(placement.getKey(), placement.getValue(), 2 | 16);
+                        }
+                    }
+
+                    this.dungeon_bronze.placementStorage.remove(placement.getKey(), placement.getValue());
+                    this.dungeon_bronze.placement.remove(placement.getKey(), placement.getValue());
+                    placementSelection.remove(placement.getKey(), placement.getValue());
+                }
+            }
+        }
+
+        for (Map.Entry<BlockPos, IBlockState> placement : replacementSelection.entrySet())
+        {
+            if (this.worldObj.isBlockLoaded(placement.getKey()))
+            {
+                if (placement.getValue() != null)
+                {
+                    this.worldObj.setBlockState(placement.getKey(), placement.getValue(), 2 | 16);
+
+                    if (placement.getValue().getBlock() == BlocksAether.dungeon_chest)
+                    {
+                        Random lootRandom = new Random();
+                        TileEntityChest chest = (TileEntityChest) this.worldObj.getTileEntity(placement.getKey());
+                        chest.setLootTable(AetherLootTables.bronze_dungeon_chest, lootRandom.nextLong());
+                    }
+
+                    this.dungeon_bronze.replacementStorage.remove(placement.getKey(), placement.getValue());
+                    this.dungeon_bronze.replacement.remove(placement.getKey(), placement.getValue());
+                    replacementSelection.remove(placement.getKey(), placement.getValue());
+                }
+            }
+        }
+    }
 }
