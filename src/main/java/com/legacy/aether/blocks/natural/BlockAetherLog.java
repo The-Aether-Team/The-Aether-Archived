@@ -1,5 +1,6 @@
 package com.legacy.aether.blocks.natural;
 
+import com.legacy.aether.items.tools.*;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
@@ -27,10 +28,6 @@ import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.util.EnumLogType;
 import com.legacy.aether.blocks.util.IAetherMeta;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.items.tools.ItemAetherTool;
-import com.legacy.aether.items.tools.ItemGravititeTool;
-import com.legacy.aether.items.tools.ItemSkyrootTool;
-import com.legacy.aether.items.tools.ItemValkyrieTool;
 import com.legacy.aether.items.util.EnumAetherToolType;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
@@ -88,7 +85,7 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 
         if (stack != null && stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType == EnumAetherToolType.AXE)
         {
-        	if (stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool)
+        	if (stack.getItem() instanceof ItemZaniteTool || stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool)
         	{
         		if (state.getValue(wood_type) == EnumLogType.Oak)
         		{
