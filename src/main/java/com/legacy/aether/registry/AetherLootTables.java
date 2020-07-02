@@ -35,8 +35,6 @@ public class AetherLootTables
 	public static ResourceLocation cockatrice = register("entities/cockatrice");
 	public static ResourceLocation aechor_plant = register("entities/aechor_plant");
 	public static ResourceLocation zephyr = register("entities/zephyr");
-	public static ResourceLocation swet = register("entities/swet");
-	public static ResourceLocation sentry = register("entities/sentry");
 	public static ResourceLocation valkyrie = register("entities/valkyrie");
 	public static ResourceLocation fire_minion = register("entities/fire_minion");
 	public static ResourceLocation chest_mimic = register("entities/chest_mimic");

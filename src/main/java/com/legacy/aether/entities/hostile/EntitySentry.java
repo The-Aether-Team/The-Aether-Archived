@@ -2,8 +2,12 @@ package com.legacy.aether.entities.hostile;
 
 import javax.annotation.Nullable;
 
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
+import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.registry.AetherLootTables;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +20,7 @@ import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -235,19 +240,15 @@ public class EntitySentry extends EntityLiving implements IMob
 	@Override
 	protected void dropFewItems(boolean var1, int var2) 
 	{
-		/*
-		 * if (this.rand.nextInt(5) == 0)
-		 * {
-		 * Block block =
-		 * BlocksAether.dungeon_block.getDefaultState().withProperty(
-		 * BlockDungeonBase.dungeon_stone, EnumStoneType.Sentry).getBlock();
-		 * this.entityDropItem(new ItemStack(block), 0F);
-		 * }
-		 * else
-		 * {
-		 * this.entityDropItem(new ItemStack(BlocksAether.dungeon_block), 0F);
-		 * }
-		 */
+		 if (this.rand.nextInt(5) == 0)
+		 {
+		    Block block = BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Sentry).getBlock();
+		    this.entityDropItem(new ItemStack(block), 0F);
+		 }
+		 else
+		 {
+		    this.entityDropItem(new ItemStack(BlocksAether.dungeon_block), 0F);
+		 }
 	}
 
     static class AISlimeAttack extends EntityAIBase
@@ -428,10 +429,4 @@ public class EntitySentry extends EntityLiving implements IMob
                 }
             }
         }
-    
-    @Nullable
-    protected ResourceLocation getLootTable()
-    {
-        return AetherLootTables.sentry;
-    }
 }
