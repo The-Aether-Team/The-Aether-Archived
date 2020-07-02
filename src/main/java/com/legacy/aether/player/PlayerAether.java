@@ -217,9 +217,14 @@ public class PlayerAether implements IPlayerAether
 
 				if (this.timeInPortal++ >= limit)
 				{
+					MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+
+					int previousDimension = this.thePlayer.dimension;
+					int transferDimension = previousDimension == AetherConfig.dimension.aether_dimension_id ? 0 : AetherConfig.dimension.aether_dimension_id;
+
 					this.timeInPortal = limit;
 					this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
-					this.teleportPlayer(true);
+					this.thePlayer.changeDimension(transferDimension, new TeleporterAether(true, server.getWorld(transferDimension)));
 				}
 
 				this.inPortal = false;
