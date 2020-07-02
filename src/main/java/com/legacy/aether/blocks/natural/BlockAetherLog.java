@@ -2,6 +2,7 @@ package com.legacy.aether.blocks.natural;
 
 import java.util.Random;
 
+import com.legacy.aether.items.tools.*;
 import net.minecraft.block.BlockLog;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
@@ -16,10 +17,6 @@ import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.ItemsAether;
-import com.legacy.aether.items.tools.ItemAetherTool;
-import com.legacy.aether.items.tools.ItemGravititeTool;
-import com.legacy.aether.items.tools.ItemSkyrootTool;
-import com.legacy.aether.items.tools.ItemValkyrieTool;
 import com.legacy.aether.items.util.EnumAetherToolType;
 
 import cpw.mods.fml.relauncher.Side;
@@ -41,7 +38,7 @@ public class BlockAetherLog extends BlockLog {
 		ItemStack stack = player.getCurrentEquippedItem();
 
 		if (stack != null && ((stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool) stack.getItem()).toolType == EnumAetherToolType.AXE) || stack.getItem() == Items.diamond_axe)) {
-			if (stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool || stack.getItem() == Items.diamond_axe) {
+			if (stack.getItem() instanceof ItemZaniteTool || stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool || stack.getItem() == Items.diamond_axe) {
 				if (this == BlocksAether.golden_oak_log) {
 					this.dropBlockAsItem(worldIn, x, y, z, new ItemStack(ItemsAether.golden_amber, 1 + worldIn.rand.nextInt(2)));
 				}
