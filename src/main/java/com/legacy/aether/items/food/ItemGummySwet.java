@@ -38,22 +38,6 @@ public class ItemGummySwet extends ItemAetherFood
 	}
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
-    {
-		ItemStack heldItem = playerIn.getHeldItem(hand);
-
-    	playerIn.heal(playerIn.getMaxHealth());
-
-    	if (!playerIn.capabilities.isCreativeMode)
-    	{
-    		heldItem.shrink(1);
-    	}
-
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
-    }
-
-
-	@Override
 	public String getTranslationKey(ItemStack itemstack)
 	{
 		int meta = itemstack.getItemDamage();
