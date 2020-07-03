@@ -61,6 +61,11 @@ public class PlayerAetherEvents {
 		if (!event.wasDeath || event.entityPlayer.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
 			playerAether.setAccessoryInventory(original.getAccessoryInventory());
 		}
+
+		if (event.wasDeath)
+		{
+			playerAether.setBedLocation(original.getBedLocation());
+		}
 	}
 
 	@SubscribeEvent

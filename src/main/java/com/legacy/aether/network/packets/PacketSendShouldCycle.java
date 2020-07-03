@@ -35,7 +35,7 @@ public class PacketSendShouldCycle extends AetherPacket<PacketSendShouldCycle>
     @Override
     public void handleClient(PacketSendShouldCycle message, EntityPlayer player)
     {
-        WorldProvider provider = Minecraft.getMinecraft().theWorld.provider;
+        WorldProvider provider = player.worldObj.provider;
 
         if (provider instanceof AetherWorldProvider)
         {

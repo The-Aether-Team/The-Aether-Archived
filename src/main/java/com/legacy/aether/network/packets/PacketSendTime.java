@@ -37,7 +37,7 @@ public class PacketSendTime extends AetherPacket<PacketSendTime>
     @Override
     public void handleClient(PacketSendTime message, EntityPlayer player)
     {
-        WorldProvider provider = Minecraft.getMinecraft().theWorld.provider;
+        WorldProvider provider = player.worldObj.provider;
 
         if (provider instanceof AetherWorldProvider)
         {

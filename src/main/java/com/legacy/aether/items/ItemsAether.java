@@ -116,6 +116,8 @@ public class ItemsAether {
 
 	public static Item aether_spawn_egg;
 
+	public static Item skyroot_bed_item;
+
 	public static void initialization() {
 		zanite_gemstone = register("zanite_gemstone", new ItemAether(AetherCreativeTabs.material).setTextureName(Aether.find("misc/zanite_gemstone")));
 		ambrosium_shard = register("ambrosium_shard", new ItemAmbrosiumShard().setTextureName(Aether.find("misc/ambrosium_shard")));
@@ -260,6 +262,9 @@ public class ItemsAether {
 		developer_stick = register("developer_stick", new ItemDeveloperStick().setTextureName(Aether.find("skyroot_stick")));
 
 		aether_spawn_egg = register("aether_spawn_egg", new ItemAetherSpawnEgg().setTextureName("spawn_egg"));
+
+		skyroot_bed_item = register("skyroot_bed_item", new ItemSkyrootBed().setTextureName(Aether.find("skyroot_bed_item")));
+
 	}
 
 	public static Item register(String name, Item item) {

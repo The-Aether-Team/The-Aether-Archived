@@ -211,7 +211,6 @@ public class BronzeDungeon extends AetherDungeon {
 
 		if (needsCorridor)
 		{
-			System.out.println("called 1");
 			endCorridor(world, random, new PositionData(x, y, z));
 			return true;
 		}
@@ -222,7 +221,6 @@ public class BronzeDungeon extends AetherDungeon {
 	public boolean generateNextRoom(World world, Random random, PositionData pos) {
 		if (needsCorridor)
 		{
-			System.out.println("called 2");
 			endCorridor(world, random, pos);
 			return false;
 		}
@@ -319,7 +317,6 @@ public class BronzeDungeon extends AetherDungeon {
 
 		if(!generateNextRoom(world, random,  new PositionData(x, y, z)))
 		{
-			System.out.println("called 3");
 			this.needsCorridor = true;
 			return false;
 		}
@@ -383,8 +380,6 @@ public class BronzeDungeon extends AetherDungeon {
 					return false;
 				}
 
-				System.out.println("east");
-
 				while(tunnelling)
 				{
 					if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(1, 8, 6)))
@@ -440,8 +435,6 @@ public class BronzeDungeon extends AetherDungeon {
 				{
 					return false;
 				}
-
-				System.out.println("west");
 
 				while(tunnelling)
 				{
@@ -500,8 +493,6 @@ public class BronzeDungeon extends AetherDungeon {
 					return false;
 				}
 
-				System.out.println("south");
-
 				while(tunnelling)
 				{
 					if(isBoxEmpty(world, new PositionData(x, y, z), new PositionData(6, 8, 1)))
@@ -557,8 +548,6 @@ public class BronzeDungeon extends AetherDungeon {
 				{
 					return false;
 				}
-
-				System.out.println("north");
 
 				while(tunnelling)
 				{

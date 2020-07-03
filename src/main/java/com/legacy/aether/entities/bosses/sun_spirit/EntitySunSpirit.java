@@ -2,6 +2,7 @@ package com.legacy.aether.entities.bosses.sun_spirit;
 
 import java.util.List;
 
+import com.legacy.aether.world.AetherData;
 import com.legacy.aether.world.AetherWorldProvider;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -203,6 +204,31 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
                 }
 
                 dungeonTarget.triggerAchievement(AchievementsAether.defeat_gold);
+
+                if (!this.worldObj.isRemote)
+                {
+                    if (!AetherData.getInstance(this.worldObj).isEternalDay())
+                    {
+                        AetherData.getInstance(this.worldObj).setEternalDay(true);
+                    }
+                }
+
+                /*
+                WorldProvider provider = this.worldObj.provider;
+
+                if (provider instanceof AetherWorldProvider)
+                {
+                    AetherWorldProvider aetherProvider = (AetherWorldProvider) provider;
+
+                    if (!this.worldObj.isRemote)
+                    {
+                        if (aetherProvider.getIsEternalDay())
+                        {
+                            aetherProvider.setIsEternalDay(true);
+                        }
+                    }
+                }
+                 */
 
                 this.setDoor(Blocks.air);
                 this.unlockTreasure();
@@ -484,25 +510,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
             return entityitem;
         } else {
             return null;
-        }
-    }
-
-    @Override
-    protected void onDeathUpdate()
-    {
-        WorldProvider provider = this.worldObj.provider;
-
-        if (provider instanceof AetherWorldProvider)
-        {
-            AetherWorldProvider aetherProvider = (AetherWorldProvider) provider;
-
-            if (!this.worldObj.isRemote)
-            {
-                if (aetherProvider.getIsEternalDay())
-                {
-                    aetherProvider.setIsEternalDay(true);
-                }
-            }
         }
     }
 

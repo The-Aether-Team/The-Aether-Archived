@@ -296,6 +296,8 @@ public class AetherRegistries {
 		register("mossy_holystone_stairs", new ItemStack(BlocksAether.mossy_holystone_stairs, 4), "Z  ", "ZZ ", "ZZZ", 'Z', new ItemStack(BlocksAether.mossy_holystone, 1, 1));
 		register("holystone_brick_stairs", new ItemStack(BlocksAether.holystone_brick_stairs, 4), "Z  ", "ZZ ", "ZZZ", 'Z', new ItemStack(BlocksAether.holystone_brick, 1));
 		register("skyroot_stairs", new ItemStack(BlocksAether.skyroot_stairs, 4), "Z  ", "ZZ ", "ZZZ", 'Z', new ItemStack(BlocksAether.skyroot_planks));
+
+		register("skyroot_bed_item", new ItemStack(ItemsAether.skyroot_bed_item, 1),  "XXX", "ZZZ", 'Z', new ItemStack(BlocksAether.skyroot_planks), 'X', new ItemStack(Blocks.wool, 1, 9));
 	}
 
 	private static void register(String name, ItemStack stack, Object... recipe) {

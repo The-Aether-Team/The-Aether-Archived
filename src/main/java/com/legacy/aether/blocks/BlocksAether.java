@@ -1,5 +1,6 @@
 package com.legacy.aether.blocks;
 
+import com.legacy.aether.items.ItemSkyrootBed;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.block.ItemBlockRarity;
 import net.minecraft.block.Block;
@@ -111,6 +112,8 @@ public class BlocksAether {
 
 	public static Block skyroot_bookshelf;
 
+	public static Block skyroot_bed;
+
 	public static void initialization() {
 		aether_grass = registerMeta("aether_grass", new BlockAetherGrass());
 		enchanted_aether_grass = registerRarity("enchanted_aether_grass", new BlockEnchantedAetherGrass(), EnumRarity.rare);
@@ -199,6 +202,7 @@ public class BlocksAether {
 		mossy_holystone_slab = registerSlab("mossy_holystone_slab", new BlockAetherSlab("mossy_holystone_slab", false, Material.rock).setBlockTextureName(Aether.find("mossy_holystone")).setHardness(0.5F).setResistance(10.0F), mossy_holystone_double_slab);
 		holystone_brick_slab = registerSlab("holystone_brick_slab", new BlockAetherSlab("holystone_brick_slab", false, Material.rock).setBlockTextureName(Aether.find("holystone_brick")).setHardness(0.5F).setResistance(10.0F), holystone_brick_double_slab);
 		skyroot_bookshelf = register("skyroot_bookshelf", new BlockSkyrootBookshelf());
+		skyroot_bed = registerBed("skyroot_bed", new BlockSkyrootBed().setBlockTextureName(Aether.find("skyroot_bed")));
 	}
 
 	public static boolean isGood(Block block) {
@@ -237,6 +241,14 @@ public class BlocksAether {
 		block.setCreativeTab(AetherCreativeTabs.blocks);
 
 		GameRegistry.registerBlock(block, ItemBlockMetadata.class, name);
+
+		return block;
+	}
+
+	public static Block registerBed(String name, Block block) {
+		block.setBlockName(name);
+
+		GameRegistry.registerBlock(block, name);
 
 		return block;
 	}

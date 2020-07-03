@@ -35,7 +35,7 @@ public class PacketSendEternalDay extends AetherPacket<PacketSendEternalDay>
     @Override
     public void handleClient(PacketSendEternalDay message, EntityPlayer player)
     {
-        WorldProvider provider = Minecraft.getMinecraft().theWorld.provider;
+        WorldProvider provider = player.worldObj.provider;
 
         if (provider instanceof AetherWorldProvider)
         {

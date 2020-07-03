@@ -1,7 +1,10 @@
 package com.legacy.aether.world;
 
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.network.AetherNetwork;
 import com.legacy.aether.network.packets.PacketSendTime;
+import com.legacy.aether.player.PlayerAether;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -131,6 +134,12 @@ public class AetherWorldProvider extends WorldProvider {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public int getRespawnDimension(EntityPlayerMP player)
+	{
+		return PlayerAether.get(player).getBedLocation() == null ? 0 : AetherConfig.getAetherDimensionID();
 	}
 
 	@Override

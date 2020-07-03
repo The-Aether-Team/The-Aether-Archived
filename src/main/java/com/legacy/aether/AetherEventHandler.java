@@ -4,8 +4,12 @@ import com.legacy.aether.network.AetherNetwork;
 import com.legacy.aether.network.packets.PacketSendEternalDay;
 import com.legacy.aether.network.packets.PacketSendShouldCycle;
 import com.legacy.aether.network.packets.PacketSendTime;
+import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.world.AetherData;
 import com.legacy.aether.world.AetherWorldProvider;
+import com.legacy.aether.world.TeleporterAether;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
@@ -14,17 +18,22 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
@@ -44,6 +53,7 @@ import com.legacy.aether.registry.achievements.AchievementsAether;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
 public class
@@ -263,6 +273,43 @@ AetherEventHandler {
 				providerAether.setShouldCycleCatchup(data.isShouldCycleCatchup());
 				AetherNetwork.sendToAll(new PacketSendShouldCycle(providerAether.getShouldCycleCatchup()));
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerSleepInBed(PlayerWakeUpEvent event)
+	{
+		final World world = event.entityPlayer.worldObj;
+
+		if (!world.isRemote && event.entityPlayer.dimension == AetherConfig.getAetherDimensionID())
+		{
+			final MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+
+			final WorldServer worldServer = server.worldServerForDimension(0);
+
+			if (worldServer.playerEntities.size() > 0)
+			{
+				if (worldServer.areAllPlayersAsleep())
+				{
+					performTimeSet(event, world, worldServer);
+				}
+			}
+			else
+			{
+				performTimeSet(event, world, worldServer);
+			}
+		}
+	}
+
+	private void performTimeSet(PlayerWakeUpEvent event, World world, WorldServer worldServer)
+	{
+		if (world.getGameRules().getGameRuleBooleanValue("doDaylightCycle") && event.entityPlayer.isPlayerFullyAsleep())
+		{
+			final long i = worldServer.getWorldInfo().getWorldTime() + 24000L;
+
+			worldServer.getWorldInfo().setWorldTime(i - i % 24000L);
+
+			PlayerAether.get(event.entityPlayer).setBedLocation(event.entityPlayer.getBedLocation(AetherConfig.getAetherDimensionID()));
 		}
 	}
 }

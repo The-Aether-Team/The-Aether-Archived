@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
+import com.legacy.aether.Aether;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Direction;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -81,6 +83,8 @@ public class PlayerAether implements IPlayerAether {
     public float timeInPortal;
 
     public float prevTimeInPortal;
+
+    private ChunkCoordinates bedLocation;
 
 	public PlayerAether() {
 		this.abilities.addAll(Arrays.<IAetherAbility>asList(new AbilityAccessories(this), new AbilityArmor(this), new AbilityFlight(this), new AbilityRepulsion(this)));
@@ -223,6 +227,20 @@ public class PlayerAether implements IPlayerAether {
                 }
             }
 		}
+
+		if (!player.worldObj.isRemote)
+		{
+			if (this.bedLocation != null)
+			{
+				if (player.dimension == AetherConfig.getAetherDimensionID())
+				{
+					if (player.worldObj.getBlock(this.bedLocation.posX, this.bedLocation.posY, this.bedLocation.posZ) != BlocksAether.skyroot_bed)
+					{
+						this.setBedLocation(null);
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -295,6 +313,13 @@ public class PlayerAether implements IPlayerAether {
 		aetherTag.setInteger("shardCount", this.shardCount);
 		aetherTag.setTag("accessories", this.getAccessoryInventory().writeToNBT(aetherTag));
 
+		if (this.bedLocation != null)
+		{
+			aetherTag.setInteger("bedX", this.bedLocation.posX);
+			aetherTag.setInteger("bedY", this.bedLocation.posY);
+			aetherTag.setInteger("bedZ", this.bedLocation.posZ);
+		}
+
 		compound.setTag("aetherI", aetherTag);
 	}
 
@@ -304,6 +329,7 @@ public class PlayerAether implements IPlayerAether {
 
 		this.updateShardCount(aetherTag.getInteger("shardCount"));
 		this.getAccessoryInventory().readFromNBT(aetherTag.getTagList("accessories", 10));
+		this.setBedLocation(new ChunkCoordinates(aetherTag.getInteger("bedX"), aetherTag.getInteger("bedY"), aetherTag.getInteger("bedZ")));
 	}
 
 	@Override
@@ -432,4 +458,13 @@ public class PlayerAether implements IPlayerAether {
 		return this.cooldownMax;
 	}
 
+	public void setBedLocation(ChunkCoordinates bedLocation)
+	{
+		this.bedLocation = bedLocation;
+	}
+
+	public ChunkCoordinates getBedLocation()
+	{
+		return bedLocation;
+	}
 }
