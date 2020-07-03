@@ -56,18 +56,4 @@ public class ItemGummySwet extends ItemAetherFood {
 		subItems.add(new ItemStack(this, 1, 0));
 		subItems.add(new ItemStack(this, 1, 1));
 	}
-
-	@Override
-	public ItemStack onItemRightClick(ItemStack stackIn, World worldIn, EntityPlayer playerIn) {
-		ItemStack heldItem = playerIn.getHeldItem();
-
-		playerIn.heal(playerIn.getMaxHealth());
-
-		if (!playerIn.capabilities.isCreativeMode) {
-			--heldItem.stackSize;
-		}
-
-		return heldItem;
-	}
-
 }
