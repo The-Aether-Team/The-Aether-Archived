@@ -1,5 +1,6 @@
 package com.legacy.aether.client.renders;
 
+import com.legacy.aether.tile_entities.TileEntitySkyrootBed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.entity.Render;
@@ -130,6 +131,7 @@ public class AetherEntityRenderingRegistry
 	{
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTreasureChest.class, new TreasureChestRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityChestMimic.class, new ChestMimicRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntitySkyrootBed.class, new SkyrootBedRenderer());
 
 		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlocksAether.treasure_chest), 0, TileEntityTreasureChest.class);
 		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(BlocksAether.chest_mimic), 0, TileEntityChestMimic.class);

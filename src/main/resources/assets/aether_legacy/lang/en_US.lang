@@ -129,6 +129,7 @@ item.dart_enchanted.name=Enchanted Dart
 item.enchanted_blueberry.name=Enchanted Berry
 item.swetty_ball.name=Swet Ball
 item.developer_stick.name=Developer Stick
+item.skyroot_bed_item.name=Skyroot Bed
 
 # Block Names
 tile.aether_portal.name=Aether Portal
@@ -218,6 +219,7 @@ tile.aerogel_double_slab.name=Aerogel Double Slab
 tile.skyroot_fence_gate.name=Skyroot Fence Gate
 tile.sun_altar.name=Sun Altar
 tile.skyroot_bookshelf.name=Skyroot Bookshelf
+tile.skyroot_bed.name=Skyroot Bed
 
 # Entities
 entity.aechor_plant.name=Aechor Plant

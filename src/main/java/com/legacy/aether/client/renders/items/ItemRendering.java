@@ -159,6 +159,8 @@ public class ItemRendering
 		
 		register(ItemsAether.developer_stick, "skyroot_stick");
 
+		register(ItemsAether.skyroot_bed_item, "skyroot_bed");
+
 		registerDefinition(ItemsAether.phoenix_bow, new PhoenixBowDefinition());
 		registerDefinition(ItemsAether.notch_hammer, new NotchHammerDefinition());
 

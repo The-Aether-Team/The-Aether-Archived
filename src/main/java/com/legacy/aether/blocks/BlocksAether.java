@@ -43,6 +43,7 @@ import com.legacy.aether.blocks.natural.ore.BlockAmbrosiumOre;
 import com.legacy.aether.blocks.natural.ore.BlockGravititeOre;
 import com.legacy.aether.blocks.natural.ore.BlockZaniteOre;
 import com.legacy.aether.blocks.portal.BlockAetherPortal;
+import com.legacy.aether.items.ItemSkyrootBed;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.block.ItemAetherSlab;
 import com.legacy.aether.items.block.ItemRarity;
@@ -114,12 +115,14 @@ public class BlocksAether
 	public static Block sun_altar;
 	
 	public static Block skyroot_bookshelf;
+
+	public static Block skyroot_bed;
 	
 	public static BlockChest dungeon_chest = Blocks.CHEST;
 
 	private static int availableId;
 
-	public static Block[] blockList = new Block[75];
+	public static Block[] blockList = new Block[76];
 
 	public static Item[] itemList = new Item[75];
 
@@ -216,6 +219,7 @@ public class BlocksAether
 		aerogel_slab = registerSlab("aerogel_slab", new BlockAerogelSlab("aerogel_slab", false, Material.IRON).setHardness(0.5F).setResistance(999F), aerogel_double_slab);
 		sun_altar = register("sun_altar", new BlockSunAltar());
 		skyroot_bookshelf = register("skyroot_bookshelf", new BlockSkyrootBookshelf());
+		skyroot_bed = registerBed("skyroot_bed", new BlockSkyrootBed());
 	}
 
 	public static Block registerSlab(String name, Block slab1, Block slab2)
@@ -261,6 +265,15 @@ public class BlocksAether
 	{
 		blockList[availableId] = block.setRegistryName(Aether.locate(name));
 		itemList[availableId] = new ItemSubtype(block).setRegistryName(Aether.locate(name));
+
+		++availableId;
+
+		return block;
+	}
+
+	public static Block registerBed(String name, Block block)
+	{
+		blockList[availableId] = block.setRegistryName(Aether.locate(name));
 
 		++availableId;
 

@@ -1,10 +1,12 @@
 package com.legacy.aether.client.renders.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -51,6 +53,7 @@ public class BlockRendering
         registerBlockWithStateMapper(BlocksAether.enchanter, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
         registerBlockWithStateMapper(BlocksAether.incubator, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
         registerBlockWithStateMapper(BlocksAether.freezer, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
+		registerBlockWithStateMapper(BlocksAether.skyroot_bed, (new AetherStateMap.Builder()).ignore(BlockBed.OCCUPIED).build());
 
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
 		register(BlocksAether.holystone_brick, "holystone_brick");
@@ -120,6 +123,8 @@ public class BlockRendering
 		register(BlocksAether.sun_altar, "sun_altar");
 		
 		register(BlocksAether.skyroot_bookshelf, "skyroot_bookshelf");
+
+		register(BlocksAether.skyroot_bed, "skyroot_bed");
 
 		for (int meta = 0; meta < EnumCloudType.values().length; ++meta)
 		{

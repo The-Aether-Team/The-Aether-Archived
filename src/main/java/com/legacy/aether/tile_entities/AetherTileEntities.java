@@ -15,6 +15,7 @@ public class AetherTileEntities
 		GameRegistry.registerTileEntity(TileEntityIncubator.class, Aether.modAddress() + "incubator");
 		GameRegistry.registerTileEntity(TileEntityTreasureChest.class, Aether.modAddress() + "treasure_chest");
 		GameRegistry.registerTileEntity(TileEntityChestMimic.class, Aether.modAddress() + "chest_mimic");
+		GameRegistry.registerTileEntity(TileEntitySkyrootBed.class, Aether.modAddress() + "skyroot_bed");
 	}
 
 }

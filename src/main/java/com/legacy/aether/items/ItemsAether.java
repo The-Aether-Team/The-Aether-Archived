@@ -114,6 +114,8 @@ public class ItemsAether
 	public static Item lore_book;
 
 	public static Item developer_stick;
+
+	public static Item skyroot_bed_item;
 	
 	public static IForgeRegistry<Item> itemRegistry;
 
@@ -264,6 +266,8 @@ public class ItemsAether
 		lore_book = register("lore_book", new ItemLoreBook());
 		
 		developer_stick = register("developer_stick", new ItemDeveloperStick());
+
+		skyroot_bed_item = register("skyroot_bed_item", new ItemSkyrootBed());
 	}
 
 	public static Item register(String name, Item item)

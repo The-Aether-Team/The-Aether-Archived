@@ -5,7 +5,9 @@ import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.networking.packets.PacketSendEternalDay;
 import com.legacy.aether.networking.packets.PacketSendShouldCycle;
 import com.legacy.aether.networking.packets.PacketSendTime;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
@@ -73,6 +75,20 @@ public class AetherWorldProvider extends WorldProvider
 	public boolean canRespawnHere()
 	{
 		return false;
+	}
+
+	@Override
+	public int getRespawnDimension(net.minecraft.entity.player.EntityPlayerMP player)
+	{
+		return (player.dimension == AetherConfig.dimension.aether_dimension_id && EntityPlayer.getBedSpawnLocation(player.world, player.getBedLocation(AetherConfig.dimension.aether_dimension_id), false) != null)
+				? AetherConfig.dimension.aether_dimension_id
+				: player.getSpawnDimension();
+	}
+
+	@Override
+	public WorldSleepResult canSleepAt(net.minecraft.entity.player.EntityPlayer player, BlockPos pos)
+	{
+		return WorldSleepResult.ALLOW;
 	}
 
 	@Override
