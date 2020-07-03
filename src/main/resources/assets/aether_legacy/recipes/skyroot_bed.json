@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "###"
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "aether_legacy:skyroot_plank"
+      }
+    ],
+    "X": [
+      {
+        "item": "minecraft:wool",
+        "data": 9
+      }
+    ]
+  },
+  "result": {
+    "item": "aether_legacy:skyroot_bed_item"
+  }
+}

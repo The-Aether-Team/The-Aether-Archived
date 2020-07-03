@@ -407,6 +407,8 @@ title.aether_legacy.sun_spirit.name=the Sun Spirit
 gui.loading.enteraether=Ascending to the Aether
 gui.loading.exitaether=Descending from the Aether
 
+gui.skyroot_bed.respawn_point=Respawn point set
+
 # Death messages
 death.attack.inebriation=%1$s was inebriated
 death.attack.inebriation_indirect=%1$s was inebriated by %2$s
