@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.entities.passive.mountable.EntityParachute;
+import com.legacy.aether.items.ItemsAether;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -124,6 +126,11 @@ public class PlayerAether implements IPlayerAether {
 
 		if (this.isInsideBlock(BlocksAether.aercloud)) {
 			this.getEntity().fallDistance = 0.0F;
+		}
+
+		if (this.getEntity().motionY < -2F)
+		{
+			this.activateParachute();
 		}
 
 		if (!this.getEntity().onGround) {
@@ -256,6 +263,38 @@ public class PlayerAether implements IPlayerAether {
 			}
 
 			this.inPortal = true;
+		}
+	}
+
+	private void activateParachute()
+	{
+		EntityParachute parachute = null;
+
+		if(this.getEntity().inventory.hasItemStack(new ItemStack(ItemsAether.cloud_parachute)))
+		{
+			parachute = new EntityParachute(this.getEntity().worldObj, this.getEntity(), false);
+			parachute.setPosition(this.getEntity().posX, this.getEntity().posY, this.getEntity().posZ);
+			this.getEntity().worldObj.spawnEntityInWorld(parachute);
+			this.getEntity().inventory.consumeInventoryItem(ItemsAether.cloud_parachute);
+		}
+		else
+		{
+			if (this.getEntity().inventory.hasItemStack(new ItemStack(ItemsAether.golden_parachute)))
+			{
+				for(int i = 0; i < this.getEntity().inventory.getSizeInventory(); i++)
+				{
+					ItemStack itemstack = this.getEntity().inventory.getStackInSlot(i);
+
+					if(itemstack != null && itemstack.getItem() == ItemsAether.golden_parachute)
+					{
+						itemstack.damageItem(1, this.getEntity());
+						parachute = new EntityParachute(this.getEntity().worldObj, this.getEntity(), true);
+						parachute.setPosition(this.getEntity().posX, this.getEntity().posY, this.getEntity().posZ);
+						this.getEntity().inventory.setInventorySlotContents(i, itemstack);
+						this.getEntity().worldObj.spawnEntityInWorld(parachute);
+					}
+				}
+			}
 		}
 	}
 
