@@ -189,7 +189,7 @@ public class BlocksAether
 		holystone_wall = register("holystone_wall", new BlockAetherWall(holystone.getDefaultState()));
 		holystone_brick_wall = register("holystone_brick_wall", new BlockAetherWall(holystone_brick.getDefaultState()));
 		mossy_holystone_wall = register("mossy_holystone_wall", new BlockAetherWall(mossy_holystone.getDefaultState()));
-		aerogel_wall = register("aerogel_wall", new BlockAerogelWall(aerogel.getDefaultState()));
+		aerogel_wall = registerRarity("aerogel_wall", new BlockAerogelWall(aerogel.getDefaultState()), ItemsAether.aether_loot);
 
 		carved_stairs = register("carved_stairs", new BlockAetherStairs(dungeon_block.getDefaultState()));
 		angelic_stairs = register("angelic_stairs", new BlockAetherStairs(dungeon_block.getDefaultState()));
@@ -198,7 +198,7 @@ public class BlocksAether
 		mossy_holystone_stairs = register("mossy_holystone_stairs", new BlockAetherStairs(mossy_holystone.getDefaultState()));
 		holystone_stairs = register("holystone_stairs", new BlockAetherStairs(holystone.getDefaultState()));
 		holystone_brick_stairs = register("holystone_brick_stairs", new BlockAetherStairs(holystone_brick.getDefaultState()));
-		aerogel_stairs = register("aerogel_stairs", new BlockAerogelStairs(aerogel.getDefaultState()));
+		aerogel_stairs = registerRarity("aerogel_stairs", new BlockAerogelStairs(aerogel.getDefaultState()), ItemsAether.aether_loot);
 
 		skyroot_double_slab = register("skyroot_double_slab", new BlockAetherSlab("skyroot_double_slab", true, Material.WOOD).setHardness(2.0F).setResistance(5.0F)).setCreativeTab(null);
 		carved_double_slab = register("carved_double_slab", new BlockAetherSlab("carved_double_slab", true, Material.ROCK).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);

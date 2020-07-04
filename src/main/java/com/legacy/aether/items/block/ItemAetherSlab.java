@@ -1,10 +1,13 @@
 package com.legacy.aether.items.block;
 
+import com.legacy.aether.blocks.BlocksAether;
+import com.legacy.aether.items.ItemsAether;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -39,6 +42,12 @@ public class ItemAetherSlab extends ItemBlock
     public String getUnlocalizedName(ItemStack stack)
     {
         return this.singleSlab.getTranslationKey(stack.getMetadata());
+    }
+
+    @Override
+    public EnumRarity getRarity(ItemStack stack)
+    {
+        return this.getBlock() == BlocksAether.aerogel_slab ? ItemsAether.aether_loot : EnumRarity.COMMON;
     }
 
     public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
