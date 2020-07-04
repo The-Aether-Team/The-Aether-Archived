@@ -2,6 +2,7 @@ package com.legacy.aether.world.gen.components;
 
 import java.util.Random;
 
+import com.legacy.aether.AetherConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -562,7 +563,7 @@ public class ComponentSilverDungeon extends AetherStructure {
 				if (random.nextBoolean())
 					return new ItemStack(ItemsAether.valkyrie_chestplate);
 		}
-		return new ItemStack(ItemsAether.golden_feather);
+		return AetherConfig.valkyrieCapeEnabled() ? new ItemStack(ItemsAether.valkyrie_cape) : new ItemStack(ItemsAether.golden_feather);
 	}
 
 }

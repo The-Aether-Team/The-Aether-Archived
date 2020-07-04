@@ -100,7 +100,7 @@ public class ItemsAether {
 
 	public static Item iron_ring, golden_ring, zanite_ring, ice_ring, iron_pendant, golden_pendant, zanite_pendant, ice_pendant;
 
-	public static Item white_cape, red_cape, blue_cape, yellow_cape, swet_cape, invisibility_cape, agility_cape;
+	public static Item white_cape, red_cape, blue_cape, yellow_cape, swet_cape, invisibility_cape, agility_cape, valkyrie_cape;
 
 	public static Item golden_feather, regeneration_stone, iron_bubble, life_shard;
 
@@ -241,6 +241,7 @@ public class ItemsAether {
 		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape").setDungeonLoot().setTextureName(Aether.find("accessories/swet_cape")));
 		invisibility_cape = register("invisibility_cape", new ItemAccessory(AccessoryType.CAPE).setDungeonLoot().setTextureName(Aether.find("accessories/invisibility_cape")));
 		agility_cape = register("agility_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("agility_cape").setDungeonLoot().setTextureName(Aether.find("accessories/agility_cape")));
+		valkyrie_cape = register("valkyrie_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("valkyrie_cape").setDungeonLoot().setTextureName(Aether.find("accessories/valkyrie_cape")));
 
 		golden_feather = register("golden_feather", new ItemAccessory(AccessoryType.MISC).setDungeonLoot().setTextureName(Aether.find("accessories/golden_feather")));
 		regeneration_stone = register("regeneration_stone", new ItemAccessory(AccessoryType.MISC).setDungeonLoot().setTextureName(Aether.find("accessories/regeneration_stone")));

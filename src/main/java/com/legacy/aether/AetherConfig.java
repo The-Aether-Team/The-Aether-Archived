@@ -15,7 +15,7 @@ public class AetherConfig {
 
 	private static boolean disable_trivia, old_mobs;
 
-	private static boolean skyrootBucketOnly;
+	private static boolean skyrootBucketOnly, valkyrie_cape;
 
 	private static boolean floating_block_collision;
 
@@ -41,6 +41,7 @@ public class AetherConfig {
 		aether_biome_id = config.get("World Identification", "Aether Biome ID", 127).getInt(127);
 
 		skyrootBucketOnly = config.get("Misc", "Activate portal with only Skyroot bucket", false).getBoolean(false);
+		valkyrie_cape = config.get("Misc", "Swaps the Golden Feather with the Valkyrie Cape in dungeon loot", false).getBoolean(false);
 		travel_dimension = config.get("Misc", "Dimension below aether", 0).getInt(0);
 		floating_block_collision = config.get("Misc", "Floating block collision", true).getBoolean(true);
 
@@ -91,6 +92,11 @@ public class AetherConfig {
 
 	public static boolean activateOnlyWithSkyroot() {
 		return AetherConfig.skyrootBucketOnly;
+	}
+
+	public static boolean valkyrieCapeEnabled()
+	{
+		return AetherConfig.valkyrie_cape;
 	}
 
 }

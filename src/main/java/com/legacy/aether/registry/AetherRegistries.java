@@ -51,6 +51,7 @@ public class AetherRegistries {
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.swet_cape, AccessoryType.CAPE));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.invisibility_cape, AccessoryType.CAPE));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.agility_cape, AccessoryType.CAPE));
+		AetherAPI.instance().register(new AetherAccessory(ItemsAether.valkyrie_cape, AccessoryType.CAPE));
 
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.golden_feather, AccessoryType.MISC));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.regeneration_stone, AccessoryType.MISC));
