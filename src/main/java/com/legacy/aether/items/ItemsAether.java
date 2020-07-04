@@ -100,7 +100,7 @@ public class ItemsAether {
 
 	public static Item iron_ring, golden_ring, zanite_ring, ice_ring, iron_pendant, golden_pendant, zanite_pendant, ice_pendant;
 
-	public static Item white_cape, swet_cape, invisibility_cape, agility_cape;
+	public static Item white_cape, red_cape, blue_cape, yellow_cape, swet_cape, invisibility_cape, agility_cape;
 
 	public static Item golden_feather, regeneration_stone, iron_bubble, life_shard;
 
@@ -234,6 +234,9 @@ public class ItemsAether {
 		zanite_pendant = register("zanite_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x711ae8).setMaxDamage(98).setTextureName(Aether.find("accessories/pendant_base")));
 		ice_pendant = register("ice_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x95e6e7).setMaxDamage(250).setTextureName(Aether.find("accessories/pendant_base")));
 
+		red_cape = register("red_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xe81111).setTextureName(Aether.find("accessories/cape_color_base")));
+		blue_cape = register("blue_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0x137fb7).setTextureName(Aether.find("accessories/cape_color_base")));
+		yellow_cape = register("yellow_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xcdcb0e).setTextureName(Aether.find("accessories/cape_color_base")));
 		white_cape = register("white_cape", new ItemAccessoryDyed(AccessoryType.CAPE).setTextureName(Aether.find("accessories/cape_color_base")));
 		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape").setDungeonLoot().setTextureName(Aether.find("accessories/swet_cape")));
 		invisibility_cape = register("invisibility_cape", new ItemAccessory(AccessoryType.CAPE).setDungeonLoot().setTextureName(Aether.find("accessories/invisibility_cape")));

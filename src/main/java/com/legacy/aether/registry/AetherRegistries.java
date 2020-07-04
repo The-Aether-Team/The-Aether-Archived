@@ -44,6 +44,9 @@ public class AetherRegistries {
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.zanite_pendant, AccessoryType.PENDANT));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.ice_pendant, AccessoryType.PENDANT));
 
+		AetherAPI.instance().register(new AetherAccessory(ItemsAether.red_cape, AccessoryType.CAPE));
+		AetherAPI.instance().register(new AetherAccessory(ItemsAether.blue_cape, AccessoryType.CAPE));
+		AetherAPI.instance().register(new AetherAccessory(ItemsAether.yellow_cape, AccessoryType.CAPE));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.white_cape, AccessoryType.CAPE));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.swet_cape, AccessoryType.CAPE));
 		AetherAPI.instance().register(new AetherAccessory(ItemsAether.invisibility_cape, AccessoryType.CAPE));
