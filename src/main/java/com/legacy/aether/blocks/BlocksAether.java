@@ -180,7 +180,7 @@ public class BlocksAether {
 		holystone_wall = register("holystone_wall", new BlockAetherWall(holystone));
 		holystone_brick_wall = register("holystone_brick_wall", new BlockAetherWall(holystone_brick));
 		mossy_holystone_wall = register("mossy_holystone_wall", new BlockAetherWall(mossy_holystone));
-		aerogel_wall = register("aerogel_wall", new BlockAetherWall(aerogel));
+		aerogel_wall = registerRarity("aerogel_wall", new BlockAetherWall(aerogel), ItemsAether.aether_loot);
 		carved_stairs = register("carved_stairs", new BlockAetherStairs(carved_stone));
 		angelic_stairs = register("angelic_stairs", new BlockAetherStairs(angelic_stone));
 		hellfire_stairs = register("hellfire_stairs", new BlockAetherStairs(hellfire_stone));
@@ -188,7 +188,7 @@ public class BlocksAether {
 		holystone_stairs = register("holystone_stairs", new BlockAetherStairs(holystone));
 		holystone_brick_stairs = register("holystone_brick_stairs", new BlockAetherStairs(holystone_brick));
 		mossy_holystone_stairs = register("mossy_holystone_stairs", new BlockAetherStairs(mossy_holystone));
-		aerogel_stairs = register("aerogel_stairs", new BlockAetherStairs(aerogel));
+		aerogel_stairs = registerRarity("aerogel_stairs", new BlockAetherStairs(aerogel), ItemsAether.aether_loot);
 		skyroot_double_slab = register("skyroot_double_slab", new BlockAetherSlab("skyroot_double_slab", true, Material.wood).setBlockTextureName(Aether.find("skyroot_planks")).setHardness(2.0F).setResistance(5.0F)).setCreativeTab(null);
 		carved_double_slab = register("carved_double_slab", new BlockAetherSlab("carved_double_slab", true, Material.rock).setBlockTextureName(Aether.find("carved_stone")).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
 		angelic_double_slab = register("angelic_double_slab", new BlockAetherSlab("angelic_double_slab", true, Material.rock).setBlockTextureName(Aether.find("angelic_stone")).setHardness(2.0F).setResistance(10.0F)).setCreativeTab(null);
