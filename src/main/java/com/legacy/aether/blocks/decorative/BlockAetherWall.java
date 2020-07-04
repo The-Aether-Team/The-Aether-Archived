@@ -2,6 +2,7 @@ package com.legacy.aether.blocks.decorative;
 
 import java.util.List;
 
+import com.legacy.aether.blocks.BlocksAether;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
 import net.minecraft.creativetab.CreativeTabs;
@@ -38,5 +39,11 @@ public class BlockAetherWall extends BlockWall {
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
 		return this.block.getBlockTextureFromSide(p_149691_1_);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return this == BlocksAether.aerogel_wall ? 1 : 0;
 	}
 }

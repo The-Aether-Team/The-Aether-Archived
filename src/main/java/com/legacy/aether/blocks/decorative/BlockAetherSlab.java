@@ -2,6 +2,8 @@ package com.legacy.aether.blocks.decorative;
 
 import java.util.Random;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -62,4 +64,9 @@ public class BlockAetherSlab extends BlockSlab {
 		return this.name;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderBlockPass() {
+		return this == BlocksAether.aerogel_slab || this == BlocksAether.aerogel_double_slab ? 1 : 0;
+	}
 }
