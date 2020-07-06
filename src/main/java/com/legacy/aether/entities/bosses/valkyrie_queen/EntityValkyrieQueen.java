@@ -14,6 +14,7 @@ import com.legacy.aether.entities.ai.EntityAIAttackContinuously;
 import com.legacy.aether.entities.ai.valkyrie_queen.ValkyrieQueenAIWander;
 import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
 import com.legacy.aether.entities.util.AetherNameGen;
+import com.legacy.aether.entities.util.EntityBossMob;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.AetherLootTables;
 
@@ -52,7 +53,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityValkyrieQueen extends EntityMob implements IAetherBoss
+public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 {
 
 	public static final DataParameter<String> VALKYRIE_NAME = EntityDataManager.<String> createKey(EntityValkyrieQueen.class, DataSerializers.STRING);
