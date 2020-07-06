@@ -1,12 +1,16 @@
 package com.legacy.aether.client.audio;
 
+import com.legacy.aether.client.gui.menu.AetherMainMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.*;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.fml.client.GuiModList;
+import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -27,6 +31,7 @@ public class AetherMusicHandler
 	{
 		TickEvent.Phase phase = event.phase;
 		TickEvent.Type type = event.type;
+		GuiScreen screen = Minecraft.getMinecraft().currentScreen;
 
 		if (phase == TickEvent.Phase.END)
 		{
@@ -46,12 +51,30 @@ public class AetherMusicHandler
 		{
 			musicTicker.trackRecord(null);
 		}
+
+		if (AetherConfig.visual_options.menu_enabled && Minecraft.getMinecraft().world == null && !(screen instanceof GuiScreenWorking))
+		{
+			if (!musicTicker.playingMenuMusic())
+			{
+				musicTicker.playMenuMusic();
+			}
+
+			if (musicTicker.playingMinecraftMusic())
+			{
+				musicTicker.stopMinecraftMusic();
+			}
+		}
+		else
+		{
+			musicTicker.stopMenuMusic();
+		}
 	}
 
 	@SubscribeEvent
 	public void onMusicControl(PlaySoundEvent event)
 	{
 		ISound sound = event.getResultSound();
+		GuiScreen screen = Minecraft.getMinecraft().currentScreen;
 
 		if (sound == null)
 		{
@@ -69,6 +92,16 @@ public class AetherMusicHandler
 					event.setResultSound(null);
 
 					return;
+				}
+			}
+
+			if (sound.getSoundLocation().toString().equals("minecraft:music.menu"))
+			{
+				musicTicker.trackMinecraftMusic(sound);
+
+				if (AetherConfig.visual_options.menu_enabled && Minecraft.getMinecraft().world == null && !(screen instanceof GuiScreenWorking))
+				{
+					event.setResultSound(null);
 				}
 			}
 		}

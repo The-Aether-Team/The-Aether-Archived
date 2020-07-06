@@ -19,7 +19,7 @@ public class AetherMusicTicker implements ITickable
 {
     private final Random rand = new Random();
     private final Minecraft mc;
-    private ISound currentMusic, currentRecord;
+    private ISound currentMusic, currentRecord, menuMusic, minecraftMusic;
     private int timeUntilNextMusic = 100;
 
     public AetherMusicTicker(Minecraft mcIn)
@@ -68,6 +68,16 @@ public class AetherMusicTicker implements ITickable
         return this.currentRecord != null;
     }
 
+    public boolean playingMenuMusic()
+    {
+        return this.menuMusic != null;
+    }
+
+    public boolean playingMinecraftMusic()
+    {
+        return this.minecraftMusic != null;
+    }
+
     public ISound getRecord()
     {
         return this.currentRecord;
@@ -92,6 +102,17 @@ public class AetherMusicTicker implements ITickable
         this.currentRecord = record;
     }
 
+    public void trackMinecraftMusic(ISound record)
+    {
+        this.minecraftMusic = record;
+    }
+
+    public void playMenuMusic()
+    {
+        this.menuMusic = PositionedSoundRecord.getMusicRecord(TrackType.TRACK_MENU.getMusicLocation());
+        this.mc.getSoundHandler().playSound(this.menuMusic);
+    }
+
     public void stopMusic()
     {
         if (this.currentMusic != null)
@@ -102,13 +123,32 @@ public class AetherMusicTicker implements ITickable
         }
     }
 
+    public void stopMenuMusic()
+    {
+        if (this.menuMusic != null)
+        {
+            this.mc.getSoundHandler().stopSound(this.menuMusic);
+            this.menuMusic = null;
+        }
+    }
+
+    public void stopMinecraftMusic()
+    {
+        if (this.minecraftMusic != null)
+        {
+            this.mc.getSoundHandler().stopSound(this.minecraftMusic);
+            this.minecraftMusic = null;
+        }
+    }
+
     @SideOnly(Side.CLIENT)
     public static enum TrackType
     {
     	TRACK_ONE(SoundsAether.aether1, 1200, 1500),
     	TRACK_TWO(SoundsAether.aether2, 1200, 1500),
     	TRACK_THREE(SoundsAether.aether3, 1200, 1500),
-    	TRACK_FOUR(SoundsAether.aether4, 1200, 1500);
+    	TRACK_FOUR(SoundsAether.aether4, 1200, 1500),
+        TRACK_MENU(SoundsAether.aether_menu, 1200, 1500);
 
         private final SoundEvent musicLocation;
         private final int minDelay;
