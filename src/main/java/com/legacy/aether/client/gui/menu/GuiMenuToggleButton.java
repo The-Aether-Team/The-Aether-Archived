@@ -54,8 +54,6 @@ public class GuiMenuToggleButton extends GuiButton
         if (AetherConfig.visual_options.menu_enabled)
         {
             Minecraft.getMinecraft().displayGuiScreen(new AetherMainMenu());
-            //Minecraft.getMinecraft().currentScreen.
         }
-        //System.out.println(AetherConfig.visual_options.menu_enabled);
     }
 }
