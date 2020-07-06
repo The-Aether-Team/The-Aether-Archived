@@ -6,8 +6,10 @@ import com.legacy.aether.AetherConfig;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.client.gui.AetherLoadingScreen;
+import com.legacy.aether.client.gui.menu.AetherMainMenu;
 import com.legacy.aether.client.gui.GuiEnterAether;
 import com.legacy.aether.client.gui.button.GuiAccessoryButton;
+import com.legacy.aether.client.gui.menu.GuiMenuToggleButton;
 import com.legacy.aether.containers.inventory.InventoryAccessories;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherGuiHandler;
@@ -21,6 +23,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDownloadTerrain;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
@@ -44,11 +47,11 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-public class AetherClientEvents 
+public class AetherClientEvents
 {
 
 	private final Minecraft mc = FMLClientHandler.instance().getClient();
-	
+
 	private static boolean wasInAether = false;
 
 	@SubscribeEvent
@@ -71,15 +74,15 @@ public class AetherClientEvents
 				}
 			}
 		}
-		
+
 		if (mc.player != null)
 		{
 			if (AetherAPI.getInstance().get(mc.player).inPortalBlock())
 			{
 				if (this.mc.currentScreen instanceof GuiContainer)
-	            {
-	                this.mc.player.closeScreen();
-	            }
+				{
+					this.mc.player.closeScreen();
+				}
 			}
 
 			if (AetherAPI.getInstance().get(mc.player).shouldPortalSound())
@@ -88,7 +91,7 @@ public class AetherClientEvents
 				AetherAPI.getInstance().get(mc.player).shouldPortalSound(false);
 			}
 		}
-			
+
 	}
 
 	@SubscribeEvent
@@ -118,27 +121,29 @@ public class AetherClientEvents
 
 		if (item == ItemsAether.phoenix_bow)
 		{
-	        int i = player.getItemInUseMaxCount();
-	        float f1 = (float)i / 20.0F;
+			int i = player.getItemInUseMaxCount();
+			float f1 = (float)i / 20.0F;
 
-	        if (f1 > 1.0F)
-	        {
-	            f1 = 1.0F;
-	        }
-	        else
-	        {
-	            f1 = f1 * f1;
-	        }
+			if (f1 > 1.0F)
+			{
+				f1 = 1.0F;
+			}
+			else
+			{
+				f1 = f1 * f1;
+			}
 
-	        float original = event.getFov();
+			float original = event.getFov();
 
-	        original *= 1.0F - f1 * 0.15F;
+			original *= 1.0F - f1 * 0.15F;
 
-	        event.setNewfov(original);
+			event.setNewfov(original);
 		}
 	}
 
 	private static final GuiAccessoryButton ACCESSORY_BUTTON = new GuiAccessoryButton(0, 0);
+
+	private static final GuiMenuToggleButton MAIN_MENU_BUTTON = new GuiMenuToggleButton(0, 0);
 
 	private static int previousSelectedTabIndex = -1;
 
@@ -169,27 +174,46 @@ public class AetherClientEvents
 				event.getButtonList().add(ACCESSORY_BUTTON.setPosition(guiLeft + 26, guiTop + 65));
 			}
 		}
+
+		if (AetherConfig.visual_options.menu_button && event.getGui() instanceof GuiMainMenu)
+		{
+			event.getButtonList().add(MAIN_MENU_BUTTON.setPosition(event.getGui().width - 24, 4));
+		}
+
+		if (AetherConfig.visual_options.menu_enabled && event.getGui().getClass() == GuiMainMenu.class)
+		{
+			Minecraft.getMinecraft().displayGuiScreen(new AetherMainMenu());
+		}
 	}
-	
+
 	@SubscribeEvent
 	public void onOpenGui(GuiOpenEvent event)
 	{
-		if (mc.player != null && event.getGui() instanceof GuiDownloadTerrain) 
+		if (mc.player != null && event.getGui() instanceof GuiDownloadTerrain)
 		{
 			GuiEnterAether enterAether = new GuiEnterAether(true);
 			GuiEnterAether exitAether = new GuiEnterAether(false);
-			
+
 			if (mc.player.dimension == AetherConfig.dimension.aether_dimension_id)
-			{				
+			{
 				event.setGui(enterAether);
 				wasInAether = true;
 			}
-			
+
 			else if (wasInAether)
 			{
 				event.setGui(exitAether);
 				wasInAether = false;
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onDrawGui(GuiScreenEvent.DrawScreenEvent.Pre event)
+	{
+		if (!AetherConfig.visual_options.menu_enabled && event.getGui().getClass() == AetherMainMenu.class)
+		{
+			Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
 		}
 	}
 
@@ -260,5 +284,4 @@ public class AetherClientEvents
 			event.getMap().registerSprite(new ResourceLocation("aether_legacy", "items/slots/" + InventoryAccessories.EMPTY_SLOT_NAMES[i]));
 		}
 	}
-
 }

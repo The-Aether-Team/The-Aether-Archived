@@ -69,11 +69,12 @@ public class AetherConfig
 		@Config.Comment("Disables the random trivia/tips you see during loading screens")
 		@Config.RequiresMcRestart
 		public boolean trivia_disabled = false;
-		
-		/*
-		 * @Config.Comment("Enables the Aether Menu")
-		 * public boolean menu_enabled = false;
-		 */
+
+		@Config.Comment("Enables the Aether Menu")
+		public boolean menu_enabled = false;
+
+		@Config.Comment("Enables the Aether Menu toggle button")
+		public boolean menu_button = true;
 	}
 	
 	public static final GameplayChanges gameplay_changes = new GameplayChanges();
