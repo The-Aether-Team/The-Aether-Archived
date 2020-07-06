@@ -7,6 +7,8 @@ import net.minecraftforge.common.config.Configuration;
 
 public class AetherConfig {
 
+	public static Configuration config;
+
 	private static int max_life_shards;
 
 	private static boolean christmas_content, tallgrass;
@@ -21,6 +23,8 @@ public class AetherConfig {
 
 	private static int travel_dimension;
 
+	private static boolean menu_enabled, menu_button;
+
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
 
@@ -30,7 +34,7 @@ public class AetherConfig {
 
 		}
 
-		Configuration config = new Configuration(newFile);
+		config = new Configuration(newFile);
 
 		config.load();
 
@@ -50,6 +54,9 @@ public class AetherConfig {
 		old_mobs = config.get("Misc", "Enable Legacy Visuals", false).getBoolean(false);
 
 		max_life_shards = config.get("Gameplay", "Max Life Shards", 10).getInt(10);
+
+		menu_enabled = config.get("Misc", "Enables the Aether Menu", false).getBoolean(false);
+		menu_button = config.get("Misc", "Enables the Aether Menu toggle button", true).getBoolean(true);
 
 		config.save();
 	}
@@ -99,4 +106,13 @@ public class AetherConfig {
 		return AetherConfig.valkyrie_cape;
 	}
 
+	public static boolean menuEnabled()
+	{
+		return AetherConfig.menu_enabled;
+	}
+
+	public static boolean menuButtonEnabled()
+	{
+		return AetherConfig.menu_button;
+	}
 }

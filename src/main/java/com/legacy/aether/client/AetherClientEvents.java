@@ -3,10 +3,13 @@ package com.legacy.aether.client;
 import java.util.List;
 
 import com.legacy.aether.client.gui.GuiEnterAether;
+import com.legacy.aether.client.gui.menu.AetherMainMenu;
+import com.legacy.aether.client.gui.menu.GuiMenuToggleButton;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiDownloadTerrain;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
@@ -188,6 +191,8 @@ public class AetherClientEvents {
 
 	private static final GuiAccessoryButton ACCESSORY_BUTTON = new GuiAccessoryButton(0, 0);
 
+	private static final GuiMenuToggleButton MAIN_MENU_BUTTON = new GuiMenuToggleButton(0, 0);
+
 	private static int previousSelectedTabIndex = -1;
 
 	@SubscribeEvent
@@ -211,6 +216,16 @@ public class AetherClientEvents {
 				event.buttonList.add(ACCESSORY_BUTTON.setPosition(guiLeft + 26, guiTop + 65));
 			}
 		}
+
+		if (AetherConfig.config.get("Misc", "Enables the Aether Menu toggle button", false).getBoolean() && event.gui instanceof GuiMainMenu)
+		{
+			event.buttonList.add(MAIN_MENU_BUTTON.setPosition(event.gui.width - 24, 4));
+		}
+
+		if (AetherConfig.config.get("Misc", "Enables the Aether Menu", false).getBoolean() && event.gui.getClass() == GuiMainMenu.class)
+		{
+			Minecraft.getMinecraft().displayGuiScreen(new AetherMainMenu());
+		}
 	}
 
 	@SubscribeEvent
@@ -232,6 +247,15 @@ public class AetherClientEvents {
 
 				previousSelectedTabIndex = guiScreen.func_147056_g();
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onDrawGui(GuiScreenEvent.DrawScreenEvent.Pre event)
+	{
+		if (!AetherConfig.config.get("Misc", "Enables the Aether Menu", false).getBoolean() && event.gui.getClass() == AetherMainMenu.class)
+		{
+			Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
 		}
 	}
 
