@@ -21,7 +21,7 @@ public class AetherMusicTicker implements IUpdatePlayerListBox {
 
 	private final Random rand = new Random();
 	private final Minecraft mc;
-	private ISound currentMusic, currentRecord;
+	private ISound currentMusic, currentRecord, menuMusic, minecraftMusic;
 	private int timeUntilNextMusic = 100;
 
 	public AetherMusicTicker(Minecraft mcIn) {
@@ -69,6 +69,16 @@ public class AetherMusicTicker implements IUpdatePlayerListBox {
 		return this.currentRecord != null;
 	}
 
+	public boolean playingMenuMusic()
+	{
+		return this.menuMusic != null;
+	}
+
+	public boolean playingMinecraftMusic()
+	{
+		return this.minecraftMusic != null;
+	}
+
 	public ISound getRecord()
 	{
 		return this.currentRecord;
@@ -91,6 +101,17 @@ public class AetherMusicTicker implements IUpdatePlayerListBox {
 		this.currentRecord = record;
 	}
 
+	public void trackMinecraftMusic(ISound record)
+	{
+		this.minecraftMusic = record;
+	}
+
+	public void playMenuMusic()
+	{
+		this.menuMusic = PositionedSoundRecord.func_147673_a(TrackType.TRACK_MENU.getMusicLocation());
+		this.mc.getSoundHandler().playSound(this.menuMusic);
+	}
+
 	public void stopMusic() {
 		if (this.currentMusic != null) {
 			this.mc.getSoundHandler().stopSound(this.currentMusic);
@@ -99,12 +120,31 @@ public class AetherMusicTicker implements IUpdatePlayerListBox {
 		}
 	}
 
+	public void stopMenuMusic()
+	{
+		if (this.menuMusic != null)
+		{
+			this.mc.getSoundHandler().stopSound(this.menuMusic);
+			this.menuMusic = null;
+		}
+	}
+
+	public void stopMinecraftMusic()
+	{
+		if (this.minecraftMusic != null)
+		{
+			this.mc.getSoundHandler().stopSound(this.minecraftMusic);
+			this.minecraftMusic = null;
+		}
+	}
+
 	@SideOnly(Side.CLIENT)
 	public static enum TrackType {
 		TRACK_ONE(Aether.locate("music.aether1"), 1200, 1500),
 		TRACK_TWO(Aether.locate("music.aether2"), 1200, 1500),
 		TRACK_THREE(Aether.locate("music.aether3"), 1200, 1500),
-		TRACK_FOUR(Aether.locate("music.aether4"), 1200, 1500);
+		TRACK_FOUR(Aether.locate("music.aether4"), 1200, 1500),
+		TRACK_MENU(Aether.locate("music.menu"), 1200, 1500);
 
 		private final ResourceLocation musicLocation;
 		private final int minDelay;

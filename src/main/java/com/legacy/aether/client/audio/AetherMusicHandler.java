@@ -5,6 +5,8 @@ import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessor;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiScreenWorking;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.sound.PlaySoundEvent17;
 
@@ -27,6 +29,7 @@ public class AetherMusicHandler {
 	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception {
 		TickEvent.Phase phase = event.phase;
 		TickEvent.Type type = event.type;
+		GuiScreen screen = Minecraft.getMinecraft().currentScreen;
 
 		if (phase == TickEvent.Phase.END) {
 			if (type.equals(TickEvent.Type.CLIENT)) {
@@ -42,11 +45,29 @@ public class AetherMusicHandler {
 		{
 			musicTicker.trackRecord(null);
 		}
+
+		if (AetherConfig.config.get("Misc", "Enables the Aether Menu", false).getBoolean() && Minecraft.getMinecraft().theWorld == null && !(screen instanceof GuiScreenWorking))
+		{
+			if (!musicTicker.playingMenuMusic())
+			{
+				musicTicker.playMenuMusic();
+			}
+
+			if (musicTicker.playingMinecraftMusic())
+			{
+				musicTicker.stopMinecraftMusic();
+			}
+		}
+		else
+		{
+			musicTicker.stopMenuMusic();
+		}
 	}
 
 	@SubscribeEvent
 	public void onMusicControl(PlaySoundEvent17 event) {
 		ISound sound = event.result;
+		GuiScreen screen = Minecraft.getMinecraft().currentScreen;
 
 		if (sound == null) {
 			return;
@@ -60,6 +81,15 @@ public class AetherMusicHandler {
 					event.result = null;
 
 					return;
+				}
+			}
+			if (sound.getPositionedSoundLocation().toString().equals("minecraft:music.menu"))
+			{
+				musicTicker.trackMinecraftMusic(sound);
+
+				if (AetherConfig.config.get("Misc", "Enables the Aether Menu", false).getBoolean() && Minecraft.getMinecraft().theWorld == null && !(screen instanceof GuiScreenWorking))
+				{
+					event.result = null;
 				}
 			}
 		} else if (category == SoundCategory.RECORDS && !(event.name.contains("note"))) {
