@@ -487,7 +487,25 @@ public class AetherMainMenu extends GuiMainMenu
 
         for (int j = 0; j < this.buttonList.size(); ++j)
         {
-            ((GuiButton)this.buttonList.get(j)).drawButton(this.mc, p_73863_1_, p_73863_2_);
+            ((GuiButton) this.buttonList.get(j)).drawButton(this.mc, p_73863_1_, p_73863_2_);
+
+            if ((this.buttonList.get(j)).getClass() == AetherMainMenuButton.class)
+            {
+                if (((GuiButton) this.buttonList.get(j)).func_146115_a())
+                {
+                    if (((GuiButton) this.buttonList.get(j)).xPosition < 45)
+                    {
+                        ((GuiButton) this.buttonList.get(j)).xPosition = ((GuiButton) this.buttonList.get(j)).xPosition + 4;
+                    }
+                }
+                else
+                {
+                    if (((GuiButton) this.buttonList.get(j)).xPosition > 30)
+                    {
+                        ((GuiButton) this.buttonList.get(j)).xPosition = ((GuiButton) this.buttonList.get(j)).xPosition - 4;
+                    }
+                }
+            }
         }
 
         for (int j = 0; j < this.labelList.size(); ++j)
