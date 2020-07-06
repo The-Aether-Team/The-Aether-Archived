@@ -2,6 +2,7 @@ package com.legacy.aether.entities.bosses.valkyrie_queen;
 
 import java.util.List;
 
+import com.legacy.aether.entities.util.EntityBossMob;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -41,7 +42,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityValkyrieQueen extends EntityAetherMob implements IAetherBoss {
+public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
 
     private EntityAIAttackContinuously enhancedCombat = new EntityAIAttackContinuously(this, 0.65D);
 
