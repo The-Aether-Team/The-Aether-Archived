@@ -73,7 +73,7 @@ public class MapGenGoldenDungeon extends MapGenStructure
         int j = chunkZ >> 4;
         this.rand.setSeed((long)(i ^ j << 4) ^ this.world.getSeed());
 
-        if (this.rand.nextInt(6) != 0)
+        if (this.rand.nextInt(250) > 5)
         {
             return false;
         }
@@ -121,6 +121,8 @@ public class MapGenGoldenDungeon extends MapGenStructure
             random.setSeed(k ^ l ^ worldIn.getSeed());
 
             ComponentGoldenIsland dungeon = new ComponentGoldenIsland((chunkX << 4) + 2, (chunkZ << 4) + 2);
+
+            System.out.println("Generated");
 
             this.dungeonDirection = random.nextInt(4);
             this.stubIslandCount = 8 + random.nextInt(5);

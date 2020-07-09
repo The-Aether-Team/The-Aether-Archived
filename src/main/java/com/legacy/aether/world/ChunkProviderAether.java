@@ -355,11 +355,15 @@ public class ChunkProviderAether implements IChunkGenerator
         this.largeColdAercloudStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
         this.silverDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
-        this.goldenDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
+
+        if (!this.isInsideStructure(worldObj, "SilverDungeon", pos) && this.getNearestStructurePos(worldObj, "SilverDungeon", pos, false) != pos)
+        {
+            this.goldenDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
+        }
 
         biome.decorate(this.worldObj, this.rand, pos);
 
-        if (this.rand.nextInt(1) == 0)
+        if (this.rand.nextInt(8) == 0)
         {
             BlockPos dungeonPos = pos.add(0, this.rand.nextInt(96) + 24, 0);
 
