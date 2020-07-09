@@ -23,7 +23,7 @@ public class AetherConfig {
 
 	private static int travel_dimension;
 
-	private static boolean menu_enabled, menu_button;
+	private static boolean menu_enabled, menu_button, install_resourcepack;
 
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
@@ -57,6 +57,8 @@ public class AetherConfig {
 
 		menu_enabled = config.get("Misc", "Enables the Aether Menu", false).getBoolean(false);
 		menu_button = config.get("Misc", "Enables the Aether Menu toggle button", true).getBoolean(true);
+
+		install_resourcepack = config.get("Misc", "Determines whether the Aether b1.7.3 resource pack should be generated.", true).getBoolean(true);
 
 		config.save();
 	}
@@ -114,5 +116,10 @@ public class AetherConfig {
 	public static boolean menuButtonEnabled()
 	{
 		return AetherConfig.menu_button;
+	}
+
+	public static boolean installResourcepack()
+	{
+		return AetherConfig.install_resourcepack;
 	}
 }
