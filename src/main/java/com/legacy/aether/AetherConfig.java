@@ -75,6 +75,9 @@ public class AetherConfig
 
 		@Config.Comment("Enables the Aether Menu toggle button")
 		public boolean menu_button = true;
+
+		@Config.Comment("Determines whether the Aether b1.7.3 resource pack should be generated.")
+		public boolean install_resourcepack = true;
 	}
 	
 	public static final GameplayChanges gameplay_changes = new GameplayChanges();

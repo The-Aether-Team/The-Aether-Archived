@@ -437,6 +437,7 @@ aether_legacy.general.visual_options.trivia_disabled=Disable Aether Trivia
 aether_legacy.general.visual_options.updated_aercloud_colors=Updated Aercloud Colors
 aether_legacy.general.visual_options.menu_enabled=Aether Menu
 aether_legacy.general.visual_options.menu_button=Aether Menu Button
+aether_legacy.general.visual_options.install_resourcepack=Install Resource Pack
 
 aether_legacy.general.world_gen=World Generation Options
 aether_legacy.general.world_gen.tooltip=These options affect world generation.
