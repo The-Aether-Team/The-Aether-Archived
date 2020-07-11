@@ -409,6 +409,9 @@ gui.loading.exitaether=Descending from the Aether
 
 gui.skyroot_bed.respawn_point=Respawn point set
 
+gui.button.halo=Halo:
+gui.button.glow=Developer Glow:
+
 # Death messages
 death.attack.inebriation=%1$s was inebriated
 death.attack.inebriation_indirect=%1$s was inebriated by %2$s

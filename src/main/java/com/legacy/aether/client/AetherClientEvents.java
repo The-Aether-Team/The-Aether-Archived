@@ -6,6 +6,9 @@ import com.legacy.aether.AetherConfig;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.client.gui.AetherLoadingScreen;
+import com.legacy.aether.client.gui.button.GuiButtonPerks;
+import com.legacy.aether.client.gui.button.GuiGlowButton;
+import com.legacy.aether.client.gui.button.GuiHaloButton;
 import com.legacy.aether.client.gui.menu.AetherMainMenu;
 import com.legacy.aether.client.gui.GuiEnterAether;
 import com.legacy.aether.client.gui.button.GuiAccessoryButton;
@@ -15,16 +18,17 @@ import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.networking.AetherNetworkingManager;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
+import com.legacy.aether.networking.packets.PacketPerkChanged;
 import com.legacy.aether.networking.packets.PacketSendJump;
+import com.legacy.aether.player.PlayerAether;
+import com.legacy.aether.player.perks.AetherRankings;
+import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import com.legacy.aether.universal.fastcrafting.FastCraftingUtil;
 import com.legacy.aether.universal.pixelmon.PixelmonUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -184,6 +188,32 @@ public class AetherClientEvents
 		{
 			Minecraft.getMinecraft().displayGuiScreen(new AetherMainMenu());
 		}
+
+		if (event.getGui().getClass() == GuiCustomizeSkin.class)
+		{
+			if (Minecraft.getMinecraft().player != null)
+			{
+				if (AetherRankings.isRankedPlayer(Minecraft.getMinecraft().player.getUniqueID()))
+				{
+					for (GuiButton button : event.getButtonList())
+					{
+						if (button.id == 200)
+						{
+							button.y = button.y + 24;
+						}
+					}
+
+					int i = 8;
+					event.getButtonList().add(new GuiHaloButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
+
+					if (AetherRankings.isDeveloper(Minecraft.getMinecraft().player.getUniqueID()))
+					{
+						i = 9;
+						event.getButtonList().add(new GuiGlowButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
+					}
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -252,6 +282,26 @@ public class AetherClientEvents
 		if ((clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz) || PixelmonUtil.isOverridenInventoryGUI(clazz) || PixelmonUtil.isOverridenCreativeGUI(clazz) || clazz == GuiContainerCreative.class) && event.getButton().id == 18067)
 		{
 			AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
+		}
+
+		if (event.getButton().getClass() == GuiHaloButton.class)
+		{
+			PlayerAether player = (PlayerAether) AetherAPI.getInstance().get(Minecraft.getMinecraft().player);
+
+			boolean enableHalo = !player.shouldRenderHalo;
+
+			player.shouldRenderHalo = enableHalo;
+			AetherNetworkingManager.sendToServer(new PacketPerkChanged(player.getEntity().getEntityId(), EnumAetherPerkType.Halo, player.shouldRenderHalo));
+		}
+
+		if (event.getButton().getClass() == GuiGlowButton.class)
+		{
+			PlayerAether player = (PlayerAether) AetherAPI.getInstance().get(Minecraft.getMinecraft().player);
+
+			boolean enableGlow = !player.shouldRenderGlow;
+
+			player.shouldRenderGlow = enableGlow;
+			AetherNetworkingManager.sendToServer(new PacketPerkChanged(player.getEntity().getEntityId(), EnumAetherPerkType.Glow, player.shouldRenderGlow));
 		}
 	}
 

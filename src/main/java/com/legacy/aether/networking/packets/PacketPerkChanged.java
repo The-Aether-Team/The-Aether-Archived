@@ -121,7 +121,25 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged>
 	{
 		if (player != null && player.world != null && !player.world.isRemote)
 		{
-			AetherNetworkingManager.sendToAll(message);
+			EntityPlayer parent = (EntityPlayer) player.world.getEntityByID(message.entityID);
+
+			if (parent != null)
+			{
+				IPlayerAether instance = AetherAPI.getInstance().get(parent);
+
+				if (message.perkType == EnumAetherPerkType.Halo)
+				{
+					((PlayerAether) instance).shouldRenderHalo = message.renderHalo;
+				}
+				else if (message.perkType == EnumAetherPerkType.Moa)
+				{
+					((PlayerAether) instance).donatorMoaSkin = message.moaSkin;
+				}
+				else if (message.perkType == EnumAetherPerkType.Glow)
+				{
+					((PlayerAether) instance).shouldRenderGlow = message.renderGlow;
+				}
+			}
 		}
 	}
 

@@ -5,7 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.networking.packets.PacketPerkChanged;
+import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -80,7 +84,7 @@ public class PlayerAether implements IPlayerAether
 
 	private int cooldown, cooldownMax;
 
-	public boolean shouldRenderHalo = true, shouldRenderGlow = false;
+	public boolean shouldRenderHalo, shouldRenderGlow;
 
 	public boolean seenSpiritDialog = false;
 	
@@ -94,6 +98,9 @@ public class PlayerAether implements IPlayerAether
 	{
 		this.thePlayer = player;
 
+		this.shouldRenderHalo = true;
+		this.shouldRenderGlow = false;
+
 		this.donatorMoaSkin = new DonatorMoaSkin();
 		this.poison = new AetherPoisonMovement(player);
 		this.accessories = new InventoryAccessories(player);
@@ -104,6 +111,12 @@ public class PlayerAether implements IPlayerAether
 
 	public void onUpdate()
 	{
+		if (!this.thePlayer.world.isRemote)
+		{
+			AetherNetworkingManager.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
+			AetherNetworkingManager.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Glow, this.shouldRenderGlow));
+		}
+
 		if (this.inPortal && this.thePlayer.world.isRemote)
 		{
 			if (this.portalAnimTime == 0.0F)
@@ -288,7 +301,7 @@ public class PlayerAether implements IPlayerAether
 		{
 			output.setBoolean("halo", this.shouldRenderHalo);
 		}
-		
+
 		if (AetherRankings.isDeveloper(this.thePlayer.getUniqueID()))
 		{
 			output.setBoolean("glow", this.shouldRenderGlow);
@@ -690,5 +703,4 @@ public class PlayerAether implements IPlayerAether
 	{
 		return this.inPortal;
 	}
-
 }

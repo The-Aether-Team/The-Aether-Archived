@@ -80,9 +80,15 @@ public class AetherWorldProvider extends WorldProvider
 	@Override
 	public int getRespawnDimension(net.minecraft.entity.player.EntityPlayerMP player)
 	{
-		return (player.dimension == AetherConfig.dimension.aether_dimension_id && EntityPlayer.getBedSpawnLocation(player.world, player.getBedLocation(AetherConfig.dimension.aether_dimension_id), false) != null)
-				? AetherConfig.dimension.aether_dimension_id
-				: player.getSpawnDimension();
+		try
+		{
+			if (player.dimension == AetherConfig.dimension.aether_dimension_id && EntityPlayer.getBedSpawnLocation(player.world, player.getBedLocation(AetherConfig.dimension.aether_dimension_id), false) != null)
+			{
+				return AetherConfig.dimension.aether_dimension_id;
+			}
+		}
+		catch (NullPointerException ignore) { }
+		return 0;
 	}
 
 	@Override
