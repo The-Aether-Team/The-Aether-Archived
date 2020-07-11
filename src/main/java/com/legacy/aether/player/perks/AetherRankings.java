@@ -19,6 +19,7 @@ public class AetherRankings
 		addGGRank("58a5d694-a8a6-4605-ab33-d6904107ad5f"); // bconlon
 		addGGRank("353a859b-ba16-4e6a-8f63-9a8c79ab0071"); // quek_guy
 		addGGRank("c3e6871e-8e60-490a-8a8d-2bbe35ad1604"); // Raptor__
+		addGGRank("d475af59-d73c-42be-90ed-f1a78f10d452"); // bumble_dani
 		addGGRank("78c7f290-62aa-4afa-9d9a-f8e6b2f85206"); // NAPPUS
 		
 		//Retired Gilded Games
