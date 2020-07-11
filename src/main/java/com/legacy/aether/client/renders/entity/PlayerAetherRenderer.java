@@ -54,7 +54,7 @@ public class PlayerAetherRenderer {
 
         this.mc = Minecraft.getMinecraft();
         this.modelHalo = new ModelHalo();
-        this.modelGlow = new ModelBiped(0.005F);
+        this.modelGlow = new ModelBiped(0.7F);
         this.modelMisc = new ModelBiped(1.0F);
         this.modelWings = new ModelAetherWings(1.0F);
     }
@@ -347,7 +347,7 @@ public class PlayerAetherRenderer {
             }
         }
 
-        if (AetherRankings.isRankedPlayer(player.getUniqueID()) && PlayerAether.get(player).shouldRenderHalo) {
+        if (AetherRankings.isRankedPlayer(player.getUniqueID()) && PlayerAether.get(player).shouldRenderHalo && !player.isInvisible()) {
             float f9 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * partialTicks - (player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * partialTicks);
 
             GL11.glPushMatrix();
@@ -364,7 +364,7 @@ public class PlayerAetherRenderer {
             GL11.glPopMatrix();
         }
 
-        if (player.getUniqueID().toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837")) {
+        if (player.getUniqueID().toString().equals("cf51ef47-04a8-439a-aa41-47d871b0b837") || AetherRankings.isDeveloper(player.getUniqueID()) && playerAether.shouldRenderGlow && !player.isInvisible()) {
             this.mc.getTextureManager().bindTexture(((AbstractClientPlayer) player).getLocationSkin());
 
             GL11.glPushMatrix();

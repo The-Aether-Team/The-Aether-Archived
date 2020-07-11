@@ -414,3 +414,8 @@ gui.treasure_chest.gold=Gold Treasure Chest
 gui.treasure_chest.platinum=Platinum Treasure Chest
 
 gui.skyroot_bed.respawn_point=Respawn point set
+
+gui.options.perk_customization=Perk Customization...
+gui.options.perk_customization.title=Perk Customization
+gui.button.halo=Halo:
+gui.button.glow=Developer Glow:

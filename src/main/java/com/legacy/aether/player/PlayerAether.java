@@ -7,6 +7,10 @@ import java.util.UUID;
 import com.legacy.aether.Aether;
 import com.legacy.aether.entities.passive.mountable.EntityParachute;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketPerkChanged;
+import com.legacy.aether.player.perks.AetherRankings;
+import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -62,7 +66,7 @@ public class PlayerAether implements IPlayerAether {
 
 	public DonatorMoaSkin donatorMoaSkin = new DonatorMoaSkin();
 
-	public boolean shouldRenderHalo;
+	public boolean shouldRenderHalo, shouldRenderGlow;
 
 	private boolean isJumping;
 
@@ -89,6 +93,8 @@ public class PlayerAether implements IPlayerAether {
     private ChunkCoordinates bedLocation;
 
 	public PlayerAether() {
+		this.shouldRenderHalo = true;
+		this.shouldRenderGlow = false;
 		this.abilities.addAll(Arrays.<IAetherAbility>asList(new AbilityAccessories(this), new AbilityArmor(this), new AbilityFlight(this), new AbilityRepulsion(this)));
 	}
 
@@ -104,6 +110,12 @@ public class PlayerAether implements IPlayerAether {
 
 	@Override
 	public void onUpdate() {
+		if (!this.player.worldObj.isRemote)
+		{
+			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
+			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Glow, this.shouldRenderGlow));
+		}
+
 		for (int i = 0; i < this.getAbilities().size(); ++i) {
 			IAetherAbility ability = this.getAbilities().get(i);
 
@@ -349,6 +361,16 @@ public class PlayerAether implements IPlayerAether {
 	public void saveNBTData(NBTTagCompound compound) {
 		NBTTagCompound aetherTag = new NBTTagCompound();
 
+		if (AetherRankings.isRankedPlayer(this.player.getUniqueID()))
+		{
+			aetherTag.setBoolean("halo", this.shouldRenderHalo);
+		}
+
+		if (AetherRankings.isDeveloper(this.player.getUniqueID()))
+		{
+			aetherTag.setBoolean("glow", this.shouldRenderGlow);
+		}
+
 		aetherTag.setInteger("shardCount", this.shardCount);
 		aetherTag.setTag("accessories", this.getAccessoryInventory().writeToNBT(aetherTag));
 
@@ -365,6 +387,16 @@ public class PlayerAether implements IPlayerAether {
 	@Override
 	public void loadNBTData(NBTTagCompound compound) {
 		NBTTagCompound aetherTag = compound.getCompoundTag("aetherI");
+
+		if (aetherTag.hasKey("halo"))
+		{
+			this.shouldRenderHalo = aetherTag.getBoolean("halo");
+		}
+
+		if (aetherTag.hasKey("glow"))
+		{
+			this.shouldRenderGlow = aetherTag.getBoolean("glow");
+		}
 
 		this.updateShardCount(aetherTag.getInteger("shardCount"));
 		this.getAccessoryInventory().readFromNBT(aetherTag.getTagList("accessories", 10));

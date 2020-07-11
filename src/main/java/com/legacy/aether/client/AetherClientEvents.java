@@ -2,19 +2,22 @@ package com.legacy.aether.client;
 
 import java.util.List;
 
+import com.legacy.aether.client.gui.GuiCustomizationScreen;
 import com.legacy.aether.client.gui.GuiEnterAether;
+import com.legacy.aether.client.gui.button.GuiCustomizationScreenButton;
+import com.legacy.aether.client.gui.button.GuiGlowButton;
+import com.legacy.aether.client.gui.button.GuiHaloButton;
 import com.legacy.aether.client.gui.menu.AetherMainMenu;
 import com.legacy.aether.client.gui.menu.GuiMenuToggleButton;
+import com.legacy.aether.player.perks.AetherRankings;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -226,6 +229,17 @@ public class AetherClientEvents {
 		{
 			Minecraft.getMinecraft().displayGuiScreen(new AetherMainMenu());
 		}
+
+		if (event.gui.getClass() == GuiOptions.class)
+		{
+			if (Minecraft.getMinecraft().thePlayer != null)
+			{
+				if (AetherRankings.isRankedPlayer(Minecraft.getMinecraft().thePlayer.getUniqueID()))
+				{
+					event.buttonList.add(new GuiCustomizationScreenButton(545, event.gui.width / 2 - 155, event.gui.height / 6 + 48 - 6, 150, 20, I18n.format("gui.options.perk_customization")));
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -265,6 +279,11 @@ public class AetherClientEvents {
 
 		if ((clazz == GuiInventory.class || clazz == GuiContainerCreative.class) && event.button.id == 18067) {
 			AetherNetwork.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
+		}
+
+		if (event.button.getClass() == GuiCustomizationScreenButton.class)
+		{
+			Minecraft.getMinecraft().displayGuiScreen(new GuiCustomizationScreen(event.gui));
 		}
 	}
 

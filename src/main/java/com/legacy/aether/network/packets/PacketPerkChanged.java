@@ -12,7 +12,7 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged> {
 
 	public int entityID;
 
-	public boolean renderHalo;
+	public boolean renderHalo, renderGlow;
 
 	public DonatorMoaSkin moaSkin;
 
@@ -29,6 +29,9 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged> {
 		if (type == EnumAetherPerkType.Halo) {
 			this.renderHalo = info;
 		}
+		else if (type == EnumAetherPerkType.Glow) {
+			this.renderGlow = info;
+		}
 	}
 
 	public PacketPerkChanged(int entityID, EnumAetherPerkType type, DonatorMoaSkin moa) {
@@ -44,6 +47,8 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged> {
 
 		if (this.perkType == EnumAetherPerkType.Halo) {
 			this.renderHalo = buf.readBoolean();
+		} else if (this.perkType == EnumAetherPerkType.Glow) {
+			this.renderGlow = buf.readBoolean();
 		} else if (this.perkType == EnumAetherPerkType.Moa) {
 			this.moaSkin = DonatorMoaSkin.readMoaSkin(buf);
 		}
@@ -56,6 +61,8 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged> {
 
 		if (this.perkType == EnumAetherPerkType.Halo) {
 			buf.writeBoolean(this.renderHalo);
+		} else if (this.perkType == EnumAetherPerkType.Glow) {
+			buf.writeBoolean(this.renderGlow);
 		} else if (this.perkType == EnumAetherPerkType.Moa) {
 			this.moaSkin.writeMoaSkin(buf);
 		}
@@ -73,6 +80,8 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged> {
 					instance.shouldRenderHalo = message.renderHalo;
 				} else if (message.perkType == EnumAetherPerkType.Moa) {
 					instance.donatorMoaSkin = message.moaSkin;
+				} else if (message.perkType == EnumAetherPerkType.Glow) {
+					instance.shouldRenderGlow = message.renderGlow;
 				}
 			}
 		}
@@ -90,9 +99,9 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged> {
 					instance.shouldRenderHalo = message.renderHalo;
 				} else if (message.perkType == EnumAetherPerkType.Moa) {
 					instance.donatorMoaSkin = message.moaSkin;
+				} else if (message.perkType == EnumAetherPerkType.Glow) {
+					instance.shouldRenderGlow = message.renderGlow;
 				}
-
-				AetherNetwork.sendToAll(message);
 			}
 		}
 	}
