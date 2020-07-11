@@ -282,29 +282,44 @@ public class PlayerAether implements IPlayerAether {
 	{
 		EntityParachute parachute = null;
 
-		if(this.getEntity().inventory.hasItemStack(new ItemStack(ItemsAether.cloud_parachute)))
-		{
-			parachute = new EntityParachute(this.getEntity().worldObj, this.getEntity(), false);
-			parachute.setPosition(this.getEntity().posX, this.getEntity().posY, this.getEntity().posZ);
-			this.getEntity().worldObj.spawnEntityInWorld(parachute);
-			this.getEntity().inventory.consumeInventoryItem(ItemsAether.cloud_parachute);
-		}
-		else
-		{
-			if (this.getEntity().inventory.hasItemStack(new ItemStack(ItemsAether.golden_parachute)))
-			{
-				for(int i = 0; i < this.getEntity().inventory.getSizeInventory(); i++)
-				{
-					ItemStack itemstack = this.getEntity().inventory.getStackInSlot(i);
+		ItemStack itemstack = null;
 
-					if(itemstack != null && itemstack.getItem() == ItemsAether.golden_parachute)
-					{
-						itemstack.damageItem(1, this.getEntity());
-						parachute = new EntityParachute(this.getEntity().worldObj, this.getEntity(), true);
-						parachute.setPosition(this.getEntity().posX, this.getEntity().posY, this.getEntity().posZ);
-						this.getEntity().inventory.setInventorySlotContents(i, itemstack);
-						this.getEntity().worldObj.spawnEntityInWorld(parachute);
-					}
+		for (int i = 0; i < this.getEntity().inventory.getSizeInventory(); i++)
+		{
+			ItemStack stackInSlot = this.getEntity().inventory.getStackInSlot(i);
+
+			if(stackInSlot != null && stackInSlot.getItem() == ItemsAether.cloud_parachute)
+			{
+				itemstack = stackInSlot;
+				break;
+			}
+			else
+			{
+				if (stackInSlot != null && stackInSlot.getItem() == ItemsAether.golden_parachute)
+				{
+					itemstack = stackInSlot;
+					break;
+				}
+			}
+		}
+
+		if (itemstack != null)
+		{
+			if (itemstack.getItem() == ItemsAether.cloud_parachute)
+			{
+				parachute = new EntityParachute(this.getEntity().worldObj, this.getEntity(), false);
+				parachute.setPosition(this.getEntity().posX, this.getEntity().posY, this.getEntity().posZ);
+				this.getEntity().worldObj.spawnEntityInWorld(parachute);
+				this.getEntity().inventory.consumeInventoryItem(itemstack.getItem());
+			}
+			else
+			{
+				if (itemstack.getItem() == ItemsAether.golden_parachute)
+				{
+					itemstack.damageItem(1, this.getEntity());
+					parachute = new EntityParachute(this.getEntity().worldObj, this.getEntity(), true);
+					parachute.setPosition(this.getEntity().posX, this.getEntity().posY, this.getEntity().posZ);
+					this.getEntity().worldObj.spawnEntityInWorld(parachute);
 				}
 			}
 		}
