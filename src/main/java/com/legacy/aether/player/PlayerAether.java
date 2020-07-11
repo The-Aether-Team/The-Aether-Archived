@@ -471,62 +471,6 @@ public class PlayerAether implements IPlayerAether
 				}
 			}
 		}
-
-
-
-
-
-		/*
-		if (this.thePlayer.inventory.hasItemStack(new ItemStack(ItemsAether.cloud_parachute)))
-		{
-			ItemStack itemstack = null;
-
-			for (int i = 0; i < this.thePlayer.inventory.getSizeInventory(); i++)
-			{
-				ItemStack stackInSlot = this.thePlayer.inventory.getStackInSlot(i);
-
-				if(stackInSlot.getItem() == ItemsAether.cloud_parachute)
-				{
-					itemstack = stackInSlot;
-					break;
-				}
-			}
-
-			if (itemstack != null && itemstack.getItem() == ItemsAether.cloud_parachute)
-			{
-				parachute = new EntityParachute(this.thePlayer.world, this.thePlayer, false);
-				parachute.setPosition(this.thePlayer.posX, this.thePlayer.posY, this.thePlayer.posZ);
-				this.thePlayer.world.spawnEntity(parachute);
-				this.thePlayer.inventory.deleteStack(itemstack);
-			}
-		}
-		else
-		{
-			if (this.thePlayer.inventory.hasItemStack(new ItemStack(ItemsAether.golden_parachute)))
-			{
-				ItemStack itemstack = null;
-
-				for (int i = 0; i < this.thePlayer.inventory.getSizeInventory(); i++)
-				{
-					ItemStack stackInSlot = this.thePlayer.inventory.getStackInSlot(i);
-
-					if(stackInSlot.getItem() == ItemsAether.golden_parachute)
-					{
-						itemstack = stackInSlot;
-						break;
-					}
-				}
-
-				if (itemstack != null && itemstack.getItem() == ItemsAether.golden_parachute)
-				{
-					itemstack.damageItem(1, this.thePlayer);
-					parachute = new EntityParachute(this.thePlayer.world, this.thePlayer, true);
-					parachute.setPosition(this.thePlayer.posX, this.thePlayer.posY, this.thePlayer.posZ);
-					this.thePlayer.world.spawnEntity(parachute);
-				}
-			}
-		}
-		 */
 	}
 
 	/*
