@@ -41,8 +41,8 @@ public class BlockRendering
 	{
         registerBlockWithStateMapper(BlocksAether.aether_grass, (new AetherStateMap.Builder()).ignore(BlockAetherGrass.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.aether_dirt, (new AetherStateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).build());
-        registerBlockWithStateMapper(BlocksAether.mossy_holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).ignore(BlockHolystone.dungeon_block).build());
+        registerBlockWithStateMapper(BlocksAether.mossy_holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).ignore(BlockHolystone.dungeon_block).build());
         registerBlockWithStateMapper(BlocksAether.quicksoil, (new AetherStateMap.Builder()).ignore(BlockQuicksoil.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.ambrosium_ore, (new AetherStateMap.Builder()).ignore(BlockAmbrosiumOre.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.aether_log, (new AetherStateMap.Builder()).ignore(BlockAetherLog.double_drop).build());

@@ -20,8 +20,9 @@ import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public class BlockHolystone extends Block
 {
-
 	public static final PropertyBool double_drop = PropertyBool.create(Aether.doubleDropNotifier());
+
+	public static final PropertyBool dungeon_block = PropertyBool.create("dungeon_block");
 
 	public BlockHolystone()
 	{
@@ -30,19 +31,19 @@ public class BlockHolystone extends Block
 		this.setHardness(0.5F);
 		this.setSoundType(SoundType.STONE);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
-		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE));
+		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE).withProperty(dungeon_block, Boolean.FALSE));
 	}
 
 	@Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-		world.setBlockState(pos, state.withProperty(double_drop, Boolean.FALSE));
+		world.setBlockState(pos, state.withProperty(double_drop, Boolean.FALSE).withProperty(dungeon_block, Boolean.FALSE));
     }
 
 	@Override
     public IBlockState getStateFromMeta(int meta)
     {
-		return this.getDefaultState().withProperty(double_drop, Boolean.valueOf(meta == 0));
+		return this.getDefaultState().withProperty(double_drop, meta == 0).withProperty(dungeon_block, meta == 0);
     }
 
 	@Override
@@ -50,9 +51,14 @@ public class BlockHolystone extends Block
     {
 		int meta = 0;
 
-		if (!((Boolean)state.getValue(double_drop)).booleanValue())
+		if (!state.getValue(double_drop))
 		{
 			meta |= 1;
+		}
+
+		if (!state.getValue(dungeon_block))
+		{
+			meta |= 2;
 		}
 
 		return meta;
@@ -67,7 +73,7 @@ public class BlockHolystone extends Block
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, new IProperty[] {double_drop});
+		return new BlockStateContainer(this, double_drop, dungeon_block);
 	}
 
 }

@@ -2,6 +2,8 @@ package com.legacy.aether.world;
 
 import java.util.*;
 
+import com.legacy.aether.blocks.natural.BlockHolystone;
+import com.legacy.aether.events.BronzeDungeonSizeEvent;
 import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.world.dungeon.util.AetherDungeonVirtual;
 import net.minecraft.block.Block;
@@ -26,6 +28,7 @@ import com.legacy.aether.world.gen.MapGenGoldenDungeon;
 import com.legacy.aether.world.gen.MapGenLargeColdAercloud;
 import com.legacy.aether.world.gen.MapGenQuicksoil;
 import com.legacy.aether.world.gen.MapGenSilverDungeon;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ChunkProviderAether implements IChunkGenerator
 {
@@ -363,7 +366,7 @@ public class ChunkProviderAether implements IChunkGenerator
 
         biome.decorate(this.worldObj, this.rand, pos);
 
-        if (this.rand.nextInt(8) == 0)
+        if (this.rand.nextInt(10) == 0)
         {
             BlockPos dungeonPos = pos.add(0, this.rand.nextInt(96) + 24, 0);
 
@@ -380,6 +383,7 @@ public class ChunkProviderAether implements IChunkGenerator
 
         Map<BlockPos, IBlockState> placementSelection = this.dungeon_bronze.getPlacement();
         Map<BlockPos, IBlockState> replacementSelection = this.dungeon_bronze.getReplacement();
+        Map<BlockPos, IBlockState> tunnelSelection = this.dungeon_bronze.getTunnel();
 
         for (Map.Entry<BlockPos, IBlockState> placement : placementSelection.entrySet())
         {
@@ -422,6 +426,28 @@ public class ChunkProviderAether implements IChunkGenerator
                     this.dungeon_bronze.replacementStorage.remove(placement.getKey(), placement.getValue());
                     this.dungeon_bronze.replacement.remove(placement.getKey(), placement.getValue());
                     replacementSelection.remove(placement.getKey(), placement.getValue());
+                }
+            }
+        }
+
+        for (Map.Entry<BlockPos, IBlockState> tunnel : tunnelSelection.entrySet())
+        {
+            if (this.worldObj.isBlockLoaded(tunnel.getKey()))
+            {
+                if (tunnel.getValue() != null)
+                {
+                    if (this.worldObj.getBlockState(tunnel.getKey()).getBlock() != Blocks.AIR && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.dungeon_block
+                            && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.locked_dungeon_block && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.dungeon_trap
+                            && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.dungeon_chest
+                            && this.worldObj.getBlockState(tunnel.getKey()) != BlocksAether.holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, true)
+                            && this.worldObj.getBlockState(tunnel.getKey()) != BlocksAether.mossy_holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, true))
+                    {
+                        this.worldObj.setBlockState(tunnel.getKey(), tunnel.getValue(), 2 | 16);
+                    }
+
+                    this.dungeon_bronze.tunnelStorage.remove(tunnel.getKey(), tunnel.getValue());
+                    this.dungeon_bronze.tunnel.remove(tunnel.getKey(), tunnel.getValue());
+                    tunnelSelection.remove(tunnel.getKey(), tunnel.getValue());
                 }
             }
         }

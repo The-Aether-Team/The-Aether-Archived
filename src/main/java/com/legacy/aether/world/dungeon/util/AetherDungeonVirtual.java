@@ -1,5 +1,6 @@
 package com.legacy.aether.world.dungeon.util;
 
+import com.legacy.aether.blocks.BlocksAether;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -19,6 +20,10 @@ public abstract class AetherDungeonVirtual extends WorldGenerator
     public Map<BlockPos, IBlockState> replacementStorage = new ConcurrentHashMap<>();
 
     public Map<BlockPos, IBlockState> replacement = new ConcurrentHashMap<>();
+
+    public Map<BlockPos, IBlockState> tunnelStorage = new ConcurrentHashMap<>();
+
+    public Map<BlockPos, IBlockState> tunnel = new ConcurrentHashMap<>();
 
     protected final Random random = new Random();
 
@@ -163,6 +168,37 @@ public abstract class AetherDungeonVirtual extends WorldGenerator
         }
     }
 
+    public void addTunnelPlaneX(World world, Random rand, PositionData pos, PositionData radius)
+    {
+        for (int lineY = pos.getY(); lineY < pos.getY() + radius.getY(); lineY++)
+        {
+            for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
+            {
+                BlockPos newPos = new BlockPos(pos.getX(), lineY, lineZ);
+
+                if ((this.replaceAir) && (this.replaceSolid))
+                {
+                    if (this.chance == 0)
+                    {
+                        this.storeTunnelBlock(world, newPos, this.blockState);
+
+                        return;
+                    }
+
+                    if (rand.nextInt(this.chance) == 0)
+                    {
+                        this.storeTunnelBlock(world, newPos, this.extraBlockState);
+                    }
+                    else
+                    {
+                        this.storeTunnelBlock(world, newPos, this.blockState);
+                    }
+                }
+            }
+        }
+    }
+
+
     public void addPlaneY(World world, Random rand, PositionData pos, PositionData radius)//, int radiusX, int radiusZ)
     {
         for (int lineX = pos.getX(); lineX < pos.getX() + radius.getX(); lineX++)
@@ -217,6 +253,36 @@ public abstract class AetherDungeonVirtual extends WorldGenerator
                     else
                     {
                         this.storeBlock(world, newPos, this.blockState);
+                    }
+                }
+            }
+        }
+    }
+
+    public void addTunnelPlaneZ(World world, Random rand, PositionData pos, PositionData radius)//, int radiusX, int radiusY)
+    {
+        for (int lineX = pos.getX(); lineX < pos.getX() + radius.getX(); lineX++)
+        {
+            for (int lineY = pos.getY(); lineY < pos.getY() + radius.getY(); lineY++)
+            {
+                BlockPos newPos = new BlockPos(lineX, lineY, pos.getZ());
+
+                if ((this.replaceAir) && (this.replaceSolid))
+                {
+                    if (this.chance == 0)
+                    {
+                        this.storeTunnelBlock(world, newPos, this.blockState);
+
+                        return;
+                    }
+
+                    if (rand.nextInt(this.chance) == 0)
+                    {
+                        this.storeTunnelBlock(world, newPos, this.extraBlockState);
+                    }
+                    else
+                    {
+                        this.storeTunnelBlock(world, newPos, this.blockState);
                     }
                 }
             }
@@ -387,6 +453,14 @@ public abstract class AetherDungeonVirtual extends WorldGenerator
         this.replacementStorage.put(pos, state);
     }
 
+    public void storeTunnelBlock(World world, BlockPos pos, IBlockState state)
+    {
+        if (!this.placementStorage.containsKey(pos))
+        {
+            this.tunnelStorage.put(pos, state);
+        }
+    }
+
     public Map<BlockPos, IBlockState> getPlacement()
     {
         return this.placement;
@@ -397,28 +471,15 @@ public abstract class AetherDungeonVirtual extends WorldGenerator
         return this.replacement;
     }
 
+    public Map<BlockPos, IBlockState> getTunnel()
+    {
+        return this.tunnel;
+    }
+
     public void storeVariables()
     {
         this.placement.putAll(this.placementStorage);
         this.replacement.putAll(this.replacementStorage);
-    }
-
-    public void generateTrue(World world, BlockPos pos)
-    {
-        for (Map.Entry<BlockPos, IBlockState> placement : this.placement.entrySet())
-        {
-            if (placement.getValue() != null)
-            {
-                world.setBlockState(placement.getKey(), placement.getValue(), 2);
-            }
-        }
-
-        for (Map.Entry<BlockPos, IBlockState> placement : this.replacement.entrySet())
-        {
-            if (placement.getValue() != null)
-            {
-                world.setBlockState(placement.getKey(), placement.getValue(), 2);
-            }
-        }
+        this.tunnel.putAll(this.tunnelStorage);
     }
 }

@@ -7,8 +7,11 @@ import java.util.Random;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.dungeon.BlockDungeonBase;
 import com.legacy.aether.blocks.dungeon.BlockTreasureChest;
+import com.legacy.aether.blocks.natural.BlockHolystone;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.slider.EntitySlider;
+import com.legacy.aether.events.BronzeDungeonSizeEvent;
+import com.legacy.aether.events.DialogueClickedEvent;
 import com.legacy.aether.world.dungeon.util.AetherDungeonVirtual;
 import com.legacy.aether.world.dungeon.util.PositionData;
 
@@ -16,29 +19,31 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BronzeDungeon extends AetherDungeonVirtual
 {
-	private int numRooms = 4;
-
-	private int n;
-
 	private boolean needsCorridor;
-
-	private boolean hasCorridor;
+	private int roomMaximum;
+	private int roomCount;
 
 	public BronzeDungeon()
 	{
-		hasCorridor = false;
 		needsCorridor = false;
 	}
 
 	@Override
 	public boolean generate(World world, Random random, BlockPos pos)
 	{
+		BronzeDungeonSizeEvent event = new BronzeDungeonSizeEvent(random.nextInt(6) + 2);
+		MinecraftForge.EVENT_BUS.post(event);
+
 		replaceAir = true;
 		replaceSolid = true;
-		n = 0;
+
+		roomMaximum = event.getDungeonRoomMaximum();
+		roomCount = 0;
 
 		preGenerate(world, random, pos);
 
@@ -69,6 +74,13 @@ public class BronzeDungeon extends AetherDungeonVirtual
 
 		this.storeReplacementBlock(world, pos.add(7, -1, 7), ((BlockTreasureChest)BlocksAether.treasure_chest).correctFacing(world, pos.add(7, -1, 7), BlocksAether.treasure_chest.getDefaultState()));
 
+		generateEmptyRoom(world, random, pos, slider);
+
+		return true;
+	}
+
+	public boolean generateEmptyRoom(World world, Random random, BlockPos pos, EntitySlider slider)
+	{
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getY();
@@ -215,57 +227,111 @@ public class BronzeDungeon extends AetherDungeonVirtual
 			}
 		}
 
-		n++;
+		if (!determineRoomPosition(world, random, new PositionData(x, y, z)) && roomCount == 0)
+		{
+			this.placementStorage.clear();
+			this.replacementStorage.clear();
+			slider.setDead();
+			return false;
+		}
 
 		if (needsCorridor)
 		{
 			endCorridor(world, random, new PositionData(x, y, z));
-			return true;
 		}
-
-		generateNextRoom(world, random, new PositionData(x, y, z));
-		generateNextRoom(world, random, new PositionData(x, y, z));
 
 		return true;
 	}
 
-	public boolean generateNextRoom(World world, Random random, PositionData pos)
+	public boolean determineRoomPosition(World world, Random random, PositionData pos)
 	{
-		if (needsCorridor)
+		if (roomCount >= roomMaximum)
 		{
-			endCorridor(world, random, pos);
-			return false;
+			this.needsCorridor = true;
+			return true;
 		}
 
-		int dir = random.nextInt(4);
+		ArrayList<Integer> sides = new ArrayList<>();
+		sides.add(1);
+		sides.add(2);
+		sides.add(3);
+		sides.add(4);
+
+		Collections.shuffle(sides);
+
+		if (generateRoomWithSide(world, random, pos, sides.get(0)))
+		{
+			return true;
+		}
+		else if (generateRoomWithSide(world, random, pos, sides.get(1)))
+		{
+			return true;
+		}
+		else if (generateRoomWithSide(world, random, pos, sides.get(2)))
+		{
+			return true;
+		}
+		else if (generateRoomWithSide(world, random, pos, sides.get(3)))
+		{
+			return true;
+		}
+		else
+		{
+			this.needsCorridor = true;
+			return false;
+		}
+	}
+
+	public boolean generateRoomWithSide(World world, Random random, PositionData pos, int switchCase)
+	{
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		int dir = 0;
+
+		switch (switchCase)
+		{
+			case 1:
+			{
+				x += 16;
+				z += 0;
+				dir = 0;
+				break;
+			}
+			case 2:
+			{
+				x += 0;
+				z += 16;
+				dir = 1;
+				break;
+			}
+			case 3:
+			{
+				x -= 16;
+				z += 0;
+				dir = 2;
+				break;
+			}
+			case 4:
+			{
+				x += 0;
+				z -= 16;
+				dir = 3;
+				break;
+			}
+		}
+
+		return generateNextRoom(world, random, new PositionData(x, y, z), dir);
+	}
+
+	public boolean generateNextRoom(World world, Random random, PositionData pos, int dir)
+	{
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		if(dir == 0)
-		{
-			x += 16;
-			z += 0;
-		}
-		else if(dir == 1)
-		{
-			x += 0;
-			z += 16;
-		}
-		else if(dir == 2)
-		{
-			x -= 16;
-			z += 0;
-		}
-		else if(dir == 3)
-		{
-			x += 0;
-			z -= 16;
-		}
-
 		if(!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 8, 12)) || isSpaceTaken(world, new PositionData(x, y, z), new PositionData(12, 8, 12)))
 		{
-			this.needsCorridor = true;
 			return false;
 		}
 
@@ -329,15 +395,14 @@ public class BronzeDungeon extends AetherDungeonVirtual
 			}
 		}
 
-		n++;
+		roomCount++;
 
-		if(!generateNextRoom(world, random,  new PositionData(x, y, z)))
+		if(!determineRoomPosition(world, random, new PositionData(x, y, z)))
 		{
-			this.needsCorridor = true;
 			return false;
 		}
 
-		return generateNextRoom(world, random, new PositionData(x, y, z));
+		return determineRoomPosition(world, random, new PositionData(x, y, z));
 	}
 
 	public boolean endCorridor(World world, Random random, PositionData pos)
@@ -374,6 +439,11 @@ public class BronzeDungeon extends AetherDungeonVirtual
 
 	public boolean generateEndCorridor(World world, Random random, PositionData pos, int switchCase)
 	{
+		if (!this.needsCorridor)
+		{
+			return false;
+		}
+
 		switch (switchCase)
 		{
 			case 1:
@@ -407,11 +477,20 @@ public class BronzeDungeon extends AetherDungeonVirtual
 						tunnelling = false;
 					}
 
+					if (x == pos.getX() + 11)
+					{
+						setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+						addPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
+
+						setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
+						addPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
+					}
+
 					setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
-					addPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
+					addTunnelPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
 
 					setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
-					addPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
+					addTunnelPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
 
 					x++;
 				}
@@ -421,7 +500,6 @@ public class BronzeDungeon extends AetherDungeonVirtual
 					return false;
 				}
 
-				this.hasCorridor = true;
 				this.needsCorridor = false;
 
 				return true;
@@ -457,11 +535,20 @@ public class BronzeDungeon extends AetherDungeonVirtual
 						tunnelling = false;
 					}
 
+					if (x == pos.getX())
+					{
+						setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+						addPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
+
+						setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
+						addPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
+					}
+
 					setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
-					addPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
+					addTunnelPlaneX(world, random, new PositionData(x, y, z), new PositionData(0, 8, 6));
 
 					setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
-					addPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
+					addTunnelPlaneX(world, random, new PositionData(x, y + 1, z + 1), new PositionData(0, 6, 4));
 
 					x--;
 				}
@@ -471,7 +558,6 @@ public class BronzeDungeon extends AetherDungeonVirtual
 					return false;
 				}
 
-				this.hasCorridor = true;
 				this.needsCorridor = false;
 
 				return true;
@@ -507,11 +593,20 @@ public class BronzeDungeon extends AetherDungeonVirtual
 						tunnelling = false;
 					}
 
+					if (z == pos.getZ() + 11)
+					{
+						setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+						addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
+
+						setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
+						addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
+					}
+
 					setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
-					addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
+					addTunnelPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
 
 					setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
-					addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
+					addTunnelPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
 
 					z++;
 				}
@@ -521,7 +616,6 @@ public class BronzeDungeon extends AetherDungeonVirtual
 					return false;
 				}
 
-				this.hasCorridor = true;
 				this.needsCorridor = false;
 
 				return true;
@@ -557,11 +651,20 @@ public class BronzeDungeon extends AetherDungeonVirtual
 						tunnelling = false;
 					}
 
+					if (z == pos.getZ())
+					{
+						setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
+						addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
+
+						setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
+						addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
+					}
+
 					setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
-					addPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
+					addTunnelPlaneZ(world, random, new PositionData(x, y, z), new PositionData(6, 8, 0));
 
 					setBlocks(Blocks.AIR.getDefaultState(), Blocks.AIR.getDefaultState(), 1);
-					addPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
+					addTunnelPlaneZ(world, random, new PositionData(x + 1, y + 1, z), new PositionData(4, 6, 0));
 
 					z--;
 				}
@@ -571,7 +674,6 @@ public class BronzeDungeon extends AetherDungeonVirtual
 					return false;
 				}
 
-				this.hasCorridor = true;
 				this.needsCorridor = false;
 
 				return true;
@@ -603,11 +705,11 @@ public class BronzeDungeon extends AetherDungeonVirtual
 
 	public IBlockState fillerBlock()
 	{
-		return BlocksAether.holystone.getDefaultState();
+		return BlocksAether.holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, true);
 	}
 
 	public IBlockState fillerBlock1()
 	{
-		return BlocksAether.mossy_holystone.getDefaultState();
+		return BlocksAether.mossy_holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, true);
 	}
 }

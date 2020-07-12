@@ -71,7 +71,7 @@ public class MapGenSilverDungeon extends MapGenStructure
         this.rand.setSeed((long)(i ^ j << 4) ^ this.world.getSeed());
         this.rand.nextInt();
 
-        if (this.rand.nextDouble() > 0.05)
+        if (this.rand.nextDouble() > 0.04)
         {
             return false;
         }
