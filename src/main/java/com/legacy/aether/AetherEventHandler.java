@@ -35,9 +35,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.*;
 
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.portal.BlockAetherPortal;
@@ -53,7 +51,6 @@ import com.legacy.aether.registry.achievements.AchievementsAether;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
-import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.world.WorldEvent;
 
 public class
@@ -246,6 +243,24 @@ AetherEventHandler {
 			if (player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_sword || player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_knife)
 			{
 				event.setCanceled(true);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityAttack(AttackEntityEvent event)
+	{
+		if (event.entityPlayer.getHeldItem().getItem() == ItemsAether.flaming_sword)
+		{
+			if (event.target.canAttackWithItem())
+			{
+				if (!event.target.hitByEntity(event.entityPlayer))
+				{
+					if (event.target instanceof EntityLivingBase)
+					{
+						event.target.setFire(30);
+					}
+				}
 			}
 		}
 	}
