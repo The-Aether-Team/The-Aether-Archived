@@ -41,14 +41,6 @@ public class ItemPigSlayer extends ItemSword {
 			if (entityliving.getHealth() > 0) {
 				entityliving.attackEntityFrom(DamageSource.causeMobDamage(entityliving1), 9999);
 			}
-
-			for (int j = 0; j < 20; j++) {
-				double d = itemRand.nextGaussian() * 0.02D;
-				double d1 = itemRand.nextGaussian() * 0.02D;
-				double d2 = itemRand.nextGaussian() * 0.02D;
-				double d3 = 5D;
-				entityliving.worldObj.spawnParticle("flame", (entityliving.posX + (double) (itemRand.nextFloat() * entityliving.width * 2.0F)) - (double) entityliving.width - d * d3, (entityliving.posY + (double) (itemRand.nextFloat() * entityliving.height)) - d1 * d3, (entityliving.posZ + (double) (itemRand.nextFloat() * entityliving.width * 2.0F)) - (double) entityliving.width - d2 * d3, d, d1, d2);
-			}
 		}
 
 		return super.hitEntity(itemstack, entityliving, entityliving1);

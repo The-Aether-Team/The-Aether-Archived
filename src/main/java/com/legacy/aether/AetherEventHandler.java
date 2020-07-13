@@ -12,7 +12,9 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
@@ -52,6 +54,8 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.world.WorldEvent;
+
+import java.util.Random;
 
 public class
 AetherEventHandler {
@@ -259,6 +263,24 @@ AetherEventHandler {
 					if (event.target instanceof EntityLivingBase)
 					{
 						event.target.setFire(30);
+					}
+				}
+			}
+		}
+		else if (event.entityPlayer.getHeldItem().getItem() == ItemsAether.pig_slayer)
+		{
+			String s = EntityList.getEntityString((Entity) event.target);
+
+			if (s != null && (s.toLowerCase().contains("pig") || s.toLowerCase().contains("phyg") || s.toLowerCase().contains("taegore") || event.target.getUniqueID().toString().equals("1d680bb6-2a9a-4f25-bf2f-a1af74361d69"))) {
+				if (event.target.worldObj.isRemote)
+				{
+					for (int j = 0; j < 20; j++) {
+						Random itemRand = new Random();
+						double d = itemRand.nextGaussian() * 0.02D;
+						double d1 = itemRand.nextGaussian() * 0.02D;
+						double d2 = itemRand.nextGaussian() * 0.02D;
+						double d3 = 5D;
+						event.target.worldObj.spawnParticle("flame", (event.target.posX + (double) (itemRand.nextFloat() * event.target.width * 2.0F)) - (double) event.target.width - d * d3, (event.target.posY + (double) (itemRand.nextFloat() * event.target.height)) - d1 * d3, (event.target.posZ + (double) (itemRand.nextFloat() * event.target.width * 2.0F)) - (double) event.target.width - d2 * d3, d, d1, d2);
 					}
 				}
 			}
