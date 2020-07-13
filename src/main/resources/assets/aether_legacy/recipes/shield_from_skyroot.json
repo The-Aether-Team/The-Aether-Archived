@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SIS",
+    "SSS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "aether_legacy:skyroot_plank"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "minecraft:shield"
+  }
+}
