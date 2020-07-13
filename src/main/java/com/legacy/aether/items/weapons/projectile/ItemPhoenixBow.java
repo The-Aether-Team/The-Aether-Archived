@@ -203,24 +203,26 @@ public class ItemPhoenixBow extends ItemBow
     {
     	return true;
     }
- 
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
-    {
-    	ItemStack heldItem = playerIn.getHeldItem(hand);
-        boolean flag = this.findAmmo(playerIn) != null;
 
-        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(heldItem, worldIn, playerIn, hand, flag);
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        boolean flag = !this.findAmmo(playerIn).isEmpty();
+
+        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, flag);
         if (ret != null) return ret;
 
         if (!playerIn.capabilities.isCreativeMode && !flag)
         {
-            return !flag ? new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem) : new ActionResult<ItemStack>(EnumActionResult.PASS, heldItem);
+            System.out.println("failed");
+            return flag ? new ActionResult(EnumActionResult.PASS, itemstack) : new ActionResult(EnumActionResult.FAIL, itemstack);
         }
         else
         {
-            playerIn.setActiveHand(hand);
-            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
+            System.out.println("success");
+            playerIn.setActiveHand(handIn);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
         }
     }
 
