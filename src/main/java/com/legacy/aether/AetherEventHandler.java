@@ -4,6 +4,7 @@ import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.portal.BlockAetherPortal;
 import com.legacy.aether.entities.bosses.EntityValkyrie;
+import com.legacy.aether.entities.passive.mountable.EntityAerbunny;
 import com.legacy.aether.entities.passive.mountable.EntityFlyingCow;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.dungeon.ItemDungeonKey;
@@ -38,6 +39,8 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -217,13 +220,27 @@ public class AetherEventHandler
 	}
 
 	@SubscribeEvent
-	public void onEntityHurt(EntityStruckByLightningEvent event)
+	public void onEntityStruckByLightning(EntityStruckByLightningEvent event)
 	{
 		if (event.getEntity() instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
 			if (player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_sword || player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_knife)
+			{
+				event.setCanceled(true);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityDamage(LivingAttackEvent event)
+	{
+		if (event.getEntityLiving() instanceof EntityAerbunny)
+		{
+			EntityAerbunny aerbunny = (EntityAerbunny) event.getEntityLiving();
+
+			if (aerbunny.isRiding() && aerbunny.getRidingEntity() instanceof EntityPlayer)
 			{
 				event.setCanceled(true);
 			}
