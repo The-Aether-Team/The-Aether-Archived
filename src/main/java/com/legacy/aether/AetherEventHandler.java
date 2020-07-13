@@ -1,5 +1,6 @@
 package com.legacy.aether;
 
+import com.legacy.aether.entities.passive.mountable.EntityAerbunny;
 import com.legacy.aether.network.AetherNetwork;
 import com.legacy.aether.network.packets.PacketSendEternalDay;
 import com.legacy.aether.network.packets.PacketSendShouldCycle;
@@ -35,6 +36,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.*;
@@ -238,13 +240,27 @@ AetherEventHandler {
 	}
 
 	@SubscribeEvent
-	public void onEntityHurt(EntityStruckByLightningEvent event)
+	public void onEntityStruckByLightning(EntityStruckByLightningEvent event)
 	{
 		if (event.entity instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer) event.entity;
 
 			if (player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_sword || player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_knife)
+			{
+				event.setCanceled(true);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityDamage(LivingAttackEvent event)
+	{
+		if (event.entityLiving instanceof EntityAerbunny)
+		{
+			EntityAerbunny aerbunny = (EntityAerbunny) event.entityLiving;
+
+			if (aerbunny.isRiding() && aerbunny.ridingEntity instanceof EntityPlayer)
 			{
 				event.setCanceled(true);
 			}
