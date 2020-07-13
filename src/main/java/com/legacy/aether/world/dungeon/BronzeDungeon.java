@@ -18,17 +18,11 @@ import com.legacy.aether.world.dungeon.util.AetherDungeon;
 import com.legacy.aether.world.dungeon.util.PositionData;
 
 public class BronzeDungeon extends AetherDungeon {
-
-	private int numRooms = 4;
-
-	private int n;
-
 	private boolean needsCorridor;
-
-	private boolean hasCorridor;
+	private int roomMaximum;
+	private int roomCount;
 
 	public BronzeDungeon() {
-		hasCorridor = false;
 		needsCorridor = false;
 	}
 
@@ -36,9 +30,23 @@ public class BronzeDungeon extends AetherDungeon {
 	public boolean generate(World world, Random random, int i, int j, int k) {
 		replaceAir = true;
 		replaceSolid = true;
-		n = 0;
 
+		roomMaximum = random.nextInt(4) + 2;
+		roomCount = 0;
+
+		generateBossRoom(world, random, i, j, k);
+
+		return true;
+	}
+
+	public boolean generateBossRoom(World world, Random random, int i, int j, int k)
+	{
 		if (!isBoxSolid(world, new PositionData(i, j - 3, k), new PositionData(16, 15, 16)) || !isBoxSolid(world, new PositionData(i + 20, j, k + 2), new PositionData(12, 12, 12))) {
+			return false;
+		}
+
+		if (random.nextInt(25) != 0)
+		{
 			return false;
 		}
 
@@ -58,6 +66,13 @@ public class BronzeDungeon extends AetherDungeon {
 
 		world.setBlock(i + 7, j - 1, k + 7, BlocksAether.treasure_chest);
 
+		generateEmptyRoom(world, random, i, j, k);
+
+		return true;
+	}
+
+	public boolean generateEmptyRoom(World world, Random random, int i, int j, int k)
+	{
 		int x = i;
 		int y = j;
 		int z = k;
@@ -91,39 +106,6 @@ public class BronzeDungeon extends AetherDungeon {
 				}
 
 				break;
-
-				/*
-				x = pos.getX() + 20;
-				y = pos.getY();
-				z = pos.getZ() + 2;
-
-				if(!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 12, 12)) || isSpaceTaken(world, new PositionData(x, y, z), new PositionData(12, 12, 12)))
-				{
-					this.placementStorage.clear();
-					this.replacementStorage.clear();
-					slider.setDead();
-					return false;
-				}
-
-				setBlocks(this.mainBlock(), this.mainLightBlock(), 20);
-				addHollowBox(world, random, new PositionData(x, y, z), new PositionData(12, 12, 12));
-
-				setBlocks(this.fillerBlock(), this.fillerBlock1(), 5);
-
-				addSquareTube(world, random, new PositionData(x - 5, y, z + 3), new PositionData(6, 6, 6), 0);
-
-				for(int p = x + 2; p < x + 10; p += 3)
-				{
-					for(int q = z + 2; q < z + 10; q += 3)
-					{
-						if (this.placementStorage.get(new BlockPos.MutableBlockPos().setPos(p, pos.getY(), q)) != Blocks.AIR && this.placementStorage.get(new BlockPos.MutableBlockPos().setPos(p, pos.getY(), q)) != null)
-						{
-							this.storeReplacementBlock(world, new BlockPos(p, pos.getY(), q), BlocksAether.dungeon_trap.getDefaultState());
-						}
-					}
-				}
-				break;
-				 */
 			}
 			case 1:
 			{
@@ -204,48 +186,108 @@ public class BronzeDungeon extends AetherDungeon {
 			}
 		}
 
-		n++;
-
-		generateNextRoom(world, random, new PositionData(x, y, z));
-		generateNextRoom(world, random, new PositionData(x, y, z));
+		if ((!determineRoomPosition(world, random, new PositionData(x, y, z)) && roomCount == 0))
+		{
+			return false;
+		}
 
 		if (needsCorridor)
 		{
 			endCorridor(world, random, new PositionData(x, y, z));
-			return true;
 		}
 
 		return true;
 	}
 
-	public boolean generateNextRoom(World world, Random random, PositionData pos) {
-		if (needsCorridor)
+	public boolean determineRoomPosition(World world, Random random, PositionData pos)
+	{
+		if (roomCount >= roomMaximum)
 		{
-			endCorridor(world, random, pos);
-			return false;
+			this.needsCorridor = true;
+			return true;
 		}
 
-		int dir = random.nextInt(4);
+		System.out.println(roomCount);
+
+		ArrayList<Integer> sides = new ArrayList<>();
+		sides.add(1);
+		sides.add(2);
+		sides.add(3);
+		sides.add(4);
+
+		Collections.shuffle(sides);
+
+		if (generateRoomWithSide(world, random, pos, sides.get(0)))
+		{
+			return true;
+		}
+		else if (generateRoomWithSide(world, random, pos, sides.get(1)))
+		{
+			return true;
+		}
+		else if (generateRoomWithSide(world, random, pos, sides.get(2)))
+		{
+			return true;
+		}
+		else if (generateRoomWithSide(world, random, pos, sides.get(3)))
+		{
+			return true;
+		}
+		else
+		{
+			this.needsCorridor = true;
+			return false;
+		}
+	}
+
+	public boolean generateRoomWithSide(World world, Random random, PositionData pos, int switchCase)
+	{
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		int dir = 0;
+
+		switch (switchCase)
+		{
+			case 1:
+			{
+				x += 16;
+				z += 0;
+				dir = 0;
+				break;
+			}
+			case 2:
+			{
+				x += 0;
+				z += 16;
+				dir = 1;
+				break;
+			}
+			case 3:
+			{
+				x -= 16;
+				z += 0;
+				dir = 2;
+				break;
+			}
+			case 4:
+			{
+				x += 0;
+				z -= 16;
+				dir = 3;
+				break;
+			}
+		}
+
+		return generateNextRoom(world, random, new PositionData(x, y, z), dir);
+	}
+
+	public boolean generateNextRoom(World world, Random random, PositionData pos, int dir) {
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		if (dir == 0) {
-			x += 16;
-			z += 0;
-		} else if (dir == 1) {
-			x += 0;
-			z += 16;
-		} else if (dir == 2) {
-			x -= 16;
-			z += 0;
-		} else if (dir == 3) {
-			x += 0;
-			z -= 16;
-		}
-
 		if (!isBoxSolid(world, new PositionData(x, y, z), new PositionData(12, 8, 12))) {
-			this.needsCorridor = true;
 			return false;
 		}
 
@@ -313,15 +355,14 @@ public class BronzeDungeon extends AetherDungeon {
 			}
 		}
 
-		n++;
+		roomCount++;
 
-		if(!generateNextRoom(world, random,  new PositionData(x, y, z)))
+		if(!determineRoomPosition(world, random,  new PositionData(x, y, z)))
 		{
-			this.needsCorridor = true;
 			return false;
 		}
 
-		return generateNextRoom(world, random, new PositionData(x, y, z));
+		return determineRoomPosition(world, random, new PositionData(x, y, z));
 	}
 
 	public boolean endCorridor(World world, Random random, PositionData pos)
@@ -358,6 +399,11 @@ public class BronzeDungeon extends AetherDungeon {
 
 	public boolean generateEndCorridor(World world, Random random, PositionData pos, int switchCase)
 	{
+		if (!this.needsCorridor)
+		{
+			return false;
+		}
+
 		replaceAir = false;
 
 		switch (switchCase)
@@ -413,7 +459,6 @@ public class BronzeDungeon extends AetherDungeon {
 					return false;
 				}
 
-				this.hasCorridor = true;
 				this.needsCorridor = false;
 
 				return true;
@@ -469,7 +514,6 @@ public class BronzeDungeon extends AetherDungeon {
 					return false;
 				}
 
-				this.hasCorridor = true;
 				this.needsCorridor = false;
 
 				return true;
@@ -526,7 +570,6 @@ public class BronzeDungeon extends AetherDungeon {
 					return false;
 				}
 
-				this.hasCorridor = true;
 				this.needsCorridor = false;
 
 				return true;
@@ -582,7 +625,6 @@ public class BronzeDungeon extends AetherDungeon {
 					return false;
 				}
 
-				this.hasCorridor = true;
 				this.needsCorridor = false;
 
 				return true;
