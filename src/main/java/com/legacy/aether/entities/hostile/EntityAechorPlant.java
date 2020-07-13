@@ -1,5 +1,6 @@
 package com.legacy.aether.entities.hostile;
 
+import com.legacy.aether.registry.sounds.SoundsAether;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -175,7 +176,7 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 		poisonNeedle.shoot(this, this.rotationPitch, this.rotationYaw, 0.0F, 0.5F, 1.0F);
 		poisonNeedle.posY = this.posY + 1D;
 
-        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.getRNG().nextFloat() * 0.2F + 0.9F));
+        this.playSound(SoundsAether.aechor_plant_attack, 1.0F, 1.2F / (this.getRNG().nextFloat() * 0.2F + 0.9F));
 		this.world.spawnEntity(poisonNeedle);
 
 		poisonNeedle.shoot(x, y, z, 0.285F + ((float)y * 0.05F), 1.0F);

@@ -21,7 +21,13 @@ public class SoundsAether
 
 	public static SoundEvent aerwhale_call, aerwhale_death;
 
+	public static SoundEvent swet_squish, swet_jump, swet_attack, swet_death;
+
+	public static SoundEvent cockatrice_say, cockatrice_flap, cockatrice_attack;
+
 	public static SoundEvent zephyr_call, zephyr_shoot;
+
+	public static SoundEvent aechor_plant_attack;
 
 	public static SoundEvent slider_collide, slider_move, slider_awaken, slider_death;
 
@@ -61,8 +67,19 @@ public class SoundsAether
 		aerwhale_call = register(Aether.locate("aemob.aerwhale.call"));
 		aerwhale_death = register(Aether.locate("aemob.aerwhale.death"));
 
+		swet_squish = register(Aether.locate("aemob.swet.squish"));
+		swet_jump = register(Aether.locate("aemob.swet.jump"));
+		swet_attack = register(Aether.locate("aemob.swet.attack"));
+		swet_death = register(Aether.locate("aemob.swet.death"));
+
+		cockatrice_say = register(Aether.locate("aemob.cockatrice.say"));
+		cockatrice_flap = register(Aether.locate("aemob.cockatrice.flap"));
+		cockatrice_attack = register(Aether.locate("aemob.cockatrice.attack"));
+
 		zephyr_call = register(Aether.locate("aemob.zephyr.call"));
 		zephyr_shoot = register(Aether.locate("aemob.zephyr.shoot"));
+
+		aechor_plant_attack = register(Aether.locate("aemob.aechor_plant.attack"));
 
 		slider_awaken = register(Aether.locate("aeboss.slider.awaken"));
 		slider_collide = register(Aether.locate("aeboss.slider.collide"));

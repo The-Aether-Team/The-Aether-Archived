@@ -1,5 +1,6 @@
 package com.legacy.aether.entities.passive.mountable;
 
+import com.legacy.aether.registry.sounds.SoundsAether;
 import io.netty.buffer.ByteBuf;
 
 import java.util.List;
@@ -214,7 +215,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 
 	public void capturePrey(EntityLivingBase entity)
 	{
-		this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_ATTACK, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+		this.world.playSound(this.posX, this.posY, this.posZ, SoundsAether.swet_attack, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 
 		this.prevPosX = this.posX = entity.posX;
 		this.prevPosY = this.posY = entity.posY + 0.0099999997764825821D;
@@ -312,7 +313,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 
 				this.motionY = 0.34999999403953552D;
 
-				this.playSound(SoundEvents.ENTITY_SLIME_JUMP, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+				this.playSound(SoundsAether.swet_jump, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
 				this.moveStrafing = 1.0F - this.rand.nextFloat() * 2.0F;
 				this.moveForward = 16.0F;
@@ -351,7 +352,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 
 				this.motionY = 0.34999999403953552D;
 
-				this.playSound(SoundEvents.ENTITY_SLIME_JUMP, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+				this.playSound(SoundsAether.swet_jump, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
 
 				this.moveStrafing = 1.0F;
 				this.moveForward = 16.0F;
@@ -403,7 +404,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 				{
 					if (this.onGround && this.canEntityBeSeen(this.getAttackTarget()))
 					{
-						this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+						this.world.playSound(this.posX, this.posY, this.posZ, SoundsAether.swet_squish, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 
 						this.flutter = 10;
 						this.isJumping = true;
@@ -420,7 +421,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 			}
 			else if (this.hasPrey() && this.onGround)
 			{
-				this.world.playSound(this.posX, this.posY, this.posZ, SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
+				this.world.playSound(this.posX, this.posY, this.posZ, SoundsAether.swet_squish, SoundCategory.HOSTILE, 0.5F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F, false);
 
 				if (!this.isFriendly())
 				{
@@ -603,7 +604,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
     {
     	super.jump();
 
-		this.playSound(SoundEvents.ENTITY_SLIME_JUMP, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+		this.playSound(SoundsAether.swet_jump, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
     }
 
 	@Override
@@ -663,13 +664,13 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source)
 	{
-		return SoundEvents.ENTITY_SLIME_SQUISH;
+		return SoundsAether.swet_squish;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound()
 	{
-		return SoundEvents.ENTITY_SLIME_DEATH;
+		return SoundsAether.swet_death;
 	}
 
 	@Override

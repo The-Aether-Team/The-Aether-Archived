@@ -135,7 +135,7 @@ public class EntityCockatrice extends EntityMob
 		EntityPoisonNeedle entityarrow = new EntityPoisonNeedle(this.world, this);
 		entityarrow.shoot(this, this.rotationPitch, this.rotationYaw, 0.0F, 1.0F, 1.0F);
 		entityarrow.posY = this.posY + 1.55D;
-        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+        this.playSound(SoundsAether.cockatrice_attack, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		this.world.spawnEntity(entityarrow);
 	}
 
@@ -156,7 +156,7 @@ public class EntityCockatrice extends EntityMob
 		{
 			if (this.ticksUntilFlap == 0)
 			{
-				this.world.playSound(null, new BlockPos(this), SoundEvents.ENTITY_BAT_TAKEOFF, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
+				this.world.playSound(null, new BlockPos(this), SoundsAether.cockatrice_flap, SoundCategory.NEUTRAL, 0.15F, MathHelper.clamp(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp(this.rand.nextFloat(), 0f, 0.3f));
 
 				this.ticksUntilFlap = 8;
 			}
@@ -200,19 +200,19 @@ public class EntityCockatrice extends EntityMob
 	@Override
 	protected SoundEvent getAmbientSound()
 	{
-		return SoundsAether.moa_say;
+		return SoundsAether.cockatrice_say;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source)
 	{
-		return SoundsAether.moa_say;
+		return SoundsAether.cockatrice_say;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound()
 	{
-		return SoundsAether.moa_say;
+		return SoundsAether.cockatrice_say;
 	}
 	
 	@Override
