@@ -66,6 +66,8 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 
 	public int timeUntilTeleport = this.rand.nextInt(250), chatTime;
 
+	public int timeUntilTeleportToPlayer;
+
 	public BlockPos dungeonPos;
 
 	public int dungeonX, dungeonY, dungeonZ;
@@ -273,6 +275,20 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 		{
 			if (this.getAttackTarget() instanceof EntityPlayer)
 			{
+				if (this.getAttackTarget().posY > this.posY)
+				{
+					timeUntilTeleportToPlayer++;
+
+					if (timeUntilTeleportToPlayer >= 75 && !this.world.isRemote)
+					{
+						this.teleportToPlayer();
+					}
+				}
+				else
+				{
+					timeUntilTeleportToPlayer = 0;
+				}
+
 				if (this.timeUntilTeleport++ >= 450)
 				{
 					if (this.onGround && this.rand.nextInt(20) == 0)
@@ -634,6 +650,21 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 			this.isJumping = false;
 			this.renderYawOffset = this.rand.nextFloat() * 360F;
 			this.timeUntilTeleport = this.rand.nextInt(40);
+			this.motionX = this.motionY = this.motionZ = this.moveForward = this.moveStrafing = this.rotationPitch = this.rotationYaw = 0;
+		}
+	}
+
+	public void teleportToPlayer()
+	{
+		if (this.getAttackTarget() instanceof EntityPlayer)
+		{
+			this.setPositionAndUpdate(this.getAttackTarget().posX + 0.5D, this.getAttackTarget().posY + 0.5D, this.getAttackTarget().posZ + 0.5D);
+			this.spawnExplosionParticle();
+
+			this.enhancedCombat.resetTask();
+			this.isJumping = false;
+			this.renderYawOffset = this.rand.nextFloat() * 360F;
+			this.timeUntilTeleportToPlayer = 0;
 			this.motionX = this.motionY = this.motionZ = this.moveForward = this.moveStrafing = this.rotationPitch = this.rotationYaw = 0;
 		}
 	}
