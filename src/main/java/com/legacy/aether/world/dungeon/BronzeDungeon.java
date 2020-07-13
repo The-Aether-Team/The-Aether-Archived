@@ -57,9 +57,7 @@ public class BronzeDungeon extends AetherDungeonVirtual
 			return false;
 		}
 
-		Random seedless = new Random();
-
-		if (seedless.nextInt(25) != 0)
+		if (random.nextInt(25) != 0)
 		{
 			return false;
 		}

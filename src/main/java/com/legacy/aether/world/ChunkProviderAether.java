@@ -371,7 +371,7 @@ public class ChunkProviderAether implements IChunkGenerator
 
     private void generateBronzeDungeon(BlockPos pos)
     {
-        this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(0, this.rand.nextInt(32) + 24, 0));
+        this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(0, this.rand.nextInt(48) + 24, 0));
         this.dungeon_bronze.storeVariables();
 
         Map<BlockPos, IBlockState> placementSelection = this.dungeon_bronze.getPlacement();
