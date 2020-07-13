@@ -12,7 +12,10 @@ import com.legacy.aether.items.weapons.ItemSkyrootSword;
 
 import com.legacy.aether.world.AetherWorld;
 import com.legacy.aether.world.AetherWorldProvider;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
@@ -36,6 +39,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -219,6 +223,24 @@ public class AetherEventHandler
 			if (player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_sword || player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_knife)
 			{
 				event.setCanceled(true);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityAttack(AttackEntityEvent event)
+	{
+		if (event.getEntityPlayer().getHeldItemMainhand().getItem() == ItemsAether.flaming_sword)
+		{
+			if (event.getTarget().canBeAttackedWithItem())
+			{
+				if (!event.getTarget().hitByEntity(event.getEntityPlayer()))
+				{
+					if (event.getTarget() instanceof EntityLivingBase)
+					{
+						event.getTarget().setFire(30);
+					}
+				}
 			}
 		}
 	}

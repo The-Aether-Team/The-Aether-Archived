@@ -73,15 +73,13 @@ public class EntityPhoenixArrow extends EntityTippedArrow implements IProjectile
     @Override
     protected void arrowHit(EntityLivingBase living)
     {
-        super.arrowHit(living);
-
-        living.setFire(10);
-        
         if (this.isSpectral)
         {
             PotionEffect potioneffect = new PotionEffect(MobEffects.GLOWING, this.duration, 0);
             living.addPotionEffect(potioneffect);
         }
+
+        super.arrowHit(living);
     }
 
     @Override

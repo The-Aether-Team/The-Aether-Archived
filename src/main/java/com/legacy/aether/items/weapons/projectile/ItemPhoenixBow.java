@@ -168,6 +168,8 @@ public class ItemPhoenixBow extends ItemBow
 
         entityPhoenixArrow.setPotionEffect(stack);
 
+        entityPhoenixArrow.setFire(1200);
+
         return entityPhoenixArrow;
     }
 
