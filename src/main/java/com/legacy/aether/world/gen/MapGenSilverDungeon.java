@@ -66,22 +66,15 @@ public class MapGenSilverDungeon extends MapGenStructure
 	@Override
     protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
     {
-        int i = chunkX >> 4;
-        int j = chunkZ >> 4;
-        this.rand.setSeed((long)(i ^ j << 4) ^ this.world.getSeed());
-        this.rand.nextInt();
+        int rand = this.rand.nextInt(60);
 
-        if (this.rand.nextDouble() > 0.04)
-        {
-            return false;
-        }
-        else if (chunkX != (i << 4) + 4 + this.rand.nextInt(8))
+        if (rand != 0)
         {
             return false;
         }
         else
         {
-            return chunkZ == (j << 4) + 4 + this.rand.nextInt(8);
+            return chunkX % 6 == 0 && chunkZ % 6 == 0;
         }
     }
 

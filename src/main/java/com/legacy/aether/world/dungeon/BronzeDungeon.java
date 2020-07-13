@@ -57,6 +57,13 @@ public class BronzeDungeon extends AetherDungeonVirtual
 			return false;
 		}
 
+		Random seedless = new Random();
+
+		if (seedless.nextInt(25) != 0)
+		{
+			return false;
+		}
+
 		setBlocks(this.lockedBlock(), this.lockedLightBlock(), 20);
 
 		addHollowBox(world, random, new PositionData(pos.getX(), pos.getY(), pos.getZ()), new PositionData(16, 12, 16));
@@ -227,7 +234,7 @@ public class BronzeDungeon extends AetherDungeonVirtual
 			}
 		}
 
-		if (!determineRoomPosition(world, random, new PositionData(x, y, z)) && roomCount == 0)
+		if ((!determineRoomPosition(world, random, new PositionData(x, y, z)) && roomCount == 0))
 		{
 			this.placementStorage.clear();
 			this.replacementStorage.clear();

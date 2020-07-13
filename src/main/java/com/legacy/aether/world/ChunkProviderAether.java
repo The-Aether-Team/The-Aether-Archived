@@ -2,6 +2,7 @@ package com.legacy.aether.world;
 
 import java.util.*;
 
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.natural.BlockHolystone;
 import com.legacy.aether.events.BronzeDungeonSizeEvent;
 import com.legacy.aether.registry.AetherLootTables;
@@ -359,26 +360,18 @@ public class ChunkProviderAether implements IChunkGenerator
 
         this.silverDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
 
-        if (!this.isInsideStructure(worldObj, "SilverDungeon", pos) && this.getNearestStructurePos(worldObj, "SilverDungeon", pos, false) != pos)
-        {
-            this.goldenDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
-        }
+        this.goldenDungeonStructure.generateStructure(this.worldObj, this.rand, chunkpos);
+
+        generateBronzeDungeon(pos);
 
         biome.decorate(this.worldObj, this.rand, pos);
-
-        if (this.rand.nextInt(10) == 0)
-        {
-            BlockPos dungeonPos = pos.add(0, this.rand.nextInt(96) + 24, 0);
-
-            generateBronzeDungeon(dungeonPos);
-        }
 
         WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, x + 8, z + 8, 16, 16, this.rand);
     }
 
     private void generateBronzeDungeon(BlockPos pos)
     {
-        this.dungeon_bronze.generate(this.worldObj, this.rand, pos);
+        this.dungeon_bronze.generate(this.worldObj, this.rand, pos.add(0, this.rand.nextInt(32) + 24, 0));
         this.dungeon_bronze.storeVariables();
 
         Map<BlockPos, IBlockState> placementSelection = this.dungeon_bronze.getPlacement();

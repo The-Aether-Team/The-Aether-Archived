@@ -69,21 +69,15 @@ public class MapGenGoldenDungeon extends MapGenStructure
 	@Override
     protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
     {
-        int i = chunkX >> 4;
-        int j = chunkZ >> 4;
-        this.rand.setSeed((long)(i ^ j << 4) ^ this.world.getSeed());
+        int rand = this.rand.nextInt(180);
 
-        if (this.rand.nextInt(750) > 5)
-        {
-            return false;
-        }
-        else if (chunkX != (i << 4) + 4 + this.rand.nextInt(8))
+        if (rand != 0)
         {
             return false;
         }
         else
         {
-            return chunkZ == (j << 4) + 4 + this.rand.nextInt(8);
+            return chunkX % 10 == 0 && chunkZ % 10 == 0;
         }
     }
 
