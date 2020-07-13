@@ -13,6 +13,7 @@ import com.legacy.aether.items.weapons.ItemSkyrootSword;
 import com.legacy.aether.world.AetherWorld;
 import com.legacy.aether.world.AetherWorldProvider;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -48,6 +49,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+
+import java.util.Random;
 
 public class AetherEventHandler 
 {
@@ -239,6 +242,27 @@ public class AetherEventHandler
 					if (event.getTarget() instanceof EntityLivingBase)
 					{
 						event.getTarget().setFire(30);
+					}
+				}
+			}
+		}
+		else if (event.getEntityPlayer().getHeldItemMainhand().getItem() == ItemsAether.pig_slayer)
+		{
+			String s = EntityList.getEntityString(event.getTarget());
+
+			if(s != null && (s.toLowerCase().contains("pig") || s.toLowerCase().contains("phyg") || s.toLowerCase().contains("taegore") || event.getTarget().getUniqueID().toString().equals("1d680bb6-2a9a-4f25-bf2f-a1af74361d69")))
+			{
+				if (event.getTarget().world.isRemote)
+				{
+					Random rand = new Random();
+
+					for(int j = 0; j < 20; j++)
+					{
+						double d = rand.nextGaussian() * 0.02D;
+						double d1 = rand.nextGaussian() * 0.02D;
+						double d2 = rand.nextGaussian() * 0.02D;
+						double d3 = 5D;
+						event.getTarget().world.spawnParticle(EnumParticleTypes.FLAME, (event.getTarget().posX + (double)(rand.nextFloat() * event.getTarget().width * 2.0F)) - (double)event.getTarget().width - d * d3, (event.getTarget().posY + (double)(rand.nextFloat() * event.getTarget().height)) - d1 * d3, (event.getTarget().posZ + (double)(rand.nextFloat() * event.getTarget().width * 2.0F)) - (double)event.getTarget().width - d2 * d3, d, d1, d2);
 					}
 				}
 			}
