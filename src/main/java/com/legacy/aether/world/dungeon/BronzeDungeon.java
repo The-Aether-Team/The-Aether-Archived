@@ -207,8 +207,6 @@ public class BronzeDungeon extends AetherDungeon {
 			return true;
 		}
 
-		System.out.println(roomCount);
-
 		ArrayList<Integer> sides = new ArrayList<>();
 		sides.add(1);
 		sides.add(2);

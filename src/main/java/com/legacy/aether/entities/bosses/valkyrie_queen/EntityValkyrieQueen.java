@@ -48,7 +48,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
 
     public int angerLevel;
 
-    public int timeLeft, timeUntilTeleport, chatTime;
+    public int timeLeft, timeUntilTeleport, chatTime, timeUntilTeleportToPlayer;
 
     public int dungeonX, dungeonY, dungeonZ;
 
@@ -224,6 +224,16 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
             this.moveStrafing = this.moveForward = 0;
         } else {
             if (this.getEntityToAttack() instanceof EntityPlayer) {
+                if (this.getEntityToAttack().posY > this.posY) {
+                    timeUntilTeleportToPlayer++;
+
+                    if (timeUntilTeleportToPlayer >= 75 && !this.worldObj.isRemote) {
+                        this.teleportToPlayer();
+                    }
+                } else {
+                    timeUntilTeleportToPlayer = 0;
+                }
+
                 if (this.timeUntilTeleport++ >= 450) {
                     if (this.onGround && this.rand.nextInt(10) == 0) {
                         this.makeHomeShot(1, (EntityPlayer) this.getEntityToAttack());
@@ -493,6 +503,20 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
             this.isJumping = false;
             this.renderYawOffset = this.rand.nextFloat() * 360F;
             this.timeUntilTeleport = this.rand.nextInt(40);
+
+            this.motionX = this.motionY = this.motionZ = this.moveForward = this.moveStrafing = this.rotationPitch = this.rotationYaw = 0;
+        }
+    }
+
+    public void teleportToPlayer() {
+        if (this.getEntityToAttack() instanceof EntityPlayer) {
+            this.spawnExplosionParticle();
+            this.enhancedCombat.resetTask();
+            this.setPosition(this.getEntityToAttack().posX + 0.5D, this.getEntityToAttack().posY + 0.5D, this.getEntityToAttack().posZ + 0.5D);
+
+            this.isJumping = false;
+            this.renderYawOffset = this.rand.nextFloat() * 360F;
+            this.timeUntilTeleportToPlayer = 0;
 
             this.motionX = this.motionY = this.motionZ = this.moveForward = this.moveStrafing = this.rotationPitch = this.rotationYaw = 0;
         }
