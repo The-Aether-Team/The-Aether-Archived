@@ -115,8 +115,13 @@ public class EntityPhyg extends EntitySaddleMount {
     @Override
     protected void dropFewItems(boolean recentlyHit, int lootLevel) {
         int j = this.rand.nextInt(3) + 1 + this.rand.nextInt(1 + lootLevel);
+        int k;
 
-        for (int k = 0; k < j; ++k) {
+        for (k = 0; k < j; ++k) {
+            this.dropItem(Items.feather, 1);
+        }
+
+        for (k = 0; k < j; ++k) {
             if (this.isBurning()) {
                 this.dropItem(Items.cooked_porkchop, 1);
             } else {
