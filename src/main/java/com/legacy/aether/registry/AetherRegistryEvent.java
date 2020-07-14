@@ -1,5 +1,6 @@
 package com.legacy.aether.registry;
 
+import com.legacy.aether.api.accessories.RecipeAccessoryDyes;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
@@ -61,6 +62,8 @@ public class AetherRegistryEvent
 	public void onRegisterCraftingEvent(RegistryEvent.Register<IRecipe> event)
 	{
 		AetherDictionary.initialization();
+
+		event.getRegistry().register(new RecipeAccessoryDyes().setRegistryName("aether_dyed_gloves"));
 	}
 
 	@SubscribeEvent

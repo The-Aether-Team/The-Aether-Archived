@@ -7,6 +7,7 @@ import com.legacy.aether.client.models.attachments.ModelAetherWings;
 import com.legacy.aether.client.models.attachments.ModelPlayerHalo;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
+import com.legacy.aether.items.accessories.ItemAccessoryDyable;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.perks.AetherRankings;
 
@@ -186,7 +187,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	        }
 		}
 
-		if (accessories.getStackInSlot(6).getItem() instanceof ItemAccessory)
+		if (accessories.getStackInSlot(6).getItem().getClass() == ItemAccessory.class)
 		{
 			ItemAccessory gloves = (ItemAccessory) accessories.getStackInSlot(6).getItem();
 			this.manager.renderEngine.bindTexture(gloves.texture);
@@ -207,6 +208,31 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 				{
 					GlStateManager.color(red, green, blue);
 				}
+			}
+
+			this.modelMisc.bipedLeftArm.render(scale);
+			this.modelMisc.bipedRightArm.render(scale);
+
+			GlStateManager.color(1.0F, 1.0F, 1.0F);
+		}
+		else if (accessories.getStackInSlot(6).getItem().getClass() == ItemAccessoryDyable.class)
+		{
+			ItemAccessoryDyable gloves = (ItemAccessoryDyable) accessories.getStackInSlot(6).getItem();
+			this.manager.renderEngine.bindTexture(gloves.texture);
+
+			int colour = gloves.getColor(accessories.getStackInSlot(6));
+
+			float red = ((colour >> 16) & 0xff) / 255F;
+			float green = ((colour >> 8) & 0xff) / 255F;
+			float blue = (colour & 0xff) / 255F;
+
+			if (player.hurtTime > 0)
+			{
+				GlStateManager.color(1.0F, 0.5F, 0.5F);
+			}
+			else
+			{
+				GlStateManager.color(red, green, blue);
 			}
 
 			this.modelMisc.bipedLeftArm.render(scale);

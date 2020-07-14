@@ -1,5 +1,6 @@
 package com.legacy.aether.client;
 
+import com.legacy.aether.items.accessories.ItemAccessoryDyable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
@@ -78,9 +79,21 @@ public class PlayerGloveRenderer
 
     private static void renderArm(IPlayerAether playerAether, EnumHandSide hand, ItemAccessory gloves)
     {
-		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
+        if (gloves.getClass() == ItemAccessory.class)
+        {
+            Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
+        }
+        else if (gloves.getClass() == ItemAccessoryDyable.class)
+        {
+            Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? ((ItemAccessoryDyable) gloves).texture : ((ItemAccessoryDyable) gloves).texture_slim);
+        }
 
 		int colour = gloves.getColorFromItemStack(playerAether.getAccessoryInventory().getStackInSlot(6), 0);
+		if (gloves.getClass() == ItemAccessoryDyable.class)
+        {
+            colour = ((ItemAccessoryDyable) gloves).getColor(playerAether.getAccessoryInventory().getStackInSlot(6));
+        }
+
 		float red = ((colour >> 16) & 0xff) / 255F;
 		float green = ((colour >> 8) & 0xff) / 255F;
 		float blue = (colour & 0xff) / 255F;
@@ -182,9 +195,21 @@ public class PlayerGloveRenderer
 
 	private static void renderRightGlove(IPlayerAether playerAether, ItemAccessory gloves)
     {
-		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
+        if (gloves.getClass() == ItemAccessory.class)
+        {
+            Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
+        }
+        else if (gloves.getClass() == ItemAccessoryDyable.class)
+        {
+            Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? ((ItemAccessoryDyable) gloves).texture : ((ItemAccessoryDyable) gloves).texture_slim);
+        }
 
 		int colour = gloves.getColorFromItemStack(playerAether.getAccessoryInventory().getStackInSlot(6), 0);
+        if (gloves.getClass() == ItemAccessoryDyable.class)
+        {
+            colour = ((ItemAccessoryDyable) gloves).getColor(playerAether.getAccessoryInventory().getStackInSlot(6));
+        }
+
 		float red = ((colour >> 16) & 0xff) / 255F;
 		float green = ((colour >> 8) & 0xff) / 255F;
 		float blue = (colour & 0xff) / 255F;
@@ -207,9 +232,21 @@ public class PlayerGloveRenderer
 
 	private static void renderLeftArmGlove(IPlayerAether playerAether, ItemAccessory gloves)
     {
-		Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
+        if (gloves.getClass() == ItemAccessory.class)
+        {
+            Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? gloves.texture : gloves.texture_slim);
+        }
+        else if (gloves.getClass() == ItemAccessoryDyable.class)
+        {
+            Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(!isSlim ? ((ItemAccessoryDyable) gloves).texture : ((ItemAccessoryDyable) gloves).texture_slim);
+        }
 
 		int colour = gloves.getColorFromItemStack(playerAether.getAccessoryInventory().getStackInSlot(6), 0);
+        if (gloves.getClass() == ItemAccessoryDyable.class)
+        {
+            colour = ((ItemAccessoryDyable) gloves).getColor(playerAether.getAccessoryInventory().getStackInSlot(6));
+        }
+
 		float red = ((colour >> 16) & 0xff) / 255F;
 		float green = ((colour >> 8) & 0xff) / 255F;
 		float blue = (colour & 0xff) / 255F;

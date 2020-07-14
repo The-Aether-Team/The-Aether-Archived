@@ -4,6 +4,7 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.api.accessories.AccessoryType;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.items.accessories.ItemAccessory;
+import com.legacy.aether.items.accessories.ItemAccessoryDyable;
 import com.legacy.aether.items.armor.ItemAetherArmor;
 import com.legacy.aether.items.armor.ItemZaniteArmor;
 import com.legacy.aether.items.dungeon.ItemDungeonKey;
@@ -213,7 +214,7 @@ public class ItemsAether
 		candy_cane_sword = register("candy_cane_sword", new ItemCandyCaneSword());
 		notch_hammer = register("notch_hammer", new ItemNotchHammer());
 
-		leather_gloves = register("leather_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xc65c35));
+		leather_gloves = register("leather_gloves", new ItemAccessoryDyable(AccessoryType.GLOVE));
 		iron_gloves = register("iron_gloves", new ItemAccessory(AccessoryType.GLOVE));
 		golden_gloves = register("golden_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xFBF424));
 		chain_gloves = register("chain_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("chain"));

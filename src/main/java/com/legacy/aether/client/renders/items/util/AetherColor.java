@@ -1,5 +1,6 @@
 package com.legacy.aether.client.renders.items.util;
 
+import com.legacy.aether.items.accessories.ItemAccessoryDyable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -27,9 +28,14 @@ public class AetherColor implements IItemColor, IBlockColor
 	@Override
 	public int colorMultiplier(ItemStack stack, int tintIndex)
 	{
-		if (this.item instanceof ItemAccessory)
+		if (this.item.getClass() == ItemAccessory.class)
 		{
 			return ((ItemAccessory)stack.getItem()).getColorFromItemStack(stack, 0);
+		}
+
+		if (this.item.getClass() == ItemAccessoryDyable.class)
+		{
+			return ((ItemAccessoryDyable)stack.getItem()).getColor(stack);
 		}
 
 		if (this.item instanceof ItemAetherArmor)
