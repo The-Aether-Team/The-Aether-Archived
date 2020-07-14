@@ -155,6 +155,7 @@ public class ItemDartShooter extends Item
 			if (!world.isRemote)
 			{
 				dart.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, 1.0F, 1.0F);
+				dart.setNoGravity(true);
 				world.spawnEntity(dart);
 
 				if (!(entityplayer.capabilities.isCreativeMode))

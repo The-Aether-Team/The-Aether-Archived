@@ -3,9 +3,11 @@ package com.legacy.aether;
 import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.portal.BlockAetherPortal;
+import com.legacy.aether.entities.AetherEntities;
 import com.legacy.aether.entities.bosses.EntityValkyrie;
 import com.legacy.aether.entities.passive.mountable.EntityAerbunny;
 import com.legacy.aether.entities.passive.mountable.EntityFlyingCow;
+import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.dungeon.ItemDungeonKey;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
@@ -14,10 +16,7 @@ import com.legacy.aether.items.weapons.ItemSkyrootSword;
 import com.legacy.aether.world.AetherWorld;
 import com.legacy.aether.world.AetherWorldProvider;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
@@ -39,6 +38,7 @@ import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -280,6 +280,34 @@ public class AetherEventHandler
 						double d2 = rand.nextGaussian() * 0.02D;
 						double d3 = 5D;
 						event.getTarget().world.spawnParticle(EnumParticleTypes.FLAME, (event.getTarget().posX + (double)(rand.nextFloat() * event.getTarget().width * 2.0F)) - (double)event.getTarget().width - d * d3, (event.getTarget().posY + (double)(rand.nextFloat() * event.getTarget().height)) - d1 * d3, (event.getTarget().posZ + (double)(rand.nextFloat() * event.getTarget().width * 2.0F)) - (double)event.getTarget().width - d2 * d3, d, d1, d2);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onProjectileImpact(ProjectileImpactEvent event)
+	{
+		if (event.getEntity() instanceof EntityDartBase)
+		{
+			EntityDartBase entityDartBase = (EntityDartBase) event.getEntity();
+
+			if (!entityDartBase.world.isRemote)
+			{
+				if (!entityDartBase.shootingEntity.getPassengers().isEmpty() && event.getRayTraceResult().entityHit == entityDartBase.shootingEntity.getPassengers().get(0))
+				{
+					event.setCanceled(true);
+				}
+				else
+				{
+					if (event.getRayTraceResult().entityHit != entityDartBase.shootingEntity && event.getRayTraceResult().typeOfHit == Type.ENTITY)
+					{
+						entityDartBase.setDead();
+					}
+					else
+					{
+						entityDartBase.setNoGravity(true);
 					}
 				}
 			}
