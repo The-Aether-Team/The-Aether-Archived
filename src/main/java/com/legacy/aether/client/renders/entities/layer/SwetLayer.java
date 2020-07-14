@@ -44,7 +44,7 @@ public class SwetLayer implements LayerRenderer<EntitySwet>
 	@Override
 	public boolean shouldCombineTextures() 
 	{
-		return false;
+		return true;
 	}
 
 }
