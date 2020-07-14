@@ -150,6 +150,10 @@ public class ItemDartShooter extends Item {
 
 			if (!world.isRemote) {
 				world.spawnEntityInWorld(dart);
+				if (dart != null)
+				{
+					dart.setGravityVelocity(0.99F);
+				}
 
 				if (!(entityplayer.capabilities.isCreativeMode)) {
 					dart.canBePickedUp = 1;

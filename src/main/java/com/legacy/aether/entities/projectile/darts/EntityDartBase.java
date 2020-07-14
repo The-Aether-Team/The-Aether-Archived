@@ -39,6 +39,7 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
     private int ticksInGround;
     private int ticksInAir;
     private double damage = 2.0D;
+    private float gravityVelocity;
 
     public EntityDartBase(World world) {
         super(world);
@@ -308,6 +309,11 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
             this.setPosition(this.posX, this.posY, this.posZ);
             this.func_145775_I();
         }
+
+        if (this.ticksInAir == 500)
+        {
+            this.setDead();
+        }
     }
 
     public void onDartHit(MovingObjectPosition movingobjectposition) {
@@ -386,10 +392,25 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
                 this.inTile.onEntityCollidedWithBlock(this.worldObj, this.tileX, this.tileY, this.tileZ, this);
             }
         }
+
+        if (movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && movingobjectposition.entityHit != this.shootingEntity.riddenByEntity)
+        {
+            this.setDead();
+        }
+        else
+        {
+            this.setGravityVelocity(0.03F);
+        }
     }
 
-    protected float getGravityVelocity() {
-        return 0.99F;
+    protected float getGravityVelocity()
+    {
+        return this.gravityVelocity;
+    }
+
+    public void setGravityVelocity(float gravityVelocity)
+    {
+        this.gravityVelocity = gravityVelocity;
     }
 
     @Override

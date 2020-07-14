@@ -1,6 +1,7 @@
 package com.legacy.aether;
 
 import com.legacy.aether.entities.passive.mountable.EntityAerbunny;
+import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.network.AetherNetwork;
 import com.legacy.aether.network.packets.PacketSendEternalDay;
 import com.legacy.aether.network.packets.PacketSendShouldCycle;
