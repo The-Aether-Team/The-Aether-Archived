@@ -1,5 +1,6 @@
 package com.legacy.aether.client.renders.items;
 
+import com.legacy.aether.client.renders.items.definitions.CandyCaneSwordDefinition;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -132,7 +133,6 @@ public class ItemRendering
 		register(ItemsAether.holy_sword, "holy_sword");
 		register(ItemsAether.vampire_blade, "vampire_blade");
 		register(ItemsAether.pig_slayer, "pig_slayer");
-		register(ItemsAether.candy_cane_sword, "candy_cane_sword");
 
 		register(ItemsAether.victory_medal, "victory_medal");
 
@@ -163,6 +163,7 @@ public class ItemRendering
 
 		registerDefinition(ItemsAether.phoenix_bow, new PhoenixBowDefinition());
 		registerDefinition(ItemsAether.notch_hammer, new NotchHammerDefinition());
+		registerDefinition(ItemsAether.candy_cane_sword, new CandyCaneSwordDefinition());
 
 		for (int meta = 0; meta < EnumGummySwetType.values().length; ++meta)
 		{
@@ -198,6 +199,8 @@ public class ItemRendering
 		registerMeta(ItemsAether.dart, Aether.locate("golden_dart"), Aether.locate("poison_dart"), Aether.locate("enchanted_dart"));
 		registerMeta(ItemsAether.phoenix_bow, Aether.locate("phoenix_bow"), Aether.locate("phoenix_bow_pulling_0"), Aether.locate("phoenix_bow_pulling_1"), Aether.locate("phoenix_bow_pulling_2"));
 		registerMeta(ItemsAether.notch_hammer, Aether.locate("notch_hammer"), Aether.locate("hammer_projectile"), Aether.locate("jeb_hammer"));
+		registerMeta(ItemsAether.candy_cane_sword, Aether.locate("candy_cane_sword"), Aether.locate("green_candy_cane_sword"));
+
 	}
 
 	public static void registerColors()
