@@ -11,6 +11,7 @@ import com.legacy.aether.world.TeleporterAether;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockWorldState;
 import net.minecraft.block.state.IBlockState;
@@ -37,6 +38,7 @@ public class BlockAetherPortal extends BlockPortal
 
 		this.setHardness(-1);
 		this.setResistance(900000F);
+		this.setSoundType(SoundType.GLASS);
 	}
 
 	@Override
