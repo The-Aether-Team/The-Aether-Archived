@@ -25,6 +25,8 @@ public class AetherConfig {
 
 	private static boolean menu_enabled, menu_button, install_resourcepack;
 
+	private static boolean legacy_altar_name;
+
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
 
@@ -59,6 +61,8 @@ public class AetherConfig {
 		menu_button = config.get("Misc", "Enables the Aether Menu toggle button", true).getBoolean(true);
 
 		install_resourcepack = config.get("Misc", "Determines whether the Aether b1.7.3 resource pack should be generated.", true).getBoolean(true);
+
+		legacy_altar_name = config.get("Misc", "Changes whether the Altar should be named Enchanter or not.", false).getBoolean(false);
 
 		config.save();
 	}
@@ -121,5 +125,9 @@ public class AetherConfig {
 	public static boolean installResourcepack()
 	{
 		return AetherConfig.install_resourcepack;
+	}
+
+	public static boolean legacyAltarName() {
+		return AetherConfig.legacy_altar_name;
 	}
 }

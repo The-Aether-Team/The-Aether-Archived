@@ -2,6 +2,7 @@ package com.legacy.aether.blocks;
 
 import com.legacy.aether.items.ItemSkyrootBed;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.items.block.ItemBlockEnchanter;
 import com.legacy.aether.items.block.ItemBlockRarity;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -148,7 +149,7 @@ public class BlocksAether {
 		white_flower = register("white_flower", new BlockAetherFlower().setBlockTextureName(Aether.find("white_flower")));
 		skyroot_sapling = register("skyroot_sapling", new BlockAetherSapling(new AetherGenSkyrootTree(false)).setBlockTextureName(Aether.find("skyroot_sapling")));
 		golden_oak_sapling = register("golden_oak_sapling", new BlockAetherSapling(new AetherGenOakTree()).setBlockTextureName(Aether.find("golden_oak_sapling")));
-		enchanter = registerMeta("enchanter", new BlockEnchanter());
+		enchanter = registerEnchanter("enchanter", new BlockEnchanter());
 		freezer = registerMeta("freezer", new BlockFreezer());
 		incubator = registerMeta("incubator", new BlockIncubator());
 		sun_altar = register("sun_altar", new BlockSunAltar());
@@ -253,6 +254,15 @@ public class BlocksAether {
 		block.setBlockName(name);
 
 		GameRegistry.registerBlock(block, name);
+
+		return block;
+	}
+
+	public static Block registerEnchanter(String name, Block block) {
+		block.setBlockName(name);
+		block.setCreativeTab(AetherCreativeTabs.blocks);
+
+		GameRegistry.registerBlock(block, ItemBlockEnchanter.class, name);
 
 		return block;
 	}

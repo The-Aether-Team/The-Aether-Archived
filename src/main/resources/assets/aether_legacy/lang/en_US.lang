@@ -187,7 +187,8 @@ tile.quicksoil_glass.name=Quicksoil Glass
 tile.aerogel.name=Aerogel
 tile.icestone.name=Icestone
 tile.treasure_chest.name=Treasure Chest
-tile.enchanter.name=Altar
+tile.enchanter.name=Enchanter
+tile.altar.name=Altar
 tile.incubator.name=Incubator
 tile.chest_mimic.name=Chest Mimic
 tile.freezer.name=Freezer
@@ -299,6 +300,7 @@ death.attack.aether_legacy.poison=%s was inebriated
 
 # Containers
 container.aether_legacy.incubator=Incubator
+container.aether_legacy.enchanter=Enchanter
 container.aether_legacy.altar=Altar
 container.aether_legacy.freezer=Freezer
 
