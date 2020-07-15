@@ -36,6 +36,8 @@ public class MoaRenderer extends RenderLiving {
 
 	private static final ResourceLocation BLACK_SADDLE = Aether.locate("textures/entities/moa/black_moa_saddle.png");
 
+	private static final ResourceLocation MOS = new ResourceLocation("aether_legacy", "textures/entities/moa/mos.png");
+
 	public MoaRenderer() {
 		super(new MoaModel(0.0F), 1.0F);
 
@@ -152,7 +154,14 @@ public class MoaRenderer extends RenderLiving {
 			}
 		}
 
-		return moa.getMoaType().getTexture(moa.isSaddled(), moa.riddenByEntity != null);
+		if (moa.hasCustomNameTag() && "Mos".equals(moa.getCustomNameTag()) && (moa.getMoaType() == AetherMoaTypes.orange))
+		{
+			return MOS;
+		}
+		else
+		{
+			return moa.getMoaType().getTexture(moa.isSaddled(), moa.riddenByEntity != null);
+		}
 	}
 
 	private static float r(int r) {
