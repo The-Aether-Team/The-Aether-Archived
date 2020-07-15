@@ -78,6 +78,9 @@ public class AetherConfig
 
 		@Config.Comment("Determines whether the Aether b1.7.3 resource pack should be generated.")
 		public boolean install_resourcepack = true;
+
+		@Config.Comment("Changes whether the Altar should be named Enchanter or not.")
+		public boolean legacy_altar_name = false;
 	}
 	
 	public static final GameplayChanges gameplay_changes = new GameplayChanges();

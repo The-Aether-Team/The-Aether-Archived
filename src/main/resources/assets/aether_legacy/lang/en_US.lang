@@ -178,7 +178,8 @@ tile.quicksoil_glass.name=Quicksoil Glass
 tile.aerogel.name=Aerogel
 tile.icestone.name=Icestone
 tile.treasure_chest.name=Treasure Chest
-tile.enchanter.name=Altar
+tile.enchanter.name=Enchanter
+tile.altar.name=Altar
 tile.incubator.name=Incubator
 tile.chest_mimic.name=Chest Mimic
 tile.freezer.name=Freezer
@@ -255,7 +256,8 @@ entity.whirlwind.name=Whirlwind
 
 # Containers
 container.aether_legacy.incubator=Incubator
-container.aether_legacy.enchanter=Altar
+container.aether_legacy.enchanter=Enchanter
+container.aether_legacy.altar=Altar
 container.aether_legacy.freezer=Freezer
 
 # Advancements
@@ -449,6 +451,7 @@ aether_legacy.general.visual_options.updated_aercloud_colors=Updated Aercloud Co
 aether_legacy.general.visual_options.menu_enabled=Aether Menu
 aether_legacy.general.visual_options.menu_button=Aether Menu Button
 aether_legacy.general.visual_options.install_resourcepack=Install Resource Pack
+aether_legacy.general.visual_options.legacy_altar_name=Classic Altar Name
 
 aether_legacy.general.world_gen=World Generation Options
 aether_legacy.general.world_gen.tooltip=These options affect world generation.

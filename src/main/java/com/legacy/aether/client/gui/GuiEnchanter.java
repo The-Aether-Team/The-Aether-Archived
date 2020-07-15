@@ -1,5 +1,6 @@
 package com.legacy.aether.client.gui;
 
+import com.legacy.aether.AetherConfig;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -38,7 +39,9 @@ public class GuiEnchanter extends GuiContainer
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2)
 	{
-		String enchanterName = this.enchanter.getDisplayName().getFormattedText();
+		String enchanterName = AetherConfig.visual_options.legacy_altar_name ?
+				I18n.format("container.aether_legacy.enchanter")
+				: I18n.format("container.aether_legacy.altar");
 
 		this.fontRenderer.drawString(enchanterName, this.xSize / 2 - this.fontRenderer.getStringWidth(enchanterName) / 2, 6, 4210752);
 		this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);

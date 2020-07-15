@@ -46,6 +46,7 @@ import com.legacy.aether.blocks.portal.BlockAetherPortal;
 import com.legacy.aether.items.ItemSkyrootBed;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.block.ItemAetherSlab;
+import com.legacy.aether.items.block.ItemEnchanter;
 import com.legacy.aether.items.block.ItemRarity;
 import com.legacy.aether.items.block.ItemSubtype;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
@@ -159,7 +160,7 @@ public class BlocksAether
 		zanite_block = register("zanite_block", new BlockZanite());
 		berry_bush = register("berry_bush", new BlockBerryBush());
 		berry_bush_stem = register("berry_bush_stem", new BlockBerryBushStem());
-		enchanter = register("enchanter", new BlockEnchanter());
+		enchanter = registerEnchanter("enchanter", new BlockEnchanter());
 		freezer = register("freezer", new BlockFreezer());
 		incubator = register("incubator", new BlockIncubator());
 		dungeon_block = registerMeta("dungeon_block", new BlockDungeonBase(false));
@@ -274,6 +275,19 @@ public class BlocksAether
 	public static Block registerBed(String name, Block block)
 	{
 		blockList[availableId] = block.setRegistryName(Aether.locate(name));
+
+		++availableId;
+
+		return block;
+	}
+
+	public static Block registerEnchanter(String name, Block block)
+	{
+		block.setTranslationKey(name);
+		block.setCreativeTab(AetherCreativeTabs.blocks);
+
+		blockList[availableId] = block.setRegistryName(Aether.locate(name));
+		itemList[availableId] = new ItemEnchanter(block).setRegistryName(Aether.locate(name));
 
 		++availableId;
 
