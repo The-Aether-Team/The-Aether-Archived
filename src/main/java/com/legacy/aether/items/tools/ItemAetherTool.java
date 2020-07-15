@@ -43,7 +43,7 @@ public abstract class ItemAetherTool extends ItemTool
         else if (toolType == EnumAetherToolType.AXE)
         {
         	this.toolClass = "axe";
-            this.attackDamage = ATTACK_DAMAGES[toolMaterial.ordinal()] + toolMaterial.getAttackDamage();
+            this.attackDamage = ATTACK_DAMAGES[toolMaterial.ordinal()];
             this.attackSpeed = ATTACK_SPEEDS[toolMaterial.ordinal()];
         }
         else if (toolType == EnumAetherToolType.SHOVEL)
