@@ -11,6 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
+import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureStart;
 
 import com.google.common.collect.Sets;
@@ -71,14 +72,14 @@ public class MapGenGoldenDungeon extends MapGenStructure
     {
         int rand = this.rand.nextInt(180);
 
-        if (rand != 0)
-        {
-            return false;
-        }
-        else
-        {
+        //if (rand != 0)
+        //{
+        //    return false;
+        //}
+        //else
+        //{
             return chunkX % 10 == 0 && chunkZ % 10 == 0;
-        }
+        //}
     }
 
 	@Override
@@ -136,8 +137,19 @@ public class MapGenGoldenDungeon extends MapGenStructure
 
             this.components.add(new ComponentGoldenDungeon((chunkX << 4) + 2, (chunkZ << 4) + 2, this.dungeonDirection));
 
+            this.customOffset(random);
             this.updateBoundingBox();
             this.wasCreated = true;
+        }
+
+        private void customOffset(Random random)
+        {
+            int offset = random.nextInt(64);
+
+            for (StructureComponent component : this.components)
+            {
+                component.offset(0, offset, 0);
+            }
         }
 
         @Override

@@ -123,6 +123,7 @@ public class MapGenSilverDungeon extends MapGenStructure
             dungeon.setStaircasePosition(this.firstStaircaseZ, this.secondStaircaseZ, this.finalStaircaseZ);
             dungeon.setCloudTendencies(this.xTendency, this.zTendency);
 
+            dungeon.offset(0, random.nextInt(64), 0);
             this.components.add(dungeon);
             this.updateBoundingBox();
             this.wasCreated = true;

@@ -26,7 +26,7 @@ public class ComponentGoldenIsland extends AetherStructure
 	{
         this.setCoordBaseMode(EnumFacing.NORTH);
 
-        this.boundingBox = new StructureBoundingBox(chunkX, 110, chunkZ, chunkX + 100, 146, chunkZ + 100);
+        this.boundingBox = new StructureBoundingBox(chunkX, 80, chunkZ, chunkX + 100, 220, chunkZ + 100);
 	}
 
 	@Override

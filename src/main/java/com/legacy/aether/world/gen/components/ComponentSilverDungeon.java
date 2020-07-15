@@ -42,7 +42,7 @@ public class ComponentSilverDungeon extends AetherStructure
 	public ComponentSilverDungeon(int chunkX, int chunkZ)
 	{
         this.setCoordBaseMode(EnumFacing.NORTH);
-        this.boundingBox = new StructureBoundingBox(chunkX, 100, chunkZ, chunkX + 100, 190, chunkZ + 100);
+        this.boundingBox = new StructureBoundingBox(chunkX, 80, chunkZ, chunkX + 100, 220, chunkZ + 100);
 	}
 
 	public void setStaircasePosition(int first, int second, int third)
