@@ -11,6 +11,7 @@ import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.accessories.ItemAccessoryDyable;
 import com.legacy.aether.items.dungeon.ItemDungeonKey;
+import com.legacy.aether.items.tools.ItemSkyrootBucket;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.items.weapons.ItemSkyrootSword;
 
@@ -19,6 +20,7 @@ import com.legacy.aether.world.AetherWorldProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.boss.EntityWither;
@@ -35,9 +37,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
@@ -326,25 +326,71 @@ public class AetherEventHandler
 	@SubscribeEvent
 	public void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock event)
 	{
-		IBlockState block = event.getWorld().getBlockState(event.getPos());
-
-		if (block.getBlock() == Blocks.CAULDRON)
+		if (event.getHand() == EnumHand.MAIN_HAND)
 		{
-			if (event.getItemStack().getItem() == ItemsAether.leather_gloves)
-			{
-				ItemAccessoryDyable gloves = (ItemAccessoryDyable) event.getItemStack().getItem();
+			IBlockState block = event.getWorld().getBlockState(event.getPos());
 
+			if (block.getBlock() == Blocks.CAULDRON)
+			{
 				BlockCauldron cauldron = (BlockCauldron) block.getBlock();
 
 				int waterLevel = block.getValue(LEVEL);
 
-				if (waterLevel > 0)
+				if (event.getItemStack().getItem() == ItemsAether.leather_gloves)
 				{
-					if (gloves.hasColor(event.getItemStack()) && !event.getWorld().isRemote)
+					ItemAccessoryDyable gloves = (ItemAccessoryDyable) event.getItemStack().getItem();
+
+					if (waterLevel > 0)
 					{
-						gloves.removeColor(event.getItemStack());
-						cauldron.setWaterLevel(event.getWorld(), event.getPos(), block, waterLevel - 1);
-						event.getEntityPlayer().addStat(StatList.ARMOR_CLEANED);
+						if (gloves.hasColor(event.getItemStack()) && !event.getWorld().isRemote)
+						{
+							gloves.removeColor(event.getItemStack());
+							cauldron.setWaterLevel(event.getWorld(), event.getPos(), block, waterLevel - 1);
+							event.getEntityPlayer().addStat(StatList.ARMOR_CLEANED);
+						}
+					}
+				}
+
+				if (event.getItemStack().getItem() == ItemsAether.skyroot_bucket)
+				{
+					ItemSkyrootBucket bucket = (ItemSkyrootBucket) event.getItemStack().getItem();
+
+					if (EnumSkyrootBucketType.getType(bucket.getMetadata(event.getItemStack())) == EnumSkyrootBucketType.Water)
+					{
+						if (waterLevel < 3 && !event.getWorld().isRemote)
+						{
+							if (!event.getEntityPlayer().capabilities.isCreativeMode)
+							{
+								event.getEntityPlayer().setHeldItem(event.getHand(), new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Empty.meta));
+							}
+
+							event.getEntityPlayer().addStat(StatList.CAULDRON_FILLED);
+							cauldron.setWaterLevel(event.getWorld(), event.getPos(), block, 3);
+							event.getEntityPlayer().world.playSound(null, event.getPos(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						}
+					}
+					else if (EnumSkyrootBucketType.getType(bucket.getMetadata(event.getItemStack())) == EnumSkyrootBucketType.Empty)
+					{
+						if (waterLevel == 3 && !event.getWorld().isRemote)
+						{
+							if (!event.getEntityPlayer().capabilities.isCreativeMode)
+							{
+								event.getItemStack().shrink(1);
+
+								if (event.getItemStack().isEmpty())
+								{
+									event.getEntityPlayer().setHeldItem(event.getHand(), new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Water.meta));
+								}
+								else if (!event.getEntityPlayer().inventory.addItemStackToInventory(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Water.meta)))
+								{
+									event.getEntityPlayer().dropItem(new ItemStack(ItemsAether.skyroot_bucket, 1, EnumSkyrootBucketType.Water.meta), false);
+								}
+							}
+
+							event.getEntityPlayer().addStat(StatList.CAULDRON_USED);
+							cauldron.setWaterLevel(event.getWorld(), event.getPos(), block, 0);
+							event.getWorld().playSound(null, event.getPos(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						}
 					}
 				}
 			}

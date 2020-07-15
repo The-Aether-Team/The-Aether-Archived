@@ -160,7 +160,11 @@ public class ItemSkyrootBucket extends Item
                 boolean flag1 = world.getBlockState(blockpos).getBlock().isReplaceable(world, blockpos);
                 BlockPos blockpos1 = flag1 && movingobjectposition.sideHit == EnumFacing.UP ? blockpos : blockpos.offset(movingobjectposition.sideHit);
 
-                if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, heldItem))
+                if (world.getBlockState(movingobjectposition.getBlockPos()).getBlock() == Blocks.CAULDRON)
+				{
+					return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
+				}
+                else if (!player.canPlayerEdit(blockpos1, movingobjectposition.sideHit, heldItem))
                 {
                     return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
                 }
