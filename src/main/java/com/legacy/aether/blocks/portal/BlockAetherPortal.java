@@ -27,6 +27,7 @@ public class BlockAetherPortal extends BlockPortal {
 
 		this.setHardness(-1);
 		this.setResistance(900000F);
+		this.setStepSound(soundTypeGlass);
 	}
 
 	@Override
