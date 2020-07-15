@@ -72,14 +72,14 @@ public class MapGenGoldenDungeon extends MapGenStructure
     {
         int rand = this.rand.nextInt(180);
 
-        //if (rand != 0)
-        //{
-        //    return false;
-        //}
-        //else
-        //{
+        if (rand != 0)
+        {
+            return false;
+        }
+        else
+        {
             return chunkX % 10 == 0 && chunkZ % 10 == 0;
-        //}
+        }
     }
 
 	@Override
