@@ -9,12 +9,16 @@ import com.legacy.aether.entities.passive.mountable.EntityAerbunny;
 import com.legacy.aether.entities.passive.mountable.EntityFlyingCow;
 import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.items.accessories.ItemAccessoryDyable;
 import com.legacy.aether.items.dungeon.ItemDungeonKey;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.items.weapons.ItemSkyrootSword;
 
 import com.legacy.aether.world.AetherWorld;
 import com.legacy.aether.world.AetherWorldProvider;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockCauldron;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.boss.EntityWither;
@@ -27,8 +31,10 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -45,6 +51,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
@@ -54,6 +61,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 import java.util.Random;
+
+import static net.minecraft.block.BlockCauldron.LEVEL;
 
 public class AetherEventHandler 
 {
@@ -308,6 +317,34 @@ public class AetherEventHandler
 					else
 					{
 						entityDartBase.setNoGravity(true);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock event)
+	{
+		IBlockState block = event.getWorld().getBlockState(event.getPos());
+
+		if (block.getBlock() == Blocks.CAULDRON)
+		{
+			if (event.getItemStack().getItem() == ItemsAether.leather_gloves)
+			{
+				ItemAccessoryDyable gloves = (ItemAccessoryDyable) event.getItemStack().getItem();
+
+				BlockCauldron cauldron = (BlockCauldron) block.getBlock();
+
+				int waterLevel = block.getValue(LEVEL);
+
+				if (waterLevel > 0)
+				{
+					if (gloves.hasColor(event.getItemStack()) && !event.getWorld().isRemote)
+					{
+						gloves.removeColor(event.getItemStack());
+						cauldron.setWaterLevel(event.getWorld(), event.getPos(), block, waterLevel - 1);
+						event.getEntityPlayer().addStat(StatList.ARMOR_CLEANED);
 					}
 				}
 			}
