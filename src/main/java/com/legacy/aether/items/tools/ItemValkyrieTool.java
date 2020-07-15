@@ -15,8 +15,8 @@ import com.legacy.aether.items.util.EnumAetherToolType;
 
 public class ItemValkyrieTool extends ItemAetherTool {
 
-	public ItemValkyrieTool(EnumAetherToolType toolType) {
-		super(ToolMaterial.EMERALD, toolType);
+	public ItemValkyrieTool(float damage, EnumAetherToolType toolType) {
+		super(damage, ToolMaterial.EMERALD, toolType);
 	}
 
 	@Override

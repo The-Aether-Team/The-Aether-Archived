@@ -15,8 +15,6 @@ import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 public abstract class ItemAetherTool extends ItemTool {
 
-	private static final float[] ATTACK_DAMAGES = new float[]{6.0F, 8.0F, 8.0F, 8.0F, 6.0F};
-
 	private float attackDamage;
 
 	private String toolClass;
@@ -25,20 +23,17 @@ public abstract class ItemAetherTool extends ItemTool {
 
 	public EnumAetherToolType toolType;
 
-	public ItemAetherTool(ToolMaterial toolMaterial, EnumAetherToolType toolType) {
-		super(1.0F, toolMaterial, toolType.getToolBlockSet());
+	public ItemAetherTool(float damage, ToolMaterial toolMaterial, EnumAetherToolType toolType) {
+		super(damage, toolMaterial, toolType.getToolBlockSet());
 
 		this.toolType = toolType;
 
 		if (toolType == EnumAetherToolType.PICKAXE) {
 			this.toolClass = "pickaxe";
-			this.attackDamage = 1.0F + toolMaterial.getDamageVsEntity();
 		} else if (toolType == EnumAetherToolType.AXE) {
 			this.toolClass = "axe";
-			this.attackDamage = ATTACK_DAMAGES[toolMaterial.ordinal()] + toolMaterial.getDamageVsEntity();
 		} else if (toolType == EnumAetherToolType.SHOVEL) {
 			this.toolClass = "shovel";
-			this.attackDamage = 1.5F + toolMaterial.getDamageVsEntity();
 		}
 
 		this.setCreativeTab(AetherCreativeTabs.tools);

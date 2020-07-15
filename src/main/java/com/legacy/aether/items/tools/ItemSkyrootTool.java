@@ -8,8 +8,8 @@ import com.legacy.aether.items.util.EnumAetherToolType;
 
 public class ItemSkyrootTool extends ItemAetherTool {
 
-	public ItemSkyrootTool(EnumAetherToolType toolType) {
-		super(ToolMaterial.WOOD, toolType);
+	public ItemSkyrootTool(float damage, EnumAetherToolType toolType) {
+		super(damage, ToolMaterial.WOOD, toolType);
 	}
 
 	@Override

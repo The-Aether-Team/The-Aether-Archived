@@ -13,8 +13,8 @@ import com.legacy.aether.items.util.EnumAetherToolType;
 
 public class ItemHolystoneTool extends ItemAetherTool {
 
-	public ItemHolystoneTool(EnumAetherToolType toolType) {
-		super(ToolMaterial.STONE, toolType);
+	public ItemHolystoneTool(float damage, EnumAetherToolType toolType) {
+		super(damage, ToolMaterial.STONE, toolType);
 	}
 
 	@Override

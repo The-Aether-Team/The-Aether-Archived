@@ -10,8 +10,8 @@ public class ItemZaniteTool extends ItemAetherTool {
 
 	public float[] level = new float[]{2F, 4F, 6F, 8F, 12F};
 
-	public ItemZaniteTool(EnumAetherToolType toolType) {
-		super(ToolMaterial.IRON, toolType);
+	public ItemZaniteTool(float damage, EnumAetherToolType toolType) {
+		super(damage, ToolMaterial.IRON, toolType);
 	}
 
 	@Override

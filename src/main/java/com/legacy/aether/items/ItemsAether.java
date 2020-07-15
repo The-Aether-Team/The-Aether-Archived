@@ -125,25 +125,25 @@ public class ItemsAether {
 		aechor_petal = register("aechor_petal", new ItemAether(AetherCreativeTabs.material).setTextureName(Aether.find("misc/aechor_petal")));
 		swet_ball = register("swet_ball", new ItemSwettyBall(AetherCreativeTabs.material).setTextureName(Aether.find("misc/swet_ball")));
 
-		skyroot_pickaxe = register("skyroot_pickaxe", new ItemSkyrootTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/skyroot_pickaxe")));
-		skyroot_axe = register("skyroot_axe", new ItemSkyrootTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/skyroot_axe")));
-		skyroot_shovel = register("skyroot_shovel", new ItemSkyrootTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/skyroot_shovel")));
+		skyroot_pickaxe = register("skyroot_pickaxe", new ItemSkyrootTool(2.0F, EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/skyroot_pickaxe")));
+		skyroot_axe = register("skyroot_axe", new ItemSkyrootTool(3.0F, EnumAetherToolType.AXE).setTextureName(Aether.find("tools/skyroot_axe")));
+		skyroot_shovel = register("skyroot_shovel", new ItemSkyrootTool(1.0F, EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/skyroot_shovel")));
 
-		holystone_pickaxe = register("holystone_pickaxe", new ItemHolystoneTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/holystone_pickaxe")));
-		holystone_axe = register("holystone_axe", new ItemHolystoneTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/holystone_axe")));
-		holystone_shovel = register("holystone_shovel", new ItemHolystoneTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/holystone_shovel")));
+		holystone_pickaxe = register("holystone_pickaxe", new ItemHolystoneTool(2.0F, EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/holystone_pickaxe")));
+		holystone_axe = register("holystone_axe", new ItemHolystoneTool(3.0F, EnumAetherToolType.AXE).setTextureName(Aether.find("tools/holystone_axe")));
+		holystone_shovel = register("holystone_shovel", new ItemHolystoneTool(1.0F, EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/holystone_shovel")));
 
-		zanite_pickaxe = register("zanite_pickaxe", new ItemZaniteTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/zanite_pickaxe")));
-		zanite_axe = register("zanite_axe", new ItemZaniteTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/zanite_axe")));
-		zanite_shovel = register("zanite_shovel", new ItemZaniteTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/zanite_shovel")));
+		zanite_pickaxe = register("zanite_pickaxe", new ItemZaniteTool(2.0F, EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/zanite_pickaxe")));
+		zanite_axe = register("zanite_axe", new ItemZaniteTool(3.0F, EnumAetherToolType.AXE).setTextureName(Aether.find("tools/zanite_axe")));
+		zanite_shovel = register("zanite_shovel", new ItemZaniteTool(1.0F, EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/zanite_shovel")));
 
-		gravitite_pickaxe = register("gravitite_pickaxe", new ItemGravititeTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/gravitite_pickaxe")));
-		gravitite_axe = register("gravitite_axe", new ItemGravititeTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/gravitite_axe")));
-		gravitite_shovel = register("gravitite_shovel", new ItemGravititeTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/gravitite_shovel")));
+		gravitite_pickaxe = register("gravitite_pickaxe", new ItemGravititeTool(2.0F, EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/gravitite_pickaxe")));
+		gravitite_axe = register("gravitite_axe", new ItemGravititeTool(3.0F, EnumAetherToolType.AXE).setTextureName(Aether.find("tools/gravitite_axe")));
+		gravitite_shovel = register("gravitite_shovel", new ItemGravititeTool(1.0F, EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/gravitite_shovel")));
 
-		valkyrie_pickaxe = register("valkyrie_pickaxe", new ItemValkyrieTool(EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/valkyrie_pickaxe")));
-		valkyrie_axe = register("valkyrie_axe", new ItemValkyrieTool(EnumAetherToolType.AXE).setTextureName(Aether.find("tools/valkyrie_axe")));
-		valkyrie_shovel = register("valkyrie_shovel", new ItemValkyrieTool(EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/valkyrie_shovel")));
+		valkyrie_pickaxe = register("valkyrie_pickaxe", new ItemValkyrieTool(2.0F, EnumAetherToolType.PICKAXE).setTextureName(Aether.find("tools/valkyrie_pickaxe")));
+		valkyrie_axe = register("valkyrie_axe", new ItemValkyrieTool(3.0F, EnumAetherToolType.AXE).setTextureName(Aether.find("tools/valkyrie_axe")));
+		valkyrie_shovel = register("valkyrie_shovel", new ItemValkyrieTool(1.0F, EnumAetherToolType.SHOVEL).setTextureName(Aether.find("tools/valkyrie_shovel")));
 
 		zanite_helmet = register("zanite_helmet", new ItemZaniteArmor(0, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8).setTextureName(Aether.find("armor/zanite_helmet")));
 		zanite_chestplate = register("zanite_chestplate", new ItemZaniteArmor(1, ArmorMaterial.IRON, "zanite", zanite_gemstone, 0x711ae8).setTextureName(Aether.find("armor/zanite_chestplate")));

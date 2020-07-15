@@ -13,8 +13,8 @@ import com.legacy.aether.items.util.EnumAetherToolType;
 
 public class ItemGravititeTool extends ItemAetherTool {
 
-	public ItemGravititeTool(EnumAetherToolType toolType) {
-		super(ToolMaterial.EMERALD, toolType);
+	public ItemGravititeTool(float damage, EnumAetherToolType toolType) {
+		super(damage, ToolMaterial.EMERALD, toolType);
 	}
 
 	@Override
