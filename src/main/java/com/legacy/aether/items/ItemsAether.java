@@ -211,7 +211,7 @@ public class ItemsAether {
 		candy_cane_sword = register("candy_cane_sword", new ItemCandyCaneSword().setTextureName(Aether.find("weapons/candycane_sword")));
 		notch_hammer = register("notch_hammer", new ItemNotchHammer().setTextureName(Aether.find("weapons/notch_hammer")));
 
-		leather_gloves = register("leather_gloves", new ItemAccessoryDyed(AccessoryType.GLOVES).setColor(0xc65c35).setTextureName(Aether.find("accessories/solid_gloves")));
+		leather_gloves = register("leather_gloves", new ItemAccessoryDyed(AccessoryType.GLOVES).setTextureName(Aether.find("accessories/leather_gloves")));
 		iron_gloves = register("iron_gloves", new ItemAccessory(AccessoryType.GLOVES).setTextureName(Aether.find("accessories/solid_gloves")));
 		golden_gloves = register("golden_gloves", new ItemAccessory(AccessoryType.GLOVES).setColor(0xFBF424).setTextureName(Aether.find("accessories/solid_gloves")));
 		chain_gloves = register("chain_gloves", new ItemAccessory(AccessoryType.GLOVES).setTexture("chain").setTextureName(Aether.find("accessories/chain_gloves")));
@@ -237,7 +237,7 @@ public class ItemsAether {
 		red_cape = register("red_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xe81111).setTextureName(Aether.find("accessories/cape_color_base")));
 		blue_cape = register("blue_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0x137fb7).setTextureName(Aether.find("accessories/cape_color_base")));
 		yellow_cape = register("yellow_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xcdcb0e).setTextureName(Aether.find("accessories/cape_color_base")));
-		white_cape = register("white_cape", new ItemAccessoryDyed(AccessoryType.CAPE).setTextureName(Aether.find("accessories/cape_color_base")));
+		white_cape = register("white_cape", new ItemAccessory(AccessoryType.CAPE).setTextureName(Aether.find("accessories/cape_color_base")));
 		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape").setDungeonLoot().setTextureName(Aether.find("accessories/swet_cape")));
 		invisibility_cape = register("invisibility_cape", new ItemAccessory(AccessoryType.CAPE).setDungeonLoot().setTextureName(Aether.find("accessories/invisibility_cape")));
 		agility_cape = register("agility_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("agility_cape").setDungeonLoot().setTextureName(Aether.find("accessories/agility_cape")));
