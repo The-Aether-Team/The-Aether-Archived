@@ -52,7 +52,7 @@ public class BronzeDungeon extends AetherDungeonVirtual
 
 	public boolean preGenerate(World world, Random random, BlockPos pos)
 	{
-		if(!isBoxSolid(world, new PositionData(pos.getX(), pos.getY() - 3, pos.getZ()), new PositionData(16, 15, 16)) || isSpaceTaken(world, new PositionData(pos.getX(), pos.getY() - 3, pos.getZ()), new PositionData(16, 15, 16)))
+		if(!isBoxSolid(world, new PositionData(pos.getX(), pos.getY() - 3, pos.getZ()), new PositionData(16, 16, 16)) || isSpaceTaken(world, new PositionData(pos.getX(), pos.getY() - 3, pos.getZ()), new PositionData(16, 16, 16)))
 		{
 			return false;
 		}
