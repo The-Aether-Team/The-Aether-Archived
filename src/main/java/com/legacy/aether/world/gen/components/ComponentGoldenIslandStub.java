@@ -23,7 +23,7 @@ public class ComponentGoldenIslandStub extends AetherStructure {
 		this.z = z;
 		this.l = l;
 		this.coordBaseMode = 0;
-		this.boundingBox = new StructureBoundingBox(chunkX, 110, chunkZ, chunkX + 100, 146, chunkZ + 100);
+		this.boundingBox = new StructureBoundingBox(chunkX, 80, chunkZ, chunkX + 100, 220, chunkZ + 100);
 	}
 
 	@Override

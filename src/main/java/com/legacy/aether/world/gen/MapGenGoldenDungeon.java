@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructure;
+import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureStart;
 
 import com.legacy.aether.world.gen.components.ComponentGoldenDungeon;
@@ -82,7 +83,20 @@ public class MapGenGoldenDungeon extends MapGenStructure {
 
 			this.components.add(new ComponentGoldenDungeon((chunkX << 4) + 2, (chunkZ << 4) + 2, this.dungeonDirection));
 
+			this.customOffset(random);
 			this.updateBoundingBox();
+		}
+
+		private void customOffset(Random random)
+		{
+			int offset = random.nextInt(64);
+
+			for (Object object : this.components)
+			{
+				AetherStructure component = (AetherStructure) object;
+
+				component.getBoundingBox().offset(0, offset, 0);
+			}
 		}
 
 		@Override
