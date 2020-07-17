@@ -2,6 +2,7 @@ package com.legacy.aether.items.accessories;
 
 import java.util.List;
 
+import com.legacy.aether.blocks.BlocksAether;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
@@ -115,6 +116,14 @@ public class ItemAccessory extends Item
         }
 
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
+    }
+
+
+    @Override
+    public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+    {
+        return (repair.getItem() == ItemsAether.zanite_gemstone && toRepair.getItem() == ItemsAether.zanite_ring)
+                || (repair.getItem() == ItemsAether.zanite_gemstone && toRepair.getItem() == ItemsAether.zanite_pendant);
     }
 
 	public AccessoryType getType()
