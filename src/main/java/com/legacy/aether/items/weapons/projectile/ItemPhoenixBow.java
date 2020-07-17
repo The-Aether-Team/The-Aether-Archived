@@ -215,12 +215,10 @@ public class ItemPhoenixBow extends ItemBow
 
         if (!playerIn.capabilities.isCreativeMode && !flag)
         {
-            System.out.println("failed");
             return flag ? new ActionResult(EnumActionResult.PASS, itemstack) : new ActionResult(EnumActionResult.FAIL, itemstack);
         }
         else
         {
-            System.out.println("success");
             playerIn.setActiveHand(handIn);
             return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
         }

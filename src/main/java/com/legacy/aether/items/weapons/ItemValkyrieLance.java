@@ -180,7 +180,6 @@ public class ItemValkyrieLance extends Item
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment)
 	{
-
 		return !enchantment.equals(Enchantments.SWEEPING) && enchantment.type == EnumEnchantmentType.WEAPON;
 	}
 

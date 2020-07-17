@@ -118,7 +118,6 @@ public class ItemAccessory extends Item
         return new ActionResult<ItemStack>(EnumActionResult.FAIL, heldItem);
     }
 
-
     @Override
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {

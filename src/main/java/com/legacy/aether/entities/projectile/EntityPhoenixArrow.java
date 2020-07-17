@@ -1,8 +1,10 @@
 package com.legacy.aether.entities.projectile;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.projectile.EntityTippedArrow;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -77,6 +79,11 @@ public class EntityPhoenixArrow extends EntityTippedArrow implements IProjectile
         {
             PotionEffect potioneffect = new PotionEffect(MobEffects.GLOWING, this.duration, 0);
             living.addPotionEffect(potioneffect);
+        }
+
+        if (EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, (EntityLivingBase) this.shootingEntity) > 0)
+        {
+            living.setFire(10);
         }
 
         super.arrowHit(living);

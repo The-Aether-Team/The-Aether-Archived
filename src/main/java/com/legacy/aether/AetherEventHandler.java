@@ -29,6 +29,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -267,7 +268,16 @@ public class AetherEventHandler
 				{
 					if (event.getTarget() instanceof EntityLivingBase)
 					{
-						event.getTarget().setFire(30);
+						int defaultTime = 30;
+
+						int fireAspectModifier = EnchantmentHelper.getFireAspectModifier(event.getEntityPlayer());
+
+						if (fireAspectModifier > 0)
+						{
+							defaultTime += (fireAspectModifier * 4);
+						}
+
+						event.getTarget().setFire(defaultTime);
 					}
 				}
 			}
@@ -298,25 +308,30 @@ public class AetherEventHandler
 	@SubscribeEvent
 	public void onProjectileImpact(ProjectileImpactEvent event)
 	{
-		if (event.getEntity() instanceof EntityDartBase)
+		if (event.getEntity() instanceof EntityArrow)
 		{
-			EntityDartBase entityDartBase = (EntityDartBase) event.getEntity();
+			EntityArrow arrow = (EntityArrow) event.getEntity();
 
-			if (!entityDartBase.world.isRemote)
+			if (!arrow.world.isRemote)
 			{
-				if (!entityDartBase.shootingEntity.getPassengers().isEmpty() && event.getRayTraceResult().entityHit == entityDartBase.shootingEntity.getPassengers().get(0))
+				if (!arrow.shootingEntity.getPassengers().isEmpty() && event.getRayTraceResult().entityHit == arrow.shootingEntity.getPassengers().get(0))
 				{
 					event.setCanceled(true);
 				}
 				else
 				{
-					if (event.getRayTraceResult().entityHit != entityDartBase.shootingEntity && event.getRayTraceResult().typeOfHit == Type.ENTITY)
+					if (event.getEntity() instanceof EntityDartBase)
 					{
-						entityDartBase.setDead();
-					}
-					else
-					{
-						entityDartBase.setNoGravity(true);
+						EntityDartBase entityDartBase = (EntityDartBase) event.getEntity();
+
+						if (event.getRayTraceResult().entityHit != entityDartBase.shootingEntity && event.getRayTraceResult().typeOfHit == Type.ENTITY)
+						{
+							entityDartBase.setDead();
+						}
+						else
+						{
+							entityDartBase.setNoGravity(true);
+						}
 					}
 				}
 			}
