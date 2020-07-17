@@ -114,6 +114,13 @@ public class ItemAccessory extends Item {
 
 		return super.onItemRightClick(stack, worldIn, player);
 	}
+	
+	@Override
+	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	{
+		return (repair.getItem() == ItemsAether.zanite_gemstone && toRepair.getItem() == ItemsAether.zanite_ring)
+				|| (repair.getItem() == ItemsAether.zanite_gemstone && toRepair.getItem() == ItemsAether.zanite_pendant);
+	}
 
 	public AccessoryType getExtraType() {
 		return this.extraType;

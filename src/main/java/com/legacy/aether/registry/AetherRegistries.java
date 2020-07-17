@@ -91,6 +91,9 @@ public class AetherRegistries {
 		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.gravitite_leggings, 13000));
 		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.gravitite_boots, 13000));
 
+		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.zanite_ring, 2250));
+		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.zanite_pendant, 2250));
+
 		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.dart, new ItemStack(ItemsAether.dart, 1, 2), 250));
 		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.dart_shooter, new ItemStack(ItemsAether.dart_shooter, 1, 2), 500));
 
