@@ -38,6 +38,8 @@ import com.legacy.aether.entities.projectile.darts.EntityDartEnchanted;
 import com.legacy.aether.entities.projectile.darts.EntityDartGolden;
 import com.legacy.aether.entities.projectile.darts.EntityDartPoison;
 
+import static net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity;
+
 public class AetherEntities 
 {
 
@@ -69,8 +71,8 @@ public class AetherEntities
 		register(EntityIceyBall.class, "ice_ball", 20);
 		register(EntityThunderBall.class, "thunder_ball", 21);
 
-		register(EntityValkyrie.class, "valkyrie", 22,0x8f8f8e, 0xfff088);
-		register(EntityFireMinion.class, "fire_minion", 23, 0xff611c, 0xffe31c);
+		register(EntityValkyrie.class, "valkyrie", 22);
+		register(EntityFireMinion.class, "fire_minion", 23);
 		register(EntityMiniCloud.class, "mini_cloud", 24);
 
 		register(EntityFloatingBlock.class, "floating_block", 25);
@@ -86,12 +88,12 @@ public class AetherEntities
 
 	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID)
 	{
-		EntityRegistry.registerModEntity(Aether.locate(entityName), entityClass, entityName, entityID, Aether.modid, 80, 3, true);
+		registerModEntity(Aether.locate(entityName), entityClass, entityName, entityID, Aether.modid, 80, 3, true);
 	}
 
 	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID, int primaryEggColor, int secondaryEggColor)
 	{
-		EntityRegistry.registerModEntity(Aether.locate(entityName), entityClass, entityName, entityID, Aether.instance, 80, 3, false, primaryEggColor, secondaryEggColor);
+		registerModEntity(Aether.locate(entityName), entityClass, entityName, entityID, Aether.instance, 80, 3, false, primaryEggColor, secondaryEggColor);
 	}
 
 }
