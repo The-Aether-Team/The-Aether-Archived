@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.networking.packets.PacketCapeChanged;
 import com.legacy.aether.networking.packets.PacketPerkChanged;
 import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
@@ -84,7 +85,7 @@ public class PlayerAether implements IPlayerAether
 
 	private int cooldown, cooldownMax;
 
-	public boolean shouldRenderHalo, shouldRenderGlow;
+	public boolean shouldRenderHalo, shouldRenderGlow, shouldRenderCape;
 
 	public boolean seenSpiritDialog = false;
 	
@@ -100,6 +101,7 @@ public class PlayerAether implements IPlayerAether
 
 		this.shouldRenderHalo = true;
 		this.shouldRenderGlow = false;
+		this.shouldRenderCape = true;
 
 		this.donatorMoaSkin = new DonatorMoaSkin();
 		this.poison = new AetherPoisonMovement(player);
@@ -115,6 +117,7 @@ public class PlayerAether implements IPlayerAether
 		{
 			AetherNetworkingManager.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
 			AetherNetworkingManager.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Glow, this.shouldRenderGlow));
+			AetherNetworkingManager.sendToAll(new PacketCapeChanged(this.getEntity().getEntityId(), this.shouldRenderCape));
 		}
 
 		if (this.inPortal && this.thePlayer.world.isRemote)
@@ -307,6 +310,7 @@ public class PlayerAether implements IPlayerAether
 			output.setBoolean("glow", this.shouldRenderGlow);
 		}
 
+		output.setBoolean("cape", this.shouldRenderCape);
 		output.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
 		output.setInteger("hammer_cooldown", this.cooldown);
 		output.setString("notch_hammer_name", this.cooldownName);
@@ -325,6 +329,11 @@ public class PlayerAether implements IPlayerAether
 		if (input.hasKey("glow"))
 		{
 			this.shouldRenderGlow = input.getBoolean("glow");
+		}
+
+		if (input.hasKey("cape"))
+		{
+			this.shouldRenderCape = input.getBoolean("cape");
 		}
 
 		if (input.hasKey("shards_used"))

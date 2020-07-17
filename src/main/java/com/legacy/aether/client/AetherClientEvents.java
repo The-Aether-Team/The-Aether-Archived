@@ -6,17 +6,15 @@ import com.legacy.aether.AetherConfig;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.client.gui.AetherLoadingScreen;
-import com.legacy.aether.client.gui.button.GuiButtonPerks;
-import com.legacy.aether.client.gui.button.GuiGlowButton;
-import com.legacy.aether.client.gui.button.GuiHaloButton;
+import com.legacy.aether.client.gui.button.*;
 import com.legacy.aether.client.gui.menu.AetherMainMenu;
 import com.legacy.aether.client.gui.GuiEnterAether;
-import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.client.gui.menu.GuiMenuToggleButton;
 import com.legacy.aether.containers.inventory.InventoryAccessories;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketCapeChanged;
 import com.legacy.aether.networking.packets.PacketOpenContainer;
 import com.legacy.aether.networking.packets.PacketPerkChanged;
 import com.legacy.aether.networking.packets.PacketSendJump;
@@ -193,22 +191,34 @@ public class AetherClientEvents
 		{
 			if (Minecraft.getMinecraft().player != null)
 			{
+				int i = 8;
+
+				for (GuiButton button : event.getButtonList())
+				{
+					if (button.id == 200)
+					{
+						button.y = button.y + 24;
+					}
+				}
+
+				event.getButtonList().add(new GuiCapeButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
+
 				if (AetherRankings.isRankedPlayer(Minecraft.getMinecraft().player.getUniqueID()))
 				{
-					for (GuiButton button : event.getButtonList())
-					{
-						if (button.id == 200)
-						{
-							button.y = button.y + 24;
-						}
-					}
-
-					int i = 8;
+					i++;
 					event.getButtonList().add(new GuiHaloButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
 
 					if (AetherRankings.isDeveloper(Minecraft.getMinecraft().player.getUniqueID()))
 					{
-						i = 9;
+						for (GuiButton button : event.getButtonList())
+						{
+							if (button.id == 200)
+							{
+								button.y = button.y + 24;
+							}
+						}
+
+						i++;
 						event.getButtonList().add(new GuiGlowButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
 					}
 				}
@@ -302,6 +312,16 @@ public class AetherClientEvents
 
 			player.shouldRenderGlow = enableGlow;
 			AetherNetworkingManager.sendToServer(new PacketPerkChanged(player.getEntity().getEntityId(), EnumAetherPerkType.Glow, player.shouldRenderGlow));
+		}
+
+		if (event.getButton().getClass() == GuiCapeButton.class)
+		{
+			PlayerAether player = (PlayerAether) AetherAPI.getInstance().get(Minecraft.getMinecraft().player);
+
+			boolean enableCape = !player.shouldRenderCape;
+
+			player.shouldRenderCape = enableCape;
+			AetherNetworkingManager.sendToServer(new PacketCapeChanged(player.getEntity().getEntityId(), player.shouldRenderCape));
 		}
 	}
 

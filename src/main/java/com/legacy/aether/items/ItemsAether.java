@@ -237,14 +237,14 @@ public class ItemsAether
 		zanite_pendant = register("zanite_pendant", new ItemAccessory(AccessoryType.PENDANT).setTexture("zanite").setMaxDamage(98));
 		ice_pendant = register("ice_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x95e6e7).setMaxDamage(250));
 
-		red_cape = register("red_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xe81111));
-		blue_cape = register("blue_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0x137fb7));
-		yellow_cape = register("yellow_cape", new ItemAccessory(AccessoryType.CAPE).setColor(0xcdcb0e));
-		white_cape = register("white_cape", new ItemAccessory(AccessoryType.CAPE));
-		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape").setDungeonLoot());
+		red_cape = register("red_cape", new ItemAccessory(AccessoryType.CAPE).setElytraTexture("base_elytra").setColor(0xe81111));
+		blue_cape = register("blue_cape", new ItemAccessory(AccessoryType.CAPE).setElytraTexture("base_elytra").setColor(0x137fb7));
+		yellow_cape = register("yellow_cape", new ItemAccessory(AccessoryType.CAPE).setElytraTexture("base_elytra").setColor(0xcdcb0e));
+		white_cape = register("white_cape", new ItemAccessory(AccessoryType.CAPE).setElytraTexture("base_elytra"));
+		swet_cape = register("swet_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("swet_cape").setElytraTexture("swet_cape_elytra").setDungeonLoot());
 		invisibility_cape = register("invisibility_cape", new ItemAccessory(AccessoryType.CAPE).setDungeonLoot());
-		agility_cape = register("agility_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("agility_cape").setDungeonLoot());
-		valkyrie_cape = register("valkyrie_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("valkyrie_cape").setDungeonLoot());
+		agility_cape = register("agility_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("agility_cape").setElytraTexture("agility_cape_elytra").setDungeonLoot());
+		valkyrie_cape = register("valkyrie_cape", new ItemAccessory(AccessoryType.CAPE).setTexture("valkyrie_cape").setElytraTexture("valkyrie_cape_elytra").setDungeonLoot());
 
 		golden_feather = register("golden_feather", new ItemAccessory(AccessoryType.MISC).setDungeonLoot());
 		regeneration_stone = register("regeneration_stone", new ItemAccessory(AccessoryType.MISC).setDungeonLoot());

@@ -1,9 +1,11 @@
 package com.legacy.aether.client.renders;
 
+import com.legacy.aether.client.renders.entities.layer.LayerElytraAether;
 import com.legacy.aether.tile_entities.TileEntitySkyrootBed;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
@@ -78,6 +80,8 @@ import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.tile_entities.TileEntityChestMimic;
 import com.legacy.aether.tile_entities.TileEntityTreasureChest;
 
+import java.util.HashSet;
+
 public class AetherEntityRenderingRegistry 
 {
 
@@ -139,11 +143,11 @@ public class AetherEntityRenderingRegistry
 
 	public static void initializePlayerLayers()
 	{
-		RenderPlayer slim_render = Minecraft.getMinecraft().getRenderManager().getSkinMap().get("slim");
-		slim_render.addLayer(new AccessoriesLayer(true, (ModelPlayer) slim_render.getMainModel()));
-
-		RenderPlayer default_render = Minecraft.getMinecraft().getRenderManager().getSkinMap().get("default");
-		default_render.addLayer(new AccessoriesLayer(false, (ModelPlayer) default_render.getMainModel()));
+		for (RenderLivingBase<?> playerRender : new HashSet<>(Minecraft.getMinecraft().getRenderManager().getSkinMap().values()))
+		{
+			playerRender.addLayer(new AccessoriesLayer(true, (ModelPlayer) playerRender.getMainModel()));
+			playerRender.addLayer(new LayerElytraAether(playerRender));
+		}
 	}
 
 	public static <ENTITY extends Entity> void register(Class<ENTITY> classes, final Class<? extends Render<ENTITY>> render)

@@ -421,6 +421,7 @@ gui.skyroot_bed.respawn_point=Respawn point set
 
 gui.button.halo=Halo:
 gui.button.glow=Developer Glow:
+gui.button.aether_cape=Aether Cape:
 
 # Death messages
 death.attack.inebriation=%1$s was inebriated

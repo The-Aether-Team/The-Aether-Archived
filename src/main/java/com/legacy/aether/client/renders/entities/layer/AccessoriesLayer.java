@@ -1,5 +1,7 @@
 package com.legacy.aether.client.renders.entities.layer;
 
+import c4.colytra.util.ColytraUtil;
+import com.google.common.collect.Lists;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.api.player.util.IAccessoryInventory;
@@ -15,13 +17,28 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.renderer.entity.layers.LayerElytra;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import scala.xml.Null;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
 
 public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 {
@@ -59,6 +76,8 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	{
 		IPlayerAether playerAether = AetherAPI.getInstance().get(player);
 		IAccessoryInventory accessories = playerAether.getAccessoryInventory();
+
+		removeElytra();
 
 		if (accessories == null)
 		{
@@ -122,68 +141,66 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		if (accessories.getStackInSlot(1).getItem() instanceof ItemAccessory && accessories.getStackInSlot(1).getItem() != ItemsAether.invisibility_cape)
 		{
 			ItemAccessory cape = ((ItemAccessory) (accessories.getStackInSlot(1).getItem()));
-
 	        if (player.hasPlayerInfo() && !player.isInvisible())
 	        {
-	            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-	            GlStateManager.pushMatrix();
-	            GlStateManager.translate(0.0F, 0.0F, 0.125F);
-	            double d0 = player.prevChasingPosX + (player.chasingPosX - player.prevChasingPosX) * (double)partialTicks - (player.prevPosX + (player.posX - player.prevPosX) * (double)partialTicks);
-	            double d1 = player.prevChasingPosY + (player.chasingPosY - player.prevChasingPosY) * (double)partialTicks - (player.prevPosY + (player.posY - player.prevPosY) * (double)partialTicks);
-	            double d2 = player.prevChasingPosZ + (player.chasingPosZ - player.prevChasingPosZ) * (double)partialTicks - (player.prevPosZ + (player.posZ - player.prevPosZ) * (double)partialTicks);
-	            float f = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * partialTicks;
-	            double d3 = (double)MathHelper.sin(f * (float)Math.PI / 180.0F);
-	            double d4 = (double)(-MathHelper.cos(f * (float)Math.PI / 180.0F));
-	            float f1 = (float)d1 * 10.0F;
-	            f1 = MathHelper.clamp(f1, -6.0F, 32.0F);
-	            float f2 = (float)(d0 * d3 + d2 * d4) * 100.0F;
-	            float f3 = (float)(d0 * d4 - d2 * d3) * 100.0F;
+				ItemStack itemstack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
 
-	            if (f2 < 0.0F)
-	            {
-	                f2 = 0.0F;
-	            }
-
-	            float f4 = player.prevCameraYaw + (player.cameraYaw - player.prevCameraYaw) * partialTicks;
-	            f1 = f1 + MathHelper.sin((player.prevDistanceWalkedModified + (player.distanceWalkedModified - player.prevDistanceWalkedModified) * partialTicks) * 6.0F) * 32.0F * f4;
-
-	            if (player.isSneaking())
-	            {
-	                f1 += 25.0F;
-	            }
-
-	            GlStateManager.rotate(6.0F + f2 / 2.0F + f1, 1.0F, 0.0F, 0.0F);
-	            GlStateManager.rotate(f3 / 2.0F, 0.0F, 0.0F, 1.0F);
-	            GlStateManager.rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
-	            GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-
-				int colour = cape.getColorFromItemStack(accessories.getStackInSlot(1), 0);
-
-				float red = ((colour >> 16) & 0xff) / 255F;
-				float green = ((colour >> 8) & 0xff) / 255F;
-				float blue = (colour & 0xff) / 255F;
-
-				if (player.hurtTime > 0)
+				if (((PlayerAether) playerAether).shouldRenderCape)
 				{
-					GlStateManager.color(1.0F, 0.5F, 0.5F);
-				}
-				else
-				{
-					GlStateManager.color(red, green, blue);
-				}
+					if (itemstack.getItem() != Items.ELYTRA)
+					{
+						ItemStack colytra = ColytraUtil.wornElytra(player);
 
-				if (player.getUniqueID().toString().equals("47ec3a3b-3f41-49b6-b5a0-c39abb7b51ef"))
-				{
-					this.manager.renderEngine.bindTexture(new ResourceLocation("aether_legacy", "textures/armor/accessory_swuff.png"));
-				}
-				else
-				{
-					this.manager.renderEngine.bindTexture(cape.texture);
-				}
+						if (colytra.isEmpty())
+						{
+							GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+							this.manager.renderEngine.bindTexture(cape.texture);
+							GlStateManager.pushMatrix();
+							int colour = cape.getColorFromItemStack(accessories.getStackInSlot(1), 0);
+							float red = ((colour >> 16) & 0xff) / 255F;
+							float green = ((colour >> 8) & 0xff) / 255F;
+							float blue = (colour & 0xff) / 255F;
+							if (player.hurtTime > 0)
+							{
+								GlStateManager.color(1.0F, 0.5F, 0.5F);
+							}
+							else
+							{
+								GlStateManager.color(red, green, blue);
+							}
+							GlStateManager.scale(1.0625F, 1.0625F, 1.0625F);
+							GlStateManager.translate(0, player.isSneaking() ? -0.25D : 0, 0);
+							GlStateManager.translate(0.0F, 0.0F, 0.125F);
+							double d0 = player.prevChasingPosX + (player.chasingPosX - player.prevChasingPosX) * (double)partialTicks - (player.prevPosX + (player.posX - player.prevPosX) * (double)partialTicks);
+							double d1 = player.prevChasingPosY + (player.chasingPosY - player.prevChasingPosY) * (double)partialTicks - (player.prevPosY + (player.posY - player.prevPosY) * (double)partialTicks);
+							double d2 = player.prevChasingPosZ + (player.chasingPosZ - player.prevChasingPosZ) * (double)partialTicks - (player.prevPosZ + (player.posZ - player.prevPosZ) * (double)partialTicks);
+							float f = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * partialTicks;
+							double d3 = (double)MathHelper.sin(f * 0.017453292F);
+							double d4 = (double)(-MathHelper.cos(f * 0.017453292F));
+							float f1 = (float)d1 * 10.0F;
+							f1 = MathHelper.clamp(f1, -6.0F, 32.0F);
+							float f2 = (float)(d0 * d3 + d2 * d4) * 100.0F;
+							float f3 = (float)(d0 * d4 - d2 * d3) * 100.0F;
+							if (f2 < 0.0F) {
+								f2 = 0.0F;
+							}
 
-	            this.modelPlayer.renderCape(scale);
-	            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-	            GlStateManager.popMatrix();
+							float f4 = player.prevCameraYaw + (player.cameraYaw - player.prevCameraYaw) * partialTicks;
+							f1 += MathHelper.sin((player.prevDistanceWalkedModified + (player.distanceWalkedModified - player.prevDistanceWalkedModified) * partialTicks) * 6.0F) * 32.0F * f4;
+							if (player.isSneaking()) {
+								f1 += 25.0F;
+							}
+
+							GlStateManager.rotate(6.0F + f2 / 2.0F + f1, 1.0F, 0.0F, 0.0F);
+							GlStateManager.rotate(f3 / 2.0F, 0.0F, 0.0F, 1.0F);
+							GlStateManager.rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
+							GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+							this.modelPlayer.renderCape(0.0625F);
+							GlStateManager.color(1.0F, 1.0F, 1.0F);
+							GlStateManager.popMatrix();
+						}
+					}
+				}
 	        }
 		}
 
@@ -356,10 +373,17 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		GlStateManager.popMatrix();
 	}
 
+	private void removeElytra()
+	{
+		RenderPlayer renderPlayer = slimFit ? this.manager.getSkinMap().get("slim") : this.manager.getSkinMap().get("default");
+		List<LayerRenderer<EntityLivingBase>> fieldOutside = ObfuscationReflectionHelper.getPrivateValue(RenderLivingBase.class, renderPlayer, "layerRenderers", "field_177097_h");
+
+		fieldOutside.removeIf(layerRenderer -> layerRenderer.getClass() == LayerElytra.class);
+	}
+
 	@Override
 	public boolean shouldCombineTextures() 
 	{
 		return true;
 	}
-
 }
