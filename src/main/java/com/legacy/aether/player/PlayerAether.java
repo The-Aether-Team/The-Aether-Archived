@@ -8,6 +8,7 @@ import com.legacy.aether.Aether;
 import com.legacy.aether.entities.passive.mountable.EntityParachute;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketCapeChanged;
 import com.legacy.aether.network.packets.PacketPerkChanged;
 import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.EnumAetherPerkType;
@@ -66,7 +67,7 @@ public class PlayerAether implements IPlayerAether {
 
 	public DonatorMoaSkin donatorMoaSkin = new DonatorMoaSkin();
 
-	public boolean shouldRenderHalo, shouldRenderGlow;
+	public boolean shouldRenderHalo, shouldRenderGlow, shouldRenderCape;
 
 	private boolean isJumping;
 
@@ -95,6 +96,7 @@ public class PlayerAether implements IPlayerAether {
 	public PlayerAether() {
 		this.shouldRenderHalo = true;
 		this.shouldRenderGlow = false;
+		this.shouldRenderCape = true;
 		this.abilities.addAll(Arrays.<IAetherAbility>asList(new AbilityAccessories(this), new AbilityArmor(this), new AbilityFlight(this), new AbilityRepulsion(this)));
 	}
 
@@ -114,6 +116,7 @@ public class PlayerAether implements IPlayerAether {
 		{
 			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
 			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Glow, this.shouldRenderGlow));
+			AetherNetwork.sendToAll(new PacketCapeChanged(this.getEntity().getEntityId(), this.shouldRenderCape));
 		}
 
 		for (int i = 0; i < this.getAbilities().size(); ++i) {
@@ -386,6 +389,7 @@ public class PlayerAether implements IPlayerAether {
 			aetherTag.setBoolean("glow", this.shouldRenderGlow);
 		}
 
+		aetherTag.setBoolean("cape", this.shouldRenderCape);
 		aetherTag.setInteger("shardCount", this.shardCount);
 		aetherTag.setTag("accessories", this.getAccessoryInventory().writeToNBT(aetherTag));
 
@@ -411,6 +415,11 @@ public class PlayerAether implements IPlayerAether {
 		if (aetherTag.hasKey("glow"))
 		{
 			this.shouldRenderGlow = aetherTag.getBoolean("glow");
+		}
+
+		if (aetherTag.hasKey("cape"))
+		{
+			this.shouldRenderCape = aetherTag.getBoolean("cape");
 		}
 
 		this.updateShardCount(aetherTag.getInteger("shardCount"));

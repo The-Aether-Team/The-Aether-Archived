@@ -228,65 +228,66 @@ public class PlayerAetherRenderer {
             GL11.glColor3f(1.0F, 1.0F, 1.0F);
         }
 
-        GL11.glScalef(0.9375F, 0.9375F, 0.9375F);
-
         if (playerAether.getAccessoryInventory().getStackInSlot(AccessoryType.CAPE) != null && !playerAether.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.invisibility_cape))) {
             ItemAccessory cape = (ItemAccessory) playerAether.getAccessoryInventory().getStackInSlot(AccessoryType.CAPE).getItem();
 
-            if (!player.isInvisible() && !player.getHideCape()) {
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                GL11.glPushMatrix();
-                GL11.glTranslatef(0.0F, 0.0F, 0.125F);
-                double d0 = player.field_71091_bM + (player.field_71094_bP - player.field_71091_bM) * (double) partialTicks - (player.prevPosX + (player.posX - player.prevPosX) * (double) partialTicks);
-                double d1 = player.field_71096_bN + (player.field_71095_bQ - player.field_71096_bN) * (double) partialTicks - (player.prevPosY + (player.posY - player.prevPosY) * (double) partialTicks);
-                double d2 = player.field_71097_bO + (player.field_71085_bR - player.field_71097_bO) * (double) partialTicks - (player.prevPosZ + (player.posZ - player.prevPosZ) * (double) partialTicks);
-                float f = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * partialTicks;
-                double d3 = (double) MathHelper.sin(f * (float) Math.PI / 180.0F);
-                double d4 = (double) (-MathHelper.cos(f * (float) Math.PI / 180.0F));
-                float f1 = (float) d1 * 10.0F;
-                f1 = MathHelper.clamp_float(f1, -6.0F, 32.0F);
-                float f2 = (float) (d0 * d3 + d2 * d4) * 100.0F;
-                float f3 = (float) (d0 * d4 - d2 * d3) * 100.0F;
+            if (!player.isInvisible()) {
+                if (playerAether.shouldRenderCape) {
+                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                    GL11.glPushMatrix();
+                    GL11.glTranslatef(0.0F, 0.0F, 0.125F);
+                    double d0 = player.field_71091_bM + (player.field_71094_bP - player.field_71091_bM) * (double) partialTicks - (player.prevPosX + (player.posX - player.prevPosX) * (double) partialTicks);
+                    double d1 = player.field_71096_bN + (player.field_71095_bQ - player.field_71096_bN) * (double) partialTicks - (player.prevPosY + (player.posY - player.prevPosY) * (double) partialTicks);
+                    double d2 = player.field_71097_bO + (player.field_71085_bR - player.field_71097_bO) * (double) partialTicks - (player.prevPosZ + (player.posZ - player.prevPosZ) * (double) partialTicks);
+                    float f = player.prevRenderYawOffset + (player.renderYawOffset - player.prevRenderYawOffset) * partialTicks;
+                    double d3 = (double) MathHelper.sin(f * (float) Math.PI / 180.0F);
+                    double d4 = (double) (-MathHelper.cos(f * (float) Math.PI / 180.0F));
+                    float f1 = (float) d1 * 10.0F;
+                    f1 = MathHelper.clamp_float(f1, -6.0F, 32.0F);
+                    float f2 = (float) (d0 * d3 + d2 * d4) * 100.0F;
+                    float f3 = (float) (d0 * d4 - d2 * d3) * 100.0F;
 
-                if (f2 < 0.0F) {
-                    f2 = 0.0F;
-                }
+                    if (f2 < 0.0F) {
+                        f2 = 0.0F;
+                    }
 
-                float f4 = player.prevCameraYaw + (player.cameraYaw - player.prevCameraYaw) * partialTicks;
-                f1 = f1 + MathHelper.sin((player.prevDistanceWalkedModified + (player.distanceWalkedModified - player.prevDistanceWalkedModified) * partialTicks) * 6.0F) * 32.0F * f4;
+                    float f4 = player.prevCameraYaw + (player.cameraYaw - player.prevCameraYaw) * partialTicks;
+                    f1 = f1 + MathHelper.sin((player.prevDistanceWalkedModified + (player.distanceWalkedModified - player.prevDistanceWalkedModified) * partialTicks) * 6.0F) * 32.0F * f4;
 
-                if (player.isSneaking()) {
-                    f1 += 25.0F;
-                }
+                    if (player.isSneaking()) {
+                        f1 += 25.0F;
+                    }
 
-                GL11.glRotatef(6.0F + f2 / 2.0F + f1, 1.0F, 0.0F, 0.0F);
-                GL11.glRotatef(f3 / 2.0F, 0.0F, 0.0F, 1.0F);
-                GL11.glRotatef(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+                    GL11.glRotatef(6.0F + f2 / 2.0F + f1, 1.0F, 0.0F, 0.0F);
+                    GL11.glRotatef(f3 / 2.0F, 0.0F, 0.0F, 1.0F);
+                    GL11.glRotatef(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
+                    GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
 
-                int colour = cape.getColorFromItemStack(playerAether.getAccessoryInventory().getStackInSlot(AccessoryType.CAPE), 0);
+                    int colour = cape.getColorFromItemStack(playerAether.getAccessoryInventory().getStackInSlot(AccessoryType.CAPE), 0);
 
-                float red = ((colour >> 16) & 0xff) / 255F;
-                float green = ((colour >> 8) & 0xff) / 255F;
-                float blue = (colour & 0xff) / 255F;
+                    float red = ((colour >> 16) & 0xff) / 255F;
+                    float green = ((colour >> 8) & 0xff) / 255F;
+                    float blue = (colour & 0xff) / 255F;
 
-                if (player.hurtTime > 0) {
-                    GL11.glColor3f(1.0F, 0.5F, 0.5F);
-                } else {
-                    GL11.glColor3f(red, green, blue);
-                }
+                    if (player.hurtTime > 0) {
+                        GL11.glColor3f(1.0F, 0.5F, 0.5F);
+                    } else {
+                        GL11.glColor3f(red, green, blue);
+                    }
 
-                if (player.getUniqueID().toString().equals("47ec3a3b-3f41-49b6-b5a0-c39abb7b51ef")) {
-                    this.mc.getTextureManager().bindTexture(Aether.locate("textures/armor/accessory_swuff.png"));
-                } else {
                     this.mc.getTextureManager().bindTexture(cape.texture);
-                }
 
-                this.modelMisc.renderCloak(scale);
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                GL11.glPopMatrix();
+                    GL11.glTranslatef(0.0F, 0.015625F, -0.0625F);
+                    GL11.glScalef(0.8F, 0.9375F, 0.234375F);
+
+                    this.modelMisc.renderCloak(scale);
+                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                    GL11.glPopMatrix();
+                }
             }
         }
+
+        GL11.glScalef(0.9375F, 0.9375F, 0.9375F);
 
         if (playerAether.getAccessoryInventory().getStackInSlot(AccessoryType.GLOVES) != null) {
             ItemAccessory gloves = (ItemAccessory) playerAether.getAccessoryInventory().getStackInSlot(AccessoryType.GLOVES).getItem();

@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.legacy.aether.client.gui.GuiCustomizationScreen;
 import com.legacy.aether.client.gui.GuiEnterAether;
-import com.legacy.aether.client.gui.button.GuiCustomizationScreenButton;
-import com.legacy.aether.client.gui.button.GuiGlowButton;
-import com.legacy.aether.client.gui.button.GuiHaloButton;
+import com.legacy.aether.client.gui.button.*;
 import com.legacy.aether.client.gui.menu.AetherMainMenu;
 import com.legacy.aether.client.gui.menu.GuiMenuToggleButton;
+import com.legacy.aether.network.packets.PacketCapeChanged;
+import com.legacy.aether.network.packets.PacketPerkChanged;
 import com.legacy.aether.player.perks.AetherRankings;
+import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -31,7 +32,6 @@ import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
 
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.client.gui.AetherLoadingScreen;
-import com.legacy.aether.client.gui.button.GuiAccessoryButton;
 import com.legacy.aether.client.renders.entity.PlayerAetherRenderer;
 import com.legacy.aether.entities.EntitiesAether;
 import com.legacy.aether.items.ItemAetherSpawnEgg;
@@ -240,6 +240,15 @@ public class AetherClientEvents {
 				}
 			}
 		}
+
+		if (event.gui.getClass() == ScreenChatOptions.class)
+		{
+			if (Minecraft.getMinecraft().thePlayer != null)
+			{
+				int i = 13;
+				event.buttonList.add(new GuiCapeButton(event.gui.width / 2 - 155 + i % 2 * 160, event.gui.height / 6 + 24 * (i >> 1)));
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -284,6 +293,16 @@ public class AetherClientEvents {
 		if (event.button.getClass() == GuiCustomizationScreenButton.class)
 		{
 			Minecraft.getMinecraft().displayGuiScreen(new GuiCustomizationScreen(event.gui));
+		}
+
+		if (event.button.getClass() == GuiCapeButton.class)
+		{
+			PlayerAether player = PlayerAether.get(Minecraft.getMinecraft().thePlayer);
+
+			boolean enableCape = !player.shouldRenderCape;
+
+			player.shouldRenderCape = enableCape;
+			AetherNetwork.sendToServer(new PacketCapeChanged(player.getEntity().getEntityId(), player.shouldRenderCape));
 		}
 	}
 
