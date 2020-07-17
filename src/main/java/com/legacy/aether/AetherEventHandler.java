@@ -14,6 +14,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityList;
@@ -281,7 +282,13 @@ AetherEventHandler {
 					{
 						if (event.target instanceof EntityLivingBase)
 						{
-							event.target.setFire(30);
+							int defaultTime = 30;
+							int fireAspectModifier = EnchantmentHelper.getFireAspectModifier(event.entityPlayer);
+							if (fireAspectModifier > 0)
+							{
+								defaultTime += (fireAspectModifier * 4);
+							}
+							event.target.setFire(defaultTime);
 						}
 					}
 				}

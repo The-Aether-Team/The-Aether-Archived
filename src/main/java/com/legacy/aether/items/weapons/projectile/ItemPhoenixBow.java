@@ -145,6 +145,13 @@ public class ItemPhoenixBow extends ItemBow {
 							entityarrow.setKnockbackStrength(k);
 						}
 
+						int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack);
+
+						if (l > 0)
+						{
+							entityarrow.isEnchanted = true;
+						}
+
 						stack.damageItem(1, entityplayer);
 
 						if (flag1) {
