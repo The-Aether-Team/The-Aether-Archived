@@ -220,7 +220,7 @@ public class ItemsAether {
 		zanite_gloves = register("zanite_gloves", new ItemAccessory(AccessoryType.GLOVES).setColor(0x711ae8).setTextureName(Aether.find("accessories/solid_gloves")));
 		gravitite_gloves = register("gravitite_gloves", new ItemAccessory(AccessoryType.GLOVES).setColor(0xe752db).setTextureName(Aether.find("accessories/solid_gloves")));
 		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVES).setDungeonLoot().setColor(0x2654FF).setTextureName(Aether.find("accessories/chain_gloves")));
-		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVES).setTexture("phoenix").setDungeonLoot().setColor(0xff7700).setMaxDamage(152).setTextureName(Aether.find("accessories/chain_gloves")));
+		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVES).setTexture("phoenix").setDungeonLoot().setMaxDamage(152).setTextureName(Aether.find("accessories/phoenix_gloves")));
 		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVES).setDungeonLoot().setColor(0x1b1447).setTextureName(Aether.find("accessories/solid_gloves")));
 		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVES).setDungeonLoot().setTexture("valkyrie").setTextureName(Aether.find("accessories/valkyrie_gloves")));
 
