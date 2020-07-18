@@ -13,6 +13,7 @@ public class AetherRandomTracker
 
         if (inputRandom != this.lastRand)
         {
+            this.lastRand = inputRandom;
             return inputRandom;
         }
         else
