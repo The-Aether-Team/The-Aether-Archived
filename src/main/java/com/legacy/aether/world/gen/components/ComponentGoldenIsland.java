@@ -1,11 +1,15 @@
 package com.legacy.aether.world.gen.components;
 
+import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
 import com.legacy.aether.blocks.BlocksAether;
@@ -16,6 +20,7 @@ import com.legacy.aether.world.gen.AetherStructure;
 
 public class ComponentGoldenIsland extends AetherStructure
 {
+    private BlockPos chunkPos;
 
     public ComponentGoldenIsland()
     {
@@ -27,6 +32,7 @@ public class ComponentGoldenIsland extends AetherStructure
         this.setCoordBaseMode(EnumFacing.NORTH);
 
         this.boundingBox = new StructureBoundingBox(chunkX, 80, chunkZ, chunkX + 100, 220, chunkZ + 100);
+        this.chunkPos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
 	}
 
 	@Override
@@ -96,7 +102,8 @@ public class ComponentGoldenIsland extends AetherStructure
 
                                 if(j5 < 2)
                                 {
-                                	AetherGenUtils.generateGoldenOakTree(this, i2, l2 + 1, i3);
+                                    WorldGenerator oakTree = new AetherGenOakTree();
+                                    oakTree.generate(this.worldObj, this.random, this.worldObj.getHeight(new BlockPos(this.getActualX(i2, i3), 0, this.getActualZ(i2, i3))));
                                 }
                                 else if(j5 == 3)
                                 {
