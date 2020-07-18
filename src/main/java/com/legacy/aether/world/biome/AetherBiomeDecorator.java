@@ -2,6 +2,7 @@ package com.legacy.aether.world.biome;
 
 import java.util.Random;
 
+import com.legacy.aether.world.biome.decoration.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -13,16 +14,6 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.legacy.aether.AetherConfig;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.world.biome.decoration.AetherGenClouds;
-import com.legacy.aether.world.biome.decoration.AetherGenFloatingIsland;
-import com.legacy.aether.world.biome.decoration.AetherGenFoilage;
-import com.legacy.aether.world.biome.decoration.AetherGenHolidayTree;
-import com.legacy.aether.world.biome.decoration.AetherGenLakes;
-import com.legacy.aether.world.biome.decoration.AetherGenLiquids;
-import com.legacy.aether.world.biome.decoration.AetherGenMinable;
-import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
-import com.legacy.aether.world.biome.decoration.AetherGenQuicksoil;
-import com.legacy.aether.world.biome.decoration.AetherGenSkyrootTree;
 
 public class AetherBiomeDecorator extends BiomeDecorator {
 
@@ -37,6 +28,8 @@ public class AetherBiomeDecorator extends BiomeDecorator {
 	public AetherGenMinable ores = new AetherGenMinable();
 
 	public AetherGenSkyrootTree skyroot_tree = new AetherGenSkyrootTree(false);
+
+	public AetherGenDungeonOakTree golden_oak_tree_dungeon = new AetherGenDungeonOakTree();
 
 	public AetherGenQuicksoil quicksoil_patches = new AetherGenQuicksoil();
 
@@ -111,6 +104,14 @@ public class AetherBiomeDecorator extends BiomeDecorator {
 				int y = this.world.getHeightValue(x, z);
 				this.holiday_tree.generate(this.world, this.rand, x, y, z);
 			}
+		}
+
+		for (int i = 0; i < 25; i++)
+		{
+			int x = this.chunk_X + this.nextInt(16);
+			int z = this.chunk_Z + this.nextInt(16);
+			int y = this.world.getHeightValue(x, z);
+			this.golden_oak_tree_dungeon.generate(this.world, this.rand, x, y, z);
 		}
 
 		if (AetherConfig.tallgrassEnabled()) {

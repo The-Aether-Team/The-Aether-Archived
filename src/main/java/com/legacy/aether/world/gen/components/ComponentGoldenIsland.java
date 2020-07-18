@@ -63,7 +63,7 @@ public class ComponentGoldenIsland extends AetherStructure {
 
 					if (Math.sqrt(k3 * k3 + i4 * i4 + k4 * k4) <= 24.0D) {
 						if (BlocksAether.isGood(this.getBlockStateWithOffset(i2, l2 + 1, i3)) && l2 > 4) {
-							this.setBlockWithOffset(i2, l2, i3, BlocksAether.aether_grass, 0);
+							this.setBlockWithOffset(i2, l2, i3, BlocksAether.aether_grass, 3);
 							this.setBlockWithOffset(i2, l2 - 1, i3, BlocksAether.aether_dirt, 0);
 							this.setBlockWithOffset(i2, l2 - (1 + this.random.nextInt(2)), i3, BlocksAether.aether_dirt, 0);
 
@@ -71,7 +71,7 @@ public class ComponentGoldenIsland extends AetherStructure {
 								int j5 = this.random.nextInt(48);
 
 								if (j5 < 2) {
-									AetherGenUtils.generateGoldenOakTree(this, i2, l2 + 1, i3);
+									//AetherGenUtils.generateGoldenOakTree(this, i2, l2 + 1, i3);
 								} else if (j5 == 3) {
 									if (this.random.nextInt(2) == 0) {
 										//new WorldGenLakes(Blocks.FLOWING_WATER).generate(world, random, new BlockPos.MutableBlockPos((i2 + i + random.nextInt(3)) - random.nextInt(3), l2 + j, (i3 + k + random.nextInt(3)) - random.nextInt(3)));
