@@ -56,8 +56,10 @@ public class ClientProxy extends CommonProxy
 
 			File buckets = new File(resourcePacks + "\\Aether b1.7.3 Textures\\assets\\aether_legacy\\textures\\items\\misc\\buckets");
 			File weapons = new File(resourcePacks + "\\Aether b1.7.3 Textures\\assets\\aether_legacy\\textures\\items\\weapons");
+			File armor = new File(resourcePacks + "\\Aether b1.7.3 Textures\\assets\\aether_legacy\\textures\\items\\armor");
+			File accessories = new File(resourcePacks + "\\Aether b1.7.3 Textures\\assets\\aether_legacy\\textures\\items\\accessories");
 
-			File[] directories = new File[] {buckets, weapons};
+			File[] directories = new File[] {buckets, weapons, armor, accessories};
 
 			if (AetherConfig.visual_options.install_resourcepack)
 			{
@@ -79,6 +81,12 @@ public class ClientProxy extends CommonProxy
 				generateFile("data/Aether_b1.7.3/weapons/holy_sword.png", "holy_sword.png", weapons.getAbsolutePath());
 				generateFile("data/Aether_b1.7.3/weapons/lightning_sword.png", "lightning_sword.png", weapons.getAbsolutePath());
 				generateFile("data/Aether_b1.7.3/weapons/phoenix_bow.png", "phoenix_bow.png", weapons.getAbsolutePath());
+				generateFile("data/Aether_b1.7.3/armor/phoenix_boots.png", "phoenix_boots.png", armor.getAbsolutePath());
+				generateFile("data/Aether_b1.7.3/armor/phoenix_leggings.png", "phoenix_leggings.png", armor.getAbsolutePath());
+				generateFile("data/Aether_b1.7.3/armor/phoenix_chestplate.png", "phoenix_chestplate.png", armor.getAbsolutePath());
+				generateFile("data/Aether_b1.7.3/armor/phoenix_helmet.png", "phoenix_helmet.png", armor.getAbsolutePath());
+				generateFile("data/Aether_b1.7.3/accessories/phoenix_gloves.png", "phoenix_gloves.png", accessories.getAbsolutePath());
+				generateFile("data/Aether_b1.7.3/accessories/agility_cape.png", "agility_cape.png", accessories.getAbsolutePath());
 			}
 		}
 		catch (IOException ignore) { }
