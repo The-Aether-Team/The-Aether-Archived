@@ -2,6 +2,7 @@ package com.legacy.aether.world.gen;
 
 import java.util.Random;
 
+import com.legacy.aether.world.util.AetherRandomTracker;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructure;
@@ -21,7 +22,8 @@ public class MapGenSilverDungeon extends MapGenStructure {
 
 	@Override
 	protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ) {
-		int rand = this.rand.nextInt(60);
+		AetherRandomTracker tracker = AetherRandomTracker.INSTANCE;
+		int rand = tracker.testRandom(this.rand, 60);
 
 		if (rand != 0)
 		{
