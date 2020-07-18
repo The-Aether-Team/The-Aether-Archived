@@ -102,8 +102,9 @@ public class ComponentGoldenIsland extends AetherStructure
 
                                 if(j5 < 2)
                                 {
-                                    WorldGenerator oakTree = new AetherGenOakTree();
-                                    oakTree.generate(this.worldObj, this.random, this.worldObj.getHeight(new BlockPos(this.getActualX(i2, i3), 0, this.getActualZ(i2, i3))));
+//                                    WorldGenerator oakTree = new AetherGenOakTree();
+//                                    oakTree.generate(this.worldObj, this.random, this.worldObj.getHeight(new BlockPos(this.getActualX(i2, i3), 0, this.getActualZ(i2, i3))));
+                                    AetherGenUtils.generateGoldenOakTree(this, i2, l2 + 1, i3);
                                 }
                                 else if(j5 == 3)
                                 {

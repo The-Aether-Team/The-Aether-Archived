@@ -82,8 +82,9 @@ public class ComponentGoldenIslandStub extends AetherStructure
 
                                 if(l3 == 0)
                                 {
-                                    WorldGenerator oakTree = new AetherGenOakTree();
-                                    oakTree.generate(this.worldObj, this.random, this.worldObj.getHeight(new BlockPos(this.getActualX(i1 + x, i2 + z), 0, this.getActualZ(i1 + x, i2 + z))));
+//                                    WorldGenerator oakTree = new AetherGenOakTree();
+//                                    oakTree.generate(this.worldObj, this.random, this.worldObj.getHeight(new BlockPos(this.getActualX(i1 + x, i2 + z), 0, this.getActualZ(i1 + x, i2 + z))));
+                                    AetherGenUtils.generateGoldenOakTree(this, i1 + x, k1 + y + 1, i2 + z);
                                 }
                                 else if(l3 == 5)
                                 {
