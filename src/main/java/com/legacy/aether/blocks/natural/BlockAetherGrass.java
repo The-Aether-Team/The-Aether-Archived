@@ -34,6 +34,8 @@ public class BlockAetherGrass extends Block implements IGrowable
 
     public static final PropertyBool SNOWY = PropertyBool.create("snowy");
 
+    public static final PropertyBool dungeon_block = PropertyBool.create("dungeon_block");
+
 	public BlockAetherGrass()
 	{
 		super(Material.GRASS);
@@ -42,7 +44,7 @@ public class BlockAetherGrass extends Block implements IGrowable
 		this.setHardness(0.2F);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setSoundType(SoundType.PLANT);
-		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE).withProperty(SNOWY, Boolean.FALSE));
+		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE).withProperty(SNOWY, Boolean.FALSE).withProperty(dungeon_block, Boolean.FALSE));
 	}
 
 	@Override
@@ -76,7 +78,7 @@ public class BlockAetherGrass extends Block implements IGrowable
 	@Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
-		world.setBlockState(pos, state.withProperty(double_drop, Boolean.FALSE));
+		world.setBlockState(pos, state.withProperty(double_drop, Boolean.FALSE).withProperty(dungeon_block, Boolean.FALSE));
     }
 
 	@Override
@@ -84,10 +86,15 @@ public class BlockAetherGrass extends Block implements IGrowable
     {
 		int meta = 0;
 		
-		if (!((Boolean)state.getValue(double_drop)).booleanValue())
+		if (!state.getValue(double_drop))
 		{
 			meta |= 1;
 		}
+
+        if (!state.getValue(dungeon_block))
+        {
+            meta |= 2;
+        }
 
 		return meta;
     }
@@ -95,7 +102,7 @@ public class BlockAetherGrass extends Block implements IGrowable
 	@Override
     public IBlockState getStateFromMeta(int meta)
     {
-		return this.getDefaultState().withProperty(double_drop, Boolean.valueOf(meta == 0));
+		return this.getDefaultState().withProperty(double_drop, meta == 0).withProperty(dungeon_block, meta == 0);
     }
 
 	@Override
@@ -107,7 +114,7 @@ public class BlockAetherGrass extends Block implements IGrowable
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, double_drop, SNOWY);
+		return new BlockStateContainer(this, double_drop, SNOWY, dungeon_block);
 	}
 
 	@Override

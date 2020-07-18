@@ -1,5 +1,6 @@
 package com.legacy.aether.world.gen.components;
 
+import com.legacy.aether.blocks.natural.BlockAetherGrass;
 import com.legacy.aether.world.biome.decoration.AetherGenOakTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower.EnumFlowerType;
@@ -92,7 +93,7 @@ public class ComponentGoldenIsland extends AetherStructure
                     {
                         if(BlocksAether.isGood(this.getBlockStateWithOffset(i2, l2 + 1, i3)) && l2 > 4)
                         {
-                        	this.setBlockWithOffset(i2, l2, i3, BlocksAether.aether_grass.getDefaultState());
+                        	this.setBlockWithOffset(i2, l2, i3, BlocksAether.aether_grass.getDefaultState().withProperty(BlockAetherGrass.dungeon_block, Boolean.TRUE));
                         	this.setBlockWithOffset(i2, l2 - 1, i3, BlocksAether.aether_dirt.getDefaultState());
                         	this.setBlockWithOffset(i2, l2 - (1 + this.random.nextInt(2)), i3, BlocksAether.aether_dirt.getDefaultState());
 
@@ -102,9 +103,7 @@ public class ComponentGoldenIsland extends AetherStructure
 
                                 if(j5 < 2)
                                 {
-//                                    WorldGenerator oakTree = new AetherGenOakTree();
-//                                    oakTree.generate(this.worldObj, this.random, this.worldObj.getHeight(new BlockPos(this.getActualX(i2, i3), 0, this.getActualZ(i2, i3))));
-                                    AetherGenUtils.generateGoldenOakTree(this, i2, l2 + 1, i3);
+                                    //AetherGenUtils.generateGoldenOakTree(this, i2, l2 + 1, i3);
                                 }
                                 else if(j5 == 3)
                                 {
