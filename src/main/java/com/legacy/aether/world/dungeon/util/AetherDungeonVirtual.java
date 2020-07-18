@@ -376,7 +376,7 @@ public abstract class AetherDungeonVirtual extends WorldGenerator
             {
                 for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
                 {
-                    if (world.isChunkGeneratedAt(lineX / 16, lineZ / 16) && world.isChunkGeneratedAt((lineX / 16) - 1, (lineZ / 16)) && world.isChunkGeneratedAt((lineX / 16), (lineZ / 16) - 1) && world.isChunkGeneratedAt((lineX / 16) - 1, (lineZ / 16) - 1))
+                    if (world.isBlockLoaded(new BlockPos(lineX, lineY, lineZ)))
                     {
                         if (world.getBlockState(new BlockPos(lineX, lineY, lineZ)).getBlock() == Blocks.AIR)
                         {
@@ -404,7 +404,7 @@ public abstract class AetherDungeonVirtual extends WorldGenerator
             {
                 for (int lineZ = pos.getZ(); lineZ < pos.getZ() + radius.getZ(); lineZ++)
                 {
-                    if (world.isChunkGeneratedAt(lineX / 16, lineZ / 16) && world.isChunkGeneratedAt((lineX / 16) - 1, (lineZ / 16)) && world.isChunkGeneratedAt((lineX / 16), (lineZ / 16) - 1) && world.isChunkGeneratedAt((lineX / 16) - 1, (lineZ / 16) - 1))
+                    if (world.isBlockLoaded(new BlockPos(lineX, lineY, lineZ)))
                     {
                         if (world.getBlockState(new BlockPos(lineX, lineY, lineZ)).getBlock() != Blocks.AIR)
                         {

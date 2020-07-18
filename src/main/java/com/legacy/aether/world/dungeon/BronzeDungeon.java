@@ -15,6 +15,7 @@ import com.legacy.aether.events.DialogueClickedEvent;
 import com.legacy.aether.world.dungeon.util.AetherDungeonVirtual;
 import com.legacy.aether.world.dungeon.util.PositionData;
 
+import com.legacy.aether.world.util.AetherRandomTracker;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -57,9 +58,12 @@ public class BronzeDungeon extends AetherDungeonVirtual
 			return false;
 		}
 
-		if (random.nextInt(25) != 0)
+		if (random.nextInt(10) != 0)
 		{
-			return false;
+			if (random.nextInt(10) != 10)
+			{
+				return false;
+			}
 		}
 
 		setBlocks(this.lockedBlock(), this.lockedLightBlock(), 20);
