@@ -43,53 +43,56 @@ public class AbilityRepulsion implements IAetherAbility
 	@Override
 	public void onUpdate() 
 	{
-		List<?> entities = this.playerAether.getEntity().world.getEntitiesWithinAABBExcludingEntity(this.playerAether.getEntity(), this.playerAether.getEntity().getEntityBoundingBox().expand(4.0D, 4.0D, 4.0D));
-
-		for (int size = 0; size < entities.size(); ++size)
+		if (!this.playerAether.thePlayer.world.isRemote)
 		{
-			Entity projectile = (Entity) entities.get(size);
-			
-			if (isProjectile(projectile) && this.getShooter(projectile) != this.playerAether.getEntity())
+			List<?> entities = this.playerAether.getEntity().world.getEntitiesWithinAABBExcludingEntity(this.playerAether.getEntity(), this.playerAether.getEntity().getEntityBoundingBox().expand(4.0D, 4.0D, 4.0D));
+
+			for (int size = 0; size < entities.size(); ++size)
 			{
-				double x, y, z;
+				Entity projectile = (Entity) entities.get(size);
 
-				if (this.getShooter(projectile) != null)
+				if (isProjectile(projectile) && this.getShooter(projectile) != this.playerAether.getEntity())
 				{
-					Entity shooter = this.getShooter(projectile);
-					x = playerAether.getEntity().posX - shooter.posX;
-					y = playerAether.getEntity().getEntityBoundingBox().minY - shooter.getEntityBoundingBox().minY;
-					z = playerAether.getEntity().posZ - shooter.posZ;
+					double x, y, z;
+
+					if (this.getShooter(projectile) != null)
+					{
+						Entity shooter = this.getShooter(projectile);
+						x = playerAether.getEntity().posX - shooter.posX;
+						y = playerAether.getEntity().getEntityBoundingBox().minY - shooter.getEntityBoundingBox().minY;
+						z = playerAether.getEntity().posZ - shooter.posZ;
+					}
+					else
+					{
+						x = playerAether.getEntity().posX - projectile.posX;
+						y = playerAether.getEntity().posY - projectile.posY;
+						z = playerAether.getEntity().posZ - projectile.posZ;
+					}
+
+					double difference = -Math.sqrt((x * x) + (y * y) + (z * z));
+
+					x /= difference; y /= difference; z /= difference;
+
+					projectile.motionX = x * 0.75F; projectile.motionY = y * 0.75F + 0.05D; projectile.motionZ = z * 0.75F;
+
+					this.setShooter(projectile, this.playerAether.getEntity());
+					playerAether.getEntity().world.playSound(this.playerAether.getEntity(), new BlockPos(this.playerAether.getEntity()), SoundEvents.BLOCK_NOTE_SNARE, SoundCategory.PLAYERS, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F + 0.8F) * 1.1F);
+
+					for (int pack = 0; pack < 12; ++pack)
+					{
+						double packX, packY, packZ;
+						packX = (-projectile.motionX * 0.15F) + ((this.rand.nextFloat() - 0.5F) * 0.05F);
+						packY = (-projectile.motionY * 0.15F) + ((this.rand.nextFloat() - 0.5F) * 0.05F);
+						packZ = (-projectile.motionZ * 0.15F) + ((this.rand.nextFloat() - 0.5F) * 0.05F);
+						packX *= 0.625F;
+						packY *= 0.625F;
+						packZ *= 0.625F;
+
+						playerAether.getEntity().world.spawnParticle(EnumParticleTypes.FLAME, projectile.posX, projectile.posY, projectile.posZ, packX, packY, packZ);
+					}
+
+					this.playerAether.accessories.damageWornStack(1, new ItemStack(ItemsAether.repulsion_shield));
 				}
-				else
-				{
-					x = playerAether.getEntity().posX - projectile.posX;
-					y = playerAether.getEntity().posY - projectile.posY;
-					z = playerAether.getEntity().posZ - projectile.posZ;
-				}
-
-				double difference = -Math.sqrt((x * x) + (y * y) + (z * z));
-
-				x /= difference; y /= difference; z /= difference;
-
-				projectile.motionX = x * 0.75F; projectile.motionY = y * 0.75F + 0.05D; projectile.motionZ = z * 0.75F;
-
-				this.setShooter(projectile, this.playerAether.getEntity());
-				playerAether.getEntity().world.playSound(this.playerAether.getEntity(), new BlockPos(this.playerAether.getEntity()), SoundEvents.BLOCK_NOTE_SNARE, SoundCategory.PLAYERS, 1.0F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F + 0.8F) * 1.1F);
-
-				for (int pack = 0; pack < 12; ++pack)
-				{
-					double packX, packY, packZ;
-					packX = (-projectile.motionX * 0.15F) + ((this.rand.nextFloat() - 0.5F) * 0.05F);
-					packY = (-projectile.motionY * 0.15F) + ((this.rand.nextFloat() - 0.5F) * 0.05F);
-					packZ = (-projectile.motionZ * 0.15F) + ((this.rand.nextFloat() - 0.5F) * 0.05F);
-					packX *= 0.625F;
-					packY *= 0.625F;
-					packZ *= 0.625F;
-
-					playerAether.getEntity().world.spawnParticle(EnumParticleTypes.FLAME, projectile.posX, projectile.posY, projectile.posZ, packX, packY, packZ);
-				}
-				
-				this.playerAether.accessories.damageWornStack(1, new ItemStack(ItemsAether.repulsion_shield));
 			}
 		}
 	}
