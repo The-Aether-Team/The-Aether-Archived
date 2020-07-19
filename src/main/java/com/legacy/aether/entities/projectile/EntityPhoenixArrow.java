@@ -4,6 +4,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.potion.PotionEffect;
@@ -20,8 +21,6 @@ public class EntityPhoenixArrow extends EntityArrow implements IThrowableEntity 
 	private int timeInGround;
 
 	private boolean hitGround;
-
-	public boolean isEnchanted = false;
 
 	public EntityPhoenixArrow(World worldIn) {
 		super(worldIn);
@@ -49,8 +48,6 @@ public class EntityPhoenixArrow extends EntityArrow implements IThrowableEntity 
 				this.worldObj.spawnParticle("flame", this.posX + (this.rand.nextGaussian() / 5D), this.posY + (this.rand.nextGaussian() / 5D), this.posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
 			}
 		}
-
-		super.onUpdate();
 
 		Vec3 vec31 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
 		Vec3 vec3 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
@@ -108,13 +105,15 @@ public class EntityPhoenixArrow extends EntityArrow implements IThrowableEntity 
 		}
 
 		if (movingobjectposition != null) {
-			if (movingobjectposition.entityHit != null) {
-				if (this.isEnchanted) {
+			if (movingobjectposition.entityHit != null && !(movingobjectposition.entityHit instanceof EntityEnderman)) {
+				movingobjectposition.entityHit.setFire(5);
+				if (this.isBurning()) {
 					movingobjectposition.entityHit.setFire(10);
 				}
 			}
 		}
 
+		super.onUpdate();
 	}
 
 	@Override

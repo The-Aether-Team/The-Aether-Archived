@@ -149,7 +149,7 @@ public class ItemPhoenixBow extends ItemBow {
 
 						if (l > 0)
 						{
-							entityarrow.isEnchanted = true;
+							entityarrow.setFire(1200);
 						}
 
 						stack.damageItem(1, entityplayer);
@@ -177,7 +177,6 @@ public class ItemPhoenixBow extends ItemBow {
 
 	public EntityPhoenixArrow createArrow(World worldIn, float distance, ItemStack stack, EntityLivingBase shooter) {
 		EntityPhoenixArrow entityPhoenixArrow = new EntityPhoenixArrow(worldIn, shooter, distance);
-		entityPhoenixArrow.setFire(1200);
 
 		return entityPhoenixArrow;
 	}
