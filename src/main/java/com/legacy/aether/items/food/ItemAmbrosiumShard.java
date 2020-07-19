@@ -58,7 +58,7 @@ public class ItemAmbrosiumShard extends ItemAetherFood
         		heldItem.shrink(1);
         	}
         	
-    		playerIn.heal(2F);
+    		playerIn.heal(1F);
 
     		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
     	}
