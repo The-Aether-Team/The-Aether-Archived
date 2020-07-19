@@ -31,7 +31,7 @@ public class EntityFireMinion extends EntityMob
         this.tasks.addTask(2, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(4, new EntityAIAttackMelee(this, 1.5D, true));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(0, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
     }
 
     @Override
