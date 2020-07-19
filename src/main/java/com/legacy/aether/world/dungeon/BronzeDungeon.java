@@ -41,7 +41,7 @@ public class BronzeDungeon extends AetherDungeon {
 
 	public boolean generateBossRoom(World world, Random random, int i, int j, int k)
 	{
-		if (!isBoxSolid(world, new PositionData(i, j - 3, k), new PositionData(16, 16, 16)) || !isBoxSolid(world, new PositionData(i + 20, j, k + 2), new PositionData(12, 12, 12))) {
+		if (!isBoxSolid(world, new PositionData(i, j - 3, k), new PositionData(16, 18, 16)) || !isBoxSolid(world, new PositionData(i + 20, j, k + 2), new PositionData(12, 12, 12))) {
 			return false;
 		}
 
