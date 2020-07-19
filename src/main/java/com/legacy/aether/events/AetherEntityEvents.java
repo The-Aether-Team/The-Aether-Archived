@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,19 +21,11 @@ import java.util.List;
 public class AetherEntityEvents
 {
 	@SubscribeEvent
-	public void onEntityUpdate(TickEvent.WorldTickEvent event)
+	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
 	{
-		if (event.phase == TickEvent.Phase.END)
+		if (event.getEntity() instanceof EntityLiving)
 		{
-			if (!event.world.isRemote)
-			{
-				List<Entity> entityList = event.world.loadedEntityList;
-
-				for (int i = 0; i < entityList.size(); i++)
-				{
-					entityUpdateEvents(entityList.get(i), event);
-				}
-			}
+			entityUpdateEvents(event.getEntity(), event);
 		}
 	}
 	
