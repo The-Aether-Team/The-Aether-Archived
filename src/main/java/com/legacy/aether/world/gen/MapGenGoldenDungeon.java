@@ -70,9 +70,9 @@ public class MapGenGoldenDungeon extends MapGenStructure
 	@Override
     protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
     {
-        if (this.rand.nextInt(120) != 0)
+        if (this.rand.nextInt(140) != 0)
         {
-            if (this.rand.nextInt(140) != 0)
+            if (this.rand.nextInt(180) != 0)
             {
                 return false;
             }
