@@ -6,27 +6,21 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.event.entity.living.LivingEvent;
 
 import java.util.List;
 
 public class AetherEntityEvents {
 
     @SubscribeEvent
-    public void onEntityUpdate(TickEvent.WorldTickEvent event)
+    public void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
     {
-        if (event.phase == TickEvent.Phase.END)
+        if (event.entity instanceof EntityLiving)
         {
-            if (!event.world.isRemote)
-            {
-                List entityList = event.world.loadedEntityList;
-
-                for (int i = 0; i < entityList.size(); i++)
-                {
-                    entityUpdateEvents((Entity) entityList.get(i));
-                }
-            }
+            entityUpdateEvents(event.entity);
         }
     }
 
