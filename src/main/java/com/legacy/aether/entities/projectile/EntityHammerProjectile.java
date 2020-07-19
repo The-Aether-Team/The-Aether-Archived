@@ -180,7 +180,17 @@ public class EntityHammerProjectile extends EntityThrowable
 			this.world.spawnParticle(EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
         }
 
-		this.setDead();
+        if (result.typeOfHit == Type.BLOCK)
+        {
+            if (this.world.getBlockState(result.getBlockPos()).isFullBlock())
+            {
+                this.setDead();
+            }
+        }
+        else
+        {
+            this.setDead();
+        }
 	}
 
 }
