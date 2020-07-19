@@ -2,6 +2,7 @@ package com.legacy.aether.world.biome.decoration;
 
 import java.util.Random;
 
+import com.legacy.aether.blocks.natural.BlockHolystone;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.EnumSkyBlock;
@@ -18,6 +19,16 @@ public class AetherGenLakes extends WorldGenerator {
 
 	@Override
 	public boolean generate(World world, Random random, int x, int y, int z) {
+		if (world.getBlock(x, y, z) == BlocksAether.carved_stone
+				|| world.getBlock(x, y, z) == BlocksAether.locked_carved_stone
+				|| world.getBlock(x, y, z) == BlocksAether.angelic_stone
+				|| world.getBlock(x, y, z) == BlocksAether.locked_angelic_stone
+				|| world.getBlock(x, y, z) == BlocksAether.hellfire_stone
+				|| world.getBlock(x, y, z) == BlocksAether.locked_hellfire_stone)
+		{
+			return false;
+		}
+		
 		x -= 8;
 
 		for (z -= 8; y > 5 && world.isAirBlock(x, y, z); --y) {
