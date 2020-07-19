@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
@@ -77,6 +78,15 @@ public class EntityZephyrSnowball extends EntityThrowable
 				else
 				{
 					player.getActiveItemStack().damageItem(1, player);
+
+					if (player.getActiveItemStack().getCount() <= 0)
+					{
+						this.playSound(SoundEvents.ITEM_SHIELD_BREAK, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
+					}
+					else
+					{
+						this.playSound(SoundEvents.ITEM_SHIELD_BLOCK, 1.0F, 0.8F + this.world.rand.nextFloat() * 0.4F);
+					}
 				}
 
 				result.entityHit.motionX += this.motionX * 1.5F;

@@ -463,6 +463,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 	{
 		if (!this.hasPrey())
 		{
+			this.setFriendly(false);
 			super.travel(strafe, vertical, forward);
 
 			return;
@@ -486,7 +487,10 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 			{
 				this.setFriendly(true);
 			}
-			
+			else
+			{
+				this.setFriendly(false);
+			}
 			
 			if (this.isFriendly())
 			{
