@@ -2,6 +2,7 @@ package com.legacy.aether.world.biome.decoration;
 
 import java.util.Random;
 
+import com.legacy.aether.blocks.natural.BlockHolystone;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +23,14 @@ public class AetherGenLakes extends WorldGenerator
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position)
     {
+        if (worldIn.getBlockState(position) == BlocksAether.holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, Boolean.TRUE)
+                || worldIn.getBlockState(position) == BlocksAether.mossy_holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, Boolean.TRUE)
+                || worldIn.getBlockState(position).getBlock() == BlocksAether.dungeon_block
+                || worldIn.getBlockState(position).getBlock() == BlocksAether.locked_dungeon_block)
+        {
+            return false;
+        }
+
         for (position = position.add(-8, 0, -8); position.getY() > 5 && worldIn.isAirBlock(position); position = position.down())
         {
             ;
