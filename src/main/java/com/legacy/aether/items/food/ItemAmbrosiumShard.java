@@ -40,8 +40,7 @@ public class ItemAmbrosiumShard extends Item {
 				--heldItem.stackSize;
 			}
 
-			playerIn.heal(2F);
-			playerIn.getFoodStats().addStats(1, 0.5F);
+			playerIn.heal(1F);
 
 			return heldItem;
 		}
