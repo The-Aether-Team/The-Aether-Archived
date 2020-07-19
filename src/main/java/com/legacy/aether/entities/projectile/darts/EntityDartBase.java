@@ -393,13 +393,16 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
             }
         }
 
-        if (movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && movingobjectposition.entityHit != this.shootingEntity.riddenByEntity)
+        if (movingobjectposition.entityHit != null)
         {
-            this.setDead();
-        }
-        else
-        {
-            this.setGravityVelocity(0.03F);
+            if (movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && movingobjectposition.entityHit != this.shootingEntity.riddenByEntity)
+            {
+                this.setDead();
+            }
+            else
+            {
+                this.setGravityVelocity(0.03F);
+            }
         }
     }
 

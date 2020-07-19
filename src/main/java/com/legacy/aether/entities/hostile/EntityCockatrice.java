@@ -1,13 +1,10 @@
 package com.legacy.aether.entities.hostile;
 
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -31,6 +28,7 @@ public class EntityCockatrice extends EntityMob {
 		this.stepHeight = 1.0F;
 		this.setSize(1.0F, 2.0F);
 		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 1.0D, 8.0F));
 		this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
 		this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(8, new EntityAILookIdle(this));
@@ -98,14 +96,7 @@ public class EntityCockatrice extends EntityMob {
 			return;
 		}
 
-		double d1, d2;
-		d1 = this.getEntityToAttack().posX - this.posX;
-		d2 = this.getEntityToAttack().posZ - this.posZ;
-		double d3 = 1.5D / Math.sqrt((d1 * d1) + (d2 * d2) + 0.1D);
-		d1 = d1 * d3;
-		d2 = d2 * d3;
-		EntityPoisonNeedle entityarrow = new EntityPoisonNeedle(this.worldObj, this, 1.0F);
-		entityarrow.posY = this.posY + 1.55D;
+		EntityArrow entityarrow = new EntityPoisonNeedle(this.worldObj, this, 1.0F);
 		this.playSound("random.bow", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		this.worldObj.spawnEntityInWorld(entityarrow);
 	}
