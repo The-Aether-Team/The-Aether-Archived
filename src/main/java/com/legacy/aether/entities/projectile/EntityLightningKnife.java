@@ -18,6 +18,24 @@ public class EntityLightningKnife extends EntityProjectileBase {
 
 	@Override
 	protected void onImpact(MovingObjectPosition object) {
+		if (!this.worldObj.isRemote)
+		{
+			if (object.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY)
+			{
+				summonLightning();
+			}
+			else if (object.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+			{
+				if (this.worldObj.getBlock(object.blockX, object.blockY, object.blockZ).getCollisionBoundingBoxFromPool(this.worldObj, object.blockX, object.blockY, object.blockZ) != null)
+				{
+					summonLightning();
+				}
+			}
+		}
+	}
+
+	private void summonLightning()
+	{
 		this.worldObj.addWeatherEffect(new EntityLightningBolt(this.worldObj, this.posX, this.posY, this.posZ));
 		this.setDead();
 	}
