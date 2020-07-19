@@ -3,6 +3,7 @@ package com.legacy.aether.world.gen;
 import java.util.Random;
 import java.util.Set;
 
+import com.legacy.aether.world.util.RandomTracker;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
@@ -66,9 +67,11 @@ public class MapGenSilverDungeon extends MapGenStructure
 	@Override
     protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ)
     {
-        if (this.rand.nextInt(80) != 0)
+        RandomTracker randomTracker = new RandomTracker();
+
+        if (randomTracker.testRandom(this.rand, 80) != 0)
         {
-            if (this.rand.nextInt(120) != 0)
+            if (randomTracker.testRandom(this.rand, 120) != 0)
             {
                 return false;
             }

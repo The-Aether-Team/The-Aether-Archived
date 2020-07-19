@@ -14,6 +14,7 @@ import com.legacy.aether.events.BronzeDungeonSizeEvent;
 import com.legacy.aether.world.dungeon.util.AetherDungeonVirtual;
 import com.legacy.aether.world.dungeon.util.PositionData;
 
+import com.legacy.aether.world.util.RandomTracker;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -55,9 +56,11 @@ public class BronzeDungeon extends AetherDungeonVirtual
 			return false;
 		}
 
-		if (random.nextInt(40) != 0)
+		RandomTracker randomTracker = new RandomTracker();
+
+		if (randomTracker.testRandom(random,40) != 0)
 		{
-			if (random.nextInt(60) != 0)
+			if (randomTracker.testRandom(random,60) != 0)
 			{
 				return false;
 			}
