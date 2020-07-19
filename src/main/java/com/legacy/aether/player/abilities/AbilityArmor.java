@@ -44,8 +44,6 @@ public class AbilityArmor implements IAetherAbility {
 				this.player.getEntity().motionY = 1D;
 				this.jumpBoosted = true;
 			}
-
-			this.player.getEntity().fallDistance = -1F;
 		}
 
 		if (this.player.getEntity().isWet()) {
@@ -73,10 +71,6 @@ public class AbilityArmor implements IAetherAbility {
 			if (!this.player.getEntity().worldObj.isRemote) {
 				((WorldServer) this.player.getEntity().worldObj).func_147487_a("flame", this.player.getEntity().posX + (this.random.nextGaussian() / 5D), this.player.getEntity().posY + (this.random.nextGaussian() / 5D), this.player.getEntity().posZ + (this.random.nextGaussian() / 3D), 0, 0.0D, 0.0D, 0.0D, 0.0D);
 			}
-		}
-
-		if (this.player.getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.sentry_boots))) {
-			this.player.getEntity().fallDistance = 0F;
 		}
 
 		if (!this.player.isJumping() && this.player.getEntity().onGround) {
