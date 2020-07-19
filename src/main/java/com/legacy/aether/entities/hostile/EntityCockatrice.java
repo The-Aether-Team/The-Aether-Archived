@@ -7,14 +7,12 @@ import com.legacy.aether.entities.projectile.EntityPoisonNeedle;
 import com.legacy.aether.registry.AetherLootTables;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
@@ -47,6 +45,7 @@ public class EntityCockatrice extends EntityMob
     protected void initEntityAI()
     {
         this.tasks.addTask(1, new EntityAISwimming(this));
+		this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 1.0D, 8.0F));
         this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
@@ -126,16 +125,13 @@ public class EntityCockatrice extends EntityMob
 			return;
 		}
 
-		double d1, d2;
-		d1 = this.getAttackTarget().posX - this.posX;
-		d2 = this.getAttackTarget().posZ - this.posZ;
-		double d3 = 1.5D / Math.sqrt((d1 * d1) + (d2 * d2) + 0.1D);
-		d1 = d1 * d3;
-		d2 = d2 * d3;
-		EntityPoisonNeedle entityarrow = new EntityPoisonNeedle(this.world, this);
-		entityarrow.shoot(this, this.rotationPitch, this.rotationYaw, 0.0F, 1.0F, 1.0F);
-		entityarrow.posY = this.posY + 1.55D;
-        this.playSound(SoundsAether.cockatrice_attack, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+		EntityArrow entityarrow = new EntityPoisonNeedle(this.world, this);
+		double d0 = getAttackTarget().posX - this.posX;
+		double d1 = getAttackTarget().getEntityBoundingBox().minY + (double)(getAttackTarget().height / 3.0F) - entityarrow.posY;
+		double d2 = getAttackTarget().posZ - this.posZ;
+		double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
+		entityarrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.0F, (float)(14 - this.world.getDifficulty().getId() * 4));
+		this.playSound(SoundsAether.cockatrice_attack, 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 		this.world.spawnEntity(entityarrow);
 	}
 
