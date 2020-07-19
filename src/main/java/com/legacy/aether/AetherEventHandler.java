@@ -1,6 +1,8 @@
 package com.legacy.aether;
 
 import com.legacy.aether.advancements.AetherAdvancements;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.blocks.portal.BlockAetherPortal;
 import com.legacy.aether.entities.AetherEntities;
@@ -46,10 +48,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -433,6 +432,20 @@ public class AetherEventHandler
 			else
 			{
 				performTimeSet(event, world, worldServer);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onFall(LivingFallEvent event)
+	{
+		if (event.getEntityLiving() instanceof EntityPlayer)
+		{
+			IPlayerAether playerAether = AetherAPI.getInstance().get((EntityPlayer) event.getEntityLiving());
+
+			if (playerAether.getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.sentry_boots)) || playerAether.getAccessoryInventory().isWearingGravititeSet() || playerAether.getAccessoryInventory().isWearingValkyrieSet())
+			{
+				event.setCanceled(true);
 			}
 		}
 	}

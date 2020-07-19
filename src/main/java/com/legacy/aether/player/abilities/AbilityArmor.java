@@ -51,8 +51,6 @@ public class AbilityArmor implements IAetherAbility
 				this.playerAether.getEntity().motionY = 1D;
 				this.jumpBoosted = true;
 			}
-
-			this.playerAether.getEntity().fallDistance = -1F;
 		}
 
 		if (this.playerAether.getEntity().isWet())
@@ -87,11 +85,6 @@ public class AbilityArmor implements IAetherAbility
 			{
 				FMLClientHandler.instance().getClient().world.spawnParticle(EnumParticleTypes.FLAME, this.playerAether.getEntity().posX + (this.rand.nextGaussian() / 5D), this.playerAether.getEntity().posY + (this.rand.nextGaussian() / 5D), this.playerAether.getEntity().posZ + (this.rand.nextGaussian() / 3D), 0.0D, 0.0D, 0.0D);
 			}
-		}
-
-		if (this.playerAether.getAccessoryInventory().wearingArmor(new ItemStack(ItemsAether.sentry_boots)))
-		{
-			this.playerAether.getEntity().fallDistance = 0F;
 		}
 
 		if (!this.playerAether.isJumping() && this.playerAether.getEntity().onGround)

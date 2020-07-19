@@ -57,8 +57,6 @@ public class AbilityFlight implements IAetherAbility
 			this.flightMod = 1.0D;
 		}
 
-		this.playerAether.getEntity().fallDistance = -1F;
-
 		if (this.playerAether.getEntity().onGround)
 		{
 			this.flightCount = 0;
