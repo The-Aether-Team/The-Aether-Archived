@@ -60,8 +60,6 @@ public class AetherGenDungeonOakTree extends WorldGenAbstractTree
             return false;
         }
 
-        System.out.println(true);
-
         int height = 9;
 
         for(int x1 = pos.getX() - 3; x1 < pos.getX() + 4; x1++)

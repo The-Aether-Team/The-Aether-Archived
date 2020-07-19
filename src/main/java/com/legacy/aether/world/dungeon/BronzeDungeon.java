@@ -11,17 +11,14 @@ import com.legacy.aether.blocks.natural.BlockHolystone;
 import com.legacy.aether.blocks.util.EnumStoneType;
 import com.legacy.aether.entities.bosses.slider.EntitySlider;
 import com.legacy.aether.events.BronzeDungeonSizeEvent;
-import com.legacy.aether.events.DialogueClickedEvent;
 import com.legacy.aether.world.dungeon.util.AetherDungeonVirtual;
 import com.legacy.aether.world.dungeon.util.PositionData;
 
-import com.legacy.aether.world.util.AetherRandomTracker;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BronzeDungeon extends AetherDungeonVirtual
 {
@@ -58,9 +55,9 @@ public class BronzeDungeon extends AetherDungeonVirtual
 			return false;
 		}
 
-		if (random.nextInt(10) != 0)
+		if (random.nextInt(40) != 0)
 		{
-			if (random.nextInt(10) != 10)
+			if (random.nextInt(60) != 0)
 			{
 				return false;
 			}
