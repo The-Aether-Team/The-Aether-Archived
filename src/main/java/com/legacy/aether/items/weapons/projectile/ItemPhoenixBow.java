@@ -130,6 +130,13 @@ public class ItemPhoenixBow extends ItemBow
                             entityarrow.setKnockbackStrength(k);
                         }
 
+                        int l = EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack);
+
+                        if (l > 0)
+                        {
+                            entityarrow.setFire(1200);
+                        }
+
                         stack.damageItem(1, entityplayer);
 
                         if (flag1)
@@ -166,15 +173,11 @@ public class ItemPhoenixBow extends ItemBow
 
             entityPhoenixArrow.setPotionEffect(stack);
 
-            entityPhoenixArrow.setFire(1200);
-
             return entityPhoenixArrow;
         }
         else
         {
             EntityPhoenixArrow entityPhoenixArrow = new EntityPhoenixArrow(worldIn, shooter, isSpectral);
-
-            entityPhoenixArrow.setFire(1200);
 
             return entityPhoenixArrow;
         }

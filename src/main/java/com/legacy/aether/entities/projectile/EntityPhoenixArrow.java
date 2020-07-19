@@ -1,8 +1,10 @@
 package com.legacy.aether.entities.projectile;
 
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
@@ -12,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityPhoenixArrow extends EntityArrow implements IProjectile
@@ -72,17 +75,30 @@ public class EntityPhoenixArrow extends EntityArrow implements IProjectile
 	}
 
     @Override
+    protected void onHit(RayTraceResult raytraceResultIn)
+    {
+        Entity entity = raytraceResultIn.entityHit;
+
+        if (entity != null && !(entity instanceof EntityEnderman))
+        {
+            entity.setFire(5);
+
+            if (this.isBurning())
+            {
+                entity.setFire(10);
+            }
+        }
+
+        super.onHit(raytraceResultIn);
+    }
+
+    @Override
     protected void arrowHit(EntityLivingBase living)
     {
         if (this.isSpectral)
         {
             PotionEffect potioneffect = new PotionEffect(MobEffects.GLOWING, this.duration, 0);
             living.addPotionEffect(potioneffect);
-        }
-
-        if (EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, (EntityLivingBase) this.shootingEntity) > 0)
-        {
-            living.setFire(10);
         }
 
         super.arrowHit(living);

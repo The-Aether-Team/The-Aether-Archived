@@ -1,12 +1,15 @@
 package com.legacy.aether.entities.projectile;
 
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityTippedPhoenixArrow extends EntityTippedArrow implements IProjectile
@@ -23,6 +26,7 @@ public class EntityTippedPhoenixArrow extends EntityTippedArrow implements IProj
         super(worldIn, shooter);
     }
 
+    @Override
     public void onUpdate()
     {
         super.onUpdate();
@@ -70,13 +74,21 @@ public class EntityTippedPhoenixArrow extends EntityTippedArrow implements IProj
         compound.setInteger("Duration", this.duration);
     }
 
-    protected void arrowHit(EntityLivingBase living)
+    @Override
+    protected void onHit(RayTraceResult raytraceResultIn)
     {
-        super.arrowHit(living);
+        Entity entity = raytraceResultIn.entityHit;
 
-        if (EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, (EntityLivingBase) this.shootingEntity) > 0)
+        if (entity != null && !(entity instanceof EntityEnderman))
         {
-            living.setFire(10);
+            entity.setFire(5);
+
+            if (this.isBurning())
+            {
+                entity.setFire(10);
+            }
         }
+
+        super.onHit(raytraceResultIn);
     }
 }
