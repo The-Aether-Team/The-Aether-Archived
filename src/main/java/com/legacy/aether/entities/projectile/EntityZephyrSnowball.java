@@ -69,11 +69,19 @@ public class EntityZephyrSnowball extends EntityThrowable
 				{
 					return;
 				}
-			}
 
-			result.entityHit.motionX += this.motionX * 1.5F;
-			result.entityHit.motionY += 0.5D;
-			result.entityHit.motionZ += this.motionZ * 1.5F;
+				if (!player.isActiveItemStackBlocking())
+				{
+					result.entityHit.motionY += 0.5D;
+				}
+				else
+				{
+					player.getActiveItemStack().damageItem(1, player);
+				}
+
+				result.entityHit.motionX += this.motionX * 1.5F;
+				result.entityHit.motionZ += this.motionZ * 1.5F;
+			}
 		}
 
         this.setDead();
