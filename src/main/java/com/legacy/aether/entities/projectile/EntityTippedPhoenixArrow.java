@@ -3,35 +3,26 @@ package com.legacy.aether.entities.projectile;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
-public class EntityPhoenixArrow extends EntityArrow implements IProjectile
+public class EntityTippedPhoenixArrow extends EntityTippedArrow implements IProjectile
 {
-	private boolean isSpectral = false;
     private int duration = 200;
 
-	public EntityPhoenixArrow(World worldIn) 
-	{
-		super(worldIn);
-	}
+    public EntityTippedPhoenixArrow(World worldIn)
+    {
+        super(worldIn);
+    }
 
-	public EntityPhoenixArrow(World worldIn, EntityLivingBase shooter, boolean isSpectral)
-	{
-		super(worldIn, shooter);
+    public EntityTippedPhoenixArrow(World worldIn, EntityLivingBase shooter)
+    {
+        super(worldIn, shooter);
+    }
 
-		this.isSpectral = isSpectral;
-	}
-
-	@Override
     public void onUpdate()
     {
         super.onUpdate();
@@ -47,11 +38,6 @@ public class EntityPhoenixArrow extends EntityArrow implements IProjectile
             }
             else
             {
-            	if (this.isSpectral)
-            	{
-                    this.world.spawnParticle(EnumParticleTypes.SPELL_INSTANT, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
-            	}
-
                 this.spawnPotionParticles(2);
             }
         }
@@ -65,29 +51,6 @@ public class EntityPhoenixArrow extends EntityArrow implements IProjectile
         }
     }
 
-	@Override
-	protected ItemStack getArrowStack() 
-	{
-		return this.isSpectral ? new ItemStack(Items.SPECTRAL_ARROW) : new ItemStack(Items.ARROW);
-	}
-
-    @Override
-    protected void arrowHit(EntityLivingBase living)
-    {
-        if (this.isSpectral)
-        {
-            PotionEffect potioneffect = new PotionEffect(MobEffects.GLOWING, this.duration, 0);
-            living.addPotionEffect(potioneffect);
-        }
-
-        if (EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, (EntityLivingBase) this.shootingEntity) > 0)
-        {
-            living.setFire(10);
-        }
-
-        super.arrowHit(living);
-    }
-
     @Override
     public void readEntityFromNBT(NBTTagCompound compound)
     {
@@ -97,11 +60,6 @@ public class EntityPhoenixArrow extends EntityArrow implements IProjectile
         {
             this.duration = compound.getInteger("Duration");
         }
-
-        if (compound.hasKey("Spectral"))
-        {
-        	this.isSpectral = compound.getBoolean("Spectral");
-        }
     }
 
     @Override
@@ -110,7 +68,15 @@ public class EntityPhoenixArrow extends EntityArrow implements IProjectile
         super.writeEntityToNBT(compound);
 
         compound.setInteger("Duration", this.duration);
-        compound.setBoolean("Spectral", this.isSpectral);
     }
 
+    protected void arrowHit(EntityLivingBase living)
+    {
+        super.arrowHit(living);
+
+        if (EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, (EntityLivingBase) this.shootingEntity) > 0)
+        {
+            living.setFire(10);
+        }
+    }
 }

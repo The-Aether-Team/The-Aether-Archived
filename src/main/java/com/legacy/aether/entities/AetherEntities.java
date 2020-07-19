@@ -1,5 +1,6 @@
 package com.legacy.aether.entities;
 
+import com.legacy.aether.entities.projectile.*;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
@@ -26,11 +27,6 @@ import com.legacy.aether.entities.passive.mountable.EntityMoa;
 import com.legacy.aether.entities.passive.mountable.EntityParachute;
 import com.legacy.aether.entities.passive.mountable.EntityPhyg;
 import com.legacy.aether.entities.passive.mountable.EntitySwet;
-import com.legacy.aether.entities.projectile.EntityHammerProjectile;
-import com.legacy.aether.entities.projectile.EntityLightningKnife;
-import com.legacy.aether.entities.projectile.EntityPhoenixArrow;
-import com.legacy.aether.entities.projectile.EntityPoisonNeedle;
-import com.legacy.aether.entities.projectile.EntityZephyrSnowball;
 import com.legacy.aether.entities.projectile.crystals.EntityFireBall;
 import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
 import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
@@ -84,6 +80,7 @@ public class AetherEntities
 		register(EntityLightningKnife.class, "lightning_knife", 30);
 		register(EntityParachute.class, "parachute", 31);
 		register(EntityWhirlwind.class, "whirlwind", 32, 0x9fc3f7, 0xffffff);
+		register(EntityTippedPhoenixArrow.class, "tipped_phoenix_arrow", 33);
 	}
 
 	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID)

@@ -1,5 +1,6 @@
 package com.legacy.aether.items.weapons.projectile;
 
+import com.legacy.aether.entities.projectile.EntityTippedPhoenixArrow;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -8,12 +9,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.EnumRarity;
-import net.minecraft.item.ItemArrow;
-import net.minecraft.item.ItemBow;
-import net.minecraft.item.ItemSpectralArrow;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -164,13 +160,24 @@ public class ItemPhoenixBow extends ItemBow
 
     public EntityArrow createArrow(World worldIn, boolean isSpectral, ItemStack stack, EntityLivingBase shooter)
     {
-        EntityPhoenixArrow entityPhoenixArrow = new EntityPhoenixArrow(worldIn, shooter, isSpectral);
+        if (stack.getItem() instanceof ItemTippedArrow)
+        {
+            EntityTippedPhoenixArrow entityPhoenixArrow = new EntityTippedPhoenixArrow(worldIn, shooter);
 
-        entityPhoenixArrow.setPotionEffect(stack);
+            entityPhoenixArrow.setPotionEffect(stack);
 
-        entityPhoenixArrow.setFire(1200);
+            entityPhoenixArrow.setFire(1200);
 
-        return entityPhoenixArrow;
+            return entityPhoenixArrow;
+        }
+        else
+        {
+            EntityPhoenixArrow entityPhoenixArrow = new EntityPhoenixArrow(worldIn, shooter, isSpectral);
+
+            entityPhoenixArrow.setFire(1200);
+
+            return entityPhoenixArrow;
+        }
     }
 
     public static float getArrowVelocity(int charge)

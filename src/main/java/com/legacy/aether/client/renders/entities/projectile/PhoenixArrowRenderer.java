@@ -1,5 +1,6 @@
 package com.legacy.aether.client.renders.entities.projectile;
 
+import com.legacy.aether.Aether;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
@@ -27,7 +28,7 @@ public class PhoenixArrowRenderer extends Render<EntityPhoenixArrow>
         if (var1.prevRotationYaw != 0.0F || var1.prevRotationPitch != 0.0F)
         {
             GL11.glPushMatrix();
-            this.renderManager.renderEngine.bindTexture(this.getEntityTexture(var1));
+            this.renderManager.renderEngine.bindTexture(Aether.locate("textures/entities/projectile/flaming_arrow.png"));
             GL11.glTranslatef((float)var2, (float)var4, (float)var6);
             GL11.glRotatef(var1.prevRotationYaw + (var1.rotationYaw - var1.prevRotationYaw) * var9 - 90.0F, 0.0F, 1.0F, 0.0F);
             GL11.glRotatef(var1.prevRotationPitch + (var1.rotationPitch - var1.prevRotationPitch) * var9, 0.0F, 0.0F, 1.0F);
