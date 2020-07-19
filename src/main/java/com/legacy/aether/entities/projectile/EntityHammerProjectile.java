@@ -51,24 +51,6 @@ public class EntityHammerProjectile extends EntityProjectileBase {
 			}
 		}
 
-		for (int l = (int) (this.posX - 3); l <= this.posX + 3; l++) {
-			for (int i1 = (int) (this.posY - 3); i1 <= this.posY + 3; i1++) {
-				for (int j1 = (int) (this.posZ - 3); j1 <= this.posZ + 3; j1++) {
-					if (this.worldObj.getBlock(l, i1, j1) instanceof BlockBush && this.getThrower() instanceof EntityPlayer) {
-						Block prevBlock = this.worldObj.getBlock(l, i1, j1);
-
-						if (!this.harvestBlockBans.contains(prevBlock)) {
-							prevBlock.harvestBlock(this.getThrower().worldObj, (EntityPlayer) this.getThrower(), l, i1, j1, this.worldObj.getBlockMetadata(l, i1, j1));
-
-							prevBlock.removedByPlayer(this.getThrower().worldObj, (EntityPlayer) this.getThrower(), l, i1, j1);
-						}
-
-						continue;
-					}
-				}
-			}
-		}
-
 		for (int j = 0; j < 8; j++) {
 			this.worldObj.spawnParticle("explode", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
 			this.worldObj.spawnParticle("explode", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
