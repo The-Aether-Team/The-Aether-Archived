@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import com.legacy.aether.world.util.RandomTracker;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -45,9 +46,11 @@ public class BronzeDungeon extends AetherDungeon {
 			return false;
 		}
 
-		if (random.nextInt(40) != 0)
+		RandomTracker randomTracker = new RandomTracker();
+
+		if (randomTracker.testRandom(random,40) != 0)
 		{
-			if (random.nextInt(60) != 0)
+			if (randomTracker.testRandom(random,60) != 0)
 			{
 				return false;
 			}
