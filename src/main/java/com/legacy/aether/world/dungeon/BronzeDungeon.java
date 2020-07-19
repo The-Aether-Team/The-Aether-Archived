@@ -45,9 +45,12 @@ public class BronzeDungeon extends AetherDungeon {
 			return false;
 		}
 
-		if (random.nextInt(25) != 0)
+		if (random.nextInt(40) != 0)
 		{
-			return false;
+			if (random.nextInt(60) != 0)
+			{
+				return false;
+			}
 		}
 
 		setBlocks(this.lockedBlock(), this.lockedLightBlock(), 20);

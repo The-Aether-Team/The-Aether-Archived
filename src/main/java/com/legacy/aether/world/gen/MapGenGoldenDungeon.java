@@ -2,12 +2,10 @@ package com.legacy.aether.world.gen;
 
 import java.util.Random;
 
-import com.legacy.aether.world.util.AetherRandomTracker;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructure;
-import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureStart;
 
 import com.legacy.aether.world.gen.components.ComponentGoldenDungeon;
@@ -26,17 +24,15 @@ public class MapGenGoldenDungeon extends MapGenStructure {
 
 	@Override
 	protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ) {
-		AetherRandomTracker tracker = AetherRandomTracker.INSTANCE;
-		int rand = tracker.testRandom(this.rand, 180);
+		if (this.rand.nextInt(120) != 0)
+		{
+			if (this.rand.nextInt(140) != 0)
+			{
+				return false;
+			}
+		}
 
-		if (rand != 0)
-		{
-			return false;
-		}
-		else
-		{
-			return chunkX % 10 == 0 && chunkZ % 10 == 0;
-		}
+		return chunkX % 10 == 0 && chunkZ % 10 == 0;
 	}
 
 	@Override
