@@ -10,132 +10,128 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import com.legacy.aether.blocks.util.BlockFloating;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityFloatingBlock extends Entity
 {
+    private static final DataParameter<Integer> BLOCK_NAME = new DataParameter<>(20, DataSerializers.VARINT);
 
-	private IBlockState state;
+    private static final DataParameter<Byte> BLOCK_METADATA = new DataParameter<>(21, DataSerializers.BYTE);
 
-	private int timeFloated = 0;
+    private boolean hasActivated = false;
 
-	public EntityFloatingBlock(World worldIn)
-	{
-		super(worldIn);
-
-		this.setSize(1.0F, 1.0F);
-	}
-
-	public EntityFloatingBlock(World world, BlockPos pos, IBlockState state)
-	{
-		this(world);
-
-        this.preventEntitySpawning = true;
-		this.motionX = this.motionY = this.motionZ = 0;
-
-        this.setState(state);
-		this.setPosition(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
-	}
-
-	@Override
-    public void setPosition(double x, double y, double z)
+    public EntityFloatingBlock(World world)
     {
-		super.setPosition(x, y, z);
+        super(world);
 
-		if (this.world.isRemote && (this.state == null || this.state == Blocks.AIR.getDefaultState()))
-		{
-			this.state = this.world.getBlockState(this.getPosition());
-		}
+        this.setSize(0.98F, 0.98F);
+        this.motionX = 0.0D;
+        this.motionY = 0.0D;
+        this.motionZ = 0.0D;
     }
 
-	@Override
-	protected void entityInit()
-	{
+    public EntityFloatingBlock(World world, double x, double y, double z, IBlockState state)
+    {
+        this(world);
 
+        this.setBlockState(state);
+
+        this.setPosition(x, y, z);
+
+        this.prevPosX = x;
+        this.prevPosY = y;
+        this.prevPosZ = z;
     }
 
-	@Override
-	public void onUpdate()
-	{
-        if (this.getBlockState() == null)
+    @Override
+    protected void entityInit()
+    {
+        this.dataManager.register(BLOCK_NAME, 2);
+        this.dataManager.register(BLOCK_METADATA, (byte) 4);
+    }
+
+    @Override
+    public void onUpdate()
+    {
+        if (!this.world.isRemote && !this.hasActivated)
         {
-            this.setDead();
-            return;
-        }
+            BlockPos pos = new BlockPos(this);
 
-        this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-        ++this.timeFloated;
-        this.motionY += 0.04D;
-        this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-        this.motionX *= 0.9800000190734863D;
-        this.motionY *= 0.9800000190734863D;
-        this.motionZ *= 0.9800000190734863D;
-        BlockPos pos = new BlockPos(this);
-        Block block = this.getBlockState().getBlock();
-
-        List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.0D, 1.0D, 0.0D));
-
-        for (int stack = 0; stack < list.size(); ++stack)
-        {
-        	Entity entity = (Entity) list.get(stack);
-
-            if (entity instanceof EntityFallingBlock && block.canPlaceBlockAt(this.world, pos))
+            if (this.world.getBlockState(pos).getBlock() == this.getBlockState().getBlock())
             {
-                this.world.setBlockState(pos.up(), this.getBlockState(), 2);
-                this.setDead();
+                this.world.setBlockToAir(pos);
             }
             else
             {
-            	entity.move(MoverType.PLAYER, this.motionX, this.motionY, this.motionZ);
-            	entity.setPosition(entity.posX, this.posY + 1.0D, entity.posZ);
-            	entity.motionY = 0.0D;
-            	entity.onGround = true;
-            	entity.fallDistance = 0.0F;
+                this.setDead();
             }
+
+            this.hasActivated = true;
         }
 
-        if (this.collidedVertically && !this.onGround)
+        if (this.ticksExisted > 200)
         {
-            this.motionX *= 0.699999988079071D;
-            this.motionZ *= 0.699999988079071D;
-            this.motionY *= -0.5D;
             this.setDead();
+        }
+        else
+        {
+            this.prevPosX = this.posX;
+            this.prevPosY = this.posY;
+            this.prevPosZ = this.posZ;
 
-            if (!block.canPlaceBlockAt(this.world, pos) || BlockFloating.canContinue(this.world, pos.up()) || !this.world.setBlockState(pos, this.getBlockState(), 2))
+            this.motionY += 0.04D;
+
+            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
+
+            this.motionX *= 0.98D;
+            this.motionY *= 0.98D;
+            this.motionZ *= 0.98D;
+
+            BlockPos pos = new BlockPos(this);
+
+            if (!BlockFloating.canFallInto(this.world, pos.up()))
             {
                 if (!this.world.isRemote)
                 {
-                    this.dropItem(Item.getItemFromBlock(block), 1);
+                    this.world.setBlockState(pos, this.getBlockState());
+
+                    this.setDead();
+                }
+
+                this.posX = pos.getX() + 0.5D;
+                this.posY = pos.getY();
+                this.posZ = pos.getZ() + 0.5D;
+            }
+
+            if (this.world.isAirBlock(pos.down()) && this.world.isRemote)
+            {
+                int count = MathHelper.floor(this.motionY / 0.15D);
+
+                if (count > 5)
+                {
+                    count = 5;
                 }
             }
         }
-        else if (this.timeFloated > 100)
-        {
-            if (!this.world.isRemote)
-            {
-                this.dropItem(Item.getItemFromBlock(block), 1);
-            }
+    }
 
-            this.setDead();
-        }
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean canRenderOnFire()
+    {
+        return false;
+    }
 
-	public void setState(IBlockState state)
-	{
-		this.state = state;
-	}
-
-	public IBlockState getBlockState()
-	{
-		return this.state;
-	}
-
-	@Override
+    @Override
     protected boolean canTriggerWalking()
     {
         return false;
@@ -147,16 +143,42 @@ public class EntityFloatingBlock extends Entity
         return !this.isDead;
     }
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound tagCompound)
-	{
-		this.state = Block.getStateById(tagCompound.getInteger("blockstateId"));
-	}
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound compound)
+    {
+        Block block = Block.getBlockFromName(compound.getString("Block"));
 
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound tagCompound) 
-	{
-		tagCompound.setInteger("blockstateId", Block.getStateId(this.state));
-	}
+        this.setBlockState(block.getStateFromMeta(compound.getByte("BlockState")));
+        this.ticksExisted = compound.getInteger("TicksExisted");
 
+        this.hasActivated = this.ticksExisted > 1;
+    }
+
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound compound)
+    {
+        IBlockState state = this.getBlockState();
+
+        Block block = state.getBlock();
+
+        compound.setString("Block", Block.REGISTRY.getNameForObject(block).toString());
+        compound.setByte("BlockState", (byte) block.getMetaFromState(state));
+        compound.setInteger("TicksExisted", this.ticksExisted);
+    }
+
+    public IBlockState getBlockState()
+    {
+        Block block = Block.getBlockById(this.dataManager.get(BLOCK_NAME));
+        int meta = (int) this.dataManager.get(BLOCK_METADATA);
+
+        return block.getStateFromMeta(meta);
+    }
+
+    public void setBlockState(IBlockState state)
+    {
+        Block block = state.getBlock();
+
+        this.dataManager.set(BLOCK_NAME, Block.REGISTRY.getIDForObject(block));
+        this.dataManager.set(BLOCK_METADATA, (byte) block.getMetaFromState(state));
+    }
 }

@@ -32,7 +32,7 @@ public class ItemGravititeTool extends ItemAetherTool
 	@SuppressWarnings("deprecation")
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
-    	EntityFloatingBlock entity = new EntityFloatingBlock(world, pos, world.getBlockState(pos));
+    	EntityFloatingBlock entity = new EntityFloatingBlock(world, pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D, world.getBlockState(pos));
 
 		ItemStack heldItem = player.getHeldItem(hand);
 
@@ -46,7 +46,6 @@ public class ItemGravititeTool extends ItemAetherTool
         	if (!world.isRemote)
         	{
         		world.spawnEntity(entity);
-        		world.setBlockToAir(pos);
         	}
 
         	heldItem.damageItem(4, player);
