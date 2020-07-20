@@ -91,6 +91,8 @@ public class PlayerAether implements IPlayerAether {
 
     public float prevTimeInPortal;
 
+    public Entity riddenEntity;
+
     private ChunkCoordinates bedLocation;
 
 	public PlayerAether() {
@@ -173,6 +175,12 @@ public class PlayerAether implements IPlayerAether {
 		if (this.getEntity().dimension == AetherConfig.getAetherDimensionID()) {
 			if (this.getEntity().posY < -2) {
 				this.teleportPlayer(false);
+
+				if (this.riddenEntity != null)
+				{
+					this.getEntity().mountEntity(this.riddenEntity);
+					this.riddenEntity = null;
+				}
 			}
 		}
 

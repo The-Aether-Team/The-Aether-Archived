@@ -1,12 +1,15 @@
 package com.legacy.aether.events;
 
 import com.legacy.aether.AetherConfig;
+import com.legacy.aether.api.AetherAPI;
+import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.world.TeleporterAether;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -38,15 +41,12 @@ public class AetherEntityEvents {
 
                     if (entity.posY <= 0)
                     {
-                        if (entity.riddenByEntity != null)
+                        if (entity.riddenByEntity instanceof EntityPlayer)
                         {
-                            entity.riddenByEntity = null;
+                            ((PlayerAether) AetherAPI.get((EntityPlayer) entity.riddenByEntity)).riddenEntity = entity;
                         }
 
-                        if (entity.ridingEntity != null)
-                        {
-                            entity.ridingEntity = null;
-                        }
+                        entity.riddenByEntity.ridingEntity = null;
 
                         entity.timeUntilPortal = 300;
                         transferEntity(false, entity, server.worldServerForDimension(previousDimension), server.worldServerForDimension(transferDimension));
