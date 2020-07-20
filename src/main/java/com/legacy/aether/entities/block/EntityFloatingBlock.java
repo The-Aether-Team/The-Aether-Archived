@@ -24,6 +24,8 @@ public class EntityFloatingBlock extends Entity implements IEntityAdditionalSpaw
 
 	private int timeFloated = 0;
 
+	private boolean hasActivated = false;
+
 	public EntityFloatingBlock(World worldIn) {
 		super(worldIn);
 
@@ -84,19 +86,25 @@ public class EntityFloatingBlock extends Entity implements IEntityAdditionalSpaw
 			}
 		}
 
-		if (this.isCollidedVertically && !this.onGround) {
-			this.motionX *= 0.699999988079071D;
-			this.motionZ *= 0.699999988079071D;
-			this.motionY *= -0.5D;
+		if (this.ticksExisted > 200)
+		{
 			this.setDead();
+		}
+		else
+		{
+			if (!BlockFloating.canContinue(this.worldObj, i, j + 1, k))
+			{
+				if (!this.worldObj.isRemote)
+				{
+					this.worldObj.setBlock(i, j, k, this.getBlock());
 
-			if (!block.canPlaceBlockAt(this.worldObj, i, j, k) || BlockFloating.canContinue(this.worldObj, i, j + 1, k) || !this.worldObj.setBlock(i, j, k, this.getBlock(), this.getMetadata(), 2)) {
-				block.dropBlockAsItem(this.worldObj, i, j, k, this.getMetadata(), 0);
+					this.setDead();
+				}
+
+				this.posX = i + 0.5D;
+				this.posY = j;
+				this.posZ = k + 0.5D;
 			}
-		} else if (this.timeFloated > 100) {
-			block.dropBlockAsItem(this.worldObj, i, j, k, this.getMetadata(), 0);
-
-			this.setDead();
 		}
 	}
 

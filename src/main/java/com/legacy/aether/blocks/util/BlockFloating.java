@@ -3,6 +3,7 @@ package com.legacy.aether.blocks.util;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
@@ -47,14 +48,35 @@ public class BlockFloating extends Block {
 	}
 
 	private void floatBlock(World world, int x, int y, int z) {
-		if (canContinue(world, x, y + 1, z) && y < world.getHeight()) {
-			EntityFloatingBlock floating = new EntityFloatingBlock(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+		boolean floatInstantly = BlockSand.fallInstantly;
 
-			if (!world.isRemote) {
-				world.spawnEntityInWorld(floating);
+		if (canContinue(world, x, y + 1, z) && y >= 0)
+		{
+			if (!floatInstantly)
+			{
+				if (!world.isRemote)
+				{
+					EntityFloatingBlock entity = new EntityFloatingBlock(world, x, y, z, world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+					world.setBlockToAir(x, y, z);
+					world.spawnEntityInWorld(entity);
+				}
 			}
+			else
+			{
+				world.setBlockToAir(x, y, z);
 
-			world.setBlockToAir(x, y, z);
+				int bottomPos = y - 1;
+
+				while (canContinue(world, x, bottomPos, z) && bottomPos > 0)
+				{
+					bottomPos = bottomPos - 1;
+				}
+
+				if (bottomPos > 0)
+				{
+					world.setBlock(x, bottomPos + 1, z, this);
+				}
+			}
 		}
 	}
 
