@@ -1,5 +1,7 @@
 package com.legacy.aether.items.weapons;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -23,7 +25,7 @@ public class ItemLightningKnife extends Item {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack heldItem, World worldIn, EntityPlayer playerIn) {
-		if (!playerIn.capabilities.isCreativeMode) {
+		if (!playerIn.capabilities.isCreativeMode && EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, heldItem) == 0) {
 			--heldItem.stackSize;
 		}
 
