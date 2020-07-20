@@ -1,12 +1,16 @@
 package com.legacy.aether.events;
 
 import com.legacy.aether.AetherConfig;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.entities.util.EntitySaddleMount;
+import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.world.TeleporterAether;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -41,26 +45,46 @@ public class AetherEntityEvents
 				
 				if (entity.posY <= 0)
 				{
+					EntityPlayer rider = null;
+
 					for (Entity passenger : entity.getPassengers())
 					{
+						if (passenger instanceof EntityPlayer)
+						{
+							rider = (EntityPlayer) passenger;
+						}
+
 						passenger.dismountRidingEntity();
 					}
 					
 					entity.timeUntilPortal = 300;
-					transferEntity(false, entity, server.getWorld(previousDimension), server.getWorld(transferDimension));
+					transferEntity(false, entity, rider, server.getWorld(previousDimension), server.getWorld(transferDimension));
+					transferPlayer(entity, rider);
 				}
 			}
 		}
 	}
 	
-	public static void transferEntity(boolean shouldSpawnPortal, Entity entityIn, WorldServer previousWorldIn, WorldServer newWorldIn)
-	{
+	public static void transferEntity(boolean shouldSpawnPortal, Entity entityIn, Entity rider, WorldServer previousWorldIn, WorldServer newWorldIn) {
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+
+		BlockPos previousPos = entityIn.getPosition();
 
 		entityIn.dimension = newWorldIn.provider.getDimension();
 		previousWorldIn.removeEntityDangerously(entityIn);
 		entityIn.isDead = false;
 
 		server.getPlayerList().transferEntityToWorld(entityIn, previousWorldIn.provider.getDimension(), previousWorldIn, newWorldIn, new TeleporterAether(false, newWorldIn));
+
+		entityIn.setPosition(previousPos.getX(), 255, previousPos.getZ());
+	}
+
+	public static void transferPlayer(Entity riding, EntityPlayer player)
+	{
+		PlayerAether playerAether = (PlayerAether) AetherAPI.getInstance().get(player);
+
+		playerAether.teleportPlayer(false);
+
+		playerAether.getEntity().startRiding(riding);
 	}
 }

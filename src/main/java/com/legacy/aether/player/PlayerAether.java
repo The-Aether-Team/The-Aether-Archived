@@ -197,7 +197,10 @@ public class PlayerAether implements IPlayerAether
 		{
 			if (this.thePlayer.posY < -2)
 			{
-				this.teleportPlayer(false);
+				if (!this.thePlayer.isRiding())
+				{
+					this.teleportPlayer(false);
+				}
 			}
 		}
 
@@ -393,7 +396,7 @@ public class PlayerAether implements IPlayerAether
 	/*
 	 * The teleporter which sends the player to the Aether/Overworld
 	 */
-	private void teleportPlayer(boolean shouldSpawnPortal) 
+	public void teleportPlayer(boolean shouldSpawnPortal)
 	{
 		if (this.thePlayer instanceof EntityPlayerMP)
 		{			
