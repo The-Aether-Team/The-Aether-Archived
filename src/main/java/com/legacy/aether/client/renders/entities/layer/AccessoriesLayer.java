@@ -77,8 +77,6 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		IPlayerAether playerAether = AetherAPI.getInstance().get(player);
 		IAccessoryInventory accessories = playerAether.getAccessoryInventory();
 
-		removeElytra();
-
 		if (accessories == null)
 		{
 			return;
@@ -371,14 +369,6 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		GlStateManager.disableRescaleNormal();
 
 		GlStateManager.popMatrix();
-	}
-
-	private void removeElytra()
-	{
-		RenderPlayer renderPlayer = slimFit ? this.manager.getSkinMap().get("slim") : this.manager.getSkinMap().get("default");
-		List<LayerRenderer<EntityLivingBase>> fieldOutside = ObfuscationReflectionHelper.getPrivateValue(RenderLivingBase.class, renderPlayer, "layerRenderers", "field_177097_h");
-
-		fieldOutside.removeIf(layerRenderer -> layerRenderer.getClass() == LayerElytra.class);
 	}
 
 	@Override

@@ -8,7 +8,10 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.renderer.entity.layers.LayerElytra;
+import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -79,8 +82,10 @@ import com.legacy.aether.entities.projectile.crystals.EntityThunderBall;
 import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.tile_entities.TileEntityChestMimic;
 import com.legacy.aether.tile_entities.TileEntityTreasureChest;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.util.HashSet;
+import java.util.List;
 
 public class AetherEntityRenderingRegistry 
 {
@@ -147,6 +152,9 @@ public class AetherEntityRenderingRegistry
 		{
 			playerRender.addLayer(new AccessoriesLayer(true, (ModelPlayer) playerRender.getMainModel()));
 			playerRender.addLayer(new LayerElytraAether(playerRender));
+
+			List<LayerRenderer<EntityLivingBase>> fieldOutside = ObfuscationReflectionHelper.getPrivateValue(RenderLivingBase.class, playerRender, "layerRenderers", "field_177097_h");
+			fieldOutside.removeIf(layerRenderer -> layerRenderer.getClass() == LayerElytra.class);
 		}
 	}
 
