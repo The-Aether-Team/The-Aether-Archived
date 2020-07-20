@@ -19,8 +19,8 @@ import net.minecraft.util.math.MathHelper;
 
 public class MoaRenderer extends RenderLiving<EntityMoa>
 {
-
     private static final ResourceLocation MOS = new ResourceLocation("aether_legacy", "textures/entities/moa/mos.png");
+	private static final ResourceLocation RAPTOR = new ResourceLocation("aether_legacy", "textures/entities/moa/raptor.png");
 
 	public MoaRenderer(RenderManager renderManager)
 	{
@@ -76,6 +76,10 @@ public class MoaRenderer extends RenderLiving<EntityMoa>
          {
 			 return MOS;
          }
+		 else if (entity.hasCustomName() && "Raptor__".equals(entity.getCustomNameTag()) && (entity.getMoaType() == AetherMoaTypes.blue))
+		 {
+		 	return RAPTOR;
+		 }
 		 else
 		 {
 			return moa.getMoaType().getTexture(moa.isBeingRidden());
