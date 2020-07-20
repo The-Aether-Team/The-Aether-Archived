@@ -38,6 +38,8 @@ public class MoaRenderer extends RenderLiving {
 
 	private static final ResourceLocation MOS = new ResourceLocation("aether_legacy", "textures/entities/moa/mos.png");
 
+	private static final ResourceLocation RAPTOR = new ResourceLocation("aether_legacy", "textures/entities/moa/raptor.png");
+
 	public MoaRenderer() {
 		super(new MoaModel(0.0F), 1.0F);
 
@@ -157,6 +159,10 @@ public class MoaRenderer extends RenderLiving {
 		if (moa.hasCustomNameTag() && "Mos".equals(moa.getCustomNameTag()) && (moa.getMoaType() == AetherMoaTypes.orange))
 		{
 			return MOS;
+		}
+		else if (moa.hasCustomNameTag() && "Raptor__".equals(moa.getCustomNameTag()) && (moa.getMoaType() == AetherMoaTypes.blue))
+		{
+			return RAPTOR;
 		}
 		else
 		{
