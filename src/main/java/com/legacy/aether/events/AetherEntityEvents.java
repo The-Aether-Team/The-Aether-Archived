@@ -59,7 +59,11 @@ public class AetherEntityEvents
 					
 					entity.timeUntilPortal = 300;
 					transferEntity(false, entity, rider, server.getWorld(previousDimension), server.getWorld(transferDimension));
-					transferPlayer(entity, rider);
+					
+					if (rider != null)
+					{
+						transferPlayer(entity, rider);
+					}
 				}
 			}
 		}
