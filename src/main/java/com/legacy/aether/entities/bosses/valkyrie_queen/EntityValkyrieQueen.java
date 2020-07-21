@@ -172,11 +172,6 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 		this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1), Blocks.AIR.getDefaultState());
 		this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1), Blocks.AIR.getDefaultState());
 		this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ), Blocks.AIR.getDefaultState());
-
-		System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + this.dungeonEntranceZ);
-		System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + (this.dungeonEntranceZ + 1));
-		System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + (this.dungeonEntranceZ + 1));
-		System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + this.dungeonEntranceZ);
 	}
 
 	private void unlockTreasure()
