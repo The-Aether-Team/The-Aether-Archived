@@ -126,19 +126,6 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
         this.setTarget(entity);
 
         this.angerLevel = 200 + this.rand.nextInt(200);
-
-        for (int k = this.dungeonZ + 2; k < this.dungeonZ + 23; k += 7) {
-            Block block = this.worldObj.getBlock(this.dungeonX - 1, this.dungeonY, k);
-
-            if (block != BlocksAether.locked_angelic_stone || block != BlocksAether.locked_light_angelic_stone) {
-                this.dungeonEntranceZ = k;
-                this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY, k, BlocksAether.angelic_stone, 0, 2);
-                this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY, k + 1, BlocksAether.angelic_stone, 0, 2);
-                this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY + 1, k + 1, BlocksAether.angelic_stone, 0, 2);
-                this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY + 1, k, BlocksAether.angelic_stone, 0, 2);
-                return;
-            }
-        }
     }
 
     public void setDungeon(int i, int j, int k) {
@@ -148,10 +135,20 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
     }
 
     private void unlockDoor() {
+        System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + this.dungeonEntranceZ);
+        System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + (this.dungeonEntranceZ + 1));
+        System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + (this.dungeonEntranceZ + 1));
+        System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + this.dungeonEntranceZ);
+
         this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ, Blocks.air);
         this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1, Blocks.air);
         this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1, Blocks.air);
         this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ, Blocks.air);
+
+        System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + this.dungeonEntranceZ);
+        System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + (this.dungeonEntranceZ + 1));
+        System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + (this.dungeonEntranceZ + 1));
+        System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + this.dungeonEntranceZ);
     }
 
     private void unlockTreasure() {
@@ -246,6 +243,23 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
                     this.timeUntilTeleport += 100;
                 }
             }
+
+            if (!this.worldObj.isRemote)
+            {
+                for (int k = 2; k < 23; k += 7)
+                {
+                    Block state = this.worldObj.getBlock(this.dungeonX - 1, this.dungeonY, this.dungeonZ + k);
+
+                    if (state != BlocksAether.locked_angelic_stone || state != BlocksAether.locked_light_angelic_stone)
+                    {
+                        this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY, this.dungeonZ + k, BlocksAether.locked_angelic_stone);
+                        this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY, this.dungeonZ + k + 1, BlocksAether.locked_angelic_stone);
+                        this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY + 1, this.dungeonZ + k + 1, BlocksAether.locked_angelic_stone);
+                        this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY + 1, this.dungeonZ + k, BlocksAether.locked_angelic_stone);
+                        this.dungeonEntranceZ = this.dungeonZ + k;
+                    }
+                }
+            }
         }
 
         if (this.getEntityToAttack() != null && this.getEntityToAttack().isDead) {
@@ -296,8 +310,11 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
         }
 
         if (this.getHealth() <= 0 || this.isDead) {
-            this.unlockDoor();
-            this.unlockTreasure();
+            if (!this.worldObj.isRemote)
+            {
+                this.unlockDoor();
+                this.unlockTreasure();
+            }
 
             if (this.getEntityToAttack() instanceof EntityPlayer) {
                 this.chatItUp((EntityPlayer) this.getEntityToAttack(), "You are truly... a mighty warrior...");
