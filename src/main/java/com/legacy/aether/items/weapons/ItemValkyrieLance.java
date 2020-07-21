@@ -158,6 +158,11 @@ public class ItemValkyrieLance extends Item
 		return blockIn.getBlock() == Blocks.WEB;
 	}
 
+	public boolean canDestroyBlockInCreative(World world, BlockPos pos, ItemStack stack, EntityPlayer player)
+	{
+		return false;
+	}
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean isFull3D()
