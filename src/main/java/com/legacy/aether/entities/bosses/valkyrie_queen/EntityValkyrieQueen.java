@@ -172,6 +172,11 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 		this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1), Blocks.AIR.getDefaultState());
 		this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1), Blocks.AIR.getDefaultState());
 		this.world.setBlockState(new BlockPos(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ), Blocks.AIR.getDefaultState());
+
+		System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + this.dungeonEntranceZ);
+		System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + (this.dungeonEntranceZ + 1));
+		System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + (this.dungeonEntranceZ + 1));
+		System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + this.dungeonEntranceZ);
 	}
 
 	private void unlockTreasure()
@@ -317,13 +322,13 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 					BlockPos newPos = this.dungeonPos.west().south(k);
 					IBlockState state = this.world.getBlockState(newPos);
 
-					if (state != this.lockedDungeonStone || state != this.lockedLightDungeonStone)
+					if (state.getBlock() != this.lockedDungeonStone.getBlock() || state.getBlock() != this.lockedLightDungeonStone.getBlock())
 					{
-						this.dungeonEntranceZ = k;
 						this.world.setBlockState(newPos, this.lockedDungeonStone, 2);
 						this.world.setBlockState(newPos.south(), this.lockedDungeonStone, 2);
 						this.world.setBlockState(newPos.up().south(), this.lockedDungeonStone, 2);
 						this.world.setBlockState(newPos.up(), this.lockedDungeonStone, 2);
+						this.dungeonEntranceZ = newPos.getZ();
 					}
 				}
 			}
