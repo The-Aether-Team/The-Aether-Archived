@@ -31,14 +31,6 @@ public interface IPlayerAether
 	public ArrayList<IAetherAbility> getAbilities();
 
 	public EntityPlayer getEntity();
-
-	public void inflictPoison(int ticks);
-
-	public boolean isPoisoned();
-
-	public void inflictCure(int ticks);
-
-	public boolean isCured();
 	
 	public boolean setHammerCooldown(int cooldown, String hammerName);
 

@@ -43,13 +43,13 @@ public class AetherOverlay
     {
     	IPlayerAether playerAether = AetherAPI.getInstance().get(mc.player);
 
-    	if(playerAether.isPoisoned())
+    	if(((PlayerAether) playerAether).poisonTime > 0)
     	{
             ScaledResolution scaledresolution = new ScaledResolution(mc);
             Tessellator tessellator = Tessellator.getInstance();
             BufferBuilder renderer = tessellator.getBuffer();
 
-    		float alpha = getPoisonAlpha((float)(((PlayerAether)playerAether).poisonInstance().poisonTime % 50) / 50);
+    		float alpha = getPoisonAlpha((float)(((PlayerAether)playerAether).poisonTime % 50) / 50);
 
             int width = scaledresolution.getScaledWidth();
             int height = scaledresolution.getScaledHeight();
@@ -82,7 +82,7 @@ public class AetherOverlay
     {
     	IPlayerAether playerAether = AetherAPI.getInstance().get(mc.player);
 
-    	if(playerAether.isCured())
+    	if(((PlayerAether) playerAether).isCured())
     	{
             ScaledResolution scaledresolution = new ScaledResolution(mc);
             Tessellator tessellator = Tessellator.getInstance();

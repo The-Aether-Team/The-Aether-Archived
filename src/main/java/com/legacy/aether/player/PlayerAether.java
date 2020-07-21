@@ -8,6 +8,7 @@ import java.util.UUID;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.networking.packets.PacketCapeChanged;
 import com.legacy.aether.networking.packets.PacketPerkChanged;
+import com.legacy.aether.networking.packets.PacketSendPoisonTime;
 import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -35,7 +36,6 @@ import com.legacy.aether.api.player.util.IAetherAbility;
 import com.legacy.aether.api.player.util.IAetherBoss;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.containers.inventory.InventoryAccessories;
-import com.legacy.aether.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.entities.passive.mountable.EntityParachute;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherNetworkingManager;
@@ -60,8 +60,6 @@ public class PlayerAether implements IPlayerAether
 	private AttributeModifier healthModifier, reachModifier;
 
 	public IAccessoryInventory accessories;
-
-	private AetherPoisonMovement poison;
 
 	public float wingSinage;
 
@@ -88,7 +86,11 @@ public class PlayerAether implements IPlayerAether
 	public boolean shouldRenderHalo, shouldRenderGlow, shouldRenderCape;
 
 	public boolean seenSpiritDialog = false;
-	
+
+	public boolean isPoisoned = false, isCured = false;
+
+	public int poisonTime = 0, cureTime = 0;
+
 	public DonatorMoaSkin donatorMoaSkin;
 	
 	public List<Item> extendedReachItems = Arrays.asList(new Item[] {ItemsAether.valkyrie_shovel, ItemsAether.valkyrie_pickaxe, ItemsAether.valkyrie_axe});
@@ -104,7 +106,6 @@ public class PlayerAether implements IPlayerAether
 		this.shouldRenderCape = true;
 
 		this.donatorMoaSkin = new DonatorMoaSkin();
-		this.poison = new AetherPoisonMovement(player);
 		this.accessories = new InventoryAccessories(player);
 		this.reachModifier = new AttributeModifier(this.extendedReachUUID, "Aether Reach Modifier", 5.0D, 0);
 
@@ -118,6 +119,33 @@ public class PlayerAether implements IPlayerAether
 			AetherNetworkingManager.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
 			AetherNetworkingManager.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Glow, this.shouldRenderGlow));
 			AetherNetworkingManager.sendToAll(new PacketCapeChanged(this.getEntity().getEntityId(), this.shouldRenderCape));
+			AetherNetworkingManager.sendToAll(new PacketSendPoisonTime(this.getEntity(), this.poisonTime));
+		}
+
+		if (this.isPoisoned)
+		{
+			if (poisonTime > 0)
+			{
+				this.poisonTime--;
+			}
+			else
+			{
+				this.poisonTime = 0;
+				this.isPoisoned = false;
+			}
+		}
+
+		if (this.isCured)
+		{
+			if (cureTime > 0)
+			{
+				this.cureTime--;
+			}
+			else
+			{
+				this.cureTime = 0;
+				this.isCured = false;
+			}
 		}
 
 		if (this.inPortal && this.thePlayer.world.isRemote)
@@ -147,8 +175,6 @@ public class PlayerAether implements IPlayerAether
 				this.clouds.remove(i);
 			}
 		}
-
-		this.poison.onUpdate();
 
 		if (!this.thePlayer.onGround && (this.thePlayer.isRiding() && !this.thePlayer.getRidingEntity().onGround))
 		{
@@ -285,6 +311,11 @@ public class PlayerAether implements IPlayerAether
 		{
 			this.accessories.dropAccessories();
 		}
+
+		this.isPoisoned = false;
+		this.poisonTime = 0;
+		this.isCured = false;
+		this.cureTime = 0;
 	}
 
 	public void onPlayerRespawn()
@@ -313,6 +344,8 @@ public class PlayerAether implements IPlayerAether
 			output.setBoolean("glow", this.shouldRenderGlow);
 		}
 
+		output.setBoolean("poisoned", this.isPoisoned);
+		output.setInteger("poison_time", this.poisonTime);
 		output.setBoolean("cape", this.shouldRenderCape);
 		output.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
 		output.setInteger("hammer_cooldown", this.cooldown);
@@ -348,7 +381,17 @@ public class PlayerAether implements IPlayerAether
 		{
 			this.seenSpiritDialog = input.getBoolean("seen_spirit_dialog");
 		}
-		
+
+		if (input.hasKey("poisoned"))
+		{
+			this.isPoisoned = input.getBoolean("poisoned");
+		}
+
+		if (input.hasKey("poison_time"))
+		{
+			this.poisonTime = input.getInteger("poison_time");
+		}
+
 		this.cooldown = input.getInteger("hammer_cooldown");
 		this.cooldownName = input.getString("notch_hammer_name");
 		this.cooldownMax = input.getInteger("max_hammer_cooldown");
@@ -610,50 +653,6 @@ public class PlayerAether implements IPlayerAether
 	{
 		return this.cooldownMax;
 	}
-	
-	/*
-	 * Instance of the poison used to move the player
-	 */
-	public AetherPoisonMovement poisonInstance()
-	{
-		return this.poison;
-	}
-
-	/*
-	 * Afflicts a set amount of poison to the player
-	 */
-	@Override
-	public void inflictPoison(int ticks)
-	{
-		this.poison.afflictPoison(ticks);
-	}
-
-	/*
-	 * Afflicts a set amount of remedy to the player
-	 */
-	@Override
-	public void inflictCure(int ticks)
-	{
-		this.poison.curePoison(ticks);
-	}
-
-	/*
-	 * A checker to tell if the player is poisoned or not
-	 */
-	@Override
-	public boolean isPoisoned()
-	{
-		return this.poison.poisonTime > 0;
-	}
-
-	/*
-	 * A checker to tell if the player is curing or not
-	 */
-	@Override
-	public boolean isCured()
-	{
-		return this.poison.poisonTime < 0;
-	}
 
 	/*
 	 * Checks if the player is jumping or not
@@ -732,5 +731,30 @@ public class PlayerAether implements IPlayerAether
 	public boolean inPortalBlock()
 	{
 		return this.inPortal;
+	}
+
+	public boolean isPoisoned()
+	{
+		return this.isPoisoned;
+	}
+
+	public void setPoisoned()
+	{
+		this.isPoisoned = true;
+		this.poisonTime = 500;
+	}
+
+	public boolean isCured()
+	{
+		return this.isCured;
+	}
+
+	public void setCured(int time)
+	{
+		this.isCured = true;
+		this.cureTime = time;
+
+		this.isPoisoned = false;
+		this.poisonTime = 0;
 	}
 }

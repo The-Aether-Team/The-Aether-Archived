@@ -1,5 +1,6 @@
 package com.legacy.aether.networking.packets;
 
+import com.legacy.aether.player.PlayerAether;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -41,7 +42,7 @@ public class PacketSendPoison extends AetherPacket<PacketSendPoison>
 
 			if (parent != null)
 			{
-				AetherAPI.getInstance().get(parent).inflictPoison(500);
+				((PlayerAether) AetherAPI.getInstance().get(parent)).setPoisoned();
 			}
 		}
 	}

@@ -1,9 +1,12 @@
 package com.legacy.aether.registry;
 
 import com.legacy.aether.api.accessories.RecipeAccessoryDyes;
+import com.legacy.aether.entities.effects.PotionInebriation;
+import com.legacy.aether.entities.effects.PotionsAether;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent;
@@ -56,6 +59,14 @@ public class AetherRegistryEvent
 		SoundsAether.soundRegistry = event.getRegistry();
 
 		SoundsAether.initialization();
+	}
+
+	@SubscribeEvent
+	public void onRegisterPotionEffect(RegistryEvent.Register<Potion> event)
+	{
+		PotionsAether.potionRegistry = event.getRegistry();
+
+		PotionsAether.initialization();
 	}
 
 	@SubscribeEvent

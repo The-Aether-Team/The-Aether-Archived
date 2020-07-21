@@ -2,9 +2,11 @@ package com.legacy.aether.items.tools;
 
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.IPlayerAether;
+import com.legacy.aether.entities.effects.PotionsAether;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.items.util.FluidSkyrootBucketWrapper;
+import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.creative_tabs.AetherCreativeTabs;
 
 import net.minecraft.block.BlockLiquid;
@@ -15,12 +17,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -273,11 +277,19 @@ public class ItemSkyrootBucket extends Item
 
 		if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Poison)
 		{
-			player.inflictPoison(500);
+			if (!world.isRemote)
+			{
+				entityplayer.addPotionEffect(new PotionEffect(PotionsAether.INEBRIATION, 500, 0, false, false));
+			}
 		}
 		else if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Remedy)
 		{
-			player.inflictCure(200);
+			((PlayerAether) player).setCured(200);
+
+			if (!world.isRemote)
+			{
+				entityplayer.curePotionEffects(new ItemStack(ItemsAether.skyroot_bucket, EnumSkyrootBucketType.Remedy.meta));
+			}
 		}
 		else if (EnumSkyrootBucketType.getType(meta) == EnumSkyrootBucketType.Milk)
 		{
