@@ -38,11 +38,11 @@ public class AetherOverlay {
 	public static void renderPoison(Minecraft mc) {
 		PlayerAether playerAether = PlayerAether.get(mc.thePlayer);
 
-		if (playerAether.isPoisoned()) {
+		if (playerAether.poisonTime > 0) {
 			ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 			Tessellator tessellator = Tessellator.instance;
 
-			float alpha = getPoisonAlpha((float) (playerAether.poisonMovement.ticks % 50) / 50);
+			float alpha = getPoisonAlpha((float) (playerAether.poisonTime % 50) / 50);
 			int width = scaledresolution.getScaledWidth();
 			int height = scaledresolution.getScaledHeight();
 

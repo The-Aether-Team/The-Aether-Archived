@@ -27,14 +27,6 @@ public interface IPlayerAether extends IExtendedEntityProperties {
 
 	public EntityLivingBase getEntity();
 
-	public void inflictPoison(int ticks);
-
-	public boolean isPoisoned();
-
-	public void inflictCure(int ticks);
-
-	public boolean isCured();
-
 	public boolean setHammerCooldown(int cooldown, String hammerName);
 
 	public String getHammerName();

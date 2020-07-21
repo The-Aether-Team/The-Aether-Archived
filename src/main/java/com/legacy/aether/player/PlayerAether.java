@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
-import com.legacy.aether.Aether;
 import com.legacy.aether.entities.passive.mountable.EntityParachute;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.network.AetherNetwork;
 import com.legacy.aether.network.packets.PacketCapeChanged;
 import com.legacy.aether.network.packets.PacketPerkChanged;
+import com.legacy.aether.network.packets.PacketSendPoisonTime;
 import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
@@ -35,7 +35,6 @@ import com.legacy.aether.api.player.util.IAccessoryInventory;
 import com.legacy.aether.api.player.util.IAetherAbility;
 import com.legacy.aether.api.player.util.IAetherBoss;
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.entities.movement.AetherPoisonMovement;
 import com.legacy.aether.inventory.InventoryAccessories;
 import com.legacy.aether.items.tools.ItemValkyrieTool;
 import com.legacy.aether.player.abilities.AbilityAccessories;
@@ -52,8 +51,6 @@ import cpw.mods.fml.relauncher.ReflectionHelper;
 public class PlayerAether implements IPlayerAether {
 
 	private EntityPlayer player;
-
-	public AetherPoisonMovement poisonMovement;
 
 	private IAetherBoss focusedBoss;
 
@@ -95,6 +92,10 @@ public class PlayerAether implements IPlayerAether {
 
     private ChunkCoordinates bedLocation;
 
+	public boolean isPoisoned = false, isCured = false;
+
+	public int poisonTime = 0, cureTime = 0;
+
 	public PlayerAether() {
 		this.shouldRenderHalo = true;
 		this.shouldRenderGlow = false;
@@ -109,7 +110,6 @@ public class PlayerAether implements IPlayerAether {
 	@Override
 	public void init(Entity entity, World world) {
 		this.player = (EntityPlayer) entity;
-		this.poisonMovement = new AetherPoisonMovement(this.player);
 	}
 
 	@Override
@@ -119,6 +119,33 @@ public class PlayerAether implements IPlayerAether {
 			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
 			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Glow, this.shouldRenderGlow));
 			AetherNetwork.sendToAll(new PacketCapeChanged(this.getEntity().getEntityId(), this.shouldRenderCape));
+			AetherNetwork.sendToAll(new PacketSendPoisonTime(this.getEntity(), this.poisonTime));
+		}
+
+		if (this.isPoisoned)
+		{
+			if (poisonTime > 0)
+			{
+				this.poisonTime--;
+			}
+			else
+			{
+				this.poisonTime = 0;
+				this.isPoisoned = false;
+			}
+		}
+
+		if (this.isCured)
+		{
+			if (cureTime > 0)
+			{
+				this.cureTime--;
+			}
+			else
+			{
+				this.cureTime = 0;
+				this.isCured = false;
+			}
 		}
 
 		for (int i = 0; i < this.getAbilities().size(); ++i) {
@@ -161,8 +188,6 @@ public class PlayerAether implements IPlayerAether {
 		} else {
 			this.wingSinage += 0.1F;
 		}
-
-		this.poisonMovement.onUpdate();
 
 		boolean hasJumped = ReflectionHelper.getPrivateValue(EntityLivingBase.class, this.getEntity(), "isJumping", "field_70703_bu");
 
@@ -400,6 +425,8 @@ public class PlayerAether implements IPlayerAether {
 			aetherTag.setBoolean("glow", this.shouldRenderGlow);
 		}
 
+		aetherTag.setBoolean("poisoned", this.isPoisoned);
+		aetherTag.setInteger("poison_time", this.poisonTime);
 		aetherTag.setBoolean("cape", this.shouldRenderCape);
 		aetherTag.setInteger("shardCount", this.shardCount);
 		aetherTag.setTag("accessories", this.getAccessoryInventory().writeToNBT(aetherTag));
@@ -431,6 +458,16 @@ public class PlayerAether implements IPlayerAether {
 		if (aetherTag.hasKey("cape"))
 		{
 			this.shouldRenderCape = aetherTag.getBoolean("cape");
+		}
+
+		if (aetherTag.hasKey("poisoned"))
+		{
+			this.isPoisoned = aetherTag.getBoolean("poisoned");
+		}
+
+		if (aetherTag.hasKey("poison_time"))
+		{
+			this.poisonTime = aetherTag.getInteger("poison_time");
 		}
 
 		this.updateShardCount(aetherTag.getInteger("shardCount"));
@@ -466,26 +503,6 @@ public class PlayerAether implements IPlayerAether {
 	@Override
 	public EntityPlayer getEntity() {
 		return this.player;
-	}
-
-	@Override
-	public void inflictPoison(int ticks) {
-		this.poisonMovement.inflictPoison(ticks);
-	}
-
-	@Override
-	public boolean isPoisoned() {
-		return this.poisonMovement.ticks > 0;
-	}
-
-	@Override
-	public void inflictCure(int ticks) {
-		this.poisonMovement.inflictCure(ticks);
-	}
-
-	@Override
-	public boolean isCured() {
-		return this.poisonMovement.ticks < 0;
 	}
 
 	@Override
@@ -572,5 +589,30 @@ public class PlayerAether implements IPlayerAether {
 	public ChunkCoordinates getBedLocation()
 	{
 		return bedLocation;
+	}
+
+	public boolean isPoisoned()
+	{
+		return this.isPoisoned;
+	}
+
+	public void setPoisoned()
+	{
+		this.isPoisoned = true;
+		this.poisonTime = 500;
+	}
+
+	public boolean isCured()
+	{
+		return this.isCured;
+	}
+
+	public void setCured(int time)
+	{
+		this.isCured = true;
+		this.cureTime = time;
+
+		this.isPoisoned = false;
+		this.poisonTime = 0;
 	}
 }

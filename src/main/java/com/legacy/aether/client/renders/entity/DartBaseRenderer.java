@@ -29,10 +29,6 @@ public class DartBaseRenderer extends Render {
             return;
         }
 
-        if (dart instanceof EntityDartPoison && ((EntityDartPoison) dart).victim != null) {
-            return;
-        }
-
         this.bindEntityTexture(dart);
         GL11.glPushMatrix();
         GL11.glTranslatef((float) d, (float) d1, (float) d2);

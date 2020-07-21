@@ -75,6 +75,11 @@ public class PlayerAetherEvents {
 
 			AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
 			playerAether.updateShardCount(playerAether.getShardsUsed());
+
+			playerAether.isPoisoned = false;
+			playerAether.poisonTime = 0;
+			playerAether.isCured = false;
+			playerAether.cureTime = 0;
 		}
 	}
 

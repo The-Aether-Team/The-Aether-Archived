@@ -27,6 +27,8 @@ public class AetherConfig {
 
 	private static boolean legacy_altar_name;
 
+	private static int inebriation_id;
+
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
 
@@ -63,6 +65,8 @@ public class AetherConfig {
 		install_resourcepack = config.get("Misc", "Determines whether the Aether b1.7.3 resource pack should be generated.", true).getBoolean(true);
 
 		legacy_altar_name = config.get("Misc", "Changes whether the Altar should be named Enchanter or not.", false).getBoolean(false);
+
+		inebriation_id = config.get("Misc", "Sets the id for the Inebriation effect.", 31).getInt(31);
 
 		config.save();
 	}
@@ -129,5 +133,10 @@ public class AetherConfig {
 
 	public static boolean legacyAltarName() {
 		return AetherConfig.legacy_altar_name;
+	}
+
+	public static int getInebriationId()
+	{
+		return AetherConfig.inebriation_id;
 	}
 }
