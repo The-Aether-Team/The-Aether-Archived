@@ -222,7 +222,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
                 }
 
                 if (this.timeUntilTeleport++ >= 450) {
-                    if (this.onGround && this.rand.nextInt(10) == 0) {
+                    if (this.onGround && this.rand.nextInt(5) == 0) {
                         this.makeHomeShot(1, (EntityPlayer) this.getEntityToAttack());
                     } else {
                         this.teleport(this.getEntityToAttack().posX, this.getEntityToAttack().posY, this.getEntityToAttack().posZ, 4);
