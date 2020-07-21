@@ -31,6 +31,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import scala.xml.Null;
@@ -147,9 +148,14 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 				{
 					if (itemstack.getItem() != Items.ELYTRA)
 					{
-						ItemStack colytra = ColytraUtil.wornElytra(player);
+						boolean flag = true;
+						if (Loader.isModLoaded("colytra"))
+						{
+							ItemStack colytra = ColytraUtil.wornElytra(player);
+							flag = colytra.isEmpty();
+						}
 
-						if (colytra.isEmpty())
+						if (flag)
 						{
 							GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 							this.manager.renderEngine.bindTexture(cape.texture);
