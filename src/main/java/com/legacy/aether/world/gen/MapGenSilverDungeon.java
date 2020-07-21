@@ -24,9 +24,9 @@ public class MapGenSilverDungeon extends MapGenStructure {
 	protected boolean canSpawnStructureAtCoords(int chunkX, int chunkZ) {
 		RandomTracker randomTracker = new RandomTracker();
 
-		if (randomTracker.testRandom(this.rand, 100) != 0)
+		if (randomTracker.testRandom(this.rand, 120) != 0)
 		{
-			if (randomTracker.testRandom(this.rand, 140) != 0)
+			if (randomTracker.testRandom(this.rand, 160) != 0)
 			{
 				return false;
 			}
