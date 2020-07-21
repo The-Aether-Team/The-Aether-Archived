@@ -53,17 +53,6 @@ public class PacketSendPoisonTime extends AetherPacket<PacketSendPoisonTime>
     @Override
     public void handleServer(PacketSendPoisonTime message, EntityPlayer player)
     {
-/*
-        if (player != null && player.world != null && !player.world.isRemote)
-        {
-            EntityPlayer parent = (EntityPlayer) player.world.getEntityByID(message.entityID);
-
-            if (parent != null)
-            {
-                ((PlayerAether) AetherAPI.getInstance().get(parent)).poisonTime = message.time;
-            }
-        }
-
- */
+        
     }
 }

@@ -84,6 +84,7 @@ public class PotionInebriation extends Potion
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean hasStatusIcon()
     {
