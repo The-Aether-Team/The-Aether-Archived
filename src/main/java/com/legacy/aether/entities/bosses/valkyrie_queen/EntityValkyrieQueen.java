@@ -135,20 +135,10 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
     }
 
     private void unlockDoor() {
-        System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + this.dungeonEntranceZ);
-        System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + (this.dungeonEntranceZ + 1));
-        System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + (this.dungeonEntranceZ + 1));
-        System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + this.dungeonEntranceZ);
-
         this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ, Blocks.air);
         this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY, this.dungeonEntranceZ + 1, Blocks.air);
         this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ + 1, Blocks.air);
         this.worldObj.setBlock(this.dungeonX - 1, this.dungeonY + 1, this.dungeonEntranceZ, Blocks.air);
-
-        System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + this.dungeonEntranceZ);
-        System.out.println(this.dungeonX - 1 + " " + this.dungeonY + " " + (this.dungeonEntranceZ + 1));
-        System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + (this.dungeonEntranceZ + 1));
-        System.out.println(this.dungeonX - 1 + " " + (this.dungeonY + 1) + " " + this.dungeonEntranceZ);
     }
 
     private void unlockTreasure() {
