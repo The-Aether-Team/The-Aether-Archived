@@ -16,6 +16,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -30,8 +31,11 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class BlockTreasureChest extends BlockContainer
 {
@@ -48,6 +52,7 @@ public class BlockTreasureChest extends BlockContainer
         super(Material.ROCK);
 
         this.setHardness(-1.0F);
+        this.setResistance(2000.0F);
         this.setSoundType(SoundType.STONE);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
     }
@@ -77,6 +82,22 @@ public class BlockTreasureChest extends BlockContainer
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return source.getBlockState(pos.north()).getBlock() == this ? NORTH_CHEST_AABB : (source.getBlockState(pos.south()).getBlock() == this ? SOUTH_CHEST_AABB : (source.getBlockState(pos.west()).getBlock() == this ? WEST_CHEST_AABB : (source.getBlockState(pos.east()).getBlock() == this ? EAST_CHEST_AABB : NOT_CONNECTED_AABB)));
+    }
+
+    @Override
+    public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos)
+    {
+        TileEntityTreasureChest treasurechest = (TileEntityTreasureChest) worldIn.getTileEntity(pos);
+
+        return treasurechest.isLocked() ? this.blockHardness : 5.0F;
+    }
+
+    @Override
+    public float getExplosionResistance(World worldIn, BlockPos pos, @Nullable Entity exploder, Explosion explosion)
+    {
+        TileEntityTreasureChest treasurechest = (TileEntityTreasureChest) worldIn.getTileEntity(pos);
+
+        return treasurechest.isLocked() ? this.blockResistance : 10.0F;
     }
 
     /**
