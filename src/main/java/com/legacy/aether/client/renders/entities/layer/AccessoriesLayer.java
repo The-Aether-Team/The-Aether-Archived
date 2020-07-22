@@ -262,11 +262,19 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 			GlStateManager.color(1.0F, 1.0F, 1.0F);
 		}
 
-		if (accessories.getStackInSlot(2).getItem() instanceof ItemAccessory) //TODO
+		if (accessories.getStackInSlot(2).getItem() instanceof ItemAccessory)
 		{
 			ItemAccessory shield = (ItemAccessory) accessories.getStackInSlot(2).getItem();
 
-			this.manager.renderEngine.bindTexture(shield.texture);
+			if (player.motionX == 0.0 && (player.motionY == -0.0784000015258789 || player.motionY == 0.0) && player.motionZ == 0.0 && shield.hasInactiveTexture())
+			{
+				this.manager.renderEngine.bindTexture(shield.texture);
+			}
+			else
+			{
+				this.manager.renderEngine.bindTexture(shield.texture_inactive);
+			}
+
 			GlStateManager.enableBlend();
 			GlStateManager.pushMatrix();
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);

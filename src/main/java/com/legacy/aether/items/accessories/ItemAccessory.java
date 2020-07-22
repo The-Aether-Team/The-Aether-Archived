@@ -39,13 +39,13 @@ public class ItemAccessory extends Item
 
 	protected final AccessoryType accessoryType;
 
-	public ResourceLocation texture, texture_slim, texture_elytra;
+	public ResourceLocation texture, texture_slim, texture_elytra, texture_inactive, texture_inactive_slim;
 
 	private int colorHex = 0xdddddd;
 
 	private boolean isDungeonLoot = false;
 
-	private boolean hasElytra = false;
+	private boolean hasElytra = false, hasInactiveTexture = false;
 
     public static final IBehaviorDispenseItem DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem()
     {
@@ -173,5 +173,19 @@ public class ItemAccessory extends Item
     public boolean hasElytra()
     {
         return this.hasElytra;
+    }
+
+    public ItemAccessory setInactiveTexture(String location)
+    {
+        this.texture_inactive = new ResourceLocation("aether_legacy", "textures/armor/accessory_" + location + ".png");
+        this.texture_inactive_slim = new ResourceLocation("aether_legacy", "textures/armor/accessory_" + location + "_slim.png");
+        this.hasInactiveTexture = true;
+
+        return this;
+    }
+
+    public boolean hasInactiveTexture()
+    {
+        return this.hasInactiveTexture;
     }
 }

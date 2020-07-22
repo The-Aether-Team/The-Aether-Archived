@@ -263,7 +263,7 @@ public class ItemsAether
 		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Voyed", "Welcoming Skies")).setCreativeTab(null);
 		legacy = register("legacy", new ItemAetherDisc("legacy", SoundsAether.legacy, "Jon Lachney", "Legacy")).setCreativeTab(null);
 
-		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512));
+		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setInactiveTexture("repulsion_movement").setDungeonLoot().setMaxDamage(512));
 		lore_book = register("lore_book", new ItemLoreBook());
 		
 		developer_stick = register("developer_stick", new ItemDeveloperStick());
