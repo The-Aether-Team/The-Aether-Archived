@@ -75,10 +75,7 @@ public class EntityFloatingBlock extends Entity implements IEntityAdditionalSpaw
 		for (int stack = 0; stack < list.size(); ++stack) {
 			Entity entity = (Entity) list.get(stack);
 
-			if (entity instanceof EntityFallingBlock && block.canPlaceBlockAt(this.worldObj, i, j, k)) {
-				this.worldObj.setBlock(i, j + 1, k, this.getBlock(), this.getMetadata(), 2);
-				this.setDead();
-			} else if (AetherConfig.shouldFloatWithBlock()) {
+			if (!(entity instanceof EntityFloatingBlock)) {
 				entity.setPosition(entity.posX, this.posY + 2.6D, entity.posZ);
 				entity.motionY = 0.0D;
 				entity.onGround = true;
