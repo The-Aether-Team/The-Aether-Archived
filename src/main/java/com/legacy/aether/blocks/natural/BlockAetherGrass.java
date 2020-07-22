@@ -102,7 +102,7 @@ public class BlockAetherGrass extends Block implements IGrowable
 	@Override
     public IBlockState getStateFromMeta(int meta)
     {
-		return this.getDefaultState().withProperty(double_drop, meta == 0).withProperty(dungeon_block, meta == 0);
+        return this.getDefaultState().withProperty(double_drop, (meta & 1) == 0).withProperty(dungeon_block, (meta & 2) == 0);
     }
 
 	@Override
