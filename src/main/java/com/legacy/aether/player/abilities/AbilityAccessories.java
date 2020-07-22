@@ -62,8 +62,16 @@ public class AbilityAccessories implements IAetherAbility {
 		}
 
 		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.agility_cape))) {
-			this.player.getEntity().stepHeight = 1.0F;
-			this.stepUpdate = true;
+			if (!this.player.getEntity().isSneaking())
+			{
+				this.player.getEntity().stepHeight = 1.0F;
+				this.stepUpdate = true;
+			} else {
+				if (this.stepUpdate) {
+					this.player.getEntity().stepHeight = 0.5F;
+					this.stepUpdate = false;
+				}
+			}
 		} else {
 			if (this.stepUpdate) {
 				this.player.getEntity().stepHeight = 0.5F;
