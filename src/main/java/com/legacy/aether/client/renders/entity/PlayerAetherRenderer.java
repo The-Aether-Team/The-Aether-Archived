@@ -314,7 +314,14 @@ public class PlayerAetherRenderer {
         if (playerAether.getAccessoryInventory().getStackInSlot(AccessoryType.SHIELD) != null) {
             ItemAccessory shield = (ItemAccessory) playerAether.getAccessoryInventory().getStackInSlot(AccessoryType.SHIELD).getItem();
 
-            this.mc.getTextureManager().bindTexture(shield.texture);
+            if (player.motionX == 0.0 && (player.motionY == -0.0784000015258789 || player.motionY == 0.0) && player.motionZ == 0.0 && shield.hasInactiveTexture())
+            {
+                this.mc.getTextureManager().bindTexture(shield.texture);
+            }
+            else
+            {
+                this.mc.getTextureManager().bindTexture(shield.texture_inactive);
+            }
 
             GL11.glPushMatrix();
             GL11.glEnable(GL11.GL_BLEND);

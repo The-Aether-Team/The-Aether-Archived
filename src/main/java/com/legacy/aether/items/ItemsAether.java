@@ -260,7 +260,7 @@ public class ItemsAether {
 		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", "Void", "Welcoming Skies").setTextureName(Aether.find("music/welcoming_skies"))).setCreativeTab(null);
 		legacy = register("legacy", new ItemAetherDisc("legacy", "Lachney", "Legacy").setTextureName(Aether.find("music/legacy"))).setCreativeTab(null);
 
-		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setDungeonLoot().setMaxDamage(512).setTextureName(Aether.find("accessories/repulsion_shield")));
+		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setInactiveTexture("repulsion_movement").setDungeonLoot().setMaxDamage(512).setTextureName(Aether.find("accessories/repulsion_shield")));
 		lore_book = register("lore_book", new ItemLoreBook().setTextureName(Aether.find("misc/lore_book")));
 
 		developer_stick = register("developer_stick", new ItemDeveloperStick().setTextureName(Aether.find("skyroot_stick")));

@@ -36,11 +36,13 @@ public class ItemAccessory extends Item {
 
 	protected final AccessoryType extraType;
 
-	public ResourceLocation texture;
+	public ResourceLocation texture, texture_inactive;
 
 	private int colorHex = 0xdddddd;
 
 	private boolean isDungeonLoot = false;
+
+	private boolean hasInactiveTexture = false;
 
 	public static final IBehaviorDispenseItem DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem() {
 		protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
@@ -160,6 +162,19 @@ public class ItemAccessory extends Item {
 		this.texture = Aether.locate("textures/armor/accessory_" + location + ".png");
 
 		return this;
+	}
+
+	public ItemAccessory setInactiveTexture(String location)
+	{
+		this.texture_inactive = new ResourceLocation("aether_legacy", "textures/armor/accessory_" + location + ".png");
+		this.hasInactiveTexture = true;
+
+		return this;
+	}
+
+	public boolean hasInactiveTexture()
+	{
+		return this.hasInactiveTexture;
 	}
 
 }
