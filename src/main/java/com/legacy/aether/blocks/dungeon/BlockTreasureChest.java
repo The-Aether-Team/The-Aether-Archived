@@ -4,9 +4,11 @@ import java.util.Random;
 
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 import com.legacy.aether.Aether;
@@ -18,12 +20,37 @@ import com.legacy.aether.tileentity.TileEntityTreasureChest;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+
 public class BlockTreasureChest extends BlockChest {
 
 	public BlockTreasureChest() {
 		super(56);
 
-		this.setBlockUnbreakable();
+		this.setHardness(-1.0F);
+		this.setResistance(2000.0F);
+	}
+
+	@Override
+	public float getBlockHardness(World p_149712_1_, int p_149712_2_, int p_149712_3_, int p_149712_4_)
+	{
+		TileEntityTreasureChest treasurechest = (TileEntityTreasureChest) p_149712_1_.getTileEntity(p_149712_2_, p_149712_3_, p_149712_4_);
+
+		if (treasurechest != null)
+		{
+			return treasurechest.isLocked() ? this.blockHardness : 5.0F;
+		}
+		else {
+			return this.blockHardness;
+		}
+	}
+
+	@Override
+	public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
+	{
+		TileEntityTreasureChest treasurechest = (TileEntityTreasureChest) world.getTileEntity(x, y, z);
+
+		return treasurechest.isLocked() ? this.blockResistance : 10.0F;
 	}
 
 	@Override
