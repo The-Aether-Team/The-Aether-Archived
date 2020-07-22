@@ -9,7 +9,7 @@ import com.legacy.aether.Aether;
 public class SoundsAether
 {
 
-	public static SoundEvent moa_say, moa_flap;
+	public static SoundEvent moa_say, moa_flap, moa_egg;
 	
 	public static SoundEvent sheepuff_hurt, sheepuff_say, sheepuff_death;
 	
@@ -47,6 +47,7 @@ public class SoundsAether
 	{
 		moa_say = register(Aether.locate("aemob.moa.say"));
 		moa_flap = register(Aether.locate("aemob.moa.flap"));
+		moa_egg = register(Aether.locate("aemob.moa.egg"));
 		
 		sheepuff_say = register(Aether.locate("aemob.sheepuff.say"));
 		sheepuff_hurt = register(Aether.locate("aemob.sheepuff.hurt"));

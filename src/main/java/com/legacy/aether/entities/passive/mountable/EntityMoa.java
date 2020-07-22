@@ -249,7 +249,7 @@ public class EntityMoa extends EntitySaddleMount
 			}
 			else
 			{
-				this.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+				this.playSound(SoundsAether.moa_egg, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 				this.entityDropItem(ItemMoaEgg.getStackFromType(this.getMoaType()), 0);
 
 				this.secsUntilEgg = this.getRandomEggTime();

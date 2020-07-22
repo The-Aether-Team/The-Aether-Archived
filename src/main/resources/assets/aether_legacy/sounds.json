@@ -136,6 +136,13 @@
 	    "mob/bat/takeoff"
 	]
   },
+	"aemob.moa.egg": {
+		"category": "neutral",
+		"subtitle": "subtitles.aemob.moa.egg",
+		"sounds": [
+			"mob/chicken/plop.ogg"
+		]
+	},
   "aemob.sheepuff.say": {
   	"category": "neutral",
 	"subtitle": "subtitles.aemob.sheepuff.say",
