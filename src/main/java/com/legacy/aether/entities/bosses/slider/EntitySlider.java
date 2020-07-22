@@ -487,13 +487,16 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
     private void openDoor()
     {
-        for (int x = this.doorStart[0]; x < this.doorEnd[0] + 1; x++)
+        if (this.doorStart.length > 0 && this.doorEnd.length > 0)
         {
-            for (int y = this.doorStart[1]; y < this.doorEnd[1] + 1; y++)
+            for (int x = this.doorStart[0]; x < this.doorEnd[0] + 1; x++)
             {
-                for (int z = this.doorStart[2]; z < this.doorEnd[2] + 1; z++)
+                for (int y = this.doorStart[1]; y < this.doorEnd[1] + 1; y++)
                 {
-                    this.world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+                    for (int z = this.doorStart[2]; z < this.doorEnd[2] + 1; z++)
+                    {
+                        this.world.setBlockState(new BlockPos(x, y, z), Blocks.AIR.getDefaultState());
+                    }
                 }
             }
         }

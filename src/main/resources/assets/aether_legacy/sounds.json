@@ -140,7 +140,7 @@
 		"category": "neutral",
 		"subtitle": "subtitles.aemob.moa.egg",
 		"sounds": [
-			"mob/chicken/plop.ogg"
+			"mob/chicken/plop"
 		]
 	},
   "aemob.sheepuff.say": {
