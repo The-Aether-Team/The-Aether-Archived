@@ -433,7 +433,12 @@ public class ChunkProviderAether implements IChunkGenerator
                             && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.locked_dungeon_block && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.dungeon_trap
                             && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.dungeon_chest
                             && this.worldObj.getBlockState(tunnel.getKey()) != BlocksAether.holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, true)
-                            && this.worldObj.getBlockState(tunnel.getKey()) != BlocksAether.mossy_holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, true))
+                            && this.worldObj.getBlockState(tunnel.getKey()) != BlocksAether.mossy_holystone.getDefaultState().withProperty(BlockHolystone.dungeon_block, true)
+                            && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.aether_leaves
+                            && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.crystal_leaves
+                            && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.holiday_leaves
+                            && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.aether_log
+                            && this.worldObj.getBlockState(tunnel.getKey()).getBlock() != BlocksAether.aercloud)
                     {
                         this.worldObj.setBlockState(tunnel.getKey(), tunnel.getValue(), 2 | 16);
                     }
