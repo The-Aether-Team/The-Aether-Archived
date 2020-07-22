@@ -98,6 +98,23 @@ public class EntityFloatingBlock extends Entity
 
             BlockPos pos = new BlockPos(this);
 
+            List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(0.0D, 1.0D, 0.0D));
+
+            for (int stack = 0; stack < list.size(); ++stack)
+            {
+                Entity entity = (Entity) list.get(stack);
+
+                if (!(entity instanceof EntityFallingBlock))
+                {
+                    entity.move(MoverType.PLAYER, this.motionX, this.motionY, this.motionZ);
+                    entity.setPosition(entity.posX, this.posY + 1.0D, entity.posZ);
+                    entity.motionY = 0.0D;
+                    entity.onGround = true;
+                    entity.fallDistance = 0.0F;
+                }
+            }
+
+
             if (!BlockFloating.canFallInto(this.world, pos.up()))
             {
                 if (!this.world.isRemote)
