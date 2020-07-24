@@ -73,9 +73,9 @@ public class MapGenGoldenDungeon extends MapGenStructure
     {
         RandomTracker randomTracker = new RandomTracker();
 
-        if (randomTracker.testRandom(this.rand,140) != 0)
+        if (randomTracker.testRandom(this.rand,150) != 0)
         {
-            if (randomTracker.testRandom(this.rand,180) != 0)
+            if (randomTracker.testRandom(this.rand,190) != 0)
             {
                 return false;
             }

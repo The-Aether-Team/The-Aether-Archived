@@ -58,9 +58,9 @@ public class BronzeDungeon extends AetherDungeonVirtual
 
 		RandomTracker randomTracker = new RandomTracker();
 
-		if (randomTracker.testRandom(random,25) != 0)
+		if (randomTracker.testRandom(random,20) != 0)
 		{
-			if (randomTracker.testRandom(random,55) != 0)
+			if (randomTracker.testRandom(random,50) != 0)
 			{
 				return false;
 			}
