@@ -47,10 +47,7 @@ public class EntityDartPoison extends EntityDartBase
 
         if (!world.isRemote)
         {
-            if (!living.isActiveItemStackBlocking())
-            {
-                living.addPotionEffect(new PotionEffect(PotionsAether.INEBRIATION, 500, 0, false, false));
-            }
+            living.addPotionEffect(new PotionEffect(PotionsAether.INEBRIATION, 500, 0, false, false));
         }
 
     	this.isDead = false;
