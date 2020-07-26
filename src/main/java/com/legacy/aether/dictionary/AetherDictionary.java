@@ -57,6 +57,9 @@ public class AetherDictionary
 		register("chestTreasure", BlocksAether.treasure_chest);
 		register("chestMimic", BlocksAether.chest_mimic);
 
+		//sticks
+		register("stickWood", ItemsAether.skyroot_stick);
+
 		//eggs
 		register("egg", ItemsAether.moa_egg);
 		register("listAllegg", ItemsAether.moa_egg);
