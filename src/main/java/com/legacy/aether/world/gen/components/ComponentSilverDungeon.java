@@ -464,28 +464,30 @@ public class ComponentSilverDungeon extends AetherStructure {
 			case 2:
 				return new ItemStack(ItemsAether.dart_shooter);
 			case 3:
-				return ItemMoaEgg.getStackFromType(AetherMoaTypes.white);
+				return ItemMoaEgg.getStackFromType(AetherMoaTypes.blue);
 			case 4:
-				return new ItemStack(ItemsAether.ambrosium_shard, random.nextInt(10) + 1);
+				return ItemMoaEgg.getStackFromType(AetherMoaTypes.white);
 			case 5:
-				return new ItemStack(ItemsAether.dart, random.nextInt(5) + 1, 0);
+				return new ItemStack(ItemsAether.ambrosium_shard, random.nextInt(10) + 1);
 			case 6:
-				return new ItemStack(ItemsAether.dart, random.nextInt(3) + 1, 1);
+				return new ItemStack(ItemsAether.dart, random.nextInt(5) + 1, 0);
 			case 7:
+				return new ItemStack(ItemsAether.dart, random.nextInt(3) + 1, 1);
+			case 8:
 				return new ItemStack(ItemsAether.dart, random.nextInt(3) + 1, 2);
-			case 8: {
+			case 9: {
 				if (random.nextInt(20) == 0)
 					return new ItemStack(ItemsAether.aether_tune);
 				break;
 			}
-			case 9:
+			case 10:
 				return new ItemStack(ItemsAether.skyroot_bucket, 1, 2);
-			case 10: {
+			case 11: {
 				if (random.nextInt(10) == 0)
 					return new ItemStack(ItemsAether.ascending_dawn);
 				break;
 			}
-			case 11: {
+			case 12: {
 				if (random.nextInt(2) == 0)
 					return new ItemStack(ItemsAether.zanite_boots);
 				if (random.nextInt(2) == 0)
@@ -496,15 +498,15 @@ public class ComponentSilverDungeon extends AetherStructure {
 					return new ItemStack(ItemsAether.zanite_chestplate);
 				break;
 			}
-			case 12: {
+			case 13: {
 				if (random.nextInt(4) == 0)
 					return new ItemStack(ItemsAether.iron_pendant);
 			}
-			case 13: {
+			case 14: {
 				if (random.nextInt(10) == 0)
 					return new ItemStack(ItemsAether.golden_pendant);
 			}
-			case 14: {
+			case 15: {
 				if (random.nextInt(15) == 0)
 					return new ItemStack(ItemsAether.zanite_ring);
 			}
@@ -518,7 +520,7 @@ public class ComponentSilverDungeon extends AetherStructure {
 
 		switch (item) {
 			case 0:
-				return new ItemStack(ItemsAether.gummy_swet, random.nextInt(15) + 1);
+				return new ItemStack(ItemsAether.gummy_swet, random.nextInt(15) + 1, random.nextInt(2));
 			case 1:
 				return new ItemStack(ItemsAether.lightning_sword);
 			case 2: {

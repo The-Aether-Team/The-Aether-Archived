@@ -703,7 +703,7 @@ public class BronzeDungeon extends AetherDungeon {
 			case 3:
 				return new ItemStack(ItemsAether.notch_hammer);
 			case 4:
-				return new ItemStack(ItemsAether.lightning_knife, random.nextInt(15) + 1);
+				return new ItemStack(ItemsAether.lightning_knife, random.nextInt(20) + 1);
 			case 5:
 				return new ItemStack(ItemsAether.valkyrie_lance);
 			case 6:
