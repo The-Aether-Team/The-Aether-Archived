@@ -17,6 +17,7 @@ import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.registry.recipe.RecipeAccessoryDyes;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class AetherRegistries {
 
@@ -202,6 +203,8 @@ public class AetherRegistries {
 		GameRegistry.addRecipe(new RecipeAccessoryDyes());
 		FurnaceRecipes.smelting().func_151394_a(new ItemStack(BlocksAether.skyroot_log, 1, 1), new ItemStack(Items.coal, 1, 1), 0.15F);
 		FurnaceRecipes.smelting().func_151394_a(new ItemStack(BlocksAether.golden_oak_log, 1, 1), new ItemStack(Items.coal, 1, 1), 0.15F);
+
+		OreDictionary.registerOre("stickWood", ItemsAether.skyroot_stick);
 	}
 
 	private static void initializeShapelessRecipes() {
