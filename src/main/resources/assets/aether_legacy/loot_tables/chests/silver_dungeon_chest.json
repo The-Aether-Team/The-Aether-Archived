@@ -25,7 +25,7 @@
 				{
 					"type": "item",
 					"weight": 1,
-					"name": "aether_legacy:moa_egg",
+					"name": "aether_legacy:moa_egg_blue",
 					"functions": [
 						{
 							"function": "aether_legacy:set_moa_type",
@@ -36,7 +36,7 @@
 				{
 					"type": "item",
 					"weight": 1,
-					"name": "aether_legacy:moa_egg",
+					"name": "aether_legacy:moa_egg_white",
 					"functions": [
 						{
 							"function": "aether_legacy:set_moa_type",
