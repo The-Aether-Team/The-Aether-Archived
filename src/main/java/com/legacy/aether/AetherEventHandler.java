@@ -17,6 +17,9 @@ import com.legacy.aether.items.tools.ItemSkyrootBucket;
 import com.legacy.aether.items.util.EnumSkyrootBucketType;
 import com.legacy.aether.items.weapons.ItemSkyrootSword;
 
+import com.legacy.aether.networking.AetherNetworkingManager;
+import com.legacy.aether.networking.packets.PacketCapeChanged;
+import com.legacy.aether.networking.packets.PacketExtendedAttack;
 import com.legacy.aether.world.AetherWorld;
 import com.legacy.aether.world.AetherWorldProvider;
 import net.minecraft.block.Block;
@@ -41,9 +44,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
@@ -59,7 +64,9 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
+import java.util.List;
 import java.util.Random;
 
 import static net.minecraft.block.BlockCauldron.LEVEL;
@@ -453,6 +460,68 @@ public class AetherEventHandler
 		}
 	}
 
+	@SubscribeEvent
+	public void interact(PlayerInteractEvent.LeftClickEmpty event)
+	{
+		EntityPlayer player = event.getEntityPlayer();
+		ItemStack stack = event.getItemStack();
+
+		if (isValkyrieItem(event.getItemStack().getItem()))
+		{
+			Vec3d playerVision = player.getLookVec();
+			AxisAlignedBB reachDistance = player.getEntityBoundingBox().grow(10.0D);
+
+			List<Entity> locatedEntities = player.world.getEntitiesWithinAABB(Entity.class, reachDistance);
+
+			Entity found = null;
+			double foundLen = 0.0D;
+
+			for (Object o : locatedEntities)
+			{
+				if (o == player)
+				{
+					continue;
+				}
+
+				Entity ent = (Entity) o;
+
+				if (!ent.canBeCollidedWith())
+				{
+					continue;
+				}
+
+				Vec3d vec = new Vec3d(ent.posX - player.posX, ent.getEntityBoundingBox().minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
+				double len = vec.length();
+
+				if (len > 8.0F)
+				{
+					continue;
+				}
+
+				vec = vec.normalize();
+				double dot = playerVision.dotProduct(vec);
+
+				if (dot < 1.0 - 0.125 / len || !player.canEntityBeSeen(ent))
+				{
+					continue;
+				}
+
+				if (foundLen == 0.0 || len < foundLen)
+				{
+					found = ent;
+					foundLen = len;
+				}
+			}
+
+			if (found != null && player.getRidingEntity() != found)
+			{
+				stack.damageItem(1, player);
+
+				AetherNetworkingManager.sendToServer(new PacketExtendedAttack(found.getEntityId()));
+			}
+		}
+	}
+
 	private void performTimeSet(PlayerWakeUpEvent event, World world, WorldServer worldServer)
 	{
 		if (world.getGameRules().getBoolean("doDaylightCycle") && event.getEntityPlayer().isPlayerFullyAsleep())
@@ -466,6 +535,11 @@ public class AetherEventHandler
 	public boolean isGravititeTool(Item stackID)
 	{
 		return stackID == ItemsAether.gravitite_shovel || stackID == ItemsAether.gravitite_axe || stackID == ItemsAether.gravitite_pickaxe;
+	}
+
+	public boolean isValkyrieItem(Item stackID)
+	{
+		return stackID == ItemsAether.valkyrie_shovel || stackID == ItemsAether.valkyrie_axe || stackID == ItemsAether.valkyrie_pickaxe || stackID == ItemsAether.valkyrie_lance;
 	}
 
 }
