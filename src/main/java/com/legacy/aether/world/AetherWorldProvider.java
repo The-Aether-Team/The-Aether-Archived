@@ -146,11 +146,11 @@ public class AetherWorldProvider extends WorldProvider
 			{
 				if (this.eternalDayManager.shouldCycleCatchup())
 				{
-					if (this.eternalDayManager.getTime() != (worldTime % 24000L))
+					if (this.eternalDayManager.getTime() != (worldTime % 24000L) && this.eternalDayManager.getTime() != (worldTime + 1 % 24000L) && this.eternalDayManager.getTime() != (worldTime - 1 % 24000L))
 					{
 						this.eternalDayManager.setTime(Math.floorMod(this.eternalDayManager.getTime() - 1, 24000L));
 					}
-					else if (this.eternalDayManager.getTime() == (worldTime + 1 % 24000L) || this.eternalDayManager.getTime() == (worldTime - 1 % 24000L) || this.eternalDayManager.getTime() == (worldTime % 24000L))
+					else
 					{
 						this.eternalDayManager.setShouldCycleCatchup(false);
 					}

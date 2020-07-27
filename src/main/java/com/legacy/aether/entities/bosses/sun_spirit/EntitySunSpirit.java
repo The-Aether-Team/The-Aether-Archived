@@ -89,7 +89,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     public EntitySunSpirit(World world, int posX, int posY, int posZ, int var6)
     {
         super(world);
-        this.setSize(2.25F, 2.6F);
+        this.setSize(2.5F, 2.8F);
         this.setPosition((double)posX + 0.5D, (double)posY, (double)posZ + 0.5D);
         this.setOriginPosition(posX, posY, posZ);
         this.setBossName(AetherNameGen.gen());
@@ -630,6 +630,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                 }
             }
         }
+
+        this.setDead();
     }
 
     private void setDoor(IBlockState block)
