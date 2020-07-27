@@ -43,11 +43,11 @@ public class AetherWorldProvider extends WorldProvider {
 			{
 				if (!data.isShouldCycleCatchup())
 				{
-					if (data.getAetherTime() != (worldTime % 24000L))
+					if (data.getAetherTime() != (worldTime % 24000L) && data.getAetherTime() != (worldTime + 1 % 24000L) && data.getAetherTime() != (worldTime - 1 % 24000L))
 					{
 						data.setAetherTime(Math.floorMod(data.getAetherTime() - 1, 24000L));
 					}
-					else if (data.getAetherTime() == ((worldTime + 1) % 24000L) || data.getAetherTime() == ((worldTime - 1) % 24000L) || data.getAetherTime() == (worldTime % 24000L))
+					else
 					{
 						data.setShouldCycleCatchup(true);
 					}

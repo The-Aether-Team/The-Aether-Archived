@@ -1,9 +1,8 @@
 package com.legacy.aether.network.packets;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-
-import java.util.Objects;
 
 public class PacketExtendedAttack extends AetherPacket<PacketExtendedAttack>
 {
@@ -40,6 +39,11 @@ public class PacketExtendedAttack extends AetherPacket<PacketExtendedAttack>
     @Override
     public void handleServer(PacketExtendedAttack message, EntityPlayer player)
     {
-        player.attackTargetEntityWithCurrentItem(Objects.requireNonNull(player.worldObj.getEntityByID(message.entityID)));
+        Entity entityFromID = player.worldObj.getEntityByID(message.entityID);
+
+        if (entityFromID != null)
+        {
+            player.attackTargetEntityWithCurrentItem(entityFromID);
+        }
     }
 }

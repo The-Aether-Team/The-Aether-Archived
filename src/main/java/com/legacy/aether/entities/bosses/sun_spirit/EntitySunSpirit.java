@@ -56,7 +56,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
     public EntitySunSpirit(World worldIn) {
         super(worldIn);
 
-        this.setSize(2.25F, 2.5F);
+        this.setSize(2.5F, 2.8F);
         this.dataWatcher.updateObject(20, AetherNameGen.gen());
     }
 
@@ -192,6 +192,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
             }
 
             if (this.isDead()) {
+                this.setFreezing(true);
                 this.chatLine(dungeonTarget, "\u00a7bSuch bitter cold... is this the feeling... of pain?");
                 this.chatCount = 100;
 
@@ -212,23 +213,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
                         AetherData.getInstance(this.worldObj).setEternalDay(true);
                     }
                 }
-
-                /*
-                WorldProvider provider = this.worldObj.provider;
-
-                if (provider instanceof AetherWorldProvider)
-                {
-                    AetherWorldProvider aetherProvider = (AetherWorldProvider) provider;
-
-                    if (!this.worldObj.isRemote)
-                    {
-                        if (aetherProvider.getIsEternalDay())
-                        {
-                            aetherProvider.setIsEternalDay(true);
-                        }
-                    }
-                }
-                 */
 
                 this.setDoor(Blocks.air);
                 this.unlockTreasure();
@@ -481,6 +465,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
             if (flag) {
                 EntityFireMinion minion = new EntityFireMinion(this.worldObj);
                 minion.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
+                minion.setAttackTarget(this.getAttackTarget());
 
                 if (!this.worldObj.isRemote) {
                     this.worldObj.spawnEntityInWorld(minion);
