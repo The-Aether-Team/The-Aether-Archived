@@ -5,6 +5,7 @@ import com.legacy.aether.api.player.IPlayerAether;
 import com.legacy.aether.entities.passive.mountable.EntityAerbunny;
 import com.legacy.aether.entities.projectile.darts.EntityDartBase;
 import com.legacy.aether.network.AetherNetwork;
+import com.legacy.aether.network.packets.PacketExtendedAttack;
 import com.legacy.aether.network.packets.PacketSendEternalDay;
 import com.legacy.aether.network.packets.PacketSendShouldCycle;
 import com.legacy.aether.network.packets.PacketSendTime;
@@ -13,6 +14,7 @@ import com.legacy.aether.world.AetherData;
 import com.legacy.aether.world.AetherWorldProvider;
 import com.legacy.aether.world.TeleporterAether;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
@@ -32,9 +34,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
@@ -61,7 +61,9 @@ import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import org.lwjgl.input.Mouse;
 
+import java.util.List;
 import java.util.Random;
 
 public class
@@ -382,6 +384,70 @@ AetherEventHandler {
 		}
 	}
 
+	@SubscribeEvent
+	public void onLeftClick(InputEvent.MouseInputEvent event)
+	{
+		if (Mouse.getEventButton() == 0)
+		{
+			if (Mouse.getEventButtonState())
+			{
+				EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+				ItemStack stack = player.getHeldItem();
+
+				if (stack != null)
+				{
+					if (isValkyrieItem(stack.getItem()))
+					{
+						Vec3 playerVision = player.getLookVec();
+						AxisAlignedBB reachDistance = player.boundingBox.expand(10.0D, 10.0D, 10.0D);
+
+						List<Entity> locatedEntities = player.worldObj.getEntitiesWithinAABB(Entity.class, reachDistance);
+
+						Entity found = null;
+						double foundLen = 0.0D;
+
+						for (Object o : locatedEntities) {
+							if (o == player) {
+								continue;
+							}
+
+							Entity ent = (Entity) o;
+
+							if (!ent.canBeCollidedWith()) {
+								continue;
+							}
+
+							Vec3 vec = Vec3.createVectorHelper(ent.posX - player.posX, ent.boundingBox.minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
+							double len = vec.lengthVector();
+
+							if (len > 8.0F) {
+								continue;
+							}
+
+							vec = vec.normalize();
+							double dot = playerVision.dotProduct(vec);
+
+							if (dot < 1.0 - 0.125 / len || !player.canEntityBeSeen(ent)) {
+								continue;
+							}
+
+							if (foundLen == 0.0 || len < foundLen) {
+								found = ent;
+								foundLen = len;
+							}
+						}
+
+						if (found != null && player.ridingEntity != found) {
+							stack.damageItem(1, player);
+
+							AetherNetwork.sendToServer(new PacketExtendedAttack(found.getEntityId()));
+						}
+					}
+				}
+			}
+		}
+	}
+
 	private void performTimeSet(PlayerWakeUpEvent event, World world, WorldServer worldServer)
 	{
 		if (world.getGameRules().getGameRuleBooleanValue("doDaylightCycle") && event.entityPlayer.isPlayerFullyAsleep())
@@ -392,5 +458,10 @@ AetherEventHandler {
 
 			PlayerAether.get(event.entityPlayer).setBedLocation(event.entityPlayer.getBedLocation(AetherConfig.getAetherDimensionID()));
 		}
+	}
+
+	public boolean isValkyrieItem(Item stackID)
+	{
+		return stackID == ItemsAether.valkyrie_shovel || stackID == ItemsAether.valkyrie_axe || stackID == ItemsAether.valkyrie_pickaxe || stackID == ItemsAether.valkyrie_lance;
 	}
 }
