@@ -49,7 +49,8 @@ public class ItemPhoenixBow extends ItemBow
     	return ItemsAether.aether_loot;
     }
 
-    private ItemStack findAmmo(EntityPlayer player)
+    @Override
+    protected ItemStack findAmmo(EntityPlayer player)
     {
         if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
         {
