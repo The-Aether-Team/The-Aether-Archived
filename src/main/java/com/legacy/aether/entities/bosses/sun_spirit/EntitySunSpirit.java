@@ -632,7 +632,9 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
             }
         }
 
-        this.setDead();
+        this.setFreezing(true);
+
+        super.onDeathUpdate();
     }
 
     private void setDoor(IBlockState block)

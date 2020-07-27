@@ -2,6 +2,7 @@ package com.legacy.aether.networking.packets;
 
 import com.legacy.aether.api.AetherAPI;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -44,6 +45,11 @@ public class PacketExtendedAttack extends AetherPacket<PacketExtendedAttack>
     @Override
     public void handleServer(PacketExtendedAttack message, EntityPlayer player)
     {
-        player.attackTargetEntityWithCurrentItem(Objects.requireNonNull(player.world.getEntityByID(message.entityID)));
+        Entity entityFromID = player.world.getEntityByID(message.entityID);
+
+        if (entityFromID != null)
+        {
+            player.attackTargetEntityWithCurrentItem(entityFromID);
+        }
     }
 }
