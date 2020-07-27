@@ -572,6 +572,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
             {
                 EntityFireMinion minion = new EntityFireMinion(this.world);
                 minion.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
+                minion.setAttackTarget(this.getAttackTarget());
                 
                 if (!this.world.isRemote)
                 {
