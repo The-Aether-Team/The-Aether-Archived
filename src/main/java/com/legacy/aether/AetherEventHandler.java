@@ -14,6 +14,7 @@ import com.legacy.aether.world.AetherData;
 import com.legacy.aether.world.AetherWorldProvider;
 import com.legacy.aether.world.TeleporterAether;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -341,6 +342,19 @@ AetherEventHandler {
 
 				providerAether.setShouldCycleCatchup(data.isShouldCycleCatchup());
 				AetherNetwork.sendToAll(new PacketSendShouldCycle(providerAether.getShouldCycleCatchup()));
+			}
+		}
+
+		for (Object entity : event.world.loadedEntityList)
+		{
+			if (entity instanceof EntityItem)
+			{
+				EntityItem entityItem = (EntityItem) entity;
+
+				if (entityItem.getEntityItem().getItem() == ItemsAether.dungeon_key)
+				{
+					ObfuscationReflectionHelper.setPrivateValue(Entity.class, entityItem, true, "invulnerable", "field_83001_bt");
+				}
 			}
 		}
 	}
