@@ -86,4 +86,8 @@ public class AetherNotificationModUpdateScreen extends GuiScreen
         return notificationModUpdateScreen;
     }
 
+    public boolean shouldRender()
+    {
+        return showNotification != null && showNotification.shouldDraw() && !ForgeModContainer.disableVersionCheck;
+    }
 }

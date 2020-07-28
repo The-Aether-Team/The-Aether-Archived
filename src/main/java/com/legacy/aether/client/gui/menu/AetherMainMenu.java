@@ -491,7 +491,14 @@ public class AetherMainMenu extends GuiMainMenu
             String brd = brandings.get(brdline);
             if (!com.google.common.base.Strings.isNullOrEmpty(brd))
             {
-                this.drawString(this.fontRenderer, brd, this.width - this.fontRenderer.getStringWidth(brd) - 2, this.height - (30 + brdline * (this.fontRenderer.FONT_HEIGHT + 1)), 16777215);
+                int offset = 30;
+
+                if (!modUpdateNotification.shouldRender())
+                {
+                    offset = 20;
+                }
+
+                this.drawString(this.fontRenderer, brd, this.width - this.fontRenderer.getStringWidth(brd) - 2, this.height - (offset + brdline * (this.fontRenderer.FONT_HEIGHT + 1)), 16777215);
             }
         }
 
@@ -541,6 +548,7 @@ public class AetherMainMenu extends GuiMainMenu
         {
             this.realmsNotification.drawScreen(mouseX, mouseY, partialTicks);
         }
+
         modUpdateNotification.drawScreen(mouseX, mouseY, partialTicks);
     }
 
