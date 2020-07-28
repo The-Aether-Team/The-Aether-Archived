@@ -273,40 +273,43 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 		}
 		else
 		{
-			if (this.getAttackTarget() instanceof EntityPlayer)
+			if (this.getAttackTarget() != null)
 			{
-				if (this.getAttackTarget().posY > this.posY)
+				if (this.getAttackTarget() instanceof EntityPlayer)
 				{
-					timeUntilTeleportToPlayer++;
+					if (this.getAttackTarget().posY > this.posY)
+					{
+						timeUntilTeleportToPlayer++;
 
-					if (timeUntilTeleportToPlayer >= 75 && !this.world.isRemote)
-					{
-						this.teleportToPlayer();
+						if (timeUntilTeleportToPlayer >= 75 && !this.world.isRemote)
+						{
+							this.teleportToPlayer();
+						}
 					}
-				}
-				else
-				{
-					timeUntilTeleportToPlayer = 0;
-				}
+					else
+					{
+						timeUntilTeleportToPlayer = 0;
+					}
 
-				if (this.timeUntilTeleport++ >= 450)
-				{
-					if (this.onGround && this.rand.nextInt(5) == 0)
+					if (this.timeUntilTeleport++ >= 450)
 					{
-						this.makeHomeShot(1, (EntityPlayer) this.getAttackTarget());
+						if (this.onGround && this.rand.nextInt(5) == 0)
+						{
+							this.makeHomeShot(1, (EntityPlayer) this.getAttackTarget());
+						}
+						else if (!this.world.isRemote)
+						{
+							this.teleport(this.safeX, this.safeY, this.safeZ, 4);
+						}
 					}
-					else if (!this.world.isRemote)
+					else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D)))
 					{
-						this.teleport(this.safeX, this.safeY, this.safeZ, 4);
+						this.timeUntilTeleport = 446;
 					}
-				}
-				else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D)))
-				{
-					this.timeUntilTeleport = 446;
-				}
-				else if ((this.timeUntilTeleport % 5) == 0 && !this.canEntityBeSeen(this.getAttackTarget()))
-				{
-					this.timeUntilTeleport += 100;
+					else if ((this.timeUntilTeleport % 5) == 0 && !this.canEntityBeSeen(this.getAttackTarget()))
+					{
+						this.timeUntilTeleport += 100;
+					}
 				}
 			}
 
