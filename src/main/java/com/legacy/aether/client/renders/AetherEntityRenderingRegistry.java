@@ -150,7 +150,7 @@ public class AetherEntityRenderingRegistry
 	{
 		for (RenderLivingBase<?> playerRender : new HashSet<>(Minecraft.getMinecraft().getRenderManager().getSkinMap().values()))
 		{
-			playerRender.addLayer(new AccessoriesLayer(true, (ModelPlayer) playerRender.getMainModel()));
+			playerRender.addLayer(new AccessoriesLayer((ModelPlayer) playerRender.getMainModel()));
 			playerRender.addLayer(new LayerElytraAether(playerRender));
 
 			List<LayerRenderer<EntityLivingBase>> fieldOutside = ObfuscationReflectionHelper.getPrivateValue(RenderLivingBase.class, playerRender, "layerRenderers", "field_177097_h");

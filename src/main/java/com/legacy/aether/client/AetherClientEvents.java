@@ -14,10 +14,7 @@ import com.legacy.aether.containers.inventory.InventoryAccessories;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherGuiHandler;
 import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketCapeChanged;
-import com.legacy.aether.networking.packets.PacketOpenContainer;
-import com.legacy.aether.networking.packets.PacketPerkChanged;
-import com.legacy.aether.networking.packets.PacketSendJump;
+import com.legacy.aether.networking.packets.*;
 import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.EnumAetherPerkType;
@@ -201,6 +198,8 @@ public class AetherClientEvents
 					}
 				}
 
+				event.getButtonList().add(new GuiGlovesButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
+				i++;
 				event.getButtonList().add(new GuiCapeButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
 
 				if (AetherRankings.isRankedPlayer(Minecraft.getMinecraft().player.getUniqueID()))
@@ -323,12 +322,25 @@ public class AetherClientEvents
 			player.shouldRenderCape = enableCape;
 			AetherNetworkingManager.sendToServer(new PacketCapeChanged(player.getEntity().getEntityId(), player.shouldRenderCape));
 		}
+
+		if (event.getButton().getClass() == GuiGlovesButton.class)
+		{
+			PlayerAether player = (PlayerAether) AetherAPI.getInstance().get(Minecraft.getMinecraft().player);
+
+			boolean enableGloves = !player.shouldRenderGloves;
+
+			player.shouldRenderGloves = enableGloves;
+			AetherNetworkingManager.sendToServer(new PacketGlovesChanged(player.getEntity().getEntityId(), player.shouldRenderGloves));
+		}
 	}
 
 	@SubscribeEvent
 	public void onRenderHand(RenderSpecificHandEvent event)
 	{
-		PlayerGloveRenderer.renderItemFirstPerson(Minecraft.getMinecraft().player, event.getPartialTicks(), event.getInterpolatedPitch(), event.getHand(), event.getSwingProgress(), event.getItemStack(), event.getEquipProgress());
+		if (((PlayerAether) AetherAPI.getInstance().get(Minecraft.getMinecraft().player)).shouldRenderGloves)
+		{
+			PlayerGloveRenderer.renderItemFirstPerson(Minecraft.getMinecraft().player, event.getPartialTicks(), event.getInterpolatedPitch(), event.getHand(), event.getSwingProgress(), event.getItemStack(), event.getEquipProgress());
+		}
 	}
 
 	@SubscribeEvent

@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.legacy.aether.api.AetherAPI;
-import com.legacy.aether.networking.packets.PacketCapeChanged;
-import com.legacy.aether.networking.packets.PacketPerkChanged;
-import com.legacy.aether.networking.packets.PacketSendPoisonTime;
+import com.legacy.aether.networking.packets.*;
 import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -39,7 +37,6 @@ import com.legacy.aether.containers.inventory.InventoryAccessories;
 import com.legacy.aether.entities.passive.mountable.EntityParachute;
 import com.legacy.aether.items.ItemsAether;
 import com.legacy.aether.networking.AetherNetworkingManager;
-import com.legacy.aether.networking.packets.PacketAccessory;
 import com.legacy.aether.player.abilities.AbilityAccessories;
 import com.legacy.aether.player.abilities.AbilityArmor;
 import com.legacy.aether.player.abilities.AbilityFlight;
@@ -83,7 +80,7 @@ public class PlayerAether implements IPlayerAether
 
 	private int cooldown, cooldownMax;
 
-	public boolean shouldRenderHalo, shouldRenderGlow, shouldRenderCape;
+	public boolean shouldRenderHalo, shouldRenderGlow, shouldRenderCape, shouldRenderGloves;
 
 	public boolean seenSpiritDialog = false;
 
@@ -104,6 +101,7 @@ public class PlayerAether implements IPlayerAether
 		this.shouldRenderHalo = true;
 		this.shouldRenderGlow = false;
 		this.shouldRenderCape = true;
+		this.shouldRenderGloves = true;
 
 		this.donatorMoaSkin = new DonatorMoaSkin();
 		this.accessories = new InventoryAccessories(player);
@@ -119,6 +117,7 @@ public class PlayerAether implements IPlayerAether
 			AetherNetworkingManager.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
 			AetherNetworkingManager.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Glow, this.shouldRenderGlow));
 			AetherNetworkingManager.sendToAll(new PacketCapeChanged(this.getEntity().getEntityId(), this.shouldRenderCape));
+			AetherNetworkingManager.sendToAll(new PacketGlovesChanged(this.getEntity().getEntityId(), this.shouldRenderGloves));
 			AetherNetworkingManager.sendToAll(new PacketSendPoisonTime(this.getEntity(), this.poisonTime));
 		}
 
@@ -347,6 +346,7 @@ public class PlayerAether implements IPlayerAether
 		output.setBoolean("poisoned", this.isPoisoned);
 		output.setInteger("poison_time", this.poisonTime);
 		output.setBoolean("cape", this.shouldRenderCape);
+		output.setBoolean("gloves", this.shouldRenderGloves);
 		output.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
 		output.setInteger("hammer_cooldown", this.cooldown);
 		output.setString("notch_hammer_name", this.cooldownName);
@@ -370,6 +370,11 @@ public class PlayerAether implements IPlayerAether
 		if (input.hasKey("cape"))
 		{
 			this.shouldRenderCape = input.getBoolean("cape");
+		}
+
+		if (input.hasKey("gloves"))
+		{
+			this.shouldRenderGloves = input.getBoolean("gloves");
 		}
 
 		if (input.hasKey("shards_used"))

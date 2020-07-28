@@ -48,6 +48,9 @@ public class AetherNetworkingManager
 		INSTANCE.registerMessage(PacketSendPoisonTime.class, PacketSendPoisonTime.class, discriminant++, Side.CLIENT);
 
 		INSTANCE.registerMessage(PacketExtendedAttack.class, PacketExtendedAttack.class, discriminant++, Side.SERVER);
+
+		INSTANCE.registerMessage(PacketGlovesChanged.class, PacketGlovesChanged.class, discriminant++, Side.SERVER);
+		INSTANCE.registerMessage(PacketGlovesChanged.class, PacketGlovesChanged.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message)

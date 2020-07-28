@@ -62,10 +62,9 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	
 	private ModelAetherWings modelWings;
 
-	public AccessoriesLayer(boolean slimFit, ModelPlayer modelPlayer)
+	public AccessoriesLayer(ModelPlayer modelPlayer)
 	{
 		this.modelPlayer = modelPlayer;
-		this.slimFit = slimFit;
 		this.modelWings = new ModelAetherWings(0.0F);
 		this.modelMisc = new ModelBiped(1.0F);
 		this.modelHalo = new ModelPlayerHalo();
@@ -82,6 +81,8 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 		{
 			return;
 		}
+
+		this.slimFit = player.getSkinType().equals("slim");
 
 		GlStateManager.pushMatrix();
 
@@ -208,7 +209,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	        }
 		}
 
-		if (accessories.getStackInSlot(6).getItem().getClass() == ItemAccessory.class)
+		if (accessories.getStackInSlot(6).getItem().getClass() == ItemAccessory.class && ((PlayerAether) playerAether).shouldRenderGloves)
 		{
 			ItemAccessory gloves = (ItemAccessory) accessories.getStackInSlot(6).getItem();
 			this.manager.renderEngine.bindTexture(gloves.texture);
@@ -236,7 +237,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
 			GlStateManager.color(1.0F, 1.0F, 1.0F);
 		}
-		else if (accessories.getStackInSlot(6).getItem().getClass() == ItemAccessoryDyable.class)
+		else if (accessories.getStackInSlot(6).getItem().getClass() == ItemAccessoryDyable.class && ((PlayerAether) playerAether).shouldRenderGloves)
 		{
 			ItemAccessoryDyable gloves = (ItemAccessoryDyable) accessories.getStackInSlot(6).getItem();
 			this.manager.renderEngine.bindTexture(gloves.texture);
