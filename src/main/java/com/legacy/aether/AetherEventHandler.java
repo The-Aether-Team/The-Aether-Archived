@@ -555,7 +555,7 @@ public class AetherEventHandler
 
 				if (entityItem.getItem().getItem() == ItemsAether.dungeon_key)
 				{
-					ObfuscationReflectionHelper.setPrivateValue(Entity.class, entityItem, true, "invulnerable", "field_149119_a");
+					ObfuscationReflectionHelper.setPrivateValue(Entity.class, entityItem, true, "invulnerable", "field_83001_bt");
 				}
 			}
 		}
