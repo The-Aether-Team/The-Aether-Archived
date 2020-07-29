@@ -35,13 +35,16 @@ public class PacketSendShouldCycle extends AetherPacket<PacketSendShouldCycle>
     @Override
     public void handleClient(PacketSendShouldCycle message, EntityPlayer player)
     {
-        WorldProvider provider = player.world.provider;
-
-        if (provider instanceof AetherWorldProvider)
+        if (player != null && player.world != null && player.world.provider != null)
         {
-            AetherWorldProvider providerAether = (AetherWorldProvider) provider;
+            WorldProvider provider = player.world.provider;
 
-            providerAether.setShouldCycleCatchup(message.shouldCycle);
+            if (provider instanceof AetherWorldProvider)
+            {
+                AetherWorldProvider providerAether = (AetherWorldProvider) provider;
+
+                providerAether.setShouldCycleCatchup(message.shouldCycle);
+            }
         }
     }
 
