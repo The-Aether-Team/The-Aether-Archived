@@ -35,13 +35,16 @@ public class PacketSendTime extends AetherPacket<PacketSendTime>
     @Override
     public void handleClient(PacketSendTime message, EntityPlayer player)
     {
-        WorldProvider provider = player.world.provider;
-
-        if (provider instanceof AetherWorldProvider)
+        if (player != null && player.world != null && player.world.provider != null)
         {
-            AetherWorldProvider providerAether = (AetherWorldProvider) provider;
+            WorldProvider provider = player.world.provider;
 
-            providerAether.setAetherTime(message.time);
+            if (provider instanceof AetherWorldProvider)
+            {
+                AetherWorldProvider providerAether = (AetherWorldProvider) provider;
+
+                providerAether.setAetherTime(message.time);
+            }
         }
     }
 

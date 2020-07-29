@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
@@ -255,41 +256,72 @@ public class PlayerAether implements IPlayerAether
 		}
 		else
 		{
+			System.out.println(this.thePlayer.timeUntilPortal);
+
 			if (this.inPortal)
 			{
-				int limit = this.thePlayer.getMaxInPortalTime();
-
-				if (this.timeInPortal++ >= limit)
+				if (this.thePlayer.timeUntilPortal <= 0)
 				{
-					MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+					System.out.println("called");
+					int limit = this.thePlayer.getMaxInPortalTime();
 
-					int previousDimension = this.thePlayer.dimension;
-					int transferDimension = previousDimension == AetherConfig.dimension.aether_dimension_id ? 0 : AetherConfig.dimension.aether_dimension_id;
+					if (this.timeInPortal >= limit)
+					{
+						MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 
-					this.timeInPortal = 0;
-					this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
-					this.thePlayer.changeDimension(transferDimension, new TeleporterAether(true, server.getWorld(transferDimension)));
+						int previousDimension = this.thePlayer.dimension;
+						int transferDimension = previousDimension == AetherConfig.dimension.aether_dimension_id ? 0 : AetherConfig.dimension.aether_dimension_id;
+
+						this.timeInPortal = limit;
+						this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
+						this.thePlayer.changeDimension(transferDimension, new TeleporterAether(true, server.getWorld(transferDimension)));
+					}
+					else
+					{
+						this.timeInPortal++;
+					}
 				}
-
-				this.inPortal = false;
+				else
+				{
+					this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
+				}
 			}
 			else
 			{
-				
+				if (this.timeInPortal < 0)
+				{
+					this.timeInPortal = 0;
+				}
+
                 if (this.timeInPortal > 0)
                 {
                     this.timeInPortal -= 4;
                 }
 
-                if (this.timeInPortal < 0)
-                {
-                    this.timeInPortal = 0;
-                }
-
                 if (this.thePlayer.timeUntilPortal > 0)
                 {
+					System.out.println("ticking");
                     --this.thePlayer.timeUntilPortal;
                 }
+			}
+
+			AxisAlignedBB playerBounding = this.thePlayer.getCollisionBoundingBox();
+
+			if (playerBounding != null)
+			{
+				if (this.thePlayer.world.getBlockState(new BlockPos(playerBounding.minX, playerBounding.minY, playerBounding.minZ)).getBlock() != BlocksAether.aether_portal
+						&& this.thePlayer.world.getBlockState(new BlockPos(playerBounding.minX, playerBounding.minY, playerBounding.minZ)).getBlock() != BlocksAether.aether_portal)
+				{
+					this.inPortal = false;
+				}
+				else
+				{
+					this.inPortal = true;
+				}
+			}
+			else
+			{
+				this.inPortal = false;
 			}
 		}
 	}
@@ -687,14 +719,7 @@ public class PlayerAether implements IPlayerAether
 
 	public void setInPortal()
 	{
-		if (this.thePlayer.timeUntilPortal > 0)
-		{
-			this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
-		}
-		else
-		{
-			this.inPortal = true;
-		}
+		this.inPortal = true;
 	}
 
 	/*
