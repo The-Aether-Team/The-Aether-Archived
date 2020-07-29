@@ -212,26 +212,30 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
         } else {
             if (this.getEntityToAttack() != null) {
                 if (this.getEntityToAttack() instanceof EntityPlayer) {
-                    if (this.getEntityToAttack().posY > this.posY) {
-                        timeUntilTeleportToPlayer++;
+                    EntityPlayer target = (EntityPlayer) this.getEntityToAttack();
 
-                        if (timeUntilTeleportToPlayer >= 75 && !this.worldObj.isRemote) {
-                            this.teleportToPlayer();
-                        }
-                    } else {
-                        timeUntilTeleportToPlayer = 0;
-                    }
+                    if (target != null) {
+                        if (target.posY > this.posY) {
+                            timeUntilTeleportToPlayer++;
 
-                    if (this.timeUntilTeleport++ >= 450) {
-                        if (this.onGround && this.rand.nextInt(5) == 0) {
-                            this.makeHomeShot(1, (EntityPlayer) this.getEntityToAttack());
+                            if (timeUntilTeleportToPlayer >= 75 && !this.worldObj.isRemote) {
+                                this.teleportToPlayer();
+                            }
                         } else {
-                            this.teleport(this.getEntityToAttack().posX, this.getEntityToAttack().posY, this.getEntityToAttack().posZ, 4);
+                            timeUntilTeleportToPlayer = 0;
                         }
-                    } else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D))) {
-                        this.timeUntilTeleport = 446;
-                    } else if ((this.timeUntilTeleport % 5) == 0 && !canEntityBeSeen(this.getEntityToAttack())) {
-                        this.timeUntilTeleport += 100;
+
+                        if (this.timeUntilTeleport++ >= 450) {
+                            if (this.onGround && this.rand.nextInt(5) == 0) {
+                                this.makeHomeShot(1, target);
+                            } else {
+                                this.teleport(target.posX, target.posY, target.posZ, 4);
+                            }
+                        } else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D))) {
+                            this.timeUntilTeleport = 446;
+                        } else if ((this.timeUntilTeleport % 5) == 0 && !canEntityBeSeen(target)) {
+                            this.timeUntilTeleport += 100;
+                        }
                     }
                 }
             }
