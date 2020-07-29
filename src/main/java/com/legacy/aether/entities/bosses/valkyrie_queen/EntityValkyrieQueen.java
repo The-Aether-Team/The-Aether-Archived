@@ -273,11 +273,13 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 		}
 		else
 		{
-			if (this.getAttackTarget() != null)
+			if (this.getAttackTarget() instanceof EntityPlayer)
 			{
-				if (this.getAttackTarget() instanceof EntityPlayer)
+				EntityPlayer target = (EntityPlayer) this.getAttackTarget();
+
+				if (target != null)
 				{
-					if (this.getAttackTarget().posY > this.posY)
+					if (target.posY > this.posY)
 					{
 						timeUntilTeleportToPlayer++;
 
@@ -295,7 +297,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 					{
 						if (this.onGround && this.rand.nextInt(5) == 0)
 						{
-							this.makeHomeShot(1, (EntityPlayer) this.getAttackTarget());
+							this.makeHomeShot(1, target);
 						}
 						else if (!this.world.isRemote)
 						{
@@ -306,7 +308,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 					{
 						this.timeUntilTeleport = 446;
 					}
-					else if ((this.timeUntilTeleport % 5) == 0 && !this.canEntityBeSeen(this.getAttackTarget()))
+					else if ((this.timeUntilTeleport % 5) == 0 && !this.canEntityBeSeen(target))
 					{
 						this.timeUntilTeleport += 100;
 					}
