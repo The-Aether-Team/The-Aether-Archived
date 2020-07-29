@@ -266,7 +266,7 @@ public class PlayerAether implements IPlayerAether
 					int previousDimension = this.thePlayer.dimension;
 					int transferDimension = previousDimension == AetherConfig.dimension.aether_dimension_id ? 0 : AetherConfig.dimension.aether_dimension_id;
 
-					this.timeInPortal = limit;
+					this.timeInPortal = 0;
 					this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
 					this.thePlayer.changeDimension(transferDimension, new TeleporterAether(true, server.getWorld(transferDimension)));
 				}
