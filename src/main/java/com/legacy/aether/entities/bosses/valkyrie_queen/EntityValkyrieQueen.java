@@ -273,44 +273,47 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 		}
 		else
 		{
-			if (this.getAttackTarget() instanceof EntityPlayer)
+			if (this.getAttackTarget() != null)
 			{
-				EntityPlayer target = (EntityPlayer) this.getAttackTarget();
-
-				if (target != null)
+				if (this.getAttackTarget() instanceof EntityPlayer)
 				{
-					if (target.posY > this.posY)
-					{
-						timeUntilTeleportToPlayer++;
+					EntityPlayer target = (EntityPlayer) this.getAttackTarget();
 
-						if (timeUntilTeleportToPlayer >= 75 && !this.world.isRemote)
-						{
-							this.teleportToPlayer();
-						}
-					}
-					else
+					if (target != null)
 					{
-						timeUntilTeleportToPlayer = 0;
-					}
+						if (target.posY > this.posY)
+						{
+							timeUntilTeleportToPlayer++;
 
-					if (this.timeUntilTeleport++ >= 450)
-					{
-						if (this.onGround && this.rand.nextInt(5) == 0)
-						{
-							this.makeHomeShot(1, target);
+							if (timeUntilTeleportToPlayer >= 75 && !this.world.isRemote)
+							{
+								this.teleportToPlayer();
+							}
 						}
-						else if (!this.world.isRemote)
+						else
 						{
-							this.teleport(this.safeX, this.safeY, this.safeZ, 4);
+							timeUntilTeleportToPlayer = 0;
 						}
-					}
-					else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D)))
-					{
-						this.timeUntilTeleport = 446;
-					}
-					else if ((this.timeUntilTeleport % 5) == 0 && !this.canEntityBeSeen(target))
-					{
-						this.timeUntilTeleport += 100;
+
+						if (this.timeUntilTeleport++ >= 450)
+						{
+							if (this.onGround && this.rand.nextInt(5) == 0)
+							{
+								this.makeHomeShot(1, target);
+							}
+							else if (!this.world.isRemote)
+							{
+								this.teleport(this.safeX, this.safeY, this.safeZ, 4);
+							}
+						}
+						else if (this.timeUntilTeleport < 446 && (this.posY <= 0D || this.posY <= (this.safeY - 16D)))
+						{
+							this.timeUntilTeleport = 446;
+						}
+						else if ((this.timeUntilTeleport % 5) == 0 && !this.canEntityBeSeen(target))
+						{
+							this.timeUntilTeleport += 100;
+						}
 					}
 				}
 			}
