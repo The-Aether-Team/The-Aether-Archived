@@ -105,7 +105,7 @@ public class PlayerAether implements IPlayerAether
 
 		this.donatorMoaSkin = new DonatorMoaSkin();
 		this.accessories = new InventoryAccessories(player);
-		this.reachModifier = new AttributeModifier(this.extendedReachUUID, "Aether Reach Modifier", 5.0D, 0);
+		this.reachModifier = new AttributeModifier(this.extendedReachUUID, "Aether Reach Modifier", 3.0D, 0);
 
 		this.abilities.addAll(Arrays.<IAetherAbility>asList(new AbilityArmor(this), new AbilityAccessories(this), new AbilityFlight(this), new AbilityRepulsion(this)));
 	}

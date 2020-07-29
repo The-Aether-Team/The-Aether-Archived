@@ -32,7 +32,7 @@ public class FlyingCowWingLayer implements LayerRenderer<EntityFlyingCow>
 	@Override
 	public boolean shouldCombineTextures() 
 	{
-		return false;
+		return true;
 	}
 
 }

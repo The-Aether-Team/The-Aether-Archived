@@ -33,7 +33,7 @@ public class PhygWingLayer implements LayerRenderer<EntityPhyg>
 	@Override
 	public boolean shouldCombineTextures()
 	{
-		return false;
+		return true;
 	}
 
 }

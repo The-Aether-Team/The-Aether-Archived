@@ -468,7 +468,21 @@ public class AetherEventHandler
 		EntityPlayer player = event.getEntityPlayer();
 		ItemStack stack = event.getItemStack();
 
-		if (isValkyrieItem(event.getItemStack().getItem()))
+		handleExtendedReach(player, stack);
+	}
+
+	@SubscribeEvent
+	public void interact(PlayerInteractEvent.LeftClickBlock event)
+	{
+		EntityPlayer player = event.getEntityPlayer();
+		ItemStack stack = event.getItemStack();
+
+		handleExtendedReach(player, stack);
+	}
+
+	private void handleExtendedReach(EntityPlayer player, ItemStack stack)
+	{
+		if (isValkyrieItem(stack.getItem()))
 		{
 			Vec3d playerVision = player.getLookVec();
 			AxisAlignedBB reachDistance = player.getEntityBoundingBox().grow(10.0D);

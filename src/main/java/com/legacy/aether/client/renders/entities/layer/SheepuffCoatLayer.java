@@ -75,7 +75,7 @@ public class SheepuffCoatLayer implements LayerRenderer<EntitySheepuff>
 	@Override
 	public boolean shouldCombineTextures()
 	{
-		return false;
+		return true;
 	}
 
 }
