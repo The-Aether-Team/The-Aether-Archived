@@ -252,10 +252,6 @@ public class PlayerAether implements IPlayerAether {
 			if (this.portalCounter < 0) {
 				this.portalCounter = 0;
 			}
-
-			if (this.getEntity().timeUntilPortal > 0) {
-				--this.getEntity().timeUntilPortal;
-			}
 		}
 
 		this.getEntity().worldObj.theProfiler.endSection();
