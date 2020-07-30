@@ -284,16 +284,7 @@ public class PlayerAether implements IPlayerAether
 					this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
 				}
 
-				if (this.thePlayer.world.getBlockState(this.thePlayer.getPosition().down()).getBlock() != Blocks.AIR)
-				{
-					AxisAlignedBB playerBounding = this.thePlayer.getEntityBoundingBox();
-
-					if (this.thePlayer.world.getBlockState(new BlockPos(playerBounding.minX, playerBounding.minY, playerBounding.minZ)).getBlock() != BlocksAether.aether_portal
-							&& this.thePlayer.world.getBlockState(new BlockPos(playerBounding.minX, playerBounding.minY, playerBounding.minZ)).getBlock() != BlocksAether.aether_portal)
-					{
-						this.inPortal = false;
-					}
-				}
+				this.inPortal = false;
 			}
 			else
 			{
