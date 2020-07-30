@@ -398,70 +398,6 @@ AetherEventHandler {
 		}
 	}
 
-	@SubscribeEvent
-	public void onLeftClick(InputEvent.MouseInputEvent event)
-	{
-		if (Mouse.getEventButton() == 0)
-		{
-			if (Mouse.getEventButtonState())
-			{
-				EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-				ItemStack stack = player.getHeldItem();
-
-				if (stack != null)
-				{
-					if (isValkyrieItem(stack.getItem()))
-					{
-						Vec3 playerVision = player.getLookVec();
-						AxisAlignedBB reachDistance = player.boundingBox.expand(10.0D, 10.0D, 10.0D);
-
-						List<Entity> locatedEntities = player.worldObj.getEntitiesWithinAABB(Entity.class, reachDistance);
-
-						Entity found = null;
-						double foundLen = 0.0D;
-
-						for (Object o : locatedEntities) {
-							if (o == player) {
-								continue;
-							}
-
-							Entity ent = (Entity) o;
-
-							if (!ent.canBeCollidedWith()) {
-								continue;
-							}
-
-							Vec3 vec = Vec3.createVectorHelper(ent.posX - player.posX, ent.boundingBox.minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
-							double len = vec.lengthVector();
-
-							if (len > 8.0F) {
-								continue;
-							}
-
-							vec = vec.normalize();
-							double dot = playerVision.dotProduct(vec);
-
-							if (dot < 1.0 - 0.125 / len || !player.canEntityBeSeen(ent)) {
-								continue;
-							}
-
-							if (foundLen == 0.0 || len < foundLen) {
-								found = ent;
-								foundLen = len;
-							}
-						}
-
-						if (found != null && player.ridingEntity != found) {
-							stack.damageItem(1, player);
-
-							AetherNetwork.sendToServer(new PacketExtendedAttack(found.getEntityId()));
-						}
-					}
-				}
-			}
-		}
-	}
-
 	private void performTimeSet(PlayerWakeUpEvent event, World world, WorldServer worldServer)
 	{
 		if (world.getGameRules().getGameRuleBooleanValue("doDaylightCycle") && event.entityPlayer.isPlayerFullyAsleep())
@@ -472,10 +408,5 @@ AetherEventHandler {
 
 			PlayerAether.get(event.entityPlayer).setBedLocation(event.entityPlayer.getBedLocation(AetherConfig.getAetherDimensionID()));
 		}
-	}
-
-	public boolean isValkyrieItem(Item stackID)
-	{
-		return stackID == ItemsAether.valkyrie_shovel || stackID == ItemsAether.valkyrie_axe || stackID == ItemsAether.valkyrie_pickaxe || stackID == ItemsAether.valkyrie_lance;
 	}
 }

@@ -19,6 +19,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -195,8 +196,6 @@ public class PlayerAether implements IPlayerAether {
 
 		this.getEntity().worldObj.theProfiler.startSection("portal");
 
-		int i = this.getEntity().getMaxInPortalTime();
-
 		if (this.getEntity().dimension == AetherConfig.getAetherDimensionID()) {
 			if (this.getEntity().posY < -2) {
 				this.teleportPlayer(false);
@@ -210,17 +209,41 @@ public class PlayerAether implements IPlayerAether {
 		}
 
 		if (this.inPortal) {
-			if (this.getEntity().ridingEntity == null && this.portalCounter++ >= i) {
-				this.portalCounter = i;
-				this.getEntity().timeUntilPortal = this.getEntity().getPortalCooldown();
+			if (this.getEntity().timeUntilPortal <= 0) {
+				int limit = this.getEntity().getMaxInPortalTime();
 
-				if (!this.getEntity().worldObj.isRemote) {
-					this.teleportPlayer(true);
-					this.getEntity().triggerAchievement(AchievementsAether.enter_aether);
+				if (this.getEntity().ridingEntity == null) {
+					if (this.portalCounter >= limit)
+					{
+						this.portalCounter = 0;
+						this.getEntity().timeUntilPortal = this.getEntity().getPortalCooldown();
+
+						if (!this.getEntity().worldObj.isRemote) {
+							this.teleportPlayer(true);
+							this.getEntity().triggerAchievement(AchievementsAether.enter_aether);
+						}
+					}
+					else
+					{
+						this.portalCounter++;
+					}
 				}
 			}
+			else
+			{
+				this.getEntity().timeUntilPortal = this.getEntity().getPortalCooldown();
+			}
 
-			this.inPortal = false;
+			if (this.getEntity().worldObj.getBlock((int) this.getEntity().posX, (int) this.getEntity().posY - 1, (int) this.getEntity().posZ) != Blocks.air)
+			{
+				AxisAlignedBB playerBounding = this.getEntity().boundingBox;
+
+				if (this.getEntity().worldObj.getBlock((int) playerBounding.minX, (int) playerBounding.minY, (int) playerBounding.minZ) != BlocksAether.aether_portal
+						&& this.getEntity().worldObj.getBlock((int) playerBounding.minX, (int) playerBounding.minY, (int) playerBounding.minZ) != BlocksAether.aether_portal)
+				{
+					this.inPortal = false;
+				}
+			}
 		} else {
 			if (this.portalCounter > 0) {
 				this.portalCounter -= 4;
@@ -229,10 +252,10 @@ public class PlayerAether implements IPlayerAether {
 			if (this.portalCounter < 0) {
 				this.portalCounter = 0;
 			}
-		}
 
-		if (this.getEntity().timeUntilPortal > 0) {
-			--this.getEntity().timeUntilPortal;
+			if (this.getEntity().timeUntilPortal > 0) {
+				--this.getEntity().timeUntilPortal;
+			}
 		}
 
 		this.getEntity().worldObj.theProfiler.endSection();
@@ -243,7 +266,7 @@ public class PlayerAether implements IPlayerAether {
 			double distance = this.getEntity().capabilities.isCreativeMode ? 5.0D : 4.5D;
 
 			if (stack != null && stack.getItem() instanceof ItemValkyrieTool) {
-				distance = 10.0D;
+				distance = 8.0D;
 			}
 
 			((EntityPlayerMP) this.getEntity()).theItemInWorldManager.setBlockReachDistance(distance);
@@ -300,18 +323,14 @@ public class PlayerAether implements IPlayerAether {
 
 	@Override
 	public void setInPortal() {
-		if (this.getEntity().timeUntilPortal > 0) {
-			this.getEntity().timeUntilPortal = this.getEntity().getPortalCooldown();
-		} else {
-			double d0 = this.getEntity().prevPosX - this.getEntity().posX;
-			double d1 = this.getEntity().prevPosZ - this.getEntity().posZ;
+		double d0 = this.getEntity().prevPosX - this.getEntity().posX;
+		double d1 = this.getEntity().prevPosZ - this.getEntity().posZ;
 
-			if (!this.getEntity().worldObj.isRemote && !this.inPortal) {
-				this.teleportDirection = Direction.getMovementDirection(d0, d1);
-			}
-
-			this.inPortal = true;
+		if (!this.getEntity().worldObj.isRemote && !this.inPortal) {
+			this.teleportDirection = Direction.getMovementDirection(d0, d1);
 		}
+
+		this.inPortal = true;
 	}
 
 	private void activateParachute()

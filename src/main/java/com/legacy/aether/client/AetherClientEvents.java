@@ -8,6 +8,7 @@ import com.legacy.aether.client.gui.button.*;
 import com.legacy.aether.client.gui.menu.AetherMainMenu;
 import com.legacy.aether.client.gui.menu.GuiMenuToggleButton;
 import com.legacy.aether.network.packets.PacketCapeChanged;
+import com.legacy.aether.network.packets.PacketExtendedAttack;
 import com.legacy.aether.network.packets.PacketPerkChanged;
 import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.EnumAetherPerkType;
@@ -21,10 +22,13 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
@@ -45,6 +49,7 @@ import com.legacy.aether.player.PlayerAether;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Mouse;
 
 public class AetherClientEvents {
 
@@ -67,6 +72,8 @@ public class AetherClientEvents {
 				if (mc.thePlayer != null && !(mc.thePlayer.movementInput instanceof AetherMovementInput)) {
 					mc.thePlayer.movementInput = new AetherMovementInput(mc, mc.gameSettings);
 				}
+
+				handleExtendedReach(mc);
 			}
 		}
 
@@ -81,6 +88,73 @@ public class AetherClientEvents {
 				}
 			}
 		}
+	}
+
+	private void handleExtendedReach(Minecraft mc)
+	{
+		EntityPlayer player = mc.thePlayer;
+
+		if (player != null) {
+			if (Mouse.getEventButton() == 0) {
+				if (Mouse.getEventButtonState()) {
+					ItemStack stack = player.getHeldItem();
+
+					if (stack != null) {
+						if (isValkyrieItem(stack.getItem())) {
+							Vec3 playerVision = player.getLookVec();
+							AxisAlignedBB reachDistance = player.boundingBox.expand(10.0D, 10.0D, 10.0D);
+
+							List<Entity> locatedEntities = player.worldObj.getEntitiesWithinAABB(Entity.class, reachDistance);
+
+							Entity found = null;
+							double foundLen = 0.0D;
+
+							for (Object o : locatedEntities) {
+								if (o == player) {
+									continue;
+								}
+
+								Entity ent = (Entity) o;
+
+								if (!ent.canBeCollidedWith()) {
+									continue;
+								}
+
+								Vec3 vec = Vec3.createVectorHelper(ent.posX - player.posX, ent.boundingBox.minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
+								double len = vec.lengthVector();
+
+								if (len > 8.0F) {
+									continue;
+								}
+
+								vec = vec.normalize();
+								double dot = playerVision.dotProduct(vec);
+
+								if (dot < 1.0 - 0.125 / len || !player.canEntityBeSeen(ent)) {
+									continue;
+								}
+
+								if (foundLen == 0.0 || len < foundLen) {
+									found = ent;
+									foundLen = len;
+								}
+							}
+
+							if (found != null && player.ridingEntity != found) {
+								stack.damageItem(1, player);
+
+								AetherNetwork.sendToServer(new PacketExtendedAttack(found.getEntityId()));
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public boolean isValkyrieItem(Item stackID)
+	{
+		return stackID == ItemsAether.valkyrie_shovel || stackID == ItemsAether.valkyrie_axe || stackID == ItemsAether.valkyrie_pickaxe || stackID == ItemsAether.valkyrie_lance;
 	}
 
 	@SubscribeEvent
