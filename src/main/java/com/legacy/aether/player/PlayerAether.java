@@ -306,11 +306,6 @@ public class PlayerAether implements IPlayerAether
                 {
                     this.timeInPortal -= 4;
                 }
-
-                if (this.thePlayer.timeUntilPortal > 0)
-                {
-                    --this.thePlayer.timeUntilPortal;
-                }
 			}
 		}
 	}
