@@ -7,11 +7,11 @@
 				{
 					"type": "item",
 					"weight": 1,
-					"name": "aether_legacy:aether_tune"
+					"name": "aether_legacy:zanite_ring"
 				},
 				{
 					"type": "item",
-					"weight": 19,
+					"weight": 14,
 					"name": "aether_legacy:ambrosium_torch",
 					"functions": [
 						{
