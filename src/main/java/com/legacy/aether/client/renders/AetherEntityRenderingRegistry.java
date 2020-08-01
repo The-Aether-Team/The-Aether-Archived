@@ -1,5 +1,6 @@
 package com.legacy.aether.client.renders;
 
+import com.legacy.aether.client.renders.entities.*;
 import com.legacy.aether.client.renders.entities.layer.LayerElytraAether;
 import com.legacy.aether.tile_entities.TileEntitySkyrootBed;
 import net.minecraft.client.Minecraft;
@@ -19,28 +20,6 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 import com.legacy.aether.blocks.BlocksAether;
-import com.legacy.aether.client.renders.entities.AechorPlantRenderer;
-import com.legacy.aether.client.renders.entities.AerbunnyRenderer;
-import com.legacy.aether.client.renders.entities.AerwhaleRenderer;
-import com.legacy.aether.client.renders.entities.CockatriceRenderer;
-import com.legacy.aether.client.renders.entities.FireMinionRenderer;
-import com.legacy.aether.client.renders.entities.FloatingBlockRenderer;
-import com.legacy.aether.client.renders.entities.FlyingCowRenderer;
-import com.legacy.aether.client.renders.entities.MimicRenderer;
-import com.legacy.aether.client.renders.entities.MiniCloudRenderer;
-import com.legacy.aether.client.renders.entities.MoaRenderer;
-import com.legacy.aether.client.renders.entities.ParachuteRenderer;
-import com.legacy.aether.client.renders.entities.PhygRenderer;
-import com.legacy.aether.client.renders.entities.SentryRenderer;
-import com.legacy.aether.client.renders.entities.SheepuffRenderer;
-import com.legacy.aether.client.renders.entities.SliderRenderer;
-import com.legacy.aether.client.renders.entities.SunSpiritRenderer;
-import com.legacy.aether.client.renders.entities.SwetRenderer;
-import com.legacy.aether.client.renders.entities.TNTPresentRenderer;
-import com.legacy.aether.client.renders.entities.ValkyrieQueenRenderer;
-import com.legacy.aether.client.renders.entities.ValkyrieRenderer;
-import com.legacy.aether.client.renders.entities.WhirlwindRenderer;
-import com.legacy.aether.client.renders.entities.ZephyrRenderer;
 import com.legacy.aether.client.renders.entities.layer.AccessoriesLayer;
 import com.legacy.aether.client.renders.entities.projectile.DartBaseRenderer;
 import com.legacy.aether.client.renders.entities.projectile.FireBallRenderer;
