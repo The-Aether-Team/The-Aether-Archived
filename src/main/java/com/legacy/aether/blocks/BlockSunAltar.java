@@ -46,13 +46,13 @@ public class BlockSunAltar extends Block
 
 				if (!aetherProvider.getIsEternalDay() && !aetherProvider.getShouldCycleCatchup())
 				{
-					if (server != null && ((server.isDedicatedServer() && server.getPlayerList().canSendCommands(player.getGameProfile())) || !server.isDedicatedServer()))
+					if (server != null && ((server.isDedicatedServer() && (server.getPlayerList().canSendCommands(player.getGameProfile())) || AetherConfig.gameplay_changes.sun_altar_multiplayer) || !server.isDedicatedServer()))
 					{
 						Aether.proxy.openSunAltar();
 					}
 					else if (world.isRemote)
 					{
-						if (player instanceof EntityPlayerSP && ((EntityPlayerSP)player).getPermissionLevel() > 3)
+						if (player instanceof EntityPlayerSP && (((EntityPlayerSP)player).getPermissionLevel() > 3 || AetherConfig.gameplay_changes.sun_altar_multiplayer))
 						{
 							Aether.proxy.openSunAltar();
 						}

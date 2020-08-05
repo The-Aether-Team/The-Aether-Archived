@@ -25,27 +25,11 @@ public class AetherConfig
 		@Config.Comment("Set the Dimension ID for the Aether.")
 		public int aether_dimension_id = 4;
 	}
-	
-	/*
-	 * public static class Biome
-	 * {
-	 * @Config.RangeInt(min=2, max=256)
-	 * @Config.RequiresMcRestart
-	 * @Config.Comment("Set the Biome ID for the Aether Highlands.")
-	 * public int aether_biome_id = 127;
-	 * }
-	 */
 
 	public static final WorldGenOptions world_gen = new WorldGenOptions();
 
 	public static class WorldGenOptions
 	{
-		/*
-		 * public final Christmas christmas_content = new Christmas();
-		 * public final TallGrass tall_grass = new TallGrass();
-		 * public final PinkAerclouds pink_aerclouds = new PinkAerclouds();
-		 */
-		
 		@Config.Comment("Enables natural christmas decor")
 		public boolean christmas_time = false;
 		
@@ -104,6 +88,9 @@ public class AetherConfig
 		
 		@Config.Comment("Disables startup loot when entering the Aether")
 		public boolean disable_startup_loot = false;
+
+		@Config.Comment("Removes the requirement for a player to be an operator to use the Sun Altar in multiplayer.")
+		public boolean sun_altar_multiplayer = false;
 		
 		//@Config.Comment("If disabed, the Sun Spirit's dialog will only show once per world.")
 		//public boolean repeat_sun_spirit_dialog = true;
