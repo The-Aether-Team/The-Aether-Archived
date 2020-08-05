@@ -29,6 +29,8 @@ public class AetherConfig {
 
 	private static int inebriation_id;
 
+	private static boolean sun_altar_multiplayer;
+
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
 
@@ -67,6 +69,8 @@ public class AetherConfig {
 		legacy_altar_name = config.get("Misc", "Changes whether the Altar should be named Enchanter or not.", false).getBoolean(false);
 
 		inebriation_id = config.get("Misc", "Sets the id for the Inebriation effect.", 31).getInt(31);
+
+		sun_altar_multiplayer = config.get("Gameplay", "Removes the requirement for a player to be an operator to use the Sun Altar in multiplayer.", false).getBoolean(false);
 
 		config.save();
 	}
@@ -138,5 +142,9 @@ public class AetherConfig {
 	public static int getInebriationId()
 	{
 		return AetherConfig.inebriation_id;
+	}
+
+	public static boolean sunAltarMultiplayer() {
+		return AetherConfig.sun_altar_multiplayer;
 	}
 }
