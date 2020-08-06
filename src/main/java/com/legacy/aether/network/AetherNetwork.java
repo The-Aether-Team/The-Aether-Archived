@@ -49,6 +49,8 @@ public class AetherNetwork {
 		INSTANCE.registerMessage(PacketCapeChanged.class, PacketCapeChanged.class, discriminant++, Side.CLIENT);
 
 		INSTANCE.registerMessage(PacketExtendedAttack.class, PacketExtendedAttack.class, discriminant++, Side.SERVER);
+
+		INSTANCE.registerMessage(PacketSendSeenDialogue.class, PacketSendSeenDialogue.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message) {

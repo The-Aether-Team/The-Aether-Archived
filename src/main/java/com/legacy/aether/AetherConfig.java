@@ -29,7 +29,7 @@ public class AetherConfig {
 
 	private static int inebriation_id;
 
-	private static boolean sun_altar_multiplayer;
+	private static boolean sun_altar_multiplayer, repeat_sun_spirit_dialog;
 
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
@@ -71,6 +71,8 @@ public class AetherConfig {
 		inebriation_id = config.get("Misc", "Sets the id for the Inebriation effect.", 31).getInt(31);
 
 		sun_altar_multiplayer = config.get("Gameplay", "Removes the requirement for a player to be an operator to use the Sun Altar in multiplayer.", false).getBoolean(false);
+
+		repeat_sun_spirit_dialog = config.get("Misc", "If disabed, the Sun Spirit's dialog will only show once per world.", true).getBoolean(true);
 
 		config.save();
 	}
@@ -146,5 +148,9 @@ public class AetherConfig {
 
 	public static boolean sunAltarMultiplayer() {
 		return AetherConfig.sun_altar_multiplayer;
+	}
+
+	public static boolean repeatSunSpiritDialogue() {
+		return repeat_sun_spirit_dialog;
 	}
 }

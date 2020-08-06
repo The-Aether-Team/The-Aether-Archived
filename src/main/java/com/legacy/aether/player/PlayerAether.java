@@ -10,6 +10,7 @@ import com.legacy.aether.network.AetherNetwork;
 import com.legacy.aether.network.packets.PacketCapeChanged;
 import com.legacy.aether.network.packets.PacketPerkChanged;
 import com.legacy.aether.network.packets.PacketSendPoisonTime;
+import com.legacy.aether.network.packets.PacketSendSeenDialogue;
 import com.legacy.aether.player.perks.AetherRankings;
 import com.legacy.aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
@@ -67,6 +68,8 @@ public class PlayerAether implements IPlayerAether {
 
 	public boolean shouldRenderHalo, shouldRenderGlow, shouldRenderCape;
 
+	public boolean seenSpiritDialog = false;
+
 	private boolean isJumping;
 
 	private boolean isMountSneaking;
@@ -121,6 +124,7 @@ public class PlayerAether implements IPlayerAether {
 			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Glow, this.shouldRenderGlow));
 			AetherNetwork.sendToAll(new PacketCapeChanged(this.getEntity().getEntityId(), this.shouldRenderCape));
 			AetherNetwork.sendToAll(new PacketSendPoisonTime(this.getEntity(), this.poisonTime));
+			AetherNetwork.sendToAll(new PacketSendSeenDialogue(this.getEntity(), this.seenSpiritDialog));
 		}
 
 		if (this.isPoisoned)
@@ -445,6 +449,7 @@ public class PlayerAether implements IPlayerAether {
 		aetherTag.setBoolean("cape", this.shouldRenderCape);
 		aetherTag.setInteger("shardCount", this.shardCount);
 		aetherTag.setTag("accessories", this.getAccessoryInventory().writeToNBT(aetherTag));
+		aetherTag.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
 
 		if (this.bedLocation != null)
 		{
@@ -483,6 +488,11 @@ public class PlayerAether implements IPlayerAether {
 		if (aetherTag.hasKey("poison_time"))
 		{
 			this.poisonTime = aetherTag.getInteger("poison_time");
+		}
+
+		if (aetherTag.hasKey("seen_spirit_dialog"))
+		{
+			this.seenSpiritDialog = aetherTag.getBoolean("seen_spirit_dialog");
 		}
 
 		this.updateShardCount(aetherTag.getInteger("shardCount"));

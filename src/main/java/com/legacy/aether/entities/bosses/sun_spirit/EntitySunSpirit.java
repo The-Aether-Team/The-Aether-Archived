@@ -2,6 +2,8 @@ package com.legacy.aether.entities.bosses.sun_spirit;
 
 import java.util.List;
 
+import com.legacy.aether.AetherConfig;
+import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.world.AetherData;
 import com.legacy.aether.world.AetherWorldProvider;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -376,7 +378,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
     private void chatLine(EntityPlayer player, String s) {
         Side side = FMLCommonHandler.instance().getEffectiveSide();
 
-        if (this.chatCount <= 0) {
+        if (this.chatCount <= 0 || (!AetherConfig.repeatSunSpiritDialogue() && ((PlayerAether) AetherAPI.get(player)).seenSpiritDialog)) {
             if (side == Side.CLIENT)
             {
                 Aether.proxy.sendMessage(player, s);
@@ -386,37 +388,55 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
 
     public boolean chatWithMe(EntityPlayer entityPlayer) {
         if (this.chatCount <= 0) {
-            if (this.getChatLine() == 0) {
-                this.chatLine(entityPlayer, "\u00a7cYou are certainly a brave soul to have entered this chamber.");
-                this.setChatLine(1);
-            } else if (this.getChatLine() == 1) {
-                this.chatLine(entityPlayer, "\u00a7cBegone human, you serve no purpose here.");
-                this.setChatLine(2);
-            } else if (this.getChatLine() == 2) {
-                this.chatLine(entityPlayer, "\u00a7cYour presence annoys me. Do you not fear my burning aura?");
-                this.setChatLine(3);
-            } else if (this.getChatLine() == 3) {
-                this.chatLine(entityPlayer, "\u00a7cI have nothing to offer you, fool. Leave me at peace.");
-                this.setChatLine(4);
-            } else if (this.getChatLine() == 4) {
-                this.chatLine(entityPlayer, "\u00a7cPerhaps you are ignorant. Do you wish to know who I am?");
-                this.setChatLine(5);
-            } else if (this.getChatLine() == 5) {
-                this.chatLine(entityPlayer, "\u00a7cI am a sun spirit, embodiment of Aether's eternal daylight. As ");
-                this.chatLine(entityPlayer, "\u00a7clong as I am alive, the sun will never set on this world.");
-                this.setChatLine(6);
-            } else if (this.getChatLine() == 6) {
-                this.chatLine(entityPlayer, "\u00a7cMy body burns with the anger of a thousand beasts. No man, ");
-                this.chatLine(entityPlayer, "\u00a7chero, or villain can harm me. You are no exception.");
-                this.setChatLine(7);
-            } else if (this.getChatLine() == 7) {
-                this.chatLine(entityPlayer, "\u00a7cYou wish to challenge the might of the sun? You are mad. ");
-                this.chatLine(entityPlayer, "\u00a7cDo not further insult me or you will feel my wrath.");
-                this.setChatLine(8);
-            } else if (this.getChatLine() == 8) {
-                this.chatLine(entityPlayer, "\u00a7cThis is your final warning. Leave now, or prepare to burn.");
+            if (!AetherConfig.repeatSunSpiritDialogue() && !((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
+            {
+                if (this.getChatLine() == 0) {
+                    this.chatLine(entityPlayer, "\u00a7cYou are certainly a brave soul to have entered this chamber.");
+                    this.setChatLine(1);
+                } else if (this.getChatLine() == 1) {
+                    this.chatLine(entityPlayer, "\u00a7cBegone human, you serve no purpose here.");
+                    this.setChatLine(2);
+                } else if (this.getChatLine() == 2) {
+                    this.chatLine(entityPlayer, "\u00a7cYour presence annoys me. Do you not fear my burning aura?");
+                    this.setChatLine(3);
+                } else if (this.getChatLine() == 3) {
+                    this.chatLine(entityPlayer, "\u00a7cI have nothing to offer you, fool. Leave me at peace.");
+                    this.setChatLine(4);
+                } else if (this.getChatLine() == 4) {
+                    this.chatLine(entityPlayer, "\u00a7cPerhaps you are ignorant. Do you wish to know who I am?");
+                    this.setChatLine(5);
+                } else if (this.getChatLine() == 5) {
+                    this.chatLine(entityPlayer, "\u00a7cI am a sun spirit, embodiment of Aether's eternal daylight. As ");
+                    this.chatLine(entityPlayer, "\u00a7clong as I am alive, the sun will never set on this world.");
+                    this.setChatLine(6);
+                } else if (this.getChatLine() == 6) {
+                    this.chatLine(entityPlayer, "\u00a7cMy body burns with the anger of a thousand beasts. No man, ");
+                    this.chatLine(entityPlayer, "\u00a7chero, or villain can harm me. You are no exception.");
+                    this.setChatLine(7);
+                } else if (this.getChatLine() == 7) {
+                    this.chatLine(entityPlayer, "\u00a7cYou wish to challenge the might of the sun? You are mad. ");
+                    this.chatLine(entityPlayer, "\u00a7cDo not further insult me or you will feel my wrath.");
+                    this.setChatLine(8);
+                } else if (this.getChatLine() == 8) {
+                    this.chatLine(entityPlayer, "\u00a7cThis is your final warning. Leave now, or prepare to burn.");
+                    this.setChatLine(9);
+                } else {
+                    if (this.getChatLine() == 9) {
+                        this.chatLine(entityPlayer, "\u00a76As you wish, your death will be slow and agonizing.");
+                        this.setChatLine(10);
+                        return true;
+                    }
+
+                    if (this.getChatLine() == 10 && this.getAttackTarget() == null) {
+                        this.chatLine(entityPlayer, "\u00a7cDid your previous death not satisfy your curiosity, human?");
+                        this.setChatLine(9);
+                    }
+                }
+            }
+            else if (!AetherConfig.repeatSunSpiritDialogue() && ((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
+            {
                 this.setChatLine(9);
-            } else {
+
                 if (this.getChatLine() == 9) {
                     this.chatLine(entityPlayer, "\u00a76As you wish, your death will be slow and agonizing.");
                     this.setChatLine(10);
