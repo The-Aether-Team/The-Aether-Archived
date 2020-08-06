@@ -92,8 +92,8 @@ public class AetherConfig
 		@Config.Comment("Removes the requirement for a player to be an operator to use the Sun Altar in multiplayer.")
 		public boolean sun_altar_multiplayer = false;
 		
-		//@Config.Comment("If disabed, the Sun Spirit's dialog will only show once per world.")
-		//public boolean repeat_sun_spirit_dialog = true;
+		@Config.Comment("If disabed, the Sun Spirit's dialog will only show once per world.")
+		public boolean repeat_sun_spirit_dialog = true;
 	}
 
 	@Mod.EventBusSubscriber(modid = Aether.modid)

@@ -3,6 +3,7 @@ package com.legacy.aether.entities.bosses.sun_spirit;
 import java.util.List;
 
 import com.legacy.aether.Aether;
+import com.legacy.aether.AetherConfig;
 import com.legacy.aether.advancements.AetherAdvancements;
 import com.legacy.aether.api.AetherAPI;
 import com.legacy.aether.api.player.IPlayerAether;
@@ -15,6 +16,7 @@ import com.legacy.aether.entities.projectile.crystals.EntityFireBall;
 import com.legacy.aether.entities.projectile.crystals.EntityIceyBall;
 import com.legacy.aether.entities.util.AetherNameGen;
 import com.legacy.aether.items.ItemsAether;
+import com.legacy.aether.player.PlayerAether;
 import com.legacy.aether.registry.sounds.SoundsAether;
 
 import com.legacy.aether.world.AetherWorldProvider;
@@ -443,9 +445,11 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     private void chatLine(EntityPlayer player, ITextComponent s)
     {
         Side side = FMLCommonHandler.instance().getEffectiveSide();
+        IPlayerAether playerAether = AetherAPI.getInstance().get(player);
 
-        if (this.chatCount <= 0)
+        if (this.chatCount <= 0 || (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && ((PlayerAether)playerAether).seenSpiritDialog))
         {
+            System.out.println("chat");
             if (side.isClient())
             {
                 Aether.proxy.sendMessage(player, s);
@@ -455,63 +459,80 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
     public boolean chatWithMe(EntityPlayer entityPlayer)
     {
-        //IPlayerAether playerAether = AetherAPI.getInstance().get(entityPlayer);
+        IPlayerAether playerAether = AetherAPI.getInstance().get(entityPlayer);
         
         if (this.chatCount <= 0)
         {
-        	//if (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && !((PlayerAether)playerAether).seenSpiritDialog)
-        	//{
-            if (this.getChatLine() == 0)
-            {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line0").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.setChatLine(1);
+        	if (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && !((PlayerAether)playerAether).seenSpiritDialog)
+        	{
+                if (this.getChatLine() == 0)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line0").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(1);
+                }
+                else if (this.getChatLine() == 1)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line1").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(2);
+                }
+                else if (this.getChatLine() == 2)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line2").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(3);
+                }
+                else if (this.getChatLine() == 3)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line3").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(4);
+                }
+                else if (this.getChatLine() == 4)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line4").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(5);
+                }
+                else if (this.getChatLine() == 5)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line5.1").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line5.2").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(6);
+                }
+                else if (this.getChatLine() == 6)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line6.1").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line6.2").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(7);
+                }
+                else if (this.getChatLine() == 7)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line7.1").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line7.2").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(8);
+                }
+                else if (this.getChatLine() == 8)
+                {
+                    this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line8").setStyle(new Style().setColor(TextFormatting.RED)));
+                    this.setChatLine(9);
+                }
+                else
+                {
+                    if (this.getChatLine() == 9)
+                    {
+                        this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line9").setStyle(new Style().setColor(TextFormatting.GOLD)));
+                        this.setChatLine(10);
+                        return true;
+                    }
+
+                    if (this.getChatLine() == 10 && this.getAttackTarget() == null)
+                    {
+                        this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line10").setStyle(new Style().setColor(TextFormatting.RED)));
+                        this.setChatLine(9);
+                    }
+                }
             }
-            else if (this.getChatLine() == 1)
+        	else if (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && ((PlayerAether)playerAether).seenSpiritDialog)
             {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line1").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.setChatLine(2);
-            }
-            else if (this.getChatLine() == 2)
-            {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line2").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.setChatLine(3);
-            }
-            else if (this.getChatLine() == 3)
-            {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line3").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.setChatLine(4);
-            }
-            else if (this.getChatLine() == 4)
-            {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line4").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.setChatLine(5);
-            }
-            else if (this.getChatLine() == 5)
-            {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line5.1").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line5.2").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.setChatLine(6);
-            }
-            else if (this.getChatLine() == 6)
-            {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line6.1").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line6.2").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.setChatLine(7);
-            }
-            else if (this.getChatLine() == 7)
-            {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line7.1").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line7.2").setStyle(new Style().setColor(TextFormatting.RED)));
-                this.setChatLine(8);
-            }
-            else if (this.getChatLine() == 8)
-            {
-                this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line8").setStyle(new Style().setColor(TextFormatting.RED)));
                 this.setChatLine(9);
-            }
-        	//}
-            else
-            {
+
                 if (this.getChatLine() == 9)
                 {
                     this.chatLine(entityPlayer, new TextComponentTranslation("gui.spirit.line9").setStyle(new Style().setColor(TextFormatting.GOLD)));
@@ -538,8 +559,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
             this.setAttackTarget(player);
             this.setDoor(BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Hellfire));
 
+            IPlayerAether playerAether = AetherAPI.getInstance().get(player);
+            ((PlayerAether) playerAether).seenSpiritDialog = true;
+
             return true;
-                
         }
         else
         {

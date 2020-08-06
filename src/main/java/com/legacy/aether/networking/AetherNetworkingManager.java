@@ -51,6 +51,8 @@ public class AetherNetworkingManager
 
 		INSTANCE.registerMessage(PacketGlovesChanged.class, PacketGlovesChanged.class, discriminant++, Side.SERVER);
 		INSTANCE.registerMessage(PacketGlovesChanged.class, PacketGlovesChanged.class, discriminant++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketSendSeenDialogue.class, PacketSendSeenDialogue.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message)
