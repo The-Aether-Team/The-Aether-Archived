@@ -449,7 +449,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
         if (this.chatCount <= 0 || (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && ((PlayerAether)playerAether).seenSpiritDialog))
         {
-            System.out.println("chat");
             if (side.isClient())
             {
                 Aether.proxy.sendMessage(player, s);

@@ -124,8 +124,6 @@ public class PlayerAether implements IPlayerAether
 			AetherNetworkingManager.sendToAll(new PacketSendSeenDialogue(this.getEntity(), this.seenSpiritDialog));
 		}
 
-		System.out.println("s: " + this.seenSpiritDialog);
-
 		if (this.isPoisoned)
 		{
 			if (poisonTime > 0)
