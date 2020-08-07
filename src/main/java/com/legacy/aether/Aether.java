@@ -50,6 +50,7 @@ public class Aether
 		CapabilityManager.INSTANCE.register(IPlayerAether.class, new IPlayerAetherStorage(), () -> null);
 
 		BlocksAether.initialization();
+		BlocksAether.initializeHarvestLevels();
 		SoundsAether.initialization();
 		LootConditionsAether.initialization();
 		LootFunctionsAether.initialization();

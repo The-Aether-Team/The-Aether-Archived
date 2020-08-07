@@ -24,7 +24,7 @@ public enum EnumAetherToolType
 			Blocks.LAPIS_ORE, Blocks.LAPIS_BLOCK, Blocks.REDSTONE_ORE, Blocks.LIT_REDSTONE_ORE,
 			Blocks.RAIL, Blocks.DETECTOR_RAIL, Blocks.GOLDEN_RAIL, Blocks.ACTIVATOR_RAIL, Blocks.MOB_SPAWNER,
 			BlocksAether.holystone, BlocksAether.holystone_brick, BlocksAether.mossy_holystone,
-			BlocksAether.enchanter, BlocksAether.incubator, BlocksAether.enchanter, BlocksAether.ambrosium_ore,
+			BlocksAether.enchanter, BlocksAether.incubator, BlocksAether.freezer, BlocksAether.ambrosium_ore,
 			BlocksAether.icestone, BlocksAether.aerogel, BlocksAether.dungeon_block
 			}))
 			{
@@ -40,6 +40,10 @@ public enum EnumAetherToolType
 			else if (block == BlocksAether.gravitite_ore || block == BlocksAether.enchanted_gravitite)
 			{
 				return toolMaterial.getHarvestLevel() >= 2;
+			}
+			else if (block == BlocksAether.aerogel)
+			{
+				return toolMaterial.getHarvestLevel() == 3;
 			}
 
 			return block == Blocks.OBSIDIAN ? toolMaterial.getHarvestLevel() == 3 : (block != Blocks.DIAMOND_BLOCK && block != Blocks.DIAMOND_ORE ? (block != Blocks.EMERALD_ORE && block != Blocks.EMERALD_BLOCK ? (block != Blocks.GOLD_BLOCK && block != Blocks.GOLD_ORE ? (block != Blocks.IRON_BLOCK && block != Blocks.IRON_ORE ? (block != Blocks.LAPIS_BLOCK && block != Blocks.LAPIS_ORE ? (block != Blocks.REDSTONE_ORE && block != Blocks.LIT_REDSTONE_ORE ? (state.getMaterial() == Material.ROCK ? true : (state.getMaterial() == Material.IRON ? true : state.getMaterial() == Material.ANVIL)) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 1) : toolMaterial.getHarvestLevel() >= 1) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 2);

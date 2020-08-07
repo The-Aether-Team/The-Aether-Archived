@@ -181,7 +181,6 @@ public class BlocksAether
 		pillar_top = register("pillar_top", new BlockPillar());
 
 		skyroot_fence = register("skyroot_fence", new BlockAetherFence());
-
 		skyroot_fence_gate = register("skyroot_fence_gate", new BlockAetherFenceGate());
 
 		carved_wall = register("carved_wall", new BlockAetherWall(dungeon_block.getDefaultState()));
@@ -221,6 +220,72 @@ public class BlocksAether
 		sun_altar = register("sun_altar", new BlockSunAltar());
 		skyroot_bookshelf = register("skyroot_bookshelf", new BlockSkyrootBookshelf());
 		skyroot_bed = registerBed("skyroot_bed", new BlockSkyrootBed());
+	}
+
+	public static void initializeHarvestLevels()
+	{
+		BlocksAether.aether_grass.setHarvestLevel("shovel", 0);
+		BlocksAether.enchanted_aether_grass.setHarvestLevel("shovel", 0);
+		BlocksAether.aether_dirt.setHarvestLevel("shovel", 0);
+		BlocksAether.holystone.setHarvestLevel("pickaxe", 0);
+		BlocksAether.mossy_holystone.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_brick.setHarvestLevel("pickaxe", 0);
+		BlocksAether.aercloud.setHarvestLevel("shovel", 0);
+		BlocksAether.quicksoil.setHarvestLevel("shovel", 0);
+		BlocksAether.icestone.setHarvestLevel("pickaxe", 1);
+		BlocksAether.ambrosium_ore.setHarvestLevel("pickaxe", 0);
+		BlocksAether.zanite_ore.setHarvestLevel("pickaxe", 1);
+		BlocksAether.gravitite_ore.setHarvestLevel("pickaxe", 2);
+		BlocksAether.aether_log.setHarvestLevel("axe", 0);
+		BlocksAether.skyroot_plank.setHarvestLevel("axe", 0);
+		BlocksAether.aerogel.setHarvestLevel("pickaxe", 3);
+		BlocksAether.enchanted_gravitite.setHarvestLevel("pickaxe", 2);
+		BlocksAether.zanite_block.setHarvestLevel("pickaxe", 1);
+		BlocksAether.berry_bush_stem.setHarvestLevel("axe", 0);
+		BlocksAether.enchanter.setHarvestLevel("pickaxe", 0);
+		BlocksAether.freezer.setHarvestLevel("pickaxe", 0);
+		BlocksAether.incubator.setHarvestLevel("pickaxe", 0);
+		BlocksAether.dungeon_block.setHarvestLevel("pickaxe", 0);
+		BlocksAether.chest_mimic.setHarvestLevel("axe", 0);
+		BlocksAether.pillar.setHarvestLevel("pickaxe", 0);
+		BlocksAether.pillar_top.setHarvestLevel("pickaxe", 0);
+		BlocksAether.skyroot_fence.setHarvestLevel("axe", 0);
+		BlocksAether.skyroot_fence_gate.setHarvestLevel("axe", 0);
+		BlocksAether.carved_wall.setHarvestLevel("pickaxe", 0);
+		BlocksAether.angelic_wall.setHarvestLevel("pickaxe", 0);
+		BlocksAether.angelic_wall.setHarvestLevel("pickaxe", 0);
+		BlocksAether.hellfire_wall.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_wall.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_brick_wall.setHarvestLevel("pickaxe", 0);
+		BlocksAether.mossy_holystone_wall.setHarvestLevel("pickaxe", 0);
+		BlocksAether.aerogel_wall.setHarvestLevel("pickaxe", 0);
+		BlocksAether.carved_stairs.setHarvestLevel("pickaxe", 0);
+		BlocksAether.angelic_stairs.setHarvestLevel("pickaxe", 0);
+		BlocksAether.hellfire_stairs.setHarvestLevel("pickaxe", 0);
+		BlocksAether.skyroot_stairs.setHarvestLevel("axe", 0);
+		BlocksAether.mossy_holystone_stairs.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_stairs.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_brick_stairs.setHarvestLevel("pickaxe", 0);
+		BlocksAether.aerogel_stairs.setHarvestLevel("pickaxe", 0);
+		BlocksAether.skyroot_double_slab.setHarvestLevel("axe", 0);
+		BlocksAether.carved_double_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.angelic_double_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.hellfire_double_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_double_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.mossy_holystone_double_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_brick_double_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.aerogel_double_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.skyroot_slab.setHarvestLevel("axe", 0);
+		BlocksAether.carved_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.angelic_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.hellfire_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.mossy_holystone_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.holystone_brick_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.aerogel_slab.setHarvestLevel("pickaxe", 0);
+		BlocksAether.sun_altar.setHarvestLevel("pickaxe", 0);
+		BlocksAether.skyroot_bookshelf.setHarvestLevel("axe", 0);
+		BlocksAether.skyroot_bed.setHarvestLevel("axe", 0);
 	}
 
 	public static Block registerSlab(String name, Block slab1, Block slab2)
