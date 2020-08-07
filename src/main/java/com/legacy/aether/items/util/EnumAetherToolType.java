@@ -36,6 +36,9 @@ public enum EnumAetherToolType {
 			} else if (block == BlocksAether.gravitite_ore || block == BlocksAether.enchanted_gravitite) {
 				return toolMaterial.getHarvestLevel() >= 2;
 			}
+			else if (block == BlocksAether.aerogel) {
+				return toolMaterial.getHarvestLevel() == 3;
+			}
 
 			return block == Blocks.obsidian ? toolMaterial.getHarvestLevel() == 3 : (block != Blocks.diamond_block && block != Blocks.diamond_ore ? (block != Blocks.emerald_ore && block != Blocks.emerald_block ? (block != Blocks.gold_block && block != Blocks.gold_ore ? (block != Blocks.iron_block && block != Blocks.iron_ore ? (block != Blocks.lapis_block && block != Blocks.lapis_ore ? (block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore ? (state.getMaterial() == Material.rock ? true : (state.getMaterial() == Material.iron ? true : state.getMaterial() == Material.anvil)) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 1) : toolMaterial.getHarvestLevel() >= 1) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 2) : toolMaterial.getHarvestLevel() >= 2);
 		}

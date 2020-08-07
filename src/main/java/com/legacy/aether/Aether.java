@@ -43,6 +43,7 @@ public class Aether {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		BlocksAether.initialization();
+		BlocksAether.initializeHarvestLevels();
 		ItemsAether.initialization();
 		AetherRegistries.register();
 		EntitiesAether.initialization();
