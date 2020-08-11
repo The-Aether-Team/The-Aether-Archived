@@ -54,7 +54,7 @@ public class AetherClientEvents
 	private static boolean wasInAether = false;
 
 	@SubscribeEvent
-	public void onClientTick(TickEvent.ClientTickEvent event) throws Exception
+	public void onClientTick(TickEvent.ClientTickEvent event)
 	{
 		Minecraft mc = Minecraft.getMinecraft();
 		TickEvent.Phase phase = event.phase;

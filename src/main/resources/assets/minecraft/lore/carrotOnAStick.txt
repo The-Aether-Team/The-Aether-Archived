@@ -1,1 +1,0 @@
-Bait used to steer Pigs in any direction the stick is pointed at.
