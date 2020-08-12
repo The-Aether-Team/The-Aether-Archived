@@ -1,5 +1,6 @@
 package com.legacy.aether.inventory;
 
+import com.legacy.aether.inventory.slots.SlotLore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -14,7 +15,7 @@ public class ContainerLore extends Container {
 	public ContainerLore(InventoryPlayer inventory) {
 		this.loreSlot = new InventoryLore(inventory.player);
 
-		this.addSlotToContainer(new Slot(this.loreSlot, 0, 104, -4));
+		this.addSlotToContainer(new SlotLore(this.loreSlot, 0, 104, -4));
 
 		for (int j = 0; j < 3; ++j) {
 			for (int k = 0; k < 9; ++k) {
