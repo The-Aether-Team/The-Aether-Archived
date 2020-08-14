@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 public class AetherLogger
 {
-    public static final Logger log = LogManager.getLogger("[Aether Legacy]: ");
-    public static final Logger logDev = LogManager.getLogger("[Aether Legacy Developer]: ");
+    public static final Logger log = LogManager.getLogger("[Aether]: ");
+    public static final Logger logDev = LogManager.getLogger("[Aether Developer]: ");
 
     //Just what you'd expect.
     public static void print(Object message)

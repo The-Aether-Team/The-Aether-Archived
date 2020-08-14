@@ -435,7 +435,7 @@ death.attack.icey_ball=%1$s was chilled by %2$s's Icey Ball
 death.attack.lightning_ball=%1$s was zapped by %2$s's Thunder Ball
 
 # Config
-aether_legacy.config.title=Aether Legacy Configuration
+aether_legacy.config.title=Aether Configuration
 aether_legacy.general.dimension=Dimension Settings
 aether_legacy.general.gameplay_changes=Gameplay Changes
 aether_legacy.general.gameplay_changes.tooltip=These options affect gameplay, and how some of the content works.

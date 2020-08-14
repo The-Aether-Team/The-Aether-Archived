@@ -82,7 +82,7 @@ public class GuiAetherToast extends GuiToast
 		}
 		catch (Exception e)
 		{
-			System.out.println("Aether Legacy failed to add toast override. Will ignore.");
+			System.out.println("The Aether failed to add toast override. Will ignore.");
 		}
 	}
 
