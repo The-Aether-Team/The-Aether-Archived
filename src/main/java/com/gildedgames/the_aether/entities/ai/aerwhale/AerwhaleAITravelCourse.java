@@ -133,8 +133,6 @@ public class AerwhaleAITravelCourse extends EntityAIBase {
             this.aerwhale.motionZ = -this.aerwhale.motionZ;
             this.motionYaw += 10F;
         }
-
-        this.aerwhale.moveFlying((float) this.aerwhale.motionX, (float) this.aerwhale.motionY, (float) this.aerwhale.motionZ);
     }
 
     private int getCorrectCourse() {
