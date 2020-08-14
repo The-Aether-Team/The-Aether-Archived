@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import com.legacy.aether.blocks.BlocksAether;
 import com.legacy.aether.entities.ai.EntityAIUpdateState;
 
-public class EntityAerwhale extends EntityFlying implements IMob {
+public class EntityAerwhale extends EntityFlying {
 
 	private double motionYaw;
 
