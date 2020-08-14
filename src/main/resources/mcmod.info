@@ -2,13 +2,13 @@
 {
   "modid": "aether_legacy",
   "name": "The Aether",
-  "description": "The Aether, a port of Aether I which has been updated to the latest version of Minecraft. This version of the aether includes multiplayer support to play with friends and others alike.",
+  "description": "Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer! The Aether is a dimension high in the sky comprised of floating islands! Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons!",
   "version": "v1.5.0",
   "mcversion": "1.12.2",
-  "url": "https://www.moddinglegacy.com/",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/the-aether",
   "updateUrl": "",
-  "authorList": ["115kino, KingPhygieBoo, xJonL"],
-  "credits": "Gilded Games for allowing us permission to do this project, and InsomniaKitten for providing the inventory texture.",
+  "authorList": ["bconlon, Oscar Payn, Hugo Payn, JellySquid"],
+  "credits": "Credits go to the Aether Collaboration Team (Kingbdogz, Shockah, Kodaichi, Flan, and 303) for creating the original Aether mod, and credits go to Modding Legacy (115kino, KingPhygieBoo, and Lachney) for originally porting and developing the mod in newer versions. InsomniaKitten is also credited with providing the inventory texture.",
   "logoFile": "aether.png",
   "screenshots": [""],
   "dependencies": []
