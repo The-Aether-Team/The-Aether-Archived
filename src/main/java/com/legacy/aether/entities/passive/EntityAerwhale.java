@@ -23,7 +23,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class EntityAerwhale extends EntityFlying implements IMob
+public class EntityAerwhale extends EntityFlying
 {
 
 	private double motionYaw;
