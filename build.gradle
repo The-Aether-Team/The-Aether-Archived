@@ -12,9 +12,9 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'com.wynprice.cursemaven'
 
-version = "1.12.2-v1.4.4"
-group = "com.legacy.aether"
-archivesBaseName = "aether_legacy"
+version = "1.12.2-v1.5.0"
+group = "com.gildedgames.the_aether"
+archivesBaseName = "aether"
 
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {

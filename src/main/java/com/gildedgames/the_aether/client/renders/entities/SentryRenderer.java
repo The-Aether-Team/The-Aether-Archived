@@ -1,0 +1,36 @@
+package com.gildedgames.the_aether.client.renders.entities;
+
+import com.gildedgames.the_aether.client.renders.entities.layer.SentryLayer;
+import com.gildedgames.the_aether.entities.hostile.EntitySentry;
+import net.minecraft.client.model.ModelSlime;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+
+public class SentryRenderer extends RenderLiving<EntitySentry>
+{
+
+    private static final ResourceLocation TEXTURE = new ResourceLocation("aether_legacy", "textures/entities/sentry/sentry.png");
+
+    private static final ResourceLocation TEXTURE_LIT = new ResourceLocation("aether_legacy", "textures/entities/sentry/sentry_lit.png");
+
+	public SentryRenderer(RenderManager renderManager)
+    {
+        super(renderManager, new ModelSlime(0), 0.3F);
+        this.addLayer(new SentryLayer((ModelSlime) this.getMainModel()));
+    }
+
+    protected void preRenderCallback(EntitySentry entityliving, float f)
+    {
+        float f1 = 1.75F;
+        GL11.glScalef(f1, f1, f1);
+    }
+
+    protected ResourceLocation getEntityTexture(EntitySentry entity)
+    {
+        return !entity.isAwake() ? TEXTURE : TEXTURE_LIT;
+    }
+
+}
