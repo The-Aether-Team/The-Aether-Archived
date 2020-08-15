@@ -130,6 +130,7 @@ item.enchanted_blueberry.name=Enchanted Berry
 item.swetty_ball.name=Swet Ball
 item.developer_stick.name=Developer Stick
 item.skyroot_bed_item.name=Skyroot Bed
+item.aether_portal_frame.name=Aether Portal Frame
 
 # Block Names
 tile.aether_portal.name=Aether Portal
@@ -437,8 +438,11 @@ death.attack.lightning_ball=%1$s was zapped by %2$s's Thunder Ball
 # Config
 aether_legacy.config.title=Aether Configuration
 aether_legacy.general.dimension=Dimension Settings
+
 aether_legacy.general.gameplay_changes=Gameplay Changes
 aether_legacy.general.gameplay_changes.tooltip=These options affect gameplay, and how some of the content works.
+
+aether_legacy.general.gameplay_changes.aether_start=Aether Start
 aether_legacy.general.gameplay_changes.ambro_is_edible=Edible Ambrosium
 aether_legacy.general.gameplay_changes.max_life_shards=Maximum Life Shards
 aether_legacy.general.gameplay_changes.skyroot_bucket_only=Skyroot Bucket Only

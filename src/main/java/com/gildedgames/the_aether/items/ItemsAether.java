@@ -117,6 +117,8 @@ public class ItemsAether
 	public static Item developer_stick;
 
 	public static Item skyroot_bed_item;
+
+	public static Item aether_portal_frame;
 	
 	public static IForgeRegistry<Item> itemRegistry;
 
@@ -269,6 +271,8 @@ public class ItemsAether
 		developer_stick = register("developer_stick", new ItemDeveloperStick());
 
 		skyroot_bed_item = register("skyroot_bed_item", new ItemSkyrootBed());
+
+		aether_portal_frame = register("aether_portal_frame", new ItemAetherPortalFrame());
 	}
 
 	public static Item register(String name, Item item)

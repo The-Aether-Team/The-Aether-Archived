@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.player;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.advancements.AetherAdvancements;
 import com.gildedgames.the_aether.enchantment.AetherEnchantmentHelper;
 import net.minecraft.command.CommandBase;
@@ -183,6 +184,15 @@ public class PlayerAetherEvents
 		if (playerAether != null)
 		{
 			playerAether.getAccessoryInventory().markDirty();
+
+			if (!AetherConfig.gameplay_changes.aether_start)
+			{
+				((PlayerAether) playerAether).shouldGetPortal = false;
+			}
+			else
+			{
+				((PlayerAether) playerAether).givePortalFrame();
+			}
 		}
 	}
 

@@ -161,6 +161,8 @@ public class ItemRendering
 
 		register(ItemsAether.skyroot_bed_item, "skyroot_bed");
 
+		register(ItemsAether.aether_portal_frame, "aether_portal_frame");
+
 		registerDefinition(ItemsAether.phoenix_bow, new PhoenixBowDefinition());
 		registerDefinition(ItemsAether.notch_hammer, new NotchHammerDefinition());
 		registerDefinition(ItemsAether.candy_cane_sword, new CandyCaneSwordDefinition());

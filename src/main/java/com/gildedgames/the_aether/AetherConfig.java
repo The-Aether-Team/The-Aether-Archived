@@ -71,6 +71,9 @@ public class AetherConfig
 	
 	public static class GameplayChanges
 	{
+		@Config.Comment("Determines if the player will get an Aether Portal Frame item when first joining the world.")
+		public boolean aether_start = false;
+
 		@Config.Comment("The max amount of life shards that can be used per player")
 		public int max_life_shards = 10;
 		

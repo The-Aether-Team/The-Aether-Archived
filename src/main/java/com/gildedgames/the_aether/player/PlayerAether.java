@@ -87,6 +87,8 @@ public class PlayerAether implements IPlayerAether
 
 	public int poisonTime = 0, cureTime = 0;
 
+	public boolean shouldGetPortal;
+
 	public DonatorMoaSkin donatorMoaSkin;
 	
 	public List<Item> extendedReachItems = Arrays.asList(new Item[] {ItemsAether.valkyrie_shovel, ItemsAether.valkyrie_pickaxe, ItemsAether.valkyrie_axe});
@@ -101,6 +103,8 @@ public class PlayerAether implements IPlayerAether
 		this.shouldRenderGlow = false;
 		this.shouldRenderCape = true;
 		this.shouldRenderGloves = true;
+
+		this.shouldGetPortal = true;
 
 		this.donatorMoaSkin = new DonatorMoaSkin();
 		this.accessories = new InventoryAccessories(player);
@@ -119,6 +123,7 @@ public class PlayerAether implements IPlayerAether
 			AetherNetworkingManager.sendToAll(new PacketGlovesChanged(this.getEntity().getEntityId(), this.shouldRenderGloves));
 			AetherNetworkingManager.sendToAll(new PacketSendPoisonTime(this.getEntity(), this.poisonTime));
 			AetherNetworkingManager.sendToAll(new PacketSendSeenDialogue(this.getEntity(), this.seenSpiritDialog));
+			AetherNetworkingManager.sendToAll(new PacketPortalItem(this.getEntity(), this.seenSpiritDialog));
 		}
 
 		if (this.isPoisoned)
@@ -353,6 +358,7 @@ public class PlayerAether implements IPlayerAether
 		output.setBoolean("cape", this.shouldRenderCape);
 		output.setBoolean("gloves", this.shouldRenderGloves);
 		output.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
+		output.setBoolean("get_portal", this.shouldGetPortal);
 		output.setInteger("hammer_cooldown", this.cooldown);
 		output.setString("notch_hammer_name", this.cooldownName);
 		output.setInteger("max_hammer_cooldown", this.cooldownMax);
@@ -390,6 +396,11 @@ public class PlayerAether implements IPlayerAether
 		if (input.hasKey("seen_spirit_dialog"))
 		{
 			this.seenSpiritDialog = input.getBoolean("seen_spirit_dialog");
+		}
+
+		if (input.hasKey("get_portal"))
+		{
+			this.shouldGetPortal = input.getBoolean("get_portal");
 		}
 
 		if (input.hasKey("poisoned"))
@@ -759,5 +770,14 @@ public class PlayerAether implements IPlayerAether
 
 		this.isPoisoned = false;
 		this.poisonTime = 0;
+	}
+
+	public void givePortalFrame()
+	{
+		if (this.shouldGetPortal)
+		{
+			this.thePlayer.addItemStackToInventory(new ItemStack(ItemsAether.aether_portal_frame));
+			this.shouldGetPortal = false;
+		}
 	}
 }
