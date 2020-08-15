@@ -118,6 +118,8 @@ public class ItemsAether {
 
 	public static Item skyroot_bed_item;
 
+	public static Item aether_portal_frame;
+
 	public static void initialization() {
 		zanite_gemstone = register("zanite_gemstone", new ItemAether(AetherCreativeTabs.material).setTextureName(Aether.find("misc/zanite_gemstone")));
 		ambrosium_shard = register("ambrosium_shard", new ItemAmbrosiumShard().setTextureName(Aether.find("misc/ambrosium_shard")));
@@ -269,6 +271,7 @@ public class ItemsAether {
 
 		skyroot_bed_item = register("skyroot_bed_item", new ItemSkyrootBed().setTextureName(Aether.find("skyroot_bed_item")));
 
+		aether_portal_frame = register("aether_portal_frame", new ItemAetherPortalFrame().setTextureName(Aether.find("aether_portal_frame")));
 	}
 
 	public static Item register(String name, Item item) {

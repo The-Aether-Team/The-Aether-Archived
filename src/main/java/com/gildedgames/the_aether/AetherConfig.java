@@ -31,6 +31,8 @@ public class AetherConfig {
 
 	private static boolean sun_altar_multiplayer, repeat_sun_spirit_dialog;
 
+	private static boolean aether_start;
+
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
 
@@ -58,6 +60,8 @@ public class AetherConfig {
 		disable_trivia = config.get("Trivia", "Disable random trivia", false).getBoolean(false);
 
 		old_mobs = config.get("Misc", "Enable Legacy Visuals", false).getBoolean(false);
+
+		aether_start = config.get("Gameplay", "Spawns Player with Aether Portal Frame", false).getBoolean(false);
 
 		max_life_shards = config.get("Gameplay", "Max Life Shards", 10).getInt(10);
 
@@ -152,5 +156,10 @@ public class AetherConfig {
 
 	public static boolean repeatSunSpiritDialogue() {
 		return repeat_sun_spirit_dialog;
+	}
+
+	public static boolean shouldAetherStart()
+	{
+		return aether_start;
 	}
 }

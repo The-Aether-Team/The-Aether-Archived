@@ -130,6 +130,7 @@ item.enchanted_blueberry.name=Enchanted Berry
 item.swet_ball.name=Swet Ball
 item.developer_stick.name=Developer Stick
 item.skyroot_bed_item.name=Skyroot Bed
+item.aether_portal_frame.name=Aether Portal Frame
 
 # Block Names
 tile.aether_portal.name=Aether Portal

@@ -51,6 +51,7 @@ public class AetherNetwork {
 		INSTANCE.registerMessage(PacketExtendedAttack.class, PacketExtendedAttack.class, discriminant++, Side.SERVER);
 
 		INSTANCE.registerMessage(PacketSendSeenDialogue.class, PacketSendSeenDialogue.class, discriminant++, Side.CLIENT);
+		INSTANCE.registerMessage(PacketPortalItem.class, PacketPortalItem.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message) {

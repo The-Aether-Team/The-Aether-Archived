@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.player;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.inventory.InventoryAccessories;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.registry.achievements.AchievementsAether;
@@ -48,6 +49,15 @@ public class PlayerAetherEvents {
 
 			AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
 			playerAether.updateShardCount(playerAether.getShardsUsed());
+
+			if (!AetherConfig.shouldAetherStart())
+			{
+				playerAether.shouldGetPortal = false;
+			}
+			else
+			{
+				playerAether.givePortalFrame();
+			}
 		}
 	}
 

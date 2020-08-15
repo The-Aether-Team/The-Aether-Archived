@@ -11,13 +11,10 @@ import com.gildedgames.the_aether.api.player.util.IAetherAbility;
 import com.gildedgames.the_aether.api.player.util.IAetherBoss;
 import com.gildedgames.the_aether.entities.passive.mountable.EntityParachute;
 import com.gildedgames.the_aether.inventory.InventoryAccessories;
+import com.gildedgames.the_aether.network.packets.*;
 import com.gildedgames.the_aether.registry.achievements.AchievementsAether;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.network.AetherNetwork;
-import com.gildedgames.the_aether.network.packets.PacketCapeChanged;
-import com.gildedgames.the_aether.network.packets.PacketPerkChanged;
-import com.gildedgames.the_aether.network.packets.PacketSendPoisonTime;
-import com.gildedgames.the_aether.network.packets.PacketSendSeenDialogue;
 import com.gildedgames.the_aether.player.perks.AetherRankings;
 import com.gildedgames.the_aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
@@ -98,12 +95,15 @@ public class PlayerAether implements IPlayerAether {
 
 	public boolean isPoisoned = false, isCured = false;
 
+	public boolean shouldGetPortal;
+
 	public int poisonTime = 0, cureTime = 0;
 
 	public PlayerAether() {
 		this.shouldRenderHalo = true;
 		this.shouldRenderGlow = false;
 		this.shouldRenderCape = true;
+		this.shouldGetPortal = true;
 		this.abilities.addAll(Arrays.<IAetherAbility>asList(new AbilityAccessories(this), new AbilityArmor(this), new AbilityFlight(this), new AbilityRepulsion(this)));
 	}
 
@@ -125,6 +125,7 @@ public class PlayerAether implements IPlayerAether {
 			AetherNetwork.sendToAll(new PacketCapeChanged(this.getEntity().getEntityId(), this.shouldRenderCape));
 			AetherNetwork.sendToAll(new PacketSendPoisonTime(this.getEntity(), this.poisonTime));
 			AetherNetwork.sendToAll(new PacketSendSeenDialogue(this.getEntity(), this.seenSpiritDialog));
+			AetherNetwork.sendToAll(new PacketPortalItem(this.getEntity(), this.shouldGetPortal));
 		}
 
 		if (this.isPoisoned)
@@ -450,6 +451,7 @@ public class PlayerAether implements IPlayerAether {
 		aetherTag.setInteger("shardCount", this.shardCount);
 		aetherTag.setTag("accessories", this.getAccessoryInventory().writeToNBT(aetherTag));
 		aetherTag.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
+		aetherTag.setBoolean("get_portal", this.shouldGetPortal);
 
 		if (this.bedLocation != null)
 		{
@@ -493,6 +495,11 @@ public class PlayerAether implements IPlayerAether {
 		if (aetherTag.hasKey("seen_spirit_dialog"))
 		{
 			this.seenSpiritDialog = aetherTag.getBoolean("seen_spirit_dialog");
+		}
+
+		if (aetherTag.hasKey("get_portal"))
+		{
+			this.shouldGetPortal = aetherTag.getBoolean("get_portal");
 		}
 
 		this.updateShardCount(aetherTag.getInteger("shardCount"));
@@ -639,5 +646,14 @@ public class PlayerAether implements IPlayerAether {
 
 		this.isPoisoned = false;
 		this.poisonTime = 0;
+	}
+
+	public void givePortalFrame()
+	{
+		if (this.shouldGetPortal)
+		{
+			this.player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.aether_portal_frame));
+			this.shouldGetPortal = false;
+		}
 	}
 }
