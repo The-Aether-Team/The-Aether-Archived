@@ -387,7 +387,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
 
     public boolean chatWithMe(EntityPlayer entityPlayer) {
         if (this.chatCount <= 0) {
-            if (!AetherConfig.repeatSunSpiritDialogue() && !((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
+            if (AetherConfig.repeatSunSpiritDialogue() || !((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
             {
                 if (this.getChatLine() == 0) {
                     this.chatLine(entityPlayer, "\u00a7cYou are certainly a brave soul to have entered this chamber.");
@@ -432,7 +432,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
                     }
                 }
             }
-            else if (!AetherConfig.repeatSunSpiritDialogue() && ((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
+            else if (((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
             {
                 this.setChatLine(9);
 
