@@ -461,7 +461,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
         
         if (this.chatCount <= 0)
         {
-        	if (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && !((PlayerAether)playerAether).seenSpiritDialog)
+        	if (AetherConfig.gameplay_changes.repeat_sun_spirit_dialog || !((PlayerAether)playerAether).seenSpiritDialog)
         	{
                 if (this.getChatLine() == 0)
                 {
@@ -527,7 +527,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                     }
                 }
             }
-        	else if (!AetherConfig.gameplay_changes.repeat_sun_spirit_dialog && ((PlayerAether)playerAether).seenSpiritDialog)
+        	else if (((PlayerAether)playerAether).seenSpiritDialog)
             {
                 this.setChatLine(9);
 
