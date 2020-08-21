@@ -45,13 +45,6 @@ public class BlockAetherLog extends BlockLog {
 			ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 			ItemStack itemstack = this.createStackedBlock(meta);
 
-//			if (this == BlocksAether.golden_oak_log)
-//			{
-//				Item item = Item.getItemFromBlock(this);
-//
-//				itemstack =  new ItemStack(item, 1, EnumLogType.Oak.getMeta());
-//			}
-
 			if (itemstack != null)
 			{
 				items.add(itemstack);
