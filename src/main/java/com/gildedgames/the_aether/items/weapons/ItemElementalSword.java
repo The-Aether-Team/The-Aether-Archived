@@ -3,6 +3,7 @@ package com.gildedgames.the_aether.items.weapons;
 import com.gildedgames.the_aether.registry.creative_tabs.AetherCreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.EnumRarity;
@@ -49,7 +50,7 @@ public class ItemElementalSword extends ItemSword
 			EntityLightningBolt lightning = new EntityLightningBolt(entityliving1.world, entityliving.posX, entityliving.posY, entityliving.posZ, false);
 			entityliving1.world.spawnEntity(lightning);
 		}
-		else if (this == ItemsAether.holy_sword && entityliving.isEntityUndead())
+		else if (this == ItemsAether.holy_sword && (entityliving.isEntityUndead() || entityliving.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD))
 		{
 			float damage = 15.0F;
 
