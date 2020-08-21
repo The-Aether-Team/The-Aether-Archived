@@ -325,7 +325,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
         Block block = this.worldObj.getBlock((int) x, (int) y, (int) z);
         int metadata = this.worldObj.getBlockMetadata((int) x, (int) y, (int) z);
 
-        if (block == Blocks.air || block instanceof BlockDungeonBase) {
+        if (block == Blocks.air || block instanceof BlockDungeonBase || block.getBlockHardness(this.worldObj, (int) x, (int) y, (int) z) < 0.0F) {
             return;
         }
 
