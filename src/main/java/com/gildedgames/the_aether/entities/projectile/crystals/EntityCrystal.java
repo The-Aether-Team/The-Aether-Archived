@@ -189,10 +189,15 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
                     ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.weakness.id, 10));
                 }
             } else if (this.type == EnumCrystalType.CLOUD && !(entity instanceof IAetherBoss)) {
-                this.explode();
-                this.expire();
-                this.setDead();
-                entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5.0F);
+                flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(), 5);
+
+                if (flag)
+                {
+                    this.explode();
+                    this.expire();
+                    this.setDead();
+                    ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.weakness.id, 10));
+                }
             } else if (this.type == EnumCrystalType.THUNDER && entity == this.getAttackTarget()) {
                 flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("lightning_ball", this, this.shootingEntity).setProjectile(), 5);
 

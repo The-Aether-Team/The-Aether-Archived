@@ -147,6 +147,8 @@ public class EntityMiniCloud extends EntityFlying implements IEntityAdditionalSp
 						EntityCrystal crystal = new EntityCrystal(this.worldObj, var1, var3, var5, EnumCrystalType.CLOUD);
 						Vec3 var9 = this.getLookVec();
 
+						crystal.shootingEntity = this.owner;
+
 						if (var9 != null) {
 							crystal.smotionX = var9.xCoord * 1.5D;
 							crystal.smotionY = var9.yCoord * 1.5D;
