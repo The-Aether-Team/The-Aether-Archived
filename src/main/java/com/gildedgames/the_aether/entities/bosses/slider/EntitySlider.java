@@ -912,4 +912,10 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
     {
         return AetherLootTables.slider;
     }
+
+    @Override
+    public boolean canRenderOnFire()
+    {
+        return false;
+    }
 }
