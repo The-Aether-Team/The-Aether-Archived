@@ -755,4 +755,10 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
         return this.getMaxHealth();
     }
 
+    @Override
+    public boolean canRenderOnFire()
+    {
+        return false;
+    }
+
 }
