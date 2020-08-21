@@ -169,6 +169,8 @@ public class EntityMiniCloud extends EntityFlying
                         EntityIceyBall iceCrystal = new EntityIceyBall(this.world, var1, var3, var5, true);
                         Vec3d var9 = this.getLookVec();
 
+                        iceCrystal.shootingEntity = this.owner;
+
                         if (var9 != null)
                         {
                         	iceCrystal.smotionX = var9.x * 1.5D;
