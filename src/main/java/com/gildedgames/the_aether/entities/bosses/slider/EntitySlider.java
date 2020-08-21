@@ -21,6 +21,7 @@ import com.gildedgames.the_aether.items.tools.ItemAetherTool;
 import com.gildedgames.the_aether.items.util.EnumAetherToolType;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -435,7 +436,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                 {
                     double var7 = posY + var6;
 
-                    if (this.world.getBlockState(new BlockPos(var4, var7, var5)).getMaterial() == Material.WATER)
+                    if (this.world.getBlockState(new BlockPos(var4, var7, var5)) instanceof BlockLiquid)
                     {
                         this.world.setBlockState(new BlockPos(var4, var7, var5), Blocks.AIR.getDefaultState());
                     }
