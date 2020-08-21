@@ -5,10 +5,15 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.registry.creative_tabs.AetherCreativeTabs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
+import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.NonNullList;
@@ -103,4 +108,23 @@ public abstract class ItemAetherTool extends ItemTool
     	return this.efficiency;
     }
 
+    public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker)
+    {
+        return this == ItemsAether.skyroot_axe ||
+                this == ItemsAether.holystone_axe ||
+                this == ItemsAether.zanite_axe ||
+                this == ItemsAether.gravitite_axe ||
+                this == ItemsAether.valkyrie_axe;
+    }
+
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book)
+    {
+        return  ((this == ItemsAether.skyroot_axe ||
+                this == ItemsAether.holystone_axe ||
+                this == ItemsAether.zanite_axe ||
+                this == ItemsAether.gravitite_axe ||
+                this == ItemsAether.valkyrie_axe) &&
+                EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.SHARPNESS)) || super.isBookEnchantable(stack, book);
+    }
 }
