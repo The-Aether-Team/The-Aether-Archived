@@ -108,6 +108,7 @@ public abstract class ItemAetherTool extends ItemTool
     	return this.efficiency;
     }
 
+    @Override
     public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker)
     {
         return this == ItemsAether.skyroot_axe ||
