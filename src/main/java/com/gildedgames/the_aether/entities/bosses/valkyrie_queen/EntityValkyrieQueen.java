@@ -196,9 +196,11 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
             this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
         } else if (this.worldObj.isRemote) {
             this.displayValkyrieDialogue();
+            
+            return true;
         }
 
-        return true;
+        return super.interact(entityplayer);
     }
 
     @Override
