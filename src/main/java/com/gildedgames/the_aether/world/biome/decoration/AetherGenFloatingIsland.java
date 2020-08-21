@@ -102,11 +102,6 @@ public class AetherGenFloatingIsland extends WorldGenerator
 			world.setBlockState(grassPos.add(1, 0, 1), BlocksAether.aether_grass.getDefaultState());
 			world.setBlockState(grassPos.add(-1, 0, -1), BlocksAether.aether_grass.getDefaultState());
 
-			for(int y = pos.getY() + 3; y <= pos.getY() + 9; y++)
-			{
-				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ()), BlocksAether.aether_log.getDefaultState());
-			}
-
 			world.setBlockState(pos.up(10), setRandomBlock(world, random));
 
 			BlockPos newPos = pos.up(5);
@@ -279,6 +274,11 @@ public class AetherGenFloatingIsland extends WorldGenerator
 			{
 				if (x != 0)
 				world.setBlockState(newPos.east(x), setRandomBlock(world, random));
+			}
+
+			for(int y = pos.getY() + 3; y <= pos.getY() + 9; y++)
+			{
+				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ()), BlocksAether.aether_log.getDefaultState());
 			}
 
 			return true;
