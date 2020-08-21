@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.blocks.natural;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
@@ -21,6 +22,7 @@ import net.minecraft.world.World;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.event.ForgeEventFactory;
 
 public class BlockAetherLog extends BlockLog {
 
@@ -37,22 +39,49 @@ public class BlockAetherLog extends BlockLog {
 
 		ItemStack stack = player.getCurrentEquippedItem();
 
-		if (stack != null && ((stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool) stack.getItem()).toolType == EnumAetherToolType.AXE) || stack.getItem() == Items.diamond_axe)) {
-			if (stack.getItem() instanceof ItemZaniteTool || stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool || stack.getItem() == Items.diamond_axe) {
-				if (this == BlocksAether.golden_oak_log) {
-					this.dropBlockAsItem(worldIn, x, y, z, new ItemStack(ItemsAether.golden_amber, 1 + worldIn.rand.nextInt(2)));
-				}
 
-				this.dropBlockAsItem(player.worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
-			} else if (stack.getItem() instanceof ItemSkyrootTool) {
-				for (int i = 0; i < size; ++i) {
+		if (this.canSilkHarvest(worldIn, player, x, y, z, meta) && EnchantmentHelper.getSilkTouchModifier(player))
+		{
+			ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+			ItemStack itemstack = this.createStackedBlock(meta);
+
+//			if (this == BlocksAether.golden_oak_log)
+//			{
+//				Item item = Item.getItemFromBlock(this);
+//
+//				itemstack =  new ItemStack(item, 1, EnumLogType.Oak.getMeta());
+//			}
+
+			if (itemstack != null)
+			{
+				items.add(itemstack);
+			}
+
+			ForgeEventFactory.fireBlockHarvesting(items, worldIn, this, x, y, z, meta, 0, 1.0f, true, player);
+			for (ItemStack is : items)
+			{
+				this.dropBlockAsItem(worldIn, x, y, z, is);
+			}
+		}
+		else
+		{
+			if (stack != null && ((stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool) stack.getItem()).toolType == EnumAetherToolType.AXE) || stack.getItem() == Items.diamond_axe)) {
+				if (stack.getItem() instanceof ItemZaniteTool || stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool || stack.getItem() == Items.diamond_axe) {
+					if (this == BlocksAether.golden_oak_log) {
+						this.dropBlockAsItem(worldIn, x, y, z, new ItemStack(ItemsAether.golden_amber, 1 + worldIn.rand.nextInt(2)));
+					}
+
+					this.dropBlockAsItem(player.worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
+				} else if (stack.getItem() instanceof ItemSkyrootTool) {
+					for (int i = 0; i < size; ++i) {
+						this.dropBlockAsItem(player.worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
+					}
+				} else {
 					this.dropBlockAsItem(player.worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
 				}
 			} else {
-				this.dropBlockAsItem(player.worldObj, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, stack));
+				super.harvestBlock(worldIn, player, x, y, z, meta);
 			}
-		} else {
-			super.harvestBlock(worldIn, player, x, y, z, meta);
 		}
 	}
 
