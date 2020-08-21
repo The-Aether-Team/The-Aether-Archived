@@ -58,6 +58,8 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 import java.util.Random;
@@ -453,6 +455,7 @@ public class AetherEventHandler
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void interact(PlayerInteractEvent.LeftClickEmpty event)
 	{
@@ -462,6 +465,7 @@ public class AetherEventHandler
 		handleExtendedReach(player, stack);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void interact(PlayerInteractEvent.LeftClickBlock event)
 	{
