@@ -246,6 +246,8 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 		else if (this.world.isRemote)
 		{
 			this.displayValkyrieDialogue();
+			
+			return true;
 		}
 
 		return super.processInteract(entityplayer, hand);
