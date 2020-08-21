@@ -84,32 +84,59 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
 
 		IBlockState defaults = BlocksAether.aether_log.getDefaultState();
 
-        if (stack != null && stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType == EnumAetherToolType.AXE)
+		if (this.canSilkHarvest(worldIn, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0)
         {
-        	if (stack.getItem() instanceof ItemZaniteTool || stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool)
-        	{
-        		if (state.getValue(wood_type) == EnumLogType.Oak)
-        		{
-            		spawnAsEntity(worldIn, pos, new ItemStack(ItemsAether.golden_amber, 1 + RANDOM.nextInt(2)));
-        		}
+            java.util.List<ItemStack> items = new java.util.ArrayList<ItemStack>();
 
-        		defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
-        	}
-        	else if (stack.getItem() instanceof ItemSkyrootTool)
-        	{
-                for (int i = 0; i < size; ++i)
-                {
-                	defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
-                }
-        	}
-        	else
-        	{
-        		defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
-        	}
+            ItemStack itemstack = this.getSilkTouchDrop(state);
+
+            if (state.getValue(wood_type) == EnumLogType.Oak)
+            {
+                Item item = Item.getItemFromBlock(this);
+
+                itemstack =  new ItemStack(item, 1, EnumLogType.Oak.getMeta());
+            }
+
+            if (!itemstack.isEmpty())
+            {
+                items.add(itemstack);
+            }
+
+            net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
+            for (ItemStack item : items)
+            {
+                spawnAsEntity(worldIn, pos, item);
+            }
         }
-        else
+		else
         {
-        	spawnAsEntity(worldIn, pos, new ItemStack(defaults.getBlock()));
+            if (stack != null && stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType == EnumAetherToolType.AXE)
+            {
+                if (stack.getItem() instanceof ItemZaniteTool || stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool)
+                {
+                    if (state.getValue(wood_type) == EnumLogType.Oak)
+                    {
+                        spawnAsEntity(worldIn, pos, new ItemStack(ItemsAether.golden_amber, 1 + RANDOM.nextInt(2)));
+                    }
+
+                    defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+                }
+                else if (stack.getItem() instanceof ItemSkyrootTool)
+                {
+                    for (int i = 0; i < size; ++i)
+                    {
+                        defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+                    }
+                }
+                else
+                {
+                    defaults.getBlock().dropBlockAsItem(worldIn, pos, defaults, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+                }
+            }
+            else
+            {
+                spawnAsEntity(worldIn, pos, new ItemStack(defaults.getBlock()));
+            }
         }
 	}
 
