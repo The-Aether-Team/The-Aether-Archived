@@ -111,21 +111,21 @@ public abstract class ItemAetherTool extends ItemTool
     @Override
     public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker)
     {
-        return this == ItemsAether.skyroot_axe ||
-                this == ItemsAether.holystone_axe ||
-                this == ItemsAether.zanite_axe ||
-                this == ItemsAether.gravitite_axe ||
-                this == ItemsAether.valkyrie_axe;
+        return stack.getItem() == ItemsAether.skyroot_axe ||
+                stack.getItem() == ItemsAether.holystone_axe ||
+                stack.getItem() == ItemsAether.zanite_axe ||
+                stack.getItem() == ItemsAether.gravitite_axe ||
+                stack.getItem() == ItemsAether.valkyrie_axe;
     }
 
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book)
     {
-        return  ((this == ItemsAether.skyroot_axe ||
-                this == ItemsAether.holystone_axe ||
-                this == ItemsAether.zanite_axe ||
-                this == ItemsAether.gravitite_axe ||
-                this == ItemsAether.valkyrie_axe) &&
+        return  ((stack.getItem() == ItemsAether.skyroot_axe ||
+                stack.getItem() == ItemsAether.holystone_axe ||
+                stack.getItem() == ItemsAether.zanite_axe ||
+                stack.getItem() == ItemsAether.gravitite_axe ||
+                stack.getItem() == ItemsAether.valkyrie_axe) &&
                 EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.SHARPNESS)) || super.isBookEnchantable(stack, book);
     }
 }
