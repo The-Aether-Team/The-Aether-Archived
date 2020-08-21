@@ -445,7 +445,6 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         }
     }
 
-
     private void destroyBlock(BlockPos pos)
     {
         IBlockState state = this.world.getBlockState(pos);
@@ -655,8 +654,6 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
             return false;
         }
 
-        boolean isTCPickaxe = stack.getItem().getClass().getName().equals("slimeknights.tconstruct.tools.tools.Pickaxe");
-        
         if (stack.getItem() == Items.APPLE)
         {
             this.sendMessage(player, new TextComponentTranslation("gui.slider.apple")); 
@@ -669,21 +666,13 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         	this.sendMessage(player, new TextComponentTranslation("It seems I'm too far away to wake it."));
         	return false;
         }
-        
-        else if (!isTCPickaxe)
+        else
         {
-            if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool) && !stack.getItem().getTranslationKey().contains("pickaxe"))
+            if (!stack.getItem().canHarvestBlock(Blocks.STONE.getDefaultState()))
             {
                 this.sendMessage(player, new TextComponentTranslation("gui.slider.notpickaxe"));
-    
-                return false; 
-            }
-    
-            if (stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType != EnumAetherToolType.PICKAXE)
-            {
-                this.sendMessage(player, new TextComponentTranslation("gui.slider.notpickaxe")); 
-    
-                return false; 
+
+                return false;
             }
         }
 
