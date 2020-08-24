@@ -319,23 +319,26 @@ public class AetherEventHandler
 				{
 					if (event.getRayTraceResult().entityHit != null)
 					{
-						if (!arrow.shootingEntity.getPassengers().isEmpty() && event.getRayTraceResult().entityHit == arrow.shootingEntity.getPassengers().get(0))
+						if (arrow.shootingEntity != null)
 						{
-							event.setCanceled(true);
-						}
-						else
-						{
-							if (event.getEntity() instanceof EntityDartBase)
+							if (!arrow.shootingEntity.getPassengers().isEmpty() && event.getRayTraceResult().entityHit == arrow.shootingEntity.getPassengers().get(0))
 							{
-								EntityDartBase entityDartBase = (EntityDartBase) event.getEntity();
+								event.setCanceled(true);
+							}
+							else
+							{
+								if (event.getEntity() instanceof EntityDartBase)
+								{
+									EntityDartBase entityDartBase = (EntityDartBase) event.getEntity();
 
-								if (event.getRayTraceResult().entityHit != entityDartBase.shootingEntity && event.getRayTraceResult().typeOfHit == Type.ENTITY)
-								{
-									entityDartBase.setDead();
-								}
-								else
-								{
-									entityDartBase.setNoGravity(true);
+									if (event.getRayTraceResult().entityHit != entityDartBase.shootingEntity && event.getRayTraceResult().typeOfHit == Type.ENTITY)
+									{
+										entityDartBase.setDead();
+									}
+									else
+									{
+										entityDartBase.setNoGravity(true);
+									}
 								}
 							}
 						}
