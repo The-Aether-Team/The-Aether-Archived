@@ -49,7 +49,7 @@ public class EntityZephyrSnowball extends EntityThrowable
     		++this.ticksInAir;
     	}
 
-    	if (this.ticksInAir > 600)
+    	if (this.ticksInAir > 400)
     	{
     		this.setDead();
     	}
