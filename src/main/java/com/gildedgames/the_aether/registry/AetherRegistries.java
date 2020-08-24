@@ -311,7 +311,7 @@ public class AetherRegistries {
 
 		register("skyroot_bookshelf", new ItemStack(BlocksAether.skyroot_bookshelf, 1),  "ZZZ", "XXX", "ZZZ", 'Z', new ItemStack(BlocksAether.skyroot_planks), 'X', new ItemStack(Items.book));
 
-		register("skyroot_bed_item", new ItemStack(ItemsAether.skyroot_bed_item, 1),  "XXX", "ZZZ", 'Z', new ItemStack(BlocksAether.skyroot_planks), 'X', new ItemStack(Blocks.wool, 1, 9));
+		register("skyroot_bed_item", new ItemStack(ItemsAether.skyroot_bed_item, 1),  "XXX", "ZZZ", 'Z', new ItemStack(BlocksAether.skyroot_planks), 'X', Blocks.wool);
 	}
 
 	private static void register(String name, ItemStack stack, Object... recipe) {
