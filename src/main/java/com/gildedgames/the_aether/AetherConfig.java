@@ -33,6 +33,8 @@ public class AetherConfig {
 
 	private static boolean aether_start;
 
+	private static boolean disable_eternal_day;
+
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
 
@@ -78,6 +80,8 @@ public class AetherConfig {
 		sun_altar_multiplayer = config.get("Gameplay", "Removes the requirement for a player to be an operator to use the Sun Altar in multiplayer.", false).getBoolean(false);
 
 		repeat_sun_spirit_dialog = config.get("Misc", "If disabed, the Sun Spirit's dialog will only show once per world.", true).getBoolean(true);
+
+		disable_eternal_day = config.get("Misc", "Disables eternal day making time cycle in the Aether without having to kill the Sun Spirit. This is mainly intended for use in modpacks.", false).getBoolean(false);
 
 		config.save();
 	}
@@ -167,5 +171,10 @@ public class AetherConfig {
 	public static boolean shouldAetherStart()
 	{
 		return aether_start;
+	}
+
+	public static boolean eternalDayDisabled()
+	{
+		return disable_eternal_day;
 	}
 }

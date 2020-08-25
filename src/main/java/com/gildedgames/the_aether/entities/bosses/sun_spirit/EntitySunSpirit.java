@@ -207,11 +207,14 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
 
                 dungeonTarget.triggerAchievement(AchievementsAether.defeat_gold);
 
-                if (!this.worldObj.isRemote)
+                if (!AetherConfig.eternalDayDisabled())
                 {
-                    if (!AetherData.getInstance(this.worldObj).isEternalDay())
+                    if (!this.worldObj.isRemote)
                     {
-                        AetherData.getInstance(this.worldObj).setEternalDay(true);
+                        if (!AetherData.getInstance(this.worldObj).isEternalDay())
+                        {
+                            AetherData.getInstance(this.worldObj).setEternalDay(true);
+                        }
                     }
                 }
 

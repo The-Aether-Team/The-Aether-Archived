@@ -35,39 +35,42 @@ public class AetherWorldProvider extends WorldProvider {
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks)
 	{
-		if (!this.worldObj.isRemote)
+		if (!AetherConfig.eternalDayDisabled())
 		{
-			AetherData data = AetherData.getInstance(this.worldObj);
-
-			if (data.isEternalDay())
+			if (!this.worldObj.isRemote)
 			{
-				if (!data.isShouldCycleCatchup())
+				AetherData data = AetherData.getInstance(this.worldObj);
+
+				if (data.isEternalDay())
 				{
-					if (data.getAetherTime() != (worldTime % 24000L) && data.getAetherTime() != (worldTime + 1 % 24000L) && data.getAetherTime() != (worldTime - 1 % 24000L))
+					if (!data.isShouldCycleCatchup())
 					{
-						data.setAetherTime(Math.floorMod(data.getAetherTime() - 1, 24000L));
+						if (data.getAetherTime() != (worldTime % 24000L) && data.getAetherTime() != (worldTime + 1 % 24000L) && data.getAetherTime() != (worldTime - 1 % 24000L))
+						{
+							data.setAetherTime(Math.floorMod(data.getAetherTime() - 1, 24000L));
+						}
+						else
+						{
+							data.setShouldCycleCatchup(true);
+						}
 					}
 					else
 					{
-						data.setShouldCycleCatchup(true);
+						data.setAetherTime(worldTime);
 					}
+
+					this.aetherTime = data.getAetherTime();
+					AetherNetwork.sendToAll(new PacketSendTime(this.aetherTime));
+					data.setAetherTime(this.aetherTime);
 				}
 				else
 				{
-					data.setAetherTime(worldTime);
+					data.setAetherTime(6000);
 				}
-
-				this.aetherTime = data.getAetherTime();
-				AetherNetwork.sendToAll(new PacketSendTime(this.aetherTime));
-				data.setAetherTime(this.aetherTime);
-			}
-			else
-			{
-				data.setAetherTime(6000);
 			}
 		}
 
-		int i = (int)(this.aetherTime % 24000L);
+		int i = (int)(AetherConfig.eternalDayDisabled() ? worldTime : this.aetherTime % 24000L);
 
 		float f = ((float)i + partialTicks) / 24000.0F - 0.25F;
 
