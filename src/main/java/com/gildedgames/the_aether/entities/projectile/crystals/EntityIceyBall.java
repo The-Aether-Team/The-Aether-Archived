@@ -100,16 +100,6 @@ public class EntityIceyBall extends EntityFlying
             {
                 AetherNetworkingManager.sendToAll(new PacketIceParticles(this));
             }
-
-//            double var2 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
-//            double var4 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
-//            double var6 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
-//
-//            var2 *= 0.5D;
-//            var4 *= 0.5D;
-//            var6 *= 0.5D;
-//
-//            this.world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, this.posX, this.posY, this.posZ, var2, var4 + 0.125D, var6);
         }
     }
 
