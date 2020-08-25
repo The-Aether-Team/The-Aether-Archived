@@ -14,6 +14,7 @@ import net.minecraft.stats.Achievement;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AchievementEvent;
@@ -104,7 +105,7 @@ public class PlayerAetherEvents {
 	}
 
 	@SubscribeEvent
-	public void onPlayerAetherDeath(LivingDeathEvent event) {
+	public void onPlayerAetherDrops(LivingDropsEvent event) {
 		if (event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
 			PlayerAether.get((EntityPlayer) event.entityLiving).getAccessoryInventory().dropAccessories();
 		}
