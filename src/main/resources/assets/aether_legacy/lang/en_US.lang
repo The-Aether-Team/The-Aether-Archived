@@ -447,6 +447,7 @@ aether_legacy.general.gameplay_changes.ambro_is_edible=Edible Ambrosium
 aether_legacy.general.gameplay_changes.max_life_shards=Maximum Life Shards
 aether_legacy.general.gameplay_changes.skyroot_bucket_only=Skyroot Bucket Only
 aether_legacy.general.gameplay_changes.valkyrie_cape=Valkyrie Cape
+aether_legacy.general.gameplay_changes.golden_feather=Golden Feather
 aether_legacy.general.gameplay_changes.disable_portal=Disable Portal
 aether_legacy.general.gameplay_changes.disable_startup_loot=Disable Startup Loot
 aether_legacy.general.gameplay_changes.sun_altar_multiplayer=Disable Sun Altar's Operator Requirement
