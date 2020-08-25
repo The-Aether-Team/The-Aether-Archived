@@ -644,11 +644,14 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
         {
             AetherWorldProvider aetherProvider = (AetherWorldProvider) provider;
 
-            if (aetherProvider.getEternalDayManager() != null)
+            if (!AetherConfig.gameplay_changes.disable_eternal_day)
             {
-                if (aetherProvider.getEternalDayManager().isEternalDay())
+                if (aetherProvider.getEternalDayManager() != null)
                 {
-                    aetherProvider.getEternalDayManager().setEternalDay(false);
+                    if (aetherProvider.getEternalDayManager().isEternalDay())
+                    {
+                        aetherProvider.getEternalDayManager().setEternalDay(false);
+                    }
                 }
             }
         }

@@ -140,33 +140,36 @@ public class AetherWorldProvider extends WorldProvider
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks)
 	{
-		if (this.eternalDayManager != null)
+		if (!AetherConfig.gameplay_changes.disable_eternal_day)
 		{
-			if (!this.eternalDayManager.isEternalDay())
+			if (this.eternalDayManager != null)
 			{
-				if (this.eternalDayManager.shouldCycleCatchup())
+				if (!this.eternalDayManager.isEternalDay())
 				{
-					if (this.eternalDayManager.getTime() != (worldTime % 24000L) && this.eternalDayManager.getTime() != (worldTime + 1 % 24000L) && this.eternalDayManager.getTime() != (worldTime - 1 % 24000L))
+					if (this.eternalDayManager.shouldCycleCatchup())
 					{
-						this.eternalDayManager.setTime(Math.floorMod(this.eternalDayManager.getTime() - 1, 24000L));
+						if (this.eternalDayManager.getTime() != (worldTime % 24000L) && this.eternalDayManager.getTime() != (worldTime + 1 % 24000L) && this.eternalDayManager.getTime() != (worldTime - 1 % 24000L))
+						{
+							this.eternalDayManager.setTime(Math.floorMod(this.eternalDayManager.getTime() - 1, 24000L));
+						}
+						else
+						{
+							this.eternalDayManager.setShouldCycleCatchup(false);
+						}
 					}
 					else
 					{
-						this.eternalDayManager.setShouldCycleCatchup(false);
+						this.eternalDayManager.setTime(worldTime);
 					}
-				}
-				else
-				{
-					this.eternalDayManager.setTime(worldTime);
-				}
 
-				this.aetherTime = this.eternalDayManager.getTime();
-				AetherNetworkingManager.sendToAll(new PacketSendTime(this.aetherTime));
-				this.eternalDayManager.setTime(this.aetherTime);
+					this.aetherTime = this.eternalDayManager.getTime();
+					AetherNetworkingManager.sendToAll(new PacketSendTime(this.aetherTime));
+					this.eternalDayManager.setTime(this.aetherTime);
+				}
 			}
 		}
 
-		int i = (int)(this.aetherTime % 24000L);
+		int i = (int)((AetherConfig.gameplay_changes.disable_eternal_day ? worldTime : this.aetherTime) % 24000L);
 
 		float f = ((float)i + partialTicks) / 24000.0F - 0.25F;
 

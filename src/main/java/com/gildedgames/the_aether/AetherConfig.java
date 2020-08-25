@@ -100,6 +100,9 @@ public class AetherConfig
 		
 		@Config.Comment("If disabed, the Sun Spirit's dialog will only show once per world.")
 		public boolean repeat_sun_spirit_dialog = true;
+
+		@Config.Comment("Disables eternal day making time cycle in the Aether without having to kill the Sun Spirit. This is mainly intended for use in modpacks.")
+		public boolean disable_eternal_day = false;
 	}
 
 	@Mod.EventBusSubscriber(modid = Aether.modid)

@@ -452,6 +452,7 @@ aether_legacy.general.gameplay_changes.disable_portal=Disable Portal
 aether_legacy.general.gameplay_changes.disable_startup_loot=Disable Startup Loot
 aether_legacy.general.gameplay_changes.sun_altar_multiplayer=Disable Sun Altar's Operator Requirement
 aether_legacy.general.gameplay_changes.repeat_sun_spirit_dialog=Repeat Sun Spirit Dialogue
+aether_legacy.general.gameplay_changes.disable_eternal_day=Disable Eternal Day
 
 aether_legacy.general.visual_options=Visual Options
 aether_legacy.general.visual_options.tooltip=These options do not affect gameplay, and are purely visual.
