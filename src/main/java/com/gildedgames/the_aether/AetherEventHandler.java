@@ -491,8 +491,6 @@ public class AetherEventHandler
 
 			List<Entity> locatedEntities = player.world.getEntitiesWithinAABB(Entity.class, reachDistance);
 
-			System.out.println(locatedEntities);
-
 			Entity found = null;
 			double foundLen = 0.0D;
 
@@ -505,14 +503,10 @@ public class AetherEventHandler
 
 				Entity ent = (Entity) o;
 
-				System.out.println("1");
-
 				if (!ent.canBeCollidedWith() && !(ent instanceof EntityDragon))
 				{
 					continue;
 				}
-
-				System.out.println("2");
 
 				Vec3d vec = new Vec3d(ent.posX - player.posX, ent.getEntityBoundingBox().minY + ent.height / 2f - player.posY - player.getEyeHeight(), ent.posZ - player.posZ);
 				double len = vec.length();
