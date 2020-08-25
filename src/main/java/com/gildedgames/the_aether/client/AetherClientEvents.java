@@ -24,6 +24,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -117,7 +118,7 @@ public class AetherClientEvents {
 
 								Entity ent = (Entity) o;
 
-								if (!ent.canBeCollidedWith()) {
+								if (!ent.canBeCollidedWith() && !(ent instanceof EntityDragon)) {
 									continue;
 								}
 
