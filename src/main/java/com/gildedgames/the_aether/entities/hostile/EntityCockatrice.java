@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.hostile;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
@@ -9,6 +10,7 @@ import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -58,14 +60,7 @@ public class EntityCockatrice extends EntityMob {
 	public void onUpdate() {
 		super.onUpdate();
 
-		if (this.getEntityToAttack() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) this.getEntityToAttack();
-
-			if (player.capabilities.isCreativeMode || this.getHealth() <= 0.0F || this.isDead || this.getEntityToAttack().isDead || this.getEntityToAttack().getDistanceToEntity(this) > 12D) {
-				this.setTarget(null);
-				this.shootTime = 0;
-				return;
-			}
+		if (this.getEntityToAttack() != null) {
 
 			double d = this.getEntityToAttack().posX - this.posX;
 			double d1 = this.getEntityToAttack().posZ - this.posZ;
@@ -136,6 +131,20 @@ public class EntityCockatrice extends EntityMob {
 
 	@Override
 	public void fall(float distance) {
+	}
+
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount)
+	{
+		if (source.getEntity() != null)
+		{
+			if (source.getEntity() instanceof EntityLivingBase)
+			{
+				this.setAttackTarget((EntityLivingBase) source.getEntity());
+			}
+		}
+
+		return super.attackEntityFrom(source, amount);
 	}
 
 	@Override
