@@ -23,7 +23,9 @@ public class CommonProxy
 
 	public void spawnBlockBrokenFX(IBlockState state, BlockPos pos) { }
 
-	public void spawnSmoke(World world, BlockPos pos) {}
+	public void spawnSmoke(World world, BlockPos pos) { }
+
+	public void spawnSplode(World world, double x, double y, double z) { }
 
 	public void openSunAltar() { }
 

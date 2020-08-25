@@ -55,6 +55,8 @@ public class AetherNetworkingManager
 
 		INSTANCE.registerMessage(PacketSendSeenDialogue.class, PacketSendSeenDialogue.class, discriminant++, Side.CLIENT);
 		INSTANCE.registerMessage(PacketPortalItem.class, PacketPortalItem.class, discriminant++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketIceParticles.class, PacketIceParticles.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message)

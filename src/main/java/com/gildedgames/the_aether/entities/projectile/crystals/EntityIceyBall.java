@@ -3,6 +3,8 @@ package com.gildedgames.the_aether.entities.projectile.crystals;
 import com.gildedgames.the_aether.entities.bosses.EntityFireMinion;
 import com.gildedgames.the_aether.entities.bosses.sun_spirit.EntitySunSpirit;
 
+import com.gildedgames.the_aether.networking.AetherNetworkingManager;
+import com.gildedgames.the_aether.networking.packets.PacketIceParticles;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -94,15 +96,20 @@ public class EntityIceyBall extends EntityFlying
 
         for (int var1 = 0; var1 < 40; ++var1)
         {
-            double var2 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
-            double var4 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
-            double var6 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
+            if (!this.world.isRemote)
+            {
+                AetherNetworkingManager.sendToAll(new PacketIceParticles(this));
+            }
 
-            var2 *= 0.5D;
-            var4 *= 0.5D;
-            var6 *= 0.5D;
-
-            this.world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, this.posX, this.posY, this.posZ, var2, var4 + 0.125D, var6);
+//            double var2 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
+//            double var4 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
+//            double var6 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
+//
+//            var2 *= 0.5D;
+//            var4 *= 0.5D;
+//            var6 *= 0.5D;
+//
+//            this.world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, this.posX, this.posY, this.posZ, var2, var4 + 0.125D, var6);
         }
     }
 

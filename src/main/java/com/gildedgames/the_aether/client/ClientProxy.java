@@ -151,6 +151,19 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
+	public void spawnSplode(World world, double x, double y, double z)
+	{
+		Random rand = new Random();
+		double var2 = ((rand.nextFloat() - 0.5F) * 0.5F);
+		double var4 = ((rand.nextFloat() - 0.5F) * 0.5F);
+		double var6 = ((rand.nextFloat() - 0.5F) * 0.5F);
+		var2 *= 0.5D;
+		var4 *= 0.5D;
+		var6 *= 0.5D;
+		world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, x, y, z, var2, var4 + 0.125D, var6);
+	}
+
+	@Override
 	public void spawnBlockBrokenFX(IBlockState state, BlockPos pos)
 	{
 		FMLClientHandler.instance().getClient().effectRenderer.addBlockDestroyEffects(pos, state);
