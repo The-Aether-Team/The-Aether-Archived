@@ -316,15 +316,18 @@ public class PlayerAether implements IPlayerAether
 
 	public void onPlayerDeath()
 	{
-		if (!this.thePlayer.world.getGameRules().getBoolean("keepInventory"))
-		{
-			this.accessories.dropAccessories();
-		}
-
 		this.isPoisoned = false;
 		this.poisonTime = 0;
 		this.isCured = false;
 		this.cureTime = 0;
+	}
+
+	public void dropAccessories()
+	{
+		if (!this.thePlayer.world.getGameRules().getBoolean("keepInventory"))
+		{
+			this.accessories.dropAccessories();
+		}
 	}
 
 	public void onPlayerRespawn()

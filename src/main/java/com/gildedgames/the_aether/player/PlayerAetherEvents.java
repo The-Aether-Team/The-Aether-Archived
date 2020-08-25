@@ -17,6 +17,7 @@ import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
@@ -121,6 +122,20 @@ public class PlayerAetherEvents
 			if (playerAether != null)
 			{
 				((PlayerAether) playerAether).onPlayerDeath();
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerDrops(LivingDropsEvent event)
+	{
+		if (event.getEntity() instanceof EntityPlayer)
+		{
+			IPlayerAether playerAether = AetherAPI.getInstance().get((EntityPlayer) event.getEntity());
+
+			if (playerAether != null)
+			{
+				((PlayerAether) playerAether).dropAccessories();
 			}
 		}
 	}
