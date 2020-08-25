@@ -7,6 +7,7 @@ import com.gildedgames.the_aether.entities.projectile.EntityPoisonNeedle;
 import com.gildedgames.the_aether.registry.AetherLootTables;
 import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityMob;
@@ -78,17 +79,8 @@ public class EntityCockatrice extends EntityMob
 	{
 		super.onUpdate();
 
-		if (this.getAttackTarget() instanceof EntityPlayer)
+		if (this.getAttackTarget() != null)
 		{
-			EntityPlayer player = (EntityPlayer) this.getAttackTarget();
-
-			if (player.capabilities.isCreativeMode || this.getHealth() <= 0.0F || this.isDead || this.getAttackTarget().isDead || this.getAttackTarget().getDistance(this) > 12D)
-			{
-				this.setAttackTarget(null);
-				this.shootTime = 0;
-				return;
-			}
-			
 			double d = this.getAttackTarget().posX - this.posX;
 			double d1 = this.getAttackTarget().posZ - this.posZ;
 
@@ -177,6 +169,20 @@ public class EntityCockatrice extends EntityMob
 	@Override
 	public void fall(float distance, float damageMultiplier)
 	{
+	}
+
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount)
+	{
+		if (source.getTrueSource() != null)
+		{
+			if (source.getTrueSource() instanceof EntityLivingBase)
+			{
+				this.setAttackTarget((EntityLivingBase) source.getTrueSource());
+			}
+		}
+
+		return super.attackEntityFrom(source, amount);
 	}
 
 	@Override
