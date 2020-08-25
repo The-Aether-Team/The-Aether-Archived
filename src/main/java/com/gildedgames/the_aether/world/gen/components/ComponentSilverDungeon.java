@@ -516,7 +516,7 @@ public class ComponentSilverDungeon extends AetherStructure {
 	}
 
 	public static ItemStack getSilverLoot(Random random) {
-		int item = random.nextInt(13);
+		int item = random.nextInt(14);
 
 		switch (item) {
 			case 0:
@@ -552,20 +552,27 @@ public class ComponentSilverDungeon extends AetherStructure {
 					return new ItemStack(ItemsAether.neptune_boots);
 				return new ItemStack(ItemsAether.neptune_gloves);
 			}
-			case 8:
-				return new ItemStack(ItemsAether.invisibility_cape);
-			case 9: {
+			case 8: {
 				if (random.nextBoolean())
 					return new ItemStack(ItemsAether.valkyrie_boots);
 				return new ItemStack(ItemsAether.valkyrie_gloves);
 			}
-			case 10:
+			case 9:
 				return new ItemStack(ItemsAether.valkyrie_leggings);
-			case 11:
+			case 10:
 				if (random.nextBoolean())
 					return new ItemStack(ItemsAether.valkyrie_chestplate);
+			case 11:
+				if (random.nextBoolean())
+					return new ItemStack(ItemsAether.valkyrie_boots);
+				return new ItemStack(ItemsAether.valkyrie_gloves);
+			case 12:
+				if (AetherConfig.valkyrieCapeEnabled())
+					return new ItemStack(ItemsAether.valkyrie_cape);
+			case 13:
+				if (AetherConfig.goldenFeatherEnabled())
+					return new ItemStack(ItemsAether.golden_feather);
 		}
-		return AetherConfig.valkyrieCapeEnabled() ? new ItemStack(ItemsAether.valkyrie_cape) : new ItemStack(ItemsAether.golden_feather);
+		return new ItemStack(ItemsAether.invisibility_cape);
 	}
-
 }
