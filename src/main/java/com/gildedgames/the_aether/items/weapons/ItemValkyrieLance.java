@@ -104,15 +104,9 @@ public class ItemValkyrieLance extends Item
 	}
 
 	@Override
-	public boolean isBookEnchantable(ItemStack stack, ItemStack book)
-	{
-		return !EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.SWEEPING);
-	}
-
-	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, net.minecraft.enchantment.Enchantment enchantment)
 	{
-		return !enchantment.equals(Enchantments.SWEEPING) && enchantment.type == EnumEnchantmentType.WEAPON;
+		return !enchantment.equals(Enchantments.SWEEPING) && (enchantment.type == EnumEnchantmentType.WEAPON || enchantment.isTreasureEnchantment());
 	}
 
 	@Override
