@@ -196,11 +196,13 @@ public class AetherClientEvents
 				{
 					if (button.id == 200)
 					{
-						button.y = button.y + 24;
+						button.y = button.y + 48;
 					}
 				}
 
 				event.getButtonList().add(new GuiGlovesButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
+				i++;
+				event.getButtonList().add(new GuiGloveSizeButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
 				i++;
 				event.getButtonList().add(new GuiCapeButton(event.getGui().width / 2 - 155 + i % 2 * 160, event.getGui().height / 6 + 24 * (i >> 1)));
 
@@ -333,6 +335,16 @@ public class AetherClientEvents
 
 			player.shouldRenderGloves = enableGloves;
 			AetherNetworkingManager.sendToServer(new PacketGlovesChanged(player.getEntity().getEntityId(), player.shouldRenderGloves));
+		}
+
+		if (event.getButton().getClass() == GuiGloveSizeButton.class)
+		{
+			PlayerAether player = (PlayerAether) AetherAPI.getInstance().get(Minecraft.getMinecraft().player);
+
+			boolean gloveSize = !player.gloveSize;
+
+			player.gloveSize = gloveSize;
+			AetherNetworkingManager.sendToServer(new PacketGloveSizeChanged(player.getEntity().getEntityId(), player.gloveSize));
 		}
 	}
 

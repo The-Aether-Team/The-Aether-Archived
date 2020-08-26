@@ -1,6 +1,7 @@
 package com.gildedgames.the_aether.client;
 
 import com.gildedgames.the_aether.items.accessories.ItemAccessoryDyable;
+import com.gildedgames.the_aether.player.PlayerAether;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
@@ -19,7 +20,7 @@ import com.gildedgames.the_aether.items.accessories.ItemAccessory;
 public class PlayerGloveRenderer
 {
 
-	private static ModelBiped gloveModel, slimGloveModel;
+	private static ModelBiped gloveModel, slimGloveModel, hatGloveModel, slimHatGloveModel;
 
 	private static boolean isSlim = false;
 
@@ -27,10 +28,12 @@ public class PlayerGloveRenderer
 	{
 		isSlim = ((AbstractClientPlayer)player).getSkinType().equals("slim") ? true : false;
 
-		if (gloveModel == null && slimGloveModel == null)
+		if (gloveModel == null && slimGloveModel == null && hatGloveModel == null && slimHatGloveModel == null)
 		{
 			gloveModel = new ModelBiped(0.01F);
 			slimGloveModel = new ModelPlayer(0.01F, true);
+            hatGloveModel = new ModelBiped(0.26F);
+            slimHatGloveModel = new ModelPlayer(0.26F, true);
 		}
 
         boolean flag = hand == EnumHand.MAIN_HAND;
@@ -220,11 +223,23 @@ public class PlayerGloveRenderer
 		}
 
         GlStateManager.enableBlend();
-        getModel().swingProgress = 0.0F;
-        getModel().isSneak = false;
-        getModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
-        getModel().bipedRightArm.rotateAngleX = 0.0F;
-        getModel().bipedRightArm.render(0.0625F);
+		if (!((PlayerAether) playerAether).gloveSize)
+        {
+            getModel().swingProgress = 0.0F;
+            getModel().isSneak = false;
+            getModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
+            getModel().bipedRightArm.rotateAngleX = 0.0F;
+            getModel().bipedRightArm.render(0.0625F);
+        }
+		else
+        {
+            getHatModel().swingProgress = 0.0F;
+            getHatModel().isSneak = false;
+            getHatModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
+            getHatModel().bipedRightArm.rotateAngleX = 0.0F;
+            getHatModel().bipedRightArm.render(0.0625F);
+            System.out.println(true);
+        }
         GlStateManager.disableBlend();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -257,11 +272,23 @@ public class PlayerGloveRenderer
 		}
 
         GlStateManager.enableBlend();
-        getModel().isSneak = false;
-        getModel().swingProgress = 0.0F;
-        getModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
-        getModel().bipedLeftArm.rotateAngleX = 0.0F;
-        getModel().bipedLeftArm.render(0.0625F);
+        if (!((PlayerAether) playerAether).gloveSize)
+        {
+            getModel().isSneak = false;
+            getModel().swingProgress = 0.0F;
+            getModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
+            getModel().bipedLeftArm.rotateAngleX = 0.0F;
+            getModel().bipedLeftArm.render(0.0625F);
+        }
+        else
+        {
+            getHatModel().isSneak = false;
+            getHatModel().swingProgress = 0.0F;
+            getHatModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
+            getHatModel().bipedLeftArm.rotateAngleX = 0.0F;
+            getHatModel().bipedLeftArm.render(0.0625F);
+            System.out.println(true);
+        }
         GlStateManager.disableBlend();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -269,8 +296,13 @@ public class PlayerGloveRenderer
 
 	private static ModelBiped getModel()
 	{
-		return isSlim ? slimGloveModel : gloveModel;
+	    return isSlim ? slimGloveModel : gloveModel;
 	}
+
+	private static ModelBiped getHatModel()
+    {
+        return isSlim ? slimHatGloveModel : hatGloveModel;
+    }
 
     private static float getMapAngleFromPitch(float pitch)
     {

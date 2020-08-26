@@ -425,6 +425,10 @@ gui.button.halo=Halo:
 gui.button.glow=Developer Glow:
 gui.button.aether_cape=Aether Cape:
 gui.button.gloves=Gloves:
+gui.button.glove_size=Glove Size:
+
+glove_size.option.skin=Skin
+glove_size.option.hat=Hat
 
 # Death messages
 death.attack.inebriation=%1$s was inebriated

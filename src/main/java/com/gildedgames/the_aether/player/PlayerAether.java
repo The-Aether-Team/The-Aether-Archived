@@ -79,7 +79,7 @@ public class PlayerAether implements IPlayerAether
 
 	private int cooldown, cooldownMax;
 
-	public boolean shouldRenderHalo, shouldRenderGlow, shouldRenderCape, shouldRenderGloves;
+	public boolean shouldRenderHalo, shouldRenderGlow, shouldRenderCape, shouldRenderGloves, gloveSize;
 
 	public boolean seenSpiritDialog = false;
 
@@ -103,6 +103,8 @@ public class PlayerAether implements IPlayerAether
 		this.shouldRenderGlow = false;
 		this.shouldRenderCape = true;
 		this.shouldRenderGloves = true;
+		//false = skin, true = hat
+		this.gloveSize = false;
 
 		this.shouldGetPortal = true;
 
@@ -124,6 +126,7 @@ public class PlayerAether implements IPlayerAether
 			AetherNetworkingManager.sendToAll(new PacketSendPoisonTime(this.getEntity(), this.poisonTime));
 			AetherNetworkingManager.sendToAll(new PacketSendSeenDialogue(this.getEntity(), this.seenSpiritDialog));
 			AetherNetworkingManager.sendToAll(new PacketPortalItem(this.getEntity(), this.shouldGetPortal));
+			AetherNetworkingManager.sendToAll(new PacketGloveSizeChanged(this.getEntity().getEntityId(), this.gloveSize));
 		}
 
 		if (this.isPoisoned)
@@ -360,6 +363,7 @@ public class PlayerAether implements IPlayerAether
 		output.setInteger("poison_time", this.poisonTime);
 		output.setBoolean("cape", this.shouldRenderCape);
 		output.setBoolean("gloves", this.shouldRenderGloves);
+		output.setBoolean("glove_size", this.gloveSize);
 		output.setBoolean("seen_spirit_dialog", this.seenSpiritDialog);
 		output.setBoolean("get_portal", this.shouldGetPortal);
 		output.setInteger("hammer_cooldown", this.cooldown);
@@ -389,6 +393,11 @@ public class PlayerAether implements IPlayerAether
 		if (input.hasKey("gloves"))
 		{
 			this.shouldRenderGloves = input.getBoolean("gloves");
+		}
+
+		if (input.hasKey("glove_size"))
+		{
+			this.gloveSize = input.getBoolean("glove_size");
 		}
 
 		if (input.hasKey("shards_used"))
