@@ -7,6 +7,7 @@ import com.gildedgames.the_aether.client.renders.items.util.AetherColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -160,6 +161,7 @@ public class ItemRendering
 		register(ItemsAether.developer_stick, "skyroot_stick");
 
 		register(ItemsAether.skyroot_bed_item, "skyroot_bed");
+		ItemsAether.skyroot_bed_item.setTileEntityItemStackRenderer(new SkyrootBedItemStackRenderer());
 
 		register(ItemsAether.aether_portal_frame, "aether_portal_frame");
 
