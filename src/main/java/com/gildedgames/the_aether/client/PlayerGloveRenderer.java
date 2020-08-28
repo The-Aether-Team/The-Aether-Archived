@@ -238,7 +238,6 @@ public class PlayerGloveRenderer
             getHatModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
             getHatModel().bipedRightArm.rotateAngleX = 0.0F;
             getHatModel().bipedRightArm.render(0.0625F);
-            System.out.println(true);
         }
         GlStateManager.disableBlend();
 
@@ -287,7 +286,6 @@ public class PlayerGloveRenderer
             getHatModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, playerAether.getEntity());
             getHatModel().bipedLeftArm.rotateAngleX = 0.0F;
             getHatModel().bipedLeftArm.render(0.0625F);
-            System.out.println(true);
         }
         GlStateManager.disableBlend();
 

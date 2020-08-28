@@ -166,7 +166,10 @@ public class EntitySentry extends EntityLiving implements IMob
 
         if (!(entityIn instanceof EntitySentry))
         {
-            this.explode((EntityLivingBase)entityIn);
+            if (entityIn instanceof EntityLivingBase)
+            {
+                this.explode((EntityLivingBase)entityIn);
+            }
         }
     }
 
