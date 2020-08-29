@@ -530,28 +530,11 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
             return false;
         }
 
-        boolean isTCPickaxe = stack.getItem().getClass().getName().equals("tconstruct.items.tools.Pickaxe");
-
-
         if (!stack.getItem().canHarvestBlock(Blocks.stone, stack))
         {
             this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?");
 
             return false;
-        }
-
-        if (!isTCPickaxe) {
-            if (!(stack.getItem() instanceof ItemPickaxe) && !(stack.getItem() instanceof ItemAetherTool)) {
-                this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?");
-
-                return false;
-            }
-
-            if (stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool) stack.getItem()).toolType != EnumAetherToolType.PICKAXE) {
-                this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?");
-
-                return false;
-            }
         }
 
         boolean flag = super.attackEntityFrom(ds, Math.max(0, var2));
