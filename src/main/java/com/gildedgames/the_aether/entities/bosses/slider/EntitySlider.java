@@ -676,7 +676,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
             }
         }
 
-        boolean flag = super.attackEntityFrom(source, amount);
+        boolean flag = super.attackEntityFrom(source, Math.max(0, amount));
     
         if(flag)
         {
