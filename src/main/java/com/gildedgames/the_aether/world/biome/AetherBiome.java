@@ -59,6 +59,7 @@ public class AetherBiome extends BiomeGenBase {
 	private void addCreatureEntry(ArrayList<SpawnListEntry> list)
 	{
 		list.add(new SpawnListEntry(EntitySwet.class, 20, 3, 4));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 19, 3, 3));
 		list.add(new SpawnListEntry(EntityPhyg.class, 12, 4, 4));
 		list.add(new SpawnListEntry(EntityAerbunny.class, 11, 3, 3));
 		list.add(new SpawnListEntry(EntitySheepuff.class, 10, 4, 4));
@@ -70,9 +71,8 @@ public class AetherBiome extends BiomeGenBase {
 	{
 		list.add(new SpawnListEntry(EntityWhirlwind.class, 8, 2, 2));
 		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
-		list.add(new SpawnListEntry(EntityZephyr.class, 4, 1, 1));
+		list.add(new SpawnListEntry(EntityZephyr.class, 3, 1, 1));
 		list.add(new SpawnListEntry(EntityAerwhale.class, 2, 1, 1));
-		list.add(new SpawnListEntry(EntityAechorPlant.class, 1, 3, 3));
 	}
 
 	@Override
