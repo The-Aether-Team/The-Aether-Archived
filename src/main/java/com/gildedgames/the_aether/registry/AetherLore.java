@@ -7,6 +7,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class AetherLore {
 
+	public static boolean hasKey;
+
 	public static String getLoreEntryKey(ItemStack stack) {
 
 		if (stack.getItem() instanceof ItemBlockEnchanter)
