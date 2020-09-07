@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 
 public class AetherLore 
 {
+	public static boolean hasKey;
 
 	public static String getLoreEntryKey(ItemStack stack)
 	{

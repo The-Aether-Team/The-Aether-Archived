@@ -60,6 +60,8 @@ public class AetherNetworkingManager
 		INSTANCE.registerMessage(PacketPortalItem.class, PacketPortalItem.class, discriminant++, Side.CLIENT);
 
 		INSTANCE.registerMessage(PacketIceParticles.class, PacketIceParticles.class, discriminant++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketCheckKey.class, PacketCheckKey.class, discriminant++, Side.SERVER);
 	}
 
 	public static void sendToAll(IMessage message)
