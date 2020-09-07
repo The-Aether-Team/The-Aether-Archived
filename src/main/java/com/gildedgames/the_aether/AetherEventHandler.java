@@ -247,9 +247,12 @@ AetherEventHandler {
 		{
 			EntityPlayer player = (EntityPlayer) event.entity;
 
-			if (player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_sword || player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_knife)
+			if (player.inventory.getCurrentItem() != null)
 			{
-				event.setCanceled(true);
+				if (player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_sword || player.inventory.getCurrentItem().getItem() == ItemsAether.lightning_knife)
+				{
+					event.setCanceled(true);
+				}
 			}
 		}
 	}
