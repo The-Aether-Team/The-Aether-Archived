@@ -5,6 +5,7 @@ import java.util.List;
 import com.gildedgames.the_aether.client.gui.AetherLoadingScreen;
 import com.gildedgames.the_aether.client.gui.GuiEnterAether;
 import com.gildedgames.the_aether.client.gui.button.*;
+import com.gildedgames.the_aether.client.gui.inventory.GuiAccessories;
 import com.gildedgames.the_aether.client.gui.menu.AetherMainMenu;
 import com.gildedgames.the_aether.client.gui.menu.GuiMenuToggleButton;
 import com.gildedgames.the_aether.containers.inventory.InventoryAccessories;
@@ -292,7 +293,7 @@ public class AetherClientEvents
 	{
 		Class<?> clazz = event.getGui().getClass();
 
-		if ((clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz) || PixelmonUtil.isOverridenInventoryGUI(clazz) || PixelmonUtil.isOverridenCreativeGUI(clazz) || clazz == GuiContainerCreative.class) && event.getButton().id == 18067)
+		if (clazz != GuiAccessories.class && event.getButton().id == 18067)
 		{
 			AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
 		}
