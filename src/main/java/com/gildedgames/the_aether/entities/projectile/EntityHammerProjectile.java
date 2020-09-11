@@ -58,7 +58,7 @@ public class EntityHammerProjectile extends EntityThrowable
     		++this.ticksInAir;
     	}
 
-    	if (this.ticksInAir > 600)
+    	if (this.ticksInAir > 500)
     	{
     		this.setDead();
     	}
