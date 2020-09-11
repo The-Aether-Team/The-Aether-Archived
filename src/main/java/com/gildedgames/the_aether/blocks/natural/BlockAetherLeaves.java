@@ -188,6 +188,14 @@ public class BlockAetherLeaves extends BlockLeaves implements IAetherMeta
 	}
 
 	@Override
+    protected ItemStack getSilkTouchDrop(IBlockState state)
+    {
+        Item item = Item.getItemFromBlock(this);
+
+        return new ItemStack(item, 1, state.getValue(leaf_type).getMeta());
+    }
+
+	@Override
 	public EnumType getWoodType(int meta)
 	{
 		return null;
