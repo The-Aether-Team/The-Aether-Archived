@@ -223,7 +223,7 @@ public class BlockAercloud extends Block implements IAetherMeta
 	@Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
 	{
-		return ((EnumCloudType)blockState.getValue(cloud_type)).getMeta() != 1 ? new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.01D, 1.0D) : new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
+		return ((EnumCloudType)blockState.getValue(cloud_type)).getMeta() != 1 ? new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.01D, 1.0D) : NULL_AABB;
 	}
 
 }
