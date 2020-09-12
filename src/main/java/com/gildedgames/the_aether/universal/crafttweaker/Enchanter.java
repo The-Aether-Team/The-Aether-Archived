@@ -3,6 +3,7 @@ package com.gildedgames.the_aether.universal.crafttweaker;
 
 import com.gildedgames.the_aether.api.enchantments.AetherEnchantment;
 import com.gildedgames.the_aether.api.enchantments.AetherEnchantmentFuel;
+import com.gildedgames.the_aether.api.freezables.AetherFreezable;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
@@ -27,10 +28,14 @@ public class Enchanter {
         CraftTweakerAPI.apply(new RegisterAction<>(enchantments, new AetherEnchantment(CraftTweakerMC.getItemStack(repair), CraftTweakerMC.getItemStack(repair), timeRequired)));
     }
 
-
     @ZenMethod
     public static void registerEnchanterFuel(IItemStack input, int timeGiven) {
         CraftTweakerAPI.apply(new RegisterAction<>(enchantmentFuels, new AetherEnchantmentFuel(CraftTweakerMC.getItemStack(input), timeGiven)));
+    }
+
+    @ZenMethod
+    public static void removeEnchantment(IItemStack input) {
+        CraftTweakerAPI.apply(new RegisterAction<>(enchantments, new AetherEnchantment(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(null), 1)));
     }
 
 }

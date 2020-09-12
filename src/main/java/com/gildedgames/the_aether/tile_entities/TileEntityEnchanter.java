@@ -55,79 +55,89 @@ public class TileEntityEnchanter extends AetherTileEntity
 
 			if (this.currentEnchantment != null)
 			{
-				if (this.world.getBlockState(this.getPos().down()).getBlock() == BlocksAether.enchanted_gravitite)
+				if (!this.currentEnchantment.getOutput().isEmpty())
 				{
-					this.progress += 2.5F;
-				}
-				else
-				{
-					this.progress++;
+					if (this.world.getBlockState(this.getPos().down()).getBlock() == BlocksAether.enchanted_gravitite)
+					{
+						this.progress += 2.5F;
+					}
+					else
+					{
+						this.progress++;
+					}
 				}
 			}
 		}
 
 		if (this.currentEnchantment != null)
 		{
-			if (this.progress >= this.ticksRequired)
+			if (!this.currentEnchantment.getOutput().isEmpty())
 			{
-				if (!this.world.isRemote)
+				if (this.progress >= this.ticksRequired)
 				{
-					ItemStack result = this.currentEnchantment.getOutput().copy();
-
-					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
-
-					if (this.getStackInSlot(0).hasTagCompound())
-					{
-						result.setTagCompound(this.getStackInSlot(0).getTagCompound());
-					}
-
-					if (!this.getStackInSlot(2).isEmpty() && this.getStackInSlot(2).isStackable())
-					{
-						result.setCount(this.getStackInSlot(2).getCount() + 1);
-
-						this.setInventorySlotContents(2, result);
-					}
-					else
-					{
-						this.setInventorySlotContents(2, result);
-					}
-
-					if (this.getStackInSlot(0).getItem().hasContainerItem(this.getStackInSlot(0)))
-					{
-						this.setInventorySlotContents(0, this.getStackInSlot(0).getItem().getContainerItem(this.getStackInSlot(0)));
-					}
-					else
-					{
-						this.decrStackSize(0, 1);
-					}
-				}
-
-				this.progress = 0;
-				AetherHooks.onItemEnchant(this, this.currentEnchantment);
-			}
-
-			if (this.getStackInSlot(0).isEmpty() || (!this.getStackInSlot(0).isEmpty() && AetherAPI.getInstance().getEnchantment(this.getStackInSlot(0)) != this.currentEnchantment))
-			{
-				this.currentEnchantment = null;
-				this.progress = 0;
-			}
-
-			if (this.powerRemaining <= 0)
-			{
-				if (!this.getStackInSlot(1).isEmpty() && AetherAPI.getInstance().isEnchantmentFuel(this.getStackInSlot(1)))
-				{
-					this.powerRemaining += AetherAPI.getInstance().getEnchantmentFuel(this.getStackInSlot(1)).getTimeGiven();
-
 					if (!this.world.isRemote)
 					{
-						this.decrStackSize(1, 1);
+						ItemStack result = this.currentEnchantment.getOutput().copy();
+
+						EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
+
+						if (this.getStackInSlot(0).hasTagCompound())
+						{
+							result.setTagCompound(this.getStackInSlot(0).getTagCompound());
+						}
+
+						if (!this.getStackInSlot(2).isEmpty() && this.getStackInSlot(2).isStackable())
+						{
+							result.setCount(this.getStackInSlot(2).getCount() + 1);
+
+							this.setInventorySlotContents(2, result);
+						}
+						else
+						{
+							this.setInventorySlotContents(2, result);
+						}
+
+						if (this.getStackInSlot(0).getItem().hasContainerItem(this.getStackInSlot(0)))
+						{
+							this.setInventorySlotContents(0, this.getStackInSlot(0).getItem().getContainerItem(this.getStackInSlot(0)));
+						}
+						else
+						{
+							this.decrStackSize(0, 1);
+						}
 					}
+
+					this.progress = 0;
+					AetherHooks.onItemEnchant(this, this.currentEnchantment);
 				}
-				else
+
+				if (this.getStackInSlot(0).isEmpty() || (!this.getStackInSlot(0).isEmpty() && AetherAPI.getInstance().getEnchantment(this.getStackInSlot(0)) != this.currentEnchantment))
 				{
 					this.currentEnchantment = null;
 					this.progress = 0;
 				}
+
+				if (this.powerRemaining <= 0)
+				{
+					if (!this.getStackInSlot(1).isEmpty() && AetherAPI.getInstance().isEnchantmentFuel(this.getStackInSlot(1)))
+					{
+						this.powerRemaining += AetherAPI.getInstance().getEnchantmentFuel(this.getStackInSlot(1)).getTimeGiven();
+
+						if (!this.world.isRemote)
+						{
+							this.decrStackSize(1, 1);
+						}
+					}
+					else
+					{
+						this.currentEnchantment = null;
+						this.progress = 0;
+					}
+				}
+			}
+			else
+			{
+				this.currentEnchantment = null;
 			}
 		}
 		else if (!this.getStackInSlot(0).isEmpty())

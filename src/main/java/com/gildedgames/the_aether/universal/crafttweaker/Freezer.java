@@ -27,5 +27,8 @@ public class Freezer {
         CraftTweakerAPI.apply(new RegisterAction<>(freezableFuels, new AetherFreezableFuel(CraftTweakerMC.getItemStack(input), timeGiven)));
     }
 
-
+    @ZenMethod
+    public static void removeFreezable(IItemStack input) {
+        CraftTweakerAPI.apply(new RegisterAction<>(freezables, new AetherFreezable(CraftTweakerMC.getItemStack(input), CraftTweakerMC.getItemStack(null), 1)));
+    }
 }

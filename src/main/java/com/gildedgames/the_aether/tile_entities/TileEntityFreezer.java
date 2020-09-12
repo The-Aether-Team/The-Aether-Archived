@@ -55,79 +55,89 @@ public class TileEntityFreezer extends AetherTileEntity
 
 			if (this.currentFreezable != null)
 			{
-				if (this.world.getBlockState(this.getPos().down()).getBlock() == BlocksAether.icestone)
+				if (!this.currentFreezable.getOutput().isEmpty())
 				{
-					this.progress += 2;
-				}
-				else
-				{
-					this.progress++;
+					if (this.world.getBlockState(this.getPos().down()).getBlock() == BlocksAether.icestone)
+					{
+						this.progress += 2;
+					}
+					else
+					{
+						this.progress++;
+					}
 				}
 			}
 		}
 
 		if (this.currentFreezable != null)
 		{
-			if (this.progress >= this.currentFreezable.getTimeRequired())
+			if (!this.currentFreezable.getOutput().isEmpty())
 			{
-				if (!this.world.isRemote)
+				if (this.progress >= this.currentFreezable.getTimeRequired())
 				{
-					ItemStack result = this.currentFreezable.getOutput().copy();
-
-					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
-
-					if (this.getStackInSlot(0).hasTagCompound())
-					{
-						result.setTagCompound(this.getStackInSlot(0).getTagCompound());
-					}
-
-					if (!this.getStackInSlot(2).isEmpty() && this.getStackInSlot(2).isStackable())
-					{
-						result.setCount(this.getStackInSlot(2).getCount() + 1);
-
-						this.setInventorySlotContents(2, result);
-					}
-					else
-					{
-						this.setInventorySlotContents(2, result);
-					}
-
-					if (this.getStackInSlot(0).getItem().hasContainerItem(this.getStackInSlot(0)))
-					{
-						this.setInventorySlotContents(0, this.getStackInSlot(0).getItem().getContainerItem(this.getStackInSlot(0)));
-					}
-					else
-					{
-						this.decrStackSize(0, 1);
-					}
-				}
-
-				this.progress = 0;
-				AetherHooks.onItemFreeze(this, this.currentFreezable);
-			}
-
-			if (this.getStackInSlot(0).isEmpty() || (!this.getStackInSlot(0).isEmpty() && AetherAPI.getInstance().getFreezable(this.getStackInSlot(0)) != this.currentFreezable))
-			{
-				this.currentFreezable = null;
-				this.progress = 0;
-			}
-
-			if (this.powerRemaining <= 0)
-			{
-				if (!this.getStackInSlot(1).isEmpty() && AetherAPI.getInstance().isFreezableFuel(this.getStackInSlot(1)))
-				{
-					this.powerRemaining += AetherAPI.getInstance().getFreezableFuel(this.getStackInSlot(1)).getTimeGiven();
-
 					if (!this.world.isRemote)
 					{
-						this.decrStackSize(1, 1);
+						ItemStack result = this.currentFreezable.getOutput().copy();
+
+						EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(this.getStackInSlot(0)), result);
+
+						if (this.getStackInSlot(0).hasTagCompound())
+						{
+							result.setTagCompound(this.getStackInSlot(0).getTagCompound());
+						}
+
+						if (!this.getStackInSlot(2).isEmpty() && this.getStackInSlot(2).isStackable())
+						{
+							result.setCount(this.getStackInSlot(2).getCount() + 1);
+
+							this.setInventorySlotContents(2, result);
+						}
+						else
+						{
+							this.setInventorySlotContents(2, result);
+						}
+
+						if (this.getStackInSlot(0).getItem().hasContainerItem(this.getStackInSlot(0)))
+						{
+							this.setInventorySlotContents(0, this.getStackInSlot(0).getItem().getContainerItem(this.getStackInSlot(0)));
+						}
+						else
+						{
+							this.decrStackSize(0, 1);
+						}
 					}
+
+					this.progress = 0;
+					AetherHooks.onItemFreeze(this, this.currentFreezable);
 				}
-				else
+
+				if (this.getStackInSlot(0).isEmpty() || (!this.getStackInSlot(0).isEmpty() && AetherAPI.getInstance().getFreezable(this.getStackInSlot(0)) != this.currentFreezable))
 				{
 					this.currentFreezable = null;
 					this.progress = 0;
 				}
+
+				if (this.powerRemaining <= 0)
+				{
+					if (!this.getStackInSlot(1).isEmpty() && AetherAPI.getInstance().isFreezableFuel(this.getStackInSlot(1)))
+					{
+						this.powerRemaining += AetherAPI.getInstance().getFreezableFuel(this.getStackInSlot(1)).getTimeGiven();
+
+						if (!this.world.isRemote)
+						{
+							this.decrStackSize(1, 1);
+						}
+					}
+					else
+					{
+						this.currentFreezable = null;
+						this.progress = 0;
+					}
+				}
+			}
+			else
+			{
+				this.currentFreezable = null;
 			}
 		}
 		else if (!this.getStackInSlot(0).isEmpty())

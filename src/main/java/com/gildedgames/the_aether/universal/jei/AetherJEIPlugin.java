@@ -34,7 +34,14 @@ public class AetherJEIPlugin implements IModPlugin
 			@Override
 			public IRecipeWrapper getRecipeWrapper(AetherEnchantment recipe)
 			{
-				return new EnchanterRecipeWrapper(recipe);
+				if (!recipe.getOutput().isEmpty())
+				{
+					return new EnchanterRecipeWrapper(recipe);
+				}
+				else
+				{
+					return null;
+				}
 			}
 		}, "aether_legacy.enchantment");
 
@@ -43,7 +50,14 @@ public class AetherJEIPlugin implements IModPlugin
 			@Override
 			public IRecipeWrapper getRecipeWrapper(AetherFreezable recipe)
 			{
-				return new FreezerRecipeWrapper(recipe);
+				if (!recipe.getOutput().isEmpty())
+				{
+					return new FreezerRecipeWrapper(recipe);
+				}
+				else
+				{
+					return null;
+				}
 			}
 		}, "aether_legacy.freezable");
 
