@@ -56,6 +56,11 @@ public class AetherMusicTicker implements ITickable
                 }
            	}
         }
+
+        if (!this.mc.getSoundHandler().isSoundPlaying(this.menuMusic))
+        {
+            this.menuMusic = null;
+        }
     }
 
     public boolean playingMusic()
