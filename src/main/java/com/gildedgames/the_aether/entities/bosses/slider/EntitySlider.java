@@ -25,11 +25,7 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityFlying;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -52,6 +48,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -791,6 +788,23 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                 this.applyEntityCollision(entity);
             }
         }
+    }
+
+    @Nullable
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
+    {
+        if (this.dungeonX == 0 && this.dungeonY == 0 && this.dungeonZ == 0)
+        {
+            this.setDungeon(this.posX - 8, this.posY - 2, this.posZ - 8);
+        }
+        
+        if (this.getBossName().isEmpty())
+        {
+            this.setBossName(AetherNameGen.gen());
+        }
+
+        return super.onInitialSpawn(difficulty, livingdata);
     }
 
     @Override
