@@ -71,7 +71,7 @@ public class AetherBiome extends BiomeGenBase {
 	{
 		list.add(new SpawnListEntry(EntityWhirlwind.class, 8, 2, 2));
 		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
-		list.add(new SpawnListEntry(EntityZephyr.class, 3, 1, 1));
+		list.add(new SpawnListEntry(EntityZephyr.class, 2, 1, 1));
 		list.add(new SpawnListEntry(EntityAerwhale.class, 2, 1, 1));
 	}
 
