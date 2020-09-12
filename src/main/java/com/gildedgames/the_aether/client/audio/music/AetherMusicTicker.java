@@ -57,6 +57,10 @@ public class AetherMusicTicker implements IUpdatePlayerListBox {
 				}
 			}
 		}
+
+		if (!this.mc.getSoundHandler().isSoundPlaying(this.menuMusic)) {
+			this.menuMusic = null;
+		}
 	}
 
 	public boolean playingMusic() {
