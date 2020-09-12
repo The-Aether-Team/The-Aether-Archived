@@ -30,7 +30,7 @@ If you're feeling a bit more adventurous (or a developer has suggested you to do
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://gitea.gildedgames.com/GildedGames/The-Aether/issues). When doing so, we ask that you provide the following information:
 
-- The exact version of the Aether you are running, such as `1.12.2-1.5.1`, and the version of Forge you are using, such as `14.23.5.2847`. Please do not state "the latest stable release" or "latest Forge".
+- The exact version of the Aether you are running, such as `1.12.2-1.5.2`, and the version of Forge you are using, such as `14.23.5.2847`. Please do not state "the latest stable release" or "latest Forge".
 - If your issue is a bug or otherwise unexpected behavior, state what you expected to happen.
 - If your issue is a crash, attach the latest client or server log and the complete crash report as a file.
 - If your issue only occurs with other mods/plugins installed, list the exact mod/plugin versions installed.
