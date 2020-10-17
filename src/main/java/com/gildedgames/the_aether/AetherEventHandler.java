@@ -65,6 +65,7 @@ AetherEventHandler {
 
 	@SubscribeEvent
 	public void checkBlockBannedEvent(PlayerInteractEvent event) {
+		if(event.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK) return;
 		EntityPlayer player = event.entityPlayer;
 		ItemStack currentStack = player.getCurrentEquippedItem();
 
