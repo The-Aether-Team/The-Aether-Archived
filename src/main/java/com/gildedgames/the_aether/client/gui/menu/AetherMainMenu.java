@@ -183,14 +183,14 @@ public class AetherMainMenu extends GuiMainMenu
 
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
-        this.buttonList.add(new AetherMainMenuButton(1, 30, p_73969_1_, 200, 20, 35, I18n.format("menu.singleplayer", new Object[0])));
+        this.buttonList.add(new AetherMainMenuButton(1, 30, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new AetherMainMenuButton(2, 30, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
-        GuiButton realmsButton = new AetherMainMenuButton(14, 30, p_73969_1_ + p_73969_2_ * 2, 200, 20, 24, I18n.format("menu.online", new Object[0]));
-        GuiButton fmlModButton = new AetherMainMenuButton(6,  30, p_73969_1_ + p_73969_2_ * 3, 200, 20, 54, "Mods");
+        GuiButton realmsButton = new AetherMainMenuButton(14, 30, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0]));
+        GuiButton fmlModButton = new AetherMainMenuButton(6,  30, p_73969_1_ + p_73969_2_ * 3, "Mods");
         this.buttonList.add(realmsButton);
         this.buttonList.add(fmlModButton);
-        this.buttonList.add(new AetherMainMenuButton(0, 30, p_73969_1_ + p_73969_2_ * 4, 200, 20, 45, I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new AetherMainMenuButton(4,30, p_73969_1_ + p_73969_2_ * 5, 200, 20, 43, I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new AetherMainMenuButton(0, 30, p_73969_1_ + p_73969_2_ * 4, I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new AetherMainMenuButton(4,30, p_73969_1_ + p_73969_2_ * 5, I18n.format("menu.quit", new Object[0])));
     }
 
     @Override
