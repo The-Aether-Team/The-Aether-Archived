@@ -36,7 +36,7 @@ public class ComponentGoldenIslandStub extends AetherStructure
 	}
 
 	@Override
-	public boolean generate() 
+	public boolean generate()
 	{
 		this.replaceAir = true;
 		this.replaceSolid = true;
@@ -89,7 +89,7 @@ public class ComponentGoldenIslandStub extends AetherStructure
                                     }
                                 }
                             }
-                        } 
+                        }
                         else if(BlocksAether.isGood(this.getBlockStateWithOffset(i1 + x, k1 + y, i2 + z)))
                         {
                         	this.setBlockWithOffset(i1 + x, k1 + y, i2 + z, BlocksAether.holystone.getDefaultState());

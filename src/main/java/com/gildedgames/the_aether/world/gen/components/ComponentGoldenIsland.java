@@ -34,7 +34,7 @@ public class ComponentGoldenIsland extends AetherStructure
 	}
 
 	@Override
-	public boolean generate() 
+	public boolean generate()
 	{
 		this.replaceAir = true;
 		this.replaceSolid = true;
@@ -77,7 +77,7 @@ public class ComponentGoldenIsland extends AetherStructure
                     {
                         i4 = MathHelper.floor((double)i4 * 1.375D);
                         i4 -= 6;
-                    } 
+                    }
                     else if(l2 < -15)
                     {
                         i4 = MathHelper.floor((double)i4 * 1.3500000238418579D);

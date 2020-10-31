@@ -1,50 +1,26 @@
 package com.gildedgames.the_aether.blocks;
 
+import com.gildedgames.the_aether.AetherLogger;
 import com.gildedgames.the_aether.blocks.container.BlockEnchanter;
 import com.gildedgames.the_aether.blocks.container.BlockFreezer;
 import com.gildedgames.the_aether.blocks.container.BlockIncubator;
+import com.gildedgames.the_aether.blocks.decorative.*;
+import com.gildedgames.the_aether.blocks.natural.*;
 import com.gildedgames.the_aether.blocks.natural.enchanted.BlockEnchantedAetherGrass;
 import com.gildedgames.the_aether.blocks.natural.enchanted.BlockEnchantedGravitite;
 import com.gildedgames.the_aether.blocks.natural.ore.BlockAmbrosiumOre;
 import com.gildedgames.the_aether.blocks.natural.ore.BlockGravititeOre;
 import com.gildedgames.the_aether.blocks.natural.ore.BlockZaniteOre;
 import com.gildedgames.the_aether.blocks.portal.BlockAetherPortal;
+import com.gildedgames.the_aether.blocks.util.EnumLeafType;
 import com.gildedgames.the_aether.items.block.ItemEnchanter;
 import com.gildedgames.the_aether.registry.creative_tabs.AetherCreativeTabs;
 import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.blocks.decorative.BlockAerogel;
-import com.gildedgames.the_aether.blocks.decorative.BlockAerogelSlab;
-import com.gildedgames.the_aether.blocks.decorative.BlockAerogelStairs;
-import com.gildedgames.the_aether.blocks.decorative.BlockAerogelWall;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherFence;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherFenceGate;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherSlab;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherStairs;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherWall;
-import com.gildedgames.the_aether.blocks.decorative.BlockAmbrosiumTorch;
-import com.gildedgames.the_aether.blocks.decorative.BlockPresent;
-import com.gildedgames.the_aether.blocks.decorative.BlockQuicksoilGlass;
-import com.gildedgames.the_aether.blocks.decorative.BlockSkyrootBookshelf;
-import com.gildedgames.the_aether.blocks.decorative.BlockSkyrootPlank;
-import com.gildedgames.the_aether.blocks.decorative.BlockZanite;
 import com.gildedgames.the_aether.blocks.dungeon.BlockDungeonBase;
 import com.gildedgames.the_aether.blocks.dungeon.BlockDungeonTrap;
 import com.gildedgames.the_aether.blocks.dungeon.BlockMimicChest;
 import com.gildedgames.the_aether.blocks.dungeon.BlockPillar;
 import com.gildedgames.the_aether.blocks.dungeon.BlockTreasureChest;
-import com.gildedgames.the_aether.blocks.natural.BlockAercloud;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherDirt;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherFlower;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherGrass;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherLeaves;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherLog;
-import com.gildedgames.the_aether.blocks.natural.BlockBerryBush;
-import com.gildedgames.the_aether.blocks.natural.BlockBerryBushStem;
-import com.gildedgames.the_aether.blocks.natural.BlockCrystalLeaves;
-import com.gildedgames.the_aether.blocks.natural.BlockHolidayLeaves;
-import com.gildedgames.the_aether.blocks.natural.BlockHolystone;
-import com.gildedgames.the_aether.blocks.natural.BlockIcestone;
-import com.gildedgames.the_aether.blocks.natural.BlockQuicksoil;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.items.block.ItemAetherSlab;
 import com.gildedgames.the_aether.items.block.ItemRarity;
@@ -61,6 +37,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class BlocksAether
@@ -119,7 +96,7 @@ public class BlocksAether
 	public static Block skyroot_bed;
 
 	public static Block ambrosium_lamp;
-	
+
 	public static BlockChest dungeon_chest = Blocks.CHEST;
 
 	private static int availableId;
@@ -135,6 +112,9 @@ public class BlocksAether
 
 	public static void registerItems(IForgeRegistry<Item> blockRegistry)
 	{
+		for (int i = 0; i < itemList.length; i++) {
+			System.out.println(i + ": " + (itemList[i] == null));
+		}
 		blockRegistry.registerAll(itemList);
 	}
 
@@ -227,8 +207,8 @@ public class BlocksAether
 		aerogel_slab = registerSlab("aerogel_slab", new BlockAerogelSlab("aerogel_slab", false, Material.IRON).setHardness(0.5F).setResistance(999F), aerogel_double_slab);
 		sun_altar = register("sun_altar", new BlockSunAltar());
 		skyroot_bookshelf = register("skyroot_bookshelf", new BlockSkyrootBookshelf());
-		skyroot_bed = registerBed("skyroot_bed", new BlockSkyrootBed());
 		ambrosium_lamp = register("ambrosium_lamp", new BlockAmbrosiumLamp());
+		skyroot_bed = registerBed("skyroot_bed", new BlockSkyrootBed());
 	}
 
 	public static void initializeHarvestLevels()

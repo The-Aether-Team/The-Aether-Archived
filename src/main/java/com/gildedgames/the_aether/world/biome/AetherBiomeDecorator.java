@@ -31,9 +31,9 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import com.gildedgames.the_aether.AetherConfig;
-import com.gildedgames.AetherConfig;
-import com.gildedgames.blocks.BlocksAether;
-import com.gildedgames.blocks.util.EnumCloudType;
+import com.gildedgames.the_aether.AetherConfig;
+import com.gildedgames.the_aether.blocks.BlocksAether;
+import com.gildedgames.the_aether.blocks.util.EnumCloudType;
 
 public class AetherBiomeDecorator extends BiomeDecorator
 {

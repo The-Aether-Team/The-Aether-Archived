@@ -44,6 +44,7 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 
 	public static final PropertyBool double_drop = PropertyBool.create(Aether.doubleDropNotifier());
 	public static final PropertyBool snowy = PropertyBool.create("snowy");
+	public static final PropertyBool dungeon_block = PropertyBool.create("dungeon_block");
 	public static final PropertyEnum<EnumGrassType> variant = PropertyEnum.create("variant", EnumGrassType.class);
 
 	public BlockAetherGrass()
@@ -54,7 +55,7 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 		this.setHardness(0.6F);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setSoundType(SoundType.PLANT);
-		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE).withProperty(snowy, Boolean.FALSE).withProperty(variant, EnumGrassType.Aether));
+		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE).withProperty(snowy, Boolean.FALSE).withProperty(dungeon_block, Boolean.FALSE).withProperty(variant, EnumGrassType.Aether));
 	}
 
 	@Override
@@ -79,9 +80,17 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 	}
 
 	@Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos)
+    {
+        Block block = worldIn.getBlockState(pos.up()).getBlock();
+        return state.withProperty(snowy, block == Blocks.SNOW || block == Blocks.SNOW_LAYER);
+    }
+
+
+	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
-		world.setBlockState(pos, state.withProperty(double_drop, Boolean.FALSE).withProperty(snowy, Boolean.FALSE));
+		world.setBlockState(pos, state.withProperty(double_drop, Boolean.FALSE).withProperty(dungeon_block, Boolean.FALSE));
 	}
 
 	@Override
@@ -94,7 +103,12 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 			meta |= 1;
 		}
 
-		meta |= state.getValue(variant).getMeta() << 1;
+		if (!state.getValue(dungeon_block))
+		{
+			meta |= 2;
+		}
+
+		meta |= state.getValue(variant).getMeta() << 2;
 
 		return meta;
 	}
@@ -103,7 +117,8 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 	public IBlockState getStateFromMeta(int meta)
 	{
 		return this.getDefaultState().withProperty(double_drop, (meta & 1) == 0)
-				.withProperty(variant, EnumGrassType.getType(meta >> 1));
+				.withProperty(variant, EnumGrassType.getType(meta >> 2))
+				.withProperty(dungeon_block, (meta & (2)) == 0);
 	}
 
 	@Override
@@ -124,7 +139,7 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		return new BlockStateContainer(this, double_drop, snowy, variant);
+		return new BlockStateContainer(this, double_drop, snowy, variant, dungeon_block);
 	}
 
 	@Override

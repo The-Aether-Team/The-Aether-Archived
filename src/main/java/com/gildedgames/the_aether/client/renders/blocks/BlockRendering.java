@@ -46,7 +46,6 @@ public class BlockRendering
 	@SubscribeEvent
 	public void onModelRegisterEvent(ModelRegistryEvent event)
 	{
-        registerBlockWithStateMapper(BlocksAether.aether_grass, (new AetherStateMap.Builder()).ignore(BlockAetherGrass.double_drop).ignore(BlockAetherGrass.dungeon_block).build());
         registerBlockWithStateMapper(BlocksAether.aether_dirt, (new AetherStateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.aether_grass_path, (new AetherStateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).ignore(BlockHolystone.dungeon_block).build());
@@ -90,6 +89,7 @@ public class BlockRendering
 				final LinkedHashMap<IProperty<?>, Comparable<?>> mappings = Maps.newLinkedHashMap(state.getProperties());
 
 				mappings.remove(BlockAetherGrass.double_drop);
+				mappings.remove(BlockAetherGrass.dungeon_block);
 
 				if (state.getValue(BlockAetherGrass.snowy))
 				{
