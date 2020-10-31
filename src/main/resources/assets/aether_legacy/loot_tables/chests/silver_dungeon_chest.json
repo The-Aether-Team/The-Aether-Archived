@@ -29,9 +29,14 @@
 					"functions": [
 						{
 							"function": "aether_legacy:set_moa_type",
-							"moa_type": "white"
+							"moa_type": "blue"
 						}
 					]
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether_legacy:chests/silver_dungeon_chest_sub0"
 				},
 				{
 					"type": "item",
@@ -107,7 +112,7 @@
 				{
 					"type": "loot_table",
 					"weight": 1,
-					"name": "aether_legacy:chests/silver_dungeon_chest_sub0"
+					"name": "aether_legacy:chests/silver_dungeon_chest_sub1"
 				},
 				{
 					"type": "item",
@@ -120,11 +125,6 @@
 							"data": 2
 						}
 					]
-				},
-				{
-					"type": "loot_table",
-					"weight": 1,
-					"name": "aether_legacy:chests/silver_dungeon_chest_sub1"
 				},
 				{
 					"type": "loot_table",
@@ -145,6 +145,11 @@
 					"type": "loot_table",
 					"weight": 1,
 					"name": "aether_legacy:chests/silver_dungeon_chest_sub5"
+				},
+				{
+					"type": "loot_table",
+					"weight": 1,
+					"name": "aether_legacy:chests/silver_dungeon_chest_sub6"
 				},
 				{
 					"type": "item",

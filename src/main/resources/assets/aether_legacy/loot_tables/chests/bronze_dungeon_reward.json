@@ -47,7 +47,7 @@
 							"function": "set_count",
 							"count": {
 								"min": 1,
-								"max": 15
+								"max": 20
 							}
 						}
 					]
@@ -71,6 +71,11 @@
 					"type": "item",
 					"weight": 1,
 					"name": "aether_legacy:repulsion_shield"
+				},
+				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:notch_hammer"
 				},
 				{
 					"type": "item",

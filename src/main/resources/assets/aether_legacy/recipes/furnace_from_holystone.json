@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "HHH",
+    "H H",
+    "HHH"
+  ],
+  "key": {
+    "H": {
+      "item": "aether_legacy:holystone"
+    }
+  },
+  "result": {
+    "item": "minecraft:furnace"
+  }
+}

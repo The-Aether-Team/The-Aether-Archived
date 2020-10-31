@@ -1,7 +1,7 @@
 {
     "pools": [
         {
-            "name": "wool",
+            "name": "sheepuff_red",
             "rolls": 1,
             "entries": [
                 {
@@ -18,7 +18,7 @@
             ]
         },
         {
-            "name": "common",
+            "name": "sheepuff_red",
             "rolls": 1,
             "entries": [
                 {

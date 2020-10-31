@@ -61,7 +61,7 @@ If you're feeling a bit more adventurous (or a developer has suggested you to do
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://gitea.gildedgames.com/GildedGames/The-Aether/issues). When doing so, we ask that you provide the following information:
 
-- The exact version of the Aether you are running, such as `1.10.2-1.0.0`, and the version of Forge you are using, such as `14.23.5.2768`. Please do not state "the latest stable release" or "latest Forge".
+- The exact version of the Aether you are running, such as `1.12.2-1.5.1`, and the version of Forge you are using, such as `14.23.5.2847`. Please do not state "the latest stable release" or "latest Forge".
 - If your issue is a bug or otherwise unexpected behavior, state what you expected to happen.
 - If your issue is a crash, attach the latest client or server log and the complete crash report as a file.
 - If your issue only occurs with other mods/plugins installed, list the exact mod/plugin versions installed.
@@ -71,12 +71,12 @@ Make sure to keep your issue's description clear and concise. Your issue's title
 ## :wrench: Contribute to the project
 Looking to contribute to the project? We ask that you read over our [Contributor's Guide](https://gitea.gildedgames.com/GildedGames/The-Aether/src/branch/1.12.2/CONTRIBUTING.md) for more details and our Contributor License Agreement (CLA) before getting started.
 
-Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://gitea.gildedgames.com/GildedGames/Aether-II/issues?label_name%5B%5D=Contributions+Welcome) which shows all the currently open issues that we'd love some help on.
+Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://gitea.gildedgames.com/GildedGames/The-Aether/issues?label_name%5B%5D=Contributions+Welcome) which shows all the currently open issues that we'd love some help on.
 
 ## :scroll: License information
 If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for the Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. We ask however that if you are using code or assets from The Aether project that you adhere to the licenses below, and that you please don't advertise using our brand. If you're interested in sponsoring The Aether project or Gilded Games or wish to otherwise use our brand, please [contact us](mailto:support@gildedgames.com).
 
-The source code of The Aether mod for Minecraft 1.7+ is under the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html) license. **All assets of the The Aether for Minecraft 1.7+ (found in the [resources folder](https://gitea.gildedgames.com/GildedGames/Aether-II/src/branch/1.12.2/src/main/resources/assets)) are unlicensed and all rights are reserved to them by Gilded Games.** 
+The source code of The Aether mod for Minecraft 1.7+ is under the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html) license. **All assets of the The Aether for Minecraft 1.7+ (found in the [resources folder](https://gitea.gildedgames.com/GildedGames/The-Aether/src/branch/1.12.2/src/main/resources/assets)) are unlicensed and all rights are reserved to them by Gilded Games.** 
 
 [Wiki contributions](https://gitea.gildedgames.com/GildedGames/Aether-II/wiki) are under the [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) unless otherwise stated.
 

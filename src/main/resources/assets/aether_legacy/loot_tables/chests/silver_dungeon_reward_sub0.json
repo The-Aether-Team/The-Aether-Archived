@@ -21,8 +21,7 @@
 			"rolls": 1,
 			"conditions": [
 				{
-					"condition": "aether_legacy:valkyrie_cape_enabled",
-					"enabled": false
+					"condition": "aether_legacy:golden_feather_enabled"
 				}
 			],
 			"entries": [

@@ -18,6 +18,11 @@
 					"name": "aether_legacy:vampire_blade"
 				},
 				{
+					"type": "item",
+					"weight": 1,
+					"name": "aether_legacy:pig_slayer"
+				},
+				{
 					"type": "loot_table",
 					"weight": 1,
 					"name": "aether_legacy:chests/gold_dungeon_reward_sub0"

@@ -136,6 +136,13 @@
       "mob/bat/takeoff"
     ]
   },
+	"aemob.moa.egg": {
+		"category": "neutral",
+		"subtitle": "subtitles.aemob.moa.egg",
+		"sounds": [
+			"mob/chicken/plop"
+		]
+	},
   "aemob.sheepuff.say": {
     "category": "neutral",
     "subtitle": "subtitles.aemob.sheepuff.say",
@@ -237,6 +244,65 @@
       "aether_legacy:aemob/aerbunny/lift"
     ]
   },
+	"aemob.swet.squish": {
+		"category": "hostile",
+		"subtitle": "subtitles.aemob.swet.squish",
+		"sounds": [
+			"mob/slime/big1",
+			"mob/slime/big2",
+			"mob/slime/big3",
+			"mob/slime/big4"
+		]
+	},
+	"aemob.swet.jump": {
+		"category": "hostile",
+		"subtitle": "subtitles.aemob.swet.jump",
+		"sounds": [
+			"mob/slime/big1",
+			"mob/slime/big2",
+			"mob/slime/big3",
+			"mob/slime/big4"
+		]
+	},
+	"aemob.swet.attack": {
+		"category": "hostile",
+		"subtitle": "subtitles.aemob.swet.attack",
+		"sounds": [
+			"mob/slime/attack1",
+			"mob/slime/attack2"
+		]
+	},
+	"aemob.swet.death": {
+		"category": "hostile",
+		"subtitle": "subtitles.aemob.swet.death",
+		"sounds": [
+			"mob/slime/big1",
+			"mob/slime/big2",
+			"mob/slime/big3",
+			"mob/slime/big4"
+		]
+	},
+	"aemob.cockatrice.say": {
+		"category": "hostile",
+		"subtitle": "subtitles.aemob.cockatrice.say",
+		"sounds": [
+			"aether_legacy:aemob/moa/say"
+		]
+	},
+	"aemob.cockatrice.flap": {
+		"category": "hostile",
+		"subtitle": "subtitles.aemob.cockatrice.flap",
+		"sounds": [
+			"mob/bat/takeoff"
+		]
+	},
+	"aemob.cockatrice.attack": {
+		"category": "hostile",
+		"subtitle": "subtitles.aemob.cockatrice.attack",
+		"sounds": [
+			"random/bow"
+		]
+	},
   "aemob.zephyr.call": {
     "category": "hostile",
     "subtitle": "subtitles.aemob.zephyr.say",
@@ -251,6 +317,13 @@
       "aether_legacy:aemob/zephyr/shoot"
     ]
   },
+	"aemob.aechor_plant.attack": {
+		"category": "hostile",
+		"subtitle": "subtitles.aemob.aechor_plant.attack",
+		"sounds": [
+			"random/bow"
+		]
+	},
   "aemob.aerwhale.call": {
     "category": "neutral",
     "subtitle": "subtitles.aemob.aerwhale.say",

@@ -1,0 +1,10 @@
+{
+    "ctm":{
+        "ctm_version": 1,
+        "type":"CTM",
+        "layer":"TRANSLUCENT",
+        "textures":[
+            "aether_legacy:blocks/quicksoil_glass-ctm"
+        ]
+    }
+}
