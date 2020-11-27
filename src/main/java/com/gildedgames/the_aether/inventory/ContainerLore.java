@@ -74,10 +74,12 @@ public class ContainerLore extends Container {
 
 	@Override
 	public void onContainerClosed(EntityPlayer entityplayer) {
-		ItemStack item = this.loreSlot.getStackInSlot(0);
+		if(!entityplayer.worldObj.isRemote) {
+			ItemStack item = this.loreSlot.getStackInSlot(0);
 
-		if (item != null) {
-			entityplayer.entityDropItem(item, 1.0F);
+			if (item != null) {
+				entityplayer.entityDropItem(item, 1.0F);
+			}
 		}
 
 		super.onContainerClosed(entityplayer);
