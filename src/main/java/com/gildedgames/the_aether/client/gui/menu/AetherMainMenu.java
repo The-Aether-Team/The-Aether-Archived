@@ -197,12 +197,12 @@ public class AetherMainMenu extends GuiMainMenu
 
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
-        this.buttonList.add(new AetherMainMenuButton(1, 30, p_73969_1_, 200, 20, 35, I18n.format("menu.singleplayer")));
+        this.buttonList.add(new AetherMainMenuButton(1, 30, p_73969_1_, I18n.format("menu.singleplayer")));
         this.buttonList.add(new AetherMainMenuButton(2, 30, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer")));
-        this.realmsButton = this.addButton(new AetherMainMenuButton(14, 30, p_73969_1_ + p_73969_2_ * 2, 200, 20, 50, I18n.format("menu.online").replace("Minecraft", "").trim()));
-        this.buttonList.add(modButton = new AetherMainMenuButton(6, 30, p_73969_1_ + p_73969_2_ * 3, 200, 20, 54, I18n.format("fml.menu.mods")));
-        this.buttonList.add(new AetherMainMenuButton(0, 30, p_73969_1_ + p_73969_2_ * 4, 200, 20, 45, I18n.format("menu.options")));
-        this.buttonList.add(new AetherMainMenuButton(4, 30, p_73969_1_ + p_73969_2_ * 5, 200, 20, 43, I18n.format("menu.quit")));
+        this.realmsButton = this.addButton(new AetherMainMenuButton(14, 30, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online").replace("Minecraft", "").trim()));
+        this.buttonList.add(modButton = new AetherMainMenuButton(6, 30, p_73969_1_ + p_73969_2_ * 3, I18n.format("fml.menu.mods")));
+        this.buttonList.add(new AetherMainMenuButton(0, 30, p_73969_1_ + p_73969_2_ * 4, I18n.format("menu.options")));
+        this.buttonList.add(new AetherMainMenuButton(4, 30, p_73969_1_ + p_73969_2_ * 5, I18n.format("menu.quit")));
     }
 
     @Override
