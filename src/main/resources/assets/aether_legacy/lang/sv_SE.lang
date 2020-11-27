@@ -1,0 +1,479 @@
+# Item Names
+item.lore_book.name=Kunskapens bok
+item.blue_moa_egg.name=Blått moaägg
+item.orange_moa_egg.name=Orange moaägg
+item.white_moa_egg.name=Vitt moaägg
+item.black_moa_egg.name=Svart moaägg
+item.leather_gloves.name=Läderhandskar
+item.chain_gloves.name=Ringbrynjehandskar
+item.golden_gloves.name=Guldhandskar
+item.iron_gloves.name=Järnhandskar
+item.diamond_gloves.name=Diamanthandskar
+item.zanite_gloves.name=Zanithandskar
+item.gravitite_gloves.name=Gravitithandskar
+item.neptune_gloves.name=Neptunhandskar
+item.phoenix_gloves.name=Fenixhandskar
+item.obsidian_gloves.name=Obsidianhandskar
+item.valkyrie_gloves.name=Valkyriehandskar
+item.skyroot_pickaxe.name=Flygrotshacka
+item.skyroot_axe.name=Flygrotsyxa
+item.skyroot_shovel.name=Flygrotsspade
+item.holystone_pickaxe.name=Helgestenshacka
+item.holystone_axe.name=Helgestensyxa
+item.holystone_shovel.name=Helgestensspade
+item.zanite_pickaxe.name=Zanithacka
+item.zanite_axe.name=Zanityxa
+item.zanite_shovel.name=Zanitspade
+item.gravitite_pickaxe.name=Gravitithacka
+item.gravitite_axe.name=Gravitityxa
+item.gravitite_shovel.name=Gravititspade
+item.valkyrie_pickaxe.name=Valkyriehacka
+item.valkyrie_axe.name=Valkyrieyxa
+item.valkyrie_shovel.name=Valkyriespade
+item.skyroot_sword.name=Flygrotssvärd
+item.holystone_sword.name=Helgestenssvärd
+item.zanite_sword.name=Zanitsvärd
+item.gravitite_sword.name=Gravititsvärd
+item.flaming_sword.name=Flamsvärd
+item.lightning_sword.name=Blixtsvärd
+item.holy_sword.name=Heligt svärd
+item.lightning_knife.name=Blixtkniv
+item.candy_cane_sword.name=Polkagrissvärd
+item.vampire_blade.name=Vampyrklinga
+item.pig_slayer.name=Grisdödare
+item.valkyrie_lance.name=Valkyrielans
+item.notch_hammer.name=Notchhammare
+item.dart_shooter_golden.name=Guldpilsblåsrör
+item.dart_shooter_poison.name=Giftpilsblåsrör
+item.dart_shooter_enchanted.name=Förtrollat blåsrör
+item.phoenix_bow.name=Fenixpilbåge
+item.zanite_helmet.name=Zanithjälm
+item.zanite_chestplate.name=Zanitharnesk
+item.zanite_leggings.name=Zanitbyxor
+item.zanite_boots.name=Zanitstövlar
+item.gravitite_helmet.name=Gravitithjälm
+item.gravitite_chestplate.name=Gravititharnesk
+item.gravitite_leggings.name=Gravititbyxor
+item.gravitite_boots.name=Gravititstövlar
+item.neptune_helmet.name=Neptunhjälm
+item.neptune_chestplate.name=Neptunharnesk
+item.neptune_leggings.name=Neptunbyxor
+item.neptune_boots.name=Neptunstövlar
+item.phoenix_helmet.name=Fenixhjälm
+item.phoenix_chestplate.name=Fenixharnesk
+item.phoenix_leggings.name=Fenixbyxor
+item.phoenix_boots.name=Fenixstövlar
+item.obsidian_helmet.name=Obsidianhjälm
+item.obsidian_chestplate.name=Obsidianharnesk
+item.obsidian_leggings.name=Obsidianbyxor
+item.obsidian_boots.name=Obsidianstövlar
+item.valkyrie_helmet.name=Valkyriehjälm
+item.valkyrie_chestplate.name=Valkyrieharnesk
+item.valkyrie_leggings.name=Valkyriebyxor
+item.valkyrie_boots.name=Valkyriestövlar
+item.sentry_boots.name=Vaktstövlar
+item.blue_berry.name=Blåa bär
+item.gummy_swet_blue.name=Blå gummiswet
+item.gummy_swet_golden.name=Gyllene gummiswet
+item.white_apple.name=Vitt äpple
+item.candy_cane.name=Polkagrisstång
+item.ginger_bread_man.name=Pepparkaksgubbe
+item.healing_stone.name=Läkesten
+item.iron_pendant.name=Järnhänge
+item.golden_pendant.name=Guldhänge
+item.zanite_pendant.name=Zanithänge
+item.ice_pendant.name=Ishänge
+item.iron_ring.name=Järnring
+item.golden_ring.name=Guldring
+item.zanite_ring.name=Zanitring
+item.ice_ring.name=Isring
+item.white_cape.name=Vit mantel
+item.red_cape.name=Röd mantel
+item.blue_cape.name=Blå mantel
+item.yellow_cape.name=Gul mantel
+item.swet_cape.name=Swetmantel
+item.valkyrie_cape.name=Valkyriemantel
+item.invisibility_cape.name=Osynlighetsmantel
+item.agility_cape.name=Smidighetsmantel
+item.repulsion_shield.name=Avstötningssköld
+item.regeneration_stone.name=Regenereringssten
+item.golden_feather.name=Guldfjäder
+item.iron_bubble.name=Järnbubbla
+item.aechor_petal.name=Aechorblomblad
+item.ambrosium_shard.name=Ambrosieskärva
+item.zanite_gemstone.name=Zanitädelsten
+item.skyroot_stick.name=Flygrotspinne
+item.golden_amber.name=Gyllene bärnsten
+item.aether_spawn_egg.name=Spawn
+item.skyroot_bucket_empty.name=Flygrotshink
+item.skyroot_bucket_water.name=Flygrotshink med vatten
+item.skyroot_bucket_poison.name=Flygrotshink med gift
+item.skyroot_bucket_remedy.name=Flygrotshink med botemedel
+item.skyroot_bucket_milk.name=Flygrotshink med mjölk
+item.aether_tune.name=Blå musikskiva
+item.ascending_dawn.name=Valkyriamusikskiva
+item.welcoming_skies.name=Välkomnande himmel
+item.legacy.name=Legacy
+item.victory_medal.name=Segermedalj
+item.life_shard.name=Livsskärva
+item.cloud_staff.name=Molnstav
+item.nature_staff.name=Naturstav
+item.dungeon_key_bronze.name=Bronsnyckel
+item.dungeon_key_silver.name=Silvernyckel
+item.dungeon_key_golden.name=Guldnyckel
+item.cold_parachute.name=Kall fallskärm
+item.golden_parachute.name=Guldfallskärm
+item.dart_golden.name=Guldpil
+item.dart_poison.name=Giftpil
+item.dart_enchanted.name=Förtrollad pil
+item.enchanted_blueberry.name=Förtrollat bär
+item.swetty_ball.name=Swetboll
+item.developer_stick.name=Utvecklarpinne
+item.skyroot_bed_item.name=Flygrotssäng
+item.aether_portal_frame.name=Aetherportalram
+
+#block Names
+tile.aether_portal.name=Aetherportal
+tile.aether_grass.name=Aethergräs
+tile.aether_dirt.name=Aetherjord
+tile.enchanted_aether_grass.name=Förtrollat aethergräs
+tile.cold_aercloud.name=Kallt aermoln
+tile.blue_aercloud.name=Blått aermoln
+tile.golden_aercloud.name=Guldaermoln
+tile.pink_aercloud.name=Rosa aermoln
+tile.berry_bush_stem.name=Bärbuskeplanta
+tile.berry_bush.name=Bärbuske
+tile.purple_flower.name=Lila blomma
+tile.white_flower.name=Vit blomma
+tile.enchanted_gravitite.name=Förtrollad gravitit
+tile.holystone.name=Helgesten
+tile.mossy_holystone.name=Mossig helgesten
+tile.carved_stone.name=Mejslad sten
+tile.angelic_stone.name=Änglasten
+tile.hellfire_stone.name=Skärseldssten
+tile.sentry_stone.name=Vaktsten
+tile.light_angelic_stone.name=Ljus änglasten
+tile.light_hellfire_stone.name=Ljus skärseldssten
+tile.ambrosium_ore.name=Ambrosiemalm
+tile.zanite_ore.name=Zanitmalm
+tile.gravitite_ore.name=Gravititmalm
+tile.zanite_block.name=Zanitblock
+tile.skyroot_log.name=Flygrotsstam
+tile.golden_oak_log.name=Guldeksstam
+tile.green_leaves.name=Flygrotslöv
+tile.golden_oak_leaves.name=Guldeklöv
+tile.crystal_fruit_leaves.name=Kristallöv med frukt
+tile.crystal_leaves.name=Kristallöv
+tile.decorated_holiday_leaves.name=Pyntad julgransgren
+tile.holiday_leaves.name=Julgransgren
+tile.skyroot_sapling.name=Flygrotsplanta
+tile.golden_oak_sapling.name=Guldekplanta
+tile.crystal_sapling.name=Kristallplanta
+tile.ambrosium_torch.name=Ambrosiefackla
+tile.skyroot_plank.name=Flygrotsträ
+tile.present.name=Present
+tile.pillar.name=Pelare
+tile.pillar_top.name=Pelaröversida
+tile.quicksoil.name=Kvickjord
+tile.quicksoil_glass.name=Kvickjordsglas
+tile.aerogel.name=Aerogel
+tile.icestone.name=Issten
+tile.treasure_chest.name=Skattkista
+tile.enchanter.name=Förtrollare
+tile.altar.name=Altare
+tile.incubator.name=Äggkläckare
+tile.chest_mimic.name=Kisthärmare
+tile.freezer.name=Frys
+tile.holystone_brick.name=Helgemursten
+tile.aether_present.name=Present
+tile.skyroot_fence.name=Flygrotsstaket
+tile.carved_wall.name=Mejslad vägg
+tile.angelic_wall.name=Änglavägg
+tile.hellfire_wall.name=Skärseldsvägg
+tile.holystone_wall.name=Helgestensvägg
+tile.holystone_brick_wall.name=Helgemurstensvägg
+tile.mossy_holystone_wall.name=Mossig helgestenvägg
+tile.aerogel_wall.name=Aerogelvägg
+tile.carved_stairs.name=Mejslad trappa
+tile.angelic_stairs.name=Änglatrappa
+tile.hellfire_stairs.name=Skärseldstrappa
+tile.skyroot_stairs.name=Flygrotstrappa
+tile.mossy_holystone_stairs.name=Mossig helgestenstrappa
+tile.holystone_stairs.name=Helgestenstrappa
+tile.holystone_brick_stairs.name=Helgemurstenstrappa
+tile.aerogel_stairs.name=Aerogeltrappa
+tile.skyroot_slab.name=Flygrotsplatta
+tile.skyroot_double_slab.name=Flygrotsdubbelplatta
+tile.carved_slab.name=Mejslad platta
+tile.carved_double_slab.name=Mejslad dubbelplatta
+tile.angelic_slab.name=Änglaplatta
+tile.angelic_double_slab.name=Ängladubbelplatta
+tile.hellfire_slab.name=Skärseldsplatta
+tile.hellfire_double_slab.name=Skärseldsdubbelplatta
+tile.holystone_slab.name=Helgestensplatta
+tile.holystone_double_slab.name=Helgestensdubbelplatta
+tile.mossy_holystone_slab.name=Mossig helgestensplatta
+tile.mossy_holystone_double_slab.name=Mossig helgestensdubbelplatta
+tile.holystone_brick_slab.name=Helgemurstensplatta
+tile.holystone_brick_double_slab.name=Helgemurstensdubbelplatta
+tile.aerogel_slab.name=Aerogelplatta
+tile.aerogel_double_slab.name=Aerogeldubbelplatta
+tile.skyroot_fence_gate.name=Flygrotsstaketgrind
+tile.sun_altar.name=Solaltare
+tile.skyroot_bookshelf.name=Flygrotsbokhylla
+tile.skyroot_bed.name=Flygrotssäng
+
+# Entities
+entity.aechor_plant.name=Aechorblomma
+entity.cockatrice.name=Basilisk
+entity.mimic.name=Härmare
+entity.sentry.name=Vakt
+entity.zephyr.name=Sefyr
+entity.aerwhale.name=Aerval
+entity.aerbunny.name=Aerkanin
+entity.sheepuff.name=Puffår
+entity.valkyrie.name=Valkyria
+entity.valkyrie_queen.name=Valkyriedrottning
+entity.slider.name=Glidare
+entity.sun_spirit.name=Solgud
+entity.fire_minion.name=Eldsoldat
+entity.mini_cloud.name=Minimoln
+entity.tnt_present.name=Dynamitpresent
+entity.lightning_knife.name=Blixtkniv
+entity.thunder_ball.name=Åskboll
+entity.zephyr_snowball.name=Sefyrsnöboll
+entity.floating_block.name=Flytblock
+entity.parachute.name=Fallskärm
+entity.golden_dart.name=Guldpil
+entity.poison_dart.name=Giftpil
+entity.enchanted_dart.name=Förtrollad pil
+entity.fire_ball.name=Eldboll
+entity.ice_ball.name=Isboll
+entity.flying_cow.name=Flygko
+entity.phyg.name=Fygg
+entity.swet.name=Swet
+entity.moa.name=Moa
+entity.whirlwind.name=Virvelvind
+
+# Containers
+container.aether_legacy.incubator=Äggkläckare
+container.aether_legacy.enchanter=Förtrollare
+container.aether_legacy.altar=Altare
+container.aether_legacy.freezer=Frys
+
+# Advancements
+advancement.aether_legacy.enter_aether=Fientligt paradis
+advancement.aether_legacy.blue_aercloud=Till oändligheten och vidare!
+advancement.aether_legacy.gravitite_tools=Rosa är det nya blå
+advancement.aether_legacy.incubator=Nu har du fått en familj
+advancement.aether_legacy.enchanter=Tror du på magi?
+advancement.aether_legacy.mount_phyg=När fyggar flyger
+advancement.aether_legacy.bronze_dungeon=Som ett proffs!
+advancement.aether_legacy.silver_dungeon=Avsatt från tronen
+advancement.aether_legacy.gold_dungeon=Utsläckt
+advancement.aether_legacy.loreception=Lore-ception!
+
+# Advancement Descriptions
+advancement.aether_legacy.enter_aether.desc=Stig upp till Aether
+advancement.aether_legacy.blue_aercloud.desc=Studsa på ett blått aermoln
+advancement.aether_legacy.gravitite_tools.desc=Tillverkar ett gravititverktyg
+advancement.aether_legacy.incubator.desc=Kläck en moa
+advancement.aether_legacy.enchanter.desc=Tillverka ett altare
+advancement.aether_legacy.mount_phyg.desc=Flyg på en fygg
+advancement.aether_legacy.bronze_dungeon.desc=Besegra bossen i bronsfängelsehålan
+advancement.aether_legacy.silver_dungeon.desc=Besegra bossen i silverfängelsehålan
+advancement.aether_legacy.gold_dungeon.desc=Besegra bossen i guldfängelsehålan
+advancement.aether_legacy.loreception.desc=Sätt Kunskapens bok inuti Kunskapens bok
+
+# Creative Tabs Names
+tab.aether_blocks=Aetherblock
+tab.aether_tools=Aetherverktyg
+tab.aether_weapons=Aethervapen
+tab.aether_armor=Aetherrustning
+tab.aether_food=Aethermatvaror
+tab.aether_accessories=Aethertillbehör
+tab.aether_material=Aethermaterial
+tab.aether_misc=Aether diverse
+
+# Tab Names
+tab.accessories.name=Tillbehör
+
+# Subtitles
+subtitles.aemob.moa.say=Moa hoar
+subtitles.aemob.moa.flap=Moa flyger
+subtitles.aemob.moa.egg=Moa lägger ägg
+subtitles.aemob.phyg.say=Fygg grymtar
+subtitles.aemob.phyg.hurt=Fygg skadas
+subtitles.aemob.phyg.death=Fygg dör
+subtitles.aemob.sheepuff.say=Puffår bräker
+subtitles.aemob.sheepuff.hurt=Puffår skadas
+subtitles.aemob.sheepuff.death=Puffår dör
+subtitles.aemob.flyingcow.say=Flygko råmar
+subtitles.aemob.flyingcow.hurt=Flygko skadas
+subtitles.aemob.flyingcow.death=Flygko dör
+subtitles.aemob.aerbunny.hurt=Aerkanin skadas
+subtitles.aemob.aerbunny.death=Aerkanin dör
+subtitles.aemob.aerbunny.lift=Aerkanin piper
+subtitles.aemob.swet.squish=Swet klafsar
+subtitles.aemob.swet.jump=Swet klafsar
+subtitles.aemob.swet.attack=Swet anfaller
+subtitles.aemob.swet.death=Swet dör
+subtitles.aemob.cockatrice.say=Basilisk ropar
+subtitles.aemob.cockatrice.flap=Basilisk flyger
+subtitles.aemob.cockatrice.attack=Basilisk skjuter
+subtitles.aemob.zephyr.say=Sefyr blåser
+subtitles.aemob.zephyr.shoot=Sefyr spottar
+subtitles.aemob.aechor_plant.attack=Aechorblomma skjuter
+subtitles.aemob.aerwhale.say=Aerval sjunger
+subtitles.aemob.aerwhale.death=Aerval gråter
+subtitles.aemisc.projectile.shoot=Giftpil skjuts
+subtitles.aemisc.dart_shooter.shoot=Blåsrör avfyras
+subtitles.aeboss.slider.awaken=Glidare vaknar
+subtitles.aeboss.slider.collide=Glidare krockar
+subtitles.aeboss.slider.move=Glidare glider
+subtitles.aeboss.slider.death=Glidare går sönder
+subtitles.aeboss.sun_spirit.shoot=Solgud skjuter
+subtitles.aemisc.portal.idle=Aetherportal susar
+subtitles.aemisc.dungeon_trap.trigger=Fälla aktiverad
+
+# GUI and Dialog
+gui.item.life_shard.maxshards=Du kan bara använda totalt 10 livsskärvor.
+gui.item.developer_stick.notdev=Du saknar färdighet nog för att använda detta föremål!
+
+gui.slider.notpickaxe=Hmm. Kanske måste jag anfalla den med en hacka?
+gui.slider.apple=Det här meddelandet är bara här för att KingPhygieBoo frågade Kino om ett slumvis föremål och han sa äpple.
+
+gui.valkyrie.dialog.1=Vadå? Vill du slåss? Ååh, vilken söt liten människa.
+gui.valkyrie.dialog.2=Du tänker väl inte kämpa mot en stor, stark valkyria, eller hur?
+gui.valkyrie.dialog.3=Jag tror inte du ska mucka med mig. Du kan bli rejält skadad.
+
+gui.valkyrie.dialog.medal.1=Eh... det var en tjusig hög med medaljer du har där...
+gui.valkyrie.dialog.medal.2=Det är ganska imponerande, men tro inte att du kan besegra mig.
+gui.valkyrie.dialog.medal.3=Du tror du är en tuffing alltså? Dåså, kom igen!
+
+gui.valkyrie.dialog.defeated.1=Okej, okej! Du vinner!
+gui.valkyrie.dialog.defeated.2=Okej, jag ger upp! Jisses...
+gui.valkyrie.dialog.defeated.3=Aj! Visst, här är din medalj...
+
+gui.valkyrie.dialog.attack.1=Jag kommer inte att vara försiktig med dig!
+gui.valkyrie.dialog.attack.2=Det där kommer du att ångra!
+gui.valkyrie.dialog.attack.3=Nu kommer du att få smaka på det!
+
+gui.valkyrie.dialog.playerdead.1=Vill du ha en medalj? Försök vara mindre patetisk.
+gui.valkyrie.dialog.playerdead.2=Kanske en vacker dag, %s...
+gui.valkyrie.dialog.playerdead.3=Människor är inte alls lika söta när de är döda.
+
+gui.valkyrie.dialog.ready=Då så, låt oss börja!
+gui.valkyrie.dialog.nomedals=Ta den tid du behöver.
+gui.valkyrie.dialog.nofight=Då får det blir så. Adjö äventyrare.
+
+gui.valkyrie.dialog.player.havemedals=Jag är beredd. Jag har medaljerna precis här!
+gui.valkyrie.dialog.player.lackmedals=Jag kommer tillbaka när jag har dem.
+gui.valkyrie.dialog.player.denyfight=Vid närmare eftertanke så vill jag nog inte.
+
+gui.queen.ready=Om du vill utmana mig, så slå till närhelst du vill.
+gui.queen.defeated=Du är i sanning ... en mäktig krigare...
+gui.queen.peaceful=Tyvärr, jag kämpar inte mot veklingar.
+gui.queen.nomedals=Försök besegra några svagare valkyrier först.
+gui.queen.fight=Det här kommer att bli din sista strid!
+gui.queen.lost=Som man kunde förvänta sig av en människa.
+
+gui.queen.dialog.0=Vad kan du berätta om den här platsen?
+
+gui.queen.answer.0=Det här är en fristad för oss valkyrier som söker vila.
+gui.queen.answer.1=Nåväl. Ge mig tio medaljer från mina underordnade för att bevisa ditt värde, så får vi se sen.
+gui.queen.answer.2=Adjö äventyrare.
+
+gui.spirit.line0=Du är verkligen modig som har gått in i den här kammaren.
+gui.spirit.line1=Försvinn människa, du tjänar inget syfte här.
+gui.spirit.line2=Din närvaro stör mig. Fruktar du inte min brinnande aura?
+gui.spirit.line3=Jag har inget att erbjuda dig, dåre. Lämna mig i fred.
+gui.spirit.line4=Du kanske är okunnig. Vill du veta vem jag är?
+gui.spirit.line5.1=Jag är en solgud, ett förkroppsligande av Aethers eviga dagsljus. Så
+gui.spirit.line5.2=länge jag lever, kommer solen aldrig att gå ned i den här världen.
+gui.spirit.line6.1=Min kropp brinner med vreden hos tusen odjur. Ingen människa,
+gui.spirit.line6.2=hjälte eller skurk kan skada mig. Du är inget undantag.
+gui.spirit.line7.1=Vill du utmana solens styrka? Du är galen.
+gui.spirit.line7.2=Förolämpa mig inte ytterligare, annars kommer du att känna min vrede.
+gui.spirit.line8=Detta är din sista varning. Gå nu eller förbered dig på att brinna.
+gui.spirit.line9=Som du önskar. Din död kommer att vara utdragen och plågsam.
+gui.spirit.line10=Stillade inte din förra död din nyfikenhet, människa?
+gui.spirit.dead=En sådan bitter kyla... är det här känslan... av smärta?
+gui.spirit.playerdied=Sådant är ödet för en varelse som motsätter sig solens styrka.
+
+gui.treasure_chest.bronze=Bronsskattkista
+gui.treasure_chest.silver=Silverskattkista
+gui.treasure_chest.gold=Guldskattkista
+gui.treasure_chest.platinum=Platinumskattkista
+
+gui.sun_altar.time=Välj tid
+gui.sun_altar.message=Solguden har ingen makt över detta rike.
+gui.sun_altar.eternal_day=Solguden har fortfarande kontroll över detta rike.
+gui.sun_altar.cycle_catchup=Solen rör sig fortfarande till sin rätta position.
+gui.sun_altar.permission=Du har inte behörighet att utföra den här åtgärden.
+
+title.aether_legacy.slider.name=Glidaren
+title.aether_legacy.valkyrie_queen.name=Valkyriedrottningen
+title.aether_legacy.sun_spirit.name=Solguden
+
+gui.loading.enteraether=Stiger upp till Aether
+gui.loading.exitaether=Stiger ned från Aether
+
+gui.skyroot_bed.respawn_point=Spawnpunkt satt
+
+gui.button.halo=Halo:
+gui.button.glow=Utvecklarsken:
+gui.button.aether_cape=Aethermantel:
+gui.button.gloves=Handskar:
+gui.button.glove_size=Handskstorlek:
+
+glove_size.option.skin=Utseende
+glove_size.option.hat=Huvudbonad
+
+# Death messages
+death.attack.inebriation=%1$s blev förgiftad
+death.attack.inebriation_indirect=%1$s blev förgiftad av %2$s
+death.attack.crush=%1$s krossades av %2$s
+death.attack.incineration=%1$s eldades upp av %2$s
+death.attack.incineration_firo=%1$s eldades upp av %2$ss eldboll
+death.attack.icey_ball=%1$s frös ihjäl av %2$ss isboll
+death.attack.lightning_ball=%1$s fick en stöt av %2$ss åskboll
+
+# Config
+aether_legacy.config.title=Konfiguration av Aether
+aether_legacy.general.dimension=Dimensionsinställningar
+
+aether_legacy.general.gameplay_changes=Spelinställningar
+aether_legacy.general.gameplay_changes.tooltip=Dessa alternativ påverkar spelet och hur en del av innehållet fungerar.
+
+aether_legacy.general.gameplay_changes.aether_start=Aetherstart
+aether_legacy.general.gameplay_changes.ambro_is_edible=Ätbar ambrosium
+aether_legacy.general.gameplay_changes.max_life_shards=Max livskärvor
+aether_legacy.general.gameplay_changes.skyroot_bucket_only=Endast flygrotshink
+aether_legacy.general.gameplay_changes.valkyrie_cape=Valkyriemantel
+aether_legacy.general.gameplay_changes.golden_feather=Guldfjäder
+aether_legacy.general.gameplay_changes.disable_portal=Inaktivera portal
+aether_legacy.general.gameplay_changes.disable_startup_loot=Inaktivera skatter vid start
+aether_legacy.general.gameplay_changes.sun_altar_multiplayer=Inaktivera krav på operatör för solaltaret
+aether_legacy.general.gameplay_changes.repeat_sun_spirit_dialog=Upprepa solgudens dialog
+aether_legacy.general.gameplay_changes.disable_eternal_day=Inaktivera evig dag
+
+aether_legacy.general.visual_options=Visuella alternativ
+aether_legacy.general.visual_options.tooltip=Dessa alternativ påverkar inte spelet och är rent visuella.
+aether_legacy.general.visual_options.legacy_models=Klassiska modeller
+aether_legacy.general.visual_options.trivia_disabled=Inaktivera Aether-trivia
+aether_legacy.general.visual_options.updated_aercloud_colors=Uppdaterade aermoln-färger
+aether_legacy.general.visual_options.menu_enabled=Aether-meny
+aether_legacy.general.visual_options.menu_button=Aether-menyknapp
+aether_legacy.general.visual_options.install_resourcepack=Installera resurspaket
+aether_legacy.general.visual_options.legacy_altar_name=Klassiskt altarnamn
+
+aether_legacy.general.world_gen=Alternativ för världsgenerering
+aether_legacy.general.world_gen.tooltip=Dessa alternativ påverkar världens skapande.
+
+aether_legacy.general.world_gen.christmas_time=Skapa jultema
+aether_legacy.general.world_gen.pink_aerclouds=Skapa rosa aermoln
+aether_legacy.general.world_gen.tallgrass_enabled=Skapa högt gräs
+
+aether_legacy.general.dimension.aether_dimension_id=ID för Aether-dimensionen
+aether_legacy.general.dimension.aether_dimension_id.tooltip=Ställ in dimensions-ID för Aether.
