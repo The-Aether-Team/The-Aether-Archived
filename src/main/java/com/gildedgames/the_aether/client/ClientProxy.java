@@ -45,10 +45,10 @@ public class ClientProxy extends CommonProxy
 		{
 			File resourcePacks = Minecraft.getMinecraft().getResourcePackRepository().getDirResourcepacks().getCanonicalFile();
 
-			File buckets = new File(resourcePacks + "\\Aether b1.7.3 Textures\\assets\\aether_legacy\\textures\\items\\misc\\buckets");
-			File weapons = new File(resourcePacks + "\\Aether b1.7.3 Textures\\assets\\aether_legacy\\textures\\items\\weapons");
-			File armor = new File(resourcePacks + "\\Aether b1.7.3 Textures\\assets\\aether_legacy\\textures\\items\\armor");
-			File accessories = new File(resourcePacks + "\\Aether b1.7.3 Textures\\assets\\aether_legacy\\textures\\items\\accessories");
+			File buckets = new File(resourcePacks + "/Aether b1.7.3 Textures/assets/aether_legacy/textures/items/misc/buckets");
+			File weapons = new File(resourcePacks + "/Aether b1.7.3 Textures/assets/aether_legacy/textures/items/weapons");
+			File armor = new File(resourcePacks + "/Aether b1.7.3 Textures/assets/aether_legacy/textures/items/armor");
+			File accessories = new File(resourcePacks + "/Aether b1.7.3 Textures/assets/aether_legacy/textures/items/accessories");
 
 			File[] directories = new File[] {buckets, weapons, armor, accessories};
 
