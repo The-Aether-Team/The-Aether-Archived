@@ -75,8 +75,6 @@ public class ClientProxy extends CommonProxy {
 		treasureChestRenderID = RenderingRegistry.getNextAvailableRenderId();
 		aetherFlowerRenderID = RenderingRegistry.getNextAvailableRenderId();
 
-		Minecraft.getMinecraft().loadingScreen = new AetherLoadingScreen(Minecraft.getMinecraft());
-
 		EntityRenderer previousRenderer = Minecraft.getMinecraft().entityRenderer;
 
 		Minecraft.getMinecraft().entityRenderer = new AetherEntityRenderer(Minecraft.getMinecraft(), previousRenderer, Minecraft.getMinecraft().getResourceManager());

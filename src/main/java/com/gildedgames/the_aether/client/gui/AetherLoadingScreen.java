@@ -20,8 +20,6 @@ public class AetherLoadingScreen extends LoadingScreenRenderer {
 
 	private Minecraft mc;
 
-	private String currentlyDisplayedText = "";
-
 	private String currentDisplayedTrivia = "";
 
 	private long systemTime = Minecraft.getSystemTime();
@@ -116,9 +114,8 @@ public class AetherLoadingScreen extends LoadingScreenRenderer {
 
 				GL11.glEnable(GL11.GL_BLEND);
 				OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-				this.mc.fontRenderer.drawStringWithShadow(this.currentlyDisplayedText, (l - this.mc.fontRenderer.getStringWidth(this.currentlyDisplayedText)) / 2, i1 / 2 - 4 - 16, 16777215);
 				this.mc.fontRenderer.drawStringWithShadow(this.message, (l - this.mc.fontRenderer.getStringWidth(this.message)) / 2, i1 / 2 - 4 + 8, 16777215);
-				this.mc.fontRenderer.drawStringWithShadow(this.currentDisplayedTrivia, (k - this.mc.fontRenderer.getStringWidth(this.currentDisplayedTrivia)) / 2, l - 16, 0xffff99);
+				this.mc.fontRenderer.drawStringWithShadow(this.currentDisplayedTrivia, (l - this.mc.fontRenderer.getStringWidth(this.currentDisplayedTrivia)) / 2, i1 - 16, 0xffff99);
 			}
 
 			this.framebuffer.unbindFramebuffer();
