@@ -10,17 +10,15 @@ import org.lwjgl.opengl.GL11;
 public class AetherMainMenuButton extends GuiButton
 {
     protected static final ResourceLocation buttonTextures = new ResourceLocation("aether_legacy", "textures/gui/menu/buttons.png");
-    private int textOffset;
 
     public AetherMainMenuButton(int buttonId, int x, int y, String buttonText)
     {
-        this(buttonId, x, y, 200, 20, 39, buttonText);
+        this(buttonId, x, y, 200, 20, buttonText);
     }
 
-    public AetherMainMenuButton(int buttonId, int x, int y, int widthIn, int heightIn, int textOffset, String buttonText)
+    public AetherMainMenuButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
     {
         super(buttonId, x, y, widthIn, heightIn, buttonText);
-        this.textOffset = textOffset;
     }
 
     @Override
@@ -39,22 +37,21 @@ public class AetherMainMenuButton extends GuiButton
             this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + k * 20, this.width / 2, this.height);
             this.drawTexturedModalRect(this.xPosition + this.width / 2, this.yPosition, 200 - this.width / 2, 46 + k * 20, this.width / 2, this.height);
             this.mouseDragged(p_146112_1_, p_146112_2_, p_146112_3_);
-            int l = 14737632;
-
+            int text_color = 0xe0e0e0;
             if (packedFGColour != 0)
             {
-                l = packedFGColour;
+                text_color = packedFGColour;
             }
             else if (!this.enabled)
             {
-                l = 10526880;
+                text_color = 0xa0a0a0;
             }
             else if (this.field_146123_n)
             {
-                l = 7851212;
+                text_color = 0x77cccc;
             }
 
-            this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + (this.width / 2) - this.textOffset, this.yPosition + (this.height - 8) / 2, l);
+            this.drawString(fontrenderer, this.displayString, this.xPosition + 32, this.yPosition + (this.height - 8) / 2, text_color);
         }
     }
 }
