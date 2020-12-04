@@ -22,11 +22,6 @@ You can also support the Aether project and Gilded Games by telling your friends
 
 We use Curseforge to publish **stable builds** of the Aether for Minecraft. You can download the latest stable builds from our [official page found here](https://minecraft.curseforge.com/projects/the-aether-mod) without signing up for an account, and even install the Aether for Minecraft using the [Twitch Launcher](https://www.curseforge.com/twitch-client) with built-in integration for Curseforge mods. We recommend using our stable Curseforge releases for most people.
 
-### Bleeding edge builds
-[![Jenkins build status](https://img.shields.io/jenkins/s/https/jenkins.gildedgames.com/job/The-Aether/job/1.7.10.svg?style=flat-square)](https://jenkins.gildedgames.com/blue/organizations/jenkins/The-Aether/activity)
-
-If you're feeling a bit more adventurous (or a developer has suggested you to do so), we provide **bleeding edge builds** which are produced on [our official Jenkins instance](https://jenkins.gildedgames.com/blue/organizations/jenkins/The-Aether/activity). These builds are very frequently created by an automatic service and contain the latest available code without undergoing any form of quality control. We do not generally recommend users use these builds as they may contain serious issues and will not generally receive support.
-
 ## :bug: Report bugs or other issues
 If you're running into bugs or other problems, feel free to open an issue on our [issue tracker](https://gitea.gildedgames.com/GildedGames/The-Aether/issues). When doing so, we ask that you provide the following information:
 
