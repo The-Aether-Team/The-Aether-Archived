@@ -62,7 +62,7 @@ The Aether project makes use of crowd sourced translations. The Aether is availa
 - German * (de_DE) - Translations by: DarkBread
 - Italian * (it_IT)
 - Korean * (ko_KR) - Translations by: minejango2
-- Polish * (pl_PL)
+- Polish * (pl_PL) - Translations by: DarkKnightComes
 - Romanian * (ro_RO)
 - Russian * (ru_RU) - Translations by: LeyxorCheysen, andreyalex1236, LunarP1, and zombi1944
 - Spanish * (es_MX) - Translations by: Aer-ink
