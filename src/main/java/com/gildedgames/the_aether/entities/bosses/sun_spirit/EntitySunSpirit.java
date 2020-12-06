@@ -479,22 +479,34 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (source.getEntity() instanceof EntityCrystal && ((EntityCrystal) source.getEntity()).getCrystalType() == EnumCrystalType.ICE) {
-            this.velocity = 0.5D - (double) this.getHealth() / 70.0D * 0.2D;
-            boolean flag = super.attackEntityFrom(source, amount);
+    public boolean attackEntityFrom(DamageSource source, float amount)
+    {
+        if (source.getSourceOfDamage() instanceof EntityCrystal)
+        {
+            if (((EntityCrystal) source.getSourceOfDamage()).getCrystalType() == EnumCrystalType.ICE)
+            {
+                this.velocity = 0.5D - (double) this.getHealth() / 70.0D * 0.2D;
+                boolean flag = super.attackEntityFrom(source, amount);
 
-            if (flag) {
-                EntityFireMinion minion = new EntityFireMinion(this.worldObj);
-                minion.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
-                minion.setAttackTarget(this.getAttackTarget());
+                if (flag)
+                {
+                    EntityFireMinion minion = new EntityFireMinion(this.worldObj);
+                    minion.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
+                    minion.setAttackTarget(this.getAttackTarget());
 
-                if (!this.worldObj.isRemote) {
-                    this.worldObj.spawnEntityInWorld(minion);
+                    if (!this.worldObj.isRemote) {
+                        this.worldObj.spawnEntityInWorld(minion);
+                    }
                 }
+                return flag;
             }
-            return flag;
-        } else {
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
             return false;
         }
     }
