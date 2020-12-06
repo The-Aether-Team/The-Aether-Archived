@@ -43,22 +43,24 @@ public class PotionInebriation extends Potion
     @Override
     public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier)
     {
-        this.distractEntity(entityLivingBaseIn);
-
-        if (this.duration % 50 == 0)
+        if (entityLivingBaseIn != null)
         {
-            entityLivingBaseIn.attackEntityFrom(new DamageSource("inebriation"), 1.0F);
-        }
+            this.distractEntity(entityLivingBaseIn);
 
-        if (entityLivingBaseIn instanceof EntityPlayer)
-        {
-            if (this.duration >= 500)
+            if (this.duration % 50 == 0)
             {
-                ((PlayerAether) AetherAPI.get((EntityPlayer) entityLivingBaseIn)).setPoisoned();
-                AetherNetwork.sendToAll(new PacketSendPoison((EntityPlayer) entityLivingBaseIn));
+                entityLivingBaseIn.attackEntityFrom(new DamageSource("inebriation"), 1.0F);
+            }
+
+            if (entityLivingBaseIn instanceof EntityPlayer)
+            {
+                if (this.duration >= 500)
+                {
+                    ((PlayerAether) AetherAPI.get((EntityPlayer) entityLivingBaseIn)).setPoisoned();
+                    AetherNetwork.sendToAll(new PacketSendPoison((EntityPlayer) entityLivingBaseIn));
+                }
             }
         }
-
     }
 
     public void distractEntity(EntityLivingBase entityLivingBaseIn)
