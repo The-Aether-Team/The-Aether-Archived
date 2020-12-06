@@ -45,6 +45,7 @@ import com.gildedgames.the_aether.items.weapons.ItemValkyrieLance;
 import com.gildedgames.the_aether.items.weapons.ItemVampireBlade;
 import com.gildedgames.the_aether.items.weapons.ItemZaniteSword;
 
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -216,18 +217,18 @@ public class ItemsAether
 		candy_cane_sword = register("candy_cane_sword", new ItemCandyCaneSword());
 		notch_hammer = register("notch_hammer", new ItemNotchHammer());
 
-		leather_gloves = register("leather_gloves", new ItemAccessoryDyable(AccessoryType.GLOVE));
-		iron_gloves = register("iron_gloves", new ItemAccessory(AccessoryType.GLOVE));
-		golden_gloves = register("golden_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0xFBF424));
-		chain_gloves = register("chain_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("chain"));
-		diamond_gloves = register("diamond_gloves", new ItemAccessory(AccessoryType.GLOVE).setColor(0x33ebcb));
+		leather_gloves = register("leather_gloves", new ItemAccessoryDyable(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_LEATHER));
+		iron_gloves = register("iron_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON));
+		golden_gloves = register("golden_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_GOLD).setColor(0xFBF424));
+		chain_gloves = register("chain_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_CHAIN).setTexture("chain"));
+		diamond_gloves = register("diamond_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND).setColor(0x33ebcb));
 
-		zanite_gloves = register("zanite_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("zanite"));
-		gravitite_gloves = register("gravitite_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("gravitite"));
-		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setTexture("neptune"));
-		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVE).setTexture("phoenix").setDungeonLoot().setMaxDamage(152));
-		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setTexture("obsidian"));
-		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVE).setDungeonLoot().setTexture("valkyrie"));
+		zanite_gloves = register("zanite_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON).setTexture("zanite"));
+		gravitite_gloves = register("gravitite_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND).setTexture("gravitite"));
+		neptune_gloves = register("neptune_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND).setDungeonLoot().setTexture("neptune"));
+		phoenix_gloves = register("phoenix_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND).setTexture("phoenix").setDungeonLoot().setMaxDamage(152));
+		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND).setDungeonLoot().setTexture("obsidian"));
+		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND).setDungeonLoot().setTexture("valkyrie"));
 
 		iron_ring = register("iron_ring", new ItemAccessory(AccessoryType.RING));
 		golden_ring = register("golden_ring", new ItemAccessory(AccessoryType.RING).setColor(0xeaee57));
