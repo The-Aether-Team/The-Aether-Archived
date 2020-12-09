@@ -251,7 +251,7 @@ public class AetherWorldProvider extends WorldProvider
     @Override
     public float getCloudHeight()
     {
-        return 8F;
+        return -5F;
     }
 
 	@Override
