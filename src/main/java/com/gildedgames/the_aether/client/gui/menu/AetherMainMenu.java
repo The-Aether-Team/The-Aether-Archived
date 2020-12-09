@@ -167,6 +167,8 @@ public class AetherMainMenu extends GuiMainMenu
 
         this.addSingleplayerMultiplayerButtons(80, 24);
 
+        this.buttonList.add(new GuiButtonLanguage(5, this.width - 48, 4));
+
         Object object = this.field_104025_t;
 
         synchronized (this.field_104025_t)
