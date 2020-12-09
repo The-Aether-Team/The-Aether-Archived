@@ -45,8 +45,6 @@ public class ItemAccessory extends Item
 
     private SoundEvent equipSound;
 
-    private boolean hasSound = false;
-
     public static final IBehaviorDispenseItem DISPENSER_BEHAVIOR = new BehaviorDefaultDispenseItem()
     {
         protected ItemStack dispenseStack(IBlockSource source, ItemStack stack)
@@ -111,17 +109,14 @@ public class ItemAccessory extends Item
         	{
             	heldItem.shrink(1);
 
-            	if (this.getType() == AccessoryType.GLOVE || this.hasSound)
+                SoundEvent soundEvent = SoundEvents.ITEM_ARMOR_EQUIP_GENERIC;
+
+                if (this.getEquipSound() != null)
                 {
-                    SoundEvent soundEvent = SoundEvents.ITEM_ARMOR_EQUIP_GENERIC;
-
-                    if (this.getEquipSound() != null)
-                    {
-                        soundEvent = this.getEquipSound();
-                    }
-
-                    player.playSound(soundEvent, 1.0F, 1.0F);
+                    soundEvent = this.getEquipSound();
                 }
+
+                player.playSound(soundEvent, 1.0F, 1.0F);
 
                 return new ActionResult<>(EnumActionResult.SUCCESS, heldItem);
         	}
@@ -204,7 +199,6 @@ public class ItemAccessory extends Item
     public ItemAccessory setEquipSound(SoundEvent sound)
     {
         this.equipSound = sound;
-        this.hasSound = true;
 
         return this;
     }

@@ -230,14 +230,14 @@ public class ItemsAether
 		obsidian_gloves = register("obsidian_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND).setDungeonLoot().setTexture("obsidian"));
 		valkyrie_gloves = register("valkyrie_gloves", new ItemAccessory(AccessoryType.GLOVE).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND).setDungeonLoot().setTexture("valkyrie"));
 
-		iron_ring = register("iron_ring", new ItemAccessory(AccessoryType.RING));
-		golden_ring = register("golden_ring", new ItemAccessory(AccessoryType.RING).setColor(0xeaee57));
-		zanite_ring = register("zanite_ring", new ItemAccessory(AccessoryType.RING).setTexture("zanite").setMaxDamage(49));
+		iron_ring = register("iron_ring", new ItemAccessory(AccessoryType.RING).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON));
+		golden_ring = register("golden_ring", new ItemAccessory(AccessoryType.RING).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_GOLD).setColor(0xeaee57));
+		zanite_ring = register("zanite_ring", new ItemAccessory(AccessoryType.RING).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON).setTexture("zanite").setMaxDamage(49));
 		ice_ring = register("ice_ring", new ItemAccessory(AccessoryType.RING).setColor(0x95e6e7).setMaxDamage(125));
 
-		iron_pendant = register("iron_pendant", new ItemAccessory(AccessoryType.PENDANT));
-		golden_pendant = register("golden_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0xeaee57));
-		zanite_pendant = register("zanite_pendant", new ItemAccessory(AccessoryType.PENDANT).setTexture("zanite").setMaxDamage(98));
+		iron_pendant = register("iron_pendant", new ItemAccessory(AccessoryType.PENDANT).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON));
+		golden_pendant = register("golden_pendant", new ItemAccessory(AccessoryType.PENDANT).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_GOLD).setColor(0xeaee57));
+		zanite_pendant = register("zanite_pendant", new ItemAccessory(AccessoryType.PENDANT).setEquipSound(SoundEvents.ITEM_ARMOR_EQUIP_IRON).setTexture("zanite").setMaxDamage(98));
 		ice_pendant = register("ice_pendant", new ItemAccessory(AccessoryType.PENDANT).setColor(0x95e6e7).setMaxDamage(250));
 
 		red_cape = register("red_cape", new ItemAccessory(AccessoryType.CAPE).setElytraTexture("base_elytra").setColor(0xe81111));
