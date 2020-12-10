@@ -252,12 +252,19 @@ public class AetherClientEvents
 		}
 	}
 
+	private static boolean canOpenAccessories = true;
+
 	@SubscribeEvent
 	public void onDrawGui(GuiScreenEvent.DrawScreenEvent.Pre event)
 	{
 		if (!AetherConfig.visual_options.menu_enabled && event.getGui().getClass() == AetherMainMenu.class)
 		{
 			Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
+		}
+
+		if (!canOpenAccessories && !ACCESSORY_BUTTON.isMouseOver())
+		{
+			canOpenAccessories = true;
 		}
 	}
 
@@ -293,7 +300,19 @@ public class AetherClientEvents
 	{
 		Class<?> clazz = event.getGui().getClass();
 
-		if (clazz != GuiAccessories.class && event.getButton().id == 18067)
+		if (clazz == GuiInventory.class && event.getButton().getClass() == GuiButtonImage.class && event.getButton().id == 10)
+		{
+			int guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiLeft", "field_147003_i");
+			int guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer)event.getGui(), "guiTop", "field_147009_r");
+
+			if (mc.currentScreen != null)
+			{
+				ACCESSORY_BUTTON.setPosition(mc.currentScreen.width - guiLeft - 74, guiTop + 65);
+				canOpenAccessories = false;
+			}
+		}
+
+		if (clazz != GuiAccessories.class && event.getButton().id == 18067 && canOpenAccessories)
 		{
 			AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
 		}
