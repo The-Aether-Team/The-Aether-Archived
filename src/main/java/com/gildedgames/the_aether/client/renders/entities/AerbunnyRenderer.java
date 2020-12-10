@@ -4,6 +4,8 @@ import com.gildedgames.the_aether.entities.passive.mountable.EntityAerbunny;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -29,6 +31,18 @@ public class AerbunnyRenderer extends RenderLiving<EntityAerbunny>
     	{
     		GlStateManager.translate(0, 0.2D, 0);
     	}
+    	else
+        {
+            if (entitybunny.getRidingEntity() instanceof EntityPlayer)
+            {
+                EntityPlayer player = (EntityPlayer) entitybunny.getRidingEntity();
+
+                if (player.isElytraFlying())
+                {
+                    GlStateManager.translate(0.0D, 0.7D, -1.4D);
+                }
+            }
+        }
     	
         if (!entitybunny.onGround)
         {
