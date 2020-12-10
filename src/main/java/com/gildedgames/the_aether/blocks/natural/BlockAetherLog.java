@@ -31,6 +31,9 @@ import com.gildedgames.the_aether.blocks.util.EnumLogType;
 import com.gildedgames.the_aether.blocks.util.IAetherMeta;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.items.util.EnumAetherToolType;
+import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.Arrays;
 
 public class BlockAetherLog extends BlockLog implements IAetherMeta
 {
@@ -112,7 +115,8 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
         {
             if (stack != null && stack.getItem() instanceof ItemAetherTool && ((ItemAetherTool)stack.getItem()).toolType == EnumAetherToolType.AXE)
             {
-                if (stack.getItem() instanceof ItemZaniteTool || stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool)
+                if (stack.getItem() instanceof ItemZaniteTool || stack.getItem() instanceof ItemGravititeTool || stack.getItem() instanceof ItemValkyrieTool
+                        || canItemHarvestAmber(stack))
                 {
                     if (state.getValue(wood_type) == EnumLogType.Oak)
                     {
@@ -139,6 +143,21 @@ public class BlockAetherLog extends BlockLog implements IAetherMeta
             }
         }
 	}
+
+	private boolean canItemHarvestAmber(ItemStack stack)
+    {
+        boolean flag = false;
+
+        for (ItemStack itemStack : OreDictionary.getOres("canHarvestAetherAmber"))
+        {
+            if (itemStack.getItem() == stack.getItem())
+            {
+                flag = true;
+            }
+        }
+
+        return flag;
+    }
 
 	@Override
 	public String getMetaName(ItemStack stack) 
