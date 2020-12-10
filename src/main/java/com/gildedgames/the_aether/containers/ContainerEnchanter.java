@@ -51,7 +51,27 @@ public class ContainerEnchanter extends Container
     @Override
     public void detectAndSendChanges()
     {
-        super.detectAndSendChanges();
+		for (int i = 0; i < this.inventorySlots.size(); ++i)
+		{
+			if (this.inventorySlots.get(i) != null && this.inventoryItemStacks != null)
+			{
+				ItemStack itemstack = this.inventorySlots.get(i).getStack();
+				ItemStack itemstack1 = this.inventoryItemStacks.get(i);
+
+				if (!ItemStack.areItemStacksEqual(itemstack1, itemstack))
+				{
+					boolean clientStackChanged = !ItemStack.areItemStacksEqualUsingNBTShareTag(itemstack1, itemstack);
+					itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
+					this.inventoryItemStacks.set(i, itemstack1);
+
+					if (clientStackChanged)
+						for (int j = 0; j < this.listeners.size(); ++j)
+						{
+							this.listeners.get(j).sendSlotContents(this, i, itemstack1);
+						}
+				}
+			}
+		}
 
         for (int i = 0; i < this.listeners.size(); ++i)
         {
