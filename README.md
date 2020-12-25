@@ -51,16 +51,17 @@ our unlicensed assets, please [get in contact with us](mailto:support@gildedgame
 ### :speech_balloon: Translations
 The Aether project makes use of crowd sourced translations. The Aether is available in these languages thanks to the following contributors:
 
-- Chinese (zh_CN, zh_TW) - Translations by: ETStareak, y830705
-- Dutch (nl_NL) - Translations by: Critical
-- French (fr_FR) - Translations by: lololoustau and Beethov46
-- German (de_DE)
+- Chinese * (zh_CN, zh_TW) - Translations by: ETStareak, y830705
+- Dutch * (nl_NL) - Translations by: Critical
+- French * (fr_FR) - Translations by: lololoustau and Beethov46
+- German * (de_DE) - Translations by: DarkBread
 - Italian * (it_IT)
-- Korean * (ko_KR)
-- Polish * (pl_PL)
-- Romanian (ro_RO)
-- Russian (ru_RU) - Translations by: LeyxorCheysen, andreyalex1236, LunarP1, and zombi1944
+- Korean * (ko_KR) - Translations by: minejango2
+- Polish * (pl_PL) - Translations by: DarkKnightComes
+- Romanian * (ro_RO)
+- Russian * (ru_RU) - Translations by: LeyxorCheysen, andreyalex1236, LunarP1, and zombi1944
 - Spanish * (es_MX) - Translations by: Aer-ink
+- Swedish * (sv_SE) - Translations by: magicus
 - Thai * (th_TH)
 - Ukranian * (uk_UK)
 
