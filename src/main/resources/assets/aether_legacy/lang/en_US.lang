@@ -445,7 +445,6 @@ aether_legacy.general.dimension=Dimension Settings
 
 aether_legacy.general.gameplay_changes=Gameplay Changes
 aether_legacy.general.gameplay_changes.tooltip=These options affect gameplay, and how some of the content works.
-
 aether_legacy.general.gameplay_changes.aether_start=Aether Start
 aether_legacy.general.gameplay_changes.ambro_is_edible=Edible Ambrosium
 aether_legacy.general.gameplay_changes.max_life_shards=Maximum Life Shards
@@ -470,7 +469,6 @@ aether_legacy.general.visual_options.legacy_altar_name=Classic Altar Name
 
 aether_legacy.general.world_gen=World Generation Options
 aether_legacy.general.world_gen.tooltip=These options affect world generation.
-
 aether_legacy.general.world_gen.christmas_time=Holiday Generation
 aether_legacy.general.world_gen.pink_aerclouds=Pink Aercloud Generation
 aether_legacy.general.world_gen.tallgrass_enabled=Tall Grass Generation
@@ -478,6 +476,7 @@ aether_legacy.general.world_gen.tallgrass_enabled=Tall Grass Generation
 aether_legacy.general.dimension.aether_dimension_id=Aether Dimension ID
 aether_legacy.general.dimension.aether_dimension_id.tooltip=Set the Dimension ID for the Aether.
 
+# Lore entries
 lore.aether_legacy.aechor_petal=The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.
 lore.aether_legacy.aerogel=The result of the Aether's unique climate and lava combining. It can be crafted into various decorative blocks and is blast resistant.
 lore.aether_legacy.aerogel_slab=Crafted from Aerogel. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!

@@ -113,6 +113,7 @@ item.skyroot_bucket_milk.name=天根木牛奶桶
 item.aether_tune.name=天堂曲調
 item.ascending_dawn.name=黎明升起
 item.welcoming_skies.name=歡迎天空
+item.legacy.name=Legacy
 item.victory_medal.name=勝利獎牌
 item.life_shard.name=生命碎片
 item.cloud_staff.name=雲朵權杖
@@ -128,6 +129,9 @@ item.dart_enchanted.name=附魔吹箭
 item.enchanted_blueberry.name=附魔漿果
 item.swetty_ball.name=天堂萊姆球
 item.developer_stick.name=開發者棒子
+item.skyroot_bed_item.name=Skyroot Bed
+item.aether_portal_frame.name=Aether Portal Frame
+
 # Block Names
 tile.aether_portal.name=天堂傳送門
 tile.aether_grass.name=天空草地
@@ -176,6 +180,7 @@ tile.aerogel.name=空氣膠
 tile.icestone.name=冷凍石
 tile.treasure_chest.name=地牢寶箱
 tile.enchanter.name=魔法爐
+tile.altar.name=Altar
 tile.incubator.name=孵化器
 tile.chest_mimic.name=箱子怪
 tile.freezer.name=結凍器
@@ -216,6 +221,8 @@ tile.aerogel_double_slab.name=空氣膠半磚
 tile.skyroot_fence_gate.name=天根木柵欄門
 tile.sun_altar.name=太陽祭壇
 tile.skyroot_bookshelf.name=天根木書櫃
+tile.skyroot_bed.name=Skyroot Bed
+
 # Entities
 entity.aechor_plant.name=天堂毒箭草
 entity.cockatrice.name=毒恐鳥
@@ -247,10 +254,13 @@ entity.phyg.name=飛天豬
 entity.swet.name=天堂史萊姆
 entity.moa.name=恐鳥
 entity.whirlwind.name=龍捲風
+
 # Containers
 container.aether_legacy.incubator=孵化器
 container.aether_legacy.enchanter=魔法爐
+container.aether_legacy.altar=Altar
 container.aether_legacy.freezer=結凍器
+
 # Advancements
 advancement.aether_legacy.enter_aether=天堂
 advancement.aether_legacy.blue_aercloud=飛向宇宙，浩瀚無垠！
@@ -262,6 +272,7 @@ advancement.aether_legacy.bronze_dungeon=就像隻BOSS一樣！
 advancement.aether_legacy.silver_dungeon=退位吧
 advancement.aether_legacy.gold_dungeon=太陽殞落
 advancement.aether_legacy.loreception=頓悟！
+
 # Advancement Descriptions
 advancement.aether_legacy.enter_aether.desc=進入天堂世界
 advancement.aether_legacy.blue_aercloud.desc=在藍天雲上彈跳
@@ -273,6 +284,7 @@ advancement.aether_legacy.bronze_dungeon.desc=擊敗青銅地牢的BOSS──滑
 advancement.aether_legacy.silver_dungeon.desc=擊敗白銀地牢的BOSS──女武神女王
 advancement.aether_legacy.gold_dungeon.desc=擊敗黃金地牢的BOSS──太陽神
 advancement.aether_legacy.loreception.desc=閱讀知識之書
+
 # Creative Tabs Names
 tab.aether_blocks=天堂方塊
 tab.aether_tools=天堂工具
@@ -282,8 +294,10 @@ tab.aether_food=天堂食物
 tab.aether_accessories=天堂飾品
 tab.aether_material=天堂材料
 tab.aether_misc=天堂雜項
+
 # Tab Names
 tab.accessories.name=飾品
+
 # Subtitles
 subtitles.aemob.moa.say=恐鳥叫喚
 subtitles.aemob.moa.flap=恐鳥拍翅
@@ -310,43 +324,66 @@ subtitles.aeboss.slider.collide=滑行者攻擊
 subtitles.aeboss.slider.move=滑行者移動
 subtitles.aeboss.slider.death=滑行者死亡
 subtitles.aeboss.sun_spirit.shoot=太陽神攻擊
+subtitles.aemob.moa.egg=Moa plops
+subtitles.aemob.swet.squish=Swet squishes
+subtitles.aemob.swet.jump=Swet squishes
+subtitles.aemob.swet.attack=Swet attacks
+subtitles.aemob.swet.death=Swet dies
+subtitles.aemob.cockatrice.say=Cockatrice calls
+subtitles.aemob.cockatrice.flap=Cockatrice flaps
+subtitles.aemob.cockatrice.attack=Cockatrice shoots
+subtitles.aemob.aechor_plant.attack=Aechor Plant shoots
+subtitles.aemisc.portal.idle=Aether Portal wooshes
+subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
+
 # GUI and Dialog
 gui.item.life_shard.maxshards=你只能使用10個生命碎片。
 gui.item.developer_stick.notdev=你的技巧不足以駕馭這個物品！
-# GUI and Dialog
+
 gui.slider.notpickaxe=嗯...也許我該用鎬來攻擊它？
 gui.slider.apple=這條消息只是在這裡，因為KingPhygieBoo向Kino要求了一個隨機項目，而他說蘋果。
+
 gui.valkyrie.dialog.1=那啥？你想打架？哇！多麼可愛的小人類。
 gui.valkyrie.dialog.2=難道你想挑戰一位強大的女武神？
 gui.valkyrie.dialog.3=我不認為你該來打擾我，你可能真的腦袋秀逗了。
+
 gui.valkyrie.dialog.medal.1=嗯...那裡有一大堆獎牌...
 gui.valkyrie.dialog.medal.2=這真是令人印象深刻，但你無法打敗我的。
 gui.valkyrie.dialog.medal.3=你認為你是個硬漢？哼...很好，那就上吧！
+
 gui.valkyrie.dialog.defeated.1=好吧、好吧！你贏了！
 gui.valkyrie.dialog.defeated.2=好的，我放棄了！天啊！
 gui.valkyrie.dialog.defeated.3=呃啊！好的，這是你的獎牌......
+
 gui.valkyrie.dialog.attack.1=我不會讓你太好過的！
 gui.valkyrie.dialog.attack.2=你會後悔的！
 gui.valkyrie.dialog.attack.3=你現在倒大楣了！
+
 gui.valkyrie.dialog.playerdead.1=你想要一個獎牌？那就試著別那麼弱小吧。
 gui.valkyrie.dialog.playerdead.2=也許有一天，%s...也許有一天。
 gui.valkyrie.dialog.playerdead.3=人類死後幾乎不可愛。
+
 gui.valkyrie.dialog.ready=現在，讓我們開始吧！
 gui.valkyrie.dialog.nomedals=慢慢來。
 gui.valkyrie.dialog.nofight=那麼就這樣吧。再見了冒險者。
+
 gui.valkyrie.dialog.player.havemedals=我準備好了，我這裡有獎牌！
 gui.valkyrie.dialog.player.lackmedals=當我擁有它們時，我會回來的。
 gui.valkyrie.dialog.player.denyfight=第二個想法：我寧願不要。
+
 gui.queen.ready=如果你想挑戰我，隨時候教。
 gui.queen.defeated=你是個...真正強悍的戰士...
 gui.queen.peaceful=抱歉，我不和弱者戰鬥。
 gui.queen.nomedals=先試著擊敗一些較弱的女武神。
 gui.queen.fight=這將是你此生的最後一戰！
 gui.queen.lost=果然終究只是個人類啊。
+
 gui.queen.dialog.0=妳能告訴我關於這個地方的消息嗎？
+
 gui.queen.answer.0=這是我等女武神尋求休憩的庇護所。
 gui.queen.answer.1=非常好，從我的下屬那帶來十塊勝利獎牌以證明你自己的價值，到那時候再說吧。
 gui.queen.answer.2=再見了，冒險者。
+
 gui.spirit.line0=能進入這個房間的你肯定擁有一個勇敢的靈魂。
 gui.spirit.line1=離開吧人類，在這裡沒有任何你想要的。
 gui.spirit.line2=你的存在煩擾了我。你不怕我的烈燃光環嗎？
@@ -363,39 +400,288 @@ gui.spirit.line9=如你所願，你的死將是緩慢和痛苦的。
 gui.spirit.line10=在你臨死前是否滿足你的好奇心了，人類？
 gui.spirit.dead=這如墜冰窖的感覺...這就是...痛苦嗎？
 gui.spirit.playerdied=這就是膽敢忤逆太陽威力之存在的命運。
+
 gui.treasure_chest.bronze=青銅寶箱
 gui.treasure_chest.silver=白銀寶箱
 gui.treasure_chest.gold=黃金寶箱
 gui.treasure_chest.platinum=白金寶箱
+
 gui.sun_altar.time=操控太陽
+gui.sun_altar.message=The sun spirit has no power over this realm.
+gui.sun_altar.eternal_day=The sun spirit is still in control of this realm.
+gui.sun_altar.cycle_catchup=The sun is still moving to its correct position.
+gui.sun_altar.permission=You don't have permission to perform this action.
+
 title.aether_legacy.slider.name=滑行者
 title.aether_legacy.valkyrie_queen.name=女武神女王
 title.aether_legacy.sun_spirit.name=太陽神
-# Death messages
+
 gui.loading.enteraether=升入天堂
 gui.loading.exitaether=從天堂墜落
+
+gui.skyroot_bed.respawn_point=Respawn point set
+
+gui.button.halo=Halo:
+gui.button.glow=Developer Glow:
+gui.button.aether_cape=Aether Cape:
+gui.button.gloves=Gloves:
+gui.button.glove_size=Glove Size:
+
+glove_size.option.skin=Skin
+glove_size.option.hat=Hat
+
 # Death messages
 death.attack.inebriation=%1$s 被毒恐鳥毒死了
 death.attack.inebriation_indirect=%1$s 被 %2$s 迷醉而死
+death.attack.crush=%1$s was crushed by %2$s
+death.attack.incineration=%1$s was incinerated by %2$s
+death.attack.incineration_firo=%1$s was incinerated by %2$s's Fire Ball
+death.attack.icey_ball=%1$s was chilled by %2$s's Icey Ball
+death.attack.lightning_ball=%1$s was zapped by %2$s's Thunder Ball
+
 # Config
 aether_legacy.config.title=天堂配置
 aether_legacy.general.dimension=世界設置
+
 aether_legacy.general.gameplay_changes=遊戲性變化
 aether_legacy.general.gameplay_changes.tooltip=這些選項會影響遊戲玩法，以及某些內容的運作。
 aether_legacy.general.gameplay_changes.ambro_is_edible=可食用的安普洛斯碎片
 aether_legacy.general.gameplay_changes.max_life_shards=最大生命碎片
 aether_legacy.general.gameplay_changes.skyroot_bucket_only=僅限天根木桶
 aether_legacy.general.gameplay_changes.valkyrie_cape=女武神披風
+aether_legacy.general.gameplay_changes.aether_start=Aether Start
+aether_legacy.general.gameplay_changes.golden_feather=Golden Feather
+aether_legacy.general.gameplay_changes.disable_portal=Disable Portal
+aether_legacy.general.gameplay_changes.disable_startup_loot=Disable Startup Loot
+aether_legacy.general.gameplay_changes.sun_altar_multiplayer=Disable Sun Altar's Operator Requirement
+aether_legacy.general.gameplay_changes.repeat_sun_spirit_dialog=Repeat Sun Spirit Dialogue
+aether_legacy.general.gameplay_changes.disable_eternal_day=Disable Eternal Day
+
 aether_legacy.general.visual_options=視覺選項
 aether_legacy.general.visual_options.tooltip=這些選項不會影響遊戲玩法，純粹是視覺效果。
 aether_legacy.general.visual_options.legacy_models=經典模型
 aether_legacy.general.visual_options.trivia_disabled=禁用天堂細節
 aether_legacy.general.visual_options.updated_aercloud_colors=更新冷天雲的顏色
 aether_legacy.general.visual_options.menu_enabled=天堂主選單
+aether_legacy.general.visual_options.menu_button=Aether Menu Button
+aether_legacy.general.visual_options.install_resourcepack=Install Resource Pack
+aether_legacy.general.visual_options.legacy_altar_name=Classic Altar Name
+
 aether_legacy.general.world_gen=世界生成選項
 aether_legacy.general.world_gen.tooltip=這些選項會影響世界的生成。
 aether_legacy.general.world_gen.christmas_time=節慶生成
 aether_legacy.general.world_gen.pink_aerclouds=粉紅色冷天雲生成
 aether_legacy.general.world_gen.tallgrass_enabled=高草叢生成
+
 aether_legacy.general.dimension.aether_dimension_id=天堂世界ID
 aether_legacy.general.dimension.aether_dimension_id.tooltip=設置天堂的世界ID。
+
+# Lore entries
+lore.aether_legacy.aechor_petal=The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.
+lore.aether_legacy.aerogel=The result of the Aether's unique climate and lava combining. It can be crafted into various decorative blocks and is blast resistant.
+lore.aether_legacy.aerogel_slab=Crafted from Aerogel. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!
+lore.aether_legacy.aerogel_stairs=Crafted from Aerogel. Stairs are useful for adding verticality to builds and are often used for decoration too!
+lore.aether_legacy.aerogel_wall=Crafted from Aerogel. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!
+lore.aether_legacy.aether_dirt=A pale dirt. It can be found in the Aether, and can also be used to grow the native trees. It can grow into grass with enough light.
+lore.aether_legacy.aether_grass=Grass found in the Aether dimension. It can be used to grow the trees native to the Aether. It is much more pale than normal Grass.
+lore.aether_legacy.aether_portal=I'm sad you had to cheat that in to check what it does. ~Kino
+lore.aether_legacy.agility_cape=A slightly rare cape, it can be seen in Bronze and Silver Dungeons. It makes the wearer's legs stronger, therefore they can walk up blocks instantly.
+lore.aether_legacy.ambrosium_ore=The most common ore in the Aether. The drops can be doubled with Skyroot tools.
+lore.aether_legacy.ambrosium_shard=Aether's coal equivalent, they have a healing property when eaten, and restore a small amount of health.
+lore.aether_legacy.ambrosium_torch=The main light source for the Aether, made with a Skyroot Stick and Ambrosium.
+lore.aether_legacy.angelic_slab=Crafted from Angelic Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!
+lore.aether_legacy.angelic_stone=Angelic Stone is the main block that makes up Silver Dungeons. There is a chance some of them can be traps when generated in dungeons, but you cannot collect them as traps. It is unbreakable until you have defeated the boss, but it's worth it for that block.
+lore.aether_legacy.angelic_wall=Crafted from Angelic Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!
+lore.aether_legacy.angelic_stairs=Crafted from Angelic Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!
+lore.aether_legacy.berry_bush=These bushes can be found all over the Aether. They provide Blue Berries when broken, and then turn into bare stems. If placed on Enchanted Aether Grass the drops are doubled.
+lore.aether_legacy.berry_bush_stem=This is the result of harvesting the Blue Berries from a Berry Bush. It can take some time for them to grow back.
+lore.aether_legacy.black_moa_egg=An Egg laid by a Black Moa. Hatching this provides a Black Moa with 8 mid-air jumps, the best and most rare one!
+lore.aether_legacy.blue_aercloud=A pale blue cloud found close to the ground. It has very bouncy properties, and can help you reach high places.
+lore.aether_legacy.blue_berry=Harvested from Berry Bushes, this is the most common food source in the Aether. It has very weak hunger restoration. You can enchant these in an Altar for much better hunger restoration.
+lore.aether_legacy.blue_cape=A Blue Cape that has a silky feeling to it. It's crafted using Blue Wool.
+lore.aether_legacy.blue_moa_egg=An Egg laid by a Blue Moa. Hatching this provides a Blue Moa with 3 mid-air jumps. The most common Moa.
+lore.aether_legacy.candy_cane=Found in presents under Holiday trees! They can be used to repair Candy Cane swords, and are a very tasty treat.
+lore.aether_legacy.candy_cane_sword=A sword made from decorative candy. Randomly drops Candy Canes when used. These are dropped from presents that are under Holiday Trees.
+lore.aether_legacy.carved_slab=Crafted from Carved Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!
+lore.aether_legacy.carved_stairs=Crafted from Sentry Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!
+lore.aether_legacy.carved_stone=The Stone found in Bronze Dungeons. This stone has a gray color to it, and can be mined as a decorative block.
+lore.aether_legacy.carved_wall=Crafted from Carved Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!
+lore.aether_legacy.chain_gloves=A very rare part of chain armor, it is needed to complete the Chain Armor set.
+lore.aether_legacy.chest_mimic=It may look like a normal chest, but it really isn't. As soon as you right click on it, a chest mimic will pop out! These appear in Bronze and Silver dungeons.
+lore.aether_legacy.cloud_staff=A staff with a light and fluffy top. It summons small Cloud Sentries to fight next to the user for a short period of time by shooting large Iceballs.
+lore.aether_legacy.cold_aercloud=A cold cloud found in the skies of the Aether. It can be used to make Parachutes, and break drops that would otherwise be very dangerous.
+lore.aether_legacy.cold_parachute=A quickly made parachute. It's fluffy to the touch and is made from Cold Aerclouds. It has one use.
+lore.aether_legacy.crystal_fruit_leaves=Crystal Leaves that are home to White Apples.
+lore.aether_legacy.crystal_leaves=Leaves that come from Crystal Trees, they generate on floating islands. Sometimes they have fruit on them, which can cure poison.
+lore.aether_legacy.decorated_holiday_leaves=Holiday Leaves that have been decorated with lovely little baubles for extra holiday cheer!
+lore.aether_legacy.dart_enchanted=The ammo for Enchanted Dart Shooters. This is the strongest of the darts, made by enchanting Golden Darts.
+lore.aether_legacy.dart_golden=The ammo for Golden Dart Shooters. Crafted with Skyroot Sticks and Golden Amber, enchanting these converts them to Enchanted Darts.
+lore.aether_legacy.dart_poison=The ammo for Poison Dart Shooters, these are made by infecting Golden Darts with poison!
+lore.aether_legacy.dart_shooter_enchanted=A Dart Shooter which shoots Enchanted Darts, the strongest one!
+lore.aether_legacy.dart_shooter_golden=A Dart Shooter which shoots Golden Darts, enchanting it on an Altar improves it's attack power!
+lore.aether_legacy.dart_shooter_poison=A Dart Shooter which shoots Poison Darts. Shooting this at something infects them with a deadly poison!
+lore.aether_legacy.diamond_gloves=Part of the Diamond Armor set, it is needed to complete the Diamond Armor set.
+lore.aether_legacy.dungeon_key_bronze=A dull key that is dropped from the Slider after being defeated. You can use it to claim the treasure you earned!
+lore.aether_legacy.dungeon_key_golden=A key that has a shiny finish. It is dropped by the Sun Spirit after you defeat him. You can use it to claim the legendary treasure in the back room!
+lore.aether_legacy.dungeon_key_platinum=Only the true holder knows what unlocks with this key.
+lore.aether_legacy.dungeon_key_silver=A reflective key that is given to you by the Valkyrie Queen after defeating her. Use it to claim the treasure she left behind!
+lore.aether_legacy.enchanted_aether_grass=Aether Grass enchanted which allows for increasing harvest rates of Blue Berries.
+lore.aether_legacy.enchanted_blueberry=An excellent food source, it tastes quite good and restores a massive amount of hunger.
+lore.aether_legacy.enchanted_gravitite=After putting Gravitite Ore into an Altar and enchanting it, you get Enchanted Gravitite. This can be made into Gravitite Tools and Armor. When powered with a Redstone signal, Enchanted Gravitite Blocks will float into the air, similarly to Gravitite Ore.
+lore.aether_legacy.enchanter=Used to enchant items and repair armor. They are powered by Ambrosium Shards. The enchanting process can take some time, but if you place an Enchanted Gravitite block under it, the process is sped up by a huge amount.
+lore.aether_legacy.flaming_sword=An ancient sword which flames its foes to a burning crisp. It almost hurts to touch! Using this on animals can make them drop cooked meat!
+lore.aether_legacy.freezer=You can freeze various items using this, such as Aerclouds, or Water Buckets. It's source of power is Icestone. You can speed up the freezing process by placing an Icestone under the Freezer.
+lore.aether_legacy.ginger_bread_man=Found in presents under Holiday trees, these are the most common of Christmas items. They are very abundant when dropped from presents.
+lore.aether_legacy.golden_aercloud=A golden cloud found in small quantities, higher in the air than normal. The properties are similar to Cold Aerclouds, but the Parachutes they produce have much more durability.
+lore.aether_legacy.golden_amber=These round golden orbs can be obtained by mining Golden Oak Logs with a Gravitite Axe. Their main purpose is to craft Golden Darts, and Dart Shooters.
+lore.aether_legacy.golden_feather=A fluffy feather found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.
+lore.aether_legacy.golden_gloves=Part of the Golden Armor set, it is needed to complete the Gold Armor set.
+lore.aether_legacy.golden_oak_leaves=These golden Leaves generate with Golden Oak trees. They spawn golden particles in a radius of 5 blocks. They yield Golden Oak Saplings when decayed.
+lore.aether_legacy.golden_oak_log=Skyroot Log which contains Golden Amber inside. When broken with an Axe they drop Skyroot Logs, and if the Axe is Gravitite, they will drop Golden Amber.
+lore.aether_legacy.golden_oak_sapling=These large saplings when planted will grow into huge Golden Oak trees! You can use Bone Meal to speed up the process.
+lore.aether_legacy.golden_parachute=The best parachute in the Aether. It has 20 uses and is made with Golden Aerclouds.
+lore.aether_legacy.golden_pendant=An aesthetic accessory made of gold.
+lore.aether_legacy.golden_ring=An aesthetic accessory made of gold.
+lore.aether_legacy.gravitite_axe=Part of Aether's best tool tier, this Axe not only can make wood blocks float, but it can mine Golden Oak logs for Golden Amber!
+lore.aether_legacy.gravitite_boots=Part of Aether's best armor set, when the full set is worn, you get an extra high jump!
+lore.aether_legacy.gravitite_chestplate=Part of Aether's best armor set, when the full set is worn, you get an extra high jump!
+lore.aether_legacy.gravitite_gloves=Part of Aether's best armor set, needed to complete the Gravitite set.
+lore.aether_legacy.gravitite_helmet=Part of Aether's best armor set, when the full set is worn, you get an extra high jump!
+lore.aether_legacy.gravitite_leggings=Part of Aether's best armor set, when the full set is worn, you get an extra high jump!
+lore.aether_legacy.gravitite_ore=This is Aether's rarest ore. It has floating properties and will float upward when there is nothing above it. These can be Enchanted into Enchanted Gravitite Blocks.
+lore.aether_legacy.gravitite_pickaxe=Part of Aether's best tool tier, when mining with this powerful tool, you can right-click on any stone block and it will levitate into the air! You can mine any ore with this Pickaxe.
+lore.aether_legacy.gravitite_shovel=Part of Aether's best tool tier, this shovel has the special ability to make dirt blocks, or sand levitate! When combined with enchantments such as Efficiency, it will instantly break Aether Dirt!
+lore.aether_legacy.gravitite_sword=Part of Aether's best tool tier, when attacking with this powerful weapon, anything you hit will be flung into the air, causing lots of damage! Use this to your advantage, as it works even while your sword is cooling down!
+lore.aether_legacy.green_leaves=These leaves generate with Skyroot Trees. They can drop Skyroot Saplings when decaying.
+lore.aether_legacy.gummy_swet_blue=A sweet smelling gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player’s hunger to full. Very useful for boss fights.
+lore.aether_legacy.gummy_swet_golden=A sour tasting gummy, it can be found in random chests in Bronze and Silver dungeons. It restores the player’s hunger to full. Very useful for boss fights.
+lore.aether_legacy.healing_stone=Obtained from enchanting Holystone, it can be used as a reliable healing source, providing Regeneration. It has a surprisingly juicy flavor.
+lore.aether_legacy.hellfire_slab=Crafted from Hellfire Stone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!
+lore.aether_legacy.hellfire_stone=A warm, red stone that makes up 90%% of Gold Dungeon interior. It cannot be destroyed until the Sun Spirit is defeated.
+lore.aether_legacy.hellfire_wall=Crafted from Hellfire Stone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!
+lore.aether_legacy.hellfire_stairs=Crafted from Hellfire Stone. Stairs are useful for adding verticality to builds and are often used for decoration too!
+lore.aether_legacy.holiday_leaves=Leaves on Christmas trees! It snows near them, and there is always presents nearby!
+lore.aether_legacy.holy_sword=An ancient sword which does heavy amounts of damage to undead foes. A perfect weapon for traversing the Overworld.
+lore.aether_legacy.holystone=The Aether's native rock. It can be used in various ways such as creating tools, construction, as well being able to be crafted into Holystone Bricks.
+lore.aether_legacy.holystone_axe=One of Aether's stone tools, it mines faster than Skyroot Tools, as well as dropping random Ambrosium Shards.
+lore.aether_legacy.holystone_brick=Used as a building material native to the Aether. It is made from Holystone and is more sturdy than it too.
+lore.aether_legacy.holystone_brick_slab=Crafted from Holystone Bricks. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!
+lore.aether_legacy.holystone_brick_stairs=Crafted from Holystone Bricks. Stairs are useful for adding verticality to builds and are often used for decoration too!
+lore.aether_legacy.holystone_brick_wall=Crafted from Holystone Bricks. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!
+lore.aether_legacy.holystone_pickaxe=One of Aether's stone tools, it can mine Zanite, and will randomly drop Ambrosium Shards while mining.
+lore.aether_legacy.holystone_shovel=One of Aether's stone tools, it can mine Quicksoil, and all other blocks a Stone Shovel can mine, except it drops random Ambrosium Shards.
+lore.aether_legacy.holystone_slab=Crafted from Holystone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!
+lore.aether_legacy.holystone_stairs=Crafted from Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!
+lore.aether_legacy.holystone_sword=One of Aether's stone tools, it can drop Ambrosium Shards at random while attacking.
+lore.aether_legacy.holystone_wall=Crafted from Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!
+lore.aether_legacy.ice_pendant=A pendant which allows you to freeze water, and lava when walked on.
+lore.aether_legacy.ice_ring=A ring which allows you to freeze water, and lava when walked on.
+lore.aether_legacy.icestone=Icestone is a common ore that can be used as fuel for a Freezer. It can be used to freeze nearby liquids such as Lava and Water.
+lore.aether_legacy.incubator=Used to incubate Moa's. You use Ambrosium Torches for the fuel. The process can take quite some time, but it is worth the wait once your Moa of choice hatches!
+lore.aether_legacy.invisibility_cape=A cloak that makes the wearer completely invisible! Since mobs cannot see you, they cannot attack you. Sneak up on your enemies with it!
+lore.aether_legacy.iron_bubble=A common dungeon loot. It allows for the wearer to breathe underwater for a longer time than normal.
+lore.aether_legacy.iron_gloves=Part of the Iron Armor set, it is needed to complete the Iron Armor set.
+lore.aether_legacy.iron_pendant=An aesthetic accessory made of iron.
+lore.aether_legacy.iron_ring=An aesthetic accessory made of iron.
+lore.aether_legacy.jeb_hammer=A mysterious hammer that shoots projectiles out of it. At one point it vanished from existence. It's said this was actually Jeb's hammer at one point.
+lore.aether_legacy.leather_gloves=Dyeable gloves to match your leather tunic! This is needed to complete the Leather armor set.
+lore.aether_legacy.life_shard=A very rare item found in Gold Dungeons. Using this will give you an extra permanent heart! The feeling of using it is very strange, and hard to describe.
+lore.aether_legacy.light_angelic_stone=The Light version of Angelic Stone. It is less common than Angelic Stone, but it looks really nice as a decorative block.
+lore.aether_legacy.light_hellfire_stone=The Light version of Hellfire Stone. It can be found in Gold Dungeons along with Hellfire stone, but like it's counterpart, it cannot be collected until the boss is defeated.
+lore.aether_legacy.lightning_knife=Small knives that when thrown, summon lightning bolts where they land.
+lore.aether_legacy.lightning_sword=An ancient sword which summons lightning to its foes.
+lore.aether_legacy.lore_book=A large book containing many lore entries written by the wise Lorist. It describes every object in detail.
+lore.aether_legacy.mossy_holystone=A more aged Holystone, it is found near dungeons, and has pale colored vines growing on it, very decorative.
+lore.aether_legacy.mossy_holystone_slab=Crafted from Mossy Holystone. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!
+lore.aether_legacy.mossy_holystone_stairs=Crafted from Mossy Holystone. Stairs are useful for adding verticality to builds and are often used for decoration too!
+lore.aether_legacy.mossy_holystone_wall=Crafted from Mossy Holystone. Can be used for decorative enclosures and defences. Great for keeping nasty intruders away!
+lore.aether_legacy.nature_staff=A staff that can allow for commanding tamed Moas. It can allow them to sit on the ground.
+lore.aether_legacy.neptune_boots=Found in Silver Dungeons, this armor allows for water walking. The full set is a much better replacement for the Depth Strider enchantment.
+lore.aether_legacy.neptune_chestplate=Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.
+lore.aether_legacy.neptune_gloves=Found in Silver Dungeons, these gloves are requires to complete the Neptune Armor set, which allows for underwater walking.
+lore.aether_legacy.neptune_helmet=Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.
+lore.aether_legacy.neptune_leggings=Found in Silver Dungeons, this armor allows for water walking. Combined with an Iron Bubble, this armor set is super useful for defeating underwater temples.
+lore.aether_legacy.notch_hammer=A mighty hammer which shoots heavy projectiles at mobs. It's said that Notch actually held this hammer.
+lore.aether_legacy.obsidian_boots=A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.
+lore.aether_legacy.obsidian_chestplate=A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.
+lore.aether_legacy.obsidian_gloves=Needed to complete the Obsidian Armor set, you can convert Phoenix Gloves into Obsidian by standing in water while wearing them.
+lore.aether_legacy.obsidian_helmet=A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.
+lore.aether_legacy.obsidian_leggings=A super powerful armor, more powerful than Diamond, this armor is only obtainable by standing in water while wearing Phoenix Armor, converting it to Obsidian.
+lore.aether_legacy.orange_moa_egg=An Egg laid by an Orange Moa. Hatching this provides an Orange Moa with 2 mid-air jumps, but extreme speed. This Moa is quite common.
+lore.aether_legacy.phoenix_boots=Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.
+lore.aether_legacy.phoenix_bow=Found as a dungeon loot, this bow is very heated, and can shoot flaming arrows! It's warm to the touch.
+lore.aether_legacy.phoenix_chestplate=Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.
+lore.aether_legacy.phoenix_gloves=Found in Gold Dungeons, these gloves are required to finish the Phoenix Armor set, and are needed to convert the full set into Obsidian too.
+lore.aether_legacy.phoenix_helmet=Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.
+lore.aether_legacy.phoenix_leggings=Found in Gold Dungeons, when fully worn, this armor set allows for Fire Resistance, you can swim in Lava as well. Be careful when standing in water, as it will turn into Obsidian armor.
+lore.aether_legacy.pig_slayer=Kills any Pig type mobs with nothing with a single blow. But why would you want to do that? Great for traversing the Nether.
+lore.aether_legacy.pillar=The main part of the Silver Dungeon's decorative pillars, they spawn all around the dungeon, and are excellent for building.
+lore.aether_legacy.pillar_top=The top of the Silver Dungeon's decorative pillars, they look excellent, and are great for building.
+lore.aether_legacy.pink_aercloud=A very soft cloud that is pink. It has natural healing properties, healing anyone's wounds when stepped in.
+lore.aether_legacy.present=A wonderful holiday gift, open it for a surprise! Be careful, as there's a chance you could get ssssssurprised!
+lore.aether_legacy.purple_flower=These pretty violet flowers can be found in large numbers around the Aether. They can be crafted into purple dye when placed into a Crafting Table.
+lore.aether_legacy.quicksoil=A silky sand with extremely slippery properties. It can be seen floating on the side of Aether islands. Be careful around it, or you'll fall off.
+lore.aether_legacy.quicksoil_glass=After enchanting Quicksoil you can get this tinted glass. It is slightly slippery and makes a for a great window.
+lore.aether_legacy.red_cape=A rough feeling cape that is crafted using Red Wool.
+lore.aether_legacy.regeneration_stone=A treasure found in Silver Dungeons. This stone makes the wearer feel healthy, and heals their wounds. The effects can stack with other Regeneration Stones.
+lore.aether_legacy.repulsion_shield=A shield that protects the user from most projectiles. It will reflect the projectile back at the thrower and cause damage to them. Each time a projectile is reflected the shield will be damaged.
+lore.aether_legacy.sentry_boots=Found in Bronze Dungeons, these boots protect you from fall damage, allowing you to fall from great heights.
+lore.aether_legacy.sentry_stone=The Light version of Carved Stone, also found in Bronze Dungeons.
+lore.aether_legacy.skyroot_axe=One of Aether's wooden tools, it can be used to double Skyroot Log drops. Simple but useful for beginners.
+lore.aether_legacy.skyroot_bed_item=Crafted with cyan wool and skyroot planks. You can only sleep at night to skip night time, but during the day you can set your respawn point in the Aether. Cannot sleep while mobs are nearby.
+lore.aether_legacy.skyroot_bookshelf=Crafted from Skyroot Planks and Books. Bookshelves can be used to enhance the enchanting capabilities of an enchanting table.
+lore.aether_legacy.skyroot_bucket_empty=A hand crafted bucket, used to contain Aechor poison, a nice Remedy or even just plain Water!
+lore.aether_legacy.skyroot_bucket_milk=A bucket full of fresh Milk, drink it to heal potion effects.
+lore.aether_legacy.skyroot_bucket_poison=A Skyroot Bucket that has been filled with a deadly poison. Better not drink it! It can be used to craft Poison Darts and Dart Shooters. Enchant it to cure the poison in it.
+lore.aether_legacy.skyroot_bucket_remedy=A Skyroot Bucket containing a soothing remedy. It has a strong smell. Drinking this cures deadly poison, and prevents it for a short time.
+lore.aether_legacy.skyroot_bucket_water=A Skyroot Bucket that is filled to the brim with Water.
+lore.aether_legacy.skyroot_fence=Crafted from Skyroot planks and Sticks. Great for keeping your livestock safe from wandering predators!
+lore.aether_legacy.skyroot_fence_gate=Crafted from Sticks and Skyroot planks. Gives a homely entrance and exit to your precious enclosures.
+lore.aether_legacy.skyroot_log=These spawn with Skyroot Trees. They can be double dropped with Skyroot Axes. When put in a crafting table they will provide 4 Skyroot Planks.
+lore.aether_legacy.skyroot_pickaxe=One of Aether's wooden tools, when mining Holystone or Ambrosium ore, it will double the drops. This is even better when combined with an enchantment such as Fortune when mining Ambrosium Shards!
+lore.aether_legacy.skyroot_plank=Skyroot Planks can be made into various tools, blocks and items. They are crafted from Skyroot Logs, and make a great building material.
+lore.aether_legacy.skyroot_sapling=These small green saplings will grow into Skyroot Trees. They can be grown faster with Bone Meal.
+lore.aether_legacy.skyroot_shovel=One of Aether's wooden tools, it doubles Aether dirt and Quicksoil drops.
+lore.aether_legacy.skyroot_slab=Crafted from Skyroot. Slabs are half blocks, versatile for decoration and smooth slopes. Try adding some to a building’s roofing!
+lore.aether_legacy.skyroot_stairs=Crafted from Skyroot Planks. Stairs are useful for adding verticality to builds and are often used for decoration too!
+lore.aether_legacy.skyroot_stick=Crafted from Skyroot Planks. Used to create various aether tools and items. Nothing else too special about it.
+lore.aether_legacy.skyroot_sword=One of Aether's wooden tools, it has a low amount of durability, and doubles mob drops. It makes an excellent food collected when combined with enchantments such as Looting and Fire Aspect.
+lore.aether_legacy.sun_altar=An Altar containing the power to control the Sun itself! It is dropped by the Sun Spirit after you defeat him. Use it to control the time of day.
+lore.aether_legacy.swet_cape=A common cape that is found in Bronze Dungeons. It allows for the wearer to ride Swets, as they become friendly when they see someone wearing it.
+lore.aether_legacy.swetty_ball=A gooey orb that is dropped from Blue Swets. It can be used to fertilize soils. Another use is to put it alongside string to make a lead.
+lore.aether_legacy.treasure_chest=A treasure chest, these are found after defeating a Bronze, Silver or Gold dungeon. Any of the keys can open these, and the specific dungeon's loot will pop out.
+lore.aether_legacy.valkyrie_axe=A tool unique to the Silver Dungeon, This Axe has a very far reach, and very high attack power, you can use this to your advantage, but be warned, the attack cooldown is very high on this.
+lore.aether_legacy.valkyrie_boots=An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.
+lore.aether_legacy.valkyrie_cape=A rare cape that is found in Silver Dungeons. When worn, the wearer becomes lighter than air and can descend slowly.
+lore.aether_legacy.valkyrie_chestplate=An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.
+lore.aether_legacy.valkyrie_gloves=An armor unique to the Silver Dungeon. The gloves are needed to complete the armor set, which grants temporary flight.
+lore.aether_legacy.valkyrie_helmet=An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.
+lore.aether_legacy.valkyrie_lance=A tool unique to the Silver Dungeon, this long range weapon is very good for defeating Zephyrs, and Valkyrie Queens.
+lore.aether_legacy.valkyrie_leggings=An armor unique to the Silver Dungeon, when fully worn, you are granted temporary flight. Quite useful for getting to high places.
+lore.aether_legacy.valkyrie_pickaxe=A tool unique to the Silver Dungeon, this pickaxe is very useful when it comes to mining blocks from under islands, as it has a very far reach, almost double the normal reach! It is also quite useful for fighting the Slider.
+lore.aether_legacy.valkyrie_shovel=A tool unique to the Silver Dungeon, this shovel can help you reach Quicksoil from a safer distance, quite useful wouldn't you say?
+lore.aether_legacy.vampire_blade=A mysterious sword that has life-stealing abilities. Holding it just makes you feel creepily empty...
+lore.aether_legacy.victory_medal=Proof of defeating a lesser Valkyrie. Use these to prove to the Queen you are worthy enough to fight her!
+lore.aether_legacy.white_apple=One of the only known cures for the Aether's deadly poison. You can find them on Crystal Trees.
+lore.aether_legacy.white_cape=A light and fluffy cape that is made from White Wool.
+lore.aether_legacy.white_flower=These extremely good smelling roses can make great gifts to a friend or loved one. They spawn in large groups around the Aether.
+lore.aether_legacy.white_moa_egg=An Egg laid by a White Moa. Hatching this provides a White Moa with 4 mid-air jumps. This Moa is decently rare.
+lore.aether_legacy.yellow_cape=A bright Yellow Cape that is crafted using Yellow Wool.
+lore.aether_legacy.zanite_axe=One of Aether's mid-tier tools, you can mine wood faster than stone, and it will get even faster as the tool is worn down.
+lore.aether_legacy.zanite_block=A block of compacted Zanite Gemstones. They can power beacons, and just have a sleek look to them.
+lore.aether_legacy.zanite_boots=Part of the Zanite Armor set, the protection it grants increases as the durability decreases.
+lore.aether_legacy.zanite_chestplate=Part of the Zanite Armor set, the protection it grants increases as the durability decreases.
+lore.aether_legacy.zanite_gemstone=Aether's version of Iron. These shiny purple gems can be made into tools and armor, that increase in strength when used.
+lore.aether_legacy.zanite_gloves=Part of the Zanite Armor set, it is needed to complete the Zanite Armor set.
+lore.aether_legacy.zanite_helmet=Part of the Zanite Armor set, the protection it grants increases as the durability decreases.
+lore.aether_legacy.zanite_leggings=Part of the Zanite Armor set, the protection it grants increases as the durability decreases.
+lore.aether_legacy.zanite_ore=A slightly rare ore that drops Zanite Gemstones when broken with Stone tools.
+lore.aether_legacy.zanite_pendant=A pendant which allows you to mine faster. It doesn't last for long, so use it wisely!
+lore.aether_legacy.zanite_pickaxe=One of Aether's mid-tier tools, it mines what Iron can, except as it's durability decreases, it gets faster. Be careful though, as when it's repaired it will be as slow as before!
+lore.aether_legacy.zanite_ring=A ring which allows you to mine faster. It doesn't last for long, so use it wisely!
+lore.aether_legacy.zanite_shovel=One of Aether's mid-tier tools, as you mine dirt and Quicksoil, the durability will decrease, and get faster. If you wait long enough it will start to break blocks instantly! Be careful repairing it, as it will be slower when there is more durability.
+lore.aether_legacy.zanite_sword=One of Aether's mid-tier tools, the attack damage on this sword starts at wood level, and will get to Diamond level when it's durability is low.
+lore.aether_legacy.aether_tune=A music disc that plays Aether Tune by Noisestorm.
+lore.aether_legacy.ascending_dawn=A music disc that plays Ascending Dawn by Emile van Krieken.
+lore.aether_legacy.legacy=A music disc that plays Legacy by xJonL.
+lore.aether_legacy.welcoming_skies=A music disc that plays Welcoming Skies by Voyed.
