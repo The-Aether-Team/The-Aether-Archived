@@ -263,6 +263,7 @@ entity.phyg.name=Phyg
 entity.swet.name=Swet
 entity.moa.name=Moa
 entity.whirlwind.name=Whirlwind
+
 entity.aether_legacy.aechor_plant.name=Aechor Plant
 entity.aether_legacy.cockatrice.name=Cockatrice
 entity.aether_legacy.mimic.name=Mimic
@@ -305,30 +306,6 @@ container.aether_legacy.enchanter=Enchanter
 container.aether_legacy.altar=Altar
 container.aether_legacy.freezer=Freezer
 
-# Advancements
-advancement.aether_legacy.enter_aether=Hostile Paradise
-advancement.aether_legacy.blue_aercloud=To infinity and beyond!
-advancement.aether_legacy.gravitite_tools=Pink is the new blue
-advancement.aether_legacy.incubator=Now you're family
-advancement.aether_legacy.enchanter=Do you believe in magic?
-advancement.aether_legacy.mount_phyg=When Phygs fly
-advancement.aether_legacy.bronze_dungeon=Like a Bossaru!
-advancement.aether_legacy.silver_dungeon=Dethroned
-advancement.aether_legacy.gold_dungeon=Extinguished
-advancement.aether_legacy.loreception=Lore-ception!
-
-# Advancement Descriptions
-advancement.aether_legacy.enter_aether.desc=Enter the Aether
-advancement.aether_legacy.blue_aercloud.desc=Bounce on a Blue Aercloud
-advancement.aether_legacy.gravitite_tools.desc=Craft a gravitite tool
-advancement.aether_legacy.incubator.desc=Incubate a Moa
-advancement.aether_legacy.enchanter.desc=Craft an Altar
-advancement.aether_legacy.mount_phyg.desc=Fly on a Phyg
-advancement.aether_legacy.bronze_dungeon.desc=Defeat the bronze dungeon boss
-advancement.aether_legacy.silver_dungeon.desc=Defeat the silver dungeon boss
-advancement.aether_legacy.gold_dungeon.desc=Defeat the golden dungeon boss
-advancement.aether_legacy.loreception.desc=Put a book of lore inside a book of lore.
-
 # Achievements
 achievement.enter_aether=Hostile Paradise
 achievement.blue_aercloud=To infinity and beyond!
@@ -365,33 +342,6 @@ tab.aether_misc=Aether Miscellaneous
 
 # Tab Names
 tab.accessories.name=Accessories
-
-# Subtitles
-subtitles.aemob.moa.say=Moa calls
-subtitles.aemob.moa.flap=Moa flaps
-subtitles.aemob.phyg.say=Phyg oinks
-subtitles.aemob.phyg.hurt=Phyg hurts
-subtitles.aemob.phyg.death=Phyg dies
-subtitles.aemob.sheepuff.say=Sheepuff baahs
-subtitles.aemob.sheepuff.hurt=Sheepuff hurts
-subtitles.aemob.sheepuff.death=Sheepuff dies
-subtitles.aemob.flyingcow.say=Flying Cow moos
-subtitles.aemob.flyingcow.hurt=Flying Cow hurts
-subtitles.aemob.flyingcow.death=Flying Cow dies
-subtitles.aemob.aerbunny.hurt=Aerbunny squeals
-subtitles.aemob.aerbunny.death=Aerbunny dies
-subtitles.aemob.aerbunny.lift=Aerbunny squeaks
-subtitles.aemob.zephyr.say=Zephyr blows
-subtitles.aemob.zephyr.shoot=Zephyr spits
-subtitles.aemob.aerwhale.say=Aerwhale whistles
-subtitles.aemob.aerwhale.death=Aerwhale cries
-subtitles.aemisc.projectile.shoot=Poison Dart shot
-subtitles.aemisc.dart_shooter.shoot=Dart Shooter fired
-subtitles.aeboss.slider.awaken=Slider awakens
-subtitles.aeboss.slider.collide=Slider smashes
-subtitles.aeboss.slider.move=Slider slides
-subtitles.aeboss.slider.death=Slider breaks
-subtitles.aeboss.sun_spirit.shoot=Sun Spirit shoots
 
 # Death messages
 death.attack.inebriation=%1$s was inebriated
@@ -628,7 +578,6 @@ lore.aether_legacy.aether_tune=A music disc that plays Aether Tune by Noisestorm
 lore.aether_legacy.ascending_dawn=A music disc that plays Ascending Dawn by Emile van Krieken.
 lore.aether_legacy.legacy=A music disc that plays Legacy by xJonL.
 lore.aether_legacy.welcoming_skies=A music disc that plays Welcoming Skies by Voyed.
-
 lore.aether_legacy.blueberry=Harvested from Berry Bushes, this is the most common food source in the Aether. It has very weak hunger restoration. You can enchant these in an Altar for much better hunger restoration.
 lore.aether_legacy.gingerbread_man=Found in presents under Holiday trees, these are the most common of Christmas items. They are very abundant when dropped from presents.
 lore.aether_legacy.skyroot_leaves=These leaves generate with Skyroot Trees. They can drop Skyroot Saplings when decaying.
