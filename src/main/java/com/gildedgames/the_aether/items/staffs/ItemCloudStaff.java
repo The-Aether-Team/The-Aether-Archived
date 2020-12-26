@@ -3,6 +3,7 @@ package com.gildedgames.the_aether.items.staffs;
 import com.gildedgames.the_aether.entities.passive.EntityMiniCloud;
 import com.gildedgames.the_aether.player.PlayerAether;
 import com.gildedgames.the_aether.registry.creative_tabs.AetherCreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -52,6 +53,16 @@ public class ItemCloudStaff extends Item
 			heldItem.damageItem(1, entityplayer);
 
 	    	return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
+		}
+		else if (entityplayer.isSneaking())
+		{
+			for (Entity cloud : ((PlayerAether) playerAether).clouds)
+			{
+				if (cloud instanceof EntityMiniCloud)
+				{
+					((EntityMiniCloud) cloud).lifeSpan = 0;
+				}
+			}
 		}
 
     	return new ActionResult<ItemStack>(EnumActionResult.PASS, heldItem);
