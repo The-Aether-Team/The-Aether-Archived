@@ -199,6 +199,7 @@ public class PlayerAetherEvents
 		if (playerAether != null)
 		{
 			playerAether.getAccessoryInventory().markDirty();
+			((PlayerAether) playerAether).updateAccessories();
 
 			if (!AetherConfig.gameplay_changes.aether_start)
 			{
