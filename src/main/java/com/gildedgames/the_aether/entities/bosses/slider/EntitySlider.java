@@ -665,7 +665,9 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         }
         else
         {
-            if (!stack.getItem().canHarvestBlock(Blocks.STONE.getDefaultState()))
+            boolean isTCPickaxe = stack.getItem().getClass().getName().equals("slimeknights.tconstruct.tools.tools.Pickaxe");
+
+            if (!stack.getItem().canHarvestBlock(Blocks.STONE.getDefaultState()) && !isTCPickaxe)
             {
                 this.sendMessage(player, new TextComponentTranslation("gui.slider.notpickaxe"));
 
