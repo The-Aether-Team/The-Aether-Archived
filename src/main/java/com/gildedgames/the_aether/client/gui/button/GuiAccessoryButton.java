@@ -40,6 +40,7 @@ public class GuiAccessoryButton extends GuiButton
 
             drawModalRectWithCustomSizedTexture(this.x - 1, this.y, 0, 0, 14, 14, 14, 14);
 
+			GlStateManager.disableBlend();
             GlStateManager.popMatrix();
     	}
     }
