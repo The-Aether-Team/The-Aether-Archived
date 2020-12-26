@@ -11,7 +11,7 @@ public class AetherConfig {
 
 	private static int max_life_shards;
 
-	private static boolean christmas_content, tallgrass;
+	private static boolean christmas_content, tallgrass, seasonal_christmas;
 
 	private static int aether_biome_id, aether_dimension_id;
 
@@ -49,6 +49,7 @@ public class AetherConfig {
 		config.load();
 
 		christmas_content = config.get("Aether World Generation", "Christmas Content", false).getBoolean(false);
+		seasonal_christmas = config.get("Aether World Generation", "Spawns Holiday Trees during December and January automatically. Christmas Content overrides this.", true).getBoolean(true);
 		tallgrass = config.get("Aether World Generation", "Enable Tall Grass", false).getBoolean(false);
 
 		aether_dimension_id = config.get("World Identification", "Aether Dimension ID", 4).getInt(4);
@@ -176,5 +177,9 @@ public class AetherConfig {
 	public static boolean eternalDayDisabled()
 	{
 		return disable_eternal_day;
+	}
+
+	public static boolean allowSeasonalChristmas() {
+		return seasonal_christmas;
 	}
 }

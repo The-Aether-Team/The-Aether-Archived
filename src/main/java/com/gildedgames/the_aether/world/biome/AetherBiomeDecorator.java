@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.world.biome;
 
+import java.util.Calendar;
 import java.util.Random;
 
 import com.gildedgames.the_aether.AetherConfig;
@@ -97,8 +98,8 @@ public class AetherBiomeDecorator extends BiomeDecorator {
 
 			this.getTree().generate(this.world, this.rand, x, y, z);
 		}
-
-		if (AetherConfig.shouldLoadHolidayContent()) {
+		if ((AetherConfig.shouldLoadHolidayContent()) || (AetherConfig.allowSeasonalChristmas() &&
+				(Calendar.getInstance().get(Calendar.MONTH) + 1 == 12 || Calendar.getInstance().get(Calendar.MONTH) + 1 == 1))) {
 			if (this.shouldSpawn(15)) {
 				int x = this.chunk_X + 8;
 				int z = this.chunk_Z + 8;
