@@ -129,6 +129,8 @@ public class PlayerAether implements IPlayerAether
 			AetherNetworkingManager.sendToAll(new PacketGloveSizeChanged(this.getEntity().getEntityId(), this.gloveSize));
 		}
 
+		this.updateAccessories();
+
 		if (this.isPoisoned)
 		{
 			if (poisonTime > 0)

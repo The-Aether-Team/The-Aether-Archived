@@ -186,6 +186,7 @@ public class PlayerAetherEvents
 		
 		if (playerAether != null)
 		{
+			playerAether.getAccessoryInventory().markDirty();
 			((PlayerAether) playerAether).onChangedDimension(event.toDim, event.fromDim);
 		}
 	}
