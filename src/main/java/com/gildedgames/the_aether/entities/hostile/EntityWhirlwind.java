@@ -11,6 +11,7 @@ import com.gildedgames.the_aether.player.perks.AetherRankings;
 
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
@@ -30,10 +31,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
 
 public class EntityWhirlwind extends EntityMob 
 {
@@ -61,12 +65,18 @@ public class EntityWhirlwind extends EntityMob
         this.movementCurve = (this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F;
 
         this.lifeLeft = this.rand.nextInt(512) + 512;
+    }
 
-        if(this.rand.nextInt(10) == 0) 
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
+    {
+        if(this.rand.nextInt(10) == 0)
         {
-        	this.lifeLeft /= 2;
-        	this.setEvil(true);
+            this.lifeLeft /= 2;
+            this.setEvil(true);
         }
+
+        return super.onInitialSpawn(difficulty, livingdata);
     }
     
     @Override
@@ -254,9 +264,9 @@ public class EntityWhirlwind extends EntityMob
     {
     	ItemStack heldItem = player.getHeldItem(hand);
 
-    	if (heldItem != null && heldItem.getItem() == Items.DYE && AetherRankings.isRankedPlayer(player.getUniqueID()))
+    	if (heldItem.getItem() == Items.DYE && AetherRankings.isRankedPlayer(player.getUniqueID()))
     	{
-    		this.setColorData(Integer.valueOf(ItemDye.DYE_COLORS[heldItem.getItemDamage()]));
+    		this.setColorData(ItemDye.DYE_COLORS[heldItem.getItemDamage()]);
 
     		return true;
     	}
@@ -427,6 +437,8 @@ public class EntityWhirlwind extends EntityMob
 
         nbttagcompound.setFloat("movementAngle", this.movementAngle);
         nbttagcompound.setFloat("movementCurve", this.movementCurve);
+        nbttagcompound.setBoolean("isEvil", this.isEvil());
+        nbttagcompound.setInteger("colorData", this.getColorData());
     }
 
 	@Override
@@ -436,6 +448,8 @@ public class EntityWhirlwind extends EntityMob
 
         this.movementAngle = nbttagcompound.getFloat("movementAngle");
         this.movementCurve = nbttagcompound.getFloat("movementCurve");
+        this.setEvil(nbttagcompound.getBoolean("isEvil"));
+        this.setColorData(nbttagcompound.getInteger("colorData"));
     }
 
 	@Override
