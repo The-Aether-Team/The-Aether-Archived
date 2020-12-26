@@ -6,6 +6,7 @@ import com.gildedgames.the_aether.api.player.IPlayerAether;
 import com.gildedgames.the_aether.api.player.util.IAetherAbility;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.player.movement.AetherLiquidMovement;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -79,14 +80,23 @@ public class AbilityArmor implements IAetherAbility {
 	}
 
 	public void damagePhoenixArmor(Entity entity, Item outcome, int slot) {
-		if (entity instanceof EntityLivingBase) {
-			EntityLivingBase entityLiving = (EntityLivingBase) entity;
-			ItemStack stack = entityLiving.getEquipmentInSlot(slot + 1);
+		if (entity instanceof EntityLivingBase)
+		{
+			if (this.player.getEntity().worldObj.getTotalWorldTime() % 5 == 0)
+			{
+				EntityLivingBase entityLiving = (EntityLivingBase) entity;
+				ItemStack stack = entityLiving.getEquipmentInSlot(slot + 1);
 
-			stack.damageItem(1, entityLiving);
+				stack.damageItem(1, entityLiving);
 
-			if (stack.stackSize <= 0) {
-				entityLiving.setCurrentItemOrArmor(slot + 1, new ItemStack(outcome));
+				if (stack.stackSize <= 0)
+				{
+					ItemStack outcomeStack = new ItemStack(outcome);
+
+					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), outcomeStack);
+
+					entityLiving.setCurrentItemOrArmor(slot + 1, outcomeStack);
+				}
 			}
 		}
 	}

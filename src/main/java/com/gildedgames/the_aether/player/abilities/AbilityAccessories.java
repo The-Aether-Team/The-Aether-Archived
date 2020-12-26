@@ -5,6 +5,8 @@ import com.gildedgames.the_aether.api.player.IPlayerAether;
 import com.gildedgames.the_aether.api.player.util.IAetherAbility;
 import com.gildedgames.the_aether.items.ItemsAether;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -94,11 +96,21 @@ public class AbilityAccessories implements IAetherAbility {
 			}
 		}
 
-		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.phoenix_gloves)) && this.player.getEntity().isWet()) {
-			this.player.getAccessoryInventory().damageWornStack(1, new ItemStack(ItemsAether.phoenix_gloves));
+		if (this.player.getAccessoryInventory().wearingAccessory(new ItemStack(ItemsAether.phoenix_gloves)) && this.player.getEntity().isWet())
+		{
+			if (this.player.getEntity().worldObj.getTotalWorldTime() % 5 == 0)
+			{
+				ItemStack stack = this.player.getAccessoryInventory().getStackInSlot(AccessoryType.GLOVES);
 
-			if (this.player.getAccessoryInventory().getStackInSlot(AccessoryType.GLOVES) == null) {
-				this.player.getAccessoryInventory().setAccessorySlot(AccessoryType.GLOVES, new ItemStack(ItemsAether.obsidian_gloves));
+				this.player.getAccessoryInventory().damageWornStack(1, stack);
+
+				if (this.player.getAccessoryInventory().getStackInSlot(AccessoryType.GLOVES) == null)
+				{
+					ItemStack outcomeStack = new ItemStack(ItemsAether.obsidian_gloves);
+					EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(stack), outcomeStack);
+
+					this.player.getAccessoryInventory().setAccessorySlot(AccessoryType.GLOVES, outcomeStack);
+				}
 			}
 		}
 
