@@ -49,7 +49,7 @@ public class PotionInebriation extends Potion
 
             if (this.duration % 50 == 0)
             {
-                entityLivingBaseIn.attackEntityFrom(new DamageSource("inebriation"), 1.0F);
+                entityLivingBaseIn.attackEntityFrom(new DamageSource("inebriation").setDamageBypassesArmor(), 1.0F);
             }
 
             if (entityLivingBaseIn instanceof EntityPlayer)
