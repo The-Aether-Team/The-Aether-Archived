@@ -84,8 +84,7 @@ public class EntityParachute extends Entity
 		{
 			this.setDead();
 		}
-
-		if (this.rider != null && !this.rider.isElytraFlying())
+		else
 		{
 			if (this.rider.motionY < -0.25F)
 			{
@@ -95,7 +94,7 @@ public class EntityParachute extends Entity
 			this.rider.fallDistance = 0F;
 
 			this.moveToEntityUsing();
-	        this.spawnExplosionParticle();
+			this.spawnExplosionParticle();
 		}
 	}
 
