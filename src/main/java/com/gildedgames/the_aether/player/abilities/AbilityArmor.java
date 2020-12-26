@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.player.abilities;
 
 import java.util.Random;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -96,11 +97,19 @@ public class AbilityArmor implements IAetherAbility
 
 	public void damagePhoenixArmor(EntityPlayer player, Item outcome, int slot)
 	{
-		player.inventory.armorInventory.get(slot).damageItem(1, player);
+		if (player.world.getTotalWorldTime() % 5 == 0)
+		{
+			ItemStack currentPiece = player.inventory.armorInventory.get(slot);
 
-        if(player.inventory.armorInventory.get(slot).isEmpty())
-        {
-        	player.inventory.armorInventory.set(slot, new ItemStack(outcome, 1, 0));
+			currentPiece.damageItem(1, player);
+
+			if(player.inventory.armorInventory.get(slot).isEmpty())
+			{
+				ItemStack outcomeStack = new ItemStack(outcome, 1, 0);
+				EnchantmentHelper.setEnchantments(EnchantmentHelper.getEnchantments(currentPiece), outcomeStack);
+
+				player.inventory.armorInventory.set(slot, outcomeStack);
+			}
 		}
 	}
 
