@@ -470,6 +470,7 @@ aether_legacy.general.visual_options.legacy_altar_name=Classic Altar Name
 aether_legacy.general.world_gen=Wereld Generatie Opties
 aether_legacy.general.world_gen.tooltip=Deze opties zijn van invloed op de wereld generatie.
 aether_legacy.general.world_gen.christmas_time=Feestdag Generatie
+aether_legacy.general.world_gen.seasonal_christmas=Automatic Holiday Tree Generation
 aether_legacy.general.world_gen.pink_aerclouds=Roze Aerwolk Generatie
 aether_legacy.general.world_gen.tallgrass_enabled=Hoog Gras Generatie
 

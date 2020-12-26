@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.world.biome;
 
+import java.util.Calendar;
 import java.util.Random;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
@@ -168,7 +169,8 @@ public class AetherBiomeDecorator extends BiomeDecorator
 				this.golden_oak_tree_dungeon.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(16), 0, this.nextInt(16))));
 			}
 
-			if (AetherConfig.world_gen.christmas_time)
+			if ((AetherConfig.world_gen.christmas_time) || (AetherConfig.world_gen.seasonal_christmas &&
+					(Calendar.getInstance().get(Calendar.MONTH) + 1 == 12 || Calendar.getInstance().get(Calendar.MONTH) + 1 == 1)))
 			{
 				if (this.shouldSpawn(15))
 				{

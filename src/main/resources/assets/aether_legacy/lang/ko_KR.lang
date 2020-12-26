@@ -469,8 +469,8 @@ aether_legacy.general.visual_options.legacy_altar_name=Classic Altar Name
 
 aether_legacy.general.world_gen=세계 생성 설정
 aether_legacy.general.world_gen.tooltip=이 설정은 세계 생성에 영향을 미칩니다.
-
 aether_legacy.general.world_gen.christmas_time=기념일 생성
+aether_legacy.general.world_gen.seasonal_christmas=Automatic Holiday Tree Generation
 aether_legacy.general.world_gen.pink_aerclouds=분홍 공중구름 생성
 aether_legacy.general.world_gen.tallgrass_enabled=큰 잔디 생성
 

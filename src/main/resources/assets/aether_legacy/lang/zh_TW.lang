@@ -470,6 +470,7 @@ aether_legacy.general.visual_options.legacy_altar_name=Classic Altar Name
 aether_legacy.general.world_gen=世界生成選項
 aether_legacy.general.world_gen.tooltip=這些選項會影響世界的生成。
 aether_legacy.general.world_gen.christmas_time=節慶生成
+aether_legacy.general.world_gen.seasonal_christmas=Automatic Holiday Tree Generation
 aether_legacy.general.world_gen.pink_aerclouds=粉紅色冷天雲生成
 aether_legacy.general.world_gen.tallgrass_enabled=高草叢生成
 

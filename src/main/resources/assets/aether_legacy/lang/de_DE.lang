@@ -468,8 +468,8 @@ aether_legacy.general.visual_options.legacy_altar_name=Classic Altar Name
 
 aether_legacy.general.world_gen=Optionen der Welterzeugung
 aether_legacy.general.world_gen.tooltip=Diese Optionen wirken sich auf die Welterzeugung aus.
-
 aether_legacy.general.world_gen.christmas_time=Urlaubsgenerierung
+aether_legacy.general.world_gen.seasonal_christmas=Automatic Holiday Tree Generation
 aether_legacy.general.world_gen.pink_aerclouds=Erzeugung rosa Luftwolken
 aether_legacy.general.world_gen.tallgrass_enabled=Hohe Graserzeugung
 

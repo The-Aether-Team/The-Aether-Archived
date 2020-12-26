@@ -459,8 +459,8 @@ aether_legacy.general.visual_options.menu_enabled=Menu Aetheru
 
 aether_legacy.general.world_gen=Opcje generowania świata
 aether_legacy.general.world_gen.tooltip=Te opcje dotyczą generowania świata.
-
 aether_legacy.general.world_gen.christmas_time=Generowanie świąteczne
+aether_legacy.general.world_gen.seasonal_christmas=Automatic Holiday Tree Generation
 aether_legacy.general.world_gen.pink_aerclouds=Generowanie różowych aerchmur
 aether_legacy.general.world_gen.tallgrass_enabled=Generowanie wysokiej trawy
 

@@ -470,6 +470,7 @@ aether_legacy.general.visual_options.legacy_altar_name=Classic Altar Name
 aether_legacy.general.world_gen=Параметры генерации мира
 aether_legacy.general.world_gen.tooltip=Эти параметры влияют на генерацию мира.
 aether_legacy.general.world_gen.christmas_time=Генерация праздников
+aether_legacy.general.world_gen.seasonal_christmas=Automatic Holiday Tree Generation
 aether_legacy.general.world_gen.pink_aerclouds=Генерация розовых облаков
 aether_legacy.general.world_gen.tallgrass_enabled=Генерация высокой травы
 

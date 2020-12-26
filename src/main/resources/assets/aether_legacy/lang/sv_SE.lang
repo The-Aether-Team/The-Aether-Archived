@@ -471,6 +471,7 @@ aether_legacy.general.visual_options.legacy_altar_name=Klassiskt altarnamn
 aether_legacy.general.world_gen=Alternativ för världsgenerering
 aether_legacy.general.world_gen.tooltip=Dessa alternativ påverkar världens skapande.
 aether_legacy.general.world_gen.christmas_time=Skapa jultema
+aether_legacy.general.world_gen.seasonal_christmas=Automatic Holiday Tree Generation
 aether_legacy.general.world_gen.pink_aerclouds=Skapa rosa aermoln
 aether_legacy.general.world_gen.tallgrass_enabled=Skapa högt gräs
 

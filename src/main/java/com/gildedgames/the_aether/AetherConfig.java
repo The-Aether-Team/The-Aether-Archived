@@ -30,8 +30,11 @@ public class AetherConfig
 
 	public static class WorldGenOptions
 	{
-		@Config.Comment("Enables natural christmas decor")
+		@Config.Comment("Enables natural christmas decor all the time")
 		public boolean christmas_time = false;
+
+		@Config.Comment("Enables natural christmas decor automatically during December and January. If christmas_time is enabled it'll override this.")
+		public boolean seasonal_christmas = true;
 		
 		@Config.Comment("Enables naturally generating tallgrass")
 		public boolean tallgrass_enabled = false;
