@@ -58,21 +58,21 @@ public class AetherBiome extends BiomeGenBase {
 
 	private void addCreatureEntry(ArrayList<SpawnListEntry> list)
 	{
-		list.add(new SpawnListEntry(EntitySwet.class, 20, 3, 4));
-		list.add(new SpawnListEntry(EntityAechorPlant.class, 19, 3, 3));
 		list.add(new SpawnListEntry(EntityPhyg.class, 12, 4, 4));
-		list.add(new SpawnListEntry(EntityAerbunny.class, 11, 3, 3));
 		list.add(new SpawnListEntry(EntitySheepuff.class, 10, 4, 4));
-		list.add(new SpawnListEntry(EntityMoa.class, 10, 3, 3));
-		list.add(new SpawnListEntry(EntityFlyingCow.class, 10, 4, 4));
+		list.add(new SpawnListEntry(EntityFlyingCow.class, 8, 4, 4));
+		list.add(new SpawnListEntry(EntityAerbunny.class, 6, 2, 3));
+		list.add(new SpawnListEntry(EntityMoa.class, 5, 2, 3));
+		list.add(new SpawnListEntry(EntityAerwhale.class, 5, 1, 1));
 	}
 
 	private void addMobEntry(ArrayList<SpawnListEntry> list)
 	{
-		list.add(new SpawnListEntry(EntityWhirlwind.class, 8, 2, 2));
-		list.add(new SpawnListEntry(EntityCockatrice.class, 4, 4, 4));
-		list.add(new SpawnListEntry(EntityZephyr.class, 2, 1, 1));
-		list.add(new SpawnListEntry(EntityAerwhale.class, 2, 1, 1));
+		list.add(new SpawnListEntry(EntityCockatrice.class, 100, 4, 4));
+		list.add(new SpawnListEntry(EntityAechorPlant.class, 100, 1, 2));
+		list.add(new SpawnListEntry(EntityZephyr.class, 95, 1, 2));
+		list.add(new SpawnListEntry(EntityWhirlwind.class, 90, 1, 2));
+		list.add(new SpawnListEntry(EntitySwet.class, 10, 3, 4));
 	}
 
 	@Override
