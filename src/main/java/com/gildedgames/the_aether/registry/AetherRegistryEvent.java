@@ -5,6 +5,7 @@ import com.gildedgames.the_aether.registry.creative_tabs.AetherCreativeTabs;
 import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import com.gildedgames.the_aether.api.accessories.RecipeAccessoryDyes;
 import com.gildedgames.the_aether.entities.effects.PotionsAether;
+import com.gildedgames.the_aether.world.biome.BiomesAether;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
@@ -49,7 +50,9 @@ public class AetherRegistryEvent
 	@SubscribeEvent
 	public void onRegisterBiomeEvent(RegistryEvent.Register<Biome> event)
 	{
-		event.getRegistry().register(AetherWorld.aether_biome.setRegistryName(Aether.locate("aether_highlands")));
+		BiomesAether.biomeRegistry = event.getRegistry();
+
+		BiomesAether.initialization();
 	}
 
 	@SubscribeEvent
