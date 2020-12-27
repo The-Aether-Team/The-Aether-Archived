@@ -70,6 +70,12 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 	}
 
 	@Override
+	public int getMaxSpawnedInChunk()
+	{
+		return 3;
+	}
+
+	@Override
 	public void writeSpawnData(ByteBuf buffer)
 	{
 		buffer.writeInt(this.swetType);

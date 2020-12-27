@@ -64,12 +64,6 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk()
-	{
-		return 3;
-	}
-
-	@Override
 	public void onLivingUpdate()
 	{
 		super.onLivingUpdate();
