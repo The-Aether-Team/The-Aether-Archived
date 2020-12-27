@@ -57,13 +57,6 @@ public class TeleporterAether extends Teleporter
             this.makePortal(entityIn);
             this.placeInExistingPortal(entityIn, rotationYaw);
         }
-        
-        if (entityIn instanceof EntityPlayerMP)
-        {
-        	EntityPlayerMP player = (EntityPlayerMP) entityIn;
-        	
-			player.connection.sendPacket(new SPacketEffect(1032, new BlockPos(player.posX, player.posY, player.posZ), 0, false));
-        }
     }
 
     @Override

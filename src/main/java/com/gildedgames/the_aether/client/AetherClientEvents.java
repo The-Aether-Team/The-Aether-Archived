@@ -15,6 +15,7 @@ import com.gildedgames.the_aether.networking.packets.*;
 import com.gildedgames.the_aether.player.PlayerAether;
 import com.gildedgames.the_aether.player.perks.AetherRankings;
 import com.gildedgames.the_aether.player.perks.util.EnumAetherPerkType;
+import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import com.gildedgames.the_aether.universal.fastcrafting.FastCraftingUtil;
 import com.gildedgames.the_aether.universal.pixelmon.PixelmonUtil;
 import com.gildedgames.the_aether.AetherConfig;
@@ -89,8 +90,17 @@ public class AetherClientEvents
 
 			if (AetherAPI.getInstance().get(mc.player).shouldPortalSound())
 			{
-				this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.BLOCK_PORTAL_TRIGGER,this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
+				this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundsAether.aether_portal_trigger,this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
+
 				AetherAPI.getInstance().get(mc.player).shouldPortalSound(false);
+			}
+
+			if (AetherAPI.getInstance().get(mc.player).shouldPortalTravelSound())
+			{
+				this.mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundsAether.aether_portal_travel, this.mc.world.rand.nextFloat() * 0.4F + 0.8F));
+
+				AetherAPI.getInstance().get(mc.player).shouldPortalTravelSound(false);
+				AetherNetworkingManager.sendToServer(new PacketShouldPortalTravelSound(mc.player, false));
 			}
 		}
 

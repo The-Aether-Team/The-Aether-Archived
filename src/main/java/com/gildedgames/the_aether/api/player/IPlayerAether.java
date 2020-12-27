@@ -54,6 +54,10 @@ public interface IPlayerAether
 	public void shouldPortalSound(boolean playSound);
 
 	public boolean shouldPortalSound();
+
+	public void shouldPortalTravelSound(boolean playSound);
+
+	public boolean shouldPortalTravelSound();
 	
 	public boolean inPortalBlock();
 	

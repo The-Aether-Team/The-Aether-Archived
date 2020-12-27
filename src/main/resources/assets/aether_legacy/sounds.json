@@ -108,12 +108,24 @@
 	]
   },
   "aemisc.aether_portal.idle": {
-  	"category": "neutral",
+  	"category": "block",
 	"subtitle": "subtitles.aemisc.portal.idle",
 	"sounds": [
 	    "portal/portal"
 	]
   },
+	"aemisc.aether_portal.trigger": {
+		"category": "block",
+		"sounds": [
+			"portal/trigger"
+		]
+	},
+	"aemisc.aether_portal.travel": {
+		"category": "player",
+		"sounds": [
+			"portal/travel"
+		]
+	},
   "aemisc.dungeon_trap.trigger": {
   	"category": "block",
 	"subtitle": "subtitles.aemisc.dungeon_trap.trigger",

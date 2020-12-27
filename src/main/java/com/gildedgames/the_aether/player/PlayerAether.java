@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import com.gildedgames.the_aether.Aether;
 import com.gildedgames.the_aether.containers.inventory.InventoryAccessories;
 import com.gildedgames.the_aether.entities.passive.mountable.EntityParachute;
 import com.gildedgames.the_aether.networking.AetherNetworkingManager;
@@ -17,7 +18,11 @@ import com.gildedgames.the_aether.player.perks.AetherRankings;
 import com.gildedgames.the_aether.player.perks.util.DonatorMoaSkin;
 import com.gildedgames.the_aether.player.perks.util.EnumAetherPerkType;
 import com.gildedgames.the_aether.networking.packets.*;
+import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -27,10 +32,14 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.SPacketChangeGameState;
+import net.minecraft.network.play.server.SPacketEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -43,6 +52,9 @@ import com.gildedgames.the_aether.api.player.util.IAetherBoss;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.world.TeleporterAether;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import javax.annotation.Nullable;
 
 public class PlayerAether implements IPlayerAether
 {
@@ -73,7 +85,7 @@ public class PlayerAether implements IPlayerAether
 
 	public int timeInPortal;
 
-	public boolean hasTeleported = false, inPortal = false, shouldPlayPortalSound = false;
+	public boolean hasTeleported = false, inPortal = false, shouldPlayPortalSound = false, shouldPlayPortalTravelSound = false;
 
 	private String cooldownName = "Hammer of Notch";
 
@@ -127,6 +139,7 @@ public class PlayerAether implements IPlayerAether
 			AetherNetworkingManager.sendToAll(new PacketSendSeenDialogue(this.getEntity(), this.seenSpiritDialog));
 			AetherNetworkingManager.sendToAll(new PacketPortalItem(this.getEntity(), this.shouldGetPortal));
 			AetherNetworkingManager.sendToAll(new PacketGloveSizeChanged(this.getEntity().getEntityId(), this.gloveSize));
+			AetherNetworkingManager.sendToAll(new PacketShouldPortalTravelSound(this.getEntity(), this.shouldPlayPortalTravelSound));
 		}
 
 		this.updateAccessories();
@@ -280,7 +293,7 @@ public class PlayerAether implements IPlayerAether
 					{
 						this.timeInPortal = 0;
 						this.thePlayer.timeUntilPortal = this.thePlayer.getPortalCooldown();
-						this.thePlayer.changeDimension(transferDimension, new TeleporterAether(true, server.getWorld(transferDimension)));
+						this.transferPlayerToDimension(transferDimension, new TeleporterAether(true, server.getWorld(transferDimension)));
 					}
 					else
 					{
@@ -305,6 +318,40 @@ public class PlayerAether implements IPlayerAether
                 {
                     this.timeInPortal -= 4;
                 }
+			}
+		}
+	}
+
+	public void transferPlayerToDimension(int dimensionIn, net.minecraftforge.common.util.ITeleporter teleporter)
+	{
+		if (net.minecraftforge.common.ForgeHooks.onTravelToDimension(this.getEntity(), dimensionIn))
+		{
+			boolean isEntityPlayerMP = this.getEntity() instanceof EntityPlayerMP;
+
+			if (isEntityPlayerMP)
+			{
+				ObfuscationReflectionHelper.setPrivateValue(EntityPlayerMP.class, (EntityPlayerMP) this.getEntity(), true, "invulnerableDimensionChange", "field_184851_cj");
+			}
+
+			if (this.thePlayer.dimension != 1 || dimensionIn != 1)
+			{
+				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+
+				if (this.thePlayer.dimension == 0 && dimensionIn == 1)
+				{
+					dimensionIn = 1;
+				}
+
+				if (isEntityPlayerMP)
+				{
+					this.shouldPlayPortalTravelSound = true;
+
+					server.getPlayerList().transferPlayerToDimension((EntityPlayerMP) this.getEntity(), dimensionIn, teleporter);
+
+					ObfuscationReflectionHelper.setPrivateValue(EntityPlayerMP.class, (EntityPlayerMP) this.getEntity(), -1, "lastExperience", "field_71144_ck");
+					ObfuscationReflectionHelper.setPrivateValue(EntityPlayerMP.class, (EntityPlayerMP) this.getEntity(), -1.0F, "lastHealth", "field_71149_ch");
+					ObfuscationReflectionHelper.setPrivateValue(EntityPlayerMP.class, (EntityPlayerMP) this.getEntity(), -1, "lastFoodLevel", "field_71146_ci");
+				}
 			}
 		}
 	}
@@ -660,6 +707,18 @@ public class PlayerAether implements IPlayerAether
 	public boolean shouldPortalSound()
 	{
 		return this.shouldPlayPortalSound;
+	}
+
+	@Override
+	public void shouldPortalTravelSound(boolean playSound)
+	{
+		this.shouldPlayPortalTravelSound = playSound;
+	}
+
+	@Override
+	public boolean shouldPortalTravelSound()
+	{
+		return this.shouldPlayPortalTravelSound;
 	}
 
 	/*

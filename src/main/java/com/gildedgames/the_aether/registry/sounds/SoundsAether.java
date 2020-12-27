@@ -37,7 +37,7 @@ public class SoundsAether
 
 	public static SoundEvent achievement_gen, achievement_bronze, achievement_silver;
 
-	public static SoundEvent projectile_shoot, dart_shooter_shoot, aether_portal_idle, dungeon_trap;
+	public static SoundEvent projectile_shoot, dart_shooter_shoot, aether_portal_idle, aether_portal_trigger, aether_portal_travel, dungeon_trap;
 
 	public static SoundEvent aether1, aether2, aether3, aether4, aether_menu;
 
@@ -98,6 +98,8 @@ public class SoundsAether
 		legacy = register(Aether.locate("records.legacy"));
 		
 		aether_portal_idle = register(Aether.locate("aemisc.aether_portal.idle"));
+		aether_portal_trigger = register(Aether.locate("aemisc.aether_portal.trigger"));
+		aether_portal_travel = register(Aether.locate("aemisc.aether_portal.travel"));
 		dungeon_trap = register(Aether.locate("aemisc.dungeon_trap.trigger"));
 
 		achievement_gen = register(Aether.locate("achievement"));
