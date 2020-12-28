@@ -35,7 +35,7 @@ public class AetherWorldProvider extends WorldProvider
 	protected void init()
 	{
 		this.hasSkyLight = true;
-		this.biomeProvider = new WorldChunkManagerAether();
+		this.biomeProvider = new AetherBiomeProvider(this.world.getSeed());
 
 		NBTTagCompound nbttagcompound = this.world.getWorldInfo().getDimensionData(AetherConfig.dimension.aether_dimension_id);
 		this.eternalDayManager = this.world instanceof WorldServer ? new EternalDayManager((WorldServer) this.world, nbttagcompound.getCompoundTag("EternalDay")) : null;

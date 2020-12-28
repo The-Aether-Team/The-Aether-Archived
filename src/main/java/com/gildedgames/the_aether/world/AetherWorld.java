@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.world;
 
 import com.gildedgames.the_aether.entities.util.PlayerStartupLoot;
 import com.gildedgames.the_aether.world.biome.AetherBiome;
+import com.gildedgames.the_aether.world.biome.BiomesAether;
 import com.gildedgames.the_aether.world.gen.MapGenGoldenDungeon;
 import com.gildedgames.the_aether.world.gen.MapGenLargeColdAercloud;
 import com.gildedgames.the_aether.world.gen.MapGenSilverDungeon;
@@ -22,7 +23,6 @@ import net.minecraftforge.common.DimensionManager;
 public class AetherWorld
 {
 
-	public static Biome aether_biome = new AetherBiome();
 
 	public static DimensionType aether_dimension_type;
 
@@ -44,8 +44,6 @@ public class AetherWorld
 		aether_dimension_type = DimensionType.register("AetherI", "_aetherI", AetherConfig.dimension.aether_dimension_id, AetherWorldProvider.class, false);
 
 		DimensionManager.registerDimension(AetherConfig.dimension.aether_dimension_id, aether_dimension_type);
-		
-		BiomeDictionary.addTypes(aether_biome, BiomeDictionary.Type.VOID, BiomeDictionary.Type.COLD, BiomeDictionary.Type.MAGICAL);
 
 		EntityPropertyManager.registerProperty(new PlayerStartupLoot.Serializer());
 	}

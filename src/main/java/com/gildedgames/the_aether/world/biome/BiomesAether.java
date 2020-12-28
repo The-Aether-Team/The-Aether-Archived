@@ -1,27 +1,28 @@
 package com.gildedgames.the_aether.world.biome;
 
 import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.world.AetherWorld;
+import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BiomesAether
 {
-    public static IForgeRegistry<Biome> biomeRegistry;
+    public static Biome aether_biome = new AetherBiome();
 
-    public static List<Biome> aetherBiomes = new ArrayList<>();
+    public static IForgeRegistry<Biome> biomeRegistry;
 
     public static void initialization()
     {
-        register(AetherWorld.aether_biome, "aether_highlands");
+        register(aether_biome, "aether_highlands");
+        BiomeStorage.addBiome(aether_biome, 50);
+        BiomeDictionary.addTypes(BiomesAether.aether_biome, BiomeDictionary.Type.VOID, BiomeDictionary.Type.COLD, BiomeDictionary.Type.MAGICAL);
+
+        BiomeStorage.addBiome(Biomes.TAIGA, 25);
     }
 
     public static void register(Biome biome, String registryName)
     {
         biomeRegistry.register(biome.setRegistryName(Aether.locate(registryName)));
-        aetherBiomes.add(biome);
     }
 }
