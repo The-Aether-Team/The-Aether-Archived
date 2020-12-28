@@ -14,13 +14,13 @@ public abstract class GenLayerAether extends GenLayer
         GenLayer biomes = new GenLayerAetherBiomes(1L);
 
         GenLayer noise = GenLayerZoom.magnify(1L, biomes, 4);
-        noise = new GenLayerFuzzyZoom(2000L, noise);
-        noise = new GenLayerVoronoiZoom(2001L, noise);
-        noise = new GenLayerSmooth(2002L, noise);
+        noise = new GenLayerSmooth(2000L, noise);
+        noise = new GenLayerVoronoiZoom(2002L, noise);
+        noise = new GenLayerSmooth(2003L, noise);
 
         biomes.initWorldGenSeed(seed);
         noise.initWorldGenSeed(seed);
 
-        return new GenLayer[]{biomes, noise, null};
+        return new GenLayer[]{biomes, noise, biomes};
     }
 }

@@ -5,6 +5,7 @@ import java.util.*;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.blocks.natural.BlockHolystone;
 import com.gildedgames.the_aether.registry.AetherLootTables;
+import com.gildedgames.the_aether.world.biome.BiomesAether;
 import com.gildedgames.the_aether.world.dungeon.BronzeDungeon;
 import com.gildedgames.the_aether.world.dungeon.util.AetherDungeonVirtual;
 import com.gildedgames.the_aether.world.gen.MapGenGoldenDungeon;
@@ -127,17 +128,19 @@ public class ChunkProviderAether implements IChunkGenerator
 
     }
 
-    public void buildSurfaces(int i, int j, ChunkPrimer chunkPrimer)
+    public void buildSurfaces(int i, int j, ChunkPrimer chunkPrimer, Biome[] biomesIn)
     {
         for(int k = 0; k < 16; k++)
         {
             for(int l = 0; l < 16; l++)
             {
+                Biome biome = biomesIn[k + l * 16];
+
                 int j1 = -1;
                 int i1 = (int)(3.0D + this.rand.nextDouble() * 0.25D);
 
-                IBlockState top = BlocksAether.aether_grass.getDefaultState();
-                IBlockState filler = BlocksAether.aether_dirt.getDefaultState();
+                IBlockState top = biome.topBlock;
+                IBlockState filler = biome.fillerBlock;
 
                 for (int k1 = 127; k1 >= 0; k1--)
                 {
@@ -178,6 +181,21 @@ public class ChunkProviderAether implements IChunkGenerator
             }
         }
     }
+
+//    public void replaceBiomeBlocks(int x, int z, ChunkPrimer primer, Biome[] biomesIn)
+//    {
+//        if (!net.minecraftforge.event.ForgeEventFactory.onReplaceBiomeBlocks(this, x, z, primer, this.worldObj)) return;
+//        this.buffer = this.setupNoiseGenerators(this.buffer, x * 2, z * 2);
+//
+//        for (int i = 0; i < 16; ++i)
+//        {
+//            for (int j = 0; j < 16; ++j)
+//            {
+//                Biome biome = biomesIn[j + i * 16];
+//                biome.genTerrainBlocks(this.worldObj, this.rand, primer, x * 16 + i, z * 16 + j, this.buffer[j + i * 16]);
+//            }
+//        }
+//    }
 
     private double[] setupNoiseGenerators(double buffer[], int x, int z)
     {
@@ -252,8 +270,11 @@ public class ChunkProviderAether implements IChunkGenerator
         this.rand.setSeed((long)x * 341873128712L + (long)z * 132897987541L);
         ChunkPrimer chunkPrimer = new ChunkPrimer();
 
+        Biome[] biomesForGeneration = new Biome[0];
+        biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(biomesForGeneration, x * 16, z * 16, 16, 16);
+
         this.setBlocksInChunk(x, z, chunkPrimer);
-        this.buildSurfaces(x, z, chunkPrimer);
+        this.buildSurfaces(x, z, chunkPrimer, biomesForGeneration);
 
         this.quicksoilGen.generate(this.worldObj, x, z, chunkPrimer);
 
@@ -263,10 +284,6 @@ public class ChunkProviderAether implements IChunkGenerator
         this.goldenDungeonStructure.generate(this.worldObj, x, z, chunkPrimer);
 
         Chunk chunk = new Chunk(this.worldObj, chunkPrimer, x, z);
-
-        Biome[] biomesForGeneration = new Biome[0];
-
-        biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(biomesForGeneration, x * 16, z * 16, 16, 16);
 
         byte[] chunkBiomes = chunk.getBiomeArray();
         for (int i = 0; i < chunkBiomes.length; ++i)
@@ -361,6 +378,23 @@ public class ChunkProviderAether implements IChunkGenerator
         generateBronzeDungeon(pos);
 
         biome.decorate(this.worldObj, this.rand, pos);
+
+        //BIOME LAYOUT VISUALIZER
+//        for(int x1 = 0; x1 < 16; x1++)
+//        {
+//            for (int z1 = 0; z1 < 16; z1++)
+//            {
+//                Biome biome1 = this.worldObj.getBiome(pos.add(x1, 0, z1));
+//                if (biome1 == BiomesAether.aether_biome)
+//                {
+//                    this.worldObj.setBlockState(pos.add(x1, 0, z1), Blocks.LAPIS_BLOCK.getDefaultState(), 2 | 16);
+//                }
+//                else
+//                {
+//                    this.worldObj.setBlockState(pos.add(x1, 0, z1), Blocks.GOLD_BLOCK.getDefaultState(), 2 | 16);
+//                }
+//            }
+//        }
 
         WorldEntitySpawner.performWorldGenSpawning(this.worldObj, biome, x + 8, z + 8, 16, 16, this.rand);
     }

@@ -1,7 +1,6 @@
 package com.gildedgames.the_aether.world.biome;
 
 import com.gildedgames.the_aether.Aether;
-import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -17,8 +16,6 @@ public class BiomesAether
         register(aether_biome, "aether_highlands");
         BiomeStorage.addBiome(aether_biome, 50);
         BiomeDictionary.addTypes(BiomesAether.aether_biome, BiomeDictionary.Type.VOID, BiomeDictionary.Type.COLD, BiomeDictionary.Type.MAGICAL);
-
-        BiomeStorage.addBiome(Biomes.TAIGA, 25);
     }
 
     public static void register(Biome biome, String registryName)
