@@ -23,7 +23,7 @@ public class AetherBiomeProvider extends BiomeProvider
 	private final BiomeCache biomeCache;
 
 	private final List<Biome> biomesToSpawnIn;
-	public static List<Biome> allowedBiomes = Lists.newArrayList(BiomesAether.aether_biome);
+	public static List<Biome> allowedBiomes = Lists.newArrayList(AetherWorld.aether_biome);
 
 	public AetherBiomeProvider(long seed)
 	{

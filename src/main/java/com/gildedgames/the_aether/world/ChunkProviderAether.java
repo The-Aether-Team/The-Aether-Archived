@@ -385,7 +385,7 @@ public class ChunkProviderAether implements IChunkGenerator
 //            for (int z1 = 0; z1 < 16; z1++)
 //            {
 //                Biome biome1 = this.worldObj.getBiome(pos.add(x1, 0, z1));
-//                if (biome1 == BiomesAether.aether_biome)
+//                if (biome1 == AetherWorld.aether_biome)
 //                {
 //                    this.worldObj.setBlockState(pos.add(x1, 0, z1), Blocks.LAPIS_BLOCK.getDefaultState(), 2 | 16);
 //                }

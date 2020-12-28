@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.world;
 
+import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.entities.util.PlayerStartupLoot;
 import com.gildedgames.the_aether.world.biome.AetherBiome;
 import com.gildedgames.the_aether.world.biome.BiomesAether;
@@ -13,6 +14,7 @@ import com.gildedgames.the_aether.world.gen.components.ComponentGoldenIslandStub
 import com.gildedgames.the_aether.world.gen.components.ComponentLargeColdAercloud;
 import com.gildedgames.the_aether.world.gen.components.ComponentSilverDungeon;
 
+import net.minecraft.block.Block;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
@@ -20,9 +22,13 @@ import net.minecraft.world.storage.loot.properties.EntityPropertyManager;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.DimensionManager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class AetherWorld
 {
-
+	public static Biome aether_biome = new AetherBiome();
 
 	public static DimensionType aether_dimension_type;
 
