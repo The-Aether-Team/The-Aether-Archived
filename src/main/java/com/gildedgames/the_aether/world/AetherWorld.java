@@ -3,7 +3,6 @@ package com.gildedgames.the_aether.world;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.entities.util.PlayerStartupLoot;
 import com.gildedgames.the_aether.world.biome.AetherBiome;
-import com.gildedgames.the_aether.world.biome.BiomesAether;
 import com.gildedgames.the_aether.world.gen.MapGenGoldenDungeon;
 import com.gildedgames.the_aether.world.gen.MapGenLargeColdAercloud;
 import com.gildedgames.the_aether.world.gen.MapGenSilverDungeon;
@@ -19,7 +18,6 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.storage.loot.properties.EntityPropertyManager;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.DimensionManager;
 
 import java.util.ArrayList;
