@@ -7,6 +7,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -77,6 +79,11 @@ public class EntityFloatingBlock extends Entity
 
         if (this.ticksExisted > 200)
         {
+            if (!this.world.isRemote)
+            {
+                this.entityDropItem(new ItemStack(Item.getItemFromBlock(this.getBlockState().getBlock()), 1, this.getBlockState().getBlock().damageDropped(this.getBlockState())),0.0F);
+            }
+
             this.setDead();
         }
         else
@@ -133,6 +140,15 @@ public class EntityFloatingBlock extends Entity
                 if (count > 5)
                 {
                     count = 5;
+                }
+            }
+
+            if (this.getPosition().getY() > this.world.getHeight())
+            {
+                if (!this.world.isRemote)
+                {
+                    this.setDead();
+                    this.entityDropItem(new ItemStack(Item.getItemFromBlock(this.getBlockState().getBlock()), 1, this.getBlockState().getBlock().damageDropped(this.getBlockState())),0.0F);
                 }
             }
         }
