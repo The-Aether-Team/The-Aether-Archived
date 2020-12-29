@@ -57,7 +57,6 @@ public class Aether
 		LootFunctionsAether.initialization();
 		AetherAdvancements.initialization();
 		AetherNetworkingManager.preInitialization();
-		BiomeStorage.handleBiomeConfig();
 
 		if(Loader.isModLoaded("crafttweaker"))
 		{
@@ -75,6 +74,7 @@ public class Aether
 		PlayerAetherManager.initialization();
 		AetherEntities.initialization();
 		AetherTileEntities.initialization();
+		BiomeStorage.handleBiomeConfig();
 		AetherWorld.initialization();
 
 		CommonProxy.registerEvent(new AetherEventHandler());
