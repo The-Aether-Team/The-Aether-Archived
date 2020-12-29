@@ -13,6 +13,7 @@ import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import com.gildedgames.the_aether.tile_entities.AetherTileEntities;
 import com.gildedgames.the_aether.universal.crafttweaker.AetherCraftTweakerPlugin;
 import com.gildedgames.the_aether.world.AetherWorld;
+import com.gildedgames.the_aether.world.biome.BiomeStorage;
 import com.gildedgames.the_aether.world.storage.loot.conditions.LootConditionsAether;
 import com.gildedgames.the_aether.world.storage.loot.functions.LootFunctionsAether;
 
@@ -56,6 +57,7 @@ public class Aether
 		LootFunctionsAether.initialization();
 		AetherAdvancements.initialization();
 		AetherNetworkingManager.preInitialization();
+		BiomeStorage.handleBiomeConfig();
 
 		if(Loader.isModLoaded("crafttweaker"))
 		{

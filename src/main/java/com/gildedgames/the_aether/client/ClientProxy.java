@@ -25,7 +25,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class ClientProxy extends CommonProxy
 {
-
 	@Override
 	public void preInitialization()
 	{
@@ -40,6 +39,20 @@ public class ClientProxy extends CommonProxy
 
 	@Override
 	public void initialization()
+	{
+		generateTexturePack();
+
+		BlockRendering.registerColors();
+		ItemRendering.registerColors();
+
+		AetherEntityRenderingRegistry.initializePlayerLayers();
+
+		MinecraftForge.EVENT_BUS.register(new GuiAetherInGame(Minecraft.getMinecraft()));
+
+		registerEvent(new AetherMusicHandler());
+	}
+
+	public void generateTexturePack()
 	{
 		try
 		{
@@ -81,15 +94,6 @@ public class ClientProxy extends CommonProxy
 			}
 		}
 		catch (IOException ignore) { }
-
-		BlockRendering.registerColors();
-		ItemRendering.registerColors();
-
-		AetherEntityRenderingRegistry.initializePlayerLayers();
-
-		MinecraftForge.EVENT_BUS.register(new GuiAetherInGame(Minecraft.getMinecraft()));
-
-		registerEvent(new AetherMusicHandler());
 	}
 
 	public void generateFile(String input, String name, String path)
