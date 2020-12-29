@@ -1,8 +1,10 @@
 package com.gildedgames.the_aether.network.packets;
 
 import com.gildedgames.the_aether.api.AetherAPI;
+import com.gildedgames.the_aether.api.player.IPlayerAether;
 import com.gildedgames.the_aether.player.PlayerAether;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class PacketSendPoison extends AetherPacket<PacketSendPoison> {
@@ -36,11 +38,20 @@ public class PacketSendPoison extends AetherPacket<PacketSendPoison> {
 	{
 		if (player != null && player.worldObj != null)
 		{
-			EntityPlayer parent = (EntityPlayer) player.worldObj.getEntityByID(message.entityID);
+			Entity entity = player.worldObj.getEntityByID(message.entityID);
 
-			if (parent != null)
+			if (entity instanceof EntityPlayer)
 			{
-				((PlayerAether) AetherAPI.get(parent)).setPoisoned();
+				EntityPlayer parent = (EntityPlayer) entity;
+
+				IPlayerAether iPlayerAether = AetherAPI.get(parent);
+
+				if (iPlayerAether != null)
+				{
+					PlayerAether playerAether = (PlayerAether) iPlayerAether;
+
+					playerAether.setPoisoned();
+				}
 			}
 		}
 	}
