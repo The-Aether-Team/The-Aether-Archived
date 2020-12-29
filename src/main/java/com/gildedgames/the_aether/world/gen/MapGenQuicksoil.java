@@ -1,7 +1,10 @@
 package com.gildedgames.the_aether.world.gen;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenBase;
@@ -34,7 +37,9 @@ public class MapGenQuicksoil extends MapGenBase
 				{
 					for (int n = 3; n < 48; n++)
 					{
-						if (chunkPrimerIn.getBlockState(x, n, z).getBlock() == Blocks.AIR && chunkPrimerIn.getBlockState(x, n + 1, z).getBlock() == BlocksAether.aether_grass && chunkPrimerIn.getBlockState(x, n + 2, z).getBlock() == Blocks.AIR)
+						Block block = worldIn.getBiome(new BlockPos(x, n + 1, z)).topBlock.getBlock();
+
+						if (chunkPrimerIn.getBlockState(x, n, z).getBlock() == Blocks.AIR && chunkPrimerIn.getBlockState(x, n + 1, z).getBlock() == block && chunkPrimerIn.getBlockState(x, n + 2, z).getBlock() == Blocks.AIR)
 						{
 							this.generate(chunkPrimerIn, x, n, z);
 							n += 128;

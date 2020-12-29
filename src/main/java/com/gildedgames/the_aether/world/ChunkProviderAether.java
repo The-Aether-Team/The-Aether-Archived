@@ -5,7 +5,6 @@ import java.util.*;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.blocks.natural.BlockHolystone;
 import com.gildedgames.the_aether.registry.AetherLootTables;
-import com.gildedgames.the_aether.world.biome.BiomesAether;
 import com.gildedgames.the_aether.world.dungeon.BronzeDungeon;
 import com.gildedgames.the_aether.world.dungeon.util.AetherDungeonVirtual;
 import com.gildedgames.the_aether.world.gen.MapGenGoldenDungeon;
