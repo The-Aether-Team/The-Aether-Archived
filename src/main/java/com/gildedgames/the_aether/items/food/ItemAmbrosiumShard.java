@@ -4,6 +4,8 @@ import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.registry.creative_tabs.AetherCreativeTabs;
 import com.gildedgames.the_aether.AetherConfig;
 
+import com.gildedgames.the_aether.world.AetherWorld;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -29,10 +31,13 @@ public class ItemAmbrosiumShard extends ItemAetherFood
     {
 		ItemStack heldItem = playerIn.getHeldItem(hand);
 
-    	if (worldIn.getBlockState(pos).getBlock() == BlocksAether.aether_grass)
-    	{
-    		worldIn.setBlockState(pos, BlocksAether.enchanted_aether_grass.getDefaultState());
-    	}
+		Block biomeBlock = worldIn.getBiome(pos).topBlock.getBlock();
+
+		//if the biomeBlock is a grass block and isn't enchanted_aether_grass, it'll set the biomeBlock to enchanted_aether_grass.
+		if (biomeBlock != BlocksAether.enchanted_aether_grass && AetherWorld.viableGrassBlocks.contains(biomeBlock))
+		{
+			worldIn.setBlockState(pos, BlocksAether.enchanted_aether_grass.getDefaultState());
+		}
     	else
     	{
     		return EnumActionResult.FAIL;
