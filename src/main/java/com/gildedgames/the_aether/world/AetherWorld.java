@@ -22,6 +22,7 @@ import net.minecraftforge.common.DimensionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class AetherWorld
@@ -30,6 +31,7 @@ public class AetherWorld
 
 	public static DimensionType aether_dimension_type;
 
+	public static List<Block> viableSpawningBlocks = new ArrayList<>(Collections.singletonList(BlocksAether.aether_grass));
 	public static List<Block> viableGrassBlocks = new ArrayList<>(Arrays.asList(BlocksAether.aether_grass, BlocksAether.enchanted_aether_grass));
 	public static List<Block> viableSoilBlocks = new ArrayList<>(Arrays.asList(BlocksAether.aether_grass, BlocksAether.enchanted_aether_grass, BlocksAether.aether_dirt));
 

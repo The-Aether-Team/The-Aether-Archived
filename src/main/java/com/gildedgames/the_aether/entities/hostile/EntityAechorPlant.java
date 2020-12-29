@@ -4,6 +4,7 @@ import com.gildedgames.the_aether.entities.passive.EntityAetherAnimal;
 import com.gildedgames.the_aether.entities.projectile.EntityPoisonNeedle;
 import com.gildedgames.the_aether.registry.AetherLootTables;
 import com.gildedgames.the_aether.registry.sounds.SoundsAether;
+import com.gildedgames.the_aether.world.AetherWorld;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -93,7 +94,7 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 	@Override
 	protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos)
 	{
-		if (state.getBlock() != BlocksAether.aether_grass)
+		if (!AetherWorld.viableGrassBlocks.contains(state.getBlock()))
 		{
 			this.setDead();
 		}
@@ -230,7 +231,14 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 	@Override
 	public boolean getCanSpawnHere()
 	{
-		return this.rand.nextInt(15) == 0 && super.getCanSpawnHere();
+		IBlockState iblockstate = this.world.getBlockState((new BlockPos(this)).down());
+		int i = MathHelper.floor(this.posX);
+		int j = MathHelper.floor(this.getEntityBoundingBox().minY);
+		int k = MathHelper.floor(this.posZ);
+		BlockPos pos = new BlockPos(i, j, k);
+
+		return this.rand.nextInt(15) == 0 && AetherWorld.viableGrassBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) && this.world.getLight(pos) > 8
+				&& iblockstate.canEntitySpawn(this);
 	}
 
 	@Override

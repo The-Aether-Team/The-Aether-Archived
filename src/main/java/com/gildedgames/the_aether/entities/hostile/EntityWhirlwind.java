@@ -9,6 +9,7 @@ import com.gildedgames.the_aether.entities.particles.ParticlePassiveWhirly;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.player.perks.AetherRankings;
 
+import com.gildedgames.the_aether.world.AetherWorld;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
@@ -82,7 +83,7 @@ public class EntityWhirlwind extends EntityMob
     @Override
     public float getBlockPathWeight(BlockPos pos)
     {
-    	return this.world.getBlockState(pos.down()).getBlock() == BlocksAether.aether_grass ? 10.0F : this.world.getLightBrightness(pos) - 0.5F;
+    	return AetherWorld.viableSpawningBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) ? 10.0F : this.world.getLightBrightness(pos) - 0.5F;
     }
 
 	@Override
@@ -422,7 +423,7 @@ public class EntityWhirlwind extends EntityMob
 		int k = MathHelper.floor(this.posZ);
 		BlockPos pos = new BlockPos(i, j, k);
 
-		return this.rand.nextInt(15) == 0 && this.world.getBlockState(pos.down()).getBlock() == BlocksAether.aether_grass && this.world.getLight(pos) > 8 && this.world.checkNoEntityCollision(this.getEntityBoundingBox()) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.world.containsAnyLiquid(this.getEntityBoundingBox());
+		return this.rand.nextInt(15) == 0 && AetherWorld.viableSpawningBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) && this.world.getLight(pos) > 8 && this.world.checkNoEntityCollision(this.getEntityBoundingBox()) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.world.containsAnyLiquid(this.getEntityBoundingBox());
 	}
 
     public EntityPlayer findClosestPlayer()

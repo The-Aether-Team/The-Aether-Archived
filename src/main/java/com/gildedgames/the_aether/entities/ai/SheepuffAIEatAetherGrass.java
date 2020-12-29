@@ -8,8 +8,13 @@ import net.minecraft.world.World;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class SheepuffAIEatAetherGrass extends EntityAIBase
 {
+    public static List<Block> edibleBlocks = new ArrayList<>(Collections.singletonList(BlocksAether.aether_grass));
 
     private EntitySheepuff sheepuff;
 
@@ -33,7 +38,7 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase
         else
         {
             BlockPos blockpos = new BlockPos(this.sheepuff.posX, this.sheepuff.posY, this.sheepuff.posZ);
-            return this.entityWorld.getBlockState(blockpos.down()).getBlock() == BlocksAether.aether_grass;
+            return edibleBlocks.contains(this.entityWorld.getBlockState(blockpos.down()).getBlock());
         }
     }
 
@@ -65,7 +70,7 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase
 
        //if (this.eatingGrassTimer == 0)
       //  {
-        	
+
         	//System.out.println("4");
             BlockPos blockpos = new BlockPos(this.sheepuff.posX, this.sheepuff.posY, this.sheepuff.posZ);
 
@@ -78,7 +83,7 @@ public class SheepuffAIEatAetherGrass extends EntityAIBase
 
                 this.sheepuff.eatGrassBonus();
            // }
-            
+
         }
     }
 
