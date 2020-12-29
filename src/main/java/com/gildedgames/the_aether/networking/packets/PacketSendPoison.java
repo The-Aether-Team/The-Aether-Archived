@@ -1,7 +1,9 @@
 package com.gildedgames.the_aether.networking.packets;
 
+import com.gildedgames.the_aether.api.player.IPlayerAether;
 import com.gildedgames.the_aether.player.PlayerAether;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
 import com.gildedgames.the_aether.api.AetherAPI;
@@ -38,11 +40,20 @@ public class PacketSendPoison extends AetherPacket<PacketSendPoison>
 	{
 		if (player != null && player.world != null)
 		{
-			EntityPlayer parent = (EntityPlayer) player.world.getEntityByID(message.entityID);
+			Entity entity = player.world.getEntityByID(message.entityID);
 
-			if (parent != null)
+			if (entity instanceof EntityPlayer)
 			{
-				((PlayerAether) AetherAPI.getInstance().get(parent)).setPoisoned();
+				EntityPlayer parent = (EntityPlayer) entity;
+
+				IPlayerAether iPlayerAether = AetherAPI.getInstance().get(parent);
+
+				if (iPlayerAether != null)
+				{
+					PlayerAether playerAether = (PlayerAether) iPlayerAether;
+
+					playerAether.setPoisoned();
+				}
 			}
 		}
 	}

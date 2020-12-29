@@ -1,6 +1,7 @@
 package com.gildedgames.the_aether.entities.effects;
 
 import com.gildedgames.the_aether.api.AetherAPI;
+import com.gildedgames.the_aether.api.player.IPlayerAether;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.items.util.EnumSkyrootBucketType;
 import com.gildedgames.the_aether.networking.AetherNetworkingManager;
@@ -57,8 +58,19 @@ public class PotionInebriation extends Potion
         {
             if (this.duration >= 500)
             {
-                ((PlayerAether) AetherAPI.getInstance().get((EntityPlayer) entityLivingBaseIn)).setPoisoned();
-                AetherNetworkingManager.sendToAll(new PacketSendPoison((EntityPlayer) entityLivingBaseIn));
+                EntityPlayer player = (EntityPlayer) entityLivingBaseIn;
+                IPlayerAether iPlayerAether = AetherAPI.getInstance().get(player);
+
+                if (iPlayerAether != null)
+                {
+                    PlayerAether playerAether = (PlayerAether) iPlayerAether;
+
+                    if (!player.world.isRemote)
+                    {
+                        playerAether.setPoisoned();
+                        AetherNetworkingManager.sendToAll(new PacketSendPoison(player));
+                    }
+                }
             }
         }
     }
