@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.blocks.natural;
 
+import com.gildedgames.the_aether.world.AetherWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
@@ -42,7 +43,8 @@ public class BlockAetherFlower extends BlockBush
     public boolean canPlaceBlockAt(World world, BlockPos pos)
 	{
         IBlockState soil = world.getBlockState(pos.down());
-		return soil.getBlock() == BlocksAether.aether_grass || soil.getBlock() == BlocksAether.aether_dirt || soil.getBlock() == BlocksAether.enchanted_aether_grass || super.canPlaceBlockAt(world, pos);
+
+		return AetherWorld.viableSoilBlocks.contains(soil.getBlock()) || super.canPlaceBlockAt(world, pos);
 	}
 
 	@Override
