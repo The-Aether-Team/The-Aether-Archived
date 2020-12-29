@@ -63,12 +63,6 @@ public class EntityCockatrice extends EntityMob
     }
 
 	@Override
-	public boolean getCanSpawnHere()
-	{
-		return this.rand.nextInt(25) == 0 && super.getCanSpawnHere();
-	}
-
-	@Override
 	public boolean isPotionApplicable(PotionEffect effect)
 	{
 		return effect.getPotion() == MobEffects.POISON ? false : super.isPotionApplicable(effect);
@@ -183,6 +177,12 @@ public class EntityCockatrice extends EntityMob
 		}
 
 		return super.attackEntityFrom(source, amount);
+	}
+
+	@Override
+	public boolean getCanSpawnHere()
+	{
+		return this.rand.nextInt(5) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override

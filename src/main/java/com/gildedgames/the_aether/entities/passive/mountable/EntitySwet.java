@@ -617,6 +617,12 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
     }
 
 	@Override
+	public boolean getCanSpawnHere()
+	{
+		return this.rand.nextInt(10) == 0 && super.getCanSpawnHere();
+	}
+
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound)
 	{
 		super.writeEntityToNBT(compound);

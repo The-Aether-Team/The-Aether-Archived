@@ -230,7 +230,7 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 	@Override
 	public boolean getCanSpawnHere()
 	{
-		return this.rand.nextInt(400) == 0 && super.getCanSpawnHere();
+		return this.rand.nextInt(15) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override
