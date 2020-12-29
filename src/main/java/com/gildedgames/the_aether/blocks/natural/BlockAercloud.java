@@ -10,6 +10,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -58,6 +59,14 @@ public class BlockAercloud extends Block implements IColoredBlock, INamedBlock {
 
 				entity.motionY = 2.0D;
 			} else {
+				if (entity instanceof EntityArrow)
+				{
+					if (entity.ticksExisted >= 1200)
+					{
+						entity.setDead();
+					}
+				}
+				
 				entity.motionY = 2.0D;
 			}
 
