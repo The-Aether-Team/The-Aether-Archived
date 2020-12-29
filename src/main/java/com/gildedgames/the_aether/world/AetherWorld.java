@@ -32,6 +32,9 @@ public class AetherWorld
 
 	public static DimensionType aether_dimension_type;
 
+	public static List<Block> viableGrassBlocks = new ArrayList<>(Arrays.asList(BlocksAether.aether_grass, BlocksAether.enchanted_aether_grass));
+	public static List<Block> viableSoilBlocks = new ArrayList<>(Arrays.asList(BlocksAether.aether_grass, BlocksAether.enchanted_aether_grass, BlocksAether.aether_dirt));
+
 	public static void initialization()
 	{
 		MapGenStructureIO.registerStructure(MapGenSilverDungeon.Start.class, "aether_legacy:silver_dungeon_start");

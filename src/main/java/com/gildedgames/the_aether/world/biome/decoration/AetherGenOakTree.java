@@ -7,6 +7,7 @@ import com.gildedgames.the_aether.blocks.natural.BlockAetherLeaves;
 import com.gildedgames.the_aether.blocks.natural.BlockAetherLog;
 import com.gildedgames.the_aether.blocks.util.EnumLeafType;
 import com.gildedgames.the_aether.blocks.util.EnumLogType;
+import com.gildedgames.the_aether.world.AetherWorld;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -54,7 +55,7 @@ public class AetherGenOakTree extends WorldGenAbstractTree
     {
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
-		if(world.getBlockState(mutablePos.setPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock() != BlocksAether.aether_grass && world.getBlockState(mutablePos.setPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock() != BlocksAether.aether_dirt)
+		if (!AetherWorld.viableSoilBlocks.contains(world.getBlockState(mutablePos.setPos(pos.getX(), pos.getY() - 1, pos.getZ())).getBlock()))
 		{
 			return false;
 		}

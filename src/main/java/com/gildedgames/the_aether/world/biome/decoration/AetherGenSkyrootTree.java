@@ -3,6 +3,7 @@ package com.gildedgames.the_aether.world.biome.decoration;
 import java.util.Random;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
+import com.gildedgames.the_aether.world.AetherWorld;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,7 +11,6 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public class AetherGenSkyrootTree extends WorldGenAbstractTree
 {
-
     public AetherGenSkyrootTree(boolean notify)
     {
     	super(notify);
@@ -23,7 +23,7 @@ public class AetherGenSkyrootTree extends WorldGenAbstractTree
 
         IBlockState j1 = world.getBlockState(pos.down());
 
-        if(j1.getBlock() != BlocksAether.aether_grass && j1.getBlock() != BlocksAether.aether_dirt)
+        if (!AetherWorld.viableSoilBlocks.contains(j1.getBlock()))
         {
             return false;
         }

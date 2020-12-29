@@ -5,6 +5,7 @@ import java.util.Random;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.blocks.natural.BlockHolidayLeaves;
 import com.gildedgames.the_aether.blocks.util.EnumHolidayType;
+import com.gildedgames.the_aether.world.AetherWorld;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -28,7 +29,7 @@ public class AetherGenHolidayTree extends WorldGenerator
 
 		Block huhu = world.getBlockState(position.down()).getBlock();
 
-		if (huhu == BlocksAether.aether_grass)
+		if (AetherWorld.viableGrassBlocks.contains(huhu))
 		{
 			for(int y1 = 0; y1 <= 8; y1++)
 			{
@@ -302,7 +303,8 @@ public class AetherGenHolidayTree extends WorldGenerator
 
 						if(huhu1 != Blocks.AIR)
 						{
-							if(rand.nextInt(80) == 0 && (huhu1 == BlocksAether.aether_grass))
+
+							if(rand.nextInt(80) == 0 && (AetherWorld.viableGrassBlocks.contains(huhu1)))
 							{
 								world.setBlockState(pos.up(), BlocksAether.present.getDefaultState(), 2 | 16);
 							}

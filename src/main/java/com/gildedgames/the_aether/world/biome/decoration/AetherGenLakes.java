@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.blocks.natural.BlockHolystone;
+import com.gildedgames.the_aether.world.AetherWorld;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -126,7 +128,17 @@ public class AetherGenLakes extends WorldGenerator
 
                             if (worldIn.getBlockState(blockpos).getBlock() == BlocksAether.aether_dirt && worldIn.getLightFor(EnumSkyBlock.SKY, position.add(i2, j4, j3)) > 0)
                             {
-                                worldIn.setBlockState(blockpos, BlocksAether.aether_grass.getDefaultState(), 2);
+                                Block biomeBlock = worldIn.getBiome(blockpos).topBlock.getBlock();
+
+                                //if the biomeBlock is a grass block, aether_dirt will be replaced with the grass block.
+                                if (AetherWorld.viableGrassBlocks.contains(biomeBlock))
+                                {
+                                    worldIn.setBlockState(blockpos, biomeBlock.getDefaultState(), 2);
+                                }
+                                else
+                                {
+                                    worldIn.setBlockState(blockpos, BlocksAether.aether_grass.getDefaultState(), 2);
+                                }
                             }
                         }
                     }
