@@ -10,6 +10,8 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -84,6 +86,11 @@ public class EntityFloatingBlock extends Entity implements IEntityAdditionalSpaw
 
 		if (this.ticksExisted > 200)
 		{
+			if (!this.worldObj.isRemote)
+			{
+				this.entityDropItem(new ItemStack(Item.getItemFromBlock(this.getBlock())),0.0F);
+			}
+
 			this.setDead();
 		}
 		else
@@ -100,6 +107,15 @@ public class EntityFloatingBlock extends Entity implements IEntityAdditionalSpaw
 				this.posX = i + 0.5D;
 				this.posY = j;
 				this.posZ = k + 0.5D;
+			}
+
+			if (this.posY > this.worldObj.getHeight())
+			{
+				if (!this.worldObj.isRemote)
+				{
+					this.setDead();
+					this.entityDropItem(new ItemStack(Item.getItemFromBlock(this.getBlock())),0.0F);
+				}
 			}
 		}
 	}
