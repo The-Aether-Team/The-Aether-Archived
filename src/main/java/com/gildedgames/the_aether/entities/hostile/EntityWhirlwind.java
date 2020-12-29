@@ -345,7 +345,7 @@ public class EntityWhirlwind extends EntityMob {
 		int j = MathHelper.floor_double(this.boundingBox.minY);
 		int k = MathHelper.floor_double(this.posZ);
 
-		return this.rand.nextInt(450) == 0 && this.worldObj.getBlock(i, j - 1, k) == BlocksAether.aether_grass && this.worldObj.getBlockLightValue(i, j, k) > 8 && this.worldObj.checkNoEntityCollision(this.boundingBox) && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox);
+		return this.rand.nextInt(15) == 0 && this.worldObj.getBlock(i, j - 1, k) == BlocksAether.aether_grass && this.worldObj.getBlockLightValue(i, j, k) > 8 && this.worldObj.checkNoEntityCollision(this.boundingBox) && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox);
 	}
 
 	public EntityPlayer findClosestPlayer() {

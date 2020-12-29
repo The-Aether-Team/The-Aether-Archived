@@ -48,7 +48,7 @@ public class EntityCockatrice extends EntityMob {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		return this.rand.nextInt(25) == 0 && super.getCanSpawnHere();
+		return this.rand.nextInt(5) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override

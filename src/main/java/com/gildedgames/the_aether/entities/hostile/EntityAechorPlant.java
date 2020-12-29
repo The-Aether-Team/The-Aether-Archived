@@ -50,8 +50,9 @@ public class EntityAechorPlant extends EntityAetherAnimal {
 	}
 
 	@Override
-	public int getMaxSpawnedInChunk() {
-		return 3;
+	public boolean getCanSpawnHere()
+	{
+		return this.rand.nextInt(15) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override
