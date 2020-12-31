@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class SwetRenderer extends RenderLiving<EntitySwet>
 {
-
     private static final ResourceLocation TEXTURE_BLUE = new ResourceLocation("aether_legacy", "textures/entities/swet/swet_blue.png");
 
     private static final ResourceLocation TEXTURE_GOLDEN = new ResourceLocation("aether_legacy", "textures/entities/swet/swet_golden.png");
@@ -22,31 +21,12 @@ public class SwetRenderer extends RenderLiving<EntitySwet>
 		this.addLayer(new SwetLayer(renderManager, this));
 	}
 
-    protected void setupAnimation(EntitySwet swet, float f)
+    @Override
+    protected void preRenderCallback(EntitySwet swet, float partialTicks)
     {
-        float f2 = 1.0F;
-        float f1 = 1.0F;
-        float f3 = 1.5F;
-
-        if(!swet.onGround && swet.world.isRemote)
-        {
-            if(swet.motionY > 0.85D)
-            {
-                f1 = 1.425F;
-                f2 = 0.575F;
-            }
-            else if(swet.motionY < -0.85D)
-            {
-                f1 = 0.575F;
-                f2 = 1.425F;
-            } 
-            else
-            {
-                float f4 = (float)swet.motionY * 0.5F;
-                f1 += f4;
-                f2 -= f4;
-            }
-        }
+        float f1 = swet.swetHeight; //height
+        float f2 = swet.swetWidth; //width
+        float f3 = 1.5F; //scale
 
         if(!swet.getPassengers().isEmpty())
         {
@@ -54,12 +34,6 @@ public class SwetRenderer extends RenderLiving<EntitySwet>
         }
 
         GlStateManager.scale(f2 * f3, f1 * f3, f2 * f3);
-    }
-
-    @Override
-    protected void preRenderCallback(EntitySwet swet, float f)
-    {
-        this.setupAnimation(swet, f);
     }
 
 	@Override

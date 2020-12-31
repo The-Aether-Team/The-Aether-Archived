@@ -30,6 +30,8 @@ public class AetherLootTables
 	public static ResourceLocation sheepuff_green = register("entities/sheepuff/green");
 	public static ResourceLocation sheepuff_red = register("entities/sheepuff/red");
 	public static ResourceLocation sheepuff_black = register("entities/sheepuff/black");
+	public static ResourceLocation swet_blue = register("entities/swet/blue");
+	public static ResourceLocation swet_gold = register("entities/swet/gold");
 	
 	// Monsters
 	public static ResourceLocation cockatrice = register("entities/cockatrice");
