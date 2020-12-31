@@ -132,6 +132,13 @@ item.developer_stick.name=Bațul developer-ului
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # Block Names
 tile.aether_portal.name=Portal Aether
 tile.aether_grass.name=Bloc de iarbă aether
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=Nu ești destul de antrenat sa folosești acest 
 
 gui.slider.notpickaxe=Mmm... Poate ar trebui să atac cu un tărnăcop?
 gui.slider.apple=Acest mesaj apara pentru că KingPhygieBoo l-a întrebat pe Kino de un obiect la întâmplare si Kino a spus măr. (as fi putut să pun un mesaj diferit de acesta dar na --ARBS Translator)
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=Ce? Vrei să lupți ? Aaa , ce om mic și simpatic.
 gui.valkyrie.dialog.2=Nu te gândești să te lupti cu o valkyrie mare și puternică, nu-i așa?
@@ -379,6 +387,8 @@ gui.queen.fight=Aceasta va fi bătălia ta finală!
 gui.queen.lost=De așteptat de la un om.
 
 gui.queen.dialog.0=Ce poți să-mi spui despre acest loc?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=Acesta este un sanctuar , pentru noi valkyrii care vor odihnă.
 gui.queen.answer.1=Foarte bine , adu-mi zece medalii de la subordonați mei ca să dovedești de ce ești capabil.
@@ -432,6 +442,14 @@ glove_size.option.hat=Hat
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+# Effect names
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s sa întoxicat

@@ -132,6 +132,13 @@ item.developer_stick.name=Developer Stick
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # Block Names
 tile.aether_portal.name=Portale dell'Aether
 tile.aether_grass.name=Erba dell'Aether
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=You aren't skilled enough to use this item!
 
 gui.slider.notpickaxe=Hmm. Perhaps I need to attack it with a Pickaxe?
 gui.slider.apple=This message is only here because KingPhygieBoo asked Kino a random item and he said apple.
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=Cosa? Vuoi combattere? Aww, che umano carino.
 gui.valkyrie.dialog.2=Non stai mica pensando di combattere contro una Valchiria grande e forte, vero?
@@ -380,6 +388,8 @@ gui.queen.fight=Questa sarà la tua ultima battaglia!
 gui.queen.lost=As expected of a human.
 
 gui.queen.dialog.0=Che altro mi puoi dire di questo posto?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=This is a sanctuary for us Valkyries who seek rest.
 gui.queen.answer.1=Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.
@@ -433,6 +443,14 @@ glove_size.option.hat=Hat
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+# Effect names
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s was inebriated

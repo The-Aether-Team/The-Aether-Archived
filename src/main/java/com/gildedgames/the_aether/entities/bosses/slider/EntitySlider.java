@@ -660,7 +660,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         
         if (!source.isCreativePlayer() && source.getTrueSource().getDistance(this) > 6 && !this.isAwake())
         {
-        	this.sendMessage(player, new TextComponentTranslation("It seems I'm too far away to wake it."));
+        	this.sendMessage(player, new TextComponentTranslation("gui.slider.far"));
         	return false;
         }
         else

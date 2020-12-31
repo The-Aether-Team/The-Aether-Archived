@@ -132,6 +132,13 @@ item.developer_stick.name=開發者棒子
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # Block Names
 tile.aether_portal.name=天堂傳送門
 tile.aether_grass.name=天空草地
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=你的技巧不足以駕馭這個物品！
 
 gui.slider.notpickaxe=嗯...也許我該用鎬來攻擊它？
 gui.slider.apple=這條消息只是在這裡，因為KingPhygieBoo向Kino要求了一個隨機項目，而他說蘋果。
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=那啥？你想打架？哇！多麼可愛的小人類。
 gui.valkyrie.dialog.2=難道你想挑戰一位強大的女武神？
@@ -379,6 +387,8 @@ gui.queen.fight=這將是你此生的最後一戰！
 gui.queen.lost=果然終究只是個人類啊。
 
 gui.queen.dialog.0=妳能告訴我關於這個地方的消息嗎？
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=這是我等女武神尋求休憩的庇護所。
 gui.queen.answer.1=非常好，從我的下屬那帶來十塊勝利獎牌以證明你自己的價值，到那時候再說吧。
@@ -432,6 +442,14 @@ glove_size.option.hat=Hat
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+# Effect names
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s 被毒恐鳥毒死了

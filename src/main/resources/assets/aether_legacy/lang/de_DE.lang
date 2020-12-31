@@ -132,6 +132,13 @@ item.developer_stick.name=Entwicklerstock
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # Block Names
 tile.aether_portal.name=Aetherportal
 tile.aether_grass.name=Aethergras
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=Du bist nicht erfahren genug, um diesen Gegensta
 
 gui.slider.notpickaxe=Hmm. Vielleicht muss ich ihn mit einer Spitzhacke angreifen?
 gui.slider.apple=Diese Nachricht ist nur hier, weil KingPhygieBoo Kino nach einem beliebigen Item gefragt hat und er sagte Apfel.
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=Was ist das? Du willst kämpfen? Ach, was für ein süßer kleiner Mensch.
 gui.valkyrie.dialog.2=Du denkst doch nicht daran, gegen eine große, starke Walküre zu kämpfen, oder?
@@ -379,6 +387,8 @@ gui.queen.fight=Das wird deine letzte Schlacht sein!
 gui.queen.lost=Wie von einem Menschen erwartet.
 
 gui.queen.dialog.0=Was kannst du mir über diesen Ort sagen?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=Dies ist ein Zufluchtsort für uns Walküren, die Ruhe suchen.
 gui.queen.answer.1=Also gut. Bring mir zehn Medaillen von meinen Untergebenen, um Deinen Wert zu beweisen, dann werden wir sehen.
@@ -431,6 +441,14 @@ glove_size.option.hat=Hat
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+# Effect names
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s war betrunken

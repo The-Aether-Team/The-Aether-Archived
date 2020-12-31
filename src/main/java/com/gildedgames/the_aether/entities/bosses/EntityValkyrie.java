@@ -341,7 +341,7 @@ public class EntityValkyrie extends EntityMob
                 }
                 else if (pokey == 1) 
                 {
-                	chatItUp(player, new TextComponentTranslation("gui.valkyrie.dialog.playerdead.2", new Object[] {player.getName()}));
+                	chatItUp(player, new TextComponentTranslation("gui.valkyrie.dialog.playerdead.2", player.getName()));
                 }
                 else
                 {

@@ -132,6 +132,13 @@ item.developer_stick.name=Utvecklarpinne
 item.skyroot_bed_item.name=Flygrotssäng
 item.aether_portal_frame.name=Aetherportalram
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 #block Names
 tile.aether_portal.name=Aetherportal
 tile.aether_grass.name=Aethergräs
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=Du saknar färdighet nog för att använda detta
 
 gui.slider.notpickaxe=Hmm. Kanske måste jag anfalla den med en hacka?
 gui.slider.apple=Det här meddelandet är bara här för att KingPhygieBoo frågade Kino om ett slumvis föremål och han sa äpple.
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=Vadå? Vill du slåss? Ååh, vilken söt liten människa.
 gui.valkyrie.dialog.2=Du tänker väl inte kämpa mot en stor, stark valkyria, eller hur?
@@ -379,6 +387,8 @@ gui.queen.fight=Det här kommer att bli din sista strid!
 gui.queen.lost=Som man kunde förvänta sig av en människa.
 
 gui.queen.dialog.0=Vad kan du berätta om den här platsen?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=Det här är en fristad för oss valkyrier som söker vila.
 gui.queen.answer.1=Nåväl. Ge mig tio medaljer från mina underordnade för att bevisa ditt värde, så får vi se sen.
@@ -432,6 +442,14 @@ glove_size.option.hat=Huvudbonad
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+# Effect names
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s blev förgiftad

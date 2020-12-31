@@ -11,6 +11,6 @@ public class PotionsAether
 
     public static void initialization()
     {
-        potionRegistry.register(INEBRIATION.setPotionName("Inebriation").setRegistryName("inebriation"));
+        potionRegistry.register(INEBRIATION.setPotionName("effect.aether.inebriation").setRegistryName("inebriation"));
     }
 }

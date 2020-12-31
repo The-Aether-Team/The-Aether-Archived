@@ -132,6 +132,13 @@ item.developer_stick.name=Ontwikkelaar Stok
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # Block Names
 tile.aether_portal.name=Aether Portaal
 tile.aether_grass.name=Aether Gras
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=Je bent niet bekwaam genoeg om dit voorwerp te g
 
 gui.slider.notpickaxe=Hmm. Misschien moet ik het aanvallen met een houweel?
 gui.slider.apple=Dit bericht is alleen hier omdat KingPhygieBoo aan Kino een willekeurig voorwerp vroeg en hij zei appel.
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=Wat is dat? Wil je vechten? Aww, wat een schattig klein mens.
 gui.valkyrie.dialog.2=Je denkt er niet aan om tegen een grote, sterke Walkure te vechten, toch?
@@ -379,6 +387,8 @@ gui.queen.fight=Dit wordt je laatste gevecht!
 gui.queen.lost=Zoals verwacht van een mens.
 
 gui.queen.dialog.0=Wat kun je me over deze plek vertellen?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=Dit is een toevluchtsoord voor ons walkuren die rust zoeken.
 gui.queen.answer.1=Heel goed dan. Breng me tien medailles van mijn ondergeschikten om je waarde te bewijzen, dan zullen we zien.
@@ -432,6 +442,13 @@ glove_size.option.hat=Hat
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s was bedwelmd

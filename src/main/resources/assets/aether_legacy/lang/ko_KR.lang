@@ -132,6 +132,13 @@ item.developer_stick.name=개발자 막대기
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # 블록 이름
 tile.aether_portal.name=에더 포탈
 tile.aether_grass.name=에더 잔디 블록
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=당신은 개발자가 아닙니다!
 
 gui.slider.notpickaxe=흠... 곡괭이로 공격해야 할 것 같은데...?
 gui.slider.apple=이 문구는 KingPhygieBoo가 Kino에게 아무 아이템이나 말하라 그랬고 사과를 말했기 때문에 여기 있습니다.
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=그게 뭐야? 싸우고 싶은 게냐? 우쭈쭈, 약한 인간이구만.
 gui.valkyrie.dialog.2=니가 내 상대가 될 거라 생각하냐? 이 강한 발키리를 니가 이길 수 있을 거 같애?
@@ -379,6 +387,8 @@ gui.queen.fight=이것이 너의 마지막 싸움이다!
 gui.queen.lost=또 다른 어리석은 인간이였군.
 
 gui.queen.dialog.0=이 장소는 어떤 장소인가요?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=이 곳은 발키리들의 휴식의 성이니라.
 gui.queen.answer.1=뭐 그렇다면, 내 부하 발키리들을 이기고 10개의 메달을 가져와라. 그때 우리의 싸움을 시작할테니.
@@ -432,6 +442,14 @@ glove_size.option.hat=Hat
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+# Effect names
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s(이)가 맹독에 중독되었습니다

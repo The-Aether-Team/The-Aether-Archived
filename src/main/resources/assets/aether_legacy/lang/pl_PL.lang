@@ -132,6 +132,13 @@ item.developer_stick.name=Patyk dewelopera
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # Block Names
 tile.aether_portal.name=Portal Aetheru
 tile.aether_grass.name=Blok trawy Aetheru
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=Nie masz wystarczających umiejętności, aby po
 
 gui.slider.notpickaxe=Hmm. Może muszę zaatakować to kilofem?
 gui.slider.apple=Ta wiadomość jest tutaj tylko dlatego, ponieważ KingPhygieBoo zapytał Kino o losowy przedmiot i on powiedział "jabłko".
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=Co takiego? Chcesz walczyć? Ahh, co za słodki mały człowieczek.
 gui.valkyrie.dialog.2=Chyba nie myślisz o walce z dużą, silną Valkyrią?
@@ -379,6 +387,8 @@ gui.queen.fight=To będzie twoja ostatnia walka!
 gui.queen.lost=To było spodziewane po człowieku.
 
 gui.queen.dialog.0=Co możesz mi powiedzieć o tym miejscu?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=To jest sanktuarium dla nas, Valkyrii, które szukają odpoczynku.
 gui.queen.answer.1=Dobrze więc. Przynieś 10 medali od moich podwładnych, abyś udowodnił swą wartość, i wtedy zobaczymy.
@@ -432,6 +442,14 @@ glove_size.option.hat=Hat
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+# Effect names
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s został śmiertelnie odurzony

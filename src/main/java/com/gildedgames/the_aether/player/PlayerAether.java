@@ -17,6 +17,7 @@ import com.gildedgames.the_aether.player.perks.AetherRankings;
 import com.gildedgames.the_aether.player.perks.util.DonatorMoaSkin;
 import com.gildedgames.the_aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -75,7 +76,7 @@ public class PlayerAether implements IPlayerAether
 
 	public boolean hasTeleported = false, inPortal = false, shouldPlayPortalSound = false, shouldPlayPortalTravelSound = false;
 
-	private String cooldownName = "Hammer of Notch";
+	private String cooldownName = I18n.format("item.notch_hammer.name");
 
 	private int cooldown, cooldownMax;
 

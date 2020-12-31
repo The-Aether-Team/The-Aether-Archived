@@ -132,6 +132,13 @@ item.developer_stick.name=Bâton du Développeur
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # Block Names
 tile.aether_portal.name=Portail de l'Aether 
 tile.aether_grass.name=Herbe de l'Aether 
@@ -342,6 +349,7 @@ gui.item.developer_stick.notdev=Vous n'êtes pas assez doué pour utiliser cet o
 
 gui.slider.notpickaxe=Hmm. Peut-être que je dois l'attaquer avec une Pioche ?
 gui.slider.apple=Ce message est uniquement là parce que KingPhygieBoo a demandé un objet aléatoire à Kino et qu'il a répondu pomme.
+gui.slider.far=It seems I'm too far away to wake it.
 
 gui.valkyrie.dialog.1=Que ce passe t-il ? Tu veux te battre ? Aww, quel mignon petit humain?
 gui.valkyrie.dialog.2=Tu ne penses pas sérieusement battre une grande et forte Valkyrie pas vrai ?
@@ -379,6 +387,8 @@ gui.queen.fight=Ce sera ta dernière bataille !
 gui.queen.lost=Je m'y attendais pour un humain.
 
 gui.queen.dialog.0=Que peux-tu me dire à propos de cet endroit ?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
 
 gui.queen.answer.0=Pour nous les Valkyries, c'est un sanctuaire où nous pouvons trouver le repos.
 gui.queen.answer.1=Très bien. Rapporte moi dix médailles de mes subordonnées pour me prouver que tu en vaut la peine, alors nous aviserons.
@@ -432,6 +442,14 @@ glove_size.option.hat=Hat
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
+# Effect names
+effect.aether.inebriation=Inebriation
 
 # Death messages
 death.attack.inebriation=%1$s a été enivré

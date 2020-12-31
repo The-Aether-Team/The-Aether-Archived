@@ -261,10 +261,10 @@ public class ItemsAether
 		valkyrie_lance = register("valkyrie_lance", new ItemValkyrieLance());
 		sentry_boots = register("sentry_boots", new ItemAetherArmor(EntityEquipmentSlot.FEET, ArmorMaterial.DIAMOND, "sentry", null));
 
-		aether_tune = register("aether_tune", new ItemAetherDisc("aether_tune", SoundsAether.aether_tune, "Noisestorm", "Aether Tune"));
-		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", SoundsAether.ascending_dawn, "Emile van Krieken", "Ascending Dawn"));
-		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Voyed", "Welcoming Skies")).setCreativeTab(null);
-		legacy = register("legacy", new ItemAetherDisc("legacy", SoundsAether.legacy, "Jon Lachney", "Legacy")).setCreativeTab(null);
+		aether_tune = register("aether_tune", new ItemAetherDisc("aether_tune", SoundsAether.aether_tune, "Noisestorm"));
+		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", SoundsAether.ascending_dawn, "Emile van Krieken"));
+		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", SoundsAether.welcoming_skies, "Voyed")).setCreativeTab(null);
+		legacy = register("legacy", new ItemAetherDisc("legacy", SoundsAether.legacy, "Jon Lachney")).setCreativeTab(null);
 
 		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setInactiveTexture("repulsion_movement").setDungeonLoot().setMaxDamage(512));
 		lore_book = register("lore_book", new ItemLoreBook());
