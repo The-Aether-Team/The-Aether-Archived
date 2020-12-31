@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.gildedgames.the_aether.Aether;
 import com.gildedgames.the_aether.entities.bosses.valkyrie_queen.EntityValkyrieQueen;
+import com.gildedgames.the_aether.entities.effects.PotionInebriation;
 import com.gildedgames.the_aether.entities.passive.EntityAerwhale;
 import com.gildedgames.the_aether.entities.passive.EntityMiniCloud;
 import com.gildedgames.the_aether.entities.passive.EntitySheepuff;
@@ -99,6 +100,7 @@ public class EntitiesAether {
 		register(EntityAetherItem.class, "aether_item", 32, 160, 20, true);
 
 		AetherMoaTypes.initialization();
+		PotionInebriation.initialization();
 	}
 
 	public static void register(Class<? extends Entity> entityClass, String entityName, int entityID, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
