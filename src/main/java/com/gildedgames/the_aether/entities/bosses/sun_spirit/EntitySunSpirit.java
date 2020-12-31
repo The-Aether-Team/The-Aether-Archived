@@ -517,7 +517,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        System.out.println(true);
         if (source.getSourceOfDamage() instanceof EntityCrystal)
         {
             if (((EntityCrystal) source.getSourceOfDamage()).getCrystalType() == EnumCrystalType.ICE)
