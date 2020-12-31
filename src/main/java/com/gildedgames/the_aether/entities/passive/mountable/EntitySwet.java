@@ -106,7 +106,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 	{
 		if (!this.world.isRemote)
 		{
-			if (!this.hasPrey())
+			if (!this.hasPrey() && this.isPlayerFriendly(player))
 			{
 				this.capturePrey(player);
 			}
