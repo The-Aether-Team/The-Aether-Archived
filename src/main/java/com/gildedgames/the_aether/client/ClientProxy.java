@@ -81,6 +81,8 @@ public class ClientProxy extends CommonProxy {
 
 		RendersAether.initialization();
 
+		AetherKeybinds.initialization();
+
 		registerEvent(new AetherMusicHandler());
 		registerEvent(new AetherClientEvents());
 		registerEvent(new GuiAetherInGame(Minecraft.getMinecraft()));

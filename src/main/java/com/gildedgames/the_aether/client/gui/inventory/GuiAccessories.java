@@ -1,6 +1,7 @@
 package com.gildedgames.the_aether.client.gui.inventory;
 
 import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.client.AetherKeybinds;
 import com.gildedgames.the_aether.client.gui.button.GuiAccessoryButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -9,6 +10,8 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
+import net.minecraftforge.client.event.GuiScreenEvent;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import com.gildedgames.the_aether.inventory.ContainerAccessories;
@@ -40,7 +43,7 @@ public class GuiAccessories extends GuiContainer {
 		}
 		 */
 
-		this.buttonList.add(new GuiAccessoryButton(this.guiLeft + 8, this.guiTop + 65));
+		//this.buttonList.add(new GuiAccessoryButton(this.guiLeft + 8, this.guiTop + 65));
 	}
 
 	@Override
@@ -91,4 +94,16 @@ public class GuiAccessories extends GuiContainer {
 		GuiInventory.func_147046_a(this.guiLeft + 35, this.guiTop + 75, 30, (float) (this.guiLeft + 51) - (float) mouseX, (float) (this.guiTop + 75 - 50) - (float) mouseY, this.mc.thePlayer);
 	}
 
+	@Override
+	public void handleKeyboardInput()
+	{
+		super.handleKeyboardInput();
+
+		int keyPressed = Keyboard.getEventKey();
+
+		if (keyPressed == AetherKeybinds.keyBindingAccessories.getKeyCode() && Keyboard.getEventKeyState())
+		{
+			Minecraft.getMinecraft().thePlayer.closeScreen();
+		}
+	}
 }
