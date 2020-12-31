@@ -50,6 +50,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -80,7 +81,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     public double rotary;
     public double velocity;
 
-    public MultiPartEntityPart SpiritPartHead = new MultiPartEntityPart(this, "head", 6.0F, 6.0F);
+    public MultiPartEntityPart[] sunSpiritParts;
+    public MultiPartEntityPart SpiritPartHead = new MultiPartEntityPart(this, "head", 1.375F, 1.375F);
+    public MultiPartEntityPart SpiritPartShoulder1 = new MultiPartEntityPart(this, "shoulder1", 1.375F, 2.0F);
+    public MultiPartEntityPart SpiritPartShoulder2 = new MultiPartEntityPart(this, "shoulder2", 1.375F, 2.0F);
     
     public EntitySunSpirit(World world)
     {
@@ -90,6 +94,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     public EntitySunSpirit(World world, int posX, int posY, int posZ, int var6)
     {
         super(world);
+        this.sunSpiritParts = new MultiPartEntityPart[] {this.SpiritPartHead, this.SpiritPartShoulder1, this.SpiritPartShoulder2};
         this.setSize(2.5F, 2.8F);
         this.setPosition((double)posX + 0.5D, (double)posY, (double)posZ + 0.5D);
         this.setOriginPosition(posX, posY, posZ);
@@ -189,6 +194,52 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
         this.setChatLine(tag.getInteger("chatLog"));
         this.setBossName(tag.getString("bossName"));
         this.setFreezing(tag.getBoolean("isFreezing"));
+    }
+
+    @Override
+    public void onLivingUpdate()
+    {
+        super.onLivingUpdate();
+
+        this.setMultiPartLocations();
+    }
+
+    private void setMultiPartLocations()
+    {
+        if (this.sunSpiritParts == null)
+        {
+            this.sunSpiritParts = new MultiPartEntityPart[] {this.SpiritPartHead, this.SpiritPartShoulder1, this.SpiritPartShoulder2};
+        }
+
+        Vec3d[] avec3d = new Vec3d[this.sunSpiritParts.length];
+
+        for (int i = 0; i < this.sunSpiritParts.length; i++)
+        {
+            avec3d[i] = new Vec3d(this.sunSpiritParts[i].posX, this.sunSpiritParts[i].posY, this.sunSpiritParts[i].posZ);
+        }
+
+        float f = this.rotationYaw * 0.017453292F;
+        float f1 = MathHelper.sin(f);
+        float f2 = MathHelper.cos(f);
+
+        this.SpiritPartHead.onUpdate();
+        this.SpiritPartHead.setLocationAndAngles(this.posX, this.posY + 1.5f, this.posZ, 0F, 0F);
+        this.SpiritPartShoulder1.onUpdate();
+        this.SpiritPartShoulder1.setLocationAndAngles(this.posX - f2 * 1.0F, this.posY - 0.25F, this.posZ - f1 * 1.0F, 0F, 0F);
+        this.SpiritPartShoulder2.onUpdate();
+        this.SpiritPartShoulder2.setLocationAndAngles(this.posX + f2 * 1.0F, this.posY - 0.25F, this.posZ + f1 * 1.0F, 0F, 0F);
+
+        for (int i = 0; i < this.sunSpiritParts.length; i++)
+        {
+            this.sunSpiritParts[i].prevPosX = avec3d[i].x;
+            this.sunSpiritParts[i].prevPosY = avec3d[i].y;
+            this.sunSpiritParts[i].prevPosZ = avec3d[i].z;
+        }
+    }
+
+    public Entity[] getParts()
+    {
+        return this.sunSpiritParts;
     }
 
     public void onUpdate()
@@ -609,6 +660,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     @Override
+    public boolean attackEntityFromPart(MultiPartEntityPart spiritPart, DamageSource source, float damage)
+    {
+        return this.attackEntityFrom(source, damage);
+    }
+
+    @Override
     protected void dropFewItems(boolean var1, int var2)
     {
         this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 2), 0.5F);
@@ -810,11 +867,5 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 	public World getWorld()
 	{
 		return this.getEntityWorld();
-	}
-
-	@Override
-	public boolean attackEntityFromPart(MultiPartEntityPart spiritPart, DamageSource source, float damage)
-	{
-		return this.attackEntityFrom(source, damage);
 	}
 }

@@ -221,7 +221,6 @@ public class EntityIceyBall extends EntityFlying
             if (var3 != null)
             {
                 this.smotionX = var3.x;
-                this.smotionY = var3.y;
                 this.smotionZ = var3.z;
             }
 
