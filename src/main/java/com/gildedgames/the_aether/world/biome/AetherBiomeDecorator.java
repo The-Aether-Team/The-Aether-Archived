@@ -113,12 +113,12 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 		if (TerrainGen.generateOre(worldIn, random, this.ambrosiumGen, this.chunkPos, GenerateMinable.EventType.CUSTOM))
 		{
-			this.spawnOre(this.ambrosiumGen, 13, 128);
+			this.spawnOre(this.ambrosiumGen, 15, 128);
 		}
 
 		if (TerrainGen.generateOre(worldIn, random, this.zaniteGen, this.chunkPos, GenerateMinable.EventType.CUSTOM))
 		{
-			this.spawnOre(this.zaniteGen, 11, 128);
+			this.spawnOre(this.zaniteGen, 12, 128);
 		}
 
 		if (TerrainGen.generateOre(worldIn, random, this.gravititeGen, this.chunkPos, GenerateMinable.EventType.CUSTOM))
