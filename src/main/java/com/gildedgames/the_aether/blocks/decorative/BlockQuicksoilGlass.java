@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,6 +35,11 @@ public class BlockQuicksoilGlass extends BlockBreakable
     public BlockRenderLayer getRenderLayer()
     {
         return BlockRenderLayer.TRANSLUCENT;
+    }
+
+    public boolean isFullCube(IBlockState state)
+    {
+        return false;
     }
 
 	@Override
