@@ -511,4 +511,16 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
         return (new EntityDamageSourceIndirect("aether_legacy.dart", dart, thrower)).setProjectile();
     }
 
+    @Override
+    public void setIsCritical(boolean p_70243_1_)
+    {
+
+    }
+
+    @Override
+    public boolean getIsCritical()
+    {
+        return false;
+    }
+
 }
