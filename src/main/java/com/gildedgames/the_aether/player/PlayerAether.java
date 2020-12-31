@@ -625,7 +625,6 @@ public class PlayerAether implements IPlayerAether
 			{
 				this.lifeShardsUsed += amount;
 				AetherNetworkingManager.sendToAll(new PacketUpdateLifeShardCount(this.thePlayer, this.lifeShardsUsed));
-				System.out.println("s" + this.lifeShardsUsed);
 
 				this.healthModifier = new AttributeModifier(this.healthUUID, "Aether Health Modifier", (this.lifeShardsUsed * 2.0F), 0);
 
