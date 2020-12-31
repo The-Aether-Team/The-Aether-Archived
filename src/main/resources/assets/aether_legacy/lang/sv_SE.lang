@@ -430,6 +430,9 @@ gui.button.glove_size=Handskstorlek:
 glove_size.option.skin=Utseende
 glove_size.option.hat=Huvudbonad
 
+key.aether.category=Aether
+key.aether.accessory_menu=Open Accessories Menu
+
 # Death messages
 death.attack.inebriation=%1$s blev förgiftad
 death.attack.inebriation_indirect=%1$s blev förgiftad av %2$s

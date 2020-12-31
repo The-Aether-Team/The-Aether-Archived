@@ -431,6 +431,9 @@ gui.button.glove_size=Glove Size:
 glove_size.option.skin=Skin
 glove_size.option.hat=Hat
 
+key.aether.category=Aether
+key.aether.accessory_menu=Open Accessories Menu
+
 # Death messages
 death.attack.inebriation=%1$s waz poizened 2 deaf
 death.attack.inebriation_indirect=%1$s waz poizened 2 deaf by %2$s

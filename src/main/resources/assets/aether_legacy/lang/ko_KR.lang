@@ -430,6 +430,9 @@ gui.button.glove_size=Glove Size:
 glove_size.option.skin=Skin
 glove_size.option.hat=Hat
 
+key.aether.category=Aether
+key.aether.accessory_menu=Open Accessories Menu
+
 # Death messages
 death.attack.inebriation=%1$s(이)가 맹독에 중독되었습니다
 death.attack.inebriation_indirect=%1$s(이)가 %2$s에 의해 맹독에 중독되었습니다

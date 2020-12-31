@@ -430,6 +430,9 @@ gui.button.glove_size=Glove Size:
 glove_size.option.skin=Skin
 glove_size.option.hat=Hat
 
+key.aether.category=Aether
+key.aether.accessory_menu=Open Accessories Menu
+
 # Death messages
 death.attack.inebriation=%1$s sa întoxicat
 death.attack.inebriation_indirect=%1$s a fost întoxicat de %2$s

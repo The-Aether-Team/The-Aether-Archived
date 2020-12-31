@@ -31,6 +31,7 @@ import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -48,7 +49,9 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
 
 public class AetherClientEvents
 {
@@ -159,6 +162,8 @@ public class AetherClientEvents
 
 	private static int previousSelectedTabIndex = -1;
 
+	private static boolean shouldRemoveButton = false;
+
 	@SubscribeEvent
 	public void onScreenOpened(GuiScreenEvent.InitGuiEvent.Post event)
 	{
@@ -184,6 +189,18 @@ public class AetherClientEvents
 			else if (clazz == GuiInventory.class || FastCraftingUtil.isOverridenGUI(clazz) || PixelmonUtil.isOverridenInventoryGUI(clazz))
 			{
 				event.getButtonList().add(ACCESSORY_BUTTON.setPosition(guiLeft + 26, guiTop + 65));
+			}
+
+			if (clazz == GuiAccessories.class)
+			{
+				if (!shouldRemoveButton)
+				{
+					event.getButtonList().add(ACCESSORY_BUTTON.setPosition(guiLeft + 8, guiTop + 65));
+				}
+				else
+				{
+					shouldRemoveButton = false;
+				}
 			}
 		}
 
@@ -243,21 +260,24 @@ public class AetherClientEvents
 	@SubscribeEvent
 	public void onOpenGui(GuiOpenEvent event)
 	{
-		if (mc.player != null && event.getGui() instanceof GuiDownloadTerrain)
+		if (mc.player != null)
 		{
-			GuiEnterAether enterAether = new GuiEnterAether(true);
-			GuiEnterAether exitAether = new GuiEnterAether(false);
-
-			if (mc.player.dimension == AetherConfig.dimension.aether_dimension_id)
+			if (event.getGui() instanceof GuiDownloadTerrain)
 			{
-				event.setGui(enterAether);
-				wasInAether = true;
-			}
+				GuiEnterAether enterAether = new GuiEnterAether(true);
+				GuiEnterAether exitAether = new GuiEnterAether(false);
 
-			else if (wasInAether)
-			{
-				event.setGui(exitAether);
-				wasInAether = false;
+				if (mc.player.dimension == AetherConfig.dimension.aether_dimension_id)
+				{
+					event.setGui(enterAether);
+					wasInAether = true;
+				}
+
+				else if (wasInAether)
+				{
+					event.setGui(exitAether);
+					wasInAether = false;
+				}
 			}
 		}
 	}
@@ -408,6 +428,39 @@ public class AetherClientEvents
 		for (int i = 0; i < InventoryAccessories.EMPTY_SLOT_NAMES.length; ++i)
 		{
 			event.getMap().registerSprite(new ResourceLocation("aether_legacy", "items/slots/" + InventoryAccessories.EMPTY_SLOT_NAMES[i]));
+		}
+	}
+
+	@SubscribeEvent
+	public void onKeyInputEvent(InputEvent.KeyInputEvent event)
+	{
+		if (Minecraft.getMinecraft().player != null)
+		{
+			if (AetherKeybinds.keyBindingAccessories.isPressed())
+			{
+				if (Minecraft.getMinecraft().currentScreen == null)
+				{
+					AetherNetworkingManager.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
+					shouldRemoveButton = true;
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onKeyboardScreenInputEvent(GuiScreenEvent.KeyboardInputEvent event)
+	{
+		if (Minecraft.getMinecraft().player != null)
+		{
+			int keyPressed = Keyboard.getEventKey();
+
+			if (keyPressed == AetherKeybinds.keyBindingAccessories.getKeyCode() && Keyboard.getEventKeyState())
+			{
+				if (event.getGui() instanceof GuiAccessories)
+				{
+					Minecraft.getMinecraft().player.closeScreen();
+				}
+			}
 		}
 	}
 }
