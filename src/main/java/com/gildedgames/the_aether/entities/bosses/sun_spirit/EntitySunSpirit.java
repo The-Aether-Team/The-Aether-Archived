@@ -19,10 +19,8 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityFlying;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
+import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +38,7 @@ import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.blocks.dungeon.BlockDungeonBase;
 import net.minecraft.world.WorldProvider;
 
-public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
+public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, IEntityMultiPart {
 
     public int originPointX, originPointY, originPointZ;
 
@@ -54,8 +52,14 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
     public double rotary;
     public double velocity;
 
+    public EntityDragonPart[] sunSpiritParts;
+    public EntityDragonPart SpiritPartHead = new EntityDragonPart(this, "head", 1.375F, 1.375F);
+    public EntityDragonPart SpiritPartShoulder1 = new EntityDragonPart(this, "shoulder1", 1.375F, 2.0F);
+    public EntityDragonPart SpiritPartShoulder2 = new EntityDragonPart(this, "shoulder2", 1.375F, 2.0F);
+
     public EntitySunSpirit(World worldIn) {
         super(worldIn);
+        this.sunSpiritParts = new EntityDragonPart[] {this.SpiritPartHead, this.SpiritPartShoulder1, this.SpiritPartShoulder2};
 
         this.setSize(2.5F, 2.8F);
         this.dataWatcher.updateObject(20, AetherNameGen.gen());
@@ -137,6 +141,38 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
         this.setChatLine(tag.getInteger("chatLog"));
         this.setBossName(tag.getString("bossName"));
         this.setFreezing(tag.getBoolean("isFreezing"));
+    }
+
+    @Override
+    public void onLivingUpdate()
+    {
+        super.onLivingUpdate();
+
+        this.setMultiPartLocations();
+    }
+
+    private void setMultiPartLocations()
+    {
+        if (this.sunSpiritParts == null)
+        {
+            this.sunSpiritParts = new EntityDragonPart[] {this.SpiritPartHead, this.SpiritPartShoulder1, this.SpiritPartShoulder2};
+        }
+
+        float f = this.rotationYaw * 0.017453292F;
+        float f1 = MathHelper.sin(f);
+        float f2 = MathHelper.cos(f);
+
+        this.SpiritPartHead.onUpdate();
+        this.SpiritPartHead.setLocationAndAngles(this.posX, this.posY + 1.5f, this.posZ, 0F, 0F);
+        this.SpiritPartShoulder1.onUpdate();
+        this.SpiritPartShoulder1.setLocationAndAngles(this.posX - f2 * 1.0F, this.posY - 0.25F, this.posZ - f1 * 1.0F, 0F, 0F);
+        this.SpiritPartShoulder2.onUpdate();
+        this.SpiritPartShoulder2.setLocationAndAngles(this.posX + f2 * 1.0F, this.posY - 0.25F, this.posZ + f1 * 1.0F, 0F, 0F);
+    }
+
+    public Entity[] getParts()
+    {
+        return this.sunSpiritParts;
     }
 
     public void onUpdate() {
@@ -481,6 +517,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
+        System.out.println(true);
         if (source.getSourceOfDamage() instanceof EntityCrystal)
         {
             if (((EntityCrystal) source.getSourceOfDamage()).getCrystalType() == EnumCrystalType.ICE)
@@ -509,6 +546,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
         {
             return false;
         }
+    }
+
+    @Override
+    public boolean attackEntityFromPart(EntityDragonPart part, DamageSource source, float damage)
+    {
+        return this.attackEntityFrom(source, damage);
     }
 
     @Override
@@ -634,4 +677,9 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss {
         return this.getMaxHealth();
     }
 
+    @Override
+    public World func_82194_d()
+    {
+        return this.worldObj;
+    }
 }

@@ -221,8 +221,12 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
 
             if (var3 != null) {
                 this.smotionX = var3.xCoord;
-                this.smotionY = var3.yCoord;
                 this.smotionZ = var3.zCoord;
+
+                if (this.type != EnumCrystalType.ICE)
+                {
+                    this.smotionY = var3.yCoord;
+                }
             }
 
             this.shootingEntity = source.getSourceOfDamage();
