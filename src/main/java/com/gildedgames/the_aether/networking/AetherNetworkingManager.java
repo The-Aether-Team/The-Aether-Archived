@@ -67,6 +67,8 @@ public class AetherNetworkingManager
 		INSTANCE.registerMessage(PacketShouldPortalTravelSound.class, PacketShouldPortalTravelSound.class, discriminant++, Side.CLIENT);
 
 		INSTANCE.registerMessage(PacketSwetJump.class, PacketSwetJump.class, discriminant++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketUpdateLifeShardCount.class, PacketUpdateLifeShardCount.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message)

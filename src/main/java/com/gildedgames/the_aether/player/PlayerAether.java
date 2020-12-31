@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import com.gildedgames.the_aether.Aether;
 import com.gildedgames.the_aether.containers.inventory.InventoryAccessories;
 import com.gildedgames.the_aether.entities.passive.mountable.EntityParachute;
 import com.gildedgames.the_aether.networking.AetherNetworkingManager;
@@ -17,12 +16,7 @@ import com.gildedgames.the_aether.player.abilities.AbilityRepulsion;
 import com.gildedgames.the_aether.player.perks.AetherRankings;
 import com.gildedgames.the_aether.player.perks.util.DonatorMoaSkin;
 import com.gildedgames.the_aether.player.perks.util.EnumAetherPerkType;
-import com.gildedgames.the_aether.networking.packets.*;
-import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -32,14 +26,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.SPacketChangeGameState;
-import net.minecraft.network.play.server.SPacketEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -53,8 +43,6 @@ import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.world.TeleporterAether;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-
-import javax.annotation.Nullable;
 
 public class PlayerAether implements IPlayerAether
 {
@@ -449,11 +437,6 @@ public class PlayerAether implements IPlayerAether
 			this.gloveSize = input.getBoolean("glove_size");
 		}
 
-		if (input.hasKey("shards_used"))
-		{
-			input.setInteger("shard_count", (int) (input.getFloat("shards_used") / 2));
-		}
-
 		if (input.hasKey("seen_spirit_dialog"))
 		{
 			this.seenSpiritDialog = input.getBoolean("seen_spirit_dialog");
@@ -474,10 +457,14 @@ public class PlayerAether implements IPlayerAether
 			this.poisonTime = input.getInteger("poison_time");
 		}
 
+		if (input.hasKey("shard_count"))
+		{
+			this.lifeShardsUsed = input.getInteger("shard_count");
+		}
+
 		this.cooldown = input.getInteger("hammer_cooldown");
 		this.cooldownName = input.getString("notch_hammer_name");
 		this.cooldownMax = input.getInteger("max_hammer_cooldown");
-		this.updateShardCount(input.getInteger("shard_count"));
 		this.accessories.readFromNBT(input);
 	}
 
@@ -632,15 +619,24 @@ public class PlayerAether implements IPlayerAether
 	@Override
 	public void updateShardCount(int amount)
 	{
-		this.lifeShardsUsed += amount;
-		this.healthModifier = new AttributeModifier(this.healthUUID, "Aether Health Modifier", (this.lifeShardsUsed * 2.0F), 0);
-
-		if (this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getModifier(this.healthUUID) != null)
+		if (!this.getEntity().world.isRemote)
 		{
-			this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).removeModifier(this.healthModifier);
-		}
+			if (this.getShardsUsed() < this.getMaxShardCount())
+			{
+				this.lifeShardsUsed += amount;
+				AetherNetworkingManager.sendToAll(new PacketUpdateLifeShardCount(this.thePlayer, this.lifeShardsUsed));
+				System.out.println("s" + this.lifeShardsUsed);
 
-		this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(this.healthModifier);
+				this.healthModifier = new AttributeModifier(this.healthUUID, "Aether Health Modifier", (this.lifeShardsUsed * 2.0F), 0);
+
+				if (this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getModifier(this.healthUUID) != null)
+				{
+					this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).removeModifier(this.healthModifier);
+				}
+
+				this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(this.healthModifier);
+			}
+		}
 	}
 
 	/*
