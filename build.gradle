@@ -34,6 +34,7 @@ repositories {
         url 'http://dvs1.progwml6.com/files/maven'
     }
     maven {
+        name 'CraftTweaker/Reskillable'
         url "http://maven.blamejared.com"
     }
 }
@@ -41,6 +42,7 @@ repositories {
 dependencies {
     deobfCompile "mezz.jei:jei_1.12.2:4.8.5.138"
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.8.470"
+    deobfCompile "codersafterdark.reskillable:Reskillable:1.12.2-1.13.0-SNAPSHOT.128"
     deobfCompile "curse.maven:colytra:2828877"
 }
 
