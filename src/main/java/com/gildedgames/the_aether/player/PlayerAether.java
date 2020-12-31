@@ -59,7 +59,7 @@ public class PlayerAether implements IPlayerAether {
 
 	public final ArrayList<Entity> clouds = new ArrayList<Entity>(2);
 
-	private int shardCount;
+	public int shardCount;
 
 	public DonatorMoaSkin donatorMoaSkin = new DonatorMoaSkin();
 
@@ -99,6 +99,10 @@ public class PlayerAether implements IPlayerAether {
 
 	public int poisonTime = 0, cureTime = 0;
 
+	private UUID uuid = UUID.fromString("df6eabe7-6947-4a56-9099-002f90370706");
+
+	private AttributeModifier healthModifier;
+
 	public PlayerAether() {
 		this.shouldRenderHalo = true;
 		this.shouldRenderGlow = false;
@@ -118,6 +122,8 @@ public class PlayerAether implements IPlayerAether {
 
 	@Override
 	public void onUpdate() {
+		System.out.println("s " + this.shardCount);
+
 		if (!this.player.worldObj.isRemote)
 		{
 			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
@@ -502,7 +508,11 @@ public class PlayerAether implements IPlayerAether {
 			this.shouldGetPortal = aetherTag.getBoolean("get_portal");
 		}
 
-		this.updateShardCount(aetherTag.getInteger("shardCount"));
+		if (aetherTag.hasKey("shardCount"))
+		{
+			this. shardCount = aetherTag.getInteger("shardCount");
+		}
+
 		this.getAccessoryInventory().readFromNBT(aetherTag.getTagList("accessories", 10));
 		this.setBedLocation(new ChunkCoordinates(aetherTag.getInteger("bedX"), aetherTag.getInteger("bedY"), aetherTag.getInteger("bedZ")));
 	}
@@ -539,16 +549,24 @@ public class PlayerAether implements IPlayerAether {
 
 	@Override
 	public void updateShardCount(int amount) {
-		UUID uuid = UUID.fromString("df6eabe7-6947-4a56-9099-002f90370706");
-		AttributeModifier healthModifier = new AttributeModifier(uuid, "Aether Health Modifier", amount * 2.0D, 0);
 
-		this.shardCount = amount;
+		if (!this.getEntity().worldObj.isRemote)
+		{
+			if (this.getShardsUsed() < this.getMaxShardCount())
+			{
+				this.shardCount += amount;
+				AetherNetwork.sendToAll(new PacketUpdateLifeShardCount(this.player, this.shardCount));
 
-		if (this.getEntity().getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(uuid) != null) {
-			this.getEntity().getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(healthModifier);
+				this.healthModifier = new AttributeModifier(uuid, "Aether Health Modifier", (this.shardCount * 2.0D), 0);
+
+				if (this.player.getEntityAttribute(SharedMonsterAttributes.maxHealth).getModifier(this.uuid) != null)
+				{
+					this.player.getEntityAttribute(SharedMonsterAttributes.maxHealth).removeModifier(this.healthModifier);
+				}
+
+				this.player.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(this.healthModifier);
+			}
 		}
-
-		this.getEntity().getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(healthModifier);
 	}
 
 	@Override

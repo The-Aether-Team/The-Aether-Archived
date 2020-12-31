@@ -49,7 +49,7 @@ public class PlayerAetherEvents {
 			PlayerAether playerAether = PlayerAether.get(event.player);
 
 			AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
-			playerAether.updateShardCount(playerAether.getShardsUsed());
+			playerAether.updateShardCount(0);
 
 			if (!AetherConfig.shouldAetherStart())
 			{
@@ -67,7 +67,7 @@ public class PlayerAetherEvents {
 		PlayerAether original = PlayerAether.get(event.original);
 		PlayerAether playerAether = PlayerAether.get(event.entityPlayer);
 
-		playerAether.updateShardCount(original.getShardsUsed());
+		playerAether.shardCount = original.shardCount;
 
 		if (!event.wasDeath || event.entityPlayer.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
 			playerAether.setAccessoryInventory(original.getAccessoryInventory());
@@ -85,7 +85,9 @@ public class PlayerAetherEvents {
 			PlayerAether playerAether = PlayerAether.get(event.player);
 
 			AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
-			playerAether.updateShardCount(playerAether.getShardsUsed());
+			
+			playerAether.updateShardCount(0);
+			event.player.setHealth(event.player.getMaxHealth());
 
 			playerAether.isPoisoned = false;
 			playerAether.poisonTime = 0;
@@ -100,7 +102,7 @@ public class PlayerAetherEvents {
 			PlayerAether playerAether = PlayerAether.get(event.player);
 
 			AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
-			playerAether.updateShardCount(playerAether.getShardsUsed());
+			playerAether.updateShardCount(0);
 		}
 	}
 

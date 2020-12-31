@@ -56,6 +56,8 @@ public class AetherNetwork {
 		INSTANCE.registerMessage(PacketCheckKey.class, PacketCheckKey.class, discriminant++, Side.SERVER);
 
 		INSTANCE.registerMessage(PacketSwetJump.class, PacketSwetJump.class, discriminant++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketUpdateLifeShardCount.class, PacketUpdateLifeShardCount.class, discriminant++, Side.CLIENT);
 	}
 
 	public static void sendToAll(IMessage message) {

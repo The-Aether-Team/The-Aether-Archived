@@ -33,7 +33,7 @@ public class ItemLifeShard extends Item {
 		}
 
 		if (playerAether.getShardsUsed() < playerAether.getMaxShardCount()) {
-			playerAether.updateShardCount(playerAether.getShardsUsed() + 1);
+			playerAether.updateShardCount(1);
 
 			--heldItem.stackSize;
 
