@@ -38,20 +38,27 @@ public class ItemLifeShard extends Item
 		IPlayerAether playerAether = AetherAPI.getInstance().get(player);
 		ItemStack heldItem = player.getHeldItem(hand);
 
-		if (worldIn.isRemote && playerAether.getShardsUsed() >= playerAether.getMaxShardCount())
+		if (!worldIn.isRemote)
 		{
-            Aether.proxy.sendMessage(player, new TextComponentTranslation("gui.item.life_shard.maxshards", playerAether.getMaxShardCount()));
+			playerAether.updateShardCount(0);
+
+			if (playerAether.getShardsUsed() < playerAether.getMaxShardCount())
+			{
+				playerAether.updateShardCount(1);
+				heldItem.shrink(1);
+			}
+
+			return new ActionResult<>(EnumActionResult.SUCCESS, heldItem);
+		}
+		else
+		{
+			if (playerAether.getShardsUsed() >= playerAether.getMaxShardCount())
+			{
+				Aether.proxy.sendMessage(player, new TextComponentTranslation("gui.item.life_shard.maxshards", playerAether.getMaxShardCount()));
+			}
 		}
 
-		if (!worldIn.isRemote && playerAether.getShardsUsed() < playerAether.getMaxShardCount())
-		{
-			playerAether.updateShardCount(1);
-			heldItem.shrink(1);
-
-			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, heldItem);
-		}
-
-		return new ActionResult<ItemStack>(EnumActionResult.PASS, heldItem);
+		return new ActionResult<>(EnumActionResult.PASS, heldItem);
 	}
 
 }

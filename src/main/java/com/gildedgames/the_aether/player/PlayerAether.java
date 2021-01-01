@@ -31,6 +31,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -76,7 +77,7 @@ public class PlayerAether implements IPlayerAether
 
 	public boolean hasTeleported = false, inPortal = false, shouldPlayPortalSound = false, shouldPlayPortalTravelSound = false;
 
-	private String cooldownName = I18n.format("item.notch_hammer.name");
+	private String cooldownName = new TextComponentTranslation("item.notch_hammer.name").toString();
 
 	private int cooldown, cooldownMax;
 
@@ -635,6 +636,10 @@ public class PlayerAether implements IPlayerAether
 				}
 
 				this.thePlayer.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(this.healthModifier);
+			}
+			else
+			{
+				AetherNetworkingManager.sendToAll(new PacketUpdateLifeShardCount(this.thePlayer, this.lifeShardsUsed));
 			}
 		}
 	}

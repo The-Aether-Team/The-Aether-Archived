@@ -186,6 +186,7 @@ public class PlayerAetherEvents
 		
 		if (playerAether != null)
 		{
+			playerAether.updateShardCount(0);
 			playerAether.getAccessoryInventory().markDirty();
 			((PlayerAether) playerAether).onChangedDimension(event.toDim, event.fromDim);
 		}
@@ -199,6 +200,7 @@ public class PlayerAetherEvents
 
 		if (playerAether != null)
 		{
+			playerAether.updateShardCount(0);
 			playerAether.getAccessoryInventory().markDirty();
 			((PlayerAether) playerAether).updateAccessories();
 
