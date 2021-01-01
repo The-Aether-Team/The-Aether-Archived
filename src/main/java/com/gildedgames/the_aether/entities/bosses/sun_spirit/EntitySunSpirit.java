@@ -28,10 +28,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
@@ -215,7 +212,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
                 this.motionX = this.motionY = this.motionZ = 0.0D;
 
-                this.chatLine(dungeonTarget, "\u00a7cSuch is the fate of a being who opposes the might of the sun.");
+                this.chatLine(dungeonTarget, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.playerdied"));
                 this.chatCount = 100;
 
                 this.setPosition((double) this.originPointX + 0.5D, (double) this.originPointY, (double) this.originPointZ + 0.5D);
@@ -230,7 +227,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
             if (this.isDead()) {
                 this.setFreezing(true);
-                this.chatLine(dungeonTarget, "\u00a7bSuch bitter cold... is this the feeling... of pain?");
+                this.chatLine(dungeonTarget, "\u00a7b" + StatCollector.translateToLocal("gui.spirit.dead"));
                 this.chatCount = 100;
 
                 for (int i = 0; i < dungeonPlayers.size(); ++i) {
@@ -429,44 +426,44 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
             if (AetherConfig.repeatSunSpiritDialogue() || !((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
             {
                 if (this.getChatLine() == 0) {
-                    this.chatLine(entityPlayer, "\u00a7cYou are certainly a brave soul to have entered this chamber.");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line0"));
                     this.setChatLine(1);
                 } else if (this.getChatLine() == 1) {
-                    this.chatLine(entityPlayer, "\u00a7cBegone human, you serve no purpose here.");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line1"));
                     this.setChatLine(2);
                 } else if (this.getChatLine() == 2) {
-                    this.chatLine(entityPlayer, "\u00a7cYour presence annoys me. Do you not fear my burning aura?");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line2"));
                     this.setChatLine(3);
                 } else if (this.getChatLine() == 3) {
-                    this.chatLine(entityPlayer, "\u00a7cI have nothing to offer you, fool. Leave me at peace.");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line3"));
                     this.setChatLine(4);
                 } else if (this.getChatLine() == 4) {
-                    this.chatLine(entityPlayer, "\u00a7cPerhaps you are ignorant. Do you wish to know who I am?");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line4"));
                     this.setChatLine(5);
                 } else if (this.getChatLine() == 5) {
-                    this.chatLine(entityPlayer, "\u00a7cI am a sun spirit, embodiment of Aether's eternal daylight. As ");
-                    this.chatLine(entityPlayer, "\u00a7clong as I am alive, the sun will never set on this world.");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line5.1"));
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line5.2"));
                     this.setChatLine(6);
                 } else if (this.getChatLine() == 6) {
-                    this.chatLine(entityPlayer, "\u00a7cMy body burns with the anger of a thousand beasts. No man, ");
-                    this.chatLine(entityPlayer, "\u00a7chero, or villain can harm me. You are no exception.");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line6.1"));
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line6.2"));
                     this.setChatLine(7);
                 } else if (this.getChatLine() == 7) {
-                    this.chatLine(entityPlayer, "\u00a7cYou wish to challenge the might of the sun? You are mad. ");
-                    this.chatLine(entityPlayer, "\u00a7cDo not further insult me or you will feel my wrath.");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line7.1"));
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line7.2"));
                     this.setChatLine(8);
                 } else if (this.getChatLine() == 8) {
-                    this.chatLine(entityPlayer, "\u00a7cThis is your final warning. Leave now, or prepare to burn.");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line8"));
                     this.setChatLine(9);
                 } else {
                     if (this.getChatLine() == 9) {
-                        this.chatLine(entityPlayer, "\u00a76As you wish, your death will be slow and agonizing.");
+                        this.chatLine(entityPlayer, "\u00a76" + StatCollector.translateToLocal("gui.spirit.line9"));
                         this.setChatLine(10);
                         return true;
                     }
 
                     if (this.getChatLine() == 10 && this.getAttackTarget() == null) {
-                        this.chatLine(entityPlayer, "\u00a7cDid your previous death not satisfy your curiosity, human?");
+                        this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line10"));
                         this.setChatLine(9);
                     }
                 }
@@ -476,13 +473,13 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                 this.setChatLine(9);
 
                 if (this.getChatLine() == 9) {
-                    this.chatLine(entityPlayer, "\u00a76As you wish, your death will be slow and agonizing.");
+                    this.chatLine(entityPlayer, "\u00a76" + StatCollector.translateToLocal("gui.spirit.line9"));
                     this.setChatLine(10);
                     return true;
                 }
 
                 if (this.getChatLine() == 10 && this.getAttackTarget() == null) {
-                    this.chatLine(entityPlayer, "\u00a7cDid your previous death not satisfy your curiosity, human?");
+                    this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line10"));
                     this.setChatLine(9);
                 }
             }
@@ -663,7 +660,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
     @Override
     public String getBossName() {
-        return this.dataWatcher.getWatchableObjectString(20) + ", the Sun Spirit";
+        return this.dataWatcher.getWatchableObjectString(20) + ", " + StatCollector.translateToLocal("title.aether_legacy.sun_spirit.name");
     }
 
     @Override

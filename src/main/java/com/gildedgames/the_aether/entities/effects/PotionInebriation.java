@@ -36,7 +36,7 @@ public class PotionInebriation extends Potion
     {
         super(AetherConfig.getInebriationId(), true, 0x51297B);
         this.duration = 0;
-        this.setPotionName("Inebriation");
+        this.setPotionName("effect.aether.inebriation");
         this.setIconIndex(0, 0);
     }
 

@@ -8,6 +8,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -148,7 +149,7 @@ public class AetherOverlay {
 			int cooldownRemaining = (int) ((float) (playerInfo.getHammerCooldown()) / (float) (playerInfo.getHammerMaxCooldown()) * 128F);
 			int width = scaledresolution.getScaledWidth();
 
-			mc.fontRenderer.drawStringWithShadow(playerInfo.getHammerName() + " Cooldown", (width / 2) - (mc.fontRenderer.getStringWidth(playerInfo.getHammerName() + " Cooldown") / 2), 32, 0xffffffff);
+			mc.fontRenderer.drawStringWithShadow(playerInfo.getHammerName() + " " + I18n.format("item.notch_hammer.cooldown"), (width / 2) - (mc.fontRenderer.getStringWidth(playerInfo.getHammerName() + " Cooldown") / 2), 32, 0xffffffff);
 
 			GL11.glPushMatrix();
 

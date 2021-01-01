@@ -4,6 +4,7 @@ import com.gildedgames.the_aether.AetherConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
 
 public class GuiMenuToggleButton extends GuiButton
 {
@@ -25,11 +26,11 @@ public class GuiMenuToggleButton extends GuiButton
             {
                 if (AetherConfig.config.get("Misc", "Enables the Aether Menu", false).getBoolean())
                 {
-                    this.drawCenteredString(fontrenderer, "Normal Theme", (this.xPosition + this.width) - 34, (this.height / 2) + 18, j);
+                    this.drawCenteredString(fontrenderer, I18n.format("gui.aether_menu.normal_theme"), (this.xPosition + this.width) - 34, (this.height / 2) + 18, j);
                 }
                 else
                 {
-                    this.drawCenteredString(fontrenderer, "Aether Theme", (this.xPosition + this.width) - 34, (this.height / 2) + 18, j);
+                    this.drawCenteredString(fontrenderer, I18n.format("gui.aether_menu.aether_theme"), (this.xPosition + this.width) - 34, (this.height / 2) + 18, j);
                 }
             }
         }

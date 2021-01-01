@@ -11,6 +11,7 @@ import com.gildedgames.the_aether.Aether;
 import net.minecraft.client.Minecraft;
 
 import com.google.common.collect.Lists;
+import net.minecraft.client.resources.I18n;
 
 public class AetherTrivia {
 
@@ -21,11 +22,32 @@ public class AetherTrivia {
 	}
 
 	public static String getNewTrivia() {
+
+		String localization = Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode();
+
+		System.out.println(localization);
+
+		if (getEntriesForLocalization(localization) != null)
+		{
+			return getEntriesForLocalization(localization);
+		}
+		else if (getEntriesForLocalization("en_US") != null)
+		{
+			return getEntriesForLocalization("en_US");
+		}
+		else
+		{
+			return "missingno";
+		}
+	}
+
+	public static String getEntriesForLocalization(String localization)
+	{
 		BufferedReader bufferedreader = null;
 
 		try {
-			List<String> list = Lists.<String>newArrayList();
-			bufferedreader = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(Aether.locate("texts/trivia.txt")).getInputStream(), StandardCharsets.UTF_8));
+			List<String> list = Lists.newArrayList();
+			bufferedreader = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(Aether.locate("texts/" + localization + ".txt")).getInputStream(), StandardCharsets.UTF_8));
 			String s;
 
 			while ((s = bufferedreader.readLine()) != null) {
@@ -37,21 +59,17 @@ public class AetherTrivia {
 			}
 
 			if (!list.isEmpty()) {
-				return "Pro Tip: " + (String) list.get(random.nextInt(list.size()));
+				return I18n.format("gui.aether_trivia.pro_tip") + " " + list.get(random.nextInt(list.size()));
 			}
-		} catch (IOException var8) {
-			;
-		} finally {
+		} catch (IOException ignore) { }
+		finally {
 			if (bufferedreader != null) {
 				try {
 					bufferedreader.close();
-				} catch (IOException ioexception) {
-					;
-				}
+				} catch (IOException ignore) { }
 			}
 		}
 
-		return "missingno";
+		return null;
 	}
-
 }

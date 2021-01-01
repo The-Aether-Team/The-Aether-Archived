@@ -18,6 +18,7 @@ import com.gildedgames.the_aether.network.AetherNetwork;
 import com.gildedgames.the_aether.player.perks.AetherRankings;
 import com.gildedgames.the_aether.player.perks.util.EnumAetherPerkType;
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -29,10 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.util.Direction;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
@@ -77,7 +75,7 @@ public class PlayerAether implements IPlayerAether {
 
 	public int teleportDirection;
 
-	private String hammerName = "Hammer of Notch";
+	private String hammerName = StatCollector.translateToLocal("item.notch_hammer.name");
 
 	private int cooldown;
 
@@ -122,8 +120,6 @@ public class PlayerAether implements IPlayerAether {
 
 	@Override
 	public void onUpdate() {
-		System.out.println("s " + this.shardCount);
-
 		if (!this.player.worldObj.isRemote)
 		{
 			AetherNetwork.sendToAll(new PacketPerkChanged(this.getEntity().getEntityId(), EnumAetherPerkType.Halo, this.shouldRenderHalo));
@@ -565,6 +561,10 @@ public class PlayerAether implements IPlayerAether {
 				}
 
 				this.player.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(this.healthModifier);
+			}
+			else
+			{
+				AetherNetwork.sendToAll(new PacketUpdateLifeShardCount(this.player, this.shardCount));
 			}
 		}
 	}

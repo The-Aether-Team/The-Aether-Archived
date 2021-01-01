@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
@@ -86,21 +87,21 @@ public class EntityValkyrie extends EntityAetherMob {
 
 		if (stack != null && stack.getItem() == ItemsAether.victory_medal && stack.stackSize >= 0) {
 			if (stack.stackSize >= 10) {
-				this.chatItUp(entityplayer, "Umm... that's a nice pile of medallions you have there...");
+				this.chatItUp(entityplayer, StatCollector.translateToLocal("gui.valkyrie.dialog.medal.1"));
 			} else if (stack.stackSize >= 5) {
-				this.chatItUp(entityplayer, "That's pretty impressive, but you won't defeat me.");
+				this.chatItUp(entityplayer, StatCollector.translateToLocal("gui.valkyrie.dialog.medal.2"));
 			} else {
-				this.chatItUp(entityplayer, "You think you're a tough guy, eh? Well, bring it on!");
+				this.chatItUp(entityplayer, StatCollector.translateToLocal("gui.valkyrie.dialog.medal.3"));
 			}
 		} else {
 			int line = rand.nextInt(3);
 
 			if (line == 2) {
-				this.chatItUp(entityplayer, "What's that? You want to fight? Aww, what a cute little human.");
+				this.chatItUp(entityplayer, StatCollector.translateToLocal("gui.valkyrie.dialog.1"));
 			} else if (line == 1) {
-				this.chatItUp(entityplayer, "You're not thinking of fighting a big, strong Valkyrie are you?");
+				this.chatItUp(entityplayer, StatCollector.translateToLocal("gui.valkyrie.dialog.2"));
 			} else {
-				this.chatItUp(entityplayer, "I don't think you should bother me, you could get really hurt.");
+				this.chatItUp(entityplayer, StatCollector.translateToLocal("gui.valkyrie.dialog.3"));
 			}
 		}
 
@@ -237,11 +238,11 @@ public class EntityValkyrie extends EntityAetherMob {
 				int pokey = rand.nextInt(3);
 
 				if (pokey == 2) {
-					chatItUp(player, "Alright, alright! You win!");
+					chatItUp(player, StatCollector.translateToLocal("gui.valkyrie.dialog.defeated.1"));
 				} else if (pokey == 1) {
-					chatItUp(player, "Okay, I give up! Geez!");
+					chatItUp(player, StatCollector.translateToLocal("gui.valkyrie.dialog.defeated.2"));
 				} else {
-					chatItUp(player, "Oww! Fine, here's your medal...");
+					chatItUp(player, StatCollector.translateToLocal("gui.valkyrie.dialog.defeated.3"));
 				}
 
 				this.setDead();
@@ -251,11 +252,11 @@ public class EntityValkyrie extends EntityAetherMob {
 				int pokey = rand.nextInt(3);
 
 				if (pokey == 2) {
-					chatItUp(player, "You want a medallion? Try being less pathetic.");
+					chatItUp(player, StatCollector.translateToLocal("gui.valkyrie.dialog.playerdead.1"));
 				} else if (pokey == 1) {
-					chatItUp(player, "Maybe some day, " + player.getCommandSenderName() + "... maybe some day.");
+					chatItUp(player, StatCollector.translateToLocalFormatted("gui.valkyrie.dialog.playerdead.2", player.getDisplayName()));
 				} else {
-					chatItUp(player, "Humans aren't nearly as cute when they're dead.");
+					chatItUp(player, StatCollector.translateToLocal("gui.valkyrie.dialog.playerdead.3"));
 				}
 
 				this.setAttackTarget(null);
@@ -301,11 +302,11 @@ public class EntityValkyrie extends EntityAetherMob {
 				this.chatTime = 0;
 				int pokey = rand.nextInt(3);
 				if (pokey == 2) {
-					chatItUp(player, "I'm not going easy on you!");
+					chatItUp(player, StatCollector.translateToLocal("gui.valkyrie.dialog.attack.1"));
 				} else if (pokey == 1) {
-					chatItUp(player, "You're gonna regret that!");
+					chatItUp(player, StatCollector.translateToLocal("gui.valkyrie.dialog.attack.2"));
 				} else {
-					chatItUp(player, "Now you're in for it!");
+					chatItUp(player, StatCollector.translateToLocal("gui.valkyrie.dialog.attack.3"));
 				}
 
 				this.setAttackTarget(player);
@@ -346,11 +347,11 @@ public class EntityValkyrie extends EntityAetherMob {
 					int pokey = this.rand.nextInt(3);
 
 					if (pokey == 2) {
-						chatItUp((EntityPlayer) this.getAttackTarget(), "You want a medallion? Try being less pathetic.");
+						chatItUp((EntityPlayer) this.getAttackTarget(), StatCollector.translateToLocal("gui.valkyrie.dialog.playerdead.1"));
 					} else if (pokey == 1) {
-						chatItUp((EntityPlayer) this.getAttackTarget(), "Maybe some day, " + player.getCommandSenderName() + "... maybe some day.");
+						chatItUp((EntityPlayer) this.getAttackTarget(), StatCollector.translateToLocalFormatted("gui.valkyrie.dialog.playerdead.2", player.getDisplayName()));
 					} else {
-						chatItUp((EntityPlayer) this.getAttackTarget(), "Humans aren't nearly as cute when they're dead.");
+						chatItUp((EntityPlayer) this.getAttackTarget(), StatCollector.translateToLocal("gui.valkyrie.dialog.playerdead.3"));
 					}
 
 					this.setAttackTarget(null);

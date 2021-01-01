@@ -132,6 +132,13 @@ item.developer_stick.name=Palo de Elaborador
 item.skyroot_bed_item.name=Skyroot Bed
 item.aether_portal_frame.name=Aether Portal Frame
 
+item.tooltip.aether_tune=Aether Tune
+item.tooltip.ascending_dawn=Ascending Dawn
+item.tooltip.welcoming_skies=Welcoming Skies
+item.tooltip.legacy=Legacy
+
+item.notch_hammer.cooldown=Cooldown
+
 # Block Names
 tile.aether_portal.name=Portal de Aether
 tile.aether_grass.name=Hierva de Aether
@@ -343,6 +350,9 @@ tab.aether_misc=Aether Miscellaneous
 # Tab Names
 tab.accessories.name=Accesorios
 
+# Effect names
+effect.aether.inebriation=Inebriation
+
 # Death messages
 death.attack.inebriation=%1$s fue embriagado por
 death.attack.inebriation_indirect=%1$s was inebriated by %2$s
@@ -353,6 +363,73 @@ death.attack.icey_ball=%1$s was chilled by %2$s's Icey Ball
 death.attack.lightning_ball=%1$s was zapped by %2$s's Thunder Ball
 
 # Gui messages
+gui.item.life_shard.maxshards=You can only use a total of %s life shards.
+gui.item.developer_stick.notdev=You aren't skilled enough to use this item!
+
+gui.slider.notpickaxe=Hmm. Perhaps I need to attack it with a Pickaxe?
+gui.slider.apple=This message is only here because KingPhygieBoo asked Kino a random item and he said apple.
+gui.slider.far=It seems I'm too far away to wake it.
+
+gui.valkyrie.dialog.1=What's that? You want to fight? Aww, what a cute little human.
+gui.valkyrie.dialog.2=You're not thinking of fighting a big, strong Valkyrie are you?
+gui.valkyrie.dialog.3=I don't think you should bother me, you could get really hurt.
+
+gui.valkyrie.dialog.medal.1=Umm... that's a nice pile of medallions you have there...
+gui.valkyrie.dialog.medal.2=That's pretty impressive, but you won't defeat me.
+gui.valkyrie.dialog.medal.3=You think you're a tough guy, eh? Well, bring it on!
+
+gui.valkyrie.dialog.defeated.1=Alright, alright! You win!
+gui.valkyrie.dialog.defeated.2=Okay, I give up! Geez!
+gui.valkyrie.dialog.defeated.3=Oww! Fine, here's your medal...
+
+gui.valkyrie.dialog.attack.1=I'm not going easy on you!
+gui.valkyrie.dialog.attack.2=You're gonna regret that!
+gui.valkyrie.dialog.attack.3=Now you're in for it!
+
+gui.valkyrie.dialog.playerdead.1=You want a medallion? Try being less pathetic.
+gui.valkyrie.dialog.playerdead.2=Maybe some day, %s... maybe some day.
+gui.valkyrie.dialog.playerdead.3=Humans aren't nearly as cute when they're dead.
+
+gui.valkyrie.dialog.ready=Now then, let's begin!
+gui.valkyrie.dialog.nomedals=Take your time.
+gui.valkyrie.dialog.nofight=So be it then. Goodbye adventurer.
+
+gui.valkyrie.dialog.player.havemedals=I'm ready, I have the medals right here!
+gui.valkyrie.dialog.player.lackmedals=I'll return when I have them.
+gui.valkyrie.dialog.player.denyfight=On second thought, I'd rather not.
+
+gui.queen.ready=If you wish to challenge me, strike at any time.
+gui.queen.defeated=You are truly... a mighty warrior...
+gui.queen.peaceful=Sorry, I don't fight with weaklings.
+gui.queen.nomedals=Try defeating some weaker valkyries first.
+gui.queen.fight=This will be your final battle!
+gui.queen.lost=As expected of a human.
+
+gui.queen.dialog.0=What can you tell me about this place?
+gui.queen.dialog.1=I wish to fight you!
+gui.queen.dialog.2=Nevermind
+
+gui.queen.answer.0=This is a sanctuary for us Valkyries who seek rest.
+gui.queen.answer.1=Very well then. Bring me ten medals from my subordinates to prove your worth, then we'll see.
+gui.queen.answer.2=Goodbye adventurer.
+
+gui.spirit.line0=You are certainly a brave soul to have entered this chamber.
+gui.spirit.line1=Begone human, you serve no purpose here.
+gui.spirit.line2=Your presence annoys me. Do you not fear my burning aura?
+gui.spirit.line3=I have nothing to offer you, fool. Leave me at peace.
+gui.spirit.line4=Perhaps you are ignorant. Do you wish to know who I am?
+gui.spirit.line5.1=I am a sun spirit, embodiment of Aether's eternal daylight. As
+gui.spirit.line5.2=long as I am alive, the sun will never set on this world.
+gui.spirit.line6.1=My body burns with the anger of a thousand beasts. No man,
+gui.spirit.line6.2=hero, or villain can harm me. You are no exception.
+gui.spirit.line7.1=You wish to challenge the might of the sun? You are mad.
+gui.spirit.line7.2=Do not further insult me or you will feel my wrath.
+gui.spirit.line8=This is your final warning. Leave now, or prepare to burn.
+gui.spirit.line9=As you wish, your death will be slow and agonizing.
+gui.spirit.line10=Did your previous death not satisfy your curiosity, human?
+gui.spirit.dead=Such bitter cold... is this the feeling... of pain?
+gui.spirit.playerdied=Such is the fate of a being who opposes the might of the sun.
+
 gui.sun_altar.message=The sun spirit has no power over this realm.
 gui.sun_altar.eternal_day=The sun spirit is still in control of this realm.
 gui.sun_altar.cycle_catchup=The sun is still moving to its correct position.
@@ -366,6 +443,10 @@ gui.treasure_chest.silver=Cofre de Tesoro Plateado
 gui.treasure_chest.gold=Cofre de Tesoro Dorado
 gui.treasure_chest.platinum=Cofre de Tesoro Platino
 
+title.aether_legacy.slider.name=the Slider
+title.aether_legacy.valkyrie_queen.name=the Valkyrie Queen
+title.aether_legacy.sun_spirit.name=the Sun Spirit
+
 gui.skyroot_bed.respawn_point=Respawn point set
 
 gui.options.perk_customization=Perk Customization...
@@ -376,6 +457,12 @@ gui.button.aether_cape=Aether Cape:
 
 key.aether.category=Aether
 key.aether.accessory_menu=Open Accessories Menu
+
+gui.aether_menu.normal_theme=Normal Theme
+gui.aether_menu.aether_theme=Aether Theme
+
+gui.aether_trivia.pro_tip=Pro Tip:
+
 
 lore.aether_legacy.aechor_petal=The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.
 lore.aether_legacy.aerogel=The result of the Aether's unique climate and lava combining. It can be crafted into various decorative blocks and is blast resistant.

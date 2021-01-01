@@ -2,10 +2,12 @@ package com.gildedgames.the_aether.items.util;
 
 import com.gildedgames.the_aether.Aether;
 import com.gildedgames.the_aether.player.perks.AetherRankings;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 public class ItemDeveloperStick extends Item {
 
@@ -26,7 +28,7 @@ public class ItemDeveloperStick extends Item {
 			--heldItem.stackSize;
 			return false;
 		} else {
-			Aether.proxy.sendMessage(playerIn, "You aren't skilled enough to use this item!");
+			Aether.proxy.sendMessage(playerIn, StatCollector.translateToLocal("gui.item.developer_stick.notdev"));
 			--heldItem.stackSize;
 			return false;
 		}

@@ -20,6 +20,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
@@ -193,7 +194,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
         this.faceEntity(entityplayer, 180F, 180F);
 
         if (this.isBossReady()) {
-            this.chatItUp(entityplayer, "If you wish to challenge me, strike at any time.");
+            this.chatItUp(entityplayer, StatCollector.translateToLocal("gui.queen.ready"));
         } else if (this.worldObj.isRemote) {
             this.displayValkyrieDialogue();
             
@@ -314,7 +315,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
             }
 
             if (this.getEntityToAttack() instanceof EntityPlayer) {
-                this.chatItUp((EntityPlayer) this.getEntityToAttack(), "You are truly... a mighty warrior...");
+                this.chatItUp((EntityPlayer) this.getEntityToAttack(), StatCollector.translateToLocal("gui.queen.defeated"));
 
                 ((EntityPlayer) this.getEntityToAttack()).triggerAchievement(AchievementsAether.defeat_silver);
 
@@ -378,7 +379,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
 
             if (this.worldObj.difficultySetting == EnumDifficulty.PEACEFUL) {
                 this.spawnExplosionParticle();
-                chatItUp(player, "Sorry, I don't fight with weaklings.");
+                chatItUp(player, StatCollector.translateToLocal("gui.queen.peaceful"));
                 return false;
             }
 
@@ -387,9 +388,9 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
                 int pokey = rand.nextInt(2);
 
                 if (pokey == 2) {
-                    chatItUp(player, "Sorry, I don't fight with weaklings.");
+                    chatItUp(player, StatCollector.translateToLocal("gui.queen.peaceful"));
                 } else {
-                    chatItUp(player, "Try defeating some weaker valkyries first.");
+                    chatItUp(player, StatCollector.translateToLocal("gui.queen.nomedals"));
                 }
                 return false;
             } else {
@@ -410,7 +411,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
 
                 if (this.getEntityToAttack() == null) {
                     this.chatTime = 0;
-                    chatItUp(player, "This will be your final battle!");
+                    chatItUp(player, StatCollector.translateToLocal("gui.queen.fight"));
                     if (ds.getEntity() instanceof EntityLivingBase)
                         becomeAngryAt((EntityLivingBase) ds.getEntity());
                 } else {
@@ -438,7 +439,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
             if (player.getHealth() <= 0 || player.isDead) {
                 this.setTarget(null);
                 this.angerLevel = this.chatTime = 0;
-                this.chatItUp(player, "As expected of a human.");
+                this.chatItUp(player, StatCollector.translateToLocal("gui.queen.lost"));
                 this.unlockDoor();
             }
         }
@@ -592,7 +593,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss {
 
     @Override
     public String getBossName() {
-        return this.dataWatcher.getWatchableObjectString(19) + ", the Valkyrie Queen";
+        return this.dataWatcher.getWatchableObjectString(19) + ", " + StatCollector.translateToLocal("title.aether_legacy.valkyrie_queen.name");
     }
 
     public void setBossName(String name) {

@@ -257,10 +257,10 @@ public class ItemsAether {
 		valkyrie_lance = register("valkyrie_lance", new ItemValkyrieLance().setTextureName(Aether.find("weapons/valkyrie_lance")));
 		sentry_boots = register("sentry_boots", new ItemAetherArmor(3, ArmorMaterial.DIAMOND, "sentry", null).setTextureName(Aether.find("armor/sentry_boots")));
 
-		aether_tune = register("aether_tune", new ItemAetherDisc("aether_tune", "Noisestorm", "Aether Tune").setTextureName(Aether.find("music/aether_tune")));
-		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", "HEmile", "Ascending Dawn").setTextureName(Aether.find("music/ascending_dawn")));
-		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", "Void", "Welcoming Skies").setTextureName(Aether.find("music/welcoming_skies"))).setCreativeTab(null);
-		legacy = register("legacy", new ItemAetherDisc("legacy", "Lachney", "Legacy").setTextureName(Aether.find("music/legacy"))).setCreativeTab(null);
+		aether_tune = register("aether_tune", new ItemAetherDisc("aether_tune", "Noisestorm").setTextureName(Aether.find("music/aether_tune")));
+		ascending_dawn = register("ascending_dawn", new ItemAetherDisc("ascending_dawn", "Emile van Krieken").setTextureName(Aether.find("music/ascending_dawn")));
+		welcoming_skies = register("welcoming_skies", new ItemAetherDisc("welcoming_skies", "Voyed").setTextureName(Aether.find("music/welcoming_skies"))).setCreativeTab(null);
+		legacy = register("legacy", new ItemAetherDisc("legacy", "Jon Lachney").setTextureName(Aether.find("music/legacy"))).setCreativeTab(null);
 
 		repulsion_shield = register("repulsion_shield", new ItemAccessory(AccessoryType.SHIELD).setTexture("repulsion").setInactiveTexture("repulsion_movement").setDungeonLoot().setMaxDamage(512).setTextureName(Aether.find("accessories/repulsion_shield")));
 		lore_book = register("lore_book", new ItemLoreBook().setTextureName(Aether.find("misc/lore_book")));

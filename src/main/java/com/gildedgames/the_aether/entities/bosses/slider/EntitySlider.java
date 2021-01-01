@@ -22,14 +22,12 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
@@ -530,13 +528,28 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
             return false;
         }
 
-        boolean isTCPickaxe = stack.getItem().getClass().getName().equals("tconstruct.items.tools.Pickaxe");
-
-        if (!stack.getItem().canHarvestBlock(Blocks.stone, stack) && !isTCPickaxe)
+        if (stack.getItem() == Items.apple)
         {
-            this.sendMessage(player, "Hmm. Perhaps I need to attack it with a Pickaxe?");
+            this.sendMessage(player, StatCollector.translateToLocal("gui.slider.apple"));
 
             return false;
+        }
+
+        if (!((EntityPlayer) ds.getEntity()).capabilities.isCreativeMode && ds.getSourceOfDamage().getDistance(this.posX, this.posY, this.posZ) > 6 && !this.isAwake())
+        {
+            this.sendMessage(player, StatCollector.translateToLocal("gui.slider.far"));
+            return false;
+        }
+        else
+        {
+            boolean isTCPickaxe = stack.getItem().getClass().getName().equals("tconstruct.items.tools.Pickaxe");
+
+            if (!stack.getItem().canHarvestBlock(Blocks.stone, stack) && !isTCPickaxe)
+            {
+                this.sendMessage(player, StatCollector.translateToLocal("gui.slider.notpickaxe"));
+
+                return false;
+            }
         }
 
         boolean flag = super.attackEntityFrom(ds, Math.max(0, var2));
@@ -735,7 +748,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss {
 
     @Override
     public String getBossName() {
-        return this.dataWatcher.getWatchableObjectString(19) + ", the Slider";
+        return this.dataWatcher.getWatchableObjectString(19) + ", " + StatCollector.translateToLocal("title.aether_legacy.slider.name");
     }
 
     @Override
