@@ -40,7 +40,7 @@ public class ItemLifeShard extends Item
 
 		if (worldIn.isRemote && playerAether.getShardsUsed() >= playerAether.getMaxShardCount())
 		{
-            Aether.proxy.sendMessage(player, new TextComponentTranslation("gui.item.life_shard.maxshards"));
+            Aether.proxy.sendMessage(player, new TextComponentTranslation("gui.item.life_shard.maxshards", playerAether.getMaxShardCount()));
 		}
 
 		if (!worldIn.isRemote && playerAether.getShardsUsed() < playerAether.getMaxShardCount())

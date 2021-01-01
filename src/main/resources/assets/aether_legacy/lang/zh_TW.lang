@@ -344,7 +344,7 @@ subtitles.aemisc.portal.idle=Aether Portal wooshes
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=你只能使用10個生命碎片。
+gui.item.life_shard.maxshards=你只能使用%s個生命碎片。
 gui.item.developer_stick.notdev=你的技巧不足以駕馭這個物品！
 
 gui.slider.notpickaxe=嗯...也許我該用鎬來攻擊它？

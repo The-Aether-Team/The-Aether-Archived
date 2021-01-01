@@ -344,7 +344,7 @@ subtitles.aemob.aechor_plant.attack=Aechor Plant shoots
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=Możesz użyć w sumie tylko 10 czerepów życia.
+gui.item.life_shard.maxshards=Możesz użyć w sumie tylko %s czerepów życia.
 gui.item.developer_stick.notdev=Nie masz wystarczających umiejętności, aby posługiwać się tym przedmiotem!
 
 gui.slider.notpickaxe=Hmm. Może muszę zaatakować to kilofem?

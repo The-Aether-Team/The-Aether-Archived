@@ -344,7 +344,7 @@ subtitles.aemisc.portal.idle=Aether Portal wooshes
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=Poți folosi doar 10 cioburi ale vieții.
+gui.item.life_shard.maxshards=Poți folosi doar %s cioburi ale vieții.
 gui.item.developer_stick.notdev=Nu ești destul de antrenat sa folosești acest obiect!
 
 gui.slider.notpickaxe=Mmm... Poate ar trebui să atac cu un tărnăcop?

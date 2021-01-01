@@ -344,7 +344,7 @@ subtitles.aemisc.portal.idle=Aether Portal wooshes
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=Je kunt in totaal slechts 10 levensscherven gebruiken.
+gui.item.life_shard.maxshards=Je kunt in totaal slechts %s levensscherven gebruiken.
 gui.item.developer_stick.notdev=Je bent niet bekwaam genoeg om dit voorwerp te gebruiken!
 
 gui.slider.notpickaxe=Hmm. Misschien moet ik het aanvallen met een houweel?

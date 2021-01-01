@@ -344,7 +344,7 @@ subtitles.aemisc.portal.idle=Aetherportal susar
 subtitles.aemisc.dungeon_trap.trigger=Fälla aktiverad
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=Du kan bara använda totalt 10 livsskärvor.
+gui.item.life_shard.maxshards=Du kan bara använda totalt %s livsskärvor.
 gui.item.developer_stick.notdev=Du saknar färdighet nog för att använda detta föremål!
 
 gui.slider.notpickaxe=Hmm. Kanske måste jag anfalla den med en hacka?

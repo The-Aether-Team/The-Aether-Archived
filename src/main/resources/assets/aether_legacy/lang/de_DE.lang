@@ -344,7 +344,7 @@ subtitles.aemob.aechor_plant.attack=Aechor Plant shoots
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=Du kannst insgesamt nur 10 Lebensscherben verwenden.
+gui.item.life_shard.maxshards=Du kannst insgesamt nur %s Lebensscherben verwenden.
 gui.item.developer_stick.notdev=Du bist nicht erfahren genug, um diesen Gegenstand zu benutzen!
 
 gui.slider.notpickaxe=Hmm. Vielleicht muss ich ihn mit einer Spitzhacke angreifen?

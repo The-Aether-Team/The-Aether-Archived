@@ -344,7 +344,7 @@ subtitles.aemisc.portal.idle=Aether Portal wooshes
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # Gui and Dialog
-gui.item.life_shard.maxshards=You can only use a total of 10 life shards.
+gui.item.life_shard.maxshards=You can only use a total of %s life shards.
 gui.item.developer_stick.notdev=You aren't skilled enough to use this item!
 
 gui.slider.notpickaxe=Hmm. Perhaps I need to attack it with a Pickaxe?

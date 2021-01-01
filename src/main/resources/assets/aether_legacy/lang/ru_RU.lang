@@ -344,7 +344,7 @@ subtitles.aemisc.portal.idle=Aether Portal wooshes
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=Вы можете использовать только 10 осколков жизни.
+gui.item.life_shard.maxshards=Вы можете использовать только %s осколков жизни.
 gui.item.developer_stick.notdev=Вы недостаточно опытны, чтобы использовать этот предмет!
 
 gui.slider.notpickaxe=Хмм. Возможно, мне нужно атаковать его киркой?

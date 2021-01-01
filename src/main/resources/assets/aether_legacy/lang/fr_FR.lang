@@ -344,7 +344,7 @@ subtitles.aemisc.portal.idle=Aether Portal wooshes
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=Vous ne pouvez utiliser qu'un nombre maximum de 10 fragments de vie. 
+gui.item.life_shard.maxshards=Vous ne pouvez utiliser qu'un nombre maximum de %s fragments de vie.
 gui.item.developer_stick.notdev=Vous n'êtes pas assez doué pour utiliser cet objet !
 
 gui.slider.notpickaxe=Hmm. Peut-être que je dois l'attaquer avec une Pioche ?

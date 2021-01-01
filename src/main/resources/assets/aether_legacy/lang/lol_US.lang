@@ -345,7 +345,7 @@ subtitles.aemisc.portal.idle=Aether Portal wooshes
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
 
 # GUI and Dialog
-gui.item.life_shard.maxshards=yo u can only uze 10 ov deez
+gui.item.life_shard.maxshards=yo u can only uze %s ov deez
 gui.item.developer_stick.notdev=you ain't a developer
 
 gui.slider.notpickaxe=that is one soled rok, i shud use pik aks
