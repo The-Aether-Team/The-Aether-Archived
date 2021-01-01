@@ -125,21 +125,25 @@ public class AetherRegistries {
 		AetherAPI.instance().register(new AetherEnchantment(Items.wooden_axe, 225));
 		AetherAPI.instance().register(new AetherEnchantment(Items.wooden_shovel, 225));
 		AetherAPI.instance().register(new AetherEnchantment(Items.wooden_hoe, 225));
+		AetherAPI.instance().register(new AetherEnchantment(Items.wooden_sword, 225));
 
 		AetherAPI.instance().register(new AetherEnchantment(Items.stone_pickaxe, 550));
 		AetherAPI.instance().register(new AetherEnchantment(Items.stone_axe, 550));
 		AetherAPI.instance().register(new AetherEnchantment(Items.stone_shovel, 550));
 		AetherAPI.instance().register(new AetherEnchantment(Items.stone_hoe, 550));
+		AetherAPI.instance().register(new AetherEnchantment(Items.stone_sword, 550));
 
 		AetherAPI.instance().register(new AetherEnchantment(Items.iron_pickaxe, 2250));
 		AetherAPI.instance().register(new AetherEnchantment(Items.iron_axe, 2250));
 		AetherAPI.instance().register(new AetherEnchantment(Items.iron_shovel, 2250));
 		AetherAPI.instance().register(new AetherEnchantment(Items.iron_hoe, 2250));
+		AetherAPI.instance().register(new AetherEnchantment(Items.iron_sword, 550));
 
 		AetherAPI.instance().register(new AetherEnchantment(Items.diamond_pickaxe, 5500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.diamond_axe, 5500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.diamond_shovel, 5500));
 		AetherAPI.instance().register(new AetherEnchantment(Items.diamond_hoe, 5500));
+		AetherAPI.instance().register(new AetherEnchantment(Items.diamond_sword, 5500));
 
 		AetherAPI.instance().register(new AetherEnchantment(Items.leather_helmet, 550));
 		AetherAPI.instance().register(new AetherEnchantment(Items.leather_chestplate, 550));
