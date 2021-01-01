@@ -25,8 +25,6 @@ public class AetherTrivia {
 
 		String localization = Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode();
 
-		System.out.println(localization);
-
 		if (getEntriesForLocalization(localization) != null)
 		{
 			return getEntriesForLocalization(localization);
