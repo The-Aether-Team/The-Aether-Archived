@@ -237,7 +237,7 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 		int k = MathHelper.floor(this.posZ);
 		BlockPos pos = new BlockPos(i, j, k);
 
-		return this.rand.nextInt(15) == 0 && AetherWorld.viableGrassBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) && this.world.getLight(pos) > 8
+		return this.rand.nextInt(25) == 0 && AetherWorld.viableGrassBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) && this.world.getLight(pos) > 8
 				&& iblockstate.canEntitySpawn(this);
 	}
 

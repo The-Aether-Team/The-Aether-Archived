@@ -107,7 +107,7 @@
 	  }
 	]
   },
-  "aemisc.aether_portal.idle": {
+  "aemisc.aether_portal.idling": {
   	"category": "block",
 	"subtitle": "subtitles.aemisc.portal.idle",
 	"sounds": [

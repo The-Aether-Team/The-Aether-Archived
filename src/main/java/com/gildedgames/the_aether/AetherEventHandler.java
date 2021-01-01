@@ -53,6 +53,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteractSpecific;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -131,10 +133,13 @@ public class AetherEventHandler
 		RayTraceResult target = event.getTarget();
 		ItemStack stack = event.getEmptyBucket();
 		EntityPlayer player = event.getEntityPlayer();
-
-		boolean isWater = (!AetherConfig.gameplay_changes.skyroot_bucket_only && (stack.getItem() == Items.WATER_BUCKET || Objects.requireNonNull(FluidUtil.getFluidContained(event.getEmptyBucket())).getFluid().getBlock() == Blocks.WATER))
+		FluidStack fluid = FluidUtil.getFluidContained(event.getEmptyBucket());
+		
+		boolean isWater = (!AetherConfig.gameplay_changes.skyroot_bucket_only && (stack.getItem() == Items.WATER_BUCKET
+				|| (fluid != null && fluid.getFluid().getBlock() == Blocks.WATER)))
 				|| stack.getItem() == ItemsAether.skyroot_bucket && stack.getMetadata() == 1;
-		boolean isLava = (stack.getItem() == Items.LAVA_BUCKET || Objects.requireNonNull(FluidUtil.getFluidContained(event.getEmptyBucket())).getFluid().getBlock() == Blocks.LAVA);
+		boolean isLava = (stack.getItem() == Items.LAVA_BUCKET
+				|| (fluid != null && fluid.getFluid().getBlock() == Blocks.LAVA));
 
 		boolean validDimension = (player.dimension == 0 || player.dimension == AetherConfig.dimension.aether_dimension_id);
 
