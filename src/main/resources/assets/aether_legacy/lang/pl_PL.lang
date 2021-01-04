@@ -488,6 +488,8 @@ aether_legacy.general.world_gen.tallgrass_enabled=Generowanie wysokiej trawy
 aether_legacy.general.dimension.aether_dimension_id=ID wymiaru Aetheru
 aether_legacy.general.dimension.aether_dimension_id.tooltip=Ustaw ID wymiaru dla Aetheru.
 
+aether_legacy.general.spawnrates=Mob Spawnrate Options
+
 # Lore entries
 aether_legacy.general.gameplay_changes.aether_start=Aether Start
 aether_legacy.general.gameplay_changes.golden_feather=Golden Feather

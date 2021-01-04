@@ -498,6 +498,8 @@ aether_legacy.general.world_gen.tallgrass_enabled=Tall Grass Generation
 aether_legacy.general.dimension.aether_dimension_id=Aether Dimension ID
 aether_legacy.general.dimension.aether_dimension_id.tooltip=Set the Dimension ID for the Aether.
 
+aether_legacy.general.spawnrates=Mob Spawnrate Options
+
 # Addon translations?
 item.phoenix_pickaxe.name=Fire Pikakse
 item.phoenix_axe.name=Fire Aks

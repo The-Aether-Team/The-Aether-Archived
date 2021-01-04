@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.registry.AetherLootTables;
 import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import com.gildedgames.the_aether.entities.ai.SheepuffAIEatAetherGrass;
@@ -273,6 +274,12 @@ public class EntitySheepuff extends EntityAetherAnimal implements net.minecraftf
 			this.amountEaten = 0;
 		}
 	}
+
+    @Override
+    public boolean getCanSpawnHere()
+    {
+        return this.rand.nextInt(AetherConfig.spawnrates.sheepuff_spawnrate) == 0 && super.getCanSpawnHere();
+    }
 
     public void writeEntityToNBT(NBTTagCompound nbttagcompound)
     {

@@ -108,6 +108,55 @@ public class AetherConfig
 		public boolean disable_eternal_day = false;
 	}
 
+	public static final Spawnrates spawnrates = new Spawnrates();
+
+	public static class Spawnrates
+	{
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Phyg. 1 is always, anything above that lessens the chances.")
+		public int phyg_spawnrate = 1;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Flying Cow. 1 is always, anything above that lessens the chances.")
+		public int flyingcow_spawnrate = 1;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Sheepuff. 1 is always, anything above that lessens the chances.")
+		public int sheepuff_spawnrate = 1;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Aerbunny. 1 is always, anything above that lessens the chances.")
+		public int aerbunny_spawnrate = 1;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Moa. 1 is always, anything above that lessens the chances.")
+		public int moa_spawnrate = 1;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Aerwhale. 1 is always, anything above that lessens the chances.")
+		public int aerwhale_spawnrate = 1;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Zephyr. 1 is always, anything above that lessens the chances.")
+		public int zephyr_spawnrate = 65;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Cockatrice. 1 is always, anything above that lessens the chances.")
+		public int cockatrice_spawnrate = 45;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Swet. 1 is always, anything above that lessens the chances.")
+		public int swet_spawnrate = 40;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Aechor Plant. 1 is always, anything above that lessens the chances.")
+		public int aechorplant_spawnrate = 55;
+
+		@Config.RangeInt(min=1, max=10000)
+		@Config.Comment("Adjusts spawnrate for the Whirlwind. 1 is always, anything above that lessens the chances.")
+		public int whirlwind_spawnrate = 55;
+	}
+
 	@Mod.EventBusSubscriber(modid = Aether.modid)
 	private static class EventHandler
 	{

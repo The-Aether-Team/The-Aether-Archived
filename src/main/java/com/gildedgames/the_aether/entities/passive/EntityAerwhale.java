@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.entities.passive;
 
 import javax.annotation.Nullable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.registry.AetherLootTables;
 import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import com.gildedgames.the_aether.api.AetherAPI;
@@ -64,7 +65,7 @@ public class EntityAerwhale extends EntityFlying
     {
         BlockPos pos = new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY), MathHelper.floor(this.posZ));
 
-        return this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0 && !this.world.containsAnyLiquid(this.getEntityBoundingBox()) && this.world.getLight(pos) > 8 && super.getCanSpawnHere();
+        return this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0 && this.rand.nextInt(AetherConfig.spawnrates.aerwhale_spawnrate) == 0 && !this.world.containsAnyLiquid(this.getEntityBoundingBox()) && this.world.getLight(pos) > 8 && super.getCanSpawnHere();
     }
 
     @Override

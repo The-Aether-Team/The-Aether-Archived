@@ -499,6 +499,7 @@ aether_legacy.general.world_gen.tallgrass_enabled=Skapa högt gräs
 aether_legacy.general.dimension.aether_dimension_id=ID för Aether-dimensionen
 aether_legacy.general.dimension.aether_dimension_id.tooltip=Ställ in dimensions-ID för Aether.
 
+aether_legacy.general.spawnrates=Mob Spawnrate Options
 
 # Lore entries
 lore.aether_legacy.aechor_petal=The petal of an Aechor Plant, they have a sweet aroma to them. These are a Moa's favorite food, and can be used to feed baby Moas.

@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.entities.passive.mountable;
 
 import javax.annotation.Nullable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.registry.AetherLootTables;
 import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import com.gildedgames.the_aether.api.AetherAPI;
@@ -400,6 +401,12 @@ public class EntityMoa extends EntitySaddleMount
 		}
 
 		return super.processInteract(player, hand);
+	}
+
+	@Override
+	public boolean getCanSpawnHere()
+	{
+		return this.rand.nextInt(AetherConfig.spawnrates.moa_spawnrate) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.passive.mountable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.api.AetherAPI;
 import com.gildedgames.the_aether.api.player.IPlayerAether;
 import com.gildedgames.the_aether.entities.ai.swet.*;
@@ -384,7 +385,7 @@ public class EntitySwet extends EntityMountable implements IEntityAdditionalSpaw
 	@Override
 	public boolean getCanSpawnHere()
 	{
-		return this.rand.nextInt(10) == 0 && super.getCanSpawnHere();
+		return this.rand.nextInt(AetherConfig.spawnrates.swet_spawnrate) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.entities.hostile;
 
 import javax.annotation.Nullable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.passive.mountable.EntityMoa;
 import com.gildedgames.the_aether.entities.projectile.EntityPoisonNeedle;
 import com.gildedgames.the_aether.registry.AetherLootTables;
@@ -182,7 +183,7 @@ public class EntityCockatrice extends EntityMob
 	@Override
 	public boolean getCanSpawnHere()
 	{
-		return this.rand.nextInt(15) == 0 && super.getCanSpawnHere();
+		return this.rand.nextInt(AetherConfig.spawnrates.cockatrice_spawnrate) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.gildedgames.the_aether.entities.hostile;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.particles.AetherParticle;
 import com.gildedgames.the_aether.entities.particles.ParticleEvilWhirly;
 import com.gildedgames.the_aether.entities.particles.ParticlePassiveWhirly;
@@ -423,7 +424,7 @@ public class EntityWhirlwind extends EntityMob
 		int k = MathHelper.floor(this.posZ);
 		BlockPos pos = new BlockPos(i, j, k);
 
-		return this.rand.nextInt(25) == 0 && AetherWorld.viableSpawningBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) && this.world.getLight(pos) > 8 && this.world.checkNoEntityCollision(this.getEntityBoundingBox()) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.world.containsAnyLiquid(this.getEntityBoundingBox());
+		return this.rand.nextInt(AetherConfig.spawnrates.whirlwind_spawnrate) == 0 && AetherWorld.viableSpawningBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) && this.world.getLight(pos) > 8 && this.world.checkNoEntityCollision(this.getEntityBoundingBox()) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.world.containsAnyLiquid(this.getEntityBoundingBox());
 	}
 
     public EntityPlayer findClosestPlayer()

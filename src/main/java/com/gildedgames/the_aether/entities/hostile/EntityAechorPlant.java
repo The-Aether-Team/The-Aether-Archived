@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.hostile;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.passive.EntityAetherAnimal;
 import com.gildedgames.the_aether.entities.projectile.EntityPoisonNeedle;
 import com.gildedgames.the_aether.registry.AetherLootTables;
@@ -237,7 +238,7 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 		int k = MathHelper.floor(this.posZ);
 		BlockPos pos = new BlockPos(i, j, k);
 
-		return this.rand.nextInt(25) == 0 && AetherWorld.viableGrassBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) && this.world.getLight(pos) > 8
+		return this.rand.nextInt(AetherConfig.spawnrates.aechorplant_spawnrate) == 0 && AetherWorld.viableGrassBlocks.contains(this.world.getBlockState(pos.down()).getBlock()) && this.world.getLight(pos) > 8
 				&& iblockstate.canEntitySpawn(this);
 	}
 
