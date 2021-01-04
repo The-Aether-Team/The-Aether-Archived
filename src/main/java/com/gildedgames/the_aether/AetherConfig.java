@@ -35,6 +35,10 @@ public class AetherConfig {
 
 	private static boolean disable_eternal_day;
 
+	private static int phyg_spawnrate, flyingcow_spawnrate, sheepuff_spawnrate, aerbunny_spawnrate, moa_spawnrate, aerwhale_spawnrate;
+
+	private static int zephyr_spawnrate, cockatrice_spawnrate, swet_spawnrate, aechorplant_spawnrate, whirlwind_spawnrate;
+
 	public static void init(File location) {
 		File newFile = new File(location + "/aether" + "/AetherI.cfg");
 
@@ -83,6 +87,19 @@ public class AetherConfig {
 		repeat_sun_spirit_dialog = config.get("Misc", "If disabed, the Sun Spirit's dialog will only show once per world.", true).getBoolean(true);
 
 		disable_eternal_day = config.get("Misc", "Disables eternal day making time cycle in the Aether without having to kill the Sun Spirit. This is mainly intended for use in modpacks.", false).getBoolean(false);
+
+		//Spawnrates
+		phyg_spawnrate = config.get("Spawnrates", "Phyg Spawnrate. 1 is always, higher numbers decrease chances.", 1).getInt(1);
+		flyingcow_spawnrate = config.get("Spawnrates", "Flying Cow Spawnrate. 1 is always, higher numbers decrease chances.", 1).getInt(1);
+		sheepuff_spawnrate = config.get("Spawnrates", "Sheepuff Spawnrate. 1 is always, higher numbers decrease chances.", 1).getInt(1);
+		aerbunny_spawnrate = config.get("Spawnrates", "Aerbunny Spawnrate. 1 is always, higher numbers decrease chances.", 1).getInt(1);
+		moa_spawnrate = config.get("Spawnrates", "Moa Spawnrate. 1 is always, higher numbers decrease chances.", 1).getInt(1);
+		aerwhale_spawnrate = config.get("Spawnrates", "Aerwhale Spawnrate. 1 is always, higher numbers decrease chances.", 1).getInt(1);
+		zephyr_spawnrate = config.get("Spawnrates", "Zephyr Spawnrate. 1 is always, higher numbers decrease chances.", 65).getInt(65);
+		cockatrice_spawnrate = config.get("Spawnrates", "Cockatrice Spawnrate. 1 is always, higher numbers decrease chances.", 45).getInt(45);
+		swet_spawnrate = config.get("Spawnrates", "Swet Spawnrate. 1 is always, higher numbers decrease chances.", 40).getInt(40);
+		aechorplant_spawnrate = config.get("Spawnrates", "Aechor Plant Spawnrate. 1 is always, higher numbers decrease chances.", 55).getInt(55);
+		whirlwind_spawnrate = config.get("Spawnrates", "Whirlwind Spawnrate. 1 is always, higher numbers decrease chances.", 55).getInt(55);
 
 		config.save();
 	}
@@ -181,5 +198,39 @@ public class AetherConfig {
 
 	public static boolean allowSeasonalChristmas() {
 		return seasonal_christmas;
+	}
+
+	public static int getPhygSpawnrate() {
+		return phyg_spawnrate;
+	}
+	public static int getFlyingCowSpawnrate() {
+		return flyingcow_spawnrate;
+	}
+	public static int getSheepuffSpawnrate() {
+		return sheepuff_spawnrate;
+	}
+	public static int getAerbunnySpawnrate() {
+		return aerbunny_spawnrate;
+	}
+	public static int getMoaSpawnrate() {
+		return moa_spawnrate;
+	}
+	public static int getAerwhaleSpawnrate() {
+		return aerwhale_spawnrate;
+	}
+	public static int getZephyrSpawnrate() {
+		return zephyr_spawnrate;
+	}
+	public static int getCockatriceSpawnrate() {
+		return cockatrice_spawnrate;
+	}
+	public static int getSwetSpawnrate() {
+		return swet_spawnrate;
+	}
+	public static int getAechorPlantSpawnrate() {
+		return aechorplant_spawnrate;
+	}
+	public static int getWhirlwindSpawnrate() {
+		return whirlwind_spawnrate;
 	}
 }

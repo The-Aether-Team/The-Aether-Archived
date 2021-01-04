@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.entities.passive;
 
 import java.util.Random;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.items.ItemsAether;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
@@ -79,6 +80,11 @@ public class EntitySheepuff extends EntityAetherAnimal {
 		this.dataWatcher.addObject(16, (byte) 0);
 		this.dataWatcher.addObject(17, (byte) 0);
 		this.dataWatcher.addObject(18, (byte) 0);
+	}
+
+	@Override
+	public boolean getCanSpawnHere() {
+		return this.rand.nextInt(AetherConfig.getSheepuffSpawnrate()) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override

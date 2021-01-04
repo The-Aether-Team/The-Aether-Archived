@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.passive.mountable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.api.AetherAPI;
 import com.gildedgames.the_aether.api.moa.AetherMoaType;
 import net.minecraft.block.Block;
@@ -92,6 +93,11 @@ public class EntityMoa extends EntitySaddleMount {
 
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0D);
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(35.0D);
+    }
+
+    @Override
+    public boolean getCanSpawnHere() {
+        return this.rand.nextInt(AetherConfig.getMoaSpawnrate()) == 0 && super.getCanSpawnHere();
     }
 
     public boolean isSitting() {

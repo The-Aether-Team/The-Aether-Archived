@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.hostile;
 
+import com.gildedgames.the_aether.AetherConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -52,7 +53,7 @@ public class EntityAechorPlant extends EntityAetherAnimal {
 	@Override
 	public boolean getCanSpawnHere()
 	{
-		return this.rand.nextInt(15) == 0 && super.getCanSpawnHere();
+		return this.rand.nextInt(AetherConfig.getAechorPlantSpawnrate()) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override

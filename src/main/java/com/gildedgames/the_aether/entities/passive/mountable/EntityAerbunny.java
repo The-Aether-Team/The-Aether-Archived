@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.passive.mountable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.passive.EntityAetherAnimal;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityAgeable;
@@ -56,6 +57,11 @@ public class EntityAerbunny extends EntityAetherAnimal implements IEntityAdditio
     @Override
     public double getYOffset() {
         return 0.4D;
+    }
+
+    @Override
+    public boolean getCanSpawnHere() {
+        return this.rand.nextInt(AetherConfig.getAerbunnySpawnrate()) == 0 && super.getCanSpawnHere();
     }
 
     @Override

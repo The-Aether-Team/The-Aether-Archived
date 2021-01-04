@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.hostile;
 
+import com.gildedgames.the_aether.AetherConfig;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
@@ -48,7 +49,7 @@ public class EntityCockatrice extends EntityMob {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		return this.rand.nextInt(5) == 0 && super.getCanSpawnHere();
+		return this.rand.nextInt(AetherConfig.getCockatriceSpawnrate()) == 0 && super.getCanSpawnHere();
 	}
 
 	@Override

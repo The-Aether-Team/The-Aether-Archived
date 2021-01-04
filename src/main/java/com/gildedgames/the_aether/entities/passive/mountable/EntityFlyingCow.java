@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.passive.mountable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.items.ItemsAether;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
@@ -56,6 +57,11 @@ public class EntityFlyingCow extends EntitySaddleMount {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.20000000298023224D);
+    }
+
+    @Override
+    public boolean getCanSpawnHere() {
+        return this.rand.nextInt(AetherConfig.getFlyingCowSpawnrate()) == 0 && super.getCanSpawnHere();
     }
 
     @Override
