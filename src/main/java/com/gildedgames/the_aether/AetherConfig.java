@@ -70,6 +70,20 @@ public class AetherConfig
 		public boolean legacy_altar_name = false;
 	}
 	
+	public static final AudioOptions audio_options = new AudioOptions();
+	
+	public static class AudioOptions
+	{
+		@Config.Comment("Enables dimensional music")
+		public boolean game_music = true;
+		
+		@Config.Comment("Enables menu music")
+		public boolean menu_music = true;
+		
+		@Config.Comment("Pauses the music when a record is playing")
+		public boolean pause_on_record = true;
+	}
+	
 	public static final GameplayChanges gameplay_changes = new GameplayChanges();
 	
 	public static class GameplayChanges
