@@ -16,8 +16,7 @@ import com.gildedgames.the_aether.blocks.BlocksAether;
 
 public class BlockAetherFlower extends BlockBush
 {
-
-    public AxisAlignedBB FLOWER_AABB = new AxisAlignedBB(0.30000001192092896D, 0.0D, 0.30000001192092896D, 0.699999988079071D, 0.6000000238418579D, 0.699999988079071D);
+	public AxisAlignedBB FLOWER_AABB;
 
 	public BlockAetherFlower() 
 	{
@@ -36,7 +35,7 @@ public class BlockAetherFlower extends BlockBush
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return FLOWER_AABB;
+        return FLOWER_AABB.offset(state.getOffset(source, pos));
     }
 
 	@Override

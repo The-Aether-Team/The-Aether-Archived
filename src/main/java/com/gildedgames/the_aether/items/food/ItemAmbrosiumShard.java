@@ -31,10 +31,8 @@ public class ItemAmbrosiumShard extends ItemAetherFood
     {
 		ItemStack heldItem = playerIn.getHeldItem(hand);
 
-		Block biomeBlock = worldIn.getBiome(pos).topBlock.getBlock();
-
 		//if the biomeBlock is a grass block and isn't enchanted_aether_grass, it'll set the biomeBlock to enchanted_aether_grass.
-		if (biomeBlock != BlocksAether.enchanted_aether_grass && AetherWorld.viableGrassBlocks.contains(biomeBlock))
+		if (worldIn.getBlockState(pos) != BlocksAether.enchanted_aether_grass && AetherWorld.viableGrassBlocks.contains(worldIn.getBlockState(pos).getBlock()))
 		{
 			worldIn.setBlockState(pos, BlocksAether.enchanted_aether_grass.getDefaultState());
 		}
