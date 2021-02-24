@@ -76,23 +76,30 @@ public class EntityCockatrice extends EntityMob
 
 		if (this.getAttackTarget() != null)
 		{
-			double d = this.getAttackTarget().posX - this.posX;
-			double d1 = this.getAttackTarget().posZ - this.posZ;
-
-            this.getLookHelper().setLookPositionWithEntity(this.getAttackTarget(), 30.0F, 30.0F);
-
-			if (this.shootTime >= 20 && this.canEntityBeSeen(this.getAttackTarget()))
+			if (this.getAttackTarget() instanceof EntityPlayer && ((EntityPlayer) this.getAttackTarget()).isCreative())
 			{
-				this.shootTarget();
-				this.shootTime = -60;
+				this.setAttackTarget(null);
 			}
-
-			if (this.shootTime < 20)
+			else
 			{
-				this.shootTime += 2;
-			}
+				double d = this.getAttackTarget().posX - this.posX;
+				double d1 = this.getAttackTarget().posZ - this.posZ;
 
-			this.rotationYaw = (float) ((Math.atan2(d1, d) * 180D) / 3.1415927410125732D) - 90F;
+				this.getLookHelper().setLookPositionWithEntity(this.getAttackTarget(), 30.0F, 30.0F);
+
+				if (this.shootTime >= 20 && this.canEntityBeSeen(this.getAttackTarget()))
+				{
+					this.shootTarget();
+					this.shootTime = -60;
+				}
+
+				if (this.shootTime < 20)
+				{
+					this.shootTime += 2;
+				}
+
+				this.rotationYaw = (float) ((Math.atan2(d1, d) * 180D) / 3.1415927410125732D) - 90F;
+			}
 		}
 
 		this.updateWingRotation();
