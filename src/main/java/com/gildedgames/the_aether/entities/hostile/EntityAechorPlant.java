@@ -97,7 +97,7 @@ public class EntityAechorPlant extends EntityAetherAnimal implements IRangedAtta
 	{
 		if (!AetherWorld.viableGrassBlocks.contains(state.getBlock()))
 		{
-			this.setDead();
+			this.setHealth(0.0F);
 		}
 	}
 
