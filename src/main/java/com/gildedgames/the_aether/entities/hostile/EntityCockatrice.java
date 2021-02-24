@@ -62,22 +62,26 @@ public class EntityCockatrice extends EntityMob {
 		super.onUpdate();
 
 		if (this.getEntityToAttack() != null) {
-
-			double d = this.getEntityToAttack().posX - this.posX;
-			double d1 = this.getEntityToAttack().posZ - this.posZ;
-
-			this.getLookHelper().setLookPositionWithEntity(this.getEntityToAttack(), 30.0F, 30.0F);
-
-			if (this.shootTime >= 20 && this.canEntityBeSeen(this.getEntityToAttack())) {
-				this.shootTarget();
-				this.shootTime = -60;
+			if (this.getAttackTarget() instanceof EntityPlayer && ((EntityPlayer) this.getAttackTarget()).capabilities.isCreativeMode) {
+				this.setAttackTarget(null);
 			}
+			else {
+				double d = this.getEntityToAttack().posX - this.posX;
+				double d1 = this.getEntityToAttack().posZ - this.posZ;
 
-			if (this.shootTime < 20) {
-				this.shootTime += 2;
+				this.getLookHelper().setLookPositionWithEntity(this.getEntityToAttack(), 30.0F, 30.0F);
+
+				if (this.shootTime >= 20 && this.canEntityBeSeen(this.getEntityToAttack())) {
+					this.shootTarget();
+					this.shootTime = -60;
+				}
+
+				if (this.shootTime < 20) {
+					this.shootTime += 2;
+				}
+
+				this.rotationYaw = (float) ((Math.atan2(d1, d) * 180D) / 3.1415927410125732D) - 90F;
 			}
-
-			this.rotationYaw = (float) ((Math.atan2(d1, d) * 180D) / 3.1415927410125732D) - 90F;
 		}
 
 		this.updateWingRotation();
