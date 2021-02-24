@@ -553,6 +553,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     @Override
     protected void dropFewItems(boolean var1, int var2) {
         this.entityDropItem(new ItemStack(ItemsAether.dungeon_key, 1, 2), 0.5F);
+        this.entityDropItem(new ItemStack(BlocksAether.sun_altar), 0.5F);
     }
 
     @Override
