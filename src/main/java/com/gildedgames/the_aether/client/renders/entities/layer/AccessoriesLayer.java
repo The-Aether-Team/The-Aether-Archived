@@ -195,6 +195,8 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 	        }
 		}
 
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0, 0.0075D, 0);
 		if (accessories.getStackInSlot(6).getItem().getClass() == ItemAccessory.class && ((PlayerAether) playerAether).shouldRenderGloves)
 		{
 			ItemAccessory gloves = (ItemAccessory) accessories.getStackInSlot(6).getItem();
@@ -248,6 +250,7 @@ public class AccessoriesLayer implements LayerRenderer<AbstractClientPlayer>
 
 			GlStateManager.color(1.0F, 1.0F, 1.0F);
 		}
+		GlStateManager.popMatrix();
 
 		if (accessories.getStackInSlot(2).getItem() instanceof ItemAccessory)
 		{
