@@ -161,14 +161,7 @@ public class BlockAercloud extends Block implements IAetherMeta
         {
         	EnumCloudType cloud_type = EnumCloudType.values()[j];
 
-        	if (AetherConfig.world_gen.pink_aerclouds)
-        	{
-        		list.add(new ItemStack(this, 1, cloud_type.getMeta()));
-        	}
-        	else if (cloud_type != EnumCloudType.Pink)
-        	{
-                list.add(new ItemStack(this, 1, cloud_type.getMeta()));
-        	}
+			list.add(new ItemStack(this, 1, cloud_type.getMeta()));
         }
     }
 
