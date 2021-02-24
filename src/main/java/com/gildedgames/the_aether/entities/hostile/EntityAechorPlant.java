@@ -100,7 +100,7 @@ public class EntityAechorPlant extends EntityAetherAnimal {
 		}
 
 		if (this.worldObj.getBlock(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY) - 1, MathHelper.floor_double(this.posZ)) != BlocksAether.aether_grass) {
-			this.setDead();
+			this.setHealth(0.0F);
 		}
 	}
 
