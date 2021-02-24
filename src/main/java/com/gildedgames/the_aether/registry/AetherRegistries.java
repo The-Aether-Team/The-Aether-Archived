@@ -100,9 +100,9 @@ public class AetherRegistries {
 
 		AetherAPI.instance().register(new AetherEnchantment(new ItemStack(ItemsAether.skyroot_bucket, 1, 2), new ItemStack(ItemsAether.skyroot_bucket.setContainerItem(null), 1, 3), 1000));
 
-		AetherAPI.instance().register(new AetherEnchantment(new ItemStack(BlocksAether.holystone, 1, 1), ItemsAether.healing_stone, 750));
+		AetherAPI.instance().register(new AetherEnchantment(BlocksAether.holystone, ItemsAether.healing_stone, 750));
 		AetherAPI.instance().register(new AetherEnchantment(BlocksAether.gravitite_ore, BlocksAether.enchanted_gravitite, 1000));
-		AetherAPI.instance().register(new AetherEnchantment(new ItemStack(BlocksAether.quicksoil, 1, 1), BlocksAether.quicksoil_glass, 250));
+		AetherAPI.instance().register(new AetherEnchantment(BlocksAether.quicksoil, BlocksAether.quicksoil_glass, 250));
 
 		AetherAPI.instance().register(new AetherEnchantment(ItemsAether.blueberry, ItemsAether.enchanted_blueberry, 300));
 
