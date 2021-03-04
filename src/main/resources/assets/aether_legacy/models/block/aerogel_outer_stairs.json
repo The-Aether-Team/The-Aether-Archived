@@ -1,6 +1,6 @@
 {
     
-	"parent": "block/outer_stairs",
+	"parent": "block/template_outer_stairs_translucent",
     
 	"textures": 
 	{
