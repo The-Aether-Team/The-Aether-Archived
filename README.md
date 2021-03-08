@@ -8,7 +8,7 @@ Gilded Games presents the original Aether mod! Up to date for modern Minecraft v
 ## :heart: Support Gilded Games
 
 [![Patreon pledgers](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.herokuapp.com%2FGildedGames&style=flat-square)](https://patreon.com/GildedGames)
-[![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/YgTv7Vg)
+[![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/yrFDeVZEwt)
 [![Twitter followers](https://img.shields.io/twitter/follow/DevAether.svg?logo=twitter&label=twitter&style=flat-square)](https://twitter.com/DevAether)
 
 If you enjoy our work, [please consider making a pledge](https://patreon.com/GildedGames) today to help fund development and gain access to special perks. Every pledge goes directly into the development process and enables us to continue making the Minecraft mods you know and love.
@@ -35,7 +35,7 @@ Make sure to keep your issue's description clear and concise. Your issue's title
 ## :wrench: Contribute to the project
 Looking to contribute to the project? We ask that you read over our [Contributor's Guide](https://github.com/Gilded-Games/The-Aether-Archived/blob/1.12.2/CONTRIBUTING.md) for more details and our Contributor License Agreement (CLA) before getting started.
 
-Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://github.com/Gilded-Games/The-Aether-Archived/issues) which shows all the currently open issues that we'd love some help on.
+Not sure what to help with? Take a look at our issue tracker for some ideas! [Here's a quick link](https://github.com/Gilded-Games/The-Aether-Archived/labels/status%2Fhelp-wanted) which shows all the currently open issues that we'd love some help on.
 
 ## :scroll: License information
 If you're wanting to create a gameplay video/review, extension or addon, parody, or any other fan work of your own for the Aether, go for it! We love seeing the content our community creates, and we hope to make it as welcoming as possible for everyone. We ask however that if you are using code or assets from The Aether project that you adhere to the licenses below, and that you please don't advertise using our brand. If you're interested in sponsoring The Aether project or Gilded Games or wish to otherwise use our brand, please [contact us](mailto:support@gildedgames.com).
