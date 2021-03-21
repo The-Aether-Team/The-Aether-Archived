@@ -2,12 +2,13 @@
 # The Aether
 [![Code license (GNU GPL 3.0)](https://img.shields.io/badge/code%20license-GNU%20GPLv3-green.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![CurseForge downloads](http://cf.way2muchnoise.eu/255308.svg)](https://www.curseforge.com/minecraft/mc-mods/the-aether-ii)
 
 Gilded Games presents the original Aether mod! Up to date for modern Minecraft versions and fully compatible with multiplayer! The Aether is a dimension high in the sky composed of floating islands! Ascend through a Glowstone portal and begin a new survival adventure packed with new ores, mythical creatures and perilous Dungeons! All you need to do is build a Glowstone frame and add water to light the mystical portal, step in and you'll be transported immediately to the luscious hostile paradise known as the Aether! Gilded Games has ensured to keep The Aether as close to the original mod from 2011 as possible, while continuing to work on the sequel, Aether II.
 
 ## :heart: Support Gilded Games
 
-[![Patreon pledgers](https://img.shields.io/badge/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.herokuapp.com%2FGildedGames&style=flat-square)](https://patreon.com/GildedGames)
+[![Patreon pledgers](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3DGildedGames%26type%3Dpatrons&style=flat-square)](https://patreon.com/GildedGames)
 [![Discord user count](https://img.shields.io/discord/118816101936267265.svg?logoColor=FFFFFF&logo=discord&color=7289DA&style=flat-square)](https://discord.gg/yrFDeVZEwt)
 [![Twitter followers](https://img.shields.io/twitter/follow/DevAether.svg?logo=twitter&label=twitter&style=flat-square)](https://twitter.com/DevAether)
 
@@ -17,9 +18,6 @@ You can also support the Aether project and Gilded Games by telling your friends
 
 ## :package: Download the latest releases
 ### "Stable" builds
-[![CurseForge downloads](https://cf.way2muchnoise.eu/full_255308_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/the-aether)
-[![CurseForge packs](https://cf.way2muchnoise.eu/packs/full_255308_in_packs.svg)](https://www.curseforge.com/minecraft/mc-mods/the-aether)
-
 We use Curseforge to publish **stable builds** of the Aether for Minecraft. You can download the latest stable builds from our [official page found here](https://www.curseforge.com/minecraft/mc-mods/the-aether) without signing up for an account, and even install the Aether for Minecraft using the [Overwolf Launcher](https://curseforge.overwolf.com/) with built-in integration for Curseforge mods. We recommend using our stable Curseforge releases for most people.
 
 ## :bug: Report bugs or other issues
