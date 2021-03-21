@@ -1,7 +1,7 @@
 ![Banner image](doc/banner.webp)
 # The Aether
 [![Code license (GNU GPL 3.0)](https://img.shields.io/badge/code%20license-GNU%20GPLv3-green.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.en.html)
-[![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![Asset license (Unlicensed)](https://img.shields.io/badge/assets%20license-All%20Rights%20Reserved-red.svg?style=flat-square)](hhttps://en.wikipedia.org/wiki/All_rights_reserved)
 [![CurseForge downloads](http://cf.way2muchnoise.eu/255308.svg)](https://www.curseforge.com/minecraft/mc-mods/the-aether-ii)
 [![Gilded-Games](https://circleci.com/gh/Gilded-Games/The-Aether-Archived/tree/1.12.2.svg?style=shield)](https://app.circleci.com/pipelines/github/Gilded-Games/The-Aether-Archived?branch=1.12.2)
 
