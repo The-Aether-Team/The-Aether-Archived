@@ -39,7 +39,6 @@ jobs:
           key: v2-dependencies-{{ checksum "build.gradle" }}
 
       - run: gradle test
-      - run: gradle setupCiWorkspace
       - run: gradle build
       - store_artifacts:
               path: ~/repo/build/libs
