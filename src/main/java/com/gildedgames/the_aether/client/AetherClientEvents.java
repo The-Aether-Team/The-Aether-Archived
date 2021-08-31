@@ -286,10 +286,11 @@ public class AetherClientEvents {
 	public void onGuiOpened(GuiScreenEvent.InitGuiEvent.Post event) {
 		if (event.gui instanceof GuiContainer) {
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			Class<?> clazz = event.gui.getClass();
 
 			int guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer) event.gui, "guiLeft", "field_147003_i");
 			int guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer) event.gui, "guiTop", "field_147009_r");
+			int xSize = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer) event.gui, "xSize", "field_146999_f");
+			int ySize = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, (GuiContainer) event.gui, "ySize", "field_147000_g");
 
 			if (player.capabilities.isCreativeMode) {
 				if (event.gui instanceof GuiContainerCreative) {
@@ -298,11 +299,14 @@ public class AetherClientEvents {
 						previousSelectedTabIndex = CreativeTabs.tabInventory.getTabIndex();
 					}
 				}
-			} else if (clazz == GuiInventory.class) {
-				event.buttonList.add(ACCESSORY_BUTTON.setPosition(guiLeft + 26, guiTop + 65));
+			} else if (event.gui instanceof GuiInventory) {
+				// We place the buttons where they would be if the inventory was its original size, for consistency with Baubles's button placement algorithm
+				int xSizeOriginal = 176;
+				int ySizeOriginal = 166;
+				event.buttonList.add(ACCESSORY_BUTTON.setPosition((xSize - xSizeOriginal) / 2 + guiLeft + 26, (ySize - ySizeOriginal) / 2 + guiTop + 65));
 			}
 
-			if (clazz == GuiAccessories.class)
+			if (event.gui instanceof GuiAccessories)
 			{
 				if (!shouldRemoveButton)
 				{
@@ -325,7 +329,7 @@ public class AetherClientEvents {
 			Minecraft.getMinecraft().displayGuiScreen(new AetherMainMenu());
 		}
 
-		if (event.gui.getClass() == GuiOptions.class)
+		if (event.gui instanceof GuiOptions)
 		{
 			if (Minecraft.getMinecraft().thePlayer != null)
 			{
@@ -336,7 +340,7 @@ public class AetherClientEvents {
 			}
 		}
 
-		if (event.gui.getClass() == ScreenChatOptions.class)
+		if (event.gui instanceof ScreenChatOptions)
 		{
 			if (Minecraft.getMinecraft().thePlayer != null)
 			{
@@ -371,7 +375,7 @@ public class AetherClientEvents {
 	@SubscribeEvent
 	public void onDrawGui(GuiScreenEvent.DrawScreenEvent.Pre event)
 	{
-		if (!AetherConfig.config.get("Misc", "Enables the Aether Menu", false).getBoolean() && event.gui.getClass() == AetherMainMenu.class)
+		if (!AetherConfig.config.get("Misc", "Enables the Aether Menu", false).getBoolean() && event.gui instanceof AetherMainMenu)
 		{
 			Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
 		}
@@ -379,18 +383,16 @@ public class AetherClientEvents {
 
 	@SubscribeEvent
 	public void onButtonPressed(GuiScreenEvent.ActionPerformedEvent.Pre event) {
-		Class<?> clazz = event.gui.getClass();
-
-		if ((clazz == GuiInventory.class || clazz == GuiContainerCreative.class) && event.button.id == 18067) {
+		if ((event.gui instanceof GuiInventory || event.gui instanceof GuiContainerCreative) && event.button.id == 18067) {
 			AetherNetwork.sendToServer(new PacketOpenContainer(AetherGuiHandler.accessories));
 		}
 
-		if (event.button.getClass() == GuiCustomizationScreenButton.class)
+		if (event.button instanceof GuiCustomizationScreenButton)
 		{
 			Minecraft.getMinecraft().displayGuiScreen(new GuiCustomizationScreen(event.gui));
 		}
 
-		if (event.button.getClass() == GuiCapeButton.class)
+		if (event.button instanceof GuiCapeButton)
 		{
 			PlayerAether player = PlayerAether.get(Minecraft.getMinecraft().thePlayer);
 
