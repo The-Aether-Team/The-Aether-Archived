@@ -491,7 +491,7 @@ public class AetherMainMenu extends GuiMainMenu
         {
             ((GuiButton) this.buttonList.get(j)).drawButton(this.mc, p_73863_1_, p_73863_2_);
 
-            if ((this.buttonList.get(j)).getClass() == AetherMainMenuButton.class)
+            if ((this.buttonList.get(j)) instanceof AetherMainMenuButton)
             {
                 if (((GuiButton) this.buttonList.get(j)).func_146115_a())
                 {
