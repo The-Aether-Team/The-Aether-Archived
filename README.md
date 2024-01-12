@@ -53,7 +53,7 @@ our unlicensed assets, please contact us on Discord for details.
 ### :speech_balloon: Translations
 The Aether project makes use of crowd sourced translations. The Aether is available in these languages thanks to the following contributors:
 
-- Chinese * (zh_CN, zh_TW) - Translations by: ETStareak, y830705
+- Chinese * (zh_CN, zh_TW) - Translations by: ETStareak, y830705, HiddenCirno
 - Dutch * (nl_NL) - Translations by: Critical
 - French * (fr_FR) - Translations by: lololoustau and Beethov46
 - German * (de_DE) - Translations by: DarkBread
