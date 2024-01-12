@@ -10,33 +10,78 @@
 	},
         
 	{   
-		"when": { "north": "true" },
+		"when": { "north": "false", "up": "true" },
             
-		"apply": { "model": "aether_legacy:aerogel_wall_side", 
+		"apply": { "model": "aether_legacy:aerogel_wall_post_side", 
 		"uvlock": true }
         
 	},
         
 	{   
-		"when": { "east": "true" },
+		"when": { "east": "false", "up": "true" },
             
-		"apply": { "model": "aether_legacy:aerogel_wall_side", 
+		"apply": { "model": "aether_legacy:aerogel_wall_post_side", 
 		"y": 90, "uvlock": true }
         
 	},
         
 	{   
-		"when": { "south": "true" },
+		"when": { "south": "false", "up": "true" },
             
-		"apply": { "model": "aether_legacy:aerogel_wall_side", 
+		"apply": { "model": "aether_legacy:aerogel_wall_post_side", 
 		"y": 180, "uvlock": true }
         
 	},
         
-	{   "when": { "west": "true" },
+	{   "when": { "west": "false", "up": "true" },
             
-		"apply": { "model": "aether_legacy:aerogel_wall_side", 
+		"apply": { "model": "aether_legacy:aerogel_wall_post_side", 
 		"y": 270, "uvlock": true }
+        
+	},
+        
+	{   
+		"when": { "north": "true", "up": "true" },
+            
+		"apply": { "model": "aether_legacy:aerogel_wall_post_side_connection", 
+		"uvlock": true }
+        
+	},
+        
+	{   
+		"when": { "east": "true", "up": "true" },
+            
+		"apply": { "model": "aether_legacy:aerogel_wall_post_side_connection", 
+		"y": 90, "uvlock": true }
+        
+	},
+        
+	{   
+		"when": { "south": "true", "up": "true" },
+            
+		"apply": { "model": "aether_legacy:aerogel_wall_post_side_connection", 
+		"y": 180, "uvlock": true }
+        
+	},
+        
+	{   "when": { "west": "true", "up": "true" },
+            
+		"apply": { "model": "aether_legacy:aerogel_wall_post_side_connection", 
+		"y": 270, "uvlock": true }
+        
+	},
+        
+	{   "when": { "west": "true", "east": "true", "up": "false" },
+            
+		"apply": { "model": "aether_legacy:aerogel_wall_straight", 
+		"y": 90, "uvlock": true }
+        
+	},
+        
+	{   "when": { "north": "true", "south": "true", "up": "false" },
+            
+		"apply": { "model": "aether_legacy:aerogel_wall_straight", 
+		"uvlock": true }
         
 	}
     
