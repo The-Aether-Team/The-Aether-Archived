@@ -181,16 +181,15 @@ public class AetherEventHandler
 				{
 					worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, hitPos.getX() + 0.5, hitPos.getY() + 1, hitPos.getZ() + 0.5, 0, 0, 0);
 					event.getEntityPlayer().playSound(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, 1.0F, 1.0F);
-					
+
 					worldObj.setBlockState(hitPos, BlocksAether.aerogel.getDefaultState());
 
 					if (!player.capabilities.isCreativeMode)
 					{
 						event.setFilledBucket(new ItemStack(Items.BUCKET));
 					}
+					event.setResult(Result.ALLOW);
 				}
-
-				event.setResult(Result.ALLOW);
 			}
 		}
 	}
