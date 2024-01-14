@@ -25,7 +25,7 @@ public class BlockEnchantedAetherGrass extends Block
 	{
 		super(Material.GRASS);
 
-		this.setHardness(0.2F);
+		this.setHardness(0.6F);
 		this.setTickRandomly(true);
 		this.setSoundType(SoundType.PLANT);
 		this.setDefaultState(this.getDefaultState().withProperty(SNOWY, Boolean.FALSE));
@@ -67,4 +67,10 @@ public class BlockEnchantedAetherGrass extends Block
     {
         return new BlockStateContainer(this, SNOWY);
     }
+
+    @Override
+	public boolean isToolEffective(String type, IBlockState state)
+	{
+		return type != null && type.equals("shovel");
+	}
 }

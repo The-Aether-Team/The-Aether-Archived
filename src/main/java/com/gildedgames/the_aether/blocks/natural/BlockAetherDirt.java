@@ -31,7 +31,7 @@ public class BlockAetherDirt extends Block
 	{
 		super(Material.GROUND);
 
-		this.setHardness(0.2F);
+		this.setHardness(0.5F);
 		this.setSoundType(SoundType.GROUND);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setDefaultState(this.getDefaultState().withProperty(double_drop, Boolean.TRUE));
@@ -86,4 +86,10 @@ public class BlockAetherDirt extends Block
 			return false;
 		}
     }
+
+    @Override
+	public boolean isToolEffective(String type, IBlockState state)
+	{
+		return type != null && type.equals("shovel");
+	}
 }

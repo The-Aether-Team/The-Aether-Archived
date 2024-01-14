@@ -71,4 +71,9 @@ public class BlockQuicksoil extends Block
 		return new BlockStateContainer(this, new IProperty[] {double_drop});
 	}
 
+	@Override
+	public boolean isToolEffective(String type, IBlockState state)
+	{
+		return type != null && type.equals("shovel");
+	}
 }

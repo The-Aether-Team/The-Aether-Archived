@@ -53,7 +53,7 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 		super(Material.GRASS);
 
 		this.setTickRandomly(true);
-		this.setHardness(0.2F);
+		this.setHardness(0.6F);
 		this.setCreativeTab(AetherCreativeTabs.blocks);
 		this.setSoundType(SoundType.PLANT);
 		this.setDefaultState(this.getDefaultState()
@@ -295,4 +295,10 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
     {
     	return BlockUtil.tryPathBlock(double_drop, world, pos, state, player, hand, side);
     }
+
+    @Override
+	public boolean isToolEffective(String type, IBlockState state)
+	{
+		return type != null && type.equals("shovel");
+	}
 }
