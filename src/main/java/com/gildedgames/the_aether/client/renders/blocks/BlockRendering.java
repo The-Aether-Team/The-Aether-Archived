@@ -1,7 +1,10 @@
 package com.gildedgames.the_aether.client.renders.blocks;
 
+import com.google.common.collect.Maps;
+import com.gildedgames.the_aether.blocks.natural.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -32,6 +35,8 @@ import com.gildedgames.the_aether.blocks.util.EnumStoneType;
 import com.gildedgames.the_aether.client.renders.AetherEntityRenderingRegistry;
 import com.gildedgames.the_aether.client.renders.items.util.AetherColor;
 
+import java.util.LinkedHashMap;
+
 public class BlockRendering 
 {
 
@@ -52,6 +57,25 @@ public class BlockRendering
         registerBlockWithStateMapper(BlocksAether.enchanter, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
         registerBlockWithStateMapper(BlocksAether.incubator, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
         registerBlockWithStateMapper(BlocksAether.freezer, (new AetherStateMap.Builder()).ignore(BlockAetherContainer.powered).build());
+
+		ModelLoader.setCustomStateMapper(BlocksAether.aercloud, new StateMapperBase()
+		{
+			@Override
+			protected ModelResourceLocation getModelResourceLocation(final IBlockState state)
+			{
+				final LinkedHashMap<IProperty<?>, Comparable<?>> mappings = Maps.newLinkedHashMap(state.getProperties());
+
+				if (state.getValue(BlockAercloud.cloud_type) != EnumCloudType.Purple)
+				{
+					mappings.remove(BlockAercloud.property_facing);
+				}
+
+				final ResourceLocation resource = Block.REGISTRY.getNameForObject(state.getBlock());
+
+				return new ModelResourceLocation(resource, this.getPropertyString(mappings));
+			}
+		});
+
 		registerBlockWithStateMapper(BlocksAether.skyroot_bed, (new AetherStateMap.Builder()).ignore(BlockBed.OCCUPIED).build());
 
 		register(BlocksAether.enchanted_aether_grass, "enchanted_aether_grass");
@@ -139,7 +163,7 @@ public class BlockRendering
 			register(BlocksAether.dungeon_trap, meta, name);
 		}
 
-		registerMetadata(BlocksAether.aercloud, Aether.locate("cold_aercloud"), Aether.locate("blue_aercloud"), Aether.locate("golden_aercloud"), Aether.locate("pink_aercloud"));
+		registerMetadata(BlocksAether.aercloud, Aether.locate("cold_aercloud"), Aether.locate("blue_aercloud"), Aether.locate("golden_aercloud"), Aether.locate("pink_aercloud"), Aether.locate("green_aercloud"), Aether.locate("storm_aercloud"), Aether.locate("purple_aercloud"));
 		registerMetadata(BlocksAether.aether_leaves, Aether.locate("green_leaves"), Aether.locate("golden_oak_leaves"));
 		registerMetadata(BlocksAether.holiday_leaves, Aether.locate("holiday_leaves"), Aether.locate("decorated_holiday_leaves"));
 		registerMetadata(BlocksAether.crystal_leaves, Aether.locate("crystal_leaves"), Aether.locate("crystal_fruit_leaves"));

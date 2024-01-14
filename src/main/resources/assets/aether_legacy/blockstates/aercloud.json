@@ -11,6 +11,33 @@
 		},
 		"aether_aercloud=pink_aercloud": {
 			"model": "aether_legacy:pink_aercloud"
+		},
+		"aether_aercloud=green_aercloud": {
+			"model": "aether_legacy:green_aercloud"
+		},
+		"aether_aercloud=storm_aercloud": {
+			"model": "aether_legacy:storm_aercloud"
+		},
+		"aether_aercloud=purple_aercloud,facing=north": {
+			"model": "aether_legacy:purple_aercloud"
+		},
+		"aether_aercloud=purple_aercloud,facing=south": {
+			"model": "aether_legacy:purple_aercloud",
+			"y": 180
+		},
+		"aether_aercloud=purple_aercloud,facing=west": {
+			"model": "aether_legacy:purple_aercloud",
+			"y": 270
+		},
+		"aether_aercloud=purple_aercloud,facing=east": {
+			"model": "aether_legacy:purple_aercloud",
+			"y": 90
+		},
+		"aether_aercloud=purple_aercloud,facing=up": {
+			"model": "aether_legacy:purple_aercloud"
+		},
+		"aether_aercloud=purple_aercloud,facing=down": {
+			"model": "aether_legacy:purple_aercloud"
 		}
 	}
 }

@@ -39,6 +39,8 @@ public class SoundsAether
 
 	public static SoundEvent projectile_shoot, dart_shooter_shoot, aether_portal_idling, aether_portal_trigger, aether_portal_travel, dungeon_trap;
 
+	public static SoundEvent aercloud_bounce;
+
 	public static SoundEvent aether1, aether2, aether3, aether4, aether_menu;
 
 	public static IForgeRegistry<SoundEvent> soundRegistry;
@@ -101,6 +103,8 @@ public class SoundsAether
 		aether_portal_trigger = register(Aether.locate("aemisc.aether_portal.trigger"));
 		aether_portal_travel = register(Aether.locate("aemisc.aether_portal.travel"));
 		dungeon_trap = register(Aether.locate("aemisc.dungeon_trap.trigger"));
+
+		aercloud_bounce = register(Aether.locate("block.aercloud.bounce"));
 
 		achievement_gen = register(Aether.locate("achievement"));
 		achievement_bronze = register(Aether.locate("achievement_bronze"));

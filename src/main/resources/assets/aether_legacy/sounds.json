@@ -398,5 +398,12 @@
 	"sounds": [
 	    "mob/ghast/fireball4"
 	]
-	}
+  },
+  "block.aercloud.bounce": {
+    "category": "neutral",
+    "subtitle": "subtitles.aether.block.aercloud.bounce",
+    "sounds": [
+      "aether_legacy:block/aercloud/bounce"
+    ]
+  }
 }

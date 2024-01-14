@@ -148,6 +148,9 @@ tile.cold_aercloud.name=Cold Aercloud
 tile.blue_aercloud.name=Blue Aercloud
 tile.golden_aercloud.name=Golden Aercloud
 tile.pink_aercloud.name=Pink Aercloud
+tile.green_aercloud.name=Green Aercloud
+tile.purple_aercloud.name=Purple Aercloud
+tile.storm_aercloud.name=Storm Aercloud
 tile.berry_bush_stem.name=Berry Bush Stem
 tile.berry_bush.name=Berry Bush
 tile.purple_flower.name=Purple Flower
@@ -342,6 +345,7 @@ subtitles.aeboss.slider.death=Slider breaks
 subtitles.aeboss.sun_spirit.shoot=Sun Spirit shoots
 subtitles.aemisc.portal.idle=Aether Portal wooshes
 subtitles.aemisc.dungeon_trap.trigger=Dungeon Trap activated
+subtitles.block.aercloud.bounce=Aercloud recoils
 
 # GUI and Dialog
 gui.item.life_shard.maxshards=You can only use a total of %s life shards.
