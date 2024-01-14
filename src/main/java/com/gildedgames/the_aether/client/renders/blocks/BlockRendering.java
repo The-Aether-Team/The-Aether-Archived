@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.client.renders.blocks;
 
 import com.google.common.collect.Maps;
 import com.gildedgames.the_aether.blocks.natural.*;
+import com.gildedgames.the_aether.blocks.util.EnumGrassType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.properties.IProperty;
@@ -37,13 +38,12 @@ import com.gildedgames.the_aether.client.renders.items.util.AetherColor;
 
 import java.util.LinkedHashMap;
 
-public class BlockRendering 
+public class BlockRendering
 {
 
 	@SubscribeEvent
 	public void onModelRegisterEvent(ModelRegistryEvent event)
 	{
-        registerBlockWithStateMapper(BlocksAether.aether_grass, (new AetherStateMap.Builder()).ignore(BlockAetherGrass.double_drop).ignore(BlockAetherGrass.dungeon_block).build());
         registerBlockWithStateMapper(BlocksAether.aether_dirt, (new AetherStateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).ignore(BlockHolystone.dungeon_block).build());
         registerBlockWithStateMapper(BlocksAether.mossy_holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).ignore(BlockHolystone.dungeon_block).build());
@@ -68,6 +68,31 @@ public class BlockRendering
 				if (state.getValue(BlockAercloud.cloud_type) != EnumCloudType.Purple)
 				{
 					mappings.remove(BlockAercloud.property_facing);
+				}
+
+				final ResourceLocation resource = Block.REGISTRY.getNameForObject(state.getBlock());
+
+				return new ModelResourceLocation(resource, this.getPropertyString(mappings));
+			}
+		});
+
+		ModelLoader.setCustomStateMapper(BlocksAether.aether_grass, new StateMapperBase()
+		{
+			@Override
+			protected ModelResourceLocation getModelResourceLocation(final IBlockState state)
+			{
+				final LinkedHashMap<IProperty<?>, Comparable<?>> mappings = Maps.newLinkedHashMap(state.getProperties());
+
+				mappings.remove(BlockAetherGrass.double_drop);
+				mappings.remove(BlockAetherGrass.dungeon_block);
+
+				if (state.getValue(BlockAetherGrass.SNOWY))
+				{
+					mappings.remove(BlockAetherGrass.variant);
+				}
+				else
+				{
+					mappings.remove(BlockAetherGrass.SNOWY);
 				}
 
 				final ResourceLocation resource = Block.REGISTRY.getNameForObject(state.getBlock());
@@ -115,7 +140,7 @@ public class BlockRendering
 		register(BlocksAether.mossy_holystone_wall, "mossy_holystone_wall");
 		register(BlocksAether.holystone_wall, "holystone_wall");
 		register(BlocksAether.aerogel_wall, "aerogel_wall");
-		
+
 		register(BlocksAether.skyroot_stairs, "skyroot_stairs");
 		register(BlocksAether.carved_stairs, "carved_stairs");
 		register(BlocksAether.angelic_stairs, "angelic_stairs");
@@ -133,7 +158,7 @@ public class BlockRendering
 		register(BlocksAether.mossy_holystone_double_slab, "mossy_holystone_double_slab");
 		register(BlocksAether.holystone_brick_double_slab, "holystone_brick_double_slab");
 		register(BlocksAether.aerogel_double_slab, "aerogel_double_slab");
-		
+
 		register(BlocksAether.skyroot_slab, "skyroot_slab");
 		register(BlocksAether.carved_slab, "carved_slab");
 		register(BlocksAether.angelic_slab, "angelic_slab");
@@ -144,7 +169,7 @@ public class BlockRendering
 		register(BlocksAether.aerogel_slab, "aerogel_slab");
 
 		register(BlocksAether.sun_altar, "sun_altar");
-		
+
 		register(BlocksAether.skyroot_bookshelf, "skyroot_bookshelf");
 
 		register(BlocksAether.skyroot_bed, "skyroot_bed");
@@ -163,6 +188,13 @@ public class BlockRendering
 			register(BlocksAether.dungeon_trap, meta, name);
 		}
 
+		for (int meta = 0; meta < EnumGrassType.values().length; ++meta)
+		{
+			register(BlocksAether.aether_grass, meta << 2, EnumGrassType.getType(meta).getName()) ;
+			register(BlocksAether.aether_grass, (meta << 2) | 1, EnumGrassType.getType(meta).getName()) ;
+		}
+
+		registerMetadata(BlocksAether.aether_grass, Aether.locate("aether_grass"), Aether.locate("arctic_aether_grass"), Aether.locate("magnetic_aether_grass"), Aether.locate("irradiated_aether_grass"));
 		registerMetadata(BlocksAether.aercloud, Aether.locate("cold_aercloud"), Aether.locate("blue_aercloud"), Aether.locate("golden_aercloud"), Aether.locate("pink_aercloud"), Aether.locate("green_aercloud"), Aether.locate("storm_aercloud"), Aether.locate("purple_aercloud"));
 		registerMetadata(BlocksAether.aether_leaves, Aether.locate("green_leaves"), Aether.locate("golden_oak_leaves"));
 		registerMetadata(BlocksAether.holiday_leaves, Aether.locate("holiday_leaves"), Aether.locate("decorated_holiday_leaves"));
@@ -182,20 +214,20 @@ public class BlockRendering
 
 	public static void registerBlockWithStateMapper(Block block)
 	{
-		ModelLoader.setCustomStateMapper(block, new StateMapperBase() 
+		ModelLoader.setCustomStateMapper(block, new StateMapperBase()
 		{
 			@Override
 			protected ModelResourceLocation getModelResourceLocation(IBlockState state)
 			{
 				return new ModelResourceLocation(state.getBlock().getRegistryName(), "normal");
 			}
-			
+
 		});
 
-		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(block), new ItemMeshDefinition() 
+		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(block), new ItemMeshDefinition()
 		{
 			@Override
-			public ModelResourceLocation getModelLocation(ItemStack stack) 
+			public ModelResourceLocation getModelLocation(ItemStack stack)
 			{
 				return new ModelResourceLocation(stack.getItem().getRegistryName(), "inventory");
 			}
@@ -206,11 +238,11 @@ public class BlockRendering
 	{
 		ModelLoader.setCustomStateMapper(block, map);
 
-		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(block), new ItemMeshDefinition() 
+		ModelLoader.setCustomMeshDefinition(Item.getItemFromBlock(block), new ItemMeshDefinition()
 		{
 			@Override
 			@SuppressWarnings("deprecation")
-			public ModelResourceLocation getModelLocation(ItemStack stack) 
+			public ModelResourceLocation getModelLocation(ItemStack stack)
 			{
 				Block block = Block.getBlockFromItem(stack.getItem());
 				IBlockState state = block.getStateFromMeta(stack.getMetadata());

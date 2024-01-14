@@ -1,11 +1,34 @@
 {
 	"variants": {
-		"snowy=false": [
+		"variant=aether_grass": [
 			{ "model": "aether_legacy:aether_grass" },
 			{ "model": "aether_legacy:aether_grass", "y": 90 },
 			{ "model": "aether_legacy:aether_grass", "y": 180 },
 			{ "model": "aether_legacy:aether_grass", "y": 270 }
 		],
-		"snowy=true":  { "model": "aether_legacy:aether_grass_snowy" }
+		"variant=arctic_aether_grass": [
+			{ "model": "aether_legacy:arctic_aether_grass" },
+			{ "model": "aether_legacy:arctic_aether_grass", "y": 90 },
+			{ "model": "aether_legacy:arctic_aether_grass", "y": 180 },
+			{ "model": "aether_legacy:arctic_aether_grass", "y": 270 }
+		],
+		"variant=magnetic_aether_grass": [
+			{ "model": "aether_legacy:magnetic_aether_grass" },
+			{ "model": "aether_legacy:magnetic_aether_grass", "y": 90 },
+			{ "model": "aether_legacy:magnetic_aether_grass", "y": 180 },
+			{ "model": "aether_legacy:magnetic_aether_grass", "y": 270 }
+		],
+		"variant=irradiated_aether_grass": [
+			{ "model": "aether_legacy:irradiated_aether_grass" },
+			{ "model": "aether_legacy:irradiated_aether_grass", "y": 90 },
+			{ "model": "aether_legacy:irradiated_aether_grass", "y": 180 },
+			{ "model": "aether_legacy:irradiated_aether_grass", "y": 270 }
+		],
+		"snowy=true": [
+			{ "model": "aether_legacy:aether_grass_snowy" },
+			{ "model": "aether_legacy:aether_grass_snowy", "y": 90 },
+			{ "model": "aether_legacy:aether_grass_snowy", "y": 180 },
+			{ "model": "aether_legacy:aether_grass_snowy", "y": 270 }
+		]
 	}
 }

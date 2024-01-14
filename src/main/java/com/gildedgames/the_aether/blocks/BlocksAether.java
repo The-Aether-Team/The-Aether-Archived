@@ -138,7 +138,7 @@ public class BlocksAether
 
 	public static void initialization()
 	{
-		aether_grass = register("aether_grass", new BlockAetherGrass());
+		aether_grass = registerMeta("aether_grass", new BlockAetherGrass());
 		enchanted_aether_grass = registerRarity("enchanted_aether_grass", new BlockEnchantedAetherGrass(), EnumRarity.RARE);
 		aether_dirt = register("aether_dirt", new BlockAetherDirt());
 		holystone = register("holystone", new BlockHolystone());
