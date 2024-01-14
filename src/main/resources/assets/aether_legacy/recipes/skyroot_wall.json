@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "aether_legacy:aether_log",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "aether_legacy:skyroot_wall",
+    "count": 6
+  }
+}

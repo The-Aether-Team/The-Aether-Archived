@@ -12,21 +12,7 @@ import com.gildedgames.the_aether.blocks.portal.BlockAetherPortal;
 import com.gildedgames.the_aether.items.block.ItemEnchanter;
 import com.gildedgames.the_aether.registry.creative_tabs.AetherCreativeTabs;
 import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.blocks.decorative.BlockAerogel;
-import com.gildedgames.the_aether.blocks.decorative.BlockAerogelSlab;
-import com.gildedgames.the_aether.blocks.decorative.BlockAerogelStairs;
-import com.gildedgames.the_aether.blocks.decorative.BlockAerogelWall;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherFence;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherFenceGate;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherSlab;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherStairs;
-import com.gildedgames.the_aether.blocks.decorative.BlockAetherWall;
-import com.gildedgames.the_aether.blocks.decorative.BlockAmbrosiumTorch;
-import com.gildedgames.the_aether.blocks.decorative.BlockPresent;
-import com.gildedgames.the_aether.blocks.decorative.BlockQuicksoilGlass;
-import com.gildedgames.the_aether.blocks.decorative.BlockSkyrootBookshelf;
-import com.gildedgames.the_aether.blocks.decorative.BlockSkyrootPlank;
-import com.gildedgames.the_aether.blocks.decorative.BlockZanite;
+import com.gildedgames.the_aether.blocks.decorative.*;
 import com.gildedgames.the_aether.blocks.dungeon.BlockDungeonBase;
 import com.gildedgames.the_aether.blocks.dungeon.BlockDungeonTrap;
 import com.gildedgames.the_aether.blocks.dungeon.BlockMimicChest;
@@ -34,6 +20,7 @@ import com.gildedgames.the_aether.blocks.dungeon.BlockPillar;
 import com.gildedgames.the_aether.blocks.dungeon.BlockTreasureChest;
 import com.gildedgames.the_aether.blocks.natural.*;
 import com.gildedgames.the_aether.items.ItemsAether;
+import com.gildedgames.the_aether.blocks.util.EnumLeafType;
 import com.gildedgames.the_aether.items.block.ItemAetherSlab;
 import com.gildedgames.the_aether.items.block.ItemRarity;
 import com.gildedgames.the_aether.items.block.ItemSubtype;
@@ -62,7 +49,7 @@ public class BlocksAether
 
 	public static Block ambrosium_ore, zanite_ore, gravitite_ore;
 
-	public static Block aether_leaves, aether_log, skyroot_plank;
+	public static Block aether_leaves, aether_leaves_2, aether_log, skyroot_plank;
 
 	public static Block quicksoil_glass, aerogel;
 
@@ -82,7 +69,7 @@ public class BlocksAether
 
 	public static Block purple_flower, white_flower;
 
-	public static Block skyroot_sapling, golden_oak_sapling;
+	public static Block skyroot_sapling, golden_oak_sapling, blue_sapling, dark_blue_sapling, purple_sapling;
 
 	public static Block crystal_leaves;
 
@@ -96,7 +83,7 @@ public class BlocksAether
 
 	public static Block carved_double_slab, angelic_double_slab, hellfire_double_slab, skyroot_double_slab, holystone_double_slab, holystone_brick_double_slab, mossy_holystone_double_slab, aerogel_double_slab;
 
-	public static Block holystone_wall, mossy_holystone_wall, holystone_brick_wall, carved_wall, angelic_wall, hellfire_wall, aerogel_wall;
+	public static Block holystone_wall, mossy_holystone_wall, holystone_brick_wall, carved_wall, angelic_wall, hellfire_wall, aerogel_wall, skyroot_wall;
 
 	public static Block holiday_leaves, present;
 
@@ -110,9 +97,9 @@ public class BlocksAether
 
 	private static int availableId;
 
-	public static Block[] blockList = new Block[77];
+	public static Block[] blockList = new Block[82];
 
-	public static Item[] itemList = new Item[76];
+	public static Item[] itemList = new Item[81];
 
 	public static void registerBlocks(IForgeRegistry<Block> blockRegistry)
 	{
@@ -139,7 +126,8 @@ public class BlocksAether
 		ambrosium_ore = register("ambrosium_ore", new BlockAmbrosiumOre());
 		zanite_ore = register("zanite_ore", new BlockZaniteOre());
 		gravitite_ore = register("gravitite_ore", new BlockGravititeOre());
-		aether_leaves = registerMeta("aether_leaves", new BlockAetherLeaves());
+		aether_leaves = registerMeta("aether_leaves", new BlockAetherLeaves(EnumLeafType.Green));
+		aether_leaves_2 = registerMeta("aether_leaves_2", new BlockAetherLeaves(EnumLeafType.Purple));
 		aether_log = registerMeta("aether_log", new BlockAetherLog());
 		skyroot_plank = register("skyroot_plank", new BlockSkyrootPlank());
 		quicksoil_glass = registerRarity("quicksoil_glass", new BlockQuicksoilGlass(), EnumRarity.RARE);
@@ -160,8 +148,11 @@ public class BlocksAether
 		treasure_chest = register("treasure_chest", new BlockTreasureChest());
 		purple_flower = register("purple_flower", new BlockAetherFlower());
 		white_flower = register("white_flower", new BlockAetherFlower());
-		skyroot_sapling = register("skyroot_sapling", new BlockAetherSapling(new AetherGenSkyrootTree(true)));
-		golden_oak_sapling = register("golden_oak_sapling", new BlockAetherSapling(new AetherGenOakTree()));
+		skyroot_sapling = register("skyroot_sapling", new BlockAetherSapling(EnumLeafType.Green));
+		golden_oak_sapling = register("golden_oak_sapling", new BlockAetherSapling(EnumLeafType.Golden));
+		blue_sapling = register("blue_sapling", new BlockAetherSapling(EnumLeafType.Blue));
+		dark_blue_sapling = register("dark_blue_sapling", new BlockAetherSapling(EnumLeafType.DarkBlue));
+		purple_sapling = register("purple_sapling", new BlockAetherSapling(EnumLeafType.Purple));
 		crystal_leaves = registerMeta("crystal_leaves", new BlockCrystalLeaves());
 		holiday_leaves = registerMeta("holiday_leaves", new BlockHolidayLeaves());
 		present = register("present", new BlockPresent());
@@ -178,6 +169,7 @@ public class BlocksAether
 		holystone_brick_wall = register("holystone_brick_wall", new BlockAetherWall(holystone_brick.getDefaultState()));
 		mossy_holystone_wall = register("mossy_holystone_wall", new BlockAetherWall(mossy_holystone.getDefaultState()));
 		aerogel_wall = registerRarity("aerogel_wall", new BlockAerogelWall(aerogel.getDefaultState()), ItemsAether.aether_loot);
+		skyroot_wall = register("skyroot_wall", new BlockSkyrootWall(aether_log.getDefaultState()));
 
 		carved_stairs = register("carved_stairs", new BlockAetherStairs(dungeon_block.getDefaultState()));
 		angelic_stairs = register("angelic_stairs", new BlockAetherStairs(dungeon_block.getDefaultState()));

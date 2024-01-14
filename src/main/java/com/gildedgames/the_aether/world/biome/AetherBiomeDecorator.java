@@ -6,7 +6,9 @@ import java.util.Random;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.blocks.util.EnumCloudType;
 import com.gildedgames.the_aether.world.biome.decoration.*;
-import com.gildedgames.the_aether.world.biome.decoration.*;
+import com.gildedgames.the_aether.blocks.natural.BlockAetherLeaves;
+import com.gildedgames.the_aether.blocks.util.EnumLeafType;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -52,7 +54,6 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 	public WorldGenMinable gravititeGen = new WorldGenMinable(BlocksAether.gravitite_ore.getDefaultState(), 6, (stateIn) -> stateIn.getBlock() == BlocksAether.holystone);
 
-	public AetherGenSkyrootTree skyroot_tree = new AetherGenSkyrootTree(false);
 
 	public AetherGenDungeonOakTree golden_oak_tree_dungeon = new AetherGenDungeonOakTree();
 
@@ -62,7 +63,17 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 	public AetherGenLiquids liquid_overhang = new AetherGenLiquids();
 
-	public AetherGenHolidayTree holiday_tree = new AetherGenHolidayTree();
+	public AetherGenSkyrootTree skyroot_tree = new AetherGenSkyrootTree(false);
+	public AetherGenHolidayTree holiday_tree = new AetherGenHolidayTree(false);
+	public AetherGenOakTree golden_oak_tree = new AetherGenOakTree(false);
+	public AetherGenSkyrootTree blue_tree = new AetherGenSkyrootTree(BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Blue), false);
+	public AetherGenLargeTree large_tree = new AetherGenLargeTree(BlocksAether.aether_log.getDefaultState(), BlocksAether.aether_leaves.getDefaultState(), false);
+	public AetherGenMassiveTree green_massive_tree_1 = new AetherGenMassiveTree(BlocksAether.aether_leaves.getDefaultState(), 8, false, false);
+	public AetherGenMassiveTree green_massive_tree_2 = new AetherGenMassiveTree(BlocksAether.aether_leaves.getDefaultState(), 20, false, false);
+	public AetherGenMassiveTree blue_massive_tree = new AetherGenMassiveTree(BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Blue), 8, false, false);
+	public AetherGenMassiveTree dark_blue_massive_tree = new AetherGenMassiveTree(BlocksAether.aether_leaves.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.DarkBlue), 35, true, false);
+	public AetherGenFruitTree purple_fruit_tree = new AetherGenFruitTree(BlocksAether.aether_leaves_2.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Purple),
+			BlocksAether.aether_leaves_2.getDefaultState().withProperty(BlockAetherLeaves.leaf_type, EnumLeafType.Purple), 50, 5, true, false);
 
 	public AetherGenLakes aether_lakes = new AetherGenLakes();
 
@@ -159,7 +170,7 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 			if (this.shouldSpawn(1))
 			{
-				this.skyroot_tree.generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(8) + 8, 0, this.nextInt(8) + 8)));
+				this.getTree().generate(this.world, this.rand, this.world.getHeight(this.chunkPos.add(this.nextInt(8) + 8, 0, this.nextInt(8) + 8)));
 			}
 
 			if (this.shouldSpawn(37))
@@ -225,7 +236,17 @@ public class AetherBiomeDecorator extends BiomeDecorator
 
 	public WorldGenerator getTree()
 	{
-		return this.shouldSpawn(13) ? new AetherGenOakTree() : new AetherGenSkyrootTree(true);
+		int ratio = this.nextInt(100);
+
+		if (ratio <= 9) return skyroot_tree;
+		else if (ratio <= 18) return large_tree;
+		else if (ratio <= 35) return blue_tree;
+		else if (ratio <= 63) return green_massive_tree_1;
+		else if (ratio <= 80) return blue_massive_tree;
+		else if (ratio <= 85) return golden_oak_tree;
+		else if (ratio <= 90) return green_massive_tree_2;
+		else if (ratio <= 95) return purple_fruit_tree;
+		else return dark_blue_massive_tree;
 	}
 
 	public void generateFoilage(IBlockState block)

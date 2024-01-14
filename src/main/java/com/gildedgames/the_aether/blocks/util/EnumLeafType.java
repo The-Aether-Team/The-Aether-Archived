@@ -5,7 +5,13 @@ import net.minecraft.util.IStringSerializable;
 public enum EnumLeafType implements IStringSerializable
 {
 
-	Green(0, "green_leaves"), Golden(1, "golden_oak_leaves");
+	Green(0, "green_leaves"),
+	Golden(1, "golden_oak_leaves"),
+	Blue(2, "blue_leaves"),
+	DarkBlue(3, "dark_blue_leaves"),
+	Purple(4, "purple_leaves")	;
+
+	public static final EnumLeafType[] lookup = EnumLeafType.values();
 
 	private int meta;
 
@@ -19,7 +25,7 @@ public enum EnumLeafType implements IStringSerializable
 
 	public static EnumLeafType getType(int meta)
 	{
-		return meta == 1 ? Golden : Green;
+		return lookup[meta];
 	}
 
 	public int getMeta()

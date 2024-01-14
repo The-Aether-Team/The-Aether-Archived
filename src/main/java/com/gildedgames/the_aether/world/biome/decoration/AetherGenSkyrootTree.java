@@ -11,9 +11,17 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public class AetherGenSkyrootTree extends WorldGenAbstractTree
 {
+    private final IBlockState leaves;
+
     public AetherGenSkyrootTree(boolean notify)
     {
-    	super(notify);
+    	this(BlocksAether.aether_leaves.getDefaultState(), notify);
+    }
+
+    public AetherGenSkyrootTree(IBlockState leaves, boolean notify)
+    {
+        super(notify);
+        this.leaves = leaves;
     }
 
     @Override
@@ -47,7 +55,7 @@ public class AetherGenSkyrootTree extends WorldGenAbstractTree
 
                     if((Math.abs(l3) != i3 || Math.abs(j4) != i3 || random.nextInt(2) != 0 && j2 != 0) && !world.getBlockState(newPos).isOpaqueCube())
                     {
-                    	this.setBlockAndNotifyAdequately(world, newPos, BlocksAether.aether_leaves.getDefaultState());
+                    	this.setBlockAndNotifyAdequately(world, newPos, this.leaves);
                     }
                 }
 

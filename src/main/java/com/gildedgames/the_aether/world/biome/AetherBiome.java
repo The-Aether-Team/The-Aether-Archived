@@ -109,7 +109,7 @@ public class AetherBiome extends Biome
 	@Override
     public WorldGenAbstractTree getRandomTreeFeature(Random rand)
     {
-        return (WorldGenAbstractTree)(rand.nextInt(20) == 0 ? new AetherGenOakTree() : new AetherGenSkyrootTree(false));
+        return (WorldGenAbstractTree)(rand.nextInt(20) == 0 ? new AetherGenOakTree(false) : new AetherGenSkyrootTree(false));
     }
 
     @Override

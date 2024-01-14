@@ -17,9 +17,9 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 public class AetherGenHolidayTree extends WorldGenerator
 {
 
-	public AetherGenHolidayTree()
+	public AetherGenHolidayTree(boolean notify)
 	{
-		super(true);
+		super(notify);
 	}
 
 	@Override /* No time and effort was made into fixing this ~Kino*/
@@ -288,14 +288,14 @@ public class AetherGenHolidayTree extends WorldGenerator
 			for(int xss = -20;xss < 20;xss++)
 			{
 				for(int yss = -20;yss < 20;yss++)
-				{ 
+				{
 					int hi = rand.nextInt((int)(MathHelper.abs(yss) + MathHelper.abs(xss)+1));
 
 					if((MathHelper.abs(yss) + MathHelper.abs(xss)) > 15)
 					{
 						hi += 5;
 					}
-					
+
 					if(hi < 10)
 					{
 						BlockPos pos = new BlockPos(xss+position.getX(), world.getHeight(new BlockPos(xss + position.getX(), 0, yss + position.getZ())).getY() -1, yss + position.getZ());
@@ -315,7 +315,7 @@ public class AetherGenHolidayTree extends WorldGenerator
 						}
 					}
 				}
-				
+
 			}
 		}
 
