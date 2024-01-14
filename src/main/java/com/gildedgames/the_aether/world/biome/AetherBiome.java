@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
+import com.gildedgames.the_aether.blocks.natural.BlockAetherGrass;
+import com.gildedgames.the_aether.blocks.natural.BlockTallAetherGrass;
+import com.gildedgames.the_aether.blocks.util.EnumTallGrassType;
 import com.gildedgames.the_aether.entities.hostile.EntityAechorPlant;
 import com.gildedgames.the_aether.entities.hostile.EntityCockatrice;
 import com.gildedgames.the_aether.entities.hostile.EntityWhirlwind;
@@ -18,10 +21,12 @@ import com.gildedgames.the_aether.entities.passive.mountable.EntityMoa;
 import com.gildedgames.the_aether.entities.passive.mountable.EntityPhyg;
 import com.gildedgames.the_aether.entities.passive.mountable.EntitySwet;
 
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenTallGrass;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class AetherBiome extends Biome
 {
@@ -76,13 +81,13 @@ public class AetherBiome extends Biome
     {
     	return 0xBCBCFA; // Lavender Blue
     }
-	
+
 	@Override
     public int getGrassColorAtPos(BlockPos pos)
     {
         return 0xb1ffcb;
     }
-	
+
 	@Override
     public int getFoliageColorAtPos(BlockPos pos)
     {
@@ -107,4 +112,9 @@ public class AetherBiome extends Biome
         return (WorldGenAbstractTree)(rand.nextInt(20) == 0 ? new AetherGenOakTree() : new AetherGenSkyrootTree(false));
     }
 
+    @Override
+    public WorldGenerator getRandomWorldGenForGrass(Random rand)
+    {
+        return new AetherGenTallGrass();
+    }
 }

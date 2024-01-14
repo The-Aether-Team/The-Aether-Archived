@@ -199,15 +199,6 @@ public class AetherBiomeDecorator extends BiomeDecorator
 						biomeGenBaseIn.getRandomWorldGenForGrass(random).generate(worldIn, random, this.chunkPos.add(j7, l17, i11));
 					}
 				}
-
-				for (int i = 0; i < 7; ++i)
-				{
-					int j = random.nextInt(16) + 8;
-					int k = random.nextInt(16) + 8;
-					int l = random.nextInt(worldIn.getHeight(this.chunkPos.add(j, 0, k)).getY() + 32);
-
-					this.doubleGrass.generate(worldIn, random, this.chunkPos.add(j, l, k));
-				}
 			}
 		}
 

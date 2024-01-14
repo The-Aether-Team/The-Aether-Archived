@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "type=aether,variant=short_tallgrass": { "model": "aether_legacy:tall_grass/short_aether" },
+        "type=aether,variant=normal_tallgrass": { "model": "aether_legacy:tall_grass/normal_aether" },
+        "type=aether,variant=long_tallgrass": { "model": "aether_legacy:tall_grass/long_aether" },
+        "type=enchanted,variant=short_tallgrass": { "model": "aether_legacy:tall_grass/short_enchanted" },
+        "type=enchanted,variant=normal_tallgrass": { "model": "aether_legacy:tall_grass/normal_enchanted" },
+        "type=enchanted,variant=long_tallgrass": { "model": "aether_legacy:tall_grass/long_enchanted" },
+        "type=arctic,variant=short_tallgrass": { "model": "aether_legacy:tall_grass/short_arctic" },
+        "type=arctic,variant=normal_tallgrass": { "model": "aether_legacy:tall_grass/normal_arctic" },
+        "type=arctic,variant=long_tallgrass": { "model": "aether_legacy:tall_grass/long_arctic" },
+        "type=magnetic,variant=short_tallgrass": { "model": "aether_legacy:tall_grass/short_magnetic" },
+        "type=magnetic,variant=normal_tallgrass": { "model": "aether_legacy:tall_grass/normal_magnetic" },
+        "type=magnetic,variant=long_tallgrass": { "model": "aether_legacy:tall_grass/long_magnetic" },
+        "type=irradiated,variant=short_tallgrass": { "model": "aether_legacy:tall_grass/short_irradiated" },
+        "type=irradiated,variant=normal_tallgrass": { "model": "aether_legacy:tall_grass/normal_irradiated" },
+        "type=irradiated,variant=long_tallgrass": { "model": "aether_legacy:tall_grass/long_irradiated" },
+        "snowy=true,variant=short_tallgrass": { "model": "aether_legacy:tall_grass/short_snowy" },
+        "snowy=true,variant=normal_tallgrass": { "model": "aether_legacy:tall_grass/normal_snowy" },
+        "snowy=true,variant=long_tallgrass": { "model": "aether_legacy:tall_grass/long_snowy" }
+    }
+}

@@ -32,19 +32,7 @@ import com.gildedgames.the_aether.blocks.dungeon.BlockDungeonTrap;
 import com.gildedgames.the_aether.blocks.dungeon.BlockMimicChest;
 import com.gildedgames.the_aether.blocks.dungeon.BlockPillar;
 import com.gildedgames.the_aether.blocks.dungeon.BlockTreasureChest;
-import com.gildedgames.the_aether.blocks.natural.BlockAercloud;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherDirt;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherFlower;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherGrass;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherLeaves;
-import com.gildedgames.the_aether.blocks.natural.BlockAetherLog;
-import com.gildedgames.the_aether.blocks.natural.BlockBerryBush;
-import com.gildedgames.the_aether.blocks.natural.BlockBerryBushStem;
-import com.gildedgames.the_aether.blocks.natural.BlockCrystalLeaves;
-import com.gildedgames.the_aether.blocks.natural.BlockHolidayLeaves;
-import com.gildedgames.the_aether.blocks.natural.BlockHolystone;
-import com.gildedgames.the_aether.blocks.natural.BlockIcestone;
-import com.gildedgames.the_aether.blocks.natural.BlockQuicksoil;
+import com.gildedgames.the_aether.blocks.natural.*;
 import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.items.block.ItemAetherSlab;
 import com.gildedgames.the_aether.items.block.ItemRarity;
@@ -66,7 +54,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class BlocksAether
 {
 
-	public static Block aether_grass, enchanted_aether_grass, aether_dirt;
+	public static Block aether_grass, enchanted_aether_grass, aether_dirt, aether_tall_grass;
 
 	public static Block holystone, mossy_holystone, holystone_brick;
 
@@ -113,18 +101,18 @@ public class BlocksAether
 	public static Block holiday_leaves, present;
 
 	public static Block sun_altar;
-	
+
 	public static Block skyroot_bookshelf;
 
 	public static Block skyroot_bed;
-	
+
 	public static BlockChest dungeon_chest = Blocks.CHEST;
 
 	private static int availableId;
 
-	public static Block[] blockList = new Block[76];
+	public static Block[] blockList = new Block[77];
 
-	public static Item[] itemList = new Item[75];
+	public static Item[] itemList = new Item[76];
 
 	public static void registerBlocks(IForgeRegistry<Block> blockRegistry)
 	{
@@ -141,6 +129,7 @@ public class BlocksAether
 		aether_grass = registerMeta("aether_grass", new BlockAetherGrass());
 		enchanted_aether_grass = registerRarity("enchanted_aether_grass", new BlockEnchantedAetherGrass(), EnumRarity.RARE);
 		aether_dirt = register("aether_dirt", new BlockAetherDirt());
+		aether_tall_grass = registerMeta("aether_tall_grass", new BlockTallAetherGrass());
 		holystone = register("holystone", new BlockHolystone());
 		mossy_holystone = register("mossy_holystone", new BlockHolystone());
 		holystone_brick = register("holystone_brick", new Block(Material.ROCK).setHardness(0.5F).setResistance(10.0F));

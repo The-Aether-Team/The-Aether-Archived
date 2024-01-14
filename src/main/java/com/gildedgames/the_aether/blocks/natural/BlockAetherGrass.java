@@ -7,6 +7,7 @@ import com.gildedgames.the_aether.Aether;
 import com.gildedgames.the_aether.AetherLogger;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.blocks.util.EnumGrassType;
+import com.gildedgames.the_aether.blocks.util.EnumTallGrassType;
 import com.gildedgames.the_aether.blocks.util.IAetherMeta;
 import com.gildedgames.the_aether.items.util.DoubleDropHelper;
 
@@ -228,9 +229,10 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 						}
 						else
 						{
-							IBlockState iblockstate1 = Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
+							IBlockState iblockstate1 = BlocksAether.aether_tall_grass.getDefaultState()
+									.withProperty(BlockTallAetherGrass.variant, EnumTallGrassType.getType(rand.nextInt(EnumTallGrassType.getMaxValues())));
 
-							if (Blocks.TALLGRASS.canBlockStay(worldIn, blockpos1, iblockstate1))
+							if (((BlockAetherPlant) BlocksAether.aether_tall_grass).isSuitableSoilBlock(worldIn.getBlockState(blockpos1.down())))
 							{
 								worldIn.setBlockState(blockpos1, iblockstate1, 3);
 							}
