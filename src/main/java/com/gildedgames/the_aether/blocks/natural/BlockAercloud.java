@@ -19,6 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -327,6 +328,16 @@ public class BlockAercloud extends Block implements IAetherMeta
 			final float motionZ = facing.getZOffset() * ((rand.nextFloat() * 0.01f) + 0.05f);
 
 			world.spawnParticle(EnumParticleTypes.CLOUD, x, y, z, motionX, 0, motionZ);
+		}
+		else if (state.getValue(cloud_type) == EnumCloudType.Storm)
+		{
+			BlockPos down = pos.down();
+			if (world.getBlockState(down).getBlock().isPassable(world, down))
+			{
+				final float x = pos.getX() + rand.nextFloat();
+				final float z = pos.getZ() + rand.nextFloat();
+				world.spawnParticle(EnumParticleTypes.DRIP_WATER, x, pos.getY(), z, 0, 0, 0);
+			}
 		}
 	}
 }
