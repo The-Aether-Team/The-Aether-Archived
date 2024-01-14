@@ -47,6 +47,7 @@ public class BlockRendering
 	public void onModelRegisterEvent(ModelRegistryEvent event)
 	{
         registerBlockWithStateMapper(BlocksAether.aether_dirt, (new AetherStateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
+        registerBlockWithStateMapper(BlocksAether.aether_grass_path, (new AetherStateMap.Builder()).ignore(BlockAetherDirt.double_drop).build());
         registerBlockWithStateMapper(BlocksAether.holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).ignore(BlockHolystone.dungeon_block).build());
         registerBlockWithStateMapper(BlocksAether.mossy_holystone, (new AetherStateMap.Builder()).ignore(BlockHolystone.double_drop).ignore(BlockHolystone.dungeon_block).build());
         registerBlockWithStateMapper(BlocksAether.quicksoil, (new AetherStateMap.Builder()).ignore(BlockQuicksoil.double_drop).build());

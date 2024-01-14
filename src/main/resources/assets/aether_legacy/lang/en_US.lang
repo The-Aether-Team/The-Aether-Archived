@@ -150,6 +150,7 @@ tile.enchanted_aether_grass.name=Enchanted Aether Grass
 tile.short_tallgrass.name=Short Aether Tallgrass
 tile.normal_tallgrass.name=Aether Tallgrass
 tile.long_tallgrass.name=Long Aether Tallgrass
+tile.aether_grass_path.name=Aether Grass Path
 tile.cold_aercloud.name=Cold Aercloud
 tile.blue_aercloud.name=Blue Aercloud
 tile.golden_aercloud.name=Golden Aercloud

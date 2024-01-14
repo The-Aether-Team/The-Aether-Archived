@@ -41,7 +41,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class BlocksAether
 {
 
-	public static Block aether_grass, enchanted_aether_grass, aether_dirt, aether_tall_grass;
+	public static Block aether_grass, enchanted_aether_grass, aether_dirt, aether_tall_grass, aether_grass_path;
 
 	public static Block holystone, mossy_holystone, holystone_brick;
 
@@ -97,9 +97,9 @@ public class BlocksAether
 
 	private static int availableId;
 
-	public static Block[] blockList = new Block[82];
+	public static Block[] blockList = new Block[83];
 
-	public static Item[] itemList = new Item[81];
+	public static Item[] itemList = new Item[82];
 
 	public static void registerBlocks(IForgeRegistry<Block> blockRegistry)
 	{
@@ -117,6 +117,7 @@ public class BlocksAether
 		enchanted_aether_grass = registerRarity("enchanted_aether_grass", new BlockEnchantedAetherGrass(), EnumRarity.RARE);
 		aether_dirt = register("aether_dirt", new BlockAetherDirt());
 		aether_tall_grass = registerMeta("aether_tall_grass", new BlockTallAetherGrass());
+		aether_grass_path = register("aether_grass_path", new BlockAetherGrassPath());
 		holystone = register("holystone", new BlockHolystone());
 		mossy_holystone = register("mossy_holystone", new BlockHolystone());
 		holystone_brick = register("holystone_brick", new Block(Material.ROCK).setHardness(0.5F).setResistance(10.0F));

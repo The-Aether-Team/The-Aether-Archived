@@ -6,6 +6,7 @@ import com.gildedgames.the_aether.registry.creative_tabs.AetherCreativeTabs;
 import com.gildedgames.the_aether.Aether;
 import com.gildedgames.the_aether.AetherLogger;
 import com.gildedgames.the_aether.blocks.BlocksAether;
+import com.gildedgames.the_aether.blocks.util.BlockUtil;
 import com.gildedgames.the_aether.blocks.util.EnumGrassType;
 import com.gildedgames.the_aether.blocks.util.EnumTallGrassType;
 import com.gildedgames.the_aether.blocks.util.IAetherMeta;
@@ -24,15 +25,19 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 {
@@ -284,4 +289,10 @@ public class BlockAetherGrass extends Block implements IGrowable, IAetherMeta
 	{
 		return this.getStateFromMeta(meta);
 	}
+
+	@Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    {
+    	return BlockUtil.tryPathBlock(double_drop, world, pos, state, player, hand, side);
+    }
 }
