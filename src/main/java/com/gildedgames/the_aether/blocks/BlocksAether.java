@@ -93,13 +93,15 @@ public class BlocksAether
 
 	public static Block skyroot_bed;
 
+	public static Block ambrosium_lamp;
+
 	public static BlockChest dungeon_chest = Blocks.CHEST;
 
 	private static int availableId;
 
-	public static Block[] blockList = new Block[83];
+	public static Block[] blockList = new Block[84];
 
-	public static Item[] itemList = new Item[82];
+	public static Item[] itemList = new Item[83];
 
 	public static void registerBlocks(IForgeRegistry<Block> blockRegistry)
 	{
@@ -200,6 +202,7 @@ public class BlocksAether
 		aerogel_slab = registerSlab("aerogel_slab", new BlockAerogelSlab("aerogel_slab", false, Material.IRON).setHardness(0.5F).setResistance(999F), aerogel_double_slab);
 		sun_altar = register("sun_altar", new BlockSunAltar());
 		skyroot_bookshelf = register("skyroot_bookshelf", new BlockSkyrootBookshelf());
+		ambrosium_lamp = register("ambrosium_lamp", new BlockAmbrosiumLamp());
 		skyroot_bed = registerBed("skyroot_bed", new BlockSkyrootBed());
 	}
 

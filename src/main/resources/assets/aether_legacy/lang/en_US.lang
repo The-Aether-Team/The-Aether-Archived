@@ -246,6 +246,7 @@ tile.skyroot_fence_gate.name=Skyroot Fence Gate
 tile.sun_altar.name=Sun Altar
 tile.skyroot_bookshelf.name=Skyroot Bookshelf
 tile.skyroot_bed.name=Skyroot Bed
+tile.ambrosium_lamp.name=Ambrosium Lamp
 
 # Entities
 entity.aechor_plant.name=Aechor Plant

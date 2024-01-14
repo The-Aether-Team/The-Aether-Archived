@@ -1,0 +1,20 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"#.#",
+		"...",
+		"#.#"
+	],
+	"key": {
+		"#": {
+			"item": "aether_legacy:skyroot_plank"
+		},
+		".": {
+			"item": "aether_legacy:ambrosium_shard"
+		}
+	},
+	"result": {
+		"item": "aether_legacy:ambrosium_lamp",
+		"count": 1
+	}
+}
