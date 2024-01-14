@@ -193,6 +193,14 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			}
 		}
 
+		if (TerrainGen.decorate(worldIn, random, pos, EventType.LAKE_WATER))
+		{
+			if (this.shouldSpawn(10))
+			{
+				aether_lakes.generate(this.world, this.rand, this.chunkPos.add(this.rand.nextInt(16) + 8, this.rand.nextInt(256), this.rand.nextInt(16) + 8));
+			}
+		}
+
 		if (AetherConfig.world_gen.tallgrass_enabled)
 		{
 			if (TerrainGen.decorate(worldIn, random, pos, EventType.GRASS))
@@ -213,13 +221,6 @@ public class AetherBiomeDecorator extends BiomeDecorator
 			}
 		}
 
-		if (TerrainGen.decorate(worldIn, random, pos, EventType.LAKE_WATER))
-		{
-			if (this.shouldSpawn(10))
-			{
-				(new WorldGenLakes(Blocks.WATER)).generate(this.world, this.rand, this.chunkPos.add(this.rand.nextInt(16) + 8, this.rand.nextInt(256), this.rand.nextInt(16) + 8));
-			}
-		}
 
 		MinecraftForge.EVENT_BUS.post(new DecorateBiomeEvent.Post(worldIn, random, pos));
 	}
