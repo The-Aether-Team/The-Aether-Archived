@@ -82,7 +82,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 	private IBlockState dungeonStone = BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic);
 
 	private IBlockState lightDungeonStone = BlocksAether.dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic);
-	
+
 	private IBlockState lockedDungeonStone = BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Angelic);
 
 	private IBlockState lockedLightDungeonStone = BlocksAether.locked_dungeon_block.getDefaultState().withProperty(BlockDungeonBase.dungeon_stone, EnumStoneType.Light_angelic);
@@ -246,7 +246,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 		else if (this.world.isRemote)
 		{
 			this.displayValkyrieDialogue();
-			
+
 			return true;
 		}
 
@@ -702,22 +702,6 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 	public boolean getCanSpawnHere()
 	{
 		return this.world.checkBlockCollision(this.getEntityBoundingBox()) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).size() == 0;
-	}
-
-	public int getMedals(EntityPlayer entityplayer)
-	{
-		int medals = 0;
-		for (ItemStack item : entityplayer.inventory.mainInventory)
-		{
-			if (item != null)
-			{
-				if (item.getItem() == ItemsAether.victory_medal)
-				{
-					medals += item.getCount();
-				}
-			}
-		}
-		return medals;
 	}
 
 	protected SoundEvent getHurtSound()
