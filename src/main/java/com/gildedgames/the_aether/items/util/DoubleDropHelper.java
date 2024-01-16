@@ -11,50 +11,42 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.math.BlockPos;
 
-public class DoubleDropHelper 
+public class DoubleDropHelper
 {
 
-	public static void dropBlock(EntityPlayer player, IBlockState state, BlockPos pos, PropertyBool property)
-	{
-		Block block = state.getBlock();
+    public static void dropBlock(EntityPlayer player, IBlockState state, BlockPos pos, PropertyBool property)
+    {
+        Block block = state.getBlock();
 
         player.addStat(StatList.getBlockStats(block));
         player.addExhaustion(0.025F);
 
-        int size = state.getValue(property).equals(true) ? 2 : 1;
         ItemStack stack = player.inventory.getCurrentItem();
-        boolean flag = true;
+        boolean toolIsSkyroot = stack.getItem() instanceof ItemSkyrootTool;
+        boolean silkHarvesting = block.canSilkHarvest(player.world, pos, state, player) &&
+                EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0;
 
-        if (stack == null || !(stack.getItem() instanceof ItemSkyrootTool))
+        int blocksToDrop = toolIsSkyroot && state.getValue(property).equals(true) ? 2 : 1;
+
+        if (blocksToDrop > 1)
         {
-        	flag = false;
-        }
-
-        if (block.canSilkHarvest(player.world, pos, state, player) && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) > 0)
-        {
-        	Block.spawnAsEntity(player.world, pos, new ItemStack(block.getDefaultState().getBlock()));
-        	return;
-        }
-
-        if (!flag)
-        {
-        	block.dropBlockAsItem(player.world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
-        	return;
-        }
-
-        ItemSkyrootTool skyrootTool = (ItemSkyrootTool) stack.getItem();
-
-        if (skyrootTool.getDestroySpeed(stack, state) == skyrootTool.getEffectiveSpeed())
-        {
-            for (int i = 0; i < size; ++i)
+            ItemSkyrootTool skyrootTool = (ItemSkyrootTool) stack.getItem();
+            if (skyrootTool.getDestroySpeed(stack, state) != skyrootTool.getEffectiveSpeed())
             {
-            	block.dropBlockAsItem(player.world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+                blocksToDrop = 1;
             }
         }
-        else
-        {
-        	block.dropBlockAsItem(player.world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
-        }
-	}
 
+        for (int i = 0; i < blocksToDrop; ++i)
+        {
+            if (silkHarvesting)
+            {
+                Block.spawnAsEntity(player.world, pos, new ItemStack(block, 1, block.getMetaFromState(state.withProperty(property, false))));
+            }
+            else
+            {
+                block.dropBlockAsItem(player.world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand()));
+            }
+        }
+    }
 }
