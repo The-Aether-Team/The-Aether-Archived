@@ -5,6 +5,8 @@ import com.gildedgames.the_aether.api.AetherAPI;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -42,16 +44,16 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	}
 
 	@Override
-    public boolean canRiderInteract()
-    {
-        return true;
-    }
+	public boolean canRiderInteract()
+	{
+		return true;
+	}
 
 	@Override
-    public boolean shouldDismountInWater(Entity rider)
+	public boolean shouldDismountInWater(Entity rider)
 	{
-        return false;
-    }
+		return false;
+	}
 
 	public boolean isRiderSneaking()
 	{
@@ -69,7 +71,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 		this.updateRider();
 		super.onUpdate();
 
-		if (this.isBeingRidden() && this.isRiding())
+		if (!this.world.isRemote && this.isBeingRidden() && this.isRiding())
 		{
 			for (Entity entity : this.getPassengers())
 			{
@@ -80,12 +82,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 	public void updateRider()
 	{
-		if (this.world.isRemote)
-		{
-			return;
-		}
-
-		if (this.isBeingRidden())
+		if (!this.world.isRemote && this.isBeingRidden())
 		{
 			Entity passenger = this.getPassengers().get(0);
 
@@ -95,7 +92,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 				{
 					passenger.setSneaking(false);
 					passenger.dismountRidingEntity();
-					
+
 					return;
 				}
 
@@ -110,27 +107,27 @@ public abstract class EntityMountable extends EntityAetherAnimal
 		}
 	}
 
-    private float updateRotation(float angle, float targetAngle, float maxIncrease)
-    {
-        float f = MathHelper.wrapDegrees(targetAngle - angle);
+	private float updateRotation(float angle, float targetAngle, float maxIncrease)
+	{
+		float f = MathHelper.wrapDegrees(targetAngle - angle);
 
-        if (f > maxIncrease)
-        {
-            f = maxIncrease;
-        }
+		if (f > maxIncrease)
+		{
+			f = maxIncrease;
+		}
 
-        if (f < -maxIncrease)
-        {
-            f = -maxIncrease;
-        }
+		if (f < -maxIncrease)
+		{
+			f = -maxIncrease;
+		}
 
-        return angle + f;
-    }
+		return angle + f;
+	}
 
 	@Override
-    public void travel(float strafe, float vertical, float forward)
+	public void travel(float strafe, float vertical, float forward)
 	{
-		Entity entity = this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
+		Entity entity = this.getControllingPassenger();
 
 		if (entity instanceof EntityPlayer)
 		{
@@ -139,7 +136,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 			this.prevRotationYaw = this.rotationYaw = player.rotationYaw;
 			this.prevRotationPitch = this.rotationPitch = player.rotationPitch;
 
-			this.rotationYawHead = player.rotationYawHead;
+			this.rotationYawHead = this.rotationYaw;
 
 			strafe = player.moveStrafing;
 			vertical = player.moveVertical;
@@ -150,17 +147,12 @@ public abstract class EntityMountable extends EntityAetherAnimal
 				forward *= 0.25F;
 			}
 
-	        double d01 = player.posX - this.posX;
-	        double d2 = player.posZ - this.posZ;
+			double d01 = player.posX - this.posX;
+			double d2 = player.posZ - this.posZ;
 
-	        float f = (float)(MathHelper.atan2(d2, d01) * (180D / Math.PI)) - 90.0F;
+			float f = (float)(MathHelper.atan2(d2, d01) * (180D / Math.PI)) - 90.0F;
 
-			if (player.moveStrafing != 0.0F && player.world.isRemote)
-			{
-		        this.rotationYaw = this.updateRotation(this.rotationYaw, f, 40.0F);
-			}
-
-			if (AetherAPI.getInstance().get(player).isJumping())
+			if (this.world.isRemote && AetherAPI.getInstance().get(player).isJumping())
 			{
 				onMountedJump(strafe, forward);
 			}
@@ -179,10 +171,7 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 				this.jumpPower = 0.0F;
 
-				if (!this.world.isRemote)
-				{
-					this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-				}
+				this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 			}
 
 			this.motionX *= 0.35F;
@@ -190,11 +179,8 @@ public abstract class EntityMountable extends EntityAetherAnimal
 
 			this.stepHeight = 1.0F;
 
-			if (!this.world.isRemote)
-			{
-				this.jumpMovementFactor = this.getAIMoveSpeed() * 0.6F;
-				super.travel(strafe, vertical, forward);
-			}
+			this.jumpMovementFactor = this.getAIMoveSpeed() * 0.6F;
+			super.travel(strafe, vertical, forward);
 
 			if (this.onGround)
 			{
@@ -224,10 +210,10 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	}
 
 	@Override
-    public float getAIMoveSpeed()
-    {
-        return this.getMountedMoveSpeed();
-    }
+	public float getAIMoveSpeed()
+	{
+		return this.getMountedMoveSpeed();
+	}
 
 	public float getMountedMoveSpeed()
 	{
@@ -235,10 +221,10 @@ public abstract class EntityMountable extends EntityAetherAnimal
 	}
 
 	@Override
-    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
-    {
-    	
-    }
+	protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
+	{
+
+	}
 
 	protected double getMountJumpStrength()
 	{
@@ -260,4 +246,31 @@ public abstract class EntityMountable extends EntityAetherAnimal
 		this.jumpPower = 0.4F;
 	}
 
+	/**
+	 * For vehicles, the first passenger is generally considered the controller and "drives" the vehicle. For example,
+	 * Pigs, Horses, and Boats are generally "steered" by the controlling passenger.
+	 */
+	@Override
+	public Entity getControllingPassenger()
+	{
+		return this.getPassengers().isEmpty() ? null : (Entity)this.getPassengers().get(0);
+	}
+
+	@Override
+	public boolean canBeSteered()
+	{
+		return this.getControllingPassenger() instanceof EntityLivingBase;
+	}
+
+	@Override
+	public void updatePassenger(Entity passenger)
+	{
+		super.updatePassenger(passenger);
+
+		if (passenger instanceof EntityLiving)
+		{
+			EntityLiving entityliving = (EntityLiving) passenger;
+			this.renderYawOffset = entityliving.renderYawOffset;
+		}
+	}
 }
