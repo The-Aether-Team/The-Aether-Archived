@@ -31,11 +31,13 @@ public class AetherMusicHandler {
 		TickEvent.Type type = event.type;
 		GuiScreen screen = Minecraft.getMinecraft().currentScreen;
 
-		if (phase == TickEvent.Phase.END) {
-			if (type.equals(TickEvent.Type.CLIENT)) {
-				if (!this.mc.isGamePaused()) {
-					if (!musicTicker.playingRecord()) {
-						this.musicTicker.update();
+		if (AetherConfig.config.get("Misc", "Toggles the music in the Aether. Turn this off if you have another mod installed that adds custom music.", true).getBoolean()) {
+			if (phase == TickEvent.Phase.END) {
+				if (type.equals(TickEvent.Type.CLIENT)) {
+					if (!this.mc.isGamePaused()) {
+						if (!musicTicker.playingRecord()) {
+							this.musicTicker.update();
+						}
 					}
 				}
 			}
