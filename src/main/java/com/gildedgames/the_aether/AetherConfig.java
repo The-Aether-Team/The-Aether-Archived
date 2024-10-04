@@ -35,6 +35,8 @@ public class AetherConfig {
 
 	private static boolean disable_eternal_day;
 
+	private static boolean music_toggle;
+
 	private static int phyg_spawnrate, flyingcow_spawnrate, sheepuff_spawnrate, aerbunny_spawnrate, moa_spawnrate, aerwhale_spawnrate;
 
 	private static int zephyr_spawnrate, cockatrice_spawnrate, swet_spawnrate, aechorplant_spawnrate, whirlwind_spawnrate;
@@ -87,6 +89,8 @@ public class AetherConfig {
 		repeat_sun_spirit_dialog = config.get("Misc", "If disabed, the Sun Spirit's dialog will only show once per world.", true).getBoolean(true);
 
 		disable_eternal_day = config.get("Misc", "Disables eternal day making time cycle in the Aether without having to kill the Sun Spirit. This is mainly intended for use in modpacks.", false).getBoolean(false);
+
+		music_toggle = config.get("Misc", "Toggles the music in the Aether. Turn this off if you have another mod installed that adds custom music.", true).getBoolean(true);
 
 		//Spawnrates
 		phyg_spawnrate = config.get("Spawnrates", "Phyg Spawnrate. 1 is always, higher numbers decrease chances.", 1).getInt(1);
