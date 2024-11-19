@@ -105,12 +105,13 @@ public class BlockAetherGrass extends Block implements IGrowable {
 		}
 	}
 
-	@Override
+	//This allows for other mods like Thaumcraft and Natura to generate their flora in the Aether as well, removing this fixes the problem
+	/*@Override
 	public boolean canSustainPlant(IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable) {
 		EnumPlantType plantType = plantable.getPlantType(world, x, y + 1, z);
 
 		return plantType == EnumPlantType.Plains;
-	}
+	}*/
 
 	@Override
 	public boolean func_149851_a(World p_149851_1_, int p_149851_2_, int p_149851_3_, int p_149851_4_, boolean p_149851_5_) {
