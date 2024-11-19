@@ -29,7 +29,7 @@ import com.gildedgames.the_aether.player.perks.AetherRankings;
 
 public class PlayerAetherRenderer {
 
-    private static final ResourceLocation TEXTURE_VALKYRIE = Aether.locate("textures/entities/valkyrie/valkyrie.png");
+    private static final ResourceLocation TEXTURE_VALKYRIE = Aether.locate("textures/other/wings.png");
 
     private static final ResourceLocation TEXTURE_HALO = Aether.locate("textures/other/halo.png");
 
