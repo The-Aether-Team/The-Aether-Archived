@@ -83,12 +83,12 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         this.rotationYaw = this.rotationPitch = 0.0F;
     }
 
-	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(AetherConfig.bronzedungeon.slider_health);
-		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(AetherConfig.bronzedungeon.slider_armor);
-		this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(AetherConfig.bronzedungeon.slider_armor_toughness);
+    @Override
+    protected void applyEntityAttributes() {
+	super.applyEntityAttributes();
+	this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(AetherConfig.bronzedungeon.slider_health);
+	this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(AetherConfig.bronzedungeon.slider_armor);
+	this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(AetherConfig.bronzedungeon.slider_armor_toughness);
     }
 
     @Override
@@ -858,7 +858,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         this.openDoor();
         this.setAwake(false);
         this.setAttackTarget(null);
-		this.setHealth(this.getMaxHealth());
+	this.setHealth(this.getMaxHealth());
         this.setPositionAndUpdate(this.dungeonX + 8, this.dungeonY + 2, this.dungeonZ + 8);
     }
 
