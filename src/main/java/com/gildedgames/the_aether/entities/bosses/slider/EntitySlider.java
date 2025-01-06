@@ -86,9 +86,9 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2 * AetherConfig.bronzedungeon.slider_health);
-		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2 * AetherConfig.bronzedungeon.slider_armor);
-		this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(2 * AetherConfig.bronzedungeon.slider_armor_toughness);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(AetherConfig.bronzedungeon.slider_health);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(AetherConfig.bronzedungeon.slider_armor);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(AetherConfig.bronzedungeon.slider_armor_toughness);
     }
 
     @Override
