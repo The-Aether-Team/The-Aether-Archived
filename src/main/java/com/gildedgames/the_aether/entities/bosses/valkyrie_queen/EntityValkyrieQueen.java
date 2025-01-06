@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.entities.bosses.valkyrie_queen;
 
 import javax.annotation.Nullable;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.projectile.crystals.EntityThunderBall;
 import com.gildedgames.the_aether.entities.util.EntityBossMob;
 import com.gildedgames.the_aether.registry.AetherLootTables;
@@ -124,8 +125,9 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 
 		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(28.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(13.5D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2 * AetherConfig.silverdungeon.valkyrie_queen_health);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2 * AetherConfig.silverdungeon.valkyrie_queen_armor);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(2 * AetherConfig.silverdungeon.valkyrie_queen_armor_toughness);
 	}
 
 	public void entityInit()
@@ -530,7 +532,7 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 	@Override
 	public boolean attackEntityAsMob(Entity entity)
 	{
-		boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 8.0F);
+		boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), AetherConfig.silverdungeon.valkyrie_queen_damage);
 
 		this.swingArm();
 
