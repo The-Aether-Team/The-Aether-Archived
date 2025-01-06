@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.projectile.crystals;
 
+import com.gildedgames.the_aether.AetherConfig;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -165,7 +166,7 @@ public class EntityThunderBall extends EntityFlying
 		
         if(entity != null && target != null && entity == target) 
         {
-			boolean flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("lightning_ball", this, this.shootingEntity).setProjectile(), 5);
+			boolean flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("lightning_ball", this, this.shootingEntity).setProjectile(), AetherConfig.silverdungeon.valkyrie_queen_thunder_ball_damage);
 			
 			if (flag)
 			{
