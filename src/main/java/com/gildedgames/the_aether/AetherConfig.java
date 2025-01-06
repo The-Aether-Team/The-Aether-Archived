@@ -186,6 +186,10 @@ public class AetherConfig
 		
 		@Config.Comment("Adjusts Slider Crush Damage. default: 6")
 		public int slider_damage = 6;
+
+	        @Config.RangeDouble(min=0, max=1.0)
+		@Config.Comment("Adjusts Slider Second (Critical) Phase. Based on Max health. Critical phase = Max Health * slider_second_phase 1.0 = 100% default: 0.2")
+		public double slider_second_phase = 0.2;
 	}
 	
 	public static final SilverDungeon silverdungeon = new SilverDungeon();
