@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.projectile.crystals;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.bosses.EntityFireMinion;
 import com.gildedgames.the_aether.entities.bosses.sun_spirit.EntitySunSpirit;
 
@@ -196,7 +197,7 @@ public class EntityIceyBall extends EntityFlying
         {
             if ((!(var1 instanceof EntitySunSpirit) || this.smacked && !this.fromCloud) && !(var1 instanceof EntityFireMinion) && !(var1 instanceof EntityFireBall))
             {
-                var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(), 5);
+                var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(), AetherConfig.golddungeon.sun_spirit_icey_ball);
 
                 if (var2)
                 {
