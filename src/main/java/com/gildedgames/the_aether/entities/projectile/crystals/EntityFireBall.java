@@ -4,20 +4,16 @@ import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.bosses.EntityFireMinion;
 import com.gildedgames.the_aether.entities.bosses.sun_spirit.EntitySunSpirit;
 
-import com.gildedgames.the_aether.networking.AetherNetworkingManager;
-import com.gildedgames.the_aether.networking.packets.PacketIceParticles;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -26,8 +22,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class EntityIceyBall extends EntityFlying
+public class EntityFireBall extends EntityFlying
 {
+
+	public Entity shootingEntity;
 
     public float[] sinage;
 
@@ -40,11 +38,7 @@ public class EntityIceyBall extends EntityFlying
 
     public boolean smacked;
 
-    public boolean fromCloud;
-    
-    public Entity shootingEntity;
-
-    public EntityIceyBall(World var1)
+    public EntityFireBall(World var1)
     {
         super(var1);
         this.lifeSpan = 300;
@@ -60,7 +54,7 @@ public class EntityIceyBall extends EntityFlying
         }
     }
 
-    public EntityIceyBall(World var1, double x, double y, double z, boolean fromCloud)
+    public EntityFireBall(World var1, double x, double y, double z)
     {
         this(var1);
 
@@ -69,11 +63,6 @@ public class EntityIceyBall extends EntityFlying
         this.smotionX = (0.2D + (double)this.rand.nextFloat() * 0.15D) * (this.rand.nextInt(2) == 0 ? 1.0D : -1.0D);
         this.smotionY = (0.2D + (double)this.rand.nextFloat() * 0.15D) * (this.rand.nextInt(2) == 0 ? 1.0D : -1.0D);
         this.smotionZ = (0.2D + (double)this.rand.nextFloat() * 0.15D) * (this.rand.nextInt(2) == 0 ? 1.0D : -1.0D);
-        this.smotionX /= 3.0D;
-        this.smotionY = 0.0D;
-        this.smotionZ /= 3.0D;
-
-        this.fromCloud = fromCloud;
     }
 
     public void onUpdate()
@@ -93,14 +82,15 @@ public class EntityIceyBall extends EntityFlying
 
     public void splode()
     {
-    	this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.HOSTILE, 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
+    	this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
 
         for (int var1 = 0; var1 < 40; ++var1)
         {
-            if (!this.world.isRemote)
-            {
-                AetherNetworkingManager.sendToAll(new PacketIceParticles(this));
-            }
+            double var2 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
+            double var4 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
+            double var6 = (double)((this.rand.nextFloat() - 0.5F) * 0.5F);
+
+            this.world.spawnParticle(EnumParticleTypes.FLAME, this.posX, this.posY, this.posZ, var2, var4, var6);
         }
     }
 
@@ -126,61 +116,53 @@ public class EntityIceyBall extends EntityFlying
 
         if (this.collided)
         {
-            if (this.smacked)
+            int var1 = MathHelper.floor(this.posX);
+            int var2 = MathHelper.floor(this.getEntityBoundingBox().minY);
+            int var3 = MathHelper.floor(this.posZ);
+
+            if (this.smotionX > 0.0D && this.world.getBlockState(new BlockPos(var1 + 1, var2, var3)).getBlock() != Blocks.AIR)
             {
-                this.splode();
-                this.setDead();
+                this.motionX = this.smotionX = -this.smotionX;
             }
-            else
+            else if (this.smotionX < 0.0D && this.world.getBlockState(new BlockPos(var1 - 1, var2, var3)).getBlock() != Blocks.AIR)
             {
-                int var1 = MathHelper.floor(this.posX);
-                int var2 = MathHelper.floor(this.getEntityBoundingBox().minY);
-                int var3 = MathHelper.floor(this.posZ);
+                this.motionX = this.smotionX = -this.smotionX;
+            }
 
-                if (this.smotionX > 0.0D && this.world.getBlockState(new BlockPos(var1 + 1, var2, var3)).getBlock() != Blocks.AIR)
-                {
-                    this.motionX = this.smotionX = -this.smotionX;
-                }
-                else if (this.smotionX < 0.0D && this.world.getBlockState(new BlockPos(var1 - 1, var2, var3)).getBlock() != Blocks.AIR)
-                {
-                    this.motionX = this.smotionX = -this.smotionX;
-                }
+            if (this.smotionY > 0.0D && this.world.getBlockState(new BlockPos(var1, var2 + 1, var3)).getBlock() != Blocks.AIR)
+            {
+                this.motionY = this.smotionY = -this.smotionY;
+            }
+            else if (this.smotionY < 0.0D && this.world.getBlockState(new BlockPos(var1, var2 - 1, var3)).getBlock() != Blocks.AIR)
+            {
+                this.motionY = this.smotionY = -this.smotionY;
+            }
 
-                if (this.smotionY > 0.0D && this.world.getBlockState(new BlockPos(var1, var2 + 1, var3)).getBlock() != Blocks.AIR)
-                {
-                    this.motionY = this.smotionY = -this.smotionY;
-                }
-                else if (this.smotionY < 0.0D && this.world.getBlockState(new BlockPos(var1, var2 - 1, var3)).getBlock() != Blocks.AIR)
-                {
-                    this.motionY = this.smotionY = -this.smotionY;
-                }
-
-                if (this.smotionZ > 0.0D && this.world.getBlockState(new BlockPos(var1, var2, var3 + 1)).getBlock() != Blocks.AIR)
-                {
-                    this.motionZ = this.smotionZ = -this.smotionZ;
-                }
-                else if (this.smotionZ < 0.0D && this.world.getBlockState(new BlockPos(var1, var2, var3 - 1)).getBlock() != Blocks.AIR)
-                {
-                    this.motionZ = this.smotionZ = -this.smotionZ;
-                }
+            if (this.smotionZ > 0.0D && this.world.getBlockState(new BlockPos(var1, var2, var3 + 1)).getBlock() != Blocks.AIR)
+            {
+                this.motionZ = this.smotionZ = -this.smotionZ;
+            }
+            else if (this.smotionZ < 0.0D && this.world.getBlockState(new BlockPos(var1, var2, var3 - 1)).getBlock() != Blocks.AIR)
+            {
+                this.motionZ = this.smotionZ = -this.smotionZ;
             }
         }
     }
 
+    @Override
     public void writeEntityToNBT(NBTTagCompound var1)
     {
         super.writeEntityToNBT(var1);
         var1.setShort("life", (short)this.life);
         var1.setTag("selfMotion", this.newDoubleNBTList(new double[] {this.smotionX, this.smotionY, this.smotionZ}));
-        var1.setBoolean("fromCloud", this.fromCloud);
         var1.setBoolean("smacked", this.smacked);
     }
 
+    @Override
     public void readEntityFromNBT(NBTTagCompound var1)
     {
         super.readEntityFromNBT(var1);
         this.life = var1.getShort("life");
-        this.fromCloud = var1.getBoolean("fromCloud");
         this.smacked = var1.getBoolean("smacked");
         NBTTagList var2 = var1.getTagList("selfMotion", 10);
         this.smotionX = var2.getDoubleAt(0);
@@ -188,20 +170,28 @@ public class EntityIceyBall extends EntityFlying
         this.smotionZ = var2.getDoubleAt(2);
     }
 
+    @Override
     public void applyEntityCollision(Entity var1)
     {
         super.applyEntityCollision(var1);
         boolean var2 = false;
 
-        if (var1 != null && var1 instanceof EntityLivingBase && !(var1 instanceof EntityIceyBall) && !(var1 instanceof EntityFireBall))
+        if (var1 != null && var1 instanceof EntityLivingBase && !(var1 instanceof EntityFireBall))
         {
-            if ((!(var1 instanceof EntitySunSpirit) || this.smacked && !this.fromCloud) && !(var1 instanceof EntityFireMinion) && !(var1 instanceof EntityFireBall))
+            if (!(var1 instanceof EntitySunSpirit) && !(var1 instanceof EntityFireMinion))
             {
-                var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(), AetherConfig.golddungeon.sun_spirit_icey_ball);
+            	if (this.shootingEntity != null)
+            	{
+            		var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("incineration_firo", this, this.shootingEntity).setProjectile(), AetherConfig.golddungeon.sun_spirit_fire_ball);	
+            	}
+            	else
+            	{
+            		var2 = var1.attackEntityFrom(new EntityDamageSource("incineration", this).setProjectile(), 5);
+            	}
 
                 if (var2)
                 {
-                    ((EntityLivingBase) var1).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 10));
+                    this.setFire(100);
                 }
             }
         }
@@ -213,20 +203,21 @@ public class EntityIceyBall extends EntityFlying
         }
     }
 
+    @Override
     public boolean attackEntityFrom(DamageSource var1, float var2)
     {
-        if (var1.getImmediateSource() != null && var1.getImmediateSource() instanceof EntityPlayer)
+        if (var1.getImmediateSource() != null)
         {
             Vec3d var3 = var1.getImmediateSource().getLookVec();
 
             if (var3 != null)
             {
                 this.smotionX = var3.x;
+                this.smotionY = var3.y;
                 this.smotionZ = var3.z;
             }
 
-            
-            this.shootingEntity = (EntityPlayer)var1.getTrueSource();
+            this.shootingEntity = var1.getTrueSource();
             this.smacked = true;
             return true;
         }
