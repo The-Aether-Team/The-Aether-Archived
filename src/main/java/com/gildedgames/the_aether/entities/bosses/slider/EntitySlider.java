@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nullable;
-
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.registry.AetherLootTables;
 import com.gildedgames.the_aether.registry.sounds.SoundsAether;
 import com.google.common.collect.Lists;
@@ -37,6 +37,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumFacing;
@@ -82,12 +83,12 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         this.rotationYaw = this.rotationPitch = 0.0F;
     }
 
-    @Override
-    protected void applyEntityAttributes()
-    {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500.0D);
-        this.setHealth(500.0F);
+	@Override
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2 * AetherConfig.bronzedungeon.slider_health);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2 * AetherConfig.bronzedungeon.slider_armor);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(2 * AetherConfig.bronzedungeon.slider_armor_toughness);
     }
 
     @Override
@@ -167,7 +168,8 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
     public boolean criticalCondition() 
     {
-        return this.getHealth() <= 80;
+        float healthPercentage = (this.getHealth() / this.getMaxHealth()) * 100;
+		return healthPercentage <= 20.0f;
     }
 
     @Override
@@ -572,7 +574,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
     {
         if (this.isAwake() && this.isMoving)
         {
-            boolean flag = entity.attackEntityFrom(new EntityDamageSource("crush", this), 6);
+            boolean flag = entity.attackEntityFrom(new EntityDamageSource("crush", this), AetherConfig.bronzedungeon.slider_damage);
 
             if(flag && entity instanceof EntityLivingBase)
             {
@@ -857,7 +859,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
         this.openDoor();
         this.setAwake(false);
         this.setAttackTarget(null);
-        this.setHealth(this.getMaxHealth());
+		this.setHealth(this.getMaxHealth());
         this.setPositionAndUpdate(this.dungeonX + 8, this.dungeonY + 2, this.dungeonZ + 8);
     }
 
