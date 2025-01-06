@@ -168,8 +168,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
     public boolean criticalCondition() 
     {
-        float healthPercentage = (this.getHealth() / this.getMaxHealth()) * 100;
-		return healthPercentage <= 20.0f;
+        return this.getHealth() <= this.getMaxHealth() * 0.15;
     }
 
     @Override
@@ -295,7 +294,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                 {
                     if(this.velocity < 2.0F)
                     {
-                        this.velocity += (this.criticalCondition() ? 0.07F : 0.035F);
+                        this.velocity += (this.Condition() ? 0.07F : 0.035F);
                     }
 
                     this.motionX = this.motionY = this.motionZ = 0.0F;
@@ -307,7 +306,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                         if(this.getEntityBoundingBox().minY > this.getAttackTarget().getEntityBoundingBox().minY + 0.35D) 
                         {
                             this.stop();
-                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                            this.moveTime = this.Condition() ? 4 : 8;
                         }
                     }
                     else if(this.direction == EnumFacing.DOWN)
@@ -317,7 +316,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                         if(this.getEntityBoundingBox().minY < this.getAttackTarget().getEntityBoundingBox().minY - 0.25D) 
                         {
                             this.stop();
-                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                            this.moveTime = this.Condition() ? 4 : 8;
                         }
                     } 
                     else if(this.direction == EnumFacing.EAST)
@@ -327,7 +326,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                         if(this.posX > this.getAttackTarget().posX + 0.125D) 
                         {
                             this.stop();
-                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                            this.moveTime = this.Condition() ? 4 : 8;
                         }
                     }
                     else if(this.direction == EnumFacing.WEST) 
@@ -337,7 +336,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                         if(this.posX < this.getAttackTarget().posX - 0.125D) 
                         {
                             this.stop();
-                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                            this.moveTime = this.Condition() ? 4 : 8;
                         }
                     }
                     else if(this.direction == EnumFacing.SOUTH) 
@@ -347,7 +346,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                         if(this.posZ > this.getAttackTarget().posZ + 0.125D) 
                         {
                             this.stop();
-                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                            this.moveTime = this.Condition() ? 4 : 8;
                         }
                     } 
                     else if(this.direction == EnumFacing.NORTH)
@@ -357,7 +356,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                         if(this.posZ < this.getAttackTarget().posZ - 0.125D)
                         {
                             this.stop();
-                            this.moveTime = this.criticalCondition() ? 4 : 8;
+                            this.moveTime = this.Condition() ? 4 : 8;
                         }
                     }
                 }
@@ -368,7 +367,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
                 {
                     this.moveTime--;
 
-                    if(this.criticalCondition() && this.rand.nextInt(2) == 0)
+                    if(this.Condition() && this.rand.nextInt(2) == 0)
                     {
                         this.moveTime--;
                     }
