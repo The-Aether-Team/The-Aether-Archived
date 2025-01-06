@@ -171,6 +171,60 @@ public class AetherConfig
 		public int whirlwind_spawnrate = 55;
 	}
 
+	public static final BronzeDungeon bronzedungeon = new BronzeDungeon();
+
+	public static class BronzeDungeon
+	{
+	    @Config.Comment("Adjusts Slider Armor. default: 0")
+		public int slider_armor = 0;
+		
+		@Config.Comment("Adjusts Slider Armor Toughness. default: 0")
+		public int slider_armor_toughness = 0;
+		
+		@Config.Comment("Adjusts Slider Maximum Health. default: 500")
+		public int slider_health = 500;
+		
+		@Config.Comment("Adjusts Slider Crush Damage. default: 6")
+		public int slider_damage = 6;
+	}
+	
+	public static final SilverDungeon silverdungeon = new SilverDungeon();
+
+	public static class SilverDungeon
+	{
+	    @Config.Comment("Adjusts Valkyrie Queen Armor. default: 0")
+		public int valkyrie_queen_armor = 0;
+		
+		@Config.Comment("Adjusts Valkyrie Queen Armor Toughness. default: 0")
+		public int valkyrie_queen_armor_toughness = 0;
+		
+		@Config.Comment("Adjusts Valkyrie Queen Maximum Health. default: 500")
+		public int valkyrie_queen_health = 500;
+		
+		@Config.Comment("Adjusts Valkyrie Queen Attack Damage. default: 8")
+		public int valkyrie_queen_damage = 8;
+		
+		@Config.Comment("Adjusts Thunder Ball Projectile Damage. default: 5")
+		public int valkyrie_queen_thunder_ball_damage = 5;
+	}
+	
+	public static final GoldDungeon golddungeon = new GoldDungeon();
+
+	public static class GoldDungeon
+	{			
+        @Config.Comment("Adjusts Sun Spirit Incineration Attack Damage. This is when you get too close to the Sun Spirit. default: 10")
+		public int sun_spirit_incineration = 10;
+		
+		@Config.Comment("Adjusts Sun Spirit Maximum Health. default: 50")
+		public int sun_spirit_health = 50;
+		
+		@Config.Comment("Adjusts Sun Spirit Fire Ball Projectile Damage. default: 5")
+		public int sun_spirit_fire_ball = 5;
+		
+		@Config.Comment("Adjusts Sun Spirit Icey Ball Projectile Damage. This is only inflicted against Sun Spirit. default: 5")
+		public int sun_spirit_icey_ball = 5;
+	}
+	
 	@Mod.EventBusSubscriber(modid = Aether.modid)
 	private static class EventHandler
 	{
