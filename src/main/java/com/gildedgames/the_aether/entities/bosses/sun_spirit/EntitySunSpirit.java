@@ -2,6 +2,7 @@ package com.gildedgames.the_aether.entities.bosses.sun_spirit;
 
 import java.util.List;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.advancements.AetherAdvancements;
 import com.gildedgames.the_aether.entities.projectile.crystals.EntityFireBall;
 import com.gildedgames.the_aether.entities.projectile.crystals.EntityIceyBall;
@@ -112,8 +113,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
         super.applyEntityAttributes();
 
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);
-        this.setHealth(50.0F);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2 * AetherConfig.golddungeon.sun_spirit_health);
     }
 
     public boolean isPotionApplicable(PotionEffect par1PotionEffect)
@@ -272,7 +272,6 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
                 this.setFreezing(false);
                 this.setAttackTarget(null);
-                this.setHealth(this.getMaxHealth());
             }
             else
             {
@@ -403,7 +402,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
             if (entity instanceof EntityLivingBase && !entity.isImmuneToFire())
             {
-                entity.attackEntityFrom(new EntityDamageSource("incineration", this), 10);
+                entity.attackEntityFrom(new EntityDamageSource("incineration", this), AetherConfig.golddungeon.sun_spirit_incineration);
                 entity.setFire(15);
             }
         }
