@@ -1,5 +1,6 @@
 package com.gildedgames.the_aether.entities.projectile.crystals;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.bosses.EntityFireMinion;
 import com.gildedgames.the_aether.entities.bosses.sun_spirit.EntitySunSpirit;
 
@@ -181,7 +182,7 @@ public class EntityFireBall extends EntityFlying
             {
             	if (this.shootingEntity != null)
             	{
-            		var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("incineration_firo", this, this.shootingEntity).setProjectile(), 5);	
+            		var2 = var1.attackEntityFrom(new EntityDamageSourceIndirect("incineration_firo", this, this.shootingEntity).setProjectile(), AetherConfig.golddungeon.sun_spirit_fire_ball);	
             	}
             	else
             	{
