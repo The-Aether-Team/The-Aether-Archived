@@ -113,7 +113,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
         super.applyEntityAttributes();
 
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2 * AetherConfig.golddungeon.sun_spirit_health);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(AetherConfig.golddungeon.sun_spirit_health);
     }
 
     public boolean isPotionApplicable(PotionEffect par1PotionEffect)
