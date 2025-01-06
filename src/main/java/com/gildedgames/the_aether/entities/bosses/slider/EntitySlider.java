@@ -168,7 +168,7 @@ public class EntitySlider extends EntityFlying implements IAetherBoss
 
     public boolean criticalCondition() 
     {
-        return this.getHealth() <= this.getMaxHealth() * 0.15;
+        return this.getHealth() <= this.getMaxHealth() * AetherConfig.bronzedungeon.slider_second_phase;
     }
 
     @Override
