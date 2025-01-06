@@ -125,9 +125,9 @@ public class EntityValkyrieQueen extends EntityBossMob implements IAetherBoss
 
 		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(28.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2 * AetherConfig.silverdungeon.valkyrie_queen_health);
-		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2 * AetherConfig.silverdungeon.valkyrie_queen_armor);
-		this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(2 * AetherConfig.silverdungeon.valkyrie_queen_armor_toughness);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(AetherConfig.silverdungeon.valkyrie_queen_health);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(AetherConfig.silverdungeon.valkyrie_queen_armor);
+		this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).setBaseValue(AetherConfig.silverdungeon.valkyrie_queen_armor_toughness);
 	}
 
 	public void entityInit()
