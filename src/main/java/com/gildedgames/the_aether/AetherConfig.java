@@ -188,7 +188,7 @@ public class AetherConfig
 		public int slider_damage = 6;
 
 	        @Config.RangeDouble(min=0, max=1.0)
-		@Config.Comment("Adjusts Slider Second (Critical) Phase. Based on Max health. Critical phase = Max Health * slider_second_phase 1.0 = 100% default: 0.2")
+		@Config.Comment("Adjusts Slider Second (Critical) Phase. Critical phase = Max Health * slider_second_phase 1.0 = 100% default: 0.2")
 		public double slider_second_phase = 0.2;
 	}
 	
@@ -225,7 +225,7 @@ public class AetherConfig
 		@Config.Comment("Adjusts Sun Spirit Fire Ball Projectile Damage. default: 5")
 		public int sun_spirit_fire_ball = 5;
 		
-		@Config.Comment("Adjusts Sun Spirit Icey Ball Projectile Damage. This is only inflicted against Sun Spirit. default: 5")
+		@Config.Comment("Adjusts Sun Spirit Icey Ball Projectile Damage. This damage is only inflicted against the Sun Spirit. default: 5")
 		public int sun_spirit_icey_ball = 5;
 	}
 	
