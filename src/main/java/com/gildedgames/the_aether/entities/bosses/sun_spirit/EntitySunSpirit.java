@@ -2,7 +2,6 @@ package com.gildedgames.the_aether.entities.bosses.sun_spirit;
 
 import java.util.List;
 
-import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.advancements.AetherAdvancements;
 import com.gildedgames.the_aether.entities.projectile.crystals.EntityFireBall;
 import com.gildedgames.the_aether.entities.projectile.crystals.EntityIceyBall;
