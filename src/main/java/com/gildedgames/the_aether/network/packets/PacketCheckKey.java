@@ -2,8 +2,6 @@ package com.gildedgames.the_aether.network.packets;
 
 import net.minecraft.entity.player.EntityPlayer;
 
-import com.gildedgames.the_aether.registry.AetherLore;
-
 import io.netty.buffer.ByteBuf;
 
 public class PacketCheckKey extends AetherPacket<PacketCheckKey> {
@@ -35,6 +33,9 @@ public class PacketCheckKey extends AetherPacket<PacketCheckKey> {
 
     @Override
     public void handleServer(PacketCheckKey message, EntityPlayer player) {
-        AetherLore.hasKey = message.bool;
+        // Intentionally a no-op. The lore slot's validity is now computed
+        // deterministically on the server (see SlotLore.isItemValid), so this
+        // client→server packet no longer carries any state. Keeping the handler
+        // empty prevents a forged packet from flipping global state.
     }
 }

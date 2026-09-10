@@ -49,6 +49,11 @@ public class PacketCapeChanged extends AetherPacket<PacketCapeChanged> {
     @Override
     public void handleServer(PacketCapeChanged message, EntityPlayer player) {
         if (player != null && player.worldObj != null && !player.worldObj.isRemote) {
+            // A client may only toggle its own cape, never another player's.
+            if (message.entityID != player.getEntityId()) {
+                return;
+            }
+
             EntityPlayer parent = (EntityPlayer) player.worldObj.getEntityByID(message.entityID);
 
             if (parent != null) {

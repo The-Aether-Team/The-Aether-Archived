@@ -1,6 +1,5 @@
 package com.gildedgames.the_aether.network.packets;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
 import com.gildedgames.the_aether.player.PlayerAether;
@@ -42,12 +41,14 @@ public class PacketSendSneaking extends AetherPacket<PacketSendSneaking> {
     @Override
     public void handleServer(PacketSendSneaking message, EntityPlayer player) {
         if (player != null) {
-            Entity entity = player.worldObj.getEntityByID(message.entityId);
-
-            if (entity instanceof EntityPlayer) {
-                PlayerAether.get((EntityPlayer) entity)
-                    .setMountSneaking(message.isSneaking);
+            // The client only ever reports its own sneaking state; reject any
+            // attempt to modify another player's mount state.
+            if (message.entityId != player.getEntityId()) {
+                return;
             }
+
+            PlayerAether.get(player)
+                .setMountSneaking(message.isSneaking);
         }
     }
 

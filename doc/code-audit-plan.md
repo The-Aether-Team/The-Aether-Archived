@@ -39,20 +39,42 @@ vulnerabilities, performance issues, and bug fixes.
 - `ItemLifeShard.onItemRightClick` — decrements `heldItem.stackSize` without
   nulling at 0, and the shard-count/max-health sync path looks fragile.
 
+## Packet Audit Results
+
+| Packet | Direction | Issue found | Fix applied |
+|---|---|---|---|
+| `PacketOpenContainer` | C→S | Client could open **any** GUI id at its own position with no whitelist; combined with the unchecked TE casts in `AetherGuiHandler`, a crafted id at a mismatched tile entity crashed the server (DoS) | Whitelist to `accessories` + `-1` (the only legitimately-sent ids) |
+| `PacketExtendedAttack` | C→S | Client could attack **any entity by ID** with no reach/LOS check → free reach/kill-aura | Server-side: require a Valkyrie tool in hand, distance ≤ 9 blocks, `canEntityBeSeen`, entity not self/dead |
+| `PacketPerkChanged` | C→S | Client could toggle **any player's** halo/glow/moa-skin by arbitrary entity id | Must target self (`entityID == player.getEntityId()`) |
+| `PacketCapeChanged` | C→S | Same — could toggle any player's cape | Must target self |
+| `PacketSendSneaking` | C→S | Client could set **any player's** mount-sneaking state | Must target self |
+| `PacketInitiateValkyrieFight` | C→S | No server-side validation: arbitrary slot index, deleted the **entire** medal stack, could ready any queen | Validate slot bounds, item == victory_medal, stack ≥ 10, queen within 64 blocks, not already ready; consume exactly 10 via `decrStackSize` |
+| `PacketCheckKey` | C→S | Set a **global static** (`AetherLore.hasKey`) — any client flipped lore-slot validity for the entire server | Handler is now a no-op; `SlotLore.isItemValid` computes deterministically on both sides via `StatCollector` |
+| `PacketDisplayDialogue` | S→C | `toBytes` wrote `dialogue` before `dialogueName`, but `fromBytes` reads `dialogueName` first → the gui title/body were swapped | Fix write order to match read order |
+| `PacketSetTime` (earlier session) | C→S | Any client could set time on **all** dimensions; no boss/permission gate | Aether-only, Sun Spirit gate, op/`sunAltarMultiplayer` check |
+| All S→C packets (`Accessory`, `Achievement`, `SendPoison*`, `UpdateLifeShardCount`, `SendSeenDialogue`, `PortalItem`, `SendTime`, `SendShouldCycle`, `SendEternalDay`, `SwetJump`, `DisplayDialogue`) | S→C | Client trusts server by design; no cross-player client exploit | No change needed |
+
+Notable: `AetherLore.hasKey` is retained (deprecated) for API compatibility.
+`PacketCheckKey` remains registered in `AetherNetwork` so the discriminant ids
+are unchanged; its handler is now inert.
+
 ## Plan Steps
 
-1. **Complete the network packet audit** — read every packet in
-   `network/packets/` (esp. `PacketInitiateValkyrieFight`,
-   `PacketDialogueClicked`, `PacketSwetJump`, `PacketPortalItem`,
-   `PacketAccessory`) and document each server-bound handler that lacks:
-   sender identity validation, range/distance checks, permission checks, and
-   input bounds validation. Produce a fix list per packet.
+1. ✅ **Complete the network packet audit (DONE)** — every packet in
+   `network/packets/` read and every call site traced. See
+   [Packet Audit Results](#packet-audit-results) below. All fixes applied and
+   verified with `gradlew build`.
 
-2. **Fix thread-safety of the packet base class** — modify
-   `AetherPacket.onMessage` to schedule handling onto the main thread via
-   `FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask()`
-   / `Minecraft.getMinecraft().addScheduledTask()`, eliminating cross-thread
-   world access.
+2. ✅ **Thread-safety: investigated, NOT needed** — traced the FML 1.7.10
+   dispatch path (`NetworkDispatcher` → `FMLProxyPacket` →
+   `NetworkManager.channelRead0` → `receivedPacketsQueue` → main-thread drain
+   → `EmbeddedChannel.writeInbound` → `SimpleChannelHandlerWrapper`).
+   `FMLProxyPacket` extends `Packet` and does not override `hasPriority()`, so
+   it is queued and processed on the **main thread** (`MinecraftServer.run` /
+   `Minecraft.runMainGameLoop`). `onMessage` already runs on the main thread;
+   a scheduled-task rewrite would add risk for no benefit. (`MinecraftServer`
+   in 1.7.10 has no `addScheduledTask` anyway — only client `Minecraft`
+   does.)
 
 3. **Harden `AetherGuiHandler`** — add `instanceof` checks before casting tile
    entities (prevents the `ClassCastException` server crash), validate GUI IDs

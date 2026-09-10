@@ -8,6 +8,11 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class AetherLore {
 
+    /**
+     * Retained for API compatibility. No longer used by the lore slot: the
+     * server computes lore validity deterministically (see SlotLore).
+     */
+    @Deprecated
     public static boolean hasKey;
 
     public static String getLoreEntryKey(ItemStack stack) {

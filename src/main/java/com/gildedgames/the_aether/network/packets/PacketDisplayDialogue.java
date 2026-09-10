@@ -54,8 +54,8 @@ public class PacketDisplayDialogue extends AetherPacket<PacketDisplayDialogue> {
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, this.dialogue);
         ByteBufUtils.writeUTF8String(buf, this.dialogueName);
+        ByteBufUtils.writeUTF8String(buf, this.dialogue);
         buf.writeInt(this.dialogueText.size());
 
         for (String dialogueForOptions : this.dialogueText) {

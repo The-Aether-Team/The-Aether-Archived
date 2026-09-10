@@ -1,15 +1,11 @@
 package com.gildedgames.the_aether.inventory.slots;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
-import com.gildedgames.the_aether.network.AetherNetwork;
-import com.gildedgames.the_aether.network.packets.PacketCheckKey;
 import com.gildedgames.the_aether.registry.AetherLore;
-
-import cpw.mods.fml.common.FMLCommonHandler;
 
 public class SlotLore extends Slot {
 
@@ -18,19 +14,13 @@ public class SlotLore extends Slot {
     }
 
     public boolean isItemValid(ItemStack stack) {
-        if (FMLCommonHandler.instance()
-            .getSide()
-            .isClient()) {
-            if (!I18n.format(AetherLore.getLoreEntryKey(stack))
-                .contains("lore.")) {
-                AetherLore.hasKey = true;
-                AetherNetwork.sendToServer(new PacketCheckKey(true));
-            } else {
-                AetherLore.hasKey = false;
-                AetherNetwork.sendToServer(new PacketCheckKey(false));
-            }
-        }
+        // The lore check is deterministic and language-independent enough to run
+        // on both sides: an item is placeable only if it actually has a lore
+        // entry. Previously the server relied on a client-controlled static
+        // (AetherLore.hasKey) that any player could flip for everyone.
+        String key = AetherLore.getLoreEntryKey(stack);
 
-        return AetherLore.hasKey;
+        return !StatCollector.translateToLocal(key)
+            .contains("lore.");
     }
 }

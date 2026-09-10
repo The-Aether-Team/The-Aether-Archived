@@ -89,6 +89,11 @@ public class PacketPerkChanged extends AetherPacket<PacketPerkChanged> {
     @Override
     public void handleServer(PacketPerkChanged message, EntityPlayer player) {
         if (player != null && player.worldObj != null && !player.worldObj.isRemote) {
+            // A client may only change its own perks, never another player's.
+            if (message.entityID != player.getEntityId()) {
+                return;
+            }
+
             EntityPlayer parent = (EntityPlayer) player.worldObj.getEntityByID(message.entityID);
 
             if (parent != null) {
