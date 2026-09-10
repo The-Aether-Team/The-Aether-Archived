@@ -393,13 +393,11 @@ public class AetherEventHandler {
             final MinecraftServer server = FMLCommonHandler.instance()
                 .getMinecraftServerInstance();
 
-            final WorldServer worldServer = server.worldServerForDimension(0);
+            final WorldServer worldServer = server.worldServerForDimension(AetherConfig.getAetherDimensionID());
 
-            if (worldServer.playerEntities.size() > 0) {
-                if (worldServer.areAllPlayersAsleep()) {
-                    performTimeSet(event, world, worldServer);
-                }
-            } else {
+            // Only skip time in the Aether itself, and only when every player in the
+            // Aether is fully asleep. The overworld is never touched.
+            if (worldServer.playerEntities.size() > 0 && worldServer.areAllPlayersAsleep()) {
                 performTimeSet(event, world, worldServer);
             }
         }

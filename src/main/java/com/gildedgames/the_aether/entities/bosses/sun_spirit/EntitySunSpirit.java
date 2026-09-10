@@ -707,7 +707,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     public String getBossName() {
         if (AetherConfig.config.get("Misc", "Enables randomly generated boss names", true)
             .getBoolean()) {
-            return this.dataWatcher.getWatchableObjectString(19) + ", "
+            return this.dataWatcher.getWatchableObjectString(20) + ", "
                 + StatCollector.translateToLocal("title.aether_legacy.sun_spirit.name");
         } else {
             return StatCollector.translateToLocal("title.aether_legacy.sun_spirit.name");
