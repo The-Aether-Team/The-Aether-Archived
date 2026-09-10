@@ -1,10 +1,11 @@
 package com.gildedgames.the_aether.world.biome.decoration;
 
-import com.gildedgames.the_aether.blocks.BlocksAether;
+import java.util.Random;
+
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
-import java.util.Random;
+import com.gildedgames.the_aether.blocks.BlocksAether;
 
 public class AetherGenDungeonOakTree extends WorldGenAbstractTree {
 
@@ -46,7 +47,8 @@ public class AetherGenDungeonOakTree extends WorldGenAbstractTree {
         for (int x1 = x - 3; x1 < x + 4; x1++) {
             for (int y1 = y + 5; y1 < y + 12; y1++) {
                 for (int z1 = z - 3; z1 < z + 4; z1++) {
-                    if ((x1 - x) * (x1 - x) + (y1 - y - 8) * (y1 - y - 8) + (z1 - z) * (z1 - z) < 12 + random.nextInt(5) && world.isAirBlock(x1, y1, z1)) {
+                    if ((x1 - x) * (x1 - x) + (y1 - y - 8) * (y1 - y - 8) + (z1 - z) * (z1 - z) < 12 + random.nextInt(5)
+                        && world.isAirBlock(x1, y1, z1)) {
                         world.setBlock(x1, y1, z1, BlocksAether.golden_oak_leaves);
                     }
                 }

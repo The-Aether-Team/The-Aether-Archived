@@ -22,6 +22,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.common.registry.IThrowableEntity;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -57,7 +58,8 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
         this.yOffset = 0.0F;
     }
 
-    public EntityDartBase(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float inaccuracy) {
+    public EntityDartBase(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity,
+        float inaccuracy) {
         super(world);
 
         this.renderDistanceWeight = 10.0D;
@@ -95,14 +97,21 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
         }
 
         this.setSize(0.5F, 0.5F);
-        this.setLocationAndAngles(shooter.posX, shooter.posY + (double) shooter.getEyeHeight(), shooter.posZ, shooter.rotationYaw, shooter.rotationPitch);
+        this.setLocationAndAngles(
+            shooter.posX,
+            shooter.posY + (double) shooter.getEyeHeight(),
+            shooter.posZ,
+            shooter.rotationYaw,
+            shooter.rotationPitch);
         this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
         this.posY -= 0.10000000149011612D;
         this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
         this.setPosition(this.posX, this.posY, this.posZ);
         this.yOffset = 0.0F;
-        this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI));
-        this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI));
+        this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI)
+            * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI));
+        this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI)
+            * MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI));
         this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI));
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, velocity * 1.5F, 1.0F);
     }
@@ -118,9 +127,15 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
         x /= (double) f2;
         y /= (double) f2;
         z /= (double) f2;
-        x += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) inaccuracy;
-        y += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) inaccuracy;
-        z += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) inaccuracy;
+        x += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1)
+            * 0.007499999832361937D
+            * (double) inaccuracy;
+        y += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1)
+            * 0.007499999832361937D
+            * (double) inaccuracy;
+        z += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1)
+            * 0.007499999832361937D
+            * (double) inaccuracy;
         x *= (double) velocity;
         y *= (double) velocity;
         z *= (double) velocity;
@@ -164,17 +179,21 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
 
         if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
             float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-            this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
-            this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(this.motionY, (double) f) * 180.0D / Math.PI);
+            this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D
+                / Math.PI);
+            this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(this.motionY, (double) f) * 180.0D
+                / Math.PI);
         }
 
         Block block = this.worldObj.getBlock(this.tileX, this.tileY, this.tileZ);
 
         if (block.getMaterial() != Material.air) {
             block.setBlockBoundsBasedOnState(this.worldObj, this.tileX, this.tileY, this.tileZ);
-            AxisAlignedBB axisalignedbb = block.getCollisionBoundingBoxFromPool(this.worldObj, this.tileX, this.tileY, this.tileZ);
+            AxisAlignedBB axisalignedbb = block
+                .getCollisionBoundingBoxFromPool(this.worldObj, this.tileX, this.tileY, this.tileZ);
 
-            if (axisalignedbb != null && axisalignedbb.isVecInside(Vec3.createVectorHelper(this.posX, this.posY, this.posZ))) {
+            if (axisalignedbb != null
+                && axisalignedbb.isVecInside(Vec3.createVectorHelper(this.posX, this.posY, this.posZ))) {
                 this.inGround = true;
                 this.wasInGround = true;
             }
@@ -204,17 +223,25 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
         } else {
             ++this.ticksInAir;
             Vec3 vec31 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
-            Vec3 vec3 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            Vec3 vec3 = Vec3
+                .createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
             MovingObjectPosition movingobjectposition = this.worldObj.func_147447_a(vec31, vec3, false, true, false);
             vec31 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
-            vec3 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+            vec3 = Vec3
+                .createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
             if (movingobjectposition != null) {
-                vec3 = Vec3.createVectorHelper(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                vec3 = Vec3.createVectorHelper(
+                    movingobjectposition.hitVec.xCoord,
+                    movingobjectposition.hitVec.yCoord,
+                    movingobjectposition.hitVec.zCoord);
             }
 
             Entity entity = null;
-            List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D));
+            List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(
+                this,
+                this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ)
+                    .expand(1.0D, 1.0D, 1.0D));
             double d0 = 0.0D;
             int i;
             float f1;
@@ -242,10 +269,12 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
                 movingobjectposition = new MovingObjectPosition(entity);
             }
 
-            if (movingobjectposition != null && movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityPlayer) {
+            if (movingobjectposition != null && movingobjectposition.entityHit != null
+                && movingobjectposition.entityHit instanceof EntityPlayer) {
                 EntityPlayer entityplayer = (EntityPlayer) movingobjectposition.entityHit;
 
-                if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof EntityPlayer && !((EntityPlayer) this.shootingEntity).canAttackPlayer(entityplayer)) {
+                if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof EntityPlayer
+                    && !((EntityPlayer) this.shootingEntity).canAttackPlayer(entityplayer)) {
                     movingobjectposition = null;
                 }
             }
@@ -264,7 +293,8 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
             f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
             this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D / Math.PI);
 
-            for (this.rotationPitch = (float) (Math.atan2(this.motionY, (double) f2) * 180.0D / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
+            for (this.rotationPitch = (float) (Math.atan2(this.motionY, (double) f2) * 180.0D
+                / Math.PI); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
                 ;
             }
 
@@ -288,7 +318,14 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
             if (this.isInWater()) {
                 for (int l = 0; l < 4; ++l) {
                     f4 = 0.25F;
-                    this.worldObj.spawnParticle("bubble", this.posX - this.motionX * (double) f4, this.posY - this.motionY * (double) f4, this.posZ - this.motionZ * (double) f4, this.motionX, this.motionY, this.motionZ);
+                    this.worldObj.spawnParticle(
+                        "bubble",
+                        this.posX - this.motionX * (double) f4,
+                        this.posY - this.motionY * (double) f4,
+                        this.posZ - this.motionZ * (double) f4,
+                        this.motionX,
+                        this.motionY,
+                        this.motionZ);
                 }
 
                 f3 = 0.8F;
@@ -310,15 +347,15 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
             this.func_145775_I();
         }
 
-        if (this.ticksInAir == 500)
-        {
+        if (this.ticksInAir == 500) {
             this.setDead();
         }
     }
 
     public void onDartHit(MovingObjectPosition movingobjectposition) {
         if (movingobjectposition.entityHit != null) {
-            float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+            float f2 = MathHelper
+                .sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
             int k = MathHelper.ceiling_double_int((double) f2 * this.damage);
 
             DamageSource damagesource = null;
@@ -344,7 +381,10 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
                     float f4 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
                     if (f4 > 0.0F) {
-                        movingobjectposition.entityHit.addVelocity(this.motionX * 0.6000000238418579D / (double) f4, 0.1D, this.motionZ * 0.6000000238418579D / (double) f4);
+                        movingobjectposition.entityHit.addVelocity(
+                            this.motionX * 0.6000000238418579D / (double) f4,
+                            0.1D,
+                            this.motionZ * 0.6000000238418579D / (double) f4);
                     }
 
                     if (this.shootingEntity != null && this.shootingEntity instanceof EntityLivingBase) {
@@ -352,8 +392,11 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
                         EnchantmentHelper.func_151385_b((EntityLivingBase) this.shootingEntity, entitylivingbase);
                     }
 
-                    if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP) {
-                        ((EntityPlayerMP) this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
+                    if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity
+                        && movingobjectposition.entityHit instanceof EntityPlayer
+                        && this.shootingEntity instanceof EntityPlayerMP) {
+                        ((EntityPlayerMP) this.shootingEntity).playerNetServerHandler
+                            .sendPacket(new S2BPacketChangeGameState(6, 0.0F));
                     }
                 }
 
@@ -379,7 +422,8 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
             this.motionX = (double) ((float) (movingobjectposition.hitVec.xCoord - this.posX));
             this.motionY = (double) ((float) (movingobjectposition.hitVec.yCoord - this.posY));
             this.motionZ = (double) ((float) (movingobjectposition.hitVec.zCoord - this.posZ));
-            float f2 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
+            float f2 = MathHelper
+                .sqrt_double(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ);
             this.posX -= this.motionX / (double) f2 * 0.05D;
             this.posY -= this.motionY / (double) f2 * 0.05D;
             this.posZ -= this.motionZ / (double) f2 * 0.05D;
@@ -393,26 +437,23 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
             }
         }
 
-        if (movingobjectposition.entityHit != null && movingobjectposition.typeOfHit != null && this.shootingEntity != null)
-        {
-            if (movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY && movingobjectposition.entityHit != this.shootingEntity.riddenByEntity)
-            {
+        if (movingobjectposition.entityHit != null && movingobjectposition.typeOfHit != null
+            && this.shootingEntity != null) {
+            if (movingobjectposition.entityHit != this.shootingEntity
+                && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.ENTITY
+                && movingobjectposition.entityHit != this.shootingEntity.riddenByEntity) {
                 this.setDead();
-            }
-            else
-            {
+            } else {
                 this.setGravityVelocity(0.03F);
             }
         }
     }
 
-    protected float getGravityVelocity()
-    {
+    protected float getGravityVelocity() {
         return this.gravityVelocity;
     }
 
-    public void setGravityVelocity(float gravityVelocity)
-    {
+    public void setGravityVelocity(float gravityVelocity) {
         this.gravityVelocity = gravityVelocity;
     }
 
@@ -464,7 +505,10 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
             }
 
             if (flag) {
-                this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                this.playSound(
+                    "random.pop",
+                    0.2F,
+                    ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
                 player.onItemPickup(this, 1);
                 this.setDead();
             }
@@ -512,14 +556,12 @@ public abstract class EntityDartBase extends EntityArrow implements IProjectile,
     }
 
     @Override
-    public void setIsCritical(boolean p_70243_1_)
-    {
+    public void setIsCritical(boolean p_70243_1_) {
 
     }
 
     @Override
-    public boolean getIsCritical()
-    {
+    public boolean getIsCritical() {
         return false;
     }
 

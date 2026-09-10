@@ -1,8 +1,5 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.client.models.entities.AerbunnyModel;
-import com.gildedgames.the_aether.entities.passive.mountable.EntityAerbunny;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -10,6 +7,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.client.models.entities.AerbunnyModel;
+import com.gildedgames.the_aether.entities.passive.mountable.EntityAerbunny;
 
 public class AerbunnyRenderer extends RenderLiving {
 
@@ -39,7 +40,8 @@ public class AerbunnyRenderer extends RenderLiving {
             }
         }
 
-        this.model.puffiness = (float) (entitybunny.ridingEntity != null ? entitybunny.getPuffinessClient() : entitybunny.getPuffiness()) / 10.0F;
+        this.model.puffiness = (float) (entitybunny.ridingEntity != null ? entitybunny.getPuffinessClient()
+            : entitybunny.getPuffiness()) / 10.0F;
     }
 
     @Override

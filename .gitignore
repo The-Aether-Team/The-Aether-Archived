@@ -1,36 +1,37 @@
-# Compiled Java
-*.class
-
-# Eclipse
+.gradle
+.settings
+/.idea/
+/.vscode/
+/run/
+/build/
+/eclipse/
 .classpath
 .project
-.settings
-/eclipse
-# IntelliJ IDEA
+/bin/
+/config/
+/crash-reports/
+/logs/
+options.txt
+/saves/
+usernamecache.json
+banned-ips.json
+banned-players.json
+eula.txt
+ops.json
+server.properties
+servers.dat
+usercache.json
+whitelist.json
+/out/
 *.iml
 *.ipr
 *.iws
-.idea
-/out
-/classes
-
-# Gradle
-.gradle
-/build
-/bin
-/run
-
-# Gradle Wrapper
-/gradle/wrapper/dists
-
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
-
-# Folder config file
-Desktop.ini
-
-# JVM crash logs
-hs_err_pid*.log
-replay_pid*.log
-*.launch
+*.bat
+*.DS_Store
+!gradlew.bat
+.factorypath
+addon.local.gradle
+addon.local.gradle.kts
+addon.late.local.gradle
+addon.late.local.gradle.kts
+layout.json

@@ -9,25 +9,25 @@ import net.minecraft.world.World;
 
 public class ItemHealingStone extends ItemAetherFood {
 
-	public ItemHealingStone() {
-		super(0);
+    public ItemHealingStone() {
+        super(0);
 
-		this.setAlwaysEdible();
-	}
+        this.setAlwaysEdible();
+    }
 
-	@Override
-	public EnumRarity getRarity(ItemStack stack) {
-		return EnumRarity.rare;
-	}
+    @Override
+    public EnumRarity getRarity(ItemStack stack) {
+        return EnumRarity.rare;
+    }
 
-	@Override
-	public boolean hasEffect(ItemStack stack, int pass) {
-		return true;
-	}
+    @Override
+    public boolean hasEffect(ItemStack stack, int pass) {
+        return true;
+    }
 
-	@Override
-	protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
-		player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 610, 0));
-	}
+    @Override
+    protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
+        player.addPotionEffect(new PotionEffect(Potion.regeneration.id, 610, 0));
+    }
 
 }

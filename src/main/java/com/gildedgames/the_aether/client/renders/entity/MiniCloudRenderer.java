@@ -1,10 +1,11 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.client.models.entities.MiniCloudModel;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.client.models.entities.MiniCloudModel;
 
 public class MiniCloudRenderer extends RenderLiving {
 

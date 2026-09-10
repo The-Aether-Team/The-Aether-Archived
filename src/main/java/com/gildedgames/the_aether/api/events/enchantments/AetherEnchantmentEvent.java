@@ -8,65 +8,67 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class AetherEnchantmentEvent extends Event {
 
-	public AetherEnchantmentEvent() {
+    public AetherEnchantmentEvent() {
 
-	}
+    }
 
-	public static class SetTimeEvent extends AetherEnchantmentEvent {
-		private TileEntity tileEntity;
+    public static class SetTimeEvent extends AetherEnchantmentEvent {
 
-		private AetherEnchantment enchantment;
+        private TileEntity tileEntity;
 
-		private int original;
+        private AetherEnchantment enchantment;
 
-		private int newTime;
+        private int original;
 
-		public SetTimeEvent(TileEntity tileEntity, AetherEnchantment enchantment, int original) {
-			this.tileEntity = tileEntity;
-			this.enchantment = enchantment;
-			this.original = original;
+        private int newTime;
 
-			this.setNewTime(original);
-		}
+        public SetTimeEvent(TileEntity tileEntity, AetherEnchantment enchantment, int original) {
+            this.tileEntity = tileEntity;
+            this.enchantment = enchantment;
+            this.original = original;
 
-		public TileEntity getTileEntity() {
-			return this.tileEntity;
-		}
+            this.setNewTime(original);
+        }
 
-		public AetherEnchantment getEnchantment() {
-			return this.enchantment;
-		}
+        public TileEntity getTileEntity() {
+            return this.tileEntity;
+        }
 
-		public int getOriginal() {
-			return this.original;
-		}
+        public AetherEnchantment getEnchantment() {
+            return this.enchantment;
+        }
 
-		public int getNewTime() {
-			return this.newTime;
-		}
+        public int getOriginal() {
+            return this.original;
+        }
 
-		public void setNewTime(int newTime) {
-			this.newTime = newTime;
-		}
-	}
+        public int getNewTime() {
+            return this.newTime;
+        }
 
-	public static class EnchantEvent extends AetherEnchantmentEvent {
-		private TileEntity tileEntity;
+        public void setNewTime(int newTime) {
+            this.newTime = newTime;
+        }
+    }
 
-		private AetherEnchantment enchantent;
+    public static class EnchantEvent extends AetherEnchantmentEvent {
 
-		public EnchantEvent(TileEntity tileEntity, AetherEnchantment enchantment) {
-			this.tileEntity = tileEntity;
-			this.enchantent = enchantment;
-		}
+        private TileEntity tileEntity;
 
-		public TileEntity getTileEntity() {
-			return this.tileEntity;
-		}
+        private AetherEnchantment enchantent;
 
-		public AetherEnchantment getEnchantment() {
-			return this.enchantent;
-		}
-	}
+        public EnchantEvent(TileEntity tileEntity, AetherEnchantment enchantment) {
+            this.tileEntity = tileEntity;
+            this.enchantent = enchantment;
+        }
+
+        public TileEntity getTileEntity() {
+            return this.tileEntity;
+        }
+
+        public AetherEnchantment getEnchantment() {
+            return this.enchantent;
+        }
+    }
 
 }

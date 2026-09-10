@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import com.gildedgames.the_aether.client.gui.dialogue.DialogueOption;
 import com.gildedgames.the_aether.client.gui.dialogue.GuiDialogue;
-import com.google.common.collect.Lists;
 import com.gildedgames.the_aether.network.AetherNetwork;
 import com.gildedgames.the_aether.network.packets.PacketDialogueClicked;
+import com.google.common.collect.Lists;
 
 public class GuiServerDialogue extends GuiDialogue {
 
@@ -23,7 +23,7 @@ public class GuiServerDialogue extends GuiDialogue {
             dialogueOptions.add(new DialogueOption(dialogueForOption));
         }
 
-        this.addDialogueOptions(dialogueOptions.toArray(new DialogueOption[]{}));
+        this.addDialogueOptions(dialogueOptions.toArray(new DialogueOption[] {}));
     }
 
     @Override

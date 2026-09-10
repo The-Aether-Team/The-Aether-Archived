@@ -1,27 +1,30 @@
 package com.gildedgames.the_aether.items.util;
 
 public enum EnumDungeonKeyType {
-	Bronze(0, "bronze"), Silver(1, "silver"), Golden(2, "golden");
 
-	private int meta;
+    Bronze(0, "bronze"),
+    Silver(1, "silver"),
+    Golden(2, "golden");
 
-	private String name;
+    private int meta;
 
-	EnumDungeonKeyType(int meta, String name) {
-		this.meta = meta;
-		this.name = name;
-	}
+    private String name;
 
-	public static EnumDungeonKeyType getType(int meta) {
-		return meta == 1 ? Silver : meta == 2 ? Golden : Bronze;
-	}
+    EnumDungeonKeyType(int meta, String name) {
+        this.meta = meta;
+        this.name = name;
+    }
 
-	public int getMeta() {
-		return this.meta;
-	}
+    public static EnumDungeonKeyType getType(int meta) {
+        return meta == 1 ? Silver : meta == 2 ? Golden : Bronze;
+    }
 
-	public String toString() {
-		return this.name;
-	}
+    public int getMeta() {
+        return this.meta;
+    }
+
+    public String toString() {
+        return this.name;
+    }
 
 }

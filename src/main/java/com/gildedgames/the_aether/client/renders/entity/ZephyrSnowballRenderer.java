@@ -1,6 +1,5 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.entities.projectile.EntityZephyrSnowball;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -13,13 +12,16 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.gildedgames.the_aether.entities.projectile.EntityZephyrSnowball;
+
 public class ZephyrSnowballRenderer extends Render {
 
     public ZephyrSnowballRenderer() {
         super();
     }
 
-    public void doRenderFireball(EntityZephyrSnowball entity, double x, double y, double z, float entityYaw, float partialTicks) {
+    public void doRenderFireball(EntityZephyrSnowball entity, double x, double y, double z, float entityYaw,
+        float partialTicks) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x, (float) y, (float) z);
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

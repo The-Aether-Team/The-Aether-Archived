@@ -1,8 +1,5 @@
 package com.gildedgames.the_aether.entities.passive.mountable;
 
-import com.gildedgames.the_aether.AetherConfig;
-import com.gildedgames.the_aether.api.AetherAPI;
-import com.gildedgames.the_aether.api.moa.AetherMoaType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,6 +16,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import com.gildedgames.the_aether.AetherConfig;
+import com.gildedgames.the_aether.api.AetherAPI;
+import com.gildedgames.the_aether.api.moa.AetherMoaType;
 import com.gildedgames.the_aether.entities.util.EntitySaddleMount;
 import com.gildedgames.the_aether.items.ItemMoaEgg;
 import com.gildedgames.the_aether.items.ItemsAether;
@@ -71,10 +71,19 @@ public class EntityMoa extends EntitySaddleMount {
     public void entityInit() {
         super.entityInit();
 
-        AetherMoaType moaType = AetherAPI.instance().getRandomMoaType();
+        AetherMoaType moaType = AetherAPI.instance()
+            .getRandomMoaType();
 
-        this.dataWatcher.addObject(20, new Short((short) AetherAPI.instance().getMoaTypeId(moaType)));
-        this.dataWatcher.addObject(21, new Byte((byte) moaType.getMoaProperties().getMaxJumps()));
+        this.dataWatcher.addObject(
+            20,
+            new Short(
+                (short) AetherAPI.instance()
+                    .getMoaTypeId(moaType)));
+        this.dataWatcher.addObject(
+            21,
+            new Byte(
+                (byte) moaType.getMoaProperties()
+                    .getMaxJumps()));
         this.dataWatcher.addObject(22, new Byte((byte) 0));
         this.dataWatcher.addObject(23, new Byte((byte) 0));
         this.dataWatcher.addObject(24, new Byte((byte) 0));
@@ -91,8 +100,10 @@ public class EntityMoa extends EntitySaddleMount {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
 
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(35.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed)
+            .setBaseValue(1.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth)
+            .setBaseValue(35.0D);
     }
 
     @Override
@@ -139,13 +150,14 @@ public class EntityMoa extends EntitySaddleMount {
     }
 
     public int getMaxJumps() {
-        return this.getMoaType().getMoaProperties().getMaxJumps();
+        return this.getMoaType()
+            .getMoaProperties()
+            .getMaxJumps();
     }
 
     public int getRemainingJumps() {
         return (int) this.dataWatcher.getWatchableObjectByte(21);
     }
-
 
     public void setRemainingJumps(int jumps) {
         this.dataWatcher.updateObject(21, (byte) jumps);
@@ -158,12 +170,21 @@ public class EntityMoa extends EntitySaddleMount {
     public AetherMoaType getMoaType() {
         int id = (int) this.dataWatcher.getWatchableObjectShort(20);
 
-        return AetherAPI.instance().getMoaType(id);
+        return AetherAPI.instance()
+            .getMoaType(id);
     }
 
     public void setMoaType(AetherMoaType type) {
-        this.dataWatcher.updateObject(20, new Short((short) AetherAPI.instance().getMoaTypeId(type)));
-        this.dataWatcher.updateObject(21, new Byte((byte) type.getMoaProperties().getMaxJumps()));
+        this.dataWatcher.updateObject(
+            20,
+            new Short(
+                (short) AetherAPI.instance()
+                    .getMoaTypeId(type)));
+        this.dataWatcher.updateObject(
+            21,
+            new Byte(
+                (byte) type.getMoaProperties()
+                    .getMaxJumps()));
     }
 
     @Override
@@ -212,7 +233,12 @@ public class EntityMoa extends EntitySaddleMount {
     public void updateWingRotation() {
         if (!this.onGround) {
             if (this.ticksUntilFlap == 0) {
-                this.worldObj.playSoundAtEntity(this, "mob.bat.takeoff", 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+                this.worldObj.playSoundAtEntity(
+                    this,
+                    "mob.bat.takeoff",
+                    0.15F,
+                    MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f)
+                        + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
                 this.ticksUntilFlap = 8;
             } else {
@@ -242,7 +268,12 @@ public class EntityMoa extends EntitySaddleMount {
         if (this.getRemainingJumps() > 0 && this.motionY < 0.0D) {
             if (!this.isOnGround()) {
                 this.motionY = 0.7D;
-                this.worldObj.playSoundAtEntity(this, "mob.bat.takeoff", 0.15F, MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f) + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
+                this.worldObj.playSoundAtEntity(
+                    this,
+                    "mob.bat.takeoff",
+                    0.15F,
+                    MathHelper.clamp_float(this.rand.nextFloat(), 0.7f, 1.0f)
+                        + MathHelper.clamp_float(this.rand.nextFloat(), 0f, 0.3f));
 
                 if (!this.worldObj.isRemote) {
                     this.setRemainingJumps(this.getRemainingJumps() - 1);
@@ -257,7 +288,9 @@ public class EntityMoa extends EntitySaddleMount {
 
     @Override
     public float getMountedMoveSpeed() {
-        return this.getMoaType().getMoaProperties().getMoaSpeed();
+        return this.getMoaType()
+            .getMoaProperties()
+            .getMoaSpeed();
     }
 
     public void setToAdult() {
@@ -322,7 +355,9 @@ public class EntityMoa extends EntitySaddleMount {
 
         this.setPlayerGrown(nbt.getBoolean("playerGrown"));
         this.setRemainingJumps(nbt.getInteger("remainingJumps"));
-        this.setMoaType(AetherAPI.instance().getMoaType(nbt.getInteger("moaTypeId")));
+        this.setMoaType(
+            AetherAPI.instance()
+                .getMoaType(nbt.getInteger("moaTypeId")));
         this.setAmountFed(nbt.getByte("amountFed"));
         this.setHungry(nbt.getBoolean("isHungry"));
         this.setSitting(nbt.getBoolean("isSitting"));

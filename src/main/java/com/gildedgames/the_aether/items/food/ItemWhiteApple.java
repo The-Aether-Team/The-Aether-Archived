@@ -1,27 +1,28 @@
 package com.gildedgames.the_aether.items.food;
 
-import com.gildedgames.the_aether.items.ItemsAether;
-import com.gildedgames.the_aether.player.PlayerAether;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import com.gildedgames.the_aether.items.ItemsAether;
+import com.gildedgames.the_aether.player.PlayerAether;
+
 public class ItemWhiteApple extends ItemAetherFood {
 
-	public ItemWhiteApple() {
-		super(0);
+    public ItemWhiteApple() {
+        super(0);
 
-		this.setAlwaysEdible();
-	}
+        this.setAlwaysEdible();
+    }
 
-	@Override
-	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
+    @Override
+    protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
 
-		PlayerAether.get(player).setCured(300);
+        PlayerAether.get(player)
+            .setCured(300);
 
-		if (!world.isRemote)
-		{
-			player.curePotionEffects(new ItemStack(ItemsAether.white_apple));
-		}
-	}
+        if (!world.isRemote) {
+            player.curePotionEffects(new ItemStack(ItemsAether.white_apple));
+        }
+    }
 }

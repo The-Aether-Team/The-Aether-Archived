@@ -9,8 +9,8 @@ import cpw.mods.fml.common.eventhandler.Cancelable;
 @Cancelable
 public class ValidAccessoryEvent extends AetherAccessoryEvent {
 
-	public ValidAccessoryEvent(EntityPlayer player, AetherAccessory accessory) {
-		super(accessory);
-	}
+    public ValidAccessoryEvent(EntityPlayer player, AetherAccessory accessory) {
+        super(accessory);
+    }
 
 }

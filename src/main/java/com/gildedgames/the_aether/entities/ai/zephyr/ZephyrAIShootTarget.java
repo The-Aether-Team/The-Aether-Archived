@@ -1,11 +1,12 @@
 package com.gildedgames.the_aether.entities.ai.zephyr;
 
-import com.gildedgames.the_aether.entities.hostile.EntityZephyr;
-import com.gildedgames.the_aether.entities.projectile.EntityZephyrSnowball;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+
+import com.gildedgames.the_aether.entities.hostile.EntityZephyr;
+import com.gildedgames.the_aether.entities.projectile.EntityZephyrSnowball;
 
 public class ZephyrAIShootTarget extends EntityAIBase {
 
@@ -23,7 +24,11 @@ public class ZephyrAIShootTarget extends EntityAIBase {
         this.zephyr = zephyr;
         this.worldObj = zephyr.worldObj;
         this.attackCounter = 0;
-        this.base = (this.zephyr.getRNG().nextFloat() - this.zephyr.getRNG().nextFloat()) * 0.2F + 1.0F;
+        this.base = (this.zephyr.getRNG()
+            .nextFloat()
+            - this.zephyr.getRNG()
+                .nextFloat())
+            * 0.2F + 1.0F;
         this.setMutexBits(4);
     }
 
@@ -43,14 +48,18 @@ public class ZephyrAIShootTarget extends EntityAIBase {
 
             this.zephyr.setAttackTarget(this.worldObj.getClosestVulnerablePlayerToEntity(this.zephyr, 100D));
         } else {
-            if (this.zephyr.getAttackTarget() instanceof EntityPlayer && (((EntityPlayer) this.zephyr.getAttackTarget()).capabilities.isCreativeMode)) {
+            if (this.zephyr.getAttackTarget() instanceof EntityPlayer
+                && (((EntityPlayer) this.zephyr.getAttackTarget()).capabilities.isCreativeMode)) {
                 this.zephyr.setAttackTarget(null);
                 return;
             }
 
-            if (this.zephyr.getAttackTarget().getDistanceSqToEntity(this.zephyr) < 4096.0D && this.zephyr.canEntityBeSeen(this.zephyr.getAttackTarget())) {
+            if (this.zephyr.getAttackTarget()
+                .getDistanceSqToEntity(this.zephyr) < 4096.0D
+                && this.zephyr.canEntityBeSeen(this.zephyr.getAttackTarget())) {
                 double x = this.zephyr.getAttackTarget().posX - this.zephyr.posX;
-                double y = (this.zephyr.getAttackTarget().boundingBox.minY + (this.zephyr.getAttackTarget().height / 2.0F)) - (this.zephyr.posY + (this.zephyr.height / 2.0F));
+                double y = (this.zephyr.getAttackTarget().boundingBox.minY
+                    + (this.zephyr.getAttackTarget().height / 2.0F)) - (this.zephyr.posY + (this.zephyr.height / 2.0F));
                 double z = this.zephyr.getAttackTarget().posZ - this.zephyr.posZ;
 
                 this.zephyr.rotationYaw = (-(float) Math.atan2(x, z) * 180F) / 3.141593F;

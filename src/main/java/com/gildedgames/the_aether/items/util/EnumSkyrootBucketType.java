@@ -1,27 +1,32 @@
 package com.gildedgames.the_aether.items.util;
 
 public enum EnumSkyrootBucketType {
-	Empty(0, "empty"), Water(1, "water"), Poison(2, "poison"), Remedy(3, "remedy"), Milk(4, "milk");
 
-	public int meta;
+    Empty(0, "empty"),
+    Water(1, "water"),
+    Poison(2, "poison"),
+    Remedy(3, "remedy"),
+    Milk(4, "milk");
 
-	public String name;
+    public int meta;
 
-	EnumSkyrootBucketType(int meta, String name) {
-		this.meta = meta;
-		this.name = name;
-	}
+    public String name;
 
-	public static EnumSkyrootBucketType getType(int meta) {
-		return meta == 1 ? Water : meta == 2 ? Poison : meta == 3 ? Remedy : meta == 4 ? Milk : Empty;
-	}
+    EnumSkyrootBucketType(int meta, String name) {
+        this.meta = meta;
+        this.name = name;
+    }
 
-	public int getMeta() {
-		return this.meta;
-	}
+    public static EnumSkyrootBucketType getType(int meta) {
+        return meta == 1 ? Water : meta == 2 ? Poison : meta == 3 ? Remedy : meta == 4 ? Milk : Empty;
+    }
 
-	public String toString() {
-		return this.name;
-	}
+    public int getMeta() {
+        return this.meta;
+    }
+
+    public String toString() {
+        return this.name;
+    }
 
 }

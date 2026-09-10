@@ -1,7 +1,5 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.client.models.entities.SliderModel;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -10,21 +8,26 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.client.models.entities.SliderModel;
 import com.gildedgames.the_aether.entities.bosses.slider.EntitySlider;
 
 public class SliderRenderer extends RenderLiving {
 
-    private static final ResourceLocation TEXTURE_AWAKE_RED = Aether.locate("textures/bosses/slider/slider_awake_critical.png");
+    private static final ResourceLocation TEXTURE_AWAKE_RED = Aether
+        .locate("textures/bosses/slider/slider_awake_critical.png");
 
     private static final ResourceLocation TEXTURE_AWAKE = Aether.locate("textures/bosses/slider/slider_awake.png");
 
     private static final ResourceLocation TEXTURE_SLEEP = Aether.locate("textures/bosses/slider/slider_asleep.png");
 
-    private static final ResourceLocation TEXTURE_SLEEP_RED = Aether.locate("textures/bosses/slider/slider_asleep_critical.png");
+    private static final ResourceLocation TEXTURE_SLEEP_RED = Aether
+        .locate("textures/bosses/slider/slider_asleep_critical.png");
 
     private static final ResourceLocation TEXTURE_GLOW = Aether.locate("textures/bosses/slider/slider_awake_glow.png");
 
-    private static final ResourceLocation TEXTURE_GLOW_RED = Aether.locate("textures/bosses/slider/slider_awake_critical_glow.png");
+    private static final ResourceLocation TEXTURE_GLOW_RED = Aether
+        .locate("textures/bosses/slider/slider_awake_critical_glow.png");
 
     public SliderRenderer() {
         super(new SliderModel(0.0F, 12.0F), 1.5F);

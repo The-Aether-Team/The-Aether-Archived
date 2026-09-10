@@ -2,21 +2,6 @@ package com.gildedgames.the_aether.entities.bosses.sun_spirit;
 
 import java.util.List;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.AetherConfig;
-import com.gildedgames.the_aether.api.AetherAPI;
-import com.gildedgames.the_aether.api.player.util.IAetherBoss;
-import com.gildedgames.the_aether.entities.bosses.EntityFireMinion;
-import com.gildedgames.the_aether.entities.projectile.crystals.EntityCrystal;
-import com.gildedgames.the_aether.entities.projectile.crystals.EnumCrystalType;
-import com.gildedgames.the_aether.entities.util.AetherNameGen;
-import com.gildedgames.the_aether.entities.util.EntityAetherItem;
-import com.gildedgames.the_aether.items.ItemsAether;
-import com.gildedgames.the_aether.player.PlayerAether;
-import com.gildedgames.the_aether.registry.achievements.AchievementsAether;
-import com.gildedgames.the_aether.world.AetherData;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.*;
@@ -31,9 +16,24 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.AetherConfig;
+import com.gildedgames.the_aether.api.AetherAPI;
+import com.gildedgames.the_aether.api.player.util.IAetherBoss;
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.blocks.dungeon.BlockDungeonBase;
-import net.minecraft.world.WorldProvider;
+import com.gildedgames.the_aether.entities.bosses.EntityFireMinion;
+import com.gildedgames.the_aether.entities.projectile.crystals.EntityCrystal;
+import com.gildedgames.the_aether.entities.projectile.crystals.EnumCrystalType;
+import com.gildedgames.the_aether.entities.util.AetherNameGen;
+import com.gildedgames.the_aether.entities.util.EntityAetherItem;
+import com.gildedgames.the_aether.items.ItemsAether;
+import com.gildedgames.the_aether.player.PlayerAether;
+import com.gildedgames.the_aether.registry.achievements.AchievementsAether;
+import com.gildedgames.the_aether.world.AetherData;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, IEntityMultiPart {
 
@@ -56,7 +56,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
     public EntitySunSpirit(World worldIn) {
         super(worldIn);
-        this.sunSpiritParts = new EntityDragonPart[] {this.SpiritPartHead, this.SpiritPartShoulder1, this.SpiritPartShoulder2};
+        this.sunSpiritParts = new EntityDragonPart[] { this.SpiritPartHead, this.SpiritPartShoulder1,
+            this.SpiritPartShoulder2 };
 
         this.setSize(2.5F, 2.8F);
         this.dataWatcher.updateObject(20, AetherNameGen.gen());
@@ -67,8 +68,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
         this.noClip = true;
         this.direction = var6;
-        this.rotary = (double) this.rand.nextFloat() * 360.0D;
-        ;
+        this.rotary = (double) this.rand.nextFloat() * 360.0D;;
         this.rotationYaw = this.rotationYawHead = var6 == 3 ? 0 : var6 == 0 ? 90 : var6 == 2 ? 180 : 270;
 
         this.setPosition((double) posX + 0.5D, (double) posY, (double) posZ + 0.5D);
@@ -88,8 +88,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
 
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(50.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed)
+            .setBaseValue(1.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth)
+            .setBaseValue(50.0D);
     }
 
     public boolean isPotionApplicable(PotionEffect par1PotionEffect) {
@@ -141,18 +143,16 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     @Override
-    public void onLivingUpdate()
-    {
+    public void onLivingUpdate() {
         super.onLivingUpdate();
 
         this.setMultiPartLocations();
     }
 
-    private void setMultiPartLocations()
-    {
-        if (this.sunSpiritParts == null)
-        {
-            this.sunSpiritParts = new EntityDragonPart[] {this.SpiritPartHead, this.SpiritPartShoulder1, this.SpiritPartShoulder2};
+    private void setMultiPartLocations() {
+        if (this.sunSpiritParts == null) {
+            this.sunSpiritParts = new EntityDragonPart[] { this.SpiritPartHead, this.SpiritPartShoulder1,
+                this.SpiritPartShoulder2 };
         }
 
         float f = this.rotationYaw * 0.017453292F;
@@ -162,13 +162,14 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
         this.SpiritPartHead.onUpdate();
         this.SpiritPartHead.setLocationAndAngles(this.posX, this.posY + 1.5f, this.posZ, 0F, 0F);
         this.SpiritPartShoulder1.onUpdate();
-        this.SpiritPartShoulder1.setLocationAndAngles(this.posX - f2 * 1.0F, this.posY - 0.25F, this.posZ - f1 * 1.0F, 0F, 0F);
+        this.SpiritPartShoulder1
+            .setLocationAndAngles(this.posX - f2 * 1.0F, this.posY - 0.25F, this.posZ - f1 * 1.0F, 0F, 0F);
         this.SpiritPartShoulder2.onUpdate();
-        this.SpiritPartShoulder2.setLocationAndAngles(this.posX + f2 * 1.0F, this.posY - 0.25F, this.posZ + f1 * 1.0F, 0F, 0F);
+        this.SpiritPartShoulder2
+            .setLocationAndAngles(this.posX + f2 * 1.0F, this.posY - 0.25F, this.posZ + f1 * 1.0F, 0F, 0F);
     }
 
-    public Entity[] getParts()
-    {
+    public Entity[] getParts() {
         return this.sunSpiritParts;
     }
 
@@ -206,7 +207,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                     }
                 }
 
-                this.setPosition((double) this.originPointX + 0.5D, (double) this.originPointY, (double) this.originPointZ + 0.5D);
+                this.setPosition(
+                    (double) this.originPointX + 0.5D,
+                    (double) this.originPointY,
+                    (double) this.originPointZ + 0.5D);
 
                 this.chatLog = 10;
 
@@ -215,7 +219,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                 this.chatLine(dungeonTarget, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.playerdied"));
                 this.chatCount = 100;
 
-                this.setPosition((double) this.originPointX + 0.5D, (double) this.originPointY, (double) this.originPointZ + 0.5D);
+                this.setPosition(
+                    (double) this.originPointX + 0.5D,
+                    (double) this.originPointY,
+                    (double) this.originPointZ + 0.5D);
                 this.setDoor(Blocks.air);
 
                 this.setFreezing(false);
@@ -240,13 +247,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
                 dungeonTarget.triggerAchievement(AchievementsAether.defeat_gold);
 
-                if (!AetherConfig.eternalDayDisabled())
-                {
-                    if (!this.worldObj.isRemote)
-                    {
-                        if (!AetherData.getInstance(this.worldObj).isEternalDay())
-                        {
-                            AetherData.getInstance(this.worldObj).setEternalDay(true);
+                if (!AetherConfig.eternalDayDisabled()) {
+                    if (!this.worldObj.isRemote) {
+                        if (!AetherData.getInstance(this.worldObj)
+                            .isEternalDay()) {
+                            AetherData.getInstance(this.worldObj)
+                                .setEternalDay(true);
                         }
                     }
                 }
@@ -342,7 +348,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     public void burnEntities() {
-        List<?> entityList = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.0D, 4.0D, 0.0D));
+        List<?> entityList = this.worldObj
+            .getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand(0.0D, 4.0D, 0.0D));
 
         for (int ammount = 0; ammount < entityList.size(); ++ammount) {
             Entity entity = (Entity) entityList.get(ammount);
@@ -355,8 +362,10 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     public void evapWater() {
-        int var1 = MathHelper.floor_double(this.boundingBox.minX + (this.boundingBox.maxX - this.boundingBox.minX) / 2.0D);
-        int var2 = MathHelper.floor_double(this.boundingBox.minZ + (this.boundingBox.maxZ - this.boundingBox.minZ) / 2.0D);
+        int var1 = MathHelper
+            .floor_double(this.boundingBox.minX + (this.boundingBox.maxX - this.boundingBox.minX) / 2.0D);
+        int var2 = MathHelper
+            .floor_double(this.boundingBox.minZ + (this.boundingBox.maxZ - this.boundingBox.minZ) / 2.0D);
 
         byte radius = 10;
 
@@ -365,13 +374,27 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                 for (int var6 = 0; var6 < 8; ++var6) {
                     int var7 = this.originPointY - 2 + var6;
 
-                    if (this.worldObj.getBlock(var4, var7, var5).getMaterial() == Material.water) {
+                    if (this.worldObj.getBlock(var4, var7, var5)
+                        .getMaterial() == Material.water) {
                         this.worldObj.setBlock(var4, var7, var5, Blocks.air);
 
-                        this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, "random.fizz", 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
+                        this.worldObj.playSoundEffect(
+                            this.posX,
+                            this.posY,
+                            this.posZ,
+                            "random.fizz",
+                            2.0F,
+                            this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
 
                         for (int var8 = 0; var8 < 8; ++var8) {
-                            this.worldObj.spawnParticle("largesmoke", (double) var4 + Math.random(), (double) var7 + 0.75D, (double) var5 + Math.random(), 0.0D, 0.0D, 0.0D);
+                            this.worldObj.spawnParticle(
+                                "largesmoke",
+                                (double) var4 + Math.random(),
+                                (double) var7 + 0.75D,
+                                (double) var5 + Math.random(),
+                                0.0D,
+                                0.0D,
+                                0.0D);
                         }
                     }
                 }
@@ -380,7 +403,11 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     public void makeFireBall(int var1) {
-        this.worldObj.playSoundAtEntity(this, "mob.ghast.fireball", this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F, 1.0F);
+        this.worldObj.playSoundAtEntity(
+            this,
+            "mob.ghast.fireball",
+            this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F,
+            1.0F);
 
         boolean shootIceyBall = false;
 
@@ -392,7 +419,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
         }
 
         for (int var3 = 0; var3 < var1; ++var3) {
-            EntityCrystal crystal = new EntityCrystal(this.worldObj, this.posX - this.motionX / 2.0D, this.posY, this.posZ - this.motionZ / 2.0D, shootIceyBall ? EnumCrystalType.ICE : EnumCrystalType.FIRE);
+            EntityCrystal crystal = new EntityCrystal(
+                this.worldObj,
+                this.posX - this.motionX / 2.0D,
+                this.posY,
+                this.posZ - this.motionZ / 2.0D,
+                shootIceyBall ? EnumCrystalType.ICE : EnumCrystalType.FIRE);
 
             if (!this.worldObj.isRemote) {
                 this.worldObj.spawnEntityInWorld(crystal);
@@ -411,11 +443,12 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     private void chatLine(EntityPlayer player, String s) {
-        Side side = FMLCommonHandler.instance().getEffectiveSide();
+        Side side = FMLCommonHandler.instance()
+            .getEffectiveSide();
 
-        if (this.chatCount <= 0 || (!AetherConfig.repeatSunSpiritDialogue() && ((PlayerAether) AetherAPI.get(player)).seenSpiritDialog)) {
-            if (side == Side.CLIENT)
-            {
+        if (this.chatCount <= 0
+            || (!AetherConfig.repeatSunSpiritDialogue() && ((PlayerAether) AetherAPI.get(player)).seenSpiritDialog)) {
+            if (side == Side.CLIENT) {
                 Aether.proxy.sendMessage(player, s);
             }
         }
@@ -423,8 +456,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
     public boolean chatWithMe(EntityPlayer entityPlayer) {
         if (this.chatCount <= 0) {
-            if (AetherConfig.repeatSunSpiritDialogue() || !((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
-            {
+            if (AetherConfig.repeatSunSpiritDialogue()
+                || !((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog) {
                 if (this.getChatLine() == 0) {
                     this.chatLine(entityPlayer, "\u00a7c" + StatCollector.translateToLocal("gui.spirit.line0"));
                     this.setChatLine(1);
@@ -467,9 +500,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                         this.setChatLine(9);
                     }
                 }
-            }
-            else if (((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog)
-            {
+            } else if (((PlayerAether) AetherAPI.get(entityPlayer)).seenSpiritDialog) {
                 this.setChatLine(9);
 
                 if (this.getChatLine() == 9) {
@@ -512,17 +543,13 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount)
-    {
-        if (source.getSourceOfDamage() instanceof EntityCrystal)
-        {
-            if (((EntityCrystal) source.getSourceOfDamage()).getCrystalType() == EnumCrystalType.ICE)
-            {
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (source.getSourceOfDamage() instanceof EntityCrystal) {
+            if (((EntityCrystal) source.getSourceOfDamage()).getCrystalType() == EnumCrystalType.ICE) {
                 this.velocity = 0.5D - (double) this.getHealth() / 70.0D * 0.2D;
                 boolean flag = super.attackEntityFrom(source, amount);
 
-                if (flag)
-                {
+                if (flag) {
                     EntityFireMinion minion = new EntityFireMinion(this.worldObj);
                     minion.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
                     minion.setAttackTarget(this.getAttackTarget());
@@ -532,21 +559,16 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                     }
                 }
                 return flag;
-            }
-            else
-            {
+            } else {
                 return false;
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     @Override
-    public boolean attackEntityFromPart(EntityDragonPart part, DamageSource source, float damage)
-    {
+    public boolean attackEntityFromPart(EntityDragonPart part, DamageSource source, float damage) {
         return this.attackEntityFrom(source, damage);
     }
 
@@ -559,12 +581,15 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     @Override
     public EntityItem entityDropItem(ItemStack stack, float offsetY) {
         if (stack.stackSize != 0 && stack.getItem() != null) {
-            EntityAetherItem entityitem = new EntityAetherItem(this.worldObj, this.posX, this.posY + (double) offsetY, this.posZ, stack);
+            EntityAetherItem entityitem = new EntityAetherItem(
+                this.worldObj,
+                this.posX,
+                this.posY + (double) offsetY,
+                this.posZ,
+                stack);
 
-            if (this.captureDrops)
-                this.capturedDrops.add(entityitem);
-            else
-                this.worldObj.spawnEntityInWorld(entityitem);
+            if (this.captureDrops) this.capturedDrops.add(entityitem);
+            else this.worldObj.spawnEntityInWorld(entityitem);
 
             return entityitem;
         } else {
@@ -616,7 +641,8 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
                 for (z = this.originPointZ - 20; z < this.originPointZ + 20; ++z) {
                     Block unlock_block = this.worldObj.getBlock(x, y, z);
 
-                    if (unlock_block == BlocksAether.locked_hellfire_stone || unlock_block == BlocksAether.locked_light_hellfire_stone) {
+                    if (unlock_block == BlocksAether.locked_hellfire_stone
+                        || unlock_block == BlocksAether.locked_light_hellfire_stone) {
                         this.worldObj.setBlock(x, y, z, ((BlockDungeonBase) unlock_block).getUnlockedBlock());
                     }
                 }
@@ -625,7 +651,17 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     public List<?> getPlayersInDungeon() {
-        return this.worldObj.getEntitiesWithinAABBExcludingEntity(this.getAttackTarget(), AxisAlignedBB.getBoundingBox(this.originPointX, this.originPointY, this.originPointZ, this.originPointX, this.originPointY, this.originPointZ).expand(20, 3, 20));
+        return this.worldObj.getEntitiesWithinAABBExcludingEntity(
+            this.getAttackTarget(),
+            AxisAlignedBB
+                .getBoundingBox(
+                    this.originPointX,
+                    this.originPointY,
+                    this.originPointZ,
+                    this.originPointX,
+                    this.originPointY,
+                    this.originPointZ)
+                .expand(20, 3, 20));
     }
 
     public void setOriginPosition(int x, int y, int z) {
@@ -661,12 +697,13 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
 
     @Override
     public String getBossName() {
-    if (AetherConfig.config.get("Misc", "Enables randomly generated boss names", true).getBoolean()) {
-        return this.dataWatcher.getWatchableObjectString(19) + ", " + StatCollector.translateToLocal("title.aether_legacy.sun_spirit.name");
-    }
-    else {
-        return StatCollector.translateToLocal("title.aether_legacy.sun_spirit.name");
-    }
+        if (AetherConfig.config.get("Misc", "Enables randomly generated boss names", true)
+            .getBoolean()) {
+            return this.dataWatcher.getWatchableObjectString(19) + ", "
+                + StatCollector.translateToLocal("title.aether_legacy.sun_spirit.name");
+        } else {
+            return StatCollector.translateToLocal("title.aether_legacy.sun_spirit.name");
+        }
     }
 
     @Override
@@ -680,8 +717,7 @@ public class EntitySunSpirit extends EntityFlying implements IMob, IAetherBoss, 
     }
 
     @Override
-    public World func_82194_d()
-    {
+    public World func_82194_d() {
         return this.worldObj;
     }
 }

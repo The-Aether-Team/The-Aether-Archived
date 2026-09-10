@@ -6,14 +6,14 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class AetherAccessoryEvent extends Event {
 
-	private AetherAccessory accessory;
+    private AetherAccessory accessory;
 
-	public AetherAccessoryEvent(AetherAccessory accessory) {
-		this.accessory = accessory;
-	}
+    public AetherAccessoryEvent(AetherAccessory accessory) {
+        this.accessory = accessory;
+    }
 
-	public AetherAccessory getAetherAccessory() {
-		return this.accessory;
-	}
+    public AetherAccessory getAetherAccessory() {
+        return this.accessory;
+    }
 
 }

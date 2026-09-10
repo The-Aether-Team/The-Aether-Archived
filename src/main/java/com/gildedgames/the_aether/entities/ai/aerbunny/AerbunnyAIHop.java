@@ -1,7 +1,8 @@
 package com.gildedgames.the_aether.entities.ai.aerbunny;
 
-import com.gildedgames.the_aether.entities.passive.mountable.EntityAerbunny;
 import net.minecraft.entity.ai.EntityAIBase;
+
+import com.gildedgames.the_aether.entities.passive.mountable.EntityAerbunny;
 
 public class AerbunnyAIHop extends EntityAIBase {
 
@@ -18,7 +19,8 @@ public class AerbunnyAIHop extends EntityAIBase {
 
     public void updateTask() {
         if (this.aerbunny.moveForward != 0.0F) {
-            this.aerbunny.getJumpHelper().setJumping();
+            this.aerbunny.getJumpHelper()
+                .setJumping();
         }
     }
 

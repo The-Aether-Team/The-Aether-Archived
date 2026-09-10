@@ -1,7 +1,5 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.entities.projectile.EntityPoisonNeedle;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -11,6 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.entities.projectile.EntityPoisonNeedle;
 import com.gildedgames.the_aether.entities.projectile.darts.EntityDartBase;
 import com.gildedgames.the_aether.entities.projectile.darts.EntityDartEnchanted;
 import com.gildedgames.the_aether.entities.projectile.darts.EntityDartGolden;
@@ -97,9 +97,13 @@ public class DartBaseRenderer extends Render {
 
     @Override
     protected ResourceLocation getEntityTexture(Entity entity) {
-        String base = entity instanceof EntityDartGolden ? "golden" : entity instanceof EntityDartEnchanted ? "enchanted" : "poison";
+        String base = entity instanceof EntityDartGolden ? "golden"
+            : entity instanceof EntityDartEnchanted ? "enchanted" : "poison";
 
-        return Aether.locate("textures/entities/projectile/dart/" + base + (entity instanceof EntityPoisonNeedle ? "_needle" : "_dart") + ".png");
+        return Aether.locate(
+            "textures/entities/projectile/dart/" + base
+                + (entity instanceof EntityPoisonNeedle ? "_needle" : "_dart")
+                + ".png");
     }
 
 }

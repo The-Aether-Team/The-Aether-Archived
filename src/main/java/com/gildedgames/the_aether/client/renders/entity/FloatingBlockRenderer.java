@@ -23,7 +23,8 @@ public class FloatingBlockRenderer extends Render {
         this.shadowSize = 0.5F;
     }
 
-    public void renderFloatingBlock(EntityFloatingBlock entityFloatingBlock, double d, double d1, double d2, float f, float f1) {
+    public void renderFloatingBlock(EntityFloatingBlock entityFloatingBlock, double d, double d1, double d2, float f,
+        float f1) {
         if (entityFloatingBlock.getBlock() == null || entityFloatingBlock.getBlock() == Blocks.air) {
             return;
         }

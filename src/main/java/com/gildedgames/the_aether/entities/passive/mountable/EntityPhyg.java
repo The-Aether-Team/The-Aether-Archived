@@ -1,7 +1,5 @@
 package com.gildedgames.the_aether.entities.passive.mountable;
 
-import com.gildedgames.the_aether.AetherConfig;
-import com.gildedgames.the_aether.items.ItemsAether;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -11,7 +9,9 @@ import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.util.EntitySaddleMount;
+import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.registry.achievements.AchievementsAether;
 
 public class EntityPhyg extends EntitySaddleMount {
@@ -39,7 +39,8 @@ public class EntityPhyg extends EntitySaddleMount {
         this.canJumpMidAir = true;
 
         this.setSize(0.9F, 1.3F);
-        this.getNavigator().setAvoidsWater(true);
+        this.getNavigator()
+            .setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
         this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
@@ -53,8 +54,10 @@ public class EntityPhyg extends EntitySaddleMount {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth)
+            .setBaseValue(10.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed)
+            .setBaseValue(0.25D);
     }
 
     @Override

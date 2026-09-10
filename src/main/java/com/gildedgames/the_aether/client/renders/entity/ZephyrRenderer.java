@@ -1,16 +1,17 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.AetherConfig;
-import com.gildedgames.the_aether.client.models.entities.OldZephyrModel;
-import com.gildedgames.the_aether.client.models.entities.ZephyrModel;
-import com.gildedgames.the_aether.entities.hostile.EntityZephyr;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.AetherConfig;
+import com.gildedgames.the_aether.client.models.entities.OldZephyrModel;
+import com.gildedgames.the_aether.client.models.entities.ZephyrModel;
+import com.gildedgames.the_aether.entities.hostile.EntityZephyr;
 
 public class ZephyrRenderer extends RenderLiving {
 
@@ -25,7 +26,8 @@ public class ZephyrRenderer extends RenderLiving {
     }
 
     protected void renderZephyrMovement(EntityZephyr zephyr, float partialTickTime) {
-        float f1 = ((float) zephyr.prevAttackCounter + (float) (zephyr.attackCounter - zephyr.prevAttackCounter) * partialTickTime) / 20.0F;
+        float f1 = ((float) zephyr.prevAttackCounter
+            + (float) (zephyr.attackCounter - zephyr.prevAttackCounter) * partialTickTime) / 20.0F;
 
         if (f1 < 0.0F) {
             f1 = 0.0F;

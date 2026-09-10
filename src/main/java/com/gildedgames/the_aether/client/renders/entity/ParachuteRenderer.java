@@ -1,6 +1,5 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.entities.passive.mountable.EntityParachute;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -10,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
+import com.gildedgames.the_aether.entities.passive.mountable.EntityParachute;
 
 public class ParachuteRenderer extends Render {
 

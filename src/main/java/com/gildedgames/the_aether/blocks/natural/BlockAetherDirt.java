@@ -1,31 +1,31 @@
 package com.gildedgames.the_aether.blocks.natural;
 
-import com.gildedgames.the_aether.items.util.DoubleDropHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+import com.gildedgames.the_aether.items.util.DoubleDropHelper;
+
 public class BlockAetherDirt extends Block {
 
-	public BlockAetherDirt() {
-		super(Material.ground);
+    public BlockAetherDirt() {
+        super(Material.ground);
 
-		this.setHardness(0.2F);
-		this.setHarvestLevel("shovel", 0);
-		this.setStepSound(soundTypeGravel);
-		this.setBlockTextureName("aether_legacy:aether_dirt");
-	}
+        this.setHardness(0.2F);
+        this.setHarvestLevel("shovel", 0);
+        this.setStepSound(soundTypeGravel);
+        this.setBlockTextureName("aether_legacy:aether_dirt");
+    }
 
-	@Override
-	public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta) {
-		DoubleDropHelper.dropBlock(player, x, y, z, this, meta);
-	}
+    @Override
+    public void harvestBlock(World worldIn, EntityPlayer player, int x, int y, int z, int meta) {
+        DoubleDropHelper.dropBlock(player, x, y, z, this, meta);
+    }
 
-	@Override
-	public int damageDropped(int meta) {
-		return 1;
-	}
+    @Override
+    public int damageDropped(int meta) {
+        return 1;
+    }
 
 }

@@ -6,14 +6,14 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class MoaEvent extends Event {
 
-	private AetherMoaType moaType;
+    private AetherMoaType moaType;
 
-	public MoaEvent(AetherMoaType moaType) {
-		this.moaType = moaType;
-	}
+    public MoaEvent(AetherMoaType moaType) {
+        this.moaType = moaType;
+    }
 
-	public AetherMoaType getMoaType() {
-		return this.moaType;
-	}
+    public AetherMoaType getMoaType() {
+        return this.moaType;
+    }
 
 }
