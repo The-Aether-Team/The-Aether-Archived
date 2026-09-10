@@ -1,8 +1,5 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.client.models.entities.CockatriceModel;
-import com.gildedgames.the_aether.entities.hostile.EntityCockatrice;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,6 +7,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.client.models.entities.CockatriceModel;
+import com.gildedgames.the_aether.entities.hostile.EntityCockatrice;
 
 public class CockatriceRenderer extends RenderLiving {
 

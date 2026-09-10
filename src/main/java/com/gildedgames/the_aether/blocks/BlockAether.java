@@ -5,10 +5,10 @@ import net.minecraft.block.material.Material;
 
 public class BlockAether extends Block {
 
-	public BlockAether(Material material, String texture) {
-		super(material);
+    public BlockAether(Material material, String texture) {
+        super(material);
 
-		this.setBlockTextureName(texture);
-	}
+        this.setBlockTextureName(texture);
+    }
 
 }

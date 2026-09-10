@@ -1,6 +1,5 @@
 package com.gildedgames.the_aether.entities.projectile.crystals;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -8,7 +7,13 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.*;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
+import net.minecraft.util.IChatComponent;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -17,6 +22,7 @@ import com.gildedgames.the_aether.api.player.util.IAetherBoss;
 import com.gildedgames.the_aether.entities.bosses.EntityFireMinion;
 
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import io.netty.buffer.ByteBuf;
 
 public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpawnData {
 
@@ -77,8 +83,10 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
 
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth)
+            .setBaseValue(20.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed)
+            .setBaseValue(1.0D);
     }
 
     @Override
@@ -93,7 +101,8 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
 
         if (this.type == EnumCrystalType.THUNDER) {
             if (!this.worldObj.isRemote) {
-                if (this.getAttackTarget() == null || (this.getAttackTarget() != null && !this.getAttackTarget().isEntityAlive())) {
+                if (this.getAttackTarget() == null || (this.getAttackTarget() != null && !this.getAttackTarget()
+                    .isEntityAlive())) {
                     this.setDead();
                 }
 
@@ -165,11 +174,13 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
                 crystal.setDead();
             }
         } else if (entity instanceof EntityLivingBase) {
-            if (this.type == EnumCrystalType.FIRE && !(entity instanceof IAetherBoss) && !(entity instanceof EntityFireMinion)) {
+            if (this.type == EnumCrystalType.FIRE && !(entity instanceof IAetherBoss)
+                && !(entity instanceof EntityFireMinion)) {
                 if (this.shootingEntity != null) {
-                    flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("incineration_firo", this, this.shootingEntity).setProjectile(), 5);
-                }
-                else {
+                    flag = entity.attackEntityFrom(
+                        new EntityDamageSourceIndirect("incineration_firo", this, this.shootingEntity).setProjectile(),
+                        5);
+                } else {
                     flag = entity.attackEntityFrom(new EntityDamageSource("incineration", this).setProjectile(), 5);
                 }
 
@@ -180,7 +191,9 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
                     entity.setFire(100);
                 }
             } else if (this.type == EnumCrystalType.ICE && this.wasHit()) {
-                flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(), 5);
+                flag = entity.attackEntityFrom(
+                    new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(),
+                    5);
 
                 if (flag) {
                     this.explode();
@@ -189,17 +202,20 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
                     ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.weakness.id, 10));
                 }
             } else if (this.type == EnumCrystalType.CLOUD && !(entity instanceof IAetherBoss)) {
-                flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(), 5);
+                flag = entity.attackEntityFrom(
+                    new EntityDamageSourceIndirect("icey_ball", this, this.shootingEntity).setProjectile(),
+                    5);
 
-                if (flag)
-                {
+                if (flag) {
                     this.explode();
                     this.expire();
                     this.setDead();
                     ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(Potion.weakness.id, 10));
                 }
             } else if (this.type == EnumCrystalType.THUNDER && entity == this.getAttackTarget()) {
-                flag = entity.attackEntityFrom(new EntityDamageSourceIndirect("lightning_ball", this, this.shootingEntity).setProjectile(), 5);
+                flag = entity.attackEntityFrom(
+                    new EntityDamageSourceIndirect("lightning_ball", this, this.shootingEntity).setProjectile(),
+                    5);
 
                 if (flag) {
                     this.moveTowardsTarget(entity, -0.3D);
@@ -217,14 +233,14 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
                 return super.attackEntityFrom(source, damage);
             }
 
-            Vec3 var3 = source.getEntity().getLookVec();
+            Vec3 var3 = source.getEntity()
+                .getLookVec();
 
             if (var3 != null) {
                 this.smotionX = var3.xCoord;
                 this.smotionZ = var3.zCoord;
 
-                if (this.type != EnumCrystalType.ICE)
-                {
+                if (this.type != EnumCrystalType.ICE) {
                     this.smotionY = var3.yCoord;
                 }
             }
@@ -273,17 +289,34 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
     }
 
     private void expire() {
-        this.worldObj.playSoundAtEntity(this, this.type.getDeathSound(), 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
+        this.worldObj.playSoundAtEntity(
+            this,
+            this.type.getDeathSound(),
+            2.0F,
+            this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
 
         if (this.worldObj.isRemote) {
             return;
         }
 
-        ((WorldServer) this.worldObj).func_147487_a(this.type.getDeathParticle(), this.posX, this.boundingBox.minY + this.height * 0.8D, this.posZ, 16, 0.25D, 0.25D, 0.25D, 0.0D);
+        ((WorldServer) this.worldObj).func_147487_a(
+            this.type.getDeathParticle(),
+            this.posX,
+            this.boundingBox.minY + this.height * 0.8D,
+            this.posZ,
+            16,
+            0.25D,
+            0.25D,
+            0.25D,
+            0.0D);
     }
 
     private void explode() {
-        this.worldObj.playSoundAtEntity(this, this.type.getExplosionSound(), 2.0F, this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
+        this.worldObj.playSoundAtEntity(
+            this,
+            this.type.getExplosionSound(),
+            2.0F,
+            this.rand.nextFloat() - this.rand.nextFloat() * 0.2F + 1.2F);
 
         if (this.worldObj.isRemote) {
             return;
@@ -295,7 +328,16 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
             motionMultiplier *= 0.5D;
         }
 
-        ((WorldServer) this.worldObj).func_147487_a(this.type.getExplosionParticle(), this.posX, this.posY, this.posZ, 40, 0.0D, 0.0D, 0.0D, motionMultiplier);
+        ((WorldServer) this.worldObj).func_147487_a(
+            this.type.getExplosionParticle(),
+            this.posX,
+            this.posY,
+            this.posZ,
+            40,
+            0.0D,
+            0.0D,
+            0.0D,
+            motionMultiplier);
     }
 
     public EnumCrystalType getCrystalType() {
@@ -304,7 +346,9 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
 
     @Override
     public IChatComponent func_145748_c_() {
-        return new ChatComponentText(this.getCommandSenderName() + this.type.toString().toLowerCase());
+        return new ChatComponentText(
+            this.getCommandSenderName() + this.type.toString()
+                .toLowerCase());
     }
 
     @Override
@@ -312,7 +356,9 @@ public class EntityCrystal extends EntityFlying implements IEntityAdditionalSpaw
         buffer.writeInt(this.type.getId());
 
         if (this.type == EnumCrystalType.THUNDER) {
-            buffer.writeInt(this.getAttackTarget().getEntityId());
+            buffer.writeInt(
+                this.getAttackTarget()
+                    .getEntityId());
         }
     }
 

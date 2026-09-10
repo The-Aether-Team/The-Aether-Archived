@@ -8,65 +8,67 @@ import cpw.mods.fml.common.eventhandler.Event;
 
 public class AetherFreezableEvent extends Event {
 
-	public AetherFreezableEvent() {
+    public AetherFreezableEvent() {
 
-	}
+    }
 
-	public static class SetTimeEvent extends AetherFreezableEvent {
-		private TileEntity tileEntity;
+    public static class SetTimeEvent extends AetherFreezableEvent {
 
-		private AetherFreezable freezable;
+        private TileEntity tileEntity;
 
-		private int original;
+        private AetherFreezable freezable;
 
-		private int newTime;
+        private int original;
 
-		public SetTimeEvent(TileEntity tileEntity, AetherFreezable freezable, int original) {
-			this.tileEntity = tileEntity;
-			this.freezable = freezable;
-			this.original = original;
+        private int newTime;
 
-			this.setNewTime(original);
-		}
+        public SetTimeEvent(TileEntity tileEntity, AetherFreezable freezable, int original) {
+            this.tileEntity = tileEntity;
+            this.freezable = freezable;
+            this.original = original;
 
-		public TileEntity getTileEntity() {
-			return this.tileEntity;
-		}
+            this.setNewTime(original);
+        }
 
-		public AetherFreezable getFreezable() {
-			return this.freezable;
-		}
+        public TileEntity getTileEntity() {
+            return this.tileEntity;
+        }
 
-		public int getOriginal() {
-			return this.original;
-		}
+        public AetherFreezable getFreezable() {
+            return this.freezable;
+        }
 
-		public int getNewTime() {
-			return this.newTime;
-		}
+        public int getOriginal() {
+            return this.original;
+        }
 
-		public void setNewTime(int newTime) {
-			this.newTime = newTime;
-		}
-	}
+        public int getNewTime() {
+            return this.newTime;
+        }
 
-	public static class FreezeEvent extends AetherFreezableEvent {
-		private TileEntity tileEntity;
+        public void setNewTime(int newTime) {
+            this.newTime = newTime;
+        }
+    }
 
-		private AetherFreezable freezable;
+    public static class FreezeEvent extends AetherFreezableEvent {
 
-		public FreezeEvent(TileEntity tileEntity, AetherFreezable freezable) {
-			this.tileEntity = tileEntity;
-			this.freezable = freezable;
-		}
+        private TileEntity tileEntity;
 
-		public TileEntity getTileEntity() {
-			return this.tileEntity;
-		}
+        private AetherFreezable freezable;
 
-		public AetherFreezable getFreezable() {
-			return this.freezable;
-		}
-	}
+        public FreezeEvent(TileEntity tileEntity, AetherFreezable freezable) {
+            this.tileEntity = tileEntity;
+            this.freezable = freezable;
+        }
+
+        public TileEntity getTileEntity() {
+            return this.tileEntity;
+        }
+
+        public AetherFreezable getFreezable() {
+            return this.freezable;
+        }
+    }
 
 }

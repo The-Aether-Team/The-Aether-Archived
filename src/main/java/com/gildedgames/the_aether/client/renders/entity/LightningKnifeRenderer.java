@@ -1,7 +1,5 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.entities.projectile.EntityLightningKnife;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -9,6 +7,9 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.entities.projectile.EntityLightningKnife;
 
 public class LightningKnifeRenderer extends Render {
 

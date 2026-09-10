@@ -1,9 +1,10 @@
 package com.gildedgames.the_aether.entities.ai.aechorplant;
 
-import com.gildedgames.the_aether.entities.hostile.EntityAechorPlant;
-import com.gildedgames.the_aether.entities.projectile.EntityPoisonNeedle;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.EnumDifficulty;
+
+import com.gildedgames.the_aether.entities.hostile.EntityAechorPlant;
+import com.gildedgames.the_aether.entities.projectile.EntityPoisonNeedle;
 
 public class AechorPlantAIShootPlayer extends EntityAIBase {
 
@@ -23,7 +24,8 @@ public class AechorPlantAIShootPlayer extends EntityAIBase {
 
     @Override
     public void updateTask() {
-        double distanceToPlayer = this.shooter.getEntityToAttack().getDistanceToEntity(this.shooter);
+        double distanceToPlayer = this.shooter.getEntityToAttack()
+            .getDistanceToEntity(this.shooter);
         double lookDistance = 5.5D + ((double) this.shooter.getSize() / 2D);
 
         if (this.shooter.getEntityToAttack().isDead || distanceToPlayer > lookDistance) {
@@ -48,7 +50,8 @@ public class AechorPlantAIShootPlayer extends EntityAIBase {
 
         double x = this.shooter.getEntityToAttack().posX - this.shooter.posX;
         double z = this.shooter.getEntityToAttack().posZ - this.shooter.posZ;
-        double y = 0.1D + (Math.sqrt((x * x) + (z * z) + 0.1D) * 0.5D) + ((this.shooter.posY - this.shooter.getEntityToAttack().posY) * 0.25D);
+        double y = 0.1D + (Math.sqrt((x * x) + (z * z) + 0.1D) * 0.5D)
+            + ((this.shooter.posY - this.shooter.getEntityToAttack().posY) * 0.25D);
 
         double distance = 1.5D / Math.sqrt((x * x) + (z * z) + 0.1D);
 
@@ -59,7 +62,11 @@ public class AechorPlantAIShootPlayer extends EntityAIBase {
 
         poisonNeedle.posY = this.shooter.posY + 1D;
 
-        this.shooter.playSound("random.bow", 1.0F, 1.2F / (this.shooter.getRNG().nextFloat() * 0.2F + 0.9F));
+        this.shooter.playSound(
+            "random.bow",
+            1.0F,
+            1.2F / (this.shooter.getRNG()
+                .nextFloat() * 0.2F + 0.9F));
         this.shooter.worldObj.spawnEntityInWorld(poisonNeedle);
 
         poisonNeedle.setThrowableHeading(x, y, z, 0.285F + ((float) y * 0.05F), 1.0F);

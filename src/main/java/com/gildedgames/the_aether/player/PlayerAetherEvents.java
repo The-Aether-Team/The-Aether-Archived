@@ -1,10 +1,5 @@
 package com.gildedgames.the_aether.player;
 
-import com.gildedgames.the_aether.AetherConfig;
-import com.gildedgames.the_aether.inventory.InventoryAccessories;
-import com.gildedgames.the_aether.items.ItemsAether;
-import com.gildedgames.the_aether.registry.achievements.AchievementsAether;
-import com.gildedgames.the_aether.registry.achievements.AetherAchievement;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -21,11 +15,16 @@ import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 
+import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.entities.util.EntityHook;
+import com.gildedgames.the_aether.inventory.InventoryAccessories;
+import com.gildedgames.the_aether.items.ItemsAether;
 import com.gildedgames.the_aether.network.AetherNetwork;
 import com.gildedgames.the_aether.network.packets.PacketAccessory;
 import com.gildedgames.the_aether.network.packets.PacketAchievement;
 import com.gildedgames.the_aether.player.abilities.AbilityRepulsion;
+import com.gildedgames.the_aether.registry.achievements.AchievementsAether;
+import com.gildedgames.the_aether.registry.achievements.AetherAchievement;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
@@ -34,153 +33,183 @@ import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 
 public class PlayerAetherEvents {
 
-	@SubscribeEvent
-	public void onPlayerAetherConstructing(EntityConstructing event) {
-		if (event.entity instanceof EntityPlayer) {
-			event.entity.registerExtendedProperties("aether_legacy:player_aether", new PlayerAether());
-		} else if (event.entity instanceof EntityLivingBase) {
-			event.entity.registerExtendedProperties("aether_legacy:entity_hook", new EntityHook());
-		}
-	}
+    @SubscribeEvent
+    public void onPlayerAetherConstructing(EntityConstructing event) {
+        if (event.entity instanceof EntityPlayer) {
+            event.entity.registerExtendedProperties("aether_legacy:player_aether", new PlayerAether());
+        } else if (event.entity instanceof EntityLivingBase) {
+            event.entity.registerExtendedProperties("aether_legacy:entity_hook", new EntityHook());
+        }
+    }
 
-	@SubscribeEvent
-	public void onPlayerAetherLoggedIn(PlayerLoggedInEvent event) {
-		if (!event.player.worldObj.isRemote) {
-			PlayerAether playerAether = PlayerAether.get(event.player);
+    @SubscribeEvent
+    public void onPlayerAetherLoggedIn(PlayerLoggedInEvent event) {
+        if (!event.player.worldObj.isRemote) {
+            PlayerAether playerAether = PlayerAether.get(event.player);
 
-			AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
-			playerAether.updateShardCount(0);
+            AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
+            playerAether.updateShardCount(0);
 
-			if (!AetherConfig.shouldAetherStart())
-			{
-				playerAether.shouldGetPortal = false;
-			}
-			else
-			{
-				playerAether.givePortalFrame();
-			}
-		}
-	}
+            if (!AetherConfig.shouldAetherStart()) {
+                playerAether.shouldGetPortal = false;
+            } else {
+                playerAether.givePortalFrame();
+            }
+        }
+    }
 
-	@SubscribeEvent
-	public void onPlayerAetherClone(Clone event) {
-		PlayerAether original = PlayerAether.get(event.original);
-		PlayerAether playerAether = PlayerAether.get(event.entityPlayer);
+    @SubscribeEvent
+    public void onPlayerAetherClone(Clone event) {
+        PlayerAether original = PlayerAether.get(event.original);
+        PlayerAether playerAether = PlayerAether.get(event.entityPlayer);
 
-		playerAether.shardCount = original.shardCount;
+        playerAether.shardCount = original.shardCount;
 
-		if (!event.wasDeath || event.entityPlayer.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
-			playerAether.setAccessoryInventory(original.getAccessoryInventory());
-		}
+        if (!event.wasDeath || event.entityPlayer.worldObj.getGameRules()
+            .getGameRuleBooleanValue("keepInventory")) {
+            playerAether.setAccessoryInventory(original.getAccessoryInventory());
+        }
 
-		if (event.wasDeath)
-		{
-			playerAether.setBedLocation(original.getBedLocation());
-		}
-	}
+        if (event.wasDeath) {
+            playerAether.setBedLocation(original.getBedLocation());
+        }
+    }
 
-	@SubscribeEvent
-	public void onPlayerAetherRespawn(PlayerRespawnEvent event) {
-		if (!event.player.worldObj.isRemote) {
-			PlayerAether playerAether = PlayerAether.get(event.player);
+    @SubscribeEvent
+    public void onPlayerAetherRespawn(PlayerRespawnEvent event) {
+        if (!event.player.worldObj.isRemote) {
+            PlayerAether playerAether = PlayerAether.get(event.player);
 
-			AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
-			
-			playerAether.updateShardCount(0);
-			event.player.setHealth(event.player.getMaxHealth());
+            AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
 
-			playerAether.isPoisoned = false;
-			playerAether.poisonTime = 0;
-			playerAether.isCured = false;
-			playerAether.cureTime = 0;
-		}
-	}
+            playerAether.updateShardCount(0);
+            event.player.setHealth(event.player.getMaxHealth());
 
-	@SubscribeEvent
-	public void onPlayerAetherChangedDimension(PlayerChangedDimensionEvent event) {
-		if (!event.player.worldObj.isRemote) {
-			PlayerAether playerAether = PlayerAether.get(event.player);
+            playerAether.isPoisoned = false;
+            playerAether.poisonTime = 0;
+            playerAether.isCured = false;
+            playerAether.cureTime = 0;
+        }
+    }
 
-			AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
-			playerAether.updateShardCount(0);
-		}
-	}
+    @SubscribeEvent
+    public void onPlayerAetherChangedDimension(PlayerChangedDimensionEvent event) {
+        if (!event.player.worldObj.isRemote) {
+            PlayerAether playerAether = PlayerAether.get(event.player);
 
-	@SubscribeEvent
-	public void onPlayerAetherDrops(LivingDropsEvent event) {
-		if (event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
-			PlayerAether.get((EntityPlayer) event.entityLiving).getAccessoryInventory().dropAccessories();
-		}
-	}
+            AetherNetwork.sendTo(new PacketAccessory(playerAether), (EntityPlayerMP) event.player);
+            playerAether.updateShardCount(0);
+        }
+    }
 
-	@SubscribeEvent
-	public void onPlayerAetherUpdate(LivingUpdateEvent event) {
-		if (event.entityLiving instanceof EntityPlayer) {
-			PlayerAether.get((EntityPlayer) event.entityLiving).onUpdate();
-			;
-		} else if (event.entityLiving instanceof EntityLivingBase) {
-			((EntityHook) event.entityLiving.getExtendedProperties("aether_legacy:entity_hook")).onUpdate();
-		}
-	}
+    @SubscribeEvent
+    public void onPlayerAetherDrops(LivingDropsEvent event) {
+        if (event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.getGameRules()
+            .getGameRuleBooleanValue("keepInventory")) {
+            PlayerAether.get((EntityPlayer) event.entityLiving)
+                .getAccessoryInventory()
+                .dropAccessories();
+        }
+    }
 
-	@SubscribeEvent
-	public void onLivingHurt(LivingHurtEvent event) {
-		if (event.entityLiving instanceof EntityPlayer) {
-			PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.entityLiving);
+    @SubscribeEvent
+    public void onPlayerAetherUpdate(LivingUpdateEvent event) {
+        if (event.entityLiving instanceof EntityPlayer) {
+            PlayerAether.get((EntityPlayer) event.entityLiving)
+                .onUpdate();;
+        } else if (event.entityLiving instanceof EntityLivingBase) {
+            ((EntityHook) event.entityLiving.getExtendedProperties("aether_legacy:entity_hook")).onUpdate();
+        }
+    }
 
-			if (playerAether.getAccessoryInventory().isWearingObsidianSet()) {
-				float original = event.ammount;
+    @SubscribeEvent
+    public void onLivingHurt(LivingHurtEvent event) {
+        if (event.entityLiving instanceof EntityPlayer) {
+            PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.entityLiving);
 
-				event.ammount = original / 2;
-			}
-		}
-	}
+            if (playerAether.getAccessoryInventory()
+                .isWearingObsidianSet()) {
+                float original = event.ammount;
 
-	@SubscribeEvent
-	public void onLivingAttack(LivingAttackEvent event) {
-		if (event.entityLiving instanceof EntityPlayer) {
-			PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.entityLiving);
+                event.ammount = original / 2;
+            }
+        }
+    }
 
-			if (playerAether.getAccessoryInventory().isWearingPhoenixSet() && event.source.isFireDamage()) {
-				event.setCanceled(true);
-			} else if (playerAether.getAbilities().get(3).shouldExecute()) {
-				event.setCanceled(((AbilityRepulsion) playerAether.getAbilities().get(3)).onPlayerAttacked(event.source));
-			}
-		}
-	}
+    @SubscribeEvent
+    public void onLivingAttack(LivingAttackEvent event) {
+        if (event.entityLiving instanceof EntityPlayer) {
+            PlayerAether playerAether = PlayerAether.get((EntityPlayer) event.entityLiving);
 
-	@SubscribeEvent
-	public void onUpdateBreakSpeed(BreakSpeed event) {
-		((InventoryAccessories) PlayerAether.get(event.entityPlayer).getAccessoryInventory()).getCurrentPlayerStrVsBlock(event.newSpeed);
-	}
+            if (playerAether.getAccessoryInventory()
+                .isWearingPhoenixSet() && event.source.isFireDamage()) {
+                event.setCanceled(true);
+            } else if (playerAether.getAbilities()
+                .get(3)
+                .shouldExecute()) {
+                    event.setCanceled(
+                        ((AbilityRepulsion) playerAether.getAbilities()
+                            .get(3)).onPlayerAttacked(event.source));
+                }
+        }
+    }
 
-	@SubscribeEvent
-	public void onAchievementGet(AchievementEvent event) {
-		Achievement achievement = event.achievement;
-		EntityPlayer player = event.entityPlayer;
+    @SubscribeEvent
+    public void onUpdateBreakSpeed(BreakSpeed event) {
+        ((InventoryAccessories) PlayerAether.get(event.entityPlayer)
+            .getAccessoryInventory()).getCurrentPlayerStrVsBlock(event.newSpeed);
+    }
 
-		if (!(achievement instanceof AetherAchievement)) {
-			return;
-		}
+    @SubscribeEvent
+    public void onAchievementGet(AchievementEvent event) {
+        Achievement achievement = event.achievement;
+        EntityPlayer player = event.entityPlayer;
 
-		int achievementType = achievement == AchievementsAether.defeat_bronze ? 1 : achievement == AchievementsAether.defeat_silver ? 2 : 0;
+        if (!(achievement instanceof AetherAchievement)) {
+            return;
+        }
 
-		if (!player.worldObj.isRemote && ((EntityPlayerMP) player).func_147099_x().canUnlockAchievement(achievement) && !((EntityPlayerMP) player).func_147099_x().hasAchievementUnlocked(achievement)) {
-			if (event.achievement == AchievementsAether.enter_aether) {
-				if (AetherConfig.config.get("Misc", "Gives the Player a Book of Lore upon entering the Aether for the first time", true).getBoolean()) {
-				if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.lore_book))) {
-					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, new ItemStack(ItemsAether.lore_book)));
-					}
-				}
-				if (AetherConfig.config.get("Misc", "Gives the Player a Golden Parachute upon entering the Aether for the first time", true).getBoolean()) {
-				if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.golden_parachute))) {
-					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj, player.posX, player.posY, player.posZ, new ItemStack(ItemsAether.golden_parachute)));
-					}
-				}
-			}
+        int achievementType = achievement == AchievementsAether.defeat_bronze ? 1
+            : achievement == AchievementsAether.defeat_silver ? 2 : 0;
 
-			AetherNetwork.sendTo(new PacketAchievement(achievementType), (EntityPlayerMP) player);
-		}
-	}
+        if (!player.worldObj.isRemote && ((EntityPlayerMP) player).func_147099_x()
+            .canUnlockAchievement(achievement)
+            && !((EntityPlayerMP) player).func_147099_x()
+                .hasAchievementUnlocked(achievement)) {
+            if (event.achievement == AchievementsAether.enter_aether) {
+                if (AetherConfig.config
+                    .get("Misc", "Gives the Player a Book of Lore upon entering the Aether for the first time", true)
+                    .getBoolean()) {
+                    if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.lore_book))) {
+                        player.worldObj.spawnEntityInWorld(
+                            new EntityItem(
+                                player.worldObj,
+                                player.posX,
+                                player.posY,
+                                player.posZ,
+                                new ItemStack(ItemsAether.lore_book)));
+                    }
+                }
+                if (AetherConfig.config
+                    .get(
+                        "Misc",
+                        "Gives the Player a Golden Parachute upon entering the Aether for the first time",
+                        true)
+                    .getBoolean()) {
+                    if (!player.inventory.addItemStackToInventory(new ItemStack(ItemsAether.golden_parachute))) {
+                        player.worldObj.spawnEntityInWorld(
+                            new EntityItem(
+                                player.worldObj,
+                                player.posX,
+                                player.posY,
+                                player.posZ,
+                                new ItemStack(ItemsAether.golden_parachute)));
+                    }
+                }
+            }
+
+            AetherNetwork.sendTo(new PacketAchievement(achievementType), (EntityPlayerMP) player);
+        }
+    }
 
 }

@@ -1,12 +1,12 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.client.models.entities.ValkyrieModel;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.client.models.entities.ValkyrieModel;
 import com.gildedgames.the_aether.entities.bosses.EntityValkyrie;
 
 public class ValkyrieRenderer extends RenderLiving {

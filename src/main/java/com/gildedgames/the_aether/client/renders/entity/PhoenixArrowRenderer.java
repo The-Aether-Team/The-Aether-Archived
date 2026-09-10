@@ -1,7 +1,5 @@
 package com.gildedgames.the_aether.client.renders.entity;
 
-import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.entities.projectile.EntityPhoenixArrow;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
@@ -10,6 +8,9 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+
+import com.gildedgames.the_aether.Aether;
+import com.gildedgames.the_aether.entities.projectile.EntityPhoenixArrow;
 
 public class PhoenixArrowRenderer extends Render {
 
@@ -23,8 +24,16 @@ public class PhoenixArrowRenderer extends Render {
             this.bindTexture(Aether.locate("textures/entities/projectile/flaming_arrow.png"));
             GL11.glPushMatrix();
             GL11.glTranslatef((float) var2, (float) var4, (float) var6);
-            GL11.glRotatef(var1.prevRotationYaw + (var1.rotationYaw - var1.prevRotationYaw) * var9 - 90.0F, 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(var1.prevRotationPitch + (var1.rotationPitch - var1.prevRotationPitch) * var9, 0.0F, 0.0F, 1.0F);
+            GL11.glRotatef(
+                var1.prevRotationYaw + (var1.rotationYaw - var1.prevRotationYaw) * var9 - 90.0F,
+                0.0F,
+                1.0F,
+                0.0F);
+            GL11.glRotatef(
+                var1.prevRotationPitch + (var1.rotationPitch - var1.prevRotationPitch) * var9,
+                0.0F,
+                0.0F,
+                1.0F);
             Tessellator tessellator = Tessellator.instance;
             byte b0 = 0;
             float f2 = 0.0F;

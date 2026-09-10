@@ -1,16 +1,16 @@
 package com.gildedgames.the_aether.entities.passive.mountable;
 
-import io.netty.buffer.ByteBuf;
-
 import java.util.List;
 
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import io.netty.buffer.ByteBuf;
 
 public class EntityParachute extends Entity implements IEntityAdditionalSpawnData {
 
@@ -48,7 +48,14 @@ public class EntityParachute extends Entity implements IEntityAdditionalSpawnDat
             double d1 = this.rand.nextGaussian() * 0.02D;
             double d2 = this.rand.nextGaussian() * 0.02D;
             double d3 = 10.0D;
-            this.worldObj.spawnParticle("explode", this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width - d0 * d3, this.posY - 0.5D + (double) (this.rand.nextFloat() * this.height) - d1 * d3, this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width - d2 * d3, d0, d1, d2);
+            this.worldObj.spawnParticle(
+                "explode",
+                this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width - d0 * d3,
+                this.posY - 0.5D + (double) (this.rand.nextFloat() * this.height) - d1 * d3,
+                this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width - d2 * d3,
+                d0,
+                d1,
+                d2);
         } else {
             this.worldObj.setEntityState(this, (byte) 20);
         }
@@ -81,7 +88,12 @@ public class EntityParachute extends Entity implements IEntityAdditionalSpawnDat
     }
 
     private void moveToEntityUsing() {
-        this.setPositionAndRotation(this.ridingPlayer.posX, this.ridingPlayer.boundingBox.minY - (this.height / 2) - 0.5D, this.ridingPlayer.posZ, this.ridingPlayer.rotationYaw, this.ridingPlayer.rotationPitch);
+        this.setPositionAndRotation(
+            this.ridingPlayer.posX,
+            this.ridingPlayer.boundingBox.minY - (this.height / 2) - 0.5D,
+            this.ridingPlayer.posZ,
+            this.ridingPlayer.rotationYaw,
+            this.ridingPlayer.rotationPitch);
 
         this.motionX = this.ridingPlayer.motionX;
         this.motionY = this.ridingPlayer.motionY;
@@ -96,7 +108,7 @@ public class EntityParachute extends Entity implements IEntityAdditionalSpawnDat
     private boolean isCollided() {
         List<?> list = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox);
 
-        for (int size = 0; size < list.size(); ) {
+        for (int size = 0; size < list.size();) {
             if (size == 0 && list.size() == 0) {
                 return false;
             }
@@ -126,7 +138,8 @@ public class EntityParachute extends Entity implements IEntityAdditionalSpawnDat
     public static boolean entityHasRoomForCloud(World world, EntityPlayer player) {
         AxisAlignedBB boundingBox = player.boundingBox;
 
-        return world.getCollidingBoundingBoxes(player, boundingBox).size() == 0 && !world.isAABBInMaterial(boundingBox, Material.water);
+        return world.getCollidingBoundingBoxes(player, boundingBox)
+            .size() == 0 && !world.isAABBInMaterial(boundingBox, Material.water);
     }
 
     @Override

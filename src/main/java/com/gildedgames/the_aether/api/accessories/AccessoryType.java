@@ -3,51 +3,52 @@ package com.gildedgames.the_aether.api.accessories;
 import net.minecraft.util.ObjectIntIdentityMap;
 
 public enum AccessoryType {
-	RING("ring", 11, 3),
-	EXTRA_RING("ring", 11, 3),
-	PENDANT("pendant", 16, 7),
-	CAPE("cape", 15, 5),
-	SHIELD("shield", 13, 0),
-	GLOVES("gloves", 10, 0),
-	MISC("misc", 10, 0),
-	EXTRA_MISC("misc", 10, 0);
 
-	private int maxDamage, damagedReduced;
+    RING("ring", 11, 3),
+    EXTRA_RING("ring", 11, 3),
+    PENDANT("pendant", 16, 7),
+    CAPE("cape", 15, 5),
+    SHIELD("shield", 13, 0),
+    GLOVES("gloves", 10, 0),
+    MISC("misc", 10, 0),
+    EXTRA_MISC("misc", 10, 0);
 
-	private String displayName;
+    private int maxDamage, damagedReduced;
 
-	AccessoryType(String displayName, int maxDamage, int damageReduced) {
-		this.displayName = displayName;
-		this.maxDamage = maxDamage;
-		this.damagedReduced = damageReduced;
-	}
+    private String displayName;
 
-	public int getMaxDamage() {
-		return this.maxDamage;
-	}
+    AccessoryType(String displayName, int maxDamage, int damageReduced) {
+        this.displayName = displayName;
+        this.maxDamage = maxDamage;
+        this.damagedReduced = damageReduced;
+    }
 
-	public int getDamageReduced() {
-		return this.damagedReduced;
-	}
+    public int getMaxDamage() {
+        return this.maxDamage;
+    }
 
-	public String getDisplayName() {
-		return this.displayName;
-	}
+    public int getDamageReduced() {
+        return this.damagedReduced;
+    }
 
-	public static ObjectIntIdentityMap createCompleteList() {
-		ObjectIntIdentityMap identityMap = new ObjectIntIdentityMap();
+    public String getDisplayName() {
+        return this.displayName;
+    }
 
-		identityMap.func_148746_a(PENDANT, 0);
-		identityMap.func_148746_a(CAPE, 1);
-		identityMap.func_148746_a(SHIELD, 2);
-		identityMap.func_148746_a(MISC, 3);
-		identityMap.func_148746_a(RING, 4);
-		identityMap.func_148746_a(EXTRA_RING, 5);
-		identityMap.func_148746_a(GLOVES, 6);
-		identityMap.func_148746_a(EXTRA_MISC, 7);
+    public static ObjectIntIdentityMap createCompleteList() {
+        ObjectIntIdentityMap identityMap = new ObjectIntIdentityMap();
 
-		return identityMap;
+        identityMap.func_148746_a(PENDANT, 0);
+        identityMap.func_148746_a(CAPE, 1);
+        identityMap.func_148746_a(SHIELD, 2);
+        identityMap.func_148746_a(MISC, 3);
+        identityMap.func_148746_a(RING, 4);
+        identityMap.func_148746_a(EXTRA_RING, 5);
+        identityMap.func_148746_a(GLOVES, 6);
+        identityMap.func_148746_a(EXTRA_MISC, 7);
 
-	}
+        return identityMap;
+
+    }
 
 }
