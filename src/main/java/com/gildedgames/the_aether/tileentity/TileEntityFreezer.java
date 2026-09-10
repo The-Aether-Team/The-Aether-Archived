@@ -3,7 +3,6 @@ package com.gildedgames.the_aether.tileentity;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -151,9 +150,8 @@ public class TileEntityFreezer extends AetherTileEntity {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void addEnchantmentWeight(ItemStack stack) {
-        Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+        Map<Integer, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
 
         if (!enchantments.isEmpty()) {
             for (int levels : enchantments.values()) {

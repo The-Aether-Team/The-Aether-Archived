@@ -1,6 +1,8 @@
 package com.gildedgames.the_aether.entities.ai.aerwhale;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;

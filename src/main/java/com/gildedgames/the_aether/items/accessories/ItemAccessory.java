@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -84,19 +83,19 @@ public class ItemAccessory extends Item {
         int k = blockSource.getZInt() + enumfacing.getFrontOffsetZ();
         AxisAlignedBB axisalignedbb = AxisAlignedBB
             .getBoundingBox((double) i, (double) j, (double) k, (double) (i + 1), (double) (j + 1), (double) (k + 1));
-        List<EntityLivingBase> list = blockSource.getWorld()
+        List<EntityPlayer> list = blockSource.getWorld()
             .getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
 
         if (list.isEmpty()) {
             return null;
         }
 
-        EntityPlayer player = (EntityPlayer) list.get(0);
+        EntityPlayer player = list.get(0);
 
         ItemStack itemstack = stack.copy();
         itemstack.stackSize = 1;
 
-        PlayerAether playerAether = PlayerAether.get((EntityPlayer) player);
+        PlayerAether playerAether = PlayerAether.get(player);
 
         if (!playerAether.getAccessoryInventory()
             .setAccessorySlot(itemstack)) {

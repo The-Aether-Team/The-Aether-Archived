@@ -14,7 +14,17 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.gildedgames.the_aether.AetherConfig;
 import com.gildedgames.the_aether.blocks.BlocksAether;
-import com.gildedgames.the_aether.world.biome.decoration.*;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenClouds;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenDungeonOakTree;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenFloatingIsland;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenFoilage;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenHolidayTree;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenLakes;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenLiquids;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenMinable;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenOakTree;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenQuicksoil;
+import com.gildedgames.the_aether.world.biome.decoration.AetherGenSkyrootTree;
 
 public class AetherBiomeDecorator extends BiomeDecorator {
 

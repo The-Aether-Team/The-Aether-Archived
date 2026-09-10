@@ -3,7 +3,27 @@ package com.gildedgames.the_aether.network;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import com.gildedgames.the_aether.Aether;
-import com.gildedgames.the_aether.network.packets.*;
+import com.gildedgames.the_aether.network.packets.PacketAccessory;
+import com.gildedgames.the_aether.network.packets.PacketAchievement;
+import com.gildedgames.the_aether.network.packets.PacketCapeChanged;
+import com.gildedgames.the_aether.network.packets.PacketCheckKey;
+import com.gildedgames.the_aether.network.packets.PacketDialogueClicked;
+import com.gildedgames.the_aether.network.packets.PacketDisplayDialogue;
+import com.gildedgames.the_aether.network.packets.PacketExtendedAttack;
+import com.gildedgames.the_aether.network.packets.PacketInitiateValkyrieFight;
+import com.gildedgames.the_aether.network.packets.PacketOpenContainer;
+import com.gildedgames.the_aether.network.packets.PacketPerkChanged;
+import com.gildedgames.the_aether.network.packets.PacketPortalItem;
+import com.gildedgames.the_aether.network.packets.PacketSendEternalDay;
+import com.gildedgames.the_aether.network.packets.PacketSendPoison;
+import com.gildedgames.the_aether.network.packets.PacketSendPoisonTime;
+import com.gildedgames.the_aether.network.packets.PacketSendSeenDialogue;
+import com.gildedgames.the_aether.network.packets.PacketSendShouldCycle;
+import com.gildedgames.the_aether.network.packets.PacketSendSneaking;
+import com.gildedgames.the_aether.network.packets.PacketSendTime;
+import com.gildedgames.the_aether.network.packets.PacketSetTime;
+import com.gildedgames.the_aether.network.packets.PacketSwetJump;
+import com.gildedgames.the_aether.network.packets.PacketUpdateLifeShardCount;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;

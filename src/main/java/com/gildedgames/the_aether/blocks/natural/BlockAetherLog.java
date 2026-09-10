@@ -18,7 +18,11 @@ import net.minecraftforge.event.ForgeEventFactory;
 
 import com.gildedgames.the_aether.blocks.BlocksAether;
 import com.gildedgames.the_aether.items.ItemsAether;
-import com.gildedgames.the_aether.items.tools.*;
+import com.gildedgames.the_aether.items.tools.ItemAetherTool;
+import com.gildedgames.the_aether.items.tools.ItemGravititeTool;
+import com.gildedgames.the_aether.items.tools.ItemSkyrootTool;
+import com.gildedgames.the_aether.items.tools.ItemValkyrieTool;
+import com.gildedgames.the_aether.items.tools.ItemZaniteTool;
 import com.gildedgames.the_aether.items.util.EnumAetherToolType;
 
 import cpw.mods.fml.relauncher.Side;
