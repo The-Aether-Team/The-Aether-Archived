@@ -76,10 +76,20 @@ are unchanged; its handler is now inert.
    in 1.7.10 has no `addScheduledTask` anyway — only client `Minecraft`
    does.)
 
-3. **Harden `AetherGuiHandler`** — add `instanceof` checks before casting tile
-   entities (prevents the `ClassCastException` server crash), validate GUI IDs
-   against a whitelist, and make `PacketOpenContainer` carry/use real
-   interaction coordinates with a distance check.
+3. ✅ **Harden `AetherGuiHandler` (DONE)** — the dangerous unchecked TE casts are
+   now guarded with `instanceof` checks on **both** server and client, so a
+   mismatched/blocks-replaced tile entity can no longer throw a
+   `ClassCastException`. Server-side TE GUIs (enchanter/freezer/incubator/
+   treasure chest) additionally require the player to be within 9 blocks
+   (`MAX_OPEN_DISTANCE_SQ`), defense-in-depth layered on top of vanilla's
+   6-block activation reach and the container's own 8-block
+   `isUseableByPlayer` check. `PacketOpenContainer` was already whitelisted to
+   `accessories`/`-1` in step 1 (no TE casts, no coords needed). Threat-model
+   note: traced FML 1.7.10 and confirmed `FMLMessage.OpenGui` is server→client
+   only (`OpenGuiHandler` uses `FMLClientHandler`), so a client cannot directly
+   invoke `getServerGuiElement` with arbitrary coords — the `instanceof`
+   guards are therefore defense-in-depth, not a remote-exploit fix, but they
+   prevent real client/server crashes on TE desync.
 
 4. **Audit all containers and slots for dupe exploits** — review
    `ContainerAccessories`, `ContainerEnchanter`, `ContainerFreezer`,

@@ -3,6 +3,7 @@ package com.gildedgames.the_aether.network;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import com.gildedgames.the_aether.client.gui.GuiEnchanter;
@@ -30,6 +31,22 @@ public class AetherGuiHandler implements IGuiHandler {
 
     public static final int accessories = 1, enchanter = 2, freezer = 3, incubator = 4, treasure_chest = 5, lore = 6;
 
+    /**
+     * The largest squared distance at which a tile-entity-bound GUI may be
+     * opened. Vanilla's block activation reach is 6 blocks; the container
+     * tick already enforces 8 blocks via isUseableByPlayer. 9 blocks leaves
+     * headroom without allowing remote interaction.
+     */
+    private static final double MAX_OPEN_DISTANCE_SQ = 81.0D;
+
+    private static boolean canReach(EntityPlayer player, int x, int y, int z) {
+        return player.getDistanceSq(x + 0.5D, y + 0.5D, z + 0.5D) <= MAX_OPEN_DISTANCE_SQ;
+    }
+
+    private static boolean isWithinReach(EntityPlayer player, TileEntity tileEntity) {
+        return tileEntity != null && canReach(player, tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+    }
+
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == accessories) {
@@ -38,13 +55,33 @@ public class AetherGuiHandler implements IGuiHandler {
                     .getAccessoryInventory(),
                 player);
         } else if (ID == enchanter) {
-            return new ContainerEnchanter(player.inventory, (TileEntityEnchanter) world.getTileEntity(x, y, z));
+            TileEntity enchanter = world.getTileEntity(x, y, z);
+
+            // Defense in depth: only open the GUI when the tile entity is
+            // actually an enchanter and the player is in reach. An unchecked
+            // cast here would crash the server if the block was replaced
+            // between the interaction and this call.
+            return enchanter instanceof TileEntityEnchanter && isWithinReach(player, enchanter)
+                ? new ContainerEnchanter(player.inventory, (TileEntityEnchanter) enchanter)
+                : null;
         } else if (ID == freezer) {
-            return new ContainerFreezer(player.inventory, (TileEntityFreezer) world.getTileEntity(x, y, z));
+            TileEntity freezer = world.getTileEntity(x, y, z);
+
+            return freezer instanceof TileEntityFreezer && isWithinReach(player, freezer)
+                ? new ContainerFreezer(player.inventory, (TileEntityFreezer) freezer)
+                : null;
         } else if (ID == incubator) {
-            return new ContainerIncubator(player, player.inventory, (TileEntityIncubator) world.getTileEntity(x, y, z));
+            TileEntity incubator = world.getTileEntity(x, y, z);
+
+            return incubator instanceof TileEntityIncubator && isWithinReach(player, incubator)
+                ? new ContainerIncubator(player, player.inventory, (TileEntityIncubator) incubator)
+                : null;
         } else if (ID == treasure_chest) {
-            return new ContainerChest(player.inventory, (IInventory) world.getTileEntity(x, y, z));
+            TileEntity chest = world.getTileEntity(x, y, z);
+
+            return chest instanceof IInventory && isWithinReach(player, chest)
+                ? new ContainerChest(player.inventory, (IInventory) chest)
+                : null;
         } else if (ID == lore) {
             return new ContainerLore(player.inventory);
         }
@@ -58,13 +95,28 @@ public class AetherGuiHandler implements IGuiHandler {
         if (ID == accessories) {
             return new GuiAccessories(PlayerAether.get(player));
         } else if (ID == enchanter) {
-            return new GuiEnchanter(player.inventory, (TileEntityEnchanter) world.getTileEntity(x, y, z));
+            TileEntity enchanter = world.getTileEntity(x, y, z);
+
+            return enchanter instanceof TileEntityEnchanter
+                ? new GuiEnchanter(player.inventory, (TileEntityEnchanter) enchanter)
+                : null;
         } else if (ID == freezer) {
-            return new GuiFreezer(player.inventory, (TileEntityFreezer) world.getTileEntity(x, y, z));
+            TileEntity freezer = world.getTileEntity(x, y, z);
+
+            return freezer instanceof TileEntityFreezer ? new GuiFreezer(player.inventory, (TileEntityFreezer) freezer)
+                : null;
         } else if (ID == incubator) {
-            return new GuiIncubator(player, player.inventory, (TileEntityIncubator) world.getTileEntity(x, y, z));
+            TileEntity incubator = world.getTileEntity(x, y, z);
+
+            return incubator instanceof TileEntityIncubator
+                ? new GuiIncubator(player, player.inventory, (TileEntityIncubator) incubator)
+                : null;
         } else if (ID == treasure_chest) {
-            return new GuiTreasureChest(player.inventory, (TileEntityTreasureChest) world.getTileEntity(x, y, z));
+            TileEntity chest = world.getTileEntity(x, y, z);
+
+            return chest instanceof TileEntityTreasureChest
+                ? new GuiTreasureChest(player.inventory, (TileEntityTreasureChest) chest)
+                : null;
         } else if (ID == lore) {
             return new GuiLore(player.inventory);
         }
